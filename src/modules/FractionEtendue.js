@@ -666,6 +666,7 @@ class FractionEtendue extends Fraction {
  * Si la fraction est réductible, retourne une suite d'égalités permettant d'obtenir la fraction irréductible
  */
   texSimplificationAvecEtapes (factorisation = false) {
+    if (this.num === 0) return '=0'
     if (this.estIrreductible && this.num > 0 && this.den > 0) return '' // irreductible et positifs
     else if (this.estIrreductible && this.num * this.den < 0) { // irréductible mais négatifs
       return `=${this.texFSD}`

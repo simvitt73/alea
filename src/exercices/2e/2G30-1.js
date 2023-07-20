@@ -52,7 +52,9 @@ export default function CoefficientDirecteurDeDroite () {
       const coefficient = oblique ? new FractionEtendue(yB - yA, xB - xA) : new FractionEtendue(0, 1) // zéro n'est utilisé que pour AMC si !oblique
       let texteCorr
       if (oblique) {
-        const solution = coefficient.estIrreductible ? coefficient.texFSD : coefficient.texSimplificationAvecEtapes()
+        const solution = coefficient.estIrreductible
+          ? coefficient.texFSD
+          : coefficient.texFSD + coefficient.texSimplificationAvecEtapes(true)
         texteCorr = `On observe que les abscisses respectives des points $${A}$ et $${B}$ ne sont pas égales ($x_${A}\\neq x_${B}$).`
         texteCorr += `<br>La droite $${miseEnEvidence('(' + A + B + ')', 'black')}$ n'est donc pas verticale.`
         texteCorr += '<br>On peut donc calculer le coefficient directeur de la droite.'
