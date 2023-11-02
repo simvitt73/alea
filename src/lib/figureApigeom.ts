@@ -15,7 +15,7 @@ export default function figureApigeom ({ exercice, idApigeom, figure }: { exerci
   document.addEventListener(idApigeom, (event: Event) => {
     const customEvent = event as CustomEvent
     const json = customEvent.detail
-    figure.loadJson(JSON.parse(json))
+    figure.loadJson(JSON.parse(json), true)
   })
 
   let alreadydone = false

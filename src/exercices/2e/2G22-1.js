@@ -7,28 +7,39 @@ import { choice } from '../../lib/outils/arrayOutils.js'
 import Exercice from '../Exercice.js'
 import { mathalea2d, colorToLatexOrHTML } from '../../modules/2dGeneralites.js'
 import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Figure from 'apigeom'
+import figureApigeom from '../../lib/figureApigeom'
 
 export const titre = 'Représenter un vecteur dans un repère, à partir de ses coordonnées'
+export const dateDeModifImportante = '2/11/2023'
+export const interactifReady = true
+export const interactifType = 'custom'
 
 /**
  * Tracer un vecteur dont on connais les coordonnées dans un repère.
- * @author Stéphane Guyon légèrement modifié par Jean-Claude Lhote
+ * @author Stéphane Guyon légèrement modifié par Jean-Claude Lhote puis interactivité par Rémi Angot
  * référence 2G22-1
  */
 export const uuid = '3a3ec'
 export const ref = '2G22-1'
 export default function RepresenterUnVecteur () {
-  Exercice.call(this) // Héritage de la classe Exercice()
+  Exercice.call(this)
   this.titre = titre
   this.nbQuestions = 2
   this.nbCols = 2
   this.nbColsCorr = 2
-  this.sup = 1 //
-  this.nouvelleVersion = function () {
+  this.sup = 1
+  this.nouvelleVersion = function (numeroExercice) {
     this.listeQuestions = [] // Liste de questions
     this.listeCorrections = [] // Liste de questions corrigées
+    this.figures = []
+    this.goodAnswers = []
 
     for (let i = 0, r, posLabelA, posLabelB, labelA, labelB, A, B, H, h1, h2, O, I, J, j, t, k, l, s, o, ux, uy, xA, yA, xB, yB, AB, nomi, nomj, nomAB, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      this.figures[i] = new Figure({ xMin: -10.5, yMin: -10.5, width: 630, height: 630, border: true, snapGrid: true })
+      this.figures[i].create('Grid')
+      this.figures[i].options.labelAutomaticForPoints = true // Les points sont nommés par ordre alphabétique
+      this.figures[i].options.limitNumberOfElement.set('Point', 2) // On limite le nombre de points à 4
       xA = randint(2, 8) * choice([-1, 1])
       yA = randint(2, 8) * choice([-1, 1])
       ux = randint(3, 8) * choice([-1, 1])
@@ -101,6 +112,10 @@ export default function RepresenterUnVecteur () {
         ymax: 9
       }, r, t, l, k, j, s, o, nomi, nomj, nomAB, h1, h2, labelA, labelB)// On trace le graphique
 
+      this.figures[i].setToolbar({ tools: ['POINT', 'VECTOR', 'NAME_POINT', 'DRAG', 'UNDO', 'REDO', 'REMOVE'], position: 'top' })
+      texte += figureApigeom({ exercice: this, idApigeom: `apigeomEx${numeroExercice}F${i}`, figure: this.figures[i] })
+      this.goodAnswers[i] = { xA, yA, xB, yB }
+
       if (this.questionJamaisPosee(i, xA, yA, xB, yB)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions.push(texte)
         this.listeCorrections.push(texteCorr)
@@ -111,4 +126,18 @@ export default function RepresenterUnVecteur () {
     listeQuestionsToContenu(this)
   }
   this.besoinFormulaireNumerique = ['Situations différentes ', 2, '1 :Avec un point origine\n 2 : Avec un point extrémité']
+
+  this.correctionInteractive = (i) => {
+    this.answers = {}
+    // Sauvegarde de la réponse pour Capytale
+    this.answers[this.idApigeom] = this.figure.json
+    const resultat = 'KO'
+    const divFeedback = document.querySelector(`#feedback${this.idApigeom}`)
+    // Vérification à faire
+    // Feedback à afficher
+    this.figures[i].isDynamic = false
+    this.figures[i].divButtons.style.display = 'none'
+    this.figures[i].divUserMessage.style.display = 'none'
+    return resultat
+  }
 }
