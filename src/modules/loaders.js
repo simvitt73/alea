@@ -384,17 +384,17 @@ function clickButtonMathField (event) {
   if (get(globalOptions).beta) {
     const mf = event.target?.getRootNode()?.host
     if (mf) {
-      console.log(mf.dataset.keyboard.split(' '))
+      // console.log(mf.dataset.keyboard.split(' '))
       keyboardState.update((value) => {
         return {
           isVisible: true, // value.isVisible || window.innerWidth < 800,
           isInLine: value.isInLine,
           idMathField: mf.id,
           alphanumericLayout: value.alphanumericLayout,
-          blocks: mf.dataset.keyboard.split(' ')
+          blocks: 'keyboard' in mf.dataset ? mf.dataset.keyboard.split(' ') : ['numbers', 'fullOperations', 'variables']
         }
       })
-      console.log(get(keyboardState))
+      // console.log(get(keyboardState))
     }
   }
 }
