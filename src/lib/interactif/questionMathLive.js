@@ -81,7 +81,7 @@ export function ajouteChampTexteMathLive (exercice, i, style = '', {
   }
 }
 
-export function remplisLesBlancs (exercice, question, content, classes, blanc = '\\ldots') {
+export function remplisLesBlancs (exercice, question, content, classes = '', blanc = '\\ldots') {
   let mfeValue = ''
   while (content) {
     const chunks = /^(.*?)%\{([^}]+)}(.*?)$/.exec(content)
