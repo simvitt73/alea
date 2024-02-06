@@ -90,7 +90,7 @@ export default function TransformationsDuPlanEtCoordonnees () {
       const pointO = point(0, 0, 'O', 'above right')
 
       const O = point(xO, yO, "O'", 'above left') // on crée le point O'
-      let droited1, droited2, droited, droitedprime, droited1Latex, droited2Latex, droitedLatex, droitedprimeLatex
+      let droited1, droited2, droited, droitedprime, droited1Latex, droited2Latex, droitedprimeLatex
       let trouve = false
       let compteur = 0
       while (trouve === false) {
@@ -174,6 +174,7 @@ export default function TransformationsDuPlanEtCoordonnees () {
       }
       // les puntos sont choisis, on écrit l'énoncé
       for (let i = 0; i < 3; i++) {
+        console.log(choixTransformation[i])
         switch (choixTransformation[i]) {
           case 1: // symétrie axiale
             droited1Latex = droiteAvecNomLatex(droiteParPointEtPente(O, 1, '', context.isHtml ? couleurs[i] : 'black'), '(d_1)')
@@ -244,7 +245,8 @@ export default function TransformationsDuPlanEtCoordonnees () {
 
           case 3: // symétrie axiale
             droited = droiteAvecNomLatex(droiteHorizontaleParPoint(O, '', context.isHtml ? couleurs[i] : 'black'), '(d)')
-            droited = droitedLatex[0]
+            // console.log(droited)
+            droited = droited[0]
             droited.color = colorToLatexOrHTML(context.isHtml ? couleurs[i] : 'black')
             droited.isVisible = true
             droited.epaisseur = 2
@@ -266,8 +268,8 @@ export default function TransformationsDuPlanEtCoordonnees () {
               xP[3] = xC
               yP[3] = yC
             }
-            objetsEnonce.push(droitedLatex)
-            objetsCorrection.push(droitedLatex)
+            objetsEnonce.push(droited)
+            objetsCorrection.push(droited)
             texte += (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) + ` Donner les coordonnées du symétrique de $${lettre1[i]}$ par rapport à la droite $${miseEnCouleur('(d)', droited.color)}$.`
             if (context.isAmc) {
               enonceAmc += (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) + ` Donner les coordonnées du symétrique de $${lettre1[i]}$ par rapport à la droite $${miseEnCouleur('(d)', droited.color)}$.`
@@ -738,6 +740,7 @@ export default function TransformationsDuPlanEtCoordonnees () {
         )
       }
       if (this.questionJamaisPosee(ee, xA, yA, xB, yB, xC, yC)) {
+        console.log(objetsEnonce)
         this.listeQuestions.push(texte + '<br>' + mathalea2d({
           xmin: -10,
           ymin: -10,
