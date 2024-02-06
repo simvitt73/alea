@@ -762,6 +762,35 @@ export function fonctionCompare (input: string, goodAnswer: {fonction: string, v
 }
 
 /**
+ * Comparaison de fonction f(x,y) (ou tout autre variable) x et y étant les lettres par défaut
+ * @param {string} input
+ * @param {{fonction: string, variables: string[]}} goodAnswer
+ */
+export function fonctionXyCompare (input: string, goodAnswer: {fonction: string, variables: string[]} = { fonction: '', variables: ['x', 'y'] }): ResultType {
+  if (typeof goodAnswer === 'string') {
+    goodAnswer = { fonction: goodAnswer, variables: ['x', 'y'] }
+  }
+  const clean = generateCleaner(['espaces', 'virgules', 'parentheses', 'fractions'])
+  const cleanInput = clean(input)
+  const inputParsed = engine.parse(cleanInput)
+  const inputFn = inputParsed.compile()
+  const cleanAnswer = clean(goodAnswer.fonction)
+  const goodAnswerFn = engine.parse(cleanAnswer).compile()
+
+  let isOk = true
+  if (inputFn == null || goodAnswerFn == null) throw Error(`fonctionCompare : La saisie ou la bonne réponse ne sont pas des fonctions (saisie : ${input} et réponse attendue : ${goodAnswer}`)
+  const [a, b, c] = [Math.random(), Math.random(), Math.random()]
+  const [A, B, C] = [Math.random(), Math.random(), Math.random()]
+  for (const x of [a, b, c]) {
+    for (const y of [A, B, C]) {
+      const variable = Object.fromEntries([[goodAnswer.variables[0], x], [goodAnswer.variables[1], y]])
+      isOk = isOk && Math.abs(inputFn(variable) - goodAnswerFn(variable)) < 1e-10
+    }
+  }
+  return { isOk }
+}
+
+/**
  * Comparaison d'égalités (pour l'instant strictement égal, il est prévu d'implémenter l'équivalence d'égalités)
  * @param {string} input
  * @param {{membre1: {fonction: string, variable?: string},membre2: {fonction: string, variable?: string},strict?: boolean}} goodAnswer
