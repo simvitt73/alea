@@ -60,7 +60,7 @@ export function cleanStringBeforeParse (aString: string) {
     .replaceAll('\\lparen', '(').replaceAll('\\rparen', ')')
 }
 
-type CleaningOperation = 'fractions' | 'virgules' | 'espaces' | 'parentheses' | 'puissances'
+type CleaningOperation = 'fractions' | 'virgules' | 'espaces' | 'parentheses' | 'puissances' | 'divisions'
 
 /**
  * Nettoie la saisie des \\dfrac en les remplaçant par des \frac comprises par ComputeEngine
@@ -69,7 +69,13 @@ type CleaningOperation = 'fractions' | 'virgules' | 'espaces' | 'parentheses' | 
 function cleanFractions (str: string): string {
   return str.replaceAll(/dfrac/g, 'frac')
 }
-
+/**
+ * Nettoie la saisie des \\div en les remplaçant par des / compris par ComputeEngine
+ * @param {string} str
+ */
+function cleanDivisions (str: string): string {
+  return str.replaceAll(/\\div/g, '/')
+}
 /**
  * Nettoie la saisie des virgules décimales en les remplaçant par des points.
  * @param {string} str
@@ -125,6 +131,8 @@ function generateCleaner (operations: CleaningOperation[]): (str: string) => str
         return cleanParenthses
       case 'puissances':
         return cleanPuissances
+      case 'divisions':
+        return cleanDivisions
       default:
         throw new Error(`Unsupported cleaning operation: ${operation}`)
     }
