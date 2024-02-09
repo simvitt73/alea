@@ -130,7 +130,7 @@ export function verifQuestionMathLive (exercice, i, writeResult = true) {
       return { isOk: resultat, feedback, score: { nbBonnesReponses, nbReponses } }
     }
     // ici, il n'y a qu'un seul input une seule saisie (même si la réponse peut contenir des variantes qui seront toutes comparées à la saisie
-    champTexte = document.getElementById(`${exercice.numeroExercice}Q${i}`)
+    champTexte = document.getElementById(`champTexteEx${exercice.numeroExercice}Q${i}`)
     if (champTexte == null) {
       throw Error(`verifQuestionMathlive: type ${formatInteractif} ne trouve pas le champ de saisie dans le dom ${JSON.stringify({ selecteur: 'champTexteEx' + String(exercice.numeroExercice) + 'Q' + String(i) })}`)
     }
