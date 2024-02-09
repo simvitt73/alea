@@ -170,6 +170,11 @@ function inputToGrandeur (input: string): Grandeur | false {
   }
 }
 
+/**
+ * Permet de valider des 'opérations' par exemple : '4+8' ou '4\\times 5' ou encore '3\\times 5 + 4'
+ * @param {string} input
+ * @param {string} goodAnswer
+ */
 export function operationCompare (input: string, goodAnswer: string):ResultType {
   const clean = generateCleaner(['virgules', 'parentheses', 'fractions', 'espaces'])
   const saisie = clean(input)
