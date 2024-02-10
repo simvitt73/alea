@@ -60,7 +60,7 @@ export function cleanStringBeforeParse (aString: string) {
     .replaceAll('\\lparen', '(').replaceAll('\\rparen', ')')
 }
 
-type CleaningOperation = 'fractions' | 'virgules' | 'espaces' | 'parentheses' | 'puissances'
+type CleaningOperation = 'fractions' | 'virgules' | 'espaces' | 'parentheses' | 'puissances' | 'divisions'
 
 /**
  * Nettoie la saisie des \\dfrac en les remplaçant par des \frac comprises par ComputeEngine
@@ -69,7 +69,13 @@ type CleaningOperation = 'fractions' | 'virgules' | 'espaces' | 'parentheses' | 
 function cleanFractions (str: string): string {
   return str.replaceAll(/dfrac/g, 'frac')
 }
-
+/**
+ * Nettoie la saisie des \\div en les remplaçant par des / compris par ComputeEngine
+ * @param {string} str
+ */
+function cleanDivisions (str: string): string {
+  return str.replaceAll(/\\div/g, '/')
+}
 /**
  * Nettoie la saisie des virgules décimales en les remplaçant par des points.
  * @param {string} str
@@ -125,6 +131,8 @@ function generateCleaner (operations: CleaningOperation[]): (str: string) => str
         return cleanParenthses
       case 'puissances':
         return cleanPuissances
+      case 'divisions':
+        return cleanDivisions
       default:
         throw new Error(`Unsupported cleaning operation: ${operation}`)
     }
@@ -162,6 +170,11 @@ function inputToGrandeur (input: string): Grandeur | false {
   }
 }
 
+/**
+ * Permet de valider des 'opérations' par exemple : '4+8' ou '4\\times 5' ou encore '3\\times 5 + 4'
+ * @param {string} input
+ * @param {string} goodAnswer
+ */
 export function operationCompare (input: string, goodAnswer: string):ResultType {
   const clean = generateCleaner(['virgules', 'parentheses', 'fractions', 'espaces'])
   const saisie = clean(input)
@@ -273,10 +286,6 @@ export const developpementCompare = function (input: string, goodAnswer:string) 
     return { isOk: false }
   }
   const saisieDev = engine.box(['ExpandAll', saisieParsed]).evaluate().simplify().canonical
-  console.log(`Commence par une addition ou une soustraction : ${['Add', 'Subtract'].includes(String(saisieParsed.head)) ? 'oui' : 'non'}`)
-  console.log(`Si je développe j'obtiens pareil qu'en simplifiant: ${saisieDev.isSame(saisieParsed.simplify().canonical) ? 'oui' : 'non'}`)
-  console.log(`La saisie est égale à la réponse une fois mises dans l'ordre canonique avec invisibleOperator : ${saisieParsed.isEqual(reponseParsed) ? 'oui' : 'non'}`)
-  console.log(`La réponse attendue : ${reponseParsed.latex} et la saisie : ${saisieParsed.latex}`)
   return { isOk: ['Add', 'Subtract'].includes(String(saisieParsed.head)) && saisieDev.isSame(saisieParsed.simplify().canonical) && saisieParsed.isEqual(reponseParsed) }
 }
 /**
@@ -315,25 +324,21 @@ export function formeDeveloppeeCompare (input: string, goodAnswer: string): Resu
 }
 
 /**
- * comparaison d'expression développées pour les tests d'Éric Elter
+ * comparaison d'expression développées et réduite pour les tests d'Éric Elter
  * @param {string} input
  * @param {string} goodAnswer
  * @return ResultType
  */
-export function formeDeveloppeeParEECompare (input: string, goodAnswer: string): ResultType {
+export function formeDeveloppeeEtReduiteCompare (input: string, goodAnswer: string): ResultType {
   if (typeof goodAnswer !== 'string') {
     goodAnswer = String(goodAnswer)
   }
-  input = cleanStringBeforeParse(input)
-  const regleSuppressionInvisibleOperator = engine.rules([{
-    match: ['InvisibleOperator', '_x', '_y'],
-    replace: ['Multiply', '_x', '_y']
-  }])
-  let saisieNonCanonique = engine.box(['CanonicalOrder', engine.parse(input, { canonical: false })])
-  saisieNonCanonique = saisieNonCanonique.replace(regleSuppressionInvisibleOperator) ?? saisieNonCanonique
-  let reponseNonCanonique = engine.box(['CanonicalOrder', engine.parse(goodAnswer, { canonical: false })])
-  reponseNonCanonique = reponseNonCanonique.replace(regleSuppressionInvisibleOperator) ?? reponseNonCanonique
-  return { isOk: saisieNonCanonique.isSame(reponseNonCanonique) }
+  const clean = generateCleaner(['fractions', 'virgules', 'puissances'])
+  const saisie = engine.box(['CanonicalOrder', engine.parse(clean(input))])
+  const answer = engine.box(['CanonicalOrder', engine.parse(clean(goodAnswer))])
+  const isOk1 = answer.isSame(saisie)
+  const isOk2 = engine.box(['CanonicalOrder', engine.parse(clean(input)).simplify()]).isSame(answer)
+  return { isOk: isOk1 && isOk2, feedback: isOk1 && isOk2 ? '' : isOk2 ? 'L\'expression est développée correctement mais pas réduite' : '' }
 }
 
 /**
@@ -639,7 +644,9 @@ export function unitesCompare (input: string, goodAnswer: {grandeur: Grandeur, p
   const inputGrandeur = inputToGrandeur(cleaner(input))
   const goodAnswerGrandeur = goodAnswer.grandeur
   if (inputGrandeur) {
-    console.log(`grandeur passée : ${JSON.stringify(inputGrandeur)} goodAnswer : ${JSON.stringify(goodAnswer.grandeur)} et precision passée à estUneApproximation() : ${goodAnswer.precision}`)
+    if (inputGrandeur.uniteDeReference !== goodAnswerGrandeur.uniteDeReference) {
+      return { isOk: false, feedback: `Il faut donner la réponse en $${goodAnswerGrandeur.latexUnit}$.` }
+    }
     if (goodAnswer.precision !== undefined) {
       if (inputGrandeur.estUneApproximation(goodAnswerGrandeur, goodAnswer.precision)) {
         return { isOk: true }
@@ -649,12 +656,20 @@ export function unitesCompare (input: string, goodAnswer: {grandeur: Grandeur, p
     } else {
       if (inputGrandeur.estEgal(goodAnswerGrandeur)) {
         return { isOk: true }
-      } else {
-        return { isOk: false }
       }
+      return { isOk: false }
     }
   } else {
-    return { isOk: false, feedback: 'essaieEncoreAvecUneSeuleUnite' }
+    // Oubli de l'unité ?
+    const inputNumber = Number(engine.parse(cleaner(input)))
+    const inputWithAddedUnit = new Grandeur(inputNumber, goodAnswer.grandeur.unite)
+    if (inputWithAddedUnit.estEgal(goodAnswerGrandeur)) {
+      return { isOk: false, feedback: 'La réponse est correcte mais tu as oublié de préciser l\'unité.' }
+    }
+    if (inputNumber !== 0) {
+      return { isOk: false, feedback: 'La réponse est fausse et il faut saisir l\'unité.' }
+    }
+    return { isOk: false }
   }
 }
 
@@ -744,7 +759,7 @@ export function fonctionCompare (input: string, goodAnswer: {fonction: string, v
   if (typeof goodAnswer === 'string') {
     goodAnswer = { fonction: goodAnswer, variable: 'x' }
   }
-  const clean = generateCleaner(['espaces', 'virgules', 'parentheses', 'fractions'])
+  const clean = generateCleaner(['espaces', 'virgules', 'parentheses', 'fractions', 'divisions'])
   const cleanInput = clean(input)
   const inputParsed = engine.parse(cleanInput)
   const inputFn = inputParsed.compile()
@@ -757,6 +772,35 @@ export function fonctionCompare (input: string, goodAnswer: {fonction: string, v
   for (const x of [a, b, c]) {
     const variable = Object.fromEntries([[goodAnswer.variable, x]])
     isOk = isOk && Math.abs(inputFn(variable) - goodAnswerFn(variable)) < 1e-10
+  }
+  return { isOk }
+}
+
+/**
+ * Comparaison de fonction f(x,y) (ou tout autre variable) x et y étant les lettres par défaut
+ * @param {string} input
+ * @param {{fonction: string, variables: string[]}} goodAnswer
+ */
+export function fonctionXyCompare (input: string, goodAnswer: {fonction: string, variables: string[]} = { fonction: '', variables: ['x', 'y'] }): ResultType {
+  if (typeof goodAnswer === 'string') {
+    goodAnswer = { fonction: goodAnswer, variables: ['x', 'y'] }
+  }
+  const clean = generateCleaner(['espaces', 'virgules', 'parentheses', 'fractions', 'divisions'])
+  const cleanInput = clean(input)
+  const inputParsed = engine.parse(cleanInput)
+  const inputFn = inputParsed.compile()
+  const cleanAnswer = clean(goodAnswer.fonction)
+  const goodAnswerFn = engine.parse(cleanAnswer).compile()
+
+  let isOk = true
+  if (inputFn == null || goodAnswerFn == null) throw Error(`fonctionCompare : La saisie ou la bonne réponse ne sont pas des fonctions (saisie : ${input} et réponse attendue : ${goodAnswer}`)
+  const [a, b, c] = [Math.random(), Math.random(), Math.random()]
+  const [A, B, C] = [Math.random(), Math.random(), Math.random()]
+  for (const x of [a, b, c]) {
+    for (const y of [A, B, C]) {
+      const variable = Object.fromEntries([[goodAnswer.variables[0], x], [goodAnswer.variables[1], y]])
+      isOk = isOk && Math.abs(inputFn(variable) - goodAnswerFn(variable)) < 1e-10
+    }
   }
   return { isOk }
 }
