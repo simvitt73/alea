@@ -16,3 +16,10 @@ pnpm-lock.yaml
 _private/
 tests/e2e/logs
 updatefile
+# Dictionnaires générés
+src/json/exercices.json
+src/json/exercicesNonInteractifs.json
+src/json/referentiel2022.json
+src/json/referentielGeometrieDynamique.json
+src/json/refToUuid.json
+src/json/uuidsToUrl.json
