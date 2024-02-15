@@ -1,5 +1,5 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { ecritureAlgebrique, ecritureAlgebriqueSauf1, rienSi1 } from '../../../lib/outils/ecritures'
+import { ecritureAlgebrique, ecritureAlgebriqueSauf1, reduireAxPlusB, rienSi1 } from '../../../lib/outils/ecritures'
 import Exercice from '../../deprecatedExercice.js'
 import { randint } from '../../../modules/outils.js'
 import { egaliteCompare } from '../../../lib/interactif/comparaisonFonctions'
@@ -54,7 +54,7 @@ export default function ExprimerVariable () {
           }
         }
 
-        this.reponse = { membre1: { fonction: var1, variable: var1 }, membre2: { fonction: `\\dfrac{${c}-${b}${var2}}{${a}}`, variable: var2 }, strict: true }
+        this.reponse = { membre1: { fonction: var1, variable: var1 }, membre2: { fonction: `\\dfrac{${reduireAxPlusB(-b, c, var2)}}{${a}}`, variable: var2 }, strict: true }
       } else {
         this.question = ` On donne la relation  : $${rienSi1(a)}${var1}${ecritureAlgebriqueSauf1(b)}${var2}=${c}$.<br>
         
@@ -72,7 +72,7 @@ export default function ExprimerVariable () {
           }
         }
 
-        this.reponse = { membre1: { fonction: var2, variable: var2 }, membre2: { fonction: `\\dfrac{${c}-${a}${var1}}{${b}}`, variable: var1 }, strict: true }
+        this.reponse = { membre1: { fonction: var2, variable: var2 }, membre2: { fonction: `\\dfrac{${reduireAxPlusB(-a, c, var1)}}{${b}}`, variable: var1 }, strict: true }
       }
     }
 
