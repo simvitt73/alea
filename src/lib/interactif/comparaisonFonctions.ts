@@ -640,7 +640,7 @@ export function compareIntervalles (input: string, goodAnswer: string) {
  * Comparaison de chaînes (principalement des noms de classes
  * @param {string} input ce que saisit l'élève
  * @param {{value: string, nombre:boolean}} goodAnswer value est ce qui est attendu, si nombre est true, on compte faux l'absence de s quand il en faut un et la présence de s quand il n'y en a pas besoin
- * si nombre est false, on compte juste une réponse plurielle ou singulier quelque soit la réponse attendue, mais on met un feedback si le pluriel ou le singulier n'est pas respecté
+ * si nombre est false, on compte juste une réponse au pluriel ou au singulier quelque soit la réponse attendue, mais on met un feedback si le pluriel ou le singulier n'est pas respecté
  */
 export function numerationCompare (input: string, goodAnswer: {value: string, nombre: boolean}): ResultType {
 // normalement, il n'y a rien à nettoyer au niveau de l'input ou de goodAnswer
