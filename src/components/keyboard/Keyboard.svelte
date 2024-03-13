@@ -117,6 +117,9 @@
         case 'ABC':
           $keyboardState.alphanumericLayout = 'AlphaUp'
           break
+        case 'ACCENTS':
+          $keyboardState.alphanumericLayout = 'AlphaAccent'
+          break
         case 'NUM':
           $keyboardState.alphanumericLayout = 'Numeric'
           break

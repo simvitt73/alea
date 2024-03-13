@@ -22,11 +22,25 @@ const rowsAlphaUp: KeysList[] = [
     'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M'
   ],
   [
-    'abc', 'W', 'X', 'C', 'V', 'B', 'N', 'DEL'
+    'ACCENTS', 'W', 'X', 'C', 'V', 'B', 'N', 'DEL'
   ],
   [
     'NUM', 'COMMA', 'SPACE', 'POINT', 'BACK', 'FWD', 'CLOSE'
   ]]
+const rowsAlphaAccent: KeysList[] = [
+  [
+    'AGrave', 'AHat', 'AE', 'ARing', 'EGrave', 'EAcute', 'EHat', 'ETrema', 'ITrema', 'IHat'
+  ],
+  [
+    'aGrave', 'aHat', 'ae', 'aRing', 'eGrave', 'eAcute', 'eHat', 'eTrema', 'iTrema', 'iHat'
+  ],
+  [
+    'OHat', 'OE', 'OTrema', 'OSlash', 'UGrave', 'UHat', 'UTrema', 'NTilde', 'CEDILLE'
+  ],
+  [
+    'abc', 'oHat', 'oe', 'oTrema', 'oSlash', 'uGrave', 'uHat', 'uTrema', 'nTilde', 'cedille'
+  ]
+]
 const rowsNum: KeysList[] = [
   [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 0
@@ -45,5 +59,6 @@ const rowsNum: KeysList[] = [
 export const alphanumericLayouts: { [key in AlphanumericPages]: KeysList[] } = {
   AlphaLow: rowsAlphaLow,
   AlphaUp: rowsAlphaUp,
-  Numeric: rowsNum
+  Numeric: rowsNum,
+  AlphaAccent: rowsAlphaAccent
 }

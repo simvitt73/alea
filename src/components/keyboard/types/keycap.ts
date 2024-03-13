@@ -6,5 +6,5 @@ export type KeyCap = {
   command?: string | string[]
 }
 
-export const isSpecialKey = (key: Keys): boolean => ['DEL', 'CLOSE', 'BACK', 'FWD', 'abc', 'ABC', 'NUM'].includes(key.toString())
-export const isPageKey = (key: Keys): boolean => ['abc', 'ABC', 'NUM'].includes(key.toString())
+export const isSpecialKey = (key: Keys): boolean => ['DEL', 'CLOSE', 'BACK', 'FWD', 'abc', 'ABC', 'NUM', 'ACCENTS'].includes(key.toString())
+export const isPageKey = (key: Keys): boolean => ['abc', 'ABC', 'NUM', 'ACCENTS'].includes(key.toString())
