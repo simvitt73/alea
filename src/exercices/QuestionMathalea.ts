@@ -9,8 +9,8 @@ export default abstract class QuestionMathalea {
   public correction!: string
   public indiceExercice: number
   public indiceQuestion: number
-  public isInteractif = false
-  public output: 'html' | 'latex'
+  public isInteractive = false
+  private _output!: 'html' | 'latex'
   public text!: string
   public mathfields: Mathfield[]
   public didacticParams: unknown
@@ -22,7 +22,7 @@ export default abstract class QuestionMathalea {
   public constructor ({ isInteractif = false, output = 'html', previousQuestions = [], indiceQuestion = 0, indiceExercice = 0, didacticParams }: { isInteractif?: boolean, indiceExercice?: number, indiceQuestion?: number, output?: 'html' | 'latex', previousQuestions?: QuestionMathalea[], didacticParams?: unknown } = {}) {
     this.indiceExercice = indiceExercice
     this.indiceQuestion = indiceQuestion
-    this.isInteractif = isInteractif
+    this.isInteractive = isInteractif
     this.output = output
     this.mathfields = []
     this.didacticParams = didacticParams
@@ -60,12 +60,28 @@ export default abstract class QuestionMathalea {
     container.appendChild(question)
   }
 
+  get output () {
+    return this._output
+  }
+
+  set output (output: 'html' | 'latex') {
+    this._output = output
+    if (output === 'latex') {
+      this.isInteractive = false
+    }
+  }
+
+  /** Aides pour la mise en page des exercices */
   get format () {
     return {
-      newLine: '£newLine£',
-      euro: '£€£',
-      mathField: (i = 0) => `£mf${i}£`,
-      mf: '£mf£'
+      /** Symbole € */
+      euro: this.output === 'html' ? '&euro;' : '\\euro{}',
+      /** Lettre majuscule correspondant à l'indice de la question  */
+      letter: String.fromCharCode(65 + this.indiceQuestion % 26),
+      /** Champ de texte pour les mathfields */
+      mathField: (indiceMF = 0) => this.output === 'html' ? `<math-field id="champTexteEx${this.indiceExercice}Q${this.indiceQuestion * this.numberOfMathFieldsByQuestion + Number(indiceMF)}"></math-field><span id="resultatCheckEx${this.indiceExercice}Q${this.indiceQuestion * this.numberOfMathFieldsByQuestion + Number(indiceMF)}"></span>` : '',
+      /** Nouvelle ligne */
+      newLine: this.output === 'html' ? '<br>' : '\\\\\n'
     }
   }
 
@@ -82,6 +98,5 @@ export default abstract class QuestionMathalea {
       .replace(/£€£/g, output === 'html' ? '&euro;' : '\\euro{}')
       // Les mathfields doivent avoir un id au format prédéfini
       // mmais dans le nouveau modèle, ça pourrait être n'importe quelle clé
-      .replace(/£mf(\d*)£/g, (_, indiceMF) => output === 'html' ? `<math-field id="champTexteEx${this.indiceExercice}Q${this.indiceQuestion * this.numberOfMathFieldsByQuestion + Number(indiceMF)}"></math-field><span id="resultatCheckEx${this.indiceExercice}Q${this.indiceQuestion * this.numberOfMathFieldsByQuestion + Number(indiceMF)}"></span>` : '')
   }
 }

@@ -1,6 +1,5 @@
 import QuestionMathalea from '../../QuestionMathalea'
 import { randint } from '../../../modules/outils'
-import { lettreDepuisChiffre } from '../../../lib/outils/outilString'
 import engine, { calculCompare, developmentCompare } from '../../../lib/interactif/comparisonFunctions'
 
 export default class QuestionDeveloppement1 extends QuestionMathalea {
@@ -30,16 +29,14 @@ export default class QuestionDeveloppement1 extends QuestionMathalea {
       k *= Math.round(Math.random()) * 2 - 1
     }
     this.numberOfMathFieldsByQuestion = 2
-    const expr1 = printSimplifyLatex(`${k}(${a}x + ${b})(${c}x + ${d})`)
-    const expr2 = printSimplifyLatex(`(${e}x + ${f})(${g}x + ${h})`)
-    const expr = expr1 + ' + ' + expr2
-    this.text = `$${lettreDepuisChiffre(this.indiceQuestion + 1)} = ${expr}$`
+    const expression = `${k}(${a}x + ${b})(${c}x + ${d}) + (${e}x + ${f})(${g}x + ${h})`
+    this.text = `$${this.format.letter} = ${expression}$`
     this.correction = 'Correction à venir'
-    if (this.isInteractif) {
-      this.text += this.format.newLine + `$${lettreDepuisChiffre(this.indiceQuestion + 1)}=$` + this.format.mathField(0) + '(forme développée)'
-      this.text += this.format.newLine + `$${lettreDepuisChiffre(this.indiceQuestion + 1)}=$` + this.format.mathField(1) + '(forme développée et réduite)'
-      this.answers[this.indiceQuestion * 2] = { value: expr, compare: developmentCompare }
-      this.answers[this.indiceQuestion * 2 + 1] = { value: engine.parse(expr).simplify().latex, compare: calculCompare }
+    if (this.isInteractive) {
+      this.text += `<br>$${this.format.letter}=$` + this.format.mathField(0) + '(forme développée)'
+      this.text += `<br>$${this.format.letter}=$` + this.format.mathField(1) + '(forme développée et réduite)'
+      this.answers[this.indiceQuestion * 2] = { value: expression, compare: developmentCompare }
+      this.answers[this.indiceQuestion * 2 + 1] = { value: engine.parse(expression).simplify().latex, compare: calculCompare }
     }
   }
 }
