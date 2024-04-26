@@ -12,7 +12,7 @@
 
   let divExercice: HTMLDivElement
 
-  const headerExerciceProps = {
+  let headerExerciceProps = {
     title: exercise.titre,
     id: '',
     indiceExercice,
@@ -22,6 +22,21 @@
     settingsReady: false,
     correctionReady: false,
     isHidable: false
+  }
+
+  // @ts-expect-error Il faudra gérer le nouveau modèle d'exercice séparemment
+  if (exercise?.meta?.isMathalea) {
+    headerExerciceProps = {
+      title: exercise.titre,
+      id: '',
+      indiceExercice,
+      indiceLastExercice,
+      interactifReady: true,
+      randomReady: true,
+      settingsReady: true,
+      correctionReady: true,
+      isHidable: true
+    }
   }
 
   onMount(async () => {

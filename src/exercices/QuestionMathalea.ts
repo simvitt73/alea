@@ -17,7 +17,7 @@ export default abstract class QuestionMathalea {
   numberOfMathFieldsByQuestion = 1
   public answers: Array<{ value: string, compare?: (input: string, goodAnswer: string) => {isOk: boolean, feedback?: string}}> = []
 
-  private numberOfTryForNewQuestion = 2
+  private numberOfTryForNewQuestion = 50
 
   public constructor ({ isInteractif = false, output = 'html', previousQuestions = [], indiceQuestion = 0, indiceExercice = 0, didacticParams }: { isInteractif?: boolean, indiceExercice?: number, indiceQuestion?: number, output?: 'html' | 'latex', previousQuestions?: QuestionMathalea[], didacticParams?: unknown } = {}) {
     this.indiceExercice = indiceExercice
@@ -42,15 +42,28 @@ export default abstract class QuestionMathalea {
 
   abstract createQuestion (): void
 
-  checkQuestionIsUnique (listOfPreviousQuestions: QuestionMathalea[]): void {
+  checkQuestionIsUnique (listOfPreviousQuestions: QuestionMathalea[], numberOfPreviousQuestionsToCheck?: number): void {
+    console.log(numberOfPreviousQuestionsToCheck)
     let cpt = 0
-    const previousTexts = listOfPreviousQuestions.map((q) => q.text)
+    let previousTexts = listOfPreviousQuestions.map((q) => q.text)
+    if (numberOfPreviousQuestionsToCheck !== undefined) {
+      previousTexts = previousTexts.slice(-numberOfPreviousQuestionsToCheck)
+    }
     while (cpt < this.numberOfTryForNewQuestion) {
+      console.log(this.text)
       if (!previousTexts.includes(this.text)) {
         break
       }
+      console.log('create new question')
       this.createQuestion()
       cpt++
+    }
+    if (cpt === this.numberOfTryForNewQuestion) {
+      if (numberOfPreviousQuestionsToCheck === undefined) {
+        this.checkQuestionIsUnique(listOfPreviousQuestions, 10)
+      } else if (numberOfPreviousQuestionsToCheck === 10) {
+        this.checkQuestionIsUnique(listOfPreviousQuestions, 2)
+      }
     }
   }
 
