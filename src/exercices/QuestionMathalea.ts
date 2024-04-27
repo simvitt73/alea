@@ -1,15 +1,16 @@
 import type { MathfieldElement } from 'mathlive'
+import type { KeyboardCategory } from '../lib/interactif/claviers/keyboard'
 
 type Mathfield = {
   mathfieldElement?: MathfieldElement
-  buttonCheckElement?: HTMLButtonElement
-  keyboard?: string
+  keyboard?: KeyboardCategory
   answers: string[]
   compare?: (input: string, goodAnswer: string) => {isOk: boolean, feedback?: string}
 
 }
 export default abstract class QuestionMathalea {
   public answers: Array<{ value: string, compare?: (input: string, goodAnswer: string) => {isOk: boolean, feedback?: string}}> = []
+  protected buttonCheckAnswers: HTMLButtonElement
   public container: HTMLElement
   public correction!: string
   public didacticParams: unknown
@@ -17,6 +18,7 @@ export default abstract class QuestionMathalea {
   public indiceQuestion: number
   public isInteractive = false
   public mathfields: Map<string, Mathfield>
+  protected spanSmiley: HTMLSpanElement
   public text!: string
 
   private _output!: 'html' | 'latex'
@@ -24,6 +26,8 @@ export default abstract class QuestionMathalea {
 
   public constructor ({ isInteractif = false, output = 'html', previousQuestions = [], indiceQuestion = 0, indiceExercice = 0, didacticParams }: { isInteractif?: boolean, indiceExercice?: number, indiceQuestion?: number, output?: 'html' | 'latex', previousQuestions?: QuestionMathalea[], didacticParams?: unknown } = {}) {
     this.container = document.createElement('div')
+    this.buttonCheckAnswers = document.createElement('button')
+    this.spanSmiley = document.createElement('span')
     this.indiceExercice = indiceExercice
     this.indiceQuestion = indiceQuestion
     this.isInteractive = isInteractif
@@ -37,30 +41,25 @@ export default abstract class QuestionMathalea {
 
   checkAnswer () {
     for (const mathfield of this.mathfields.values()) {
-      if (mathfield.mathfieldElement === undefined || mathfield.buttonCheckElement === undefined) {
+      if (mathfield.mathfieldElement === undefined) {
         continue
       }
       const studentAnswer = mathfield.mathfieldElement.getValue()
-      const goodAnswer = mathfield.answers[0]
-      if (mathfield.compare) {
-        const { isOk, feedback } = mathfield.compare(studentAnswer, goodAnswer)
-        if (isOk) {
-          mathfield.buttonCheckElement.style.backgroundColor = 'green'
+      let studentAnswerIsOk = false
+      for (const goodAnswer of mathfield.answers) {
+        if (mathfield.compare) {
+          if (mathfield.compare(studentAnswer, goodAnswer).isOk) {
+            studentAnswerIsOk = true
+            break
+          }
         } else {
-          mathfield.buttonCheckElement.style.backgroundColor = 'red'
-        }
-        if (feedback) {
-          const p = document.createElement('p')
-          p.textContent = feedback
-          this.container.appendChild(p)
-        }
-      } else {
-        if (studentAnswer === goodAnswer) {
-          mathfield.buttonCheckElement.style.backgroundColor = 'green'
-        } else {
-          mathfield.buttonCheckElement.style.backgroundColor = 'red'
+          if (studentAnswer === goodAnswer) {
+            studentAnswerIsOk = true
+            break
+          }
         }
       }
+      this.spanSmiley.textContent = studentAnswerIsOk ? '😎' : '☹️'
     }
   }
 
@@ -99,30 +98,37 @@ export default abstract class QuestionMathalea {
     while ((match = regex.exec(this.text)) !== null) {
       this.container.innerHTML += this.text.substring(currentIndex, match.index)
       const mathfieldElement = document.createElement('math-field') as MathfieldElement
-      const buttonCheckMathfieldElement = document.createElement('button')
       const id = match[1]
-      buttonCheckMathfieldElement.textContent = 'Vérifier'
-      buttonCheckMathfieldElement.onclick = this.checkAnswer.bind(this)
       this.container.appendChild(mathfieldElement)
-      this.container.appendChild(buttonCheckMathfieldElement)
+      this.container.appendChild(this.buttonCheckAnswers)
       currentIndex = match.index + match[0].length
       if (this.mathfields.has(id)) {
         this.mathfields.get(id)!.mathfieldElement = mathfieldElement
-        this.mathfields.get(id)!.buttonCheckElement = buttonCheckMathfieldElement
+        const { keyboard } = this.mathfields.get(id)!
+        if (keyboard !== undefined) {
+          mathfieldElement.dataset.keyboard = keyboard
+        }
       }
     }
     if (currentIndex < this.text.length) {
       this.container.innerHTML += this.text.substring(currentIndex)
     }
+    this.container.appendChild(this.spanSmiley)
     return this.container
   }
 
   init () {
     this.text = ''
     this.correction = ''
+    this.container.innerHTML = ''
+    this.container.classList.add('p-5')
+    this.spanSmiley.classList.add('mx-2')
+    this.buttonCheckAnswers.textContent = 'Vérifier'
+    this.buttonCheckAnswers.onclick = this.checkAnswer.bind(this)
+    this.buttonCheckAnswers.classList.add('ml-5', 'bg-gray-100', 'text-gray-800', 'border', 'border-gray-300', 'hover:bg-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-gray-300', 'focus:ring-opacity-50', 'rounded-lg', 'px-2', 'py-1', 'transition', 'duration-150', 'ease-in-out')
   }
 
-  setMathfield ({ id = '0', keyboard, answers, compare }: { id?: string, keyboard?: string, answers: number | number[] | string | string[], compare?: (input: string, goodAnswer: string) => {isOk: boolean, feedback?: string} }) {
+  setMathfield ({ id = '0', keyboard, answers, compare }: { id?: string, keyboard?: KeyboardCategory, answers: number | string | (number | string)[], compare?: (input: string, goodAnswer: string) => {isOk: boolean, feedback?: string} }) {
     if (!this.mathfields.has(id)) {
       const answersArray = Array.isArray(answers) ? answers : [answers]
       const answersArrayOfStrings = answersArray.map(answer => String(answer))
