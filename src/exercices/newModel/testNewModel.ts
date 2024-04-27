@@ -7,7 +7,7 @@ export const titre = 'Calcul mental'
 class ExerciceTestNewModel extends ExerciceMathalea {
   constructor () {
     super()
-    this.questions = [QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionDouble]
+    this.questions = [QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionDouble, QuestionDouble]
   }
 }
 

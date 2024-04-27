@@ -15,11 +15,11 @@ export default class QuestionDeveloppement2 extends QuestionMathalea {
     this.numberOfMathFieldsByQuestion = 2
     const expression = `(${a}x + ${b})^2 - (${c}x + ${d})`
     const expressionDeveloped = `${a ** 2}x^2 + ${2 * a * b - c}x + ${b ** 2 - d}`
-    this.text = `$${this.format.letter} = ${expression} $`
+    this.text = `$${this.add.letter} = ${expression} $`
     this.correction = 'Correction à venir'
     if (this.isInteractive) {
-      this.text += `<br>$${this.format.letter}=$` + this.format.mathField(0) + '(forme développée)'
-      this.text += `<br>$${this.format.letter}=$` + this.format.mathField(1) + '(forme développée et réduite)'
+      this.text += `<br>$${this.add.letter}=$` + this.add.mathField(0) + '(forme développée)'
+      this.text += `<br>$${this.add.letter}=$` + this.add.mathField(1) + '(forme développée et réduite)'
       this.answers[this.indiceQuestion * 2] = { value: expressionDeveloped, compare: developmentCompare }
       this.answers[this.indiceQuestion * 2 + 1] = { value: expressionDeveloped, compare: canonicalAddCompare }
     }

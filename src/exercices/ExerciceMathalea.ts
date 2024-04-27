@@ -1,13 +1,12 @@
-import { get } from 'svelte/store'
 import type QuestionMathalea from './QuestionMathalea'
-import { globalOptions } from '../lib/stores/generalStore'
 // @ts-expect-error typage de auto-render
 import renderMathInElement from 'katex/dist/contrib/auto-render.js'
 
 export default class ExerciceMathalea {
   protected _questions: QuestionMathalea[]
-  protected typeExercice = 'html'
+  protected buttonCheckAnswers: HTMLButtonElement
   protected container: HTMLDivElement
+  protected typeExercice = 'html'
   public meta: {
     about: string
     author: string
@@ -24,20 +23,23 @@ export default class ExerciceMathalea {
       author: '',
       isMathalea: true
     }
-    this.container = document.createElement('div')
-    const p = document.createElement('p')
-    p.textContent = 'Hello world'
-    this.container.append(p)
-    if (get(globalOptions).v === 'eleve') {
-      p.textContent = 'Hello world eleve'
+    this.buttonCheckAnswers = document.createElement('button')
+  }
+
+  checkAnswers () {
+    for (const question of this._questions) {
+      question.checkAnswer()
     }
   }
 
-  newDatas () {
-    this._questions.forEach(question => question.newData())
+  getANewVersion () {
+    let indiceQuestion = 0
     for (const question of this._questions) {
-      question.checkQuestionIsUnique(this._questions)
-      question.toHtml(this.container)
+      question.indiceQuestion = indiceQuestion
+      question.checkQuestionIsUnique(this._questions.slice(0, indiceQuestion))
+      const questionContainer = question.getContainer()
+      this.container.appendChild(questionContainer)
+      indiceQuestion++
     }
     renderMathInElement(this.container, {
       delimiters: [
@@ -53,18 +55,22 @@ export default class ExerciceMathalea {
     })
   }
 
+  get html () {
+    this.buttonCheckAnswers.textContent = 'Vérifier les réponses'
+    this.buttonCheckAnswers.addEventListener('click', this.checkAnswers.bind(this))
+    this.container.appendChild(this.buttonCheckAnswers)
+    return this.container
+  }
+
   set questions (questions: (new () => QuestionMathalea)[]) {
     for (const Question of questions) {
       this._questions.push(new Question())
     }
-    this.newDatas()
+    this.getANewVersion()
+    if (window.location.hostname === 'localhost') console.info(this._questions)
   }
 
   get questions (): QuestionMathalea[] {
     return this._questions
-  }
-
-  get html () {
-    return this.container
   }
 }

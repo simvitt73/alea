@@ -30,11 +30,11 @@ export default class QuestionDeveloppement1 extends QuestionMathalea {
     }
     this.numberOfMathFieldsByQuestion = 2
     const expression = `${k}(${a}x + ${b})(${c}x + ${d}) + (${e}x + ${f})(${g}x + ${h})`
-    this.text = `$${this.format.letter} = ${expression}$`
+    this.text = `$${this.add.letter} = ${expression}$`
     this.correction = 'Correction à venir'
     if (this.isInteractive) {
-      this.text += `<br>$${this.format.letter}=$` + this.format.mathField(0) + '(forme développée)'
-      this.text += `<br>$${this.format.letter}=$` + this.format.mathField(1) + '(forme développée et réduite)'
+      this.text += `<br>$${this.add.letter}=$` + this.add.mathField(0) + '(forme développée)'
+      this.text += `<br>$${this.add.letter}=$` + this.add.mathField(1) + '(forme développée et réduite)'
       this.answers[this.indiceQuestion * 2] = { value: expression, compare: developmentCompare }
       this.answers[this.indiceQuestion * 2 + 1] = { value: engine.parse(expression).simplify().latex, compare: calculCompare }
     }
