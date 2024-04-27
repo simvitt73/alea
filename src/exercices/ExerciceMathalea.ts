@@ -29,7 +29,12 @@ export default class ExerciceMathalea {
   checkAnswers () {
     for (const question of this._questions) {
       question.checkAnswer()
+      if (question.state !== 'correct') {
+        question.container.appendChild(question.divCorrection)
+      }
+      question.buttonCheckAnswers.remove()
     }
+    renderMathInElement(this.container, optionsKatex)
   }
 
   getANewVersion () {
@@ -41,18 +46,7 @@ export default class ExerciceMathalea {
       this.container.appendChild(questionContainer)
       indiceQuestion++
     }
-    renderMathInElement(this.container, {
-      delimiters: [
-        { left: '\\[', right: '\\]', display: true },
-        { left: '$', right: '$', display: false }
-      ],
-      // Les accolades permettent d'avoir une formule non coupée
-      preProcess: (chaine: string) => '{' + chaine.replaceAll(String.fromCharCode(160), '\\,') + '}',
-      throwOnError: true,
-      errorColor: '#CC0000',
-      strict: 'warn',
-      trust: false
-    })
+    renderMathInElement(this.container, optionsKatex)
   }
 
   get html () {
@@ -73,4 +67,17 @@ export default class ExerciceMathalea {
   get questions (): QuestionMathalea[] {
     return this._questions
   }
+}
+
+const optionsKatex = {
+  delimiters: [
+    { left: '\\[', right: '\\]', display: true },
+    { left: '$', right: '$', display: false }
+  ],
+  // Les accolades permettent d'avoir une formule non coupée
+  preProcess: (chaine: string) => '{' + chaine.replaceAll(String.fromCharCode(160), '\\,') + '}',
+  throwOnError: true,
+  errorColor: '#CC0000',
+  strict: 'warn',
+  trust: false
 }

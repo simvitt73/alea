@@ -1,6 +1,6 @@
 import type { MathfieldElement } from 'mathlive'
 import { convertKeyboardTypeToBlocks, type KeyboardCategory } from '../lib/interactif/claviers/keyboard'
-import { handleFocusMathField } from '../modules/loaders'
+import { handleFocusMathField, handleFocusOutMathField } from '../modules/loaders'
 
 type Mathfield = {
   mathfieldElement?: MathfieldElement
@@ -11,8 +11,9 @@ type Mathfield = {
 }
 export default abstract class QuestionMathalea {
   public answers: Array<{ value: string, compare?: (input: string, goodAnswer: string) => {isOk: boolean, feedback?: string}}> = []
-  protected buttonCheckAnswers: HTMLButtonElement
+  public buttonCheckAnswers: HTMLButtonElement
   public container: HTMLElement
+  public divCorrection: HTMLDivElement
   public correction!: string
   public didacticParams: unknown
   public indiceExercice: number
@@ -20,6 +21,7 @@ export default abstract class QuestionMathalea {
   public isInteractive = false
   public mathfields: Map<string, Mathfield>
   protected spanSmiley: HTMLSpanElement
+  public state: 'unchecked' | 'correct' | 'incorrect' = 'unchecked'
   public text!: string
 
   private _output!: 'html' | 'latex'
@@ -27,6 +29,7 @@ export default abstract class QuestionMathalea {
 
   public constructor ({ isInteractif = false, output = 'html', previousQuestions = [], indiceQuestion = 0, indiceExercice = 0, didacticParams }: { isInteractif?: boolean, indiceExercice?: number, indiceQuestion?: number, output?: 'html' | 'latex', previousQuestions?: QuestionMathalea[], didacticParams?: unknown } = {}) {
     this.container = document.createElement('div')
+    this.divCorrection = document.createElement('div')
     this.buttonCheckAnswers = document.createElement('button')
     this.spanSmiley = document.createElement('span')
     this.indiceExercice = indiceExercice
@@ -61,6 +64,7 @@ export default abstract class QuestionMathalea {
         }
       }
       this.spanSmiley.textContent = studentAnswerIsOk ? '😎' : '☹️'
+      this.state = studentAnswerIsOk ? 'correct' : 'incorrect'
     }
   }
 
@@ -102,6 +106,7 @@ export default abstract class QuestionMathalea {
       const id = match[1]
       mathfieldElement.id = `mathfieldEx${this.indiceExercice}Q${this.indiceQuestion}MF${id}`
       mathfieldElement.addEventListener('focus', handleFocusMathField)
+      mathfieldElement.addEventListener('focusout', handleFocusOutMathField)
       this.container.appendChild(mathfieldElement)
       this.container.appendChild(this.buttonCheckAnswers)
       currentIndex = match.index + match[0].length
@@ -118,6 +123,7 @@ export default abstract class QuestionMathalea {
       this.container.innerHTML += this.text.substring(currentIndex)
     }
     this.container.appendChild(this.spanSmiley)
+    this.divCorrection.innerHTML = this.correction
     return this.container
   }
 

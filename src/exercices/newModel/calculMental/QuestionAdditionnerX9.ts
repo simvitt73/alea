@@ -7,7 +7,7 @@ export default class QuestionAdditionnerX9 extends QuestionMathalea {
     const b = randint(11, 89)
     this.text = `$${a} + ${b} = $` + this.add.mathField()
     this.setMathfield({ keyboard: 'clavierDeBase', answers: a + b })
-    this.correction = `Ajouter $${a}$ revient à ajouter $${a + 1} puis enlever 1.`
+    this.correction = `Ajouter $${a}$ revient à ajouter $${a + 1}$ puis enlever 1.`
     this.correction += `<br>$${a} + ${b} = ${a + b + 1} - 1 = ${a + b}$`
   }
 }
