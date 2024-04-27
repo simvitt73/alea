@@ -13,7 +13,7 @@ export default abstract class QuestionMathalea {
   public answers: Array<{ value: string, compare?: (input: string, goodAnswer: string) => {isOk: boolean, feedback?: string}}> = []
   public buttonCheckAnswers: HTMLButtonElement
   public container: HTMLElement
-  public divCorrection: HTMLDivElement
+  protected divCorrection: HTMLDivElement
   public correction!: string
   public didacticParams: unknown
   public indiceExercice: number
@@ -123,7 +123,7 @@ export default abstract class QuestionMathalea {
       this.container.innerHTML += this.text.substring(currentIndex)
     }
     this.container.appendChild(this.spanSmiley)
-    this.divCorrection.innerHTML = this.correction
+    this.divCorrection = createCorrectionWithBorderAndHeader(this.correction)
     return this.container
   }
 
@@ -144,6 +144,14 @@ export default abstract class QuestionMathalea {
       const answersArrayOfStrings = answersArray.map(answer => String(answer))
       this.mathfields.set(id, { mathfieldElement: undefined, keyboard, answers: answersArrayOfStrings, compare })
     }
+  }
+
+  showCorrection () {
+    this.container.appendChild(this.divCorrection)
+  }
+
+  hideCorrection () {
+    this.divCorrection.remove()
   }
 
   /** Aides pour la mise en page des exercices */
@@ -172,4 +180,18 @@ export default abstract class QuestionMathalea {
       this.isInteractive = false
     }
   }
+}
+
+function createCorrectionWithBorderAndHeader (content: string): HTMLDivElement {
+  const container = document.createElement('div')
+  const divHeader = document.createElement('div')
+  const divContent = document.createElement('div')
+  container.appendChild(divHeader)
+  container.appendChild(divContent)
+  divHeader.classList.add('rounded-t-md', 'justify-center', 'items-center', 'bg-coopmaths-struct', 'dark:bg-coopmathsdark-struct', 'font-semibold', 'text-xs', 'text-coopmaths-canvas', 'dark:text-coopmathsdark-canvas')
+  divHeader.textContent = 'Correction'
+  divContent.innerHTML = content
+  divContent.classList.add('p-2')
+  container.classList.add('border-2', 'border-coopmaths-struct', 'rounded-t-md')
+  return container
 }

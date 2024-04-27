@@ -30,7 +30,7 @@ export default class ExerciceMathalea {
     for (const question of this._questions) {
       question.checkAnswer()
       if (question.state !== 'correct') {
-        question.container.appendChild(question.divCorrection)
+        question.showCorrection()
       }
       question.buttonCheckAnswers.remove()
     }
