@@ -10,6 +10,12 @@ class ExerciceTestNewModel extends ExerciceMathalea {
     super()
     this.questions = [QuestionAdditionnerMinutes, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionAdditionnerX9, QuestionDouble, QuestionDouble]
   }
+
+  // Faire un builder
+  // Quelles sont mes questions
+  // Combien de questions
+  // Comment les mélanger
+  // Paramétrer les questions
 }
 
 export default ExerciceTestNewModel

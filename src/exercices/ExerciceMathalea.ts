@@ -4,8 +4,8 @@ import renderMathInElement from 'katex/dist/contrib/auto-render.js'
 
 export default class ExerciceMathalea {
   protected _questions: QuestionMathalea[]
-  protected buttonCheckAnswers: HTMLButtonElement
-  protected container: HTMLDivElement
+  protected elementButtonCheckAnswers: HTMLButtonElement
+  protected elementContainer: HTMLDivElement
   protected typeExercice = 'html'
   public meta: {
     about: string
@@ -15,15 +15,20 @@ export default class ExerciceMathalea {
     isMathalea?: boolean
   }
 
+  private _output: 'html' | 'latex' = 'html'
+
   public constructor () {
     this._questions = []
-    this.container = document.createElement('div')
     this.meta = {
       about: '',
       author: '',
       isMathalea: true
     }
-    this.buttonCheckAnswers = document.createElement('button')
+    this.elementContainer = document.createElement('div')
+    this.elementButtonCheckAnswers = document.createElement('button')
+    this.elementButtonCheckAnswers.textContent = 'Vérifier les réponses'
+    this.elementButtonCheckAnswers.addEventListener('click', this.checkAnswers.bind(this))
+    this.elementContainer.appendChild(this.elementButtonCheckAnswers)
   }
 
   checkAnswers () {
@@ -34,38 +39,55 @@ export default class ExerciceMathalea {
       }
       question.buttonCheckAnswers.remove()
     }
-    renderMathInElement(this.container, optionsKatex)
+    renderMathInElement(this.elementContainer, optionsKatex)
   }
 
-  getANewVersion () {
+  generateANewVersion () {
     let indiceQuestion = 0
     for (const question of this._questions) {
       question.indiceQuestion = indiceQuestion
-      question.checkQuestionIsUnique(this._questions.slice(0, indiceQuestion))
-      const questionContainer = question.getContainer()
-      this.container.appendChild(questionContainer)
+      question.generateANewVersion(this._questions.slice(0, indiceQuestion))
       indiceQuestion++
     }
-    renderMathInElement(this.container, optionsKatex)
+    if (this.output === 'html') {
+      console.log('updateContainer')
+      this.updateContainer()
+    }
+  }
+
+  updateContainer () {
+    this.elementContainer.innerHTML = ''
+    for (const question of this._questions) {
+      this.elementContainer.appendChild(question.container)
+    }
+    renderMathInElement(this.elementContainer, optionsKatex)
   }
 
   get html () {
-    this.buttonCheckAnswers.textContent = 'Vérifier les réponses'
-    this.buttonCheckAnswers.addEventListener('click', this.checkAnswers.bind(this))
-    this.container.appendChild(this.buttonCheckAnswers)
-    return this.container
+    this.updateContainer()
+    return this.elementContainer
   }
 
   set questions (questions: (new () => QuestionMathalea)[]) {
     for (const Question of questions) {
-      this._questions.push(new Question())
+      const question = new Question()
+      this._questions.push(question)
+      question.updateContainers()
+      console.log(question)
     }
-    this.getANewVersion()
     if (window.location.hostname === 'localhost') console.info(this._questions)
   }
 
   get questions (): QuestionMathalea[] {
     return this._questions
+  }
+
+  set output (output: 'html' | 'latex') {
+    this._output = output
+  }
+
+  get output (): 'html' | 'latex' {
+    return this._output
   }
 }
 
