@@ -1,0 +1,124 @@
+import { ecritureAlgebrique, ecritureAlgebriqueSauf1, rienSi1 } from '../lib/outils/ecritures'
+import { texNombre } from '../lib/outils/texNombre'
+import FractionEtendue from './FractionEtendue'
+
+// créer une fonction qui construit une équation du second degré. On peut la créer à partir de solutions, à partir des coefficients ou simplement donner des conditions sur la solution et les coefficients pour la créer.
+class EquationSecondDegre {
+  coefficients: FractionEtendue[]
+  coefficientsEqReduite: FractionEtendue[]
+  delta: FractionEtendue
+  nombreSolutions: number
+  solutionsListeTex: string[]
+  ensembleDeSolutionsTex: string
+  constructor (a: FractionEtendue, b: FractionEtendue, c: FractionEtendue, d: FractionEtendue, e: FractionEtendue, f: FractionEtendue) {
+    this.coefficients = [a, b, c, d, e, f]
+    this.coefficientsEqReduite = [a.differenceFraction(d), b.differenceFraction(e), c.differenceFraction(f), new FractionEtendue(0, 0), new FractionEtendue(0, 0), new FractionEtendue(0, 0)]
+    this.delta = this.coefficientsEqReduite[1].produitFraction(this.coefficientsEqReduite[1]).differenceFraction(this.coefficientsEqReduite[0].produitFraction(this.coefficientsEqReduite[2]).produitFraction(4))
+    this.nombreSolutions = 0
+    if (this.delta.num > 0) {
+      this.nombreSolutions = 2
+    } else if (this.delta.num === 0) {
+      this.nombreSolutions = 1
+    } else {
+      this.nombreSolutions = 0
+    }
+    this.solutionsListeTex = []
+    this.natureDesSolutions = 
+    this.ensembleDeSolutionsTex = this.delta.num === 0 ? 'S=\\emptyset' : this.delta.num > 0 ? 'S = \\{' + this.solutionsListeTex.join(';') + '\\}' : `S=${this.solutionsListeTex[0]}`
+  }
+
+  // Méthode pour créer une équation à partir des coefficients
+  static aPartirDesCoefficients (a: FractionEtendue, b: FractionEtendue, c: FractionEtendue, d: FractionEtendue, e: FractionEtendue, f: FractionEtendue): EquationSecondDegre {
+    return new EquationSecondDegre(a, b, c, d, e, f)
+  }
+
+  // Méthode pour créer une équation à partir des solutions
+  static aPartirDesSolutions (sol1: FractionEtendue, sol2: FractionEtendue, coeffLead: FractionEtendue): EquationSecondDegre {
+    const a = coeffLead
+    const b = sol1.sommeFraction(sol2).multiplieEntier(-1).produitFraction(coeffLead)
+    const c = sol1.produitFraction(sol2).produitFraction(coeffLead)
+    const d = new FractionEtendue(0, 0)
+    const e = new FractionEtendue(0, 0)
+    const f = new FractionEtendue(0, 0)
+    return new EquationSecondDegre(a, b, c, d, e, f)
+  }
+
+  // Méthode pour créer une équation à partir du type de jeu de coefficients
+  static aPartirDuTypeDeJeuDeCoefficients (type: string): EquationSecondDegre {
+    const fractionNulle = new FractionEtendue(0, 0)
+    let coefficients: FractionEtendue[] = [fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle] // Initialiser avec tous les coefficients à 0
+
+    switch (type) {
+      case 'naturels':
+        // Définir les coefficients pour les nombres naturels
+        coefficients = [fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle] // Exemple de coefficients
+        break
+      case 'entiers':
+        // Définir les coefficients pour les entiers
+        coefficients = [fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle] // Exemple de coefficients
+        break
+      case 'décimaux':
+        // Définir les coefficients pour les nombres décimaux
+        coefficients = [fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle] // Exemple de coefficients
+        break
+      case 'fraction':
+        // Définir les coefficients pour les fractions
+        coefficients = [fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle] // Exemple de coefficients
+        break
+      default:
+        // Par défaut, utiliser les nombres naturels si le type n'est pas reconnu
+        coefficients = [fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle, fractionNulle] // Exemple de coefficients
+    }
+
+    return new EquationSecondDegre(coefficients[0], coefficients[1], coefficients[2], coefficients[3], coefficients[4], coefficients[5])
+  }
+
+  printToLatex (): string {
+    let expr = ''
+    let checkPreviousNull = true
+    const nomVal = ['x^2', 'x', '', 'x^2', 'x', '']
+    for (let i = 0; i < 3; i++) {
+      if ((this.coefficients.slice(0, 3).every(item => item.num === 0)) && i === 0) {
+        expr = expr + '0'
+      } else if (!(this.coefficients[i].num === 0) && checkPreviousNull) {
+        if (nomVal[i] === '') {
+          expr = expr + `${texNombre(this.coefficients[i], 0)}${nomVal[i]}`
+        } else {
+          expr = expr + `${rienSi1(this.coefficients[i])}${nomVal[i]}`
+        }
+        checkPreviousNull = false
+      } else if (!(this.coefficients[i].num === 0) && !checkPreviousNull) {
+        if (nomVal[i] === '') {
+          expr = expr + `${ecritureAlgebrique(this.coefficients[i])}${nomVal[i]}`
+        } else {
+          expr = expr + `${ecritureAlgebriqueSauf1(this.coefficients[i])}${nomVal[i]}`
+        }
+        checkPreviousNull = false
+      }
+    }
+    expr = expr + '='
+    checkPreviousNull = true
+    for (let i = 3; i < 6; i++) {
+      if ((this.coefficients.slice(3).every(item => item.num === 0)) && i === 3) {
+        expr = expr + '0'
+      } else if (!(this.coefficients[i].num === 0) && checkPreviousNull) {
+        if (nomVal[i] === '') {
+          expr = expr + `${texNombre(this.coefficients[i], 0)}${nomVal[i]}`
+        } else {
+          expr = expr + `${rienSi1(this.coefficients[i])}${nomVal[i]}`
+        }
+        checkPreviousNull = false
+      } else if (!(this.coefficients[i].num === 0) && !checkPreviousNull) {
+        if (nomVal[i] === '') {
+          expr = expr + `${ecritureAlgebrique(this.coefficients[i])}${nomVal[i]}`
+        } else {
+          expr = expr + `${ecritureAlgebriqueSauf1(this.coefficients[i])}${nomVal[i]}`
+        }
+        checkPreviousNull = false
+      }
+    }
+    return expr
+  }
+}
+
+export default EquationSecondDegre
