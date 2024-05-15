@@ -34,10 +34,8 @@ export default class nomExercice extends Exercice {
 
   nouvelleVersion () {
     // Exemple d'utilisation :
-    const equation1 = EquationSecondDegre.aPartirDesCoefficients(1, 2, 3, 4, 5, 6)
-    const equation2 = EquationSecondDegre.aPartirDesSolutions(1, -1, 2, 6)
-    const equation3 = EquationSecondDegre.aPartirDuTypeDeJeuDeCoefficients('fraction')
-    console.log(equation1.printToLatex())
+    const equation1 = EquationSecondDegre.aPartirDesCoefficients(new FractionEtendue(1,1), new FractionEtendue(10,1), new FractionEtendue(-4,1), new FractionEtendue(0,1), new FractionEtendue(0,1), new FractionEtendue(0,1))
+    console.log(equation1.delta, equation1.natureDesSolutions)
     this.listeQuestions = []
     this.listeCorrections = []
     this.autoCorrection = []
