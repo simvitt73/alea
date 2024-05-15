@@ -2,9 +2,20 @@ import { sqrt } from 'mathjs'
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1, rienSi1 } from '../lib/outils/ecritures'
 import { texNombre } from '../lib/outils/texNombre'
 import FractionEtendue from './FractionEtendue'
-import { ComputeEngine } from '@cortex-js/compute-engine'
+import { ComputeEngine, type BoxedExpression } from '@cortex-js/compute-engine'
 
 const ce = new ComputeEngine()
+
+function soluceEE (expr:BoxedExpression):BoxedExpression {
+  if (expr.ops) { // Pour ne pas accepter les +0 ou les \\times1
+    return expr.engine.box([expr.head,
+      ...expr.ops.map((x) =>
+        soluceEE(x)
+      )], { canonical: ['Multiply'] })
+  }
+  return expr.canonical
+}
+
 // créer une fonction qui construit une équation du second degré. On peut la créer à partir de solutions, à partir des coefficients ou simplement donner des conditions sur la solution et les coefficients pour la créer.
 class EquationSecondDegre {
   coefficients: FractionEtendue[]
@@ -39,15 +50,23 @@ class EquationSecondDegre {
     } else { this.natureDesSolutions = 'irrationnel' }
     if (this.natureDesSolutions === 'entier' || this.natureDesSolutions === 'fractionnaire') {
       this.solutionsListeTex = [`${this.coefficientsEqReduite[1].multiplieEntier(-1).differenceFraction(new FractionEtendue(sqrt(this.delta.num) as number, sqrt(this.delta.den) as number)).produitFraction((this.coefficientsEqReduite[0].multiplieEntier(2)).inverse()).texFSD}`, `${this.coefficientsEqReduite[1].multiplieEntier(-1).sommeFraction(new FractionEtendue(sqrt(this.delta.num) as number, sqrt(this.delta.den) as number)).produitFraction((this.coefficientsEqReduite[0].multiplieEntier(2)).inverse()).texFSD}`]
-      const expr= this.coefficientsEqReduite[0].texFractionSignee +'*x^2' + this.coefficientsEqReduite[1].texFractionSignee + '*x' + '+' + this.coefficientsEqReduite[2].texFSD + '=0'
+      const expr = this.coefficientsEqReduite[0].texFractionSignee + '*x^2' + this.coefficientsEqReduite[1].texFractionSignee + '*x' + '+' + this.coefficientsEqReduite[2].texFSD + '=0'
       console.log(expr)
-      const eq=ce.parse(expr)
-      console.log(eq,'te',eq.solve('x')[0].latex)
+      // const eq = ce.parse(expr)
+      const eq = ce.parse(expr, { canonical: ['InvisibleOperator', 'Order'] })
+      // console.log(eq, 'te', eq.solve('x')[0].latex)
     } else {
-      const expr= this.coefficientsEqReduite[0].texFractionSignee +'*x^2' + this.coefficientsEqReduite[1].texFractionSignee + '*x' + '+' + this.coefficientsEqReduite[2].texFSD + '=0'
+      const expr = this.coefficientsEqReduite[0].texFractionSignee + '*x^2' + this.coefficientsEqReduite[1].texFractionSignee + '*x' + '+' + this.coefficientsEqReduite[2].texFSD + '=0'
       console.log(expr)
-      const eq=ce.parse(expr)
-      console.log(eq,'te',eq.solve('x')[0].latex,ce.serialize(ce.box(ce.parse(eq.solve('x')[1].latex))),{ canonical: true },eq.solve('x')[1].latex)
+      const eq = ce.parse(expr)
+      // const ee = expr.engine.box
+      // console.log('toto', eq, 'te', soluceEE(ce.parse(this.eq.solve('x')[1])).latex)
+      // console.log('toto', eq, 'te', eq.solve('x')[1])
+      console.log('Equation', eq.latex)
+      console.log('Ancienne Solution', eq.solve('x')[1].latex)
+      console.log('Nouvelle Solution', soluceEE(eq.solve('x')[1]).latex)
+      console.log(' ')
+      console.log(ce.serialize(ce.box(ce.parse(eq.solve('x')[1].latex))), { canonical: true }, eq.solve('x')[1].latex)
     }
     this.ensembleDeSolutionsTex = this.delta.num < 0 ? 'S=\\emptyset' : this.delta.num > 0 ? 'S = \\{' + this.solutionsListeTex.join(';') + '\\}' : `S=${this.solutionsListeTex[0]}`
   }
