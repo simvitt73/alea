@@ -123,7 +123,11 @@ export function ecritureAlgebrique (a: number | FractionEtendue | Decimal) {
  * @author Rémi Angot et Jean-Claude Lhote pour le support des fractions
  */
 export function ecritureAlgebriqueSauf1 (a: FractionEtendue | number | Decimal) {
-  if (a instanceof FractionEtendue) return a.ecritureAlgebrique
+  if (a instanceof FractionEtendue) {
+    if (a.num === 1 && a.den === 1) return '+'
+    else if (a.num === -1 && a.den === 1) return '-'
+    else return a.texFractionSignee
+  }
   if (typeof a === 'string') {
     window.notify('ecritureAlgebriqueSauf1() n\'accepte pas les string.', { argument: a })
     a = Number(a)

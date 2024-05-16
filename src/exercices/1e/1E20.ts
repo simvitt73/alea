@@ -5,7 +5,7 @@ import Exercice from '../Exercice'
 import FractionEtendue from '../../modules/FractionEtendue'
 import EquationSecondDegre from '../../modules/EquationSecondDegre'
 
-import { ecritureAlgebrique, ecritureAlgebriqueSauf1, rienSi1 } from '../../lib/outils/ecritures'
+import { rienSi1 } from '../../lib/outils/ecritures'
 import { texNombre } from '../../lib/outils/texNombre'
 
 export const titre = 'Résoudre une équaton du second degré à l\'aide la racine carrée'
@@ -34,7 +34,7 @@ export default class nomExercice extends Exercice {
 
   nouvelleVersion () {
     // Exemple d'utilisation :
-    const equation1 = EquationSecondDegre.aPartirDesCoefficients(new FractionEtendue(1,1), new FractionEtendue(10,1), new FractionEtendue(-4,1), new FractionEtendue(0,1), new FractionEtendue(0,1), new FractionEtendue(0,1))
+    const equation1 = EquationSecondDegre.aPartirDesCoefficients(new FractionEtendue(1, 2), new FractionEtendue(10, 1), new FractionEtendue(-4,1), new FractionEtendue(0, 1), new FractionEtendue(0, 1), new FractionEtendue(0, 1), {variable:'x', format: 'initial' })
     console.log(equation1.delta, equation1.natureDesSolutions)
     this.listeQuestions = []
     this.listeCorrections = []
@@ -60,8 +60,8 @@ export default class nomExercice extends Exercice {
 
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      let texte = ''
-      let texteCorr = ''
+      let texte = `$${equation1.equationTex}$`
+      let texteCorr = equation1.correctionDetailleeTex
       let coeffX = choice([1, -1, 2, -2, 3, -3])
       let coeffConstant = new FractionEtendue(0, 1)
       let expReduite = ''
@@ -125,8 +125,8 @@ export default class nomExercice extends Exercice {
           break
       }
       expReduite = `$${rienSi1(coeffX)}x^2  ${coeffConstant.texFractionSignee}=0$`
-      texte = `${expReduite}.`
-      texteCorr = `On commence par isoler le terme en $x^2$ : \\[${rienSi1(coeffX)}x^2=${coeffConstant.multiplieEntier(-1).texFSD}.\\]`
+      texte += `${expReduite}.`
+      texteCorr += `On commence par isoler le terme en $x^2$ : \\[${rienSi1(coeffX)}x^2=${coeffConstant.multiplieEntier(-1).texFSD}.\\]`
       if (!(coeffX === 1)) {
         texteCorr += `On divise par $${texNombre(coeffX)}$ et on s'assure que la fraction est irréductible pour obtenir $x^2=${(coeffConstant.multiplieEntier(-1).entierDivise(coeffX)).texFractionSimplifiee}$.`
       } else if (!(coeffConstant.estIrreductible)) {
