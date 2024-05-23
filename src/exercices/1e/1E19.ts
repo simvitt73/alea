@@ -23,7 +23,7 @@ export default class nomExercice extends Exercice {
   constructor () {
     super()
     this.besoinFormulaireTexte = ['Nombre de solutions', '1 : Une solution\n2 : Deux solutions\n3 : Pas de solution réelle\n4 : Mélange']
-    this.besoinFormulaire2Texte = ['Types de solution', '1 : Entier\n2 : Fraction\n3 : Irrationnel\n4 : Mélange']
+    this.besoinFormulaire2Texte = ['Type de solutions', '1 : Entier\n2 : Fraction (au moins une)\n3 : Irrationnel\n4 : Mélange']
     this.besoinFormulaire3Texte = ['Format de l\'équation', '1 : Réduite ordonnée\n2 : Réduite mélangée\n3 : Mélangée simple\n4 : Mélangée compliquée\n5 : Mélange']
     this.sup = 4
     this.sup2 = 4
