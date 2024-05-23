@@ -35,7 +35,6 @@ export default class nomExercice extends Exercice {
 
   nouvelleVersion () {
     // Exemple d'utilisation :
-    const equation1 = EquationSecondDegre.aPartirDesCoefficients(new FractionEtendue(1, 2), new FractionEtendue(10, 1), new FractionEtendue(-4, 1), new FractionEtendue(0, 1), new FractionEtendue(0, 1), new FractionEtendue(0, 1), { variable: 'x', format: 'melangeComplique' })
     this.comment = "L'option une unique solution avec type de solution irrationelle donne par défaut une solution fractionnaire<br> Le format de l'équation est: 1. ax^2+bx+c=0 <br>2. bx+ax^2+c=0<br>3. ax^2+bx+c=dx^2+ex+f<br>4. bx+c+ax^2=f+dx^2+ex."
     this.listeQuestions = []
     this.listeCorrections = []

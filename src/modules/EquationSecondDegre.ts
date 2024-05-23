@@ -1,29 +1,19 @@
 import { sqrt } from 'mathjs'
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1, rienSi1 } from '../lib/outils/ecritures'
 import FractionEtendue from './FractionEtendue'
-import {ComputeEngine, type BoxedExpression } from '@cortex-js/compute-engine'
-import { areSameObject, compareArrays, shuffle2tableauxSansModif } from '../lib/outils/arrayOutils'
+import { ComputeEngine } from '@cortex-js/compute-engine'
+import { compareArrays, shuffle2tableauxSansModif } from '../lib/outils/arrayOutils'
 import { randint } from './outils'
 import type { Expression } from 'mathlive'
 
-
-const ce = new ComputeEngine();
+const ce = new ComputeEngine()
 ce.latexOptions = {
-  //precision: 3,
-  //decimalMarker: "{,}",
-  //invisiblePlus : '',
-  fractionStyle: (expr: Expression, level: number) => 'block-quotient',
-};
-
-function soluceEE (expr:BoxedExpression):BoxedExpression {
-  if (expr.ops) { // Pour ne pas accepter les +0 ou les \\times1
-    return expr.engine.box([expr.head,
-      ...expr.ops.map((x) =>
-        soluceEE(x)
-      )], { canonical: ['Multiply'] })
-  }
-  return expr.canonical
+  // precision: 3,
+  // decimalMarker: "{,}",
+  // invisiblePlus : '',
+  fractionStyle: (expr: Expression, level: number) => 'block-quotient'
 }
+
 interface Options {
   format: string;
   variable: string;
@@ -49,7 +39,6 @@ class EquationSecondDegre {
     this.natureDesSolutions = ''
     const nomValDefault = [`${this.variable}^2`, this.variable, '', `${this.variable}^2`, this.variable, '']
     this.coefficientsEqReduite = [a.differenceFraction(d), b.differenceFraction(e), c.differenceFraction(f), new FractionEtendue(0, 1), new FractionEtendue(0, 1), new FractionEtendue(0, 1)]
-    console.log(this.coefficients)
     this.equationTex = ''
     if (options.format === 'reduit') {
       this.equationTex = this.printToLatexEq(this.coefficientsEqReduite)
@@ -67,10 +56,8 @@ class EquationSecondDegre {
     } else if (options.format === 'initial') {
       this.equationTex = this.printToLatexEq(this.coefficients, nomValDefault)
     }
-    console.log(this.equationTex)
     this.delta = this.coefficientsEqReduite[1].produitFraction(this.coefficientsEqReduite[1]).differenceFraction(this.coefficientsEqReduite[0].produitFraction(this.coefficientsEqReduite[2]).produitFraction(4))
     this.nombreSolutions = 0
-    console.log(this.delta)
     if (this.delta.num > 0) {
       this.nombreSolutions = 2
     } else if (this.delta.num === 0) {
@@ -82,23 +69,19 @@ class EquationSecondDegre {
     this.natureDesSolutions = ''
     if (this.nombreSolutions > 0) {
       if (this.delta.estParfaite) {
-        console.log(this.coefficientsEqReduite[1].multiplieEntier(-1).differenceFraction(new FractionEtendue(sqrt(this.delta.num) as number, sqrt(this.delta.den) as number)).produitFraction((a.multiplieEntier(2)).inverse()).denIrred)
         if (this.coefficientsEqReduite[1].multiplieEntier(-1).differenceFraction(new FractionEtendue(sqrt(this.delta.num) as number, sqrt(this.delta.den) as number)).produitFraction((a.multiplieEntier(2)).inverse()).denIrred === 1) {
           this.natureDesSolutions = 'entier'
         } else {
           this.natureDesSolutions = 'fractionnaire'
         }
       } else { this.natureDesSolutions = 'irrationnel' }
-      console.log(this.natureDesSolutions)
       if (this.natureDesSolutions === 'entier' || this.natureDesSolutions === 'fractionnaire') {
         this.solutionsListeTex = [`${this.coefficientsEqReduite[1].multiplieEntier(-1).differenceFraction(new FractionEtendue(sqrt(this.delta.num) as number, sqrt(this.delta.den) as number)).produitFraction((this.coefficientsEqReduite[0].multiplieEntier(2)).inverse()).texFractionSimplifiee}`, `${this.coefficientsEqReduite[1].multiplieEntier(-1).sommeFraction(new FractionEtendue(sqrt(this.delta.num) as number, sqrt(this.delta.den) as number)).produitFraction((this.coefficientsEqReduite[0].multiplieEntier(2)).inverse()).texFractionSimplifiee}`]
         // parse la réponse latex en CE qui la simplifie et l'imprime
       } else if (this.natureDesSolutions === 'irrationnel') {
-        const expr = this.coefficientsEqReduite[0].texFractionSignee + '*x^2' + this.coefficientsEqReduite[1].texFractionSignee + '*x' + '+' + this.coefficientsEqReduite[2].texFSD + '=0'
-        const eq = ce.parse(this.equationTex.replaceAll('dfrac', 'frac'))
         const sol1Tex = `\\dfrac{-${this.coefficientsEqReduite[1].ecritureParentheseSiNegatif}+\\sqrt{${this.delta.texFSD}}}{2\\times${this.coefficientsEqReduite[0].ecritureParentheseSiNegatif}}`.replaceAll('dfrac', 'frac')
         const sol2Tex = `\\dfrac{-${this.coefficientsEqReduite[1].ecritureParentheseSiNegatif}-\\sqrt{${this.delta.texFSD}}}{2\\times${this.coefficientsEqReduite[0].ecritureParentheseSiNegatif}}`.replaceAll('dfrac', 'frac')
-        this.solutionsListeTex = [ce.serialize(ce.parse(sol1Tex, { canonical: true })), soluceEE(ce.parse(sol2Tex)).latex]
+        this.solutionsListeTex = [ce.serialize(ce.parse(sol1Tex, { canonical: true })), ce.serialize(ce.parse(sol2Tex, { canonical: true }))]
       }
     }
     this.ensembleDeSolutionsTex = this.delta.num < 0 ? 'S=\\emptyset' : this.delta.num > 0 ? 'S = \\left\\{' + this.solutionsListeTex.join(';') + '\\right\\}' : `S=\\left\\{${this.solutionsListeTex[0]}\\right\\}`
@@ -114,11 +97,11 @@ class EquationSecondDegre {
       this.correctionDetailleeTex += `l'équation a deux solutions. Les solutions sont
         \\[s_{1,2}=\\dfrac{-${this.coefficientsEqReduite[1].ecritureParentheseSiNegatif}\\pm\\sqrt{${this.delta.texFSD}}}{2\\times${this.coefficientsEqReduite[0].ecritureParentheseSiNegatif}}\\]
         Ainsi, $${this.ensembleDeSolutionsTex}$.`
-    } else if(this.nombreSolutions===1)
-    {      this.correctionDetailleeTex += `l'équation a une solution donnée par
+    } else if (this.nombreSolutions === 1) {
+      this.correctionDetailleeTex += `l'équation a une solution donnée par
     \\[s=\\dfrac{-${this.coefficientsEqReduite[1].ecritureParentheseSiNegatif}}{2\\times${this.coefficientsEqReduite[0].ecritureParentheseSiNegatif}}\\]
     Ainsi, $${this.ensembleDeSolutionsTex}$.`
-    }else {
+    } else {
       this.correctionDetailleeTex += ` l'équation n'a pas de solution réelle, $${this.ensembleDeSolutionsTex}$.`
     }
   }
