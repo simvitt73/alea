@@ -5,6 +5,7 @@ import { Vecteur } from '../../lib/2d/segmentsVecteurs'
 import { Point, milieu } from '../../lib/2d/points'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { reduireAxPlusByPlusC } from '../../lib/outils/ecritures'
+import engine from '../../lib/interactif/comparisonFunctions'
 
 export const titre = 'Équations cartésiennes de droites'
 export const dateDePublication = '24/06/2024'
@@ -40,7 +41,7 @@ function vecteurNormal(u: Vecteur, nom: string = 'n'): Vecteur {
     return new Vecteur(-u.y, u.x, nom)
 }
 
-function equaDroite(A: Point, {B = false, u = false, n = false}) : [string, string] {
+function equaDroite(A: Point, {B = undefined, u = undefined, n = undefined}) : [string, string] {
     if (B instanceof Point) {
 	let u = new Vecteur(A, B, `${A.nom}${B.nom}`)
 	let [equa, details] = equaDroite(A, {u: u})
@@ -55,12 +56,15 @@ function equaDroite(A: Point, {B = false, u = false, n = false}) : [string, stri
     }
     if (n instanceof Vecteur) {
 	let c = -(A.x*n.x + A.y*n.y)
-	let equa =  `${reduireAxPlusByPlusC(n.x, n.y, c)} = 0`
+	let partial = engine.parse(`${n.x}x + ${n.y}y + c = 0`).simplify()
+	let Aind = engine.parse(`${n.x}*(${A.x}) + ${n.y}* (${A.y}) + c = 0`)
+	let equa = engine.parse(`${n.x}x + ${n.y}y + ${c} = 0`).simplify()
 	return [equa,
-		`La droite de vecteur normal $${vecteurVersTex(n)}$ admet pour équation cartésienne $${n.x}x + ${n.y}y + c = 0$, pour un certain nombre réel $c$. Comme $${A.nom}$ appartient à la droite, $${n.x}\\times${A.x} + ${n.y}\\times ${A.y} + c = 0$. Ainsi, $c = ${c}$, l'équation cartésienne de la droite est donc $${equa}$.`]
+		`La droite de vecteur normal $${vecteurVersTex(n)}$ admet pour équation cartésienne $${partial.latex}$, pour un certain nombre réel $c$. Comme $${A.nom}$ appartient à la droite, $${Aind.latex}$. Ainsi, $c = ${c}$, l'équation cartésienne de la droite est donc $${equa.latex}$.`]
     }
     return ""
 }
+
 
 function hauteur(A: Point, B: Point, C: Point): [string, string] {
     let n = new Vecteur(B, C, 'BC')
