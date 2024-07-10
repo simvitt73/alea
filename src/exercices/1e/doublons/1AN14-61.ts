@@ -11,7 +11,7 @@ export const titre = 'Dérivation de fonction composées V2'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
-<<<<<<<< f1c664b0c5b24bc63f7c4980b9588c2ce195b0fe:src/exercices/1e/doublons/1AN14-61.ts
+// <<<<<<<< f1c664b0c5b24bc63f7c4980b9588c2ce195b0fe:src/exercices/1e/doublons/1AN14-61.ts
 // export const uuid = '518d8'
 // export const refs = {
 //   'fr-fr': ['1AN14-61'],
