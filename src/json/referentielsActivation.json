@@ -1,7 +1,7 @@
 {
   "outils" : false,
   "aleatoires" : true,
-  "statiques" : false,
+  "statiques" : true,
   "ressources" : true,
   "geometrieDynamique": true,
   "bibliotheque" : false,

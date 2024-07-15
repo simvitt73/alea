@@ -3,6 +3,8 @@
   import {
     isExamItemInReferentiel,
     isJSONReferentielEnding,
+    isParentOfStaticEnding,
+    isRealJSONReferentielObject,
     type JSONReferentielObject
   } from '../../../../../../lib/types/referentiels'
   import { codeToLevelTitle } from '../../../../../../lib/components/refUtils'
@@ -16,9 +18,13 @@
   import { onMount } from 'svelte'
   import {
     exercicesParams,
-    bibliothequeDisplayedContent
+    bibliothequeDisplayedContent,
+    isModalStaticExercisesChoiceVisible,
+    bibliothequePathToSection
   } from '../../../../../../lib/stores/generalStore'
   import { monthes } from '../../../../../../lib/components/handleDate'
+  import StaticEnding from './StaticEnding.svelte'
+  import ModalStaticExercisesChoiceDialog from '../../modalStaticExercisesChoice/ModalStaticExercisesChoiceDialog.svelte'
 
   export let subset: JSONReferentielObject
   export let unfold: boolean = false
@@ -78,7 +84,12 @@
       if (regExpForExactlyFourDigits.test(pathToThisNode[pathToThisNode.length - 1])) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return Object.entries(s).sort(([keyA, valueA], [keyB, valueB]) => {
-          if (isExamItemInReferentiel(valueA) && isExamItemInReferentiel(valueB) && valueA.jour && valueB.jour) {
+          if (
+            isExamItemInReferentiel(valueA) &&
+            isExamItemInReferentiel(valueB) &&
+            valueA.jour &&
+            valueB.jour
+          ) {
             const jourA = parseInt(valueA.jour.replace('J', ''))
             const jourB = parseInt(valueB.jour.replace('J', ''))
             const moisA = monthes.indexOf(valueA.mois ?? '')
@@ -153,9 +164,7 @@
     {unfold && nestedLevelCount !== 1
       ? 'bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas-darkest'
       : 'bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark'}
-    {Object.keys(subset).length === 0
-      ? 'opacity-10'
-      : 'opacity-100 cursor-pointer'}"
+    {Object.keys(subset).length === 0 ? 'opacity-10' : 'opacity-100 cursor-pointer'}"
     style="padding-left: {(nestedLevelCount * 2) / 5}rem"
     on:click={() => {
       unfold = !unfold
@@ -175,9 +184,7 @@
       <i
         class="text-xl bg-transparent transition-transform duration-500 ease-in-out
         {nestedLevelCount === 1 ? 'hidden' : 'flex'}
-        {unfold && nestedLevelCount !== 1
-          ? 'bx bx-plus rotate-[225deg]'
-          : 'bx bx-plus'}"
+        {unfold && nestedLevelCount !== 1 ? 'bx bx-plus rotate-[225deg]' : 'bx bx-plus'}"
       />
       <i
         class="text-sm text-coopmaths-action dark:text-coopmathsdark-action bg-transparent transition-transform duration-500 ease-in-out
@@ -191,11 +198,26 @@
       <ul transition:slide={{ duration: 500 }}>
         {#each items as [key, obj], i}
           <li>
-            {#if isJSONReferentielEnding(obj)}
+            {#if isRealJSONReferentielObject(obj) && isParentOfStaticEnding(obj)}
+              <StaticEnding
+                pathToThisNode={[...pathToThisNode, key]}
+                referentielToDisplay={obj}
+                nestedLevelCount={nestedLevelCount + 1}
+                isEmpty={false}
+              />
+            {:else if isJSONReferentielEnding(obj)}
               <ReferentielEnding
                 ending={obj}
                 nestedLevelCount={nestedLevelCount + 1}
                 class={i === items.length - 1 ? 'pb-6' : ''}
+              />
+            {:else if Object.keys(obj).length === 0}
+              <!-- Terminaison vide est affichée comme un bouton désactivé -->
+              <StaticEnding
+                pathToThisNode={[...pathToThisNode, key]}
+                referentielToDisplay={{}}
+                nestedLevelCount={nestedLevelCount + 1}
+                isEmpty={true}
               />
             {:else}
               <svelte:self
@@ -212,3 +234,9 @@
     {/if}
   </div>
 </div>
+<ModalStaticExercisesChoiceDialog
+  isVisible={$isModalStaticExercisesChoiceVisible}
+  bibliothequePathToSection={$bibliothequePathToSection}
+  {bibliothequeUuidInExercisesList}
+  bibliothequeDisplayedContent={$bibliothequeDisplayedContent}
+/>

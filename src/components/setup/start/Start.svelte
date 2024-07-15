@@ -15,10 +15,7 @@
     exercicesParams,
     globalOptions
   } from '../../../lib/stores/generalStore'
-  import {
-    localisedIDToUuid,
-    referentielLocale
-  } from '../../../lib/stores/languagesStore'
+  import { localisedIDToUuid, referentielLocale } from '../../../lib/stores/languagesStore'
   import SideMenu from './presentationalComponents/sideMenu/SideMenu.svelte'
   import { Sidenav, Collapse, Ripple, initTE } from 'tw-elements'
   import { type AppTierceGroup } from '../../../lib/types/referentiels'
@@ -37,7 +34,10 @@
   import type { Language } from '../../../lib/types/languages'
   import { isLanguage } from '../../../lib/types/languages'
   import { get } from 'svelte/store'
-  import { mathaleaUpdateExercicesParamsFromUrl, mathaleaUpdateUrlFromExercicesParams } from '../../../lib/mathalea'
+  import {
+    mathaleaUpdateExercicesParamsFromUrl,
+    mathaleaUpdateUrlFromExercicesParams
+  } from '../../../lib/mathalea'
   import handleCapytale from '../../../lib/handleCapytale'
   import { canOptions } from '../../../lib/stores/canStore'
   import { buildEsParams } from '../../../lib/components/urls'
@@ -55,11 +55,9 @@
   let localeValue: Language = get(referentielLocale)
   let isSidenavOpened: boolean = true
 
-  const unsubscribeToReferentielLocale = referentielLocale.subscribe(
-    (value) => {
-      localeValue = value
-    }
-  )
+  const unsubscribeToReferentielLocale = referentielLocale.subscribe((value) => {
+    localeValue = value
+  })
 
   onMount(async () => {
     initTE({ Sidenav, Collapse, Ripple })
@@ -120,12 +118,8 @@
         break
     }
     url.searchParams.append('title', $globalOptions.title ?? '')
-    const presMode =
-      $exercicesParams.length === 1 ? 'liste_exos' : 'un_exo_par_page'
-    url.searchParams.append(
-      'es',
-      buildEsParams(presMode)
-    )
+    const presMode = $exercicesParams.length === 1 ? 'liste_exos' : 'un_exo_par_page'
+    url.searchParams.append('es', buildEsParams(presMode))
 
     if ($canOptions.isChoosen) {
       if ($canOptions.durationInMinutes !== 0) {
@@ -167,9 +161,7 @@
             return currentRefToUuid[key] === list[i].uuid
           })
           const frenchID = (
-            Object.keys(
-              localisedIDToUuid['fr-FR']
-            ) as (keyof (typeof localisedIDToUuid)['fr-FR'])[]
+            Object.keys(localisedIDToUuid['fr-FR']) as (keyof (typeof localisedIDToUuid)['fr-FR'])[]
           ).find((key) => {
             return localisedIDToUuid['fr-FR'][key] === list[i].uuid
           })
@@ -194,18 +186,14 @@
   function addScrollListener () {
     function updateBackToTopButtonVisibility () {
       isBackToTopButtonVisible =
-        document.body.scrollTop > 500 ||
-        document.documentElement.scrollTop > 500
+        document.body.scrollTop > 500 || document.documentElement.scrollTop > 500
     }
     window.addEventListener('scroll', () => updateBackToTopButtonVisibility())
   }
 
   function updateSelectedThirdApps () {
-    const appsTierceReferentielArray: AppTierceGroup[] =
-      Object.values(appsTierce)
-    const uuidList: string[] = $exercicesParams.map(
-      (exerciceParams) => exerciceParams.uuid
-    )
+    const appsTierceReferentielArray: AppTierceGroup[] = Object.values(appsTierce)
+    const uuidList: string[] = $exercicesParams.map((exerciceParams) => exerciceParams.uuid)
     selectedThirdApps = []
     for (const group of appsTierceReferentielArray) {
       for (const app of group.liste) {
@@ -356,15 +344,9 @@
                     MODE NORMAL
   ========================================================================================= -->
       <!-- Menu choix + Exos en mode non-smartphone -->
-      <div
-        class="relative flex w-full h-full bg-coopmaths-canvas dark:bg-coopmathsdark-canvas"
-      >
+      <div class="relative flex w-full h-full bg-coopmaths-canvas dark:bg-coopmathsdark-canvas">
         {#if $globalOptions.recorder === 'capytale'}
-          <SideMenuWrapper
-            isCapytale={true}
-            {isSidenavOpened}
-            {toggleSidenav}
-          />
+          <SideMenuWrapper isCapytale={true} {isSidenavOpened} {toggleSidenav} />
         {/if}
         <nav
           id="choiceSideMenuWrapper"
@@ -483,7 +465,7 @@
   appsTierceInExercisesList={selectedThirdApps}
 />
 <ModalCapytalSettings
-  bind:isSettingsDialogDisplayed={isSettingsDialogDisplayed}
+  bind:isSettingsDialogDisplayed
   globalOptions={$globalOptions}
   canOptions={$canOptions}
   {toggleCan}
@@ -494,7 +476,9 @@
 <style>
   @media (min-width: 768px) {
     #barre-boutons {
-      width: calc(100% - (var(--isMenuOpen) * var(--sidebarWidth) * 1px + (var(--isMenuOpen)) * 16px));
+      width: calc(
+        100% - (var(--isMenuOpen) * var(--sidebarWidth) * 1px + (var(--isMenuOpen)) * 16px)
+      );
     }
   }
   @media (max-width: 768px) {

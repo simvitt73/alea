@@ -88,6 +88,9 @@ export const bibliothequeDisplayedContent =
   writable<Record<string, JSONReferentielEnding>>()
 export const bibliothequePathToSection = writable<string[]>([])
 
+// pour détecter à travers les composants si le modal des exercices statiques est ouvert ou pas
+export const isModalStaticExercisesChoiceVisible = writable<boolean>(false)
+
 /**
  * Déplace un exercice dans exercicesParams
  */

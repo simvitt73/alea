@@ -314,6 +314,25 @@ export const isCrpeType = (obj: any): obj is crpeItemInreferentiel =>
   obj.typeExercice === 'crpe'
 
 /**
+ * Teste si un objet de type `JSONReferentielObject` est parent
+ * d'une terminaison, c'est-à-dire d'un
+ * objet de type `JSONReferentielEnding`
+ * @param {JSONReferentielObject} obj objet à tester
+ */
+export function isParentOfStaticEnding (
+  obj: any
+): obj is Record<string, JSONReferentielEnding> {
+  const values = Object.values(obj)
+  if (values.length === 0) {
+    return false
+  } else {
+    return (
+      isJSONReferentielEnding(values[0]) && values[0].typeExercice === 'static'
+    )
+  }
+}
+
+/**
  * Détecte si la terminaison d'un référentiel est un exercice de géométrie dynamique ou pas.
  * On teste la présence de la chaine `geodyn` en début d'url (si elle existe)
  * @param obj {JSONReferentielEnding} terminaison à tester
