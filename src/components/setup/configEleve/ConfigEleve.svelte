@@ -21,6 +21,7 @@
   import { Tab, initTE } from 'tw-elements'
   import ButtonText from '../../shared/forms/ButtonText.svelte'
   import ButtonActionInfo from '../../shared/forms/ButtonActionInfo.svelte'
+  import CheckboxWithLabel from '../../shared/forms/CheckboxWithLabel.svelte'
 
   onMount(() => {
     initTE({ Tab })
@@ -308,6 +309,28 @@
                     'Les élèves pourront accéder aux corrections en cliquant sur un bouton.',
                     "Les élèves n'auront aucun moyen de voir la correction."
                   ]}
+                />
+              </div>
+              <div
+                class="pl-2 pb-2 font-bold text-coopmaths-struct-light dark:text-coopmathsdark-struct-light"
+              >
+                Pour les exercices statiques
+              </div>
+              <div class="flex flex-col justify-start items-start px-4">
+                <CheckboxWithLabel
+                id="hint-state-checkbox"
+                isChecked={true}
+                label="Indice"
+                />
+                <CheckboxWithLabel
+                id="hint-state-checkbox"
+                isChecked={true}
+                label="Réponse"
+                />
+                <CheckboxWithLabel
+                id="hint-state-checkbox"
+                isChecked={true}
+                label="Solution détaillée"
                 />
               </div>
             </div>
