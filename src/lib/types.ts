@@ -66,7 +66,7 @@ export interface InterfaceGlobalOptions {
   canSM?: CanSolutionsMode
   canI?: boolean
   lang: Language
-  staticDisplayStyle?: StaticDisplayElements
+  staticDisplayStyle: StaticDisplayElements
 }
 
 export interface InterfaceParams extends Partial<Record<string, string| number>> {

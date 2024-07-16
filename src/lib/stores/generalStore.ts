@@ -150,6 +150,7 @@ export function updateGlobalOptionsInURL (url: URL) {
       url.searchParams.delete('answers')
     }
     if (typeof options !== 'undefined') {
+      console.log('from updateGlobalOptionsInURL: ' + JSON.stringify(options.staticDisplayStyle))
       let es = ''
       if (options.presMode != null) {
         es = presModeId.indexOf(options.presMode).toString()
@@ -160,6 +161,9 @@ export function updateGlobalOptionsInURL (url: URL) {
       es += options.oneShot ? '1' : '0'
       es += options.twoColumns ? '1' : '0'
       es += options.isTitleDisplayed ? '1' : '0'
+      es += options.staticDisplayStyle.hint ? '1' : '0'
+      es += options.staticDisplayStyle.answer ? '1' : '0'
+      es += options.staticDisplayStyle.solution ? '1' : '0'
       url.searchParams.append('es', es)
     }
     if (options.done) {

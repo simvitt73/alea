@@ -328,18 +328,27 @@
                 <div class="flex flex-col justify-start items-start px-4">
                   <CheckboxWithLabel
                   id="hint-state-checkbox"
-                  isChecked={true}
+                  bind:isChecked={$globalOptions.staticDisplayStyle.hint}
                   label="Indice"
+                  on:change = {() => {
+                    console.log('hint: ' + $globalOptions.staticDisplayStyle.hint)
+                  }}
                   />
                   <CheckboxWithLabel
-                  id="hint-state-checkbox"
-                  isChecked={true}
+                  id="answer-state-checkbox"
+                  bind:isChecked={$globalOptions.staticDisplayStyle.answer}
                   label="Réponse"
+                  on:change = {() => {
+                    console.log('answer: ' + $globalOptions.staticDisplayStyle.answer)
+                  }}
                   />
                   <CheckboxWithLabel
-                  id="hint-state-checkbox"
-                  isChecked={true}
+                  id="solution-state-checkbox"
+                  bind:isChecked={$globalOptions.staticDisplayStyle.solution}
                   label="Solution détaillée"
+                  on:change = {() => {
+                    console.log('solution: ' + $globalOptions.staticDisplayStyle.solution)
+                  }}
                   />
                 </div>
               </div>

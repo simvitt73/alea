@@ -16,7 +16,7 @@ import referentielStaticCH from '../json/referentielStaticCH.json'
 import 'katex/dist/katex.min.css'
 import renderScratch from './renderScratch.js'
 import { decrypt, isCrypted } from './components/urls.js'
-import { convertVueType, type InterfaceGlobalOptions, type InterfaceParams, type VueType } from './types.js'
+import { convertVueType, type InterfaceGlobalOptions, type InterfaceParams, type StaticDisplayElements, type VueType } from './types.js'
 import { sendToCapytaleMathaleaHasChanged } from './handleCapytale.js'
 import { handleAnswers, setReponse } from './interactif/gestionInteractif'
 import type { MathfieldElement } from 'mathlive'
@@ -420,6 +420,11 @@ export function mathaleaUpdateExercicesParamsFromUrl (urlString = window.locatio
   let canSolAccess = true
   let canSolMode = 'gathered'
   let canIsInteractive = true
+  const staticDisplayStyleFromURL: StaticDisplayElements = {
+    hint: false,
+    answer: false,
+    solution: false
+  }
   try {
     url = new URL(urlString)
   } catch (error) {
@@ -556,22 +561,47 @@ export function mathaleaUpdateExercicesParamsFromUrl (urlString = window.locatio
      * Il est de la forme 210110
      * Avec un caractère par réglage presMode|setInteractive|isSolutionAccessible|isInteractiveFree|oneShot|twoColumns|isTitleDisplayed
      */
-  if (es && es.length === 6) {
+  if (es) {
     presMode = presModeId[parseInt(es.charAt(0))]
     setInteractive = es.charAt(1)
     isSolutionAccessible = es.charAt(2) === '1'
     isInteractiveFree = es.charAt(3) === '1'
     oneShot = es.charAt(4) === '1'
     twoColumns = es.charAt(5) === '1'
-  } else if (es && es.length === 7) {
-    presMode = presModeId[parseInt(es.charAt(0))]
-    setInteractive = es.charAt(1)
-    isSolutionAccessible = es.charAt(2) === '1'
-    isInteractiveFree = es.charAt(3) === '1'
-    oneShot = es.charAt(4) === '1'
-    twoColumns = es.charAt(5) === '1'
-    isTitleDisplayed = es.charAt(6) === '1'
+    isTitleDisplayed = es.charAt(6) === '1' || es.charAt(6) === ''
+    staticDisplayStyleFromURL.hint = es.charAt(7) === '1'
+    staticDisplayStyleFromURL.answer = es.charAt(8) === '1'
+    staticDisplayStyleFromURL.solution = es.charAt(9) === '1'
   }
+  console.log('staticDisplayStyleFromURL: ' + JSON.stringify(staticDisplayStyleFromURL))
+  console.log(JSON.stringify({
+    v,
+    z,
+    durationGlobal,
+    ds,
+    nbVues,
+    flow,
+    screenBetweenSlides,
+    sound,
+    shuffle,
+    manualMode,
+    select,
+    order,
+    title,
+    presMode,
+    setInteractive,
+    isSolutionAccessible,
+    isInteractiveFree,
+    oneShot,
+    twoColumns,
+    isTitleDisplayed,
+    recorder,
+    done,
+    beta,
+    iframe,
+    answers,
+    staticDisplayStyle: { ...staticDisplayStyleFromURL }
+  }))
   return {
     v,
     z,
@@ -597,7 +627,8 @@ export function mathaleaUpdateExercicesParamsFromUrl (urlString = window.locatio
     done,
     beta,
     iframe,
-    answers
+    answers,
+    staticDisplayStyle: { ...staticDisplayStyleFromURL }
   }
 }
 

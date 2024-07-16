@@ -113,6 +113,9 @@ export function buildEsParams (
   es += options.oneShot ? '1' : '0'
   es += options.twoColumns ? '1' : '0'
   es += options.isTitleDisplayed ? '1' : '0'
+  es += options.staticDisplayStyle.hint ? '1' : '0'
+  es += options.staticDisplayStyle.answer ? '1' : '0'
+  es += options.staticDisplayStyle.solution ? '1' : '0'
   return es
 }
 
