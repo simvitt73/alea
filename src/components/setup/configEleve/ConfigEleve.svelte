@@ -100,8 +100,12 @@
       $globalOptions.setInteractive = '1'
     }
   }
-
-  function staticExerciseIsPresent () {
+  /**
+   * Détermine si des exercices de la librairie statique sont présents dans la liste des exercices sélectionnés
+   * @author sylvain
+   * @returns {boolean} `true` si un exercice statique est dans la liste
+   */
+  function staticExerciseFromLibraryIsPresent () {
     return $exercicesParams.some((exo) => exo.uuid.startsWith('2nd_'))
   }
 </script>
@@ -315,7 +319,7 @@
                   ]}
                 />
               </div>
-              <div class="{staticExerciseIsPresent() ? 'flex flex-col' : 'hidden'}">
+              <div class="{staticExerciseFromLibraryIsPresent() ? 'flex flex-col' : 'hidden'}">
                 <div
                   class="pl-2 pb-2 font-bold text-coopmaths-struct-light dark:text-coopmathsdark-struct-light"
                 >

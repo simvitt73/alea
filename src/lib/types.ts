@@ -15,6 +15,13 @@ export const convertVueType = (type : string) : VueType | undefined => {
   return VueTypeArray.indexOf(type as VueType) < 0 ? undefined : VueTypeArray[VueTypeArray.indexOf(type as VueType)]
 }
 
+export type StaticDisplayStyle = {
+  nothing: boolean
+  hint: boolean
+  answer: boolean
+  solution: boolean
+}
+
 /**
  * setInteractive à 0 on enlève tout, à 1 on les met tous en interactif, à 2 on ne change rien
  * iframe est un identifiant de l'iframe utilisé par des recorders comme Moodle
@@ -60,6 +67,7 @@ export interface InterfaceGlobalOptions {
   canSM?: CanSolutionsMode
   canI?: boolean
   lang: Language
+  staticDisplayStyle: StaticDisplayStyle
 }
 
 export interface InterfaceParams extends Partial<Record<string, string| number>> {
