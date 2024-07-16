@@ -128,18 +128,19 @@ export interface StaticItemInReferentiel extends BaseItemInReferentiel {
 /**
  * Description d'une ressource de la bibliothèque des statiques dans un référentiel
  * (typiquement un exercice utilisé dans un plan de travail)
- * @interface LibraryStaticItemInReferentiel
+ * @interface LibraryItemInReferentiel
  * @extends StaticItemInReferentiel
  * @property {string} texIndice: chemin vers le source LaTeX de l'indice
  * @property {string} pngIndice: chemin vers l'image de l'indice
  * @property {string} texSolution: chemin vers le source LaTeX de la solution
  * @property {string} pngSolution: chemin vers l'image de la solution
  */
-export interface LibraryStaticItemInReferentiel extends StaticItemInReferentiel {
+export interface LibraryItemInReferentiel extends StaticItemInReferentiel {
   texIndice?: string
   pngIndice?: string
   texSolution?: string
   pngSolution?: string
+  titre?:string
   typeExercice: 'static'
 }
 
