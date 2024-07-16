@@ -827,13 +827,13 @@ export function inferieurSuperieur (fonction, y, xMin, xMax, inferieur = true, s
 
 export function racines ({ fonction, xMin, xMax, tol = 1e-13, maxIter = 100, precision = 1 }) {
   const racines = []
-  for (let x = xMin; x < xMax; x += 0.5) {
-    if (fonction(x) * fonction(x + 0.5) < 0) {
-      const { root } = brent(fonction, x, x + 0.5, tol, maxIter)
+  for (let x = xMin; x < xMax; x += 0.2) {
+    if (fonction(x) * fonction(x + 0.2) < 0) {
+      const { root } = brent(fonction, x, x + 0.2, tol, maxIter)
       if (root != null) racines.push(round(root, precision))
     } else {
       if (fonction(x) === 0) racines.push(round(x, precision))
-      if (fonction(x + 0.5) === 0) racines.push(round(x + 0.5, precision))
+      if (fonction(x + 0.2) === 0) racines.push(round(x + 0.2, precision))
     }
   }
   return Array.from((new Set(racines)).values())
@@ -998,6 +998,7 @@ export function tableauSignesFonction (fonction, xMin, xMax, {
  * @param {string} [options.nomVariable] 'x' par défaut
  * @param {string} [options.nomFonction] 'f(x)' par défaut
  * @param {string} [options.nomDerivee] 'f′(x)' par défaut
+ * @param {number} [options.precisionImage] 2 par défaut = nombre de décimale des images approchées
  * @returns {string}
  */
 export function tableauVariationsFonction (fonction, derivee, xMin, xMax, {
@@ -1007,7 +1008,8 @@ export function tableauVariationsFonction (fonction, derivee, xMin, xMax, {
   ligneDerivee = false,
   nomVariable = 'x',
   nomFonction = 'f(x)',
-  nomDerivee = 'f′(x)'
+  nomDerivee = 'f^{\\prime}(x)',
+  precisionImage = 2
 } = {}) {
   const signes = signesFonction(derivee, xMin, xMax, step, tolerance).filter((signe) => signe.xG !== signe.xD)
   const premiereLigne = []
@@ -1044,28 +1046,28 @@ export function tableauVariationsFonction (fonction, derivee, xMin, xMax, {
   let variationG = variations[0]
   let variationD
   if (variationG.variation === 'croissant') {
-    tabLineVariations.push(`-/${stringNombre(fonction(variationG.xG), 3)}`, 10)
+    tabLineVariations.push(`-/${stringNombre(fonction(variationG.xG), precisionImage)}`, 10)
   } else {
-    tabLineVariations.push(`+/${stringNombre(fonction(variationG.xG), 3)}`, 10)
+    tabLineVariations.push(`+/${stringNombre(fonction(variationG.xG), precisionImage)}`, 10)
   }
   for (let i = 0; i < variations.length - 1; i++) {
     variationG = variations[i]
     variationD = variations[i + 1]
     if (variationG.variation === variationD.variation) {
       tabLineVariations.push('R/', 10)
-      tabLinesImage.push(['Ima', i + 1, i + 3, i + 2, stringNombre(fonction(variationG.xD), 3)])
+      tabLinesImage.push(['Ima', i + 1, i + 3, i + 2, stringNombre(fonction(variationG.xD), precisionImage)])
     } else {
-      tabLineVariations.push(`${variationG.variation === 'croissant' ? '+' : '-'}/${stringNombre(fonction(variationG.xD), 3)}`, 10)
+      tabLineVariations.push(`${variationG.variation === 'croissant' ? '+' : '-'}/${stringNombre(fonction(variationG.xD), precisionImage)}`, 10)
     }
   }
   if (variationD != null) {
     if (variationD.variation === 'croissant') {
-      tabLineVariations.push(`+/${stringNombre(fonction(variationD.xD, 1), 3)}`, 10)
+      tabLineVariations.push(`+/${stringNombre(fonction(variationD.xD, 1), precisionImage)}`, 10)
     } else {
-      tabLineVariations.push(`-/${stringNombre(fonction(variationD.xD, 1), 3)}`, 10)
+      tabLineVariations.push(`-/${stringNombre(fonction(variationD.xD, 1), precisionImage)}`, 10)
     }
   } else {
-    tabLineVariations.push(`${variationG.variation === 'croissant' ? '+' : '-'}/${stringNombre(fonction(variationG.xD), 3)}`, 10)
+    tabLineVariations.push(`${variationG.variation === 'croissant' ? '+' : '-'}/${stringNombre(fonction(variationG.xD), precisionImage)}`, 10)
   }
   if (substituts && Array.isArray(substituts)) {
     for (let i = 2; i < tabLineVariations.length; i += 2) {
