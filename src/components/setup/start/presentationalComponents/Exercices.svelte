@@ -1,14 +1,10 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
   import Footer from '../../../Footer.svelte'
   import Exercice from '../../../shared/exercice/Exercice.svelte'
   import type { InterfaceParams } from 'src/lib/types'
   import { flip } from 'svelte/animate'
 
   export let exercicesParams: InterfaceParams[]
-  onMount(() => {
-    console.log(JSON.stringify(exercicesParams))
-  })
 </script>
 
 <div

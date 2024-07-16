@@ -330,25 +330,16 @@
                   id="hint-state-checkbox"
                   bind:isChecked={$globalOptions.staticDisplayStyle.hint}
                   label="Indice"
-                  on:change = {() => {
-                    console.log('hint: ' + $globalOptions.staticDisplayStyle.hint)
-                  }}
                   />
                   <CheckboxWithLabel
                   id="answer-state-checkbox"
                   bind:isChecked={$globalOptions.staticDisplayStyle.answer}
                   label="Réponse"
-                  on:change = {() => {
-                    console.log('answer: ' + $globalOptions.staticDisplayStyle.answer)
-                  }}
                   />
                   <CheckboxWithLabel
                   id="solution-state-checkbox"
                   bind:isChecked={$globalOptions.staticDisplayStyle.solution}
                   label="Solution détaillée"
-                  on:change = {() => {
-                    console.log('solution: ' + $globalOptions.staticDisplayStyle.solution)
-                  }}
                   />
                 </div>
               </div>

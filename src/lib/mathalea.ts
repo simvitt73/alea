@@ -588,35 +588,6 @@ export function mathaleaUpdateExercicesParamsFromUrl (urlString = window.locatio
     staticDisplayStyleFromURL.answer = es.charAt(8) === '1'
     staticDisplayStyleFromURL.solution = es.charAt(9) === '1'
   }
-  console.log('staticDisplayStyleFromURL: ' + JSON.stringify(staticDisplayStyleFromURL))
-  console.log(JSON.stringify({
-    v,
-    z,
-    durationGlobal,
-    ds,
-    nbVues,
-    flow,
-    screenBetweenSlides,
-    sound,
-    shuffle,
-    manualMode,
-    select,
-    order,
-    title,
-    presMode,
-    setInteractive,
-    isSolutionAccessible,
-    isInteractiveFree,
-    oneShot,
-    twoColumns,
-    isTitleDisplayed,
-    recorder,
-    done,
-    beta,
-    iframe,
-    answers,
-    staticDisplayStyle: { ...staticDisplayStyleFromURL }
-  }))
   return {
     v,
     z,

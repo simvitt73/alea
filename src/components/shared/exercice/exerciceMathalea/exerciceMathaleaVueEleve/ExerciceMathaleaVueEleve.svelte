@@ -42,10 +42,9 @@
     headerExerciceProps = headerExerciceProps
   }
 
-  
   function countMathField () {
-    let numbOfAnswerFields : number = 0 
-    exercise.autoCorrection.forEach( val => {
+    let numbOfAnswerFields : number = 0
+    exercise.autoCorrection.forEach(val => {
       if (val.reponse.param.formatInteractif === 'mathlive' || val.reponse.param.formatInteractif === 'qcm') {
         numbOfAnswerFields++
       }
@@ -106,7 +105,7 @@
     }, 100)
     if (isInteractif && !isCorrectionVisible) {
       numberOfAnswerFields = countMathField()
-    } 
+    }
     if ($globalOptions.setInteractive === '1') {
       setAllInteractif()
     } else if ($globalOptions.setInteractive === '0') {
@@ -135,7 +134,7 @@
         } catch (e) {
           console.error(e)
         }
-      }      
+      }
     }
     // affectation du zoom pour les figures scratch
     const scratchDivs = divExercice.getElementsByClassName('scratchblocks')
@@ -177,7 +176,7 @@
     updateDisplay()
   }
 
-  let debug = false
+  const debug = false
   function log (str: string) {
     if (debug) {
       console.log(str)
