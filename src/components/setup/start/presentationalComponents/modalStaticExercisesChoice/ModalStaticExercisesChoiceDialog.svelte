@@ -6,7 +6,7 @@
   import {
     isStaticType,
     type JSONReferentielEnding,
-    type StaticItemInreferentiel
+    type StaticItemInReferentiel
   } from '../../../../../lib/types/referentiels'
 
   export let isVisible: boolean
@@ -15,8 +15,8 @@
   export let bibliothequeDisplayedContent: Record<string, JSONReferentielEnding>
   // let bibliothequeChoiceModal: BasicGridModal
 
-  const buildBiblioToBeDisplayed = (): StaticItemInreferentiel[] => {
-    const results: StaticItemInreferentiel[] = []
+  const buildBiblioToBeDisplayed = (): StaticItemInReferentiel[] => {
+    const results: StaticItemInReferentiel[] = []
     if (bibliothequeDisplayedContent) {
       Object.values(bibliothequeDisplayedContent).forEach((item) => {
         if (isStaticType(item)) {
