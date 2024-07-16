@@ -100,6 +100,10 @@
       $globalOptions.setInteractive = '1'
     }
   }
+
+  function staticExerciseIsPresent () {
+    return $exercicesParams.some((exo) => exo.uuid.startsWith('2nd_'))
+  }
 </script>
 
 <main
@@ -311,27 +315,29 @@
                   ]}
                 />
               </div>
-              <div
-                class="pl-2 pb-2 font-bold text-coopmaths-struct-light dark:text-coopmathsdark-struct-light"
-              >
-                Pour les exercices statiques
-              </div>
-              <div class="flex flex-col justify-start items-start px-4">
-                <CheckboxWithLabel
-                id="hint-state-checkbox"
-                isChecked={true}
-                label="Indice"
-                />
-                <CheckboxWithLabel
-                id="hint-state-checkbox"
-                isChecked={true}
-                label="Réponse"
-                />
-                <CheckboxWithLabel
-                id="hint-state-checkbox"
-                isChecked={true}
-                label="Solution détaillée"
-                />
+              <div class="{staticExerciseIsPresent() ? 'flex flex-col' : 'hidden'}">
+                <div
+                  class="pl-2 pb-2 font-bold text-coopmaths-struct-light dark:text-coopmathsdark-struct-light"
+                >
+                  Pour les exercices statiques
+                </div>
+                <div class="flex flex-col justify-start items-start px-4">
+                  <CheckboxWithLabel
+                  id="hint-state-checkbox"
+                  isChecked={true}
+                  label="Indice"
+                  />
+                  <CheckboxWithLabel
+                  id="hint-state-checkbox"
+                  isChecked={true}
+                  label="Réponse"
+                  />
+                  <CheckboxWithLabel
+                  id="hint-state-checkbox"
+                  isChecked={true}
+                  label="Solution détaillée"
+                  />
+                </div>
               </div>
             </div>
           </div>
