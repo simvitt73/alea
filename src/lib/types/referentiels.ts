@@ -140,7 +140,8 @@ export interface LibraryItemInReferentiel extends StaticItemInReferentiel {
   pngIndice?: string
   texSolution?: string
   pngSolution?: string
-  titre?:string
+  titre?: string
+  difficulte?: string
   typeExercice: 'static'
 }
 

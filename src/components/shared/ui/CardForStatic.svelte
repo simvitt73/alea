@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
   import type { LibraryItemInReferentiel } from '../../../lib/types/referentiels'
   import StarIcon from '../icons/StarIcon.svelte'
   import { exercicesParams } from '../../../lib/stores/generalStore'
@@ -27,7 +27,10 @@
   }
   function removeExerciseFromList () {
     const matchingIndex = listeCodes.findIndex(isPresent)
-    exercicesParams.update((list) => [...list.slice(0, matchingIndex), ...list.slice(matchingIndex + 1)])
+    exercicesParams.update((list) => [
+      ...list.slice(0, matchingIndex),
+      ...list.slice(matchingIndex + 1)
+    ])
   }
   function handelSelection () {
     selected = !selected
@@ -41,25 +44,53 @@
 
 <button
   type="button"
-  class="block relative w-full rounded-lg bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark shadow-lg border border-coopmaths-canvas-darkest dark:border-coopmathsdark-canvas-darkest"
+  class="flex flex-col justify-between relative w-full rounded-lg bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark shadow-lg {selected ? 'border-4 border-coopmaths-warn-800 dark:border-coopmathsdark-warn' : 'border border-coopmaths-canvas-darkest dark:border-coopmathsdark-canvas-darkest'}"
   id={indice}
   on:click={handelSelection}
 >
-  <div class="{reversed ? 'hide' : 'block'} ">
-    <img src={exercise.png} alt="{exercise.uuid} image" class="object-fill rounded-t-lg" />
+  <div class="flex justify-center items-center h-full bg-white rounded-t-lg">
+    <div class="{reversed ? 'hide' : 'block rounded-t-lg'} ">
+      <img src={exercise.png} alt="{exercise.uuid} image" class="object-fill rounded-t-lg" />
+    </div>
   </div>
-  <div class="p-2">
-    <h5 class="mb-2 text-lg font-bold leading-tight text-coopmaths-struct dark:text-coopmathsdark-struct">{exercise.titre ?? exercise.uuid}</h5>
+  <div class="p-4">
+    <div class="flex flex-row justify-start items-center space-x-4">
+      <div
+        class="text-lg font-bold leading-tight text-coopmaths-struct dark:text-coopmathsdark-struct"
+      >
+        {exercise.titre ?? exercise.uuid}
+      </div>
+      {#if exercise.difficulte}
+      <div class="flex flex-row space-x-1">
+        {#each [...Array(parseInt(exercise.difficulte, 10)).keys()] as i}
+          <i class="bx bxs-star bx-xl text-coopmaths-warn-800 dark:text-coopmathsdark-warn"/>
+        {/each}
+        {#each [...Array(3 - parseInt(exercise.difficulte, 10)).keys()] as i}
+          <i class="bx bx-star bx-xl text-coopmaths-warn-800 dark:text-coopmathsdark-warn"/>
+        {/each}
+      </div>
+      {/if}
+    </div>
   </div>
   <div class="absolute -bottom-4 left-1/2 -translate-x-1/2">
-    <div class="rounded-full h-8 w-8 bg-coopmaths-action text-coopmaths-canvas flex justify-center items-center hover:animate-pulse">
+    <div
+      class="rounded-full h-8 w-8 bg-coopmaths-action dark:bg-coopmathsdark-action text-coopmaths-canvas dark:text-coopmathsdark-canvas flex justify-center items-center hover:animate-pulse"
+    >
       <i class="bx bx-sm {selected ? 'bx-minus' : 'bx-plus'}" />
     </div>
   </div>
-  <div class="absolute top-3 right-3 rotate-frac">
+  <div class="absolute -top-5 -right-5 rotate-frac">
     <div class="relative">
-      <StarIcon class="{selected ? 'container' : 'hidden'} top-0 left-0 h-12 w-12 text-coopmaths-warn-800 dark:text-coopmathsdark-warn" />
-      <i class="{selected ? 'container' : 'hidden'} absolute top-1 left-[0.1rem] bx bx-check bx-md text-coopmaths-canvas dark:text-coopmathsdark-canvas" />
+      <StarIcon
+        class="{selected
+          ? 'container'
+          : 'hidden'} top-0 left-0 h-10 w-10 text-coopmaths-warn-800 dark:text-coopmathsdark-warn"
+      />
+      <i
+        class="{selected
+          ? 'container'
+          : 'hidden'} absolute top-0 left-[0.1rem] bx bx-check bx-md text-coopmaths-canvas dark:text-coopmathsdark-canvas"
+      />
     </div>
   </div>
 </button>

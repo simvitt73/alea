@@ -32,7 +32,7 @@
   class={`${$$props.class || 'rounded-xl w-2/3 bg-coopmaths-canvas dark:bg-coopmathsdark-canvas'}`}
 >
   <div on:click|stopPropagation class="relative p-8" role="button" tabindex="0">
-    <div class="text-4xl text-coopmaths-struct font-light mb-6">
+    <div class="text-4xl text-coopmaths-struct dark:text-coopmathsdark-struct font-light mb-6">
       <slot name="header" />
     </div>
     <div class="w-full">
@@ -48,7 +48,7 @@
         // $isModalForStaticsVisible = false
       }}
     >
-      <i class="bx bx-x text-2xl text-coopmaths-action hover:text-coopmaths-action-lightest" />
+      <i class="bx bx-x text-2xl text-coopmaths-action dark:text-coopmathsdark-action hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest" />
     </button>
   </div>
 </dialog>
