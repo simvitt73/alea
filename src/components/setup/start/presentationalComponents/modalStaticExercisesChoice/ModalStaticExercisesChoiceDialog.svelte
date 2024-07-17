@@ -42,6 +42,7 @@
               indice={'static-card-' + exercise.uuid + '-' + i.toString()}
               {exercise}
               selected={bibliothequeUuidInExercisesList.includes(exercise.uuid)}
+              reversed={true}
             />
           {/if}
         {/each}

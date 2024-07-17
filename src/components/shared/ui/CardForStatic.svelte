@@ -44,13 +44,29 @@
 
 <button
   type="button"
-  class="flex flex-col justify-between relative w-full rounded-lg bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark shadow-lg {selected ? 'border-4 border-coopmaths-warn-800 dark:border-coopmathsdark-warn' : 'border border-coopmaths-canvas-darkest dark:border-coopmathsdark-canvas-darkest'}"
+  class="flex justify-between relative w-full rounded-lg bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark shadow-lg
+  {reversed
+    ? 'flex-col-reverse'
+    : 'flex-col  '}
+  {selected
+    ? 'border-4 border-coopmaths-warn-800 dark:border-coopmathsdark-warn'
+    : 'border border-coopmaths-canvas-darkest dark:border-coopmathsdark-canvas-darkest'}"
   id={indice}
   on:click={handelSelection}
 >
-  <div class="flex justify-center items-center h-full bg-white rounded-t-lg">
-    <div class="{reversed ? 'hide' : 'block rounded-t-lg'} ">
-      <img src={exercise.png} alt="{exercise.uuid} image" class="object-fill rounded-t-lg" />
+  <div
+    class="flex justify-center items-center h-full bg-white
+    {reversed
+      ? 'rounded-b-lg'
+      : 'rounded-t-lg'}"
+  >
+    <div class="block
+    {reversed ? 'rounded-b-lg' : 'rounded-t-lg'} ">
+      <img
+        src={exercise.png}
+        alt="{exercise.uuid} image"
+        class="object-fill {reversed ? 'rounded-b-lg' : 'rounded-t-lg'}"
+      />
     </div>
   </div>
   <div class="p-4">
@@ -61,14 +77,14 @@
         {exercise.titre ?? exercise.uuid}
       </div>
       {#if exercise.difficulte}
-      <div class="flex flex-row space-x-1">
-        {#each [...Array(parseInt(exercise.difficulte, 10)).keys()] as i}
-          <i class="bx bxs-star bx-xl text-coopmaths-warn-800 dark:text-coopmathsdark-warn"/>
-        {/each}
-        {#each [...Array(3 - parseInt(exercise.difficulte, 10)).keys()] as i}
-          <i class="bx bx-star bx-xl text-coopmaths-warn-800 dark:text-coopmathsdark-warn"/>
-        {/each}
-      </div>
+        <div class="flex flex-row space-x-1">
+          {#each [...Array(parseInt(exercise.difficulte, 10)).keys()] as i}
+            <i class="bx bxs-star bx-xl text-coopmaths-warn-800 dark:text-coopmathsdark-warn" />
+          {/each}
+          {#each [...Array(3 - parseInt(exercise.difficulte, 10)).keys()] as i}
+            <i class="bx bx-star bx-xl text-coopmaths-warn-800 dark:text-coopmathsdark-warn" />
+          {/each}
+        </div>
       {/if}
     </div>
   </div>
