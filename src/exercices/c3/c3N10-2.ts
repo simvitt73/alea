@@ -95,7 +95,7 @@ class Decomp1 extends Exercice {
 
       handleAnswers(this, i, objetReponses)
       decompo = decompo.substring(0, decompo.length - 1)
-      const classe = 'numeration'
+      const classe = KeyboardType.numeration
       let texte = remplisLesBlancs(this, i, texNombre(Number(nombreStr), 0) + '=' + decompo, classe, '\\ldots')
       texte += ajouteFeedback(this, i, KeyboardType.numeration)
       const morceaux = items.map((el) => `${String(el.chiffre)}\\text{ ${el.classe} }`)

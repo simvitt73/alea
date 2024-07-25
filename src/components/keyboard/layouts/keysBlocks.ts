@@ -57,12 +57,12 @@ const fullOperationCaps: CompleteKeysList = {
 }
 const logPuissanceCaps: CompleteKeysList = {
   inline: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 'LOG', 'LN', 'POW', 'FRAC', 'SEMICOLON', 'COMMA', 'DIV', 'MULT', 'SUB', 'ADD'],
-  block: ['[','LOG', 7, 8, 9, 'DIV',']', 'LN', 4, 5, 6, 'MULT','INFTY', 'POW', 1, 2, 3, 'SUB', 'e^', 'FRAC', 0, 'COMMA', 'SEMICOLON', 'ADD']
+  block: ['[', 'LOG', 7, 8, 9, 'DIV', ']', 'LN', 4, 5, 6, 'MULT', 'INFTY', 'POW', 1, 2, 3, 'SUB', 'e^', 'FRAC', 0, 'COMMA', 'SEMICOLON', 'ADD']
 }
 
 const numerationCaps: CompleteKeysList = {
-  inline: ['MILLION', 'MILLIARD', 'MILLE', 'CENTAINE', 'DIZAINE', 'UNITE', 'DE', 'DIXIEME', 'CENTIEME', 'MILLIEME', 'DIX_MILLIEME', 'CENT_MILLIEME', 'MILLIONIEME', 'HYPHEN', 'DIX', 'VINGT', 'TRENTE', 'QUARANTE', 'CINQUANTE', 'SOIXANTE', 'SOIXANTE_DIX', 'QUATRE_VINGT', 'QUATRE_VINGT_DIX', 'CENT'],
-  block: ['MILLION', 'MILLIARD', 'MILLE', 'CENTAINE', 'DIZAINE', 'UNITE', 'DE', 'DIXIEME', 'CENTIEME', 'MILLIEME', 'DIX_MILLIEME', 'CENT_MILLIEME', 'MILLIONIEME', 'HYPHEN', 'DIX', 'VINGT', 'TRENTE', 'QUARANTE', 'CINQUANTE', 'SOIXANTE', 'SOIXANTE_DIX', 'QUATRE_VINGT', 'QUATRE_VINGT_DIX', 'CENT']
+  inline: ['MILLION', 'MILLIARD', 'MILLE', 'CENTAINE', 'DIZAINE', 'UNITE', 'DE', 's', 'DIXIEME', 'CENTIEME', 'MILLIEME', 'DIX_MILLIEME', 'CENT_MILLIEME', 'MILLIONIEME', 'HYPHEN', 'DIX', 'VINGT', 'TRENTE', 'QUARANTE', 'CINQUANTE', 'SOIXANTE', 'SOIXANTE_DIX', 'QUATRE_VINGT', 'QUATRE_VINGT_DIX', 'CENT'],
+  block: ['MILLION', 'MILLIARD', 'MILLE', 'CENTAINE', 'DIZAINE', 'UNITE', 'DE', 's', 'DIXIEME', 'CENTIEME', 'MILLIEME', 'DIX_MILLIEME', 'CENT_MILLIEME', 'MILLIONIEME', 'HYPHEN', 'DIX', 'VINGT', 'TRENTE', 'QUARANTE', 'CINQUANTE', 'SOIXANTE', 'SOIXANTE_DIX', 'QUATRE_VINGT', 'QUATRE_VINGT_DIX', 'CENT']
 }
 
 const probabiliteCaps: CompleteKeysList = {
@@ -279,7 +279,7 @@ export const logPuissance: KeyboardBlock = {
 export const numeration: KeyboardBlock = {
   keycaps: numerationCaps,
   cols: 6,
-  title: 'Logarithme et puissance',
+  title: 'Numération',
   isUnits: false
 }
 
