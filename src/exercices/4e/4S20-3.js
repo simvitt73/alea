@@ -29,6 +29,7 @@ export default class nomExercice extends Exercice {
     this.nbQuestions = 5 // Nombre de questions par défaut
 
     this.besoinFormulaireNumerique = ['Notions testées', 2, '1 : Contraires-Non contraires\n2 : Compatibles-Incompatibles-Contraires']
+    this.sup = 1
   }
 
   nouvelleVersion () {
