@@ -207,7 +207,7 @@ export default function ExerciceAdditionnerOuSoustraireDesFractions () {
 
       texte += ajouteChampTexteMathLive(this, i, 'largeur25 inline nospacebefore', { texteAvant: '=' })
       reponse = this.sup3 ? fraction(num, den).simplifie() : fraction(num, den)
-      handleAnswers(this, i, { reponse: { value: reponse.toLatex(), compare: fonctionComparaison, options: { fractionSimplifiee: !this.sup3, fractionIrreductible: this.sup3 } } })
+      handleAnswers(this, i, { reponse: { value: reponse.toLatex(), compare: fonctionComparaison, options: { fractionEgale: !this.sup3, fractionIrreductible: this.sup3 } } })
       texte += ajouteFeedback(this, i)
 
       if (context.isAmc) {

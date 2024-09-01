@@ -24,6 +24,7 @@ export type OptionsComparaisonType = {
   fractionSimplifiee?: boolean
   fractionReduite?: boolean
   fractionDecimale?:boolean
+  fractionEgale?:boolean
   operationSeulementEtNonCalcul?: boolean
   calculSeulementEtNonOperation?: boolean
   ensembleDeNombres ?:boolean
@@ -500,6 +501,7 @@ export function fonctionComparaison (
     fractionSimplifiee, // Documenté
     fractionReduite, // Documenté
     fractionDecimale, // Documenté
+    fractionEgale,
     operationSeulementEtNonCalcul, // Documenté
     calculSeulementEtNonOperation, // Documenté
     ensembleDeNombres,
@@ -523,6 +525,7 @@ export function fonctionComparaison (
     fractionSimplifiee: false,
     fractionReduite: false,
     fractionDecimale: false,
+    fractionEgale: false,
     operationSeulementEtNonCalcul: false,
     calculSeulementEtNonOperation: false,
     ensembleDeNombres: false,
@@ -560,7 +563,7 @@ export function fonctionComparaison (
   if (egaliteExpression) return egaliteCompare(input, goodAnswer)
   if (nombreAvecEspace) return numberWithSpaceCompare(input, goodAnswer)
   if (ensembleDeNombres) return ensembleNombres(input, goodAnswer)
-  if (fractionSimplifiee || fractionReduite || fractionIrreductible || fractionDecimale) return comparaisonFractionSimplifiee(input, goodAnswer, { fractionReduite, fractionIrreductible, fractionDecimale }) // feedback OK
+  if (fractionSimplifiee || fractionReduite || fractionIrreductible || fractionDecimale || fractionEgale) return comparaisonFractionSimplifiee(input, goodAnswer, { fractionReduite, fractionIrreductible, fractionDecimale, fractionEgale }) // feedback OK
   // Ici, c'est la comparaison par défaut qui fonctionne dans la très grande majorité des cas
   return expressionDeveloppeeEtReduiteCompare(input, goodAnswer, {
     expressionsForcementReduites,
@@ -654,14 +657,13 @@ function customCanonical (
  * @return ResultType
  */
 
-// export type ResultType = { isOk: boolean; feedback?: string }
-
 function comparaisonFractionSimplifiee (
   input: string,
   goodAnswer: string, {
     fractionReduite = false,
     fractionIrreductible = false,
-    fractionDecimale = false
+    fractionDecimale = false,
+    fractionEgale = false
   }
   = {}
 ): ResultType {
@@ -679,6 +681,15 @@ function comparaisonFractionSimplifiee (
   if (saisieNativeParsed.isEqual(reponseNativeParsed)) {
     if (saisieNativeParsed.head === 'Number' && reponseParsed.isInteger) { // réponse est égale à un entier et saisie est un nombre entier (2) ou décimal (2.0).
       return { isOk: true }
+    } else if (fractionEgale) {
+      if ((saisieNativeParsed.head === 'Divide' || saisieNativeParsed.head === 'Rational') && // saisie doit être une fraction (ou une division)
+        saisieNativeParsed.op1.isInteger && saisieNativeParsed.op2.isInteger) { // reponse doit avoir des numérateur/dénominateur multiples de ceux de saisie ou bien fractionReduite est true
+        return { isOk: true }
+      } else if ((saisieNativeParsed.head === 'Divide' || saisieNativeParsed.head === 'Rational')) {
+        return { isOk: false, feedback: 'Résultat incorrect car dénominateur et numérateur doivent être entiers.' }
+      } else {
+        return { isOk: false, feedback: 'Résultat incorrect car une fraction est attendue' }
+      }
     } else if (fractionDecimale) {
       if ((saisieNativeParsed.head === 'Divide' || saisieNativeParsed.head === 'Rational') &&
         Number.isInteger(Math.log10(saisieNativeParsed.op2.value)) &&
