@@ -139,6 +139,13 @@ export function mathalea2d (
       }
     } else {
       if (objets != null && Array.isArray(objets)) {
+        console.log('************* Création des nombres du labyrinthe **********************')
+        console.log('Bug Incroyable dans les labyrinthes')
+        console.log('Ouvrir ce tableau, regarder le premier élement et regarder la propriété texte', objets)
+        console.log('Voici le premier élement et regarder maintenant de nouveau la propriété texte', objets[0])
+        console.log('Exemple de propriété texte : ', objets[0].texte)
+        console.log('Dans le premier labyrinthe, il y a des dollars et après il n\'y en a plus. Dans le second labyrinthe, c\'est identique,Incompréhensible')
+
         for (const objet of objets) {
           codeSvg += ajouteCodeHtml(mainlevee, objet, divsLatex, xmin, ymax)
         }

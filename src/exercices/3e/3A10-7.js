@@ -25,8 +25,8 @@ export default function ExerciceLabyrinthePremiers3e () {
   this.pas_de_version_HMTL = false
   this.sup = 3
   this.sup2 = 6
-  this.sup3 = 1
-  this.sup4 = 1
+  this.sup3 = 2
+  this.sup4 = 2
 
   this.nouvelleVersion = function () {
     const tailleChiffre = 1.5
@@ -77,8 +77,16 @@ export default function ExerciceLabyrinthePremiers3e () {
       // Le tableau de nombre étant fait, on place les objets nombres.
       laby.nombres2d = laby.placeNombres(monChemin, bonnesReponses, mauvaisesReponses, tailleChiffre)
       const params = { xmin: -4, ymin: 0, xmax: 5 + 3 * nbC, ymax: 2 + 3 * nbL, pixelsParCm: 20, scale: 0.7 }
-      texte += mathalea2d(params, laby.murs2d, laby.nombres2d)
-      texteCorr += mathalea2d(params, laby.murs2d, laby.nombres2d, laby.chemin2d)
+      // texte += mathalea2d(params, laby.murs2d, ...laby.nombres2d)
+      // texte += mathalea2d(params, laby.murs2d, ...laby.nombres2d)
+      console.log('---------------------- Premier labyrinthe ---------------')
+      texte += mathalea2d(params, ...laby.nombres2d)
+      console.log(' ')
+      console.log(' ')
+      console.log(' ')
+      console.log('---------------------- Second labyrinthe ---------------')
+      texte += mathalea2d(params, ...laby.nombres2d)
+      // texteCorr += mathalea2d(params, laby.murs2d, laby.nombres2d, laby.chemin2d)
       if (this.questionJamaisPosee(q, bonnesReponses[0], mauvaisesReponses[0])) {
         this.listeQuestions.push(texte)
         this.listeCorrections.push(texteCorr)
