@@ -15,6 +15,7 @@
   export let trash: () => void
   export let setFullScreen: (isFullScreen: boolean) => void
   export let handleExport: (vue: VueType) => void
+  export let handleRecorder: () => void
   export let locale: Language
   export let handleLanguage: (lang: string) => void
   export let isCapytale: boolean
@@ -48,6 +49,7 @@
         {importExercises}
         {isExercisesListEmpty}
         {isCapytale}
+        {handleRecorder}
       />
     </div>
   {:else}

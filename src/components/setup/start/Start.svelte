@@ -39,6 +39,7 @@
   import { get } from 'svelte/store'
   import { mathaleaUpdateExercicesParamsFromUrl, mathaleaUpdateUrlFromExercicesParams } from '../../../lib/mathalea'
   import handleCapytale from '../../../lib/handleCapytale'
+  import {sendActivityParams} from '../../../lib/handleRecorder'
   import { canOptions } from '../../../lib/stores/canStore'
   import { buildEsParams } from '../../../lib/components/urls'
   import ModalCapytalSettings from './presentationalComponents/modalCapytalSettings/ModalCapytalSettings.svelte'
@@ -343,6 +344,7 @@
       {trash}
       {setFullScreen}
       {handleExport}
+      handleRecorder={sendActivityParams}
       locale={localeValue}
       {handleLanguage}
       isCapytale={$globalOptions.recorder === 'capytale'}

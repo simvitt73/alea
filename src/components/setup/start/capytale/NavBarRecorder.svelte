@@ -12,6 +12,7 @@
   export let importExercises: (urlFeuilleEleve: string) => void
   export let isExercisesListEmpty: boolean
   export let isCapytale: boolean
+  export let handleRecorder: () => void
 
   let urlFeuilleEleve: string = ''
 
@@ -100,7 +101,7 @@
             class="text-sm py-1 px-2 rounded-md h-7"
             text="Valider"
             disabled={isExercisesListEmpty}
-            on:click={() => importExercises(urlFeuilleEleve)}
+            on:click={handleRecorder}
           />
         {/if}
         <ButtonIconTooltip
