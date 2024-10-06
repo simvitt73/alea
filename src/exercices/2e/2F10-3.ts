@@ -205,7 +205,7 @@ export default class Representerfonctionaffine extends Exercice {
               texteCorr += `La droite a pour équation $y=${texFractionReduite(a, d)}x ${ecritureAlgebrique(b)}$. <br>
               L'ordonnée à l'origine est $${b}$, on place donc le point $A$ de coordonnées $(0\\,;\\,${b})$.<br>
              Le coefficient directeur est égal à $${texFractionReduite(a, d)}$. En se décalant de $${d}$ unités vers la droite à partir du point $A$, on ${a > 0 ? 'monte' : 'descend'} de $${abs(a)}$  ${a === 1 || a === -1 ? 'unité' : 'unités'}. <br>
-             On obtient alors le point $B$. <br>
+             On obtient alors le point $B$ de coordonnées $(${xB};${yB})$. <br>
              On trace la droite $(AB)$.`
             } else {
               texteCorr += `Il suffit donc de déterminer les coordonnées de deux points pour pouvoir représenter $f$.<br>
@@ -228,13 +228,13 @@ export default class Representerfonctionaffine extends Exercice {
                 monRepere, droiteAB, tA, lA, tB, lB, textO)
             } else {
               const grapheDroite = new Graphe({ expression: droiteAB.expressionPGF, domain: [-5, 5], sample: 200, style: 'thick', color: 'red' })
-              const pointA = new Point({ coordinates: [xA, yA], color: 'red', mark: '+' })
-              const pointB = new Point({ coordinates: [xB, yB], color: 'red', mark: '+' })
-              const repere = new Repere({ x: '0.7cm', y: '0.7cm' })
+              const pointA = new Point({ coordinates: [xA, yA], color: 'red' })
+              const pointB = new Point({ coordinates: [xB, yB], color: 'red' })
+              const repere = new Repere({ x: '0.7cm', y: '0.7cm', xMin: cadre.xMin, xMax: cadre.xMax, yMin: cadre.yMin, yMax: cadre.yMax })
               repere.add(grapheDroite).add(pointA).add(pointB)
-              texteCorr += `<br><br>\\begin{tikzpicture}
+              texteCorr += `<br><br>
               ${repere.renderTikz()}
-              \\end{tikzpicture}<br>
+              <br>
 `
             }
 

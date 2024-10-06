@@ -1,6 +1,7 @@
 import { colorToLatexOrHTML, ObjetMathalea2D, vide2d } from '../../modules/2dGeneralites.js'
 import { context } from '../../modules/context.js'
 import { egal } from '../../modules/outils.js'
+import { arrondi } from '../outils/nombres'
 import { angleOriente } from './angles.js'
 import { traceCompas } from './cercle.js'
 import { codageBissectrice, codageMediatrice, codageSegments } from './codages.js'
@@ -245,7 +246,7 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
   }
   if (this.b !== 0) this.pente = -this.a / this.b
   if (this.b !== 0) this.ordonneeALorigine = -this.c / this.b
-  this.expressionPGF = `${this.pente}*x ${this.ordonneeALorigine > 0 ? '+' : ''}${this.ordonneeALorigine}`
+  this.expressionPGF = `${arrondi(this.pente, 10)}*x ${arrondi(this.ordonneeALorigine, 10) > 0 ? '+' : ''}${arrondi(this.ordonneeALorigine, 10)}`
   let xsav, ysav
   if (this.x1 > this.x2) {
     xsav = this.x1

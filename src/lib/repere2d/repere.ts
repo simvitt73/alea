@@ -8,8 +8,8 @@ import type { Repere2D } from './repere2d'
  *
  */
 export class Repere implements Repere2D {
-  private opening: string = '\\begin{axis}[%'
-  private closing: string = '\\end{axis}'
+  private opening: string = '\\begin{tikzpicture}[scale=1]\\begin{axis}[%'
+  private closing: string = '\\end{axis}\\end{tikzpicture}'
   private options: string[] = []
   private content: string[] = []
   private renderOptions = () => {

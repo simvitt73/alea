@@ -17,7 +17,7 @@ export class Point implements Repere2D {
   mark : string
   label : string
   style : string
-  constructor ({ coordinates, color = 'red', mark = '+', label = '', style = 'mark size = 5pt' }: {coordinates : [number, number], color?: string, mark?: string, label?: string, style?: string}) {
+  constructor ({ coordinates, color = 'red', mark = 'x', label = '', style = 'mark size = 5pt' }: {coordinates : [number, number], color?: string, mark?: string, label?: string, style?: string}) {
     this.coordinates = coordinates
     this.color = color
     this.mark = mark
