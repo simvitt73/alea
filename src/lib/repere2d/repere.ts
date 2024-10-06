@@ -2,18 +2,34 @@ import { Graphe } from './graphe'
 import type { Point } from './point'
 import type { Repere2D } from './repere2d'
 
-// export type
+type RepereOptions = {
+  axisXLine?: 'box' | 'top' | 'middle' | 'center' | 'bottom' | 'none'
+  axisYLine?: 'box' | 'left' | 'middle' | 'center' | 'right' | 'none'
+  x?: string
+  y?: string
+  xMin?: number
+  xMax?: number
+  yMin?: number
+  yMax?: number
+  xTickDistance?: number
+  yTickDistance?: number
+    grid?: 'minor' | 'major' | 'both' | 'none'
+    scale: number
+  moreOptions?: string | null
+}
 /**
  * Définition d'un modèle de repère.
- *
  */
 export class Repere implements Repere2D {
-  private opening: string = '\\begin{tikzpicture}[scale=1]\\begin{axis}[%'
   private closing: string = '\\end{axis}\\end{tikzpicture}'
   private options: string[] = []
   private content: string[] = []
   private renderOptions = () => {
     return this.options.map((x) => x.replace(/^/, '  ')).join(',%\n')
+  }
+
+  private renderOpening = () => {
+    return `\\begin{tikzpicture}[scale=${this.scale}]\\begin{axis}[%`
   }
 
   private axisXLine: 'box' | 'top' | 'middle' | 'center' | 'bottom' | 'none' // positionnement de l'axe des abscisses dans le repère
@@ -27,6 +43,7 @@ export class Repere implements Repere2D {
   private xTickDistance: number // distance entre les tirets sur l'axe des abscisses
   private yTickDistance: number // distance entre les tirets sur l'axe des ordonnées
   private grid: 'minor' | 'major' | 'both' | 'none' // type de grille
+  private scale: number // échelle de la figure TikZ
   // private moreOptions: string | null // ajouter d'autre options au repère
   renderTikz () {
     this.options.push(`axis x line = ${this.axisXLine}`)
@@ -41,7 +58,7 @@ export class Repere implements Repere2D {
     this.options.push(`ytick distance = ${this.yTickDistance}`)
     this.options.push(`grid = ${this.grid}`)
     // if (this.moreOptions) this.options.push(`${this.moreOptions}`)
-    return [this.opening, this.renderOptions(), ']', this.content, this.closing].join('\n')
+    return [this.renderOpening(), this.renderOptions(), ']', this.content, this.closing].join('\n')
   }
 
   constructor ({
@@ -55,21 +72,9 @@ export class Repere implements Repere2D {
     yMax = 5.2,
     xTickDistance = 1,
     yTickDistance = 1,
-    grid = 'both'
-  }: {
-    axisXLine?: 'box' | 'top' | 'middle' | 'center' | 'bottom' | 'none'
-    axisYLine?: 'box' | 'left' | 'middle' | 'center' | 'right' | 'none'
-    x?: string
-    y?: string
-    xMin?: number
-    xMax?: number
-    yMin?: number
-    yMax?: number
-    xTickDistance?: number
-    yTickDistance?: number
-      grid?: 'minor' | 'major' | 'both' | 'none'
-    moreOptions?: string | null
-  } = {}) {
+    grid = 'both',
+    scale = 1
+  }: RepereOptions = {}) {
     this.axisXLine = axisXLine
     this.axisYLine = axisYLine
     this.x = x
@@ -81,6 +86,7 @@ export class Repere implements Repere2D {
     this.xTickDistance = xTickDistance
     this.yTickDistance = yTickDistance
     this.grid = grid
+    this.scale = scale
   }
 
   add (obj: Graphe | Point) {
