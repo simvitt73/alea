@@ -3,11 +3,12 @@ import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../deprecatedExercice.js'
 import { contraindreValeur, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive.js'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { context } from '../../modules/context.js'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { factorisation } from '../../lib/outils/primalite'
 
 export const titre = 'Recourir à une décomposition en facteurs premiers dans des cas simples'
 export const interactifReady = true
@@ -28,6 +29,49 @@ export const refs = {
   'fr-fr': ['3A10-5'],
   'fr-ch': ['9NO4-28']
 }
+
+export function extraitLaDecomposition (expression) {
+  const listeFacteurs = expression.split('\\times')
+  const decompo = []
+  for (const facteur of listeFacteurs) {
+    if (facteur.includes('^')) { // c'est une puissance
+      const puissance = facteur.split('^')
+      const mantisse = Number(puissance[0])
+      const exposant = Number(puissance[1].replace('{', '').replace('}', ''))
+      const element = decompo.find(el => el[0] === mantisse)
+      if (element == null) { // il n'y a pas eu encore ce facteur, on crée son élément dans decompo
+        decompo.push([mantisse, exposant])
+      } else { // il y a déjà eu un facteur mantisse, on incrément l'exposant
+        element[1] += exposant
+      }
+    } else { // c'est un facteur simple
+      const mantisse = Number(facteur)
+      const exposant = 1
+      const element = decompo.find(el => el[0] === mantisse)
+      if (element == null) { // il n'y a pas eu encore ce facteur, on crée son élément dans decompo
+        decompo.push([mantisse, exposant])
+      } else { // il y a déjà eu un facteur mantisse, on incrément l'exposant
+        element[1] += exposant
+      }
+    }
+  }
+  return decompo
+}
+
+function compareLesDecomposition (decompo1, decompo2) {
+  if (!(Array.isArray(decompo1) && Array.isArray(decompo2))) return false
+  if (decompo1.length !== decompo2.length) return false
+  for (const facteur of decompo2) {
+    const mantisse = facteur[0]
+    const exposant = facteur[1]
+    const element = decompo1.find(el => el[0] === mantisse)
+    if (element == null) return false
+    const exposant1 = element[1]
+    if (exposant !== exposant1) return false
+  }
+  return true
+}
+
 export default function RecourirDecompositionFacteursPremiers () {
   Exercice.call(this)
   this.nbQuestions = 4
@@ -140,28 +184,24 @@ export default function RecourirDecompositionFacteursPremiers () {
           texte = `$${texNombre(nbADecomposer)}`
           texteCorr = texte + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(2, a, 3, b, 5, c)[0], 'blue') + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(2, a, 3, b, 5, c)[1]) + '$'
           texte += '$' + ajouteChampTexteMathLive(this, i, 'inline largeur01 nospacebefore ' + KeyboardType.clavierFullOperations, { texteAvant: `${sp(2)}=` })
-          setReponse(this, i, ecrireReponse(2, a, 3, b, 5, c), { formatInteractif: 'texte' })
           break
         case 2: // 2, 3 et 7
           nbADecomposer = Math.pow(2, a) * Math.pow(3, b) * Math.pow(7, c)
           texte = `$${texNombre(nbADecomposer)}`
           texteCorr = texte + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(2, a, 3, b, 7, c)[0], 'blue') + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(2, a, 3, b, 7, c)[1]) + '$'
           texte += '$' + ajouteChampTexteMathLive(this, i, 'inline largeur01 nospacebefore ' + KeyboardType.clavierFullOperations, { texteAvant: `${sp(2)}=` })
-          setReponse(this, i, ecrireReponse(2, a, 3, b, 7, c), { formatInteractif: 'texte' })
           break
         case 3: // 2, 5 et 7
           nbADecomposer = Math.pow(2, a) * Math.pow(5, b) * Math.pow(7, c)
           texte = `$${texNombre(nbADecomposer)}`
           texteCorr = texte + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(2, a, 5, b, 7, c)[0], 'blue') + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(2, a, 5, b, 7, c)[1]) + '$'
           texte += '$' + ajouteChampTexteMathLive(this, i, 'inline largeur01 nospacebefore ' + KeyboardType.clavierFullOperations, { texteAvant: `${sp(2)}=` })
-          setReponse(this, i, ecrireReponse(2, a, 5, b, 7, c), { formatInteractif: 'texte' })
           break
         case 4: // 3, 5 et 7
           nbADecomposer = Math.pow(3, a) * Math.pow(5, b) * Math.pow(7, c)
           texte = `$${texNombre(nbADecomposer)}`
           texteCorr = texte + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(3, a, 5, b, 7, c)[0], 'blue') + `${sp(2)}=${sp(1)}` + miseEnEvidence(ecrireReponse(3, a, 5, b, 7, c)[1]) + '$'
           texte += '$' + ajouteChampTexteMathLive(this, i, 'inline largeur01 nospacebefore ' + KeyboardType.clavierFullOperations, { texteAvant: `${sp(2)}=` })
-          setReponse(this, i, ecrireReponse(3, a, 5, b, 7, c), { formatInteractif: 'texte' })
           break
         case 5: // 11, 13, 17 ou 19 et deux autres facteurs parmi 2, 3 et 5
           facteur1 = choice([2, 3, 5])
@@ -177,9 +217,32 @@ export default function RecourirDecompositionFacteursPremiers () {
           solution = ecrireReponse(facteur1, b, facteur2, c, facteurX, 1)
           texteCorr = texte + `${sp(2)}=${sp(1)}` + miseEnEvidence(solution[0], 'blue') + `${sp(2)}=${sp(1)}` + miseEnEvidence(solution[1]) + '$'
           texte += '$' + ajouteChampTexteMathLive(this, i, 'inline largeur01 nospacebefore ' + KeyboardType.clavierFullOperations, { texteAvant: `${sp(2)}=` })
-          setReponse(this, i, solution, { formatInteractif: 'texte' })
           break
       }
+      const bonneDecomposition = factorisation(nbADecomposer)
+      handleAnswers(this, i, {
+        reponse: { value: bonneDecomposition },
+        callback: (exercice, question) => {
+          let isOk
+          const mfe = document.querySelector(`#champTexteEx${exercice.numeroExercice}Q${question}`)
+          if (mfe == null) return { isOk: false, score: { nbBonnesReponses: 0, nbReponses: 0 } }
+          const expression = mfe.getValue()
+          if (expression == null || expression === '') {
+            isOk = false
+          } else {
+            const decompoSaisie = extraitLaDecomposition(expression)
+            isOk = compareLesDecomposition(decompoSaisie, bonneDecomposition)
+          }
+
+          const spanReponseLigne = document.querySelector(`#resultatCheckEx${exercice.numeroExercice}Q${question}`)
+          if (spanReponseLigne != null) {
+            spanReponseLigne.innerHTML = isOk ? '😎' : '☹️'
+          }
+          return { isOk, score: { nbBonnesReponses: (isOk ? 1 : 0), nbReponses: 1 } }
+        }
+
+      })
+
       if (this.questionJamaisPosee(i, a, b, c)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions.push(texte)
