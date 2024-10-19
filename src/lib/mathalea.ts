@@ -13,6 +13,7 @@ import { ajouteChampTexteMathLive, remplisLesBlancs } from '../lib/interactif/qu
 import uuidToUrl from '../json/uuidsToUrlFR.json'
 import referentielStaticFR from '../json/referentielStaticFR.json'
 import referentielStaticCH from '../json/referentielStaticCH.json'
+import referentielBibliotheque from '../json/referentielBibliotheque.json'
 import 'katex/dist/katex.min.css'
 import renderScratch from './renderScratch.js'
 import { decrypt, isCrypted } from './components/urls.js'
@@ -216,11 +217,25 @@ export async function mathaleaGetExercicesFromParams (params: InterfaceParams[])
             param.uuid.substring(0, 7) === 'evacom_' ||
             param.uuid.startsWith('2nd_')
     ) {
-      const infosExerciceStatique = (param.uuid.substring(0, 7) === 'evacom_') ? getExerciceByUuid(referentielStaticCH, param.uuid) : getExerciceByUuid(referentielStaticFR, param.uuid)
+      let infosExerciceStatique = (param.uuid.substring(0, 7) === 'evacom_') ? getExerciceByUuid(referentielStaticCH, param.uuid) : getExerciceByUuid(referentielStaticFR, param.uuid)
+      if (infosExerciceStatique == null) {
+        infosExerciceStatique = getExerciceByUuid(referentielBibliotheque, param.uuid)
+      }
       let content = ''
       let contentCorr = ''
       if (infosExerciceStatique?.url) {
         const response = await window.fetch(infosExerciceStatique.url)
+        if (response.status === 200) {
+          const text = await response.clone().text()
+          if (!text.trim().startsWith('<!DOCTYPE html>')) {
+            content = text
+          } else {
+            content = '\n\n\t%Exercice non disponible\n\n'
+          }
+        }
+      }
+      if (infosExerciceStatique?.tex) {
+        const response = await window.fetch(infosExerciceStatique.tex)
         if (response.status === 200) {
           const text = await response.clone().text()
           if (!text.trim().startsWith('<!DOCTYPE html>')) {
