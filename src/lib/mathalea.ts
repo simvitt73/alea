@@ -214,28 +214,14 @@ export async function mathaleaGetExercicesFromParams (params: InterfaceParams[])
             param.uuid.substring(0, 4) === 'dnb_' ||
             param.uuid.substring(0, 4) === 'e3c_' ||
             param.uuid.substring(0, 4) === 'bac_' ||
-            param.uuid.substring(0, 7) === 'evacom_' ||
-            param.uuid.startsWith('2nd_')
+            param.uuid.substring(0, 7) === 'evacom_'
+
     ) {
-      let infosExerciceStatique = (param.uuid.substring(0, 7) === 'evacom_') ? getExerciceByUuid(referentielStaticCH, param.uuid) : getExerciceByUuid(referentielStaticFR, param.uuid)
-      if (infosExerciceStatique == null) {
-        infosExerciceStatique = getExerciceByUuid(referentielBibliotheque, param.uuid)
-      }
+      const infosExerciceStatique = (param.uuid.substring(0, 7) === 'evacom_') ? getExerciceByUuid(referentielStaticCH, param.uuid) : getExerciceByUuid(referentielStaticFR, param.uuid)
       let content = ''
       let contentCorr = ''
       if (infosExerciceStatique?.url) {
         const response = await window.fetch(infosExerciceStatique.url)
-        if (response.status === 200) {
-          const text = await response.clone().text()
-          if (!text.trim().startsWith('<!DOCTYPE html>')) {
-            content = text
-          } else {
-            content = '\n\n\t%Exercice non disponible\n\n'
-          }
-        }
-      }
-      if (infosExerciceStatique?.tex) {
-        const response = await window.fetch(infosExerciceStatique.tex)
         if (response.status === 200) {
           const text = await response.clone().text()
           if (!text.trim().startsWith('<!DOCTYPE html>')) {
@@ -267,6 +253,34 @@ export async function mathaleaGetExercicesFromParams (params: InterfaceParams[])
       if (param.uuid.substring(0, 4) === 'bac_') examen = 'BAC'
       if (param.uuid.substring(0, 7) === 'evacom_') examen = 'EVACOM'
       exercices.push({ typeExercice: 'statique', uuid: param.uuid, content, contentCorr, annee, lieu, mois, numeroInitial, examen })
+    } else if (param.uuid.startsWith('2nd_')) {
+      // Gestion de la bibliothèque d'exercices statiques
+      const infosExerciceStatique = getExerciceByUuid(referentielBibliotheque, param.uuid)
+      let content = ''
+      let contentCorr = ''
+      if (infosExerciceStatique?.tex) {
+        const response = await window.fetch(infosExerciceStatique.tex)
+        if (response.status === 200) {
+          const text = await response.clone().text()
+          if (!text.trim().startsWith('<!DOCTYPE html>')) {
+            content = text
+          } else {
+            content = '\n\n\t%Exercice non disponible\n\n'
+          }
+        }
+      }
+      if (infosExerciceStatique?.texCor) {
+        const response = await window.fetch(infosExerciceStatique.texCor)
+        if (response.status === 200) {
+          const text = await response.clone().text()
+          if (!text.trim().startsWith('<!DOCTYPE html>')) {
+            contentCorr = text
+          } else {
+            contentCorr = '\n\n\t%Exercice non disponible\n\n'
+          }
+        }
+      }
+      exercices.push({ typeExercice: 'statique', uuid: param.uuid, content, contentCorr, annee:'', lieu:'', mois:'', numeroInitial:'', examen:'' })
     } else {
       const exercice = await mathaleaLoadExerciceFromUuid(param.uuid)
       if (typeof exercice === 'undefined') continue
