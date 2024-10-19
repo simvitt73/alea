@@ -1,15 +1,21 @@
 <script lang="ts">
   import HeaderExerciceVueProf from '../../shared/headerExerciceVueProf/HeaderExerciceVueProf.svelte'
   import { retrieveResourceFromUuid } from '../../../../../lib/components/refUtils'
-  import { resourceHasPlace, isStaticType, type JSONReferentielObject, isCrpeType } from '../../../../../lib/types/referentiels'
+  import {
+    resourceHasPlace,
+    isStaticType,
+    type JSONReferentielObject,
+    isCrpeType
+  } from '../../../../../lib/types/referentiels'
   /**
    * Gestion du référentiel pour la recherche de l'uuid
-  */
+   */
   import referentielStaticFR from '../../../../../json/referentielStaticFR.json'
   import referentielStaticCH from '../../../../../json/referentielStaticCH.json'
 
   import referentielBibliotheque from '../../../../../json/referentielBibliotheque.json'
   import type { HeaderProps } from '../../../../../lib/types/ui'
+  import Exercice from '../../Exercice.svelte'
   // on rassemble les deux référentiel statique
   const allStaticReferentiels: JSONReferentielObject = {
     ...referentielBibliotheque,
@@ -30,22 +36,92 @@
   export let zoomFactor: string
   export let isSolutionAccessible: boolean
   const foundResource = retrieveResourceFromUuid(allStaticReferentiels, uuid)
-  const resourceToDisplay = isStaticType(foundResource) || isCrpeType(foundResource)
-    ? { ...foundResource }
-    : null
-  const exercice =
+  interface ResourceToDisplay {
+    png: string
+    pngCor: string
+    tex: string
+    texCor: string
+    typeExercice: 'static' | 'dnb' | 'bac' | 'e3c' | 'evacom'
+    uuid: string
+    tags: string[]
+    titre?: string
+    difficulte?: string
+    texIndice?: string
+    pngIndice?: string
+    texReponse?: string
+    pngReponse?: string
+    texSolution?: string
+    pngSolution?: string
+  }
+  const resourceToDisplay: ResourceToDisplay | null =
+    isStaticType(foundResource) || isCrpeType(foundResource)
+      ? { ...foundResource }
+      : null
+  interface Exercice {
+    png: string[]
+    pngCor: string[]
+    difficulty?: string
+    titre?: string
+    tex?: string
+    texCor?: string
+    texIndice?: string
+    pngIndice?: string
+    texReponse?: string
+    pngReponse?: string
+    texSolution?: string
+    pngSolution?: string
+  }
+  const exercice: Exercice | null =
     resourceToDisplay === null
       ? null
       : {
-          png: typeof resourceToDisplay.png === 'string' ? [resourceToDisplay.png] : resourceToDisplay.png,
-          pngCor: typeof resourceToDisplay.pngCor === 'string' ? [resourceToDisplay.pngCor] : resourceToDisplay.pngCor
+          png:
+            typeof resourceToDisplay.png === 'string'
+              ? [resourceToDisplay.png]
+              : resourceToDisplay.png,
+          pngCor:
+            typeof resourceToDisplay.pngCor === 'string'
+              ? [resourceToDisplay.pngCor]
+              : resourceToDisplay.pngCor
         }
+  if (resourceToDisplay !== null && exercice !== null) {
+    if (resourceToDisplay.titre !== undefined) {
+      exercice.titre = resourceToDisplay.titre
+    }
+    if (resourceToDisplay.difficulte !== undefined) {
+      exercice.difficulty = resourceToDisplay.difficulte
+    }
+    if (resourceToDisplay.pngIndice !== undefined) {
+      exercice.pngIndice = resourceToDisplay.pngIndice
+    }
+    if (resourceToDisplay.texIndice !== undefined) {
+      exercice.texIndice = resourceToDisplay.texIndice
+    }
+    if (resourceToDisplay.pngSolution !== undefined) {
+      exercice.pngSolution = resourceToDisplay.pngSolution
+    }
+    if (resourceToDisplay.texSolution !== undefined) {
+      exercice.texSolution = resourceToDisplay.texSolution
+    }
+    if (resourceToDisplay.pngReponse !== undefined) {
+      exercice.pngReponse = resourceToDisplay.pngReponse
+    }
+    if (resourceToDisplay.texReponse !== undefined) {
+      exercice.texReponse = resourceToDisplay.texReponse
+    }
+    if (resourceToDisplay.tex !== undefined) {
+      exercice.tex = resourceToDisplay.tex
+    }
+    if (resourceToDisplay.texCor !== undefined) {
+      exercice.texCor = resourceToDisplay.texCor
+    }
+  }
   let isCorrectionVisible = false
   let isContentVisible = true
   let headerExerciceProps: HeaderProps
   if (resourceToDisplay !== null) {
     headerExerciceProps = {
-      title: '',
+      title: exercice?.titre ?? '',
       id: '',
       isInteractif: false,
       settingsReady: false,
@@ -60,7 +136,7 @@
       headerExerciceProps.title = `${resourceToDisplay.typeExercice.toUpperCase()} ${
         resourceToDisplay.mois || ''
       } ${resourceToDisplay.annee} ${resourceToDisplay.lieu} - ${resourceToDisplay.numeroInitial}`
-    } else {
+    } else if (resourceToDisplay.titre == null || resourceToDisplay.titre === '') {
       headerExerciceProps.title = resourceToDisplay.uuid
     }
   }
@@ -70,10 +146,13 @@
   function handleNoCorrectionAvailable () {
     noCorrectionAvailable = true
   }
+
 </script>
 
 <HeaderExerciceVueProf
-  {...headerExerciceProps}{indiceExercice}{indiceLastExercice}
+  {...headerExerciceProps}
+  {indiceExercice}
+  {indiceLastExercice}
   on:clickCorrection={(event) => {
     isCorrectionVisible = event.detail.isCorrectionVisible
   }}
@@ -105,13 +184,13 @@
               <p class="text-red-500">Aucune correction disponible</p>
             {:else}
               <img
-              src={url}
-              class="p-2"
-              style="width: calc(100% * {zoomFactor}"
-              alt="correction"
-              on:error={handleNoCorrectionAvailable}
+                src={url}
+                class="p-2"
+                style="width: calc(100% * {zoomFactor}"
+                alt="correction"
+                on:error={handleNoCorrectionAvailable}
               />
-              {/if}
+            {/if}
           {/each}
         {/if}
       </div>
