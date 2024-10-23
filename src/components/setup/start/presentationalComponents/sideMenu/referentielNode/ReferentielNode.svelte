@@ -3,6 +3,7 @@
   import {
     isExamItemInReferentiel,
     isJSONReferentielEnding,
+    isParentOfStaticEnding,
     isRealJSONReferentielObject,
     type JSONReferentielObject
   } from '../../../../../../lib/types/referentiels'
