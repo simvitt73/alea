@@ -3,6 +3,7 @@
   import {
     isExamItemInReferentiel,
     isJSONReferentielEnding,
+    isRealJSONReferentielObject,
     type JSONReferentielObject
   } from '../../../../../../lib/types/referentiels'
   import { codeToLevelTitle } from '../../../../../../lib/components/refUtils'
@@ -19,6 +20,7 @@
     bibliothequeDisplayedContent
   } from '../../../../../../lib/stores/generalStore'
   import { monthes } from '../../../../../../lib/components/handleDate'
+  import StaticEnding from './StaticEnding.svelte'
 
   export let subset: JSONReferentielObject
   export let unfold: boolean = false
@@ -191,7 +193,14 @@
       <ul transition:slide={{ duration: 500 }}>
         {#each items as [key, obj], i}
           <li>
-            {#if isJSONReferentielEnding(obj)}
+            {#if isRealJSONReferentielObject(obj) && isParentOfStaticEnding(obj)}
+              <StaticEnding
+                pathToThisNode={[...pathToThisNode, key]}
+                referentielToDisplay={obj}
+                nestedLevelCount={nestedLevelCount + 1}
+                isEmpty={false}
+              />
+            {:else if isJSONReferentielEnding(obj)}
               <ReferentielEnding
                 ending={obj}
                 nestedLevelCount={nestedLevelCount + 1}
