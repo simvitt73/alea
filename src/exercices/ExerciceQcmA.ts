@@ -5,7 +5,7 @@ export default class ExerciceQcmA extends ExerciceQcm {
   versionAleatoire: () => void = () => {}
   constructor () {
     super()
-    this.besoinFormulaireCaseACocher = ['version originale', false]
+    this.besoinFormulaireCaseACocher = ['Version originale', false]
     this.sup = false
     this.versionAleatoire()
   }

@@ -20,7 +20,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM rapport d\'homothétie (2023 Métropole)'
+export const titre = 'Rapport d\'homothétie (2023 Métropole)'
 export const dateDePublication = '28/10/2024'
 
 export default class NCDecembre23Exo1Q5 extends ExerciceQcmA {

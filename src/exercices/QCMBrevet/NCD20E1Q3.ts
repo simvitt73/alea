@@ -7,21 +7,21 @@ import ExerciceQcmA from '../ExerciceQcmA'
 
 export const uuid = 'b87c3'
 export const refs = {
-  'fr-fr': ['3QCMS14-5'],
+  'fr-fr': ['3QCMS-5'],
   'fr-ch': []
 }
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM déterminer la médiane d\'une série d\'effectif impair (issu de Nouvelle Calédonie Décembre 2020)'
+export const titre = 'Déterminer la médiane d\'une série d\'effectif impair (issu de Nouvelle Calédonie Décembre 2020)'
 export const dateDePublication = '1/11/2024'
 // Ceci est un exemple de QCM avec version originale et version aléatoire
 export default class NouvelleCaledonieDec20Exo1Q3 extends ExerciceQcmA {
   // Ceci est la fonction qui s'occupe d'écrire l'énoncé, la correction et les réponses
   // Elle factorise le code qui serait dupliqué dans versionAleatoire et versionOriginale
   private appliquerLesValeurs (valeur : Array<number>, mediane : number, effectif : number): void {
-    const moyenne = round(eval(valeur.join('+')) / valeur.length)
+    const moyenne = round(valeur.reduce((acc, curr) => acc + curr, 0) / valeur.length)
     this.reponses = [
       `$${String(mediane)}$`, // Réponse correcte.
       `$${String(valeur[(effectif - 1) / 2])}$`, // Valeur placée au bon rang mais dans la série non ordonnée.
@@ -54,9 +54,7 @@ export default class NouvelleCaledonieDec20Exo1Q3 extends ExerciceQcmA {
     const n = 3 // nombre de réponses différentes voulues (on rappelle que la première réponse est la bonne)
     do {
       const effectif = 2 * randint(0, 4) + 5 // effectif impair compris entre 5 et 13
-      console.log('effectif = ', effectif)
       const mediane = randint(0, 12) + 8 // médiane entière comprise entre 8 et 20
-      console.log('mediane = ', mediane)
       const valeur = []
       for (let i = 0; i < ((effectif - 1) / 2); i++) {
         valeur[i] = randint(0, mediane - 2) + 1 // moitié des valeurs, entières et strictement comprises entre 0 et la médiane

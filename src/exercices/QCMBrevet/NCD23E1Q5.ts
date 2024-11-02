@@ -13,7 +13,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM déterminer la médiane d\'une série d\'effectif impair (issu de Nouvelle Calédonie Décembre 2023)'
+export const titre = 'Déterminer la médiane d\'une série d\'effectif impair (issu de Nouvelle Calédonie Décembre 2023)'
 export const dateDePublication = '31/10/2024'
 // Ceci est un exemple de QCM avec version originale et version aléatoire
 export default class NouvelleCaledonieDec23Exo1Q5 extends ExerciceQcmA {
@@ -53,9 +53,7 @@ export default class NouvelleCaledonieDec23Exo1Q5 extends ExerciceQcmA {
     const n = 3 // nombre de réponses différentes voulues (on rappelle que la première réponse est la bonne)
     do {
       const effectif = 2 * randint(0, 4) + 5 // effectif impair compris entre 5 et 13
-      console.log('effectif = ', effectif)
       const mediane = randint(0, 12) + 8 // médiane entière comprise entre 8 et 20
-      console.log('mediane = ', mediane)
       const valeur = []
       for (let i = 0; i < ((effectif - 1) / 2); i++) {
         valeur[i] = randint(0, mediane - 2) + 1 // moitié des valeurs, entières et strictement comprises entre 0 et la médiane
