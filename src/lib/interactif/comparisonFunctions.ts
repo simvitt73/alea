@@ -36,6 +36,7 @@ export type OptionsComparaisonType = {
   factorisation?:boolean
   exclusifFactorisation?:boolean
   nbFacteursIdentiquesFactorisation?:boolean
+  unSeulFacteurLitteral?:boolean
   HMS?: boolean
   intervalle?: boolean
   estDansIntervalle?: boolean
@@ -334,6 +335,7 @@ function allFactorsMatch (ops1: readonly BoxedExpression[], ops2: readonly Boxed
   let nbMatchOK = 0
   let nbNonAttendu = 0
   let allMatch = true
+  console.log(ops1, ops2)
   for (const op of ops1) {
     let match = false
     for (const op2 of ops2) {
@@ -373,7 +375,8 @@ function allFactorsMatch (ops1: readonly BoxedExpression[], ops2: readonly Boxed
  * @param {string} goodAnswer
  * @param {Object} [options={}] - Options pour la comparaison.
  * @param {boolean} [options.exclusifFactorisation=false] // si true, seuls les facteurs (modulo l'ordre) égaux à ceux de goodAnswer seront considérés corrects.
- * @param {boolean} [options.nbFacteursIdentiquesFactorisation=false] // // si true, op1 et op2 sont considérés égaux que s'ils contiennent le même nombre de facteurs.
+ * @param {boolean} [options.nbFacteursIdentiquesFactorisation=false] // si true, input et goodAnswer sont considérés égaux que s'ils contiennent le même nombre de facteurs.
+ * @param {boolean} [options.unSeulFacteurLitteral=false] // si true, input peut être factorisé et ne contenir qu'un seul facteur littéral (les autres sont des nombres)
  * @return ResultType
  * @author Jean-Claude Lhote
  */
@@ -382,7 +385,8 @@ export function factorisationCompare (
   goodAnswer: string,
   {
     exclusifFactorisation = false,
-    nbFacteursIdentiquesFactorisation = false
+    nbFacteursIdentiquesFactorisation = false,
+    unSeulFacteurLitteral = false
   } = {}
 ): ResultType {
   const clean = generateCleaner([
@@ -421,7 +425,7 @@ export function factorisationCompare (
   }
 
   // isOk1 atteste que le développement de la saisie et de la reponse attendue sont égales
-  /* const saisieDev = engine
+  const saisieDev = engine
     .box(['ExpandAll', saisieParsed])
     .evaluate()
     .simplify().canonical
@@ -429,8 +433,8 @@ export function factorisationCompare (
     .box(['ExpandAll', reponseParsed])
     .evaluate()
     .simplify().canonical
-  const isOk1 = saisieDev.isEqual(reponseDev) */
-  const isOk1 = saisieParsedInit.isEqual(reponseParsedInit) // EE : Depuis la version 0.26 de cortexEngine, ce qui précède devrait être inutile. 30/10/2024 : en phase de test.
+  const isOk1 = saisieDev.isEqual(reponseDev)
+  // const isOk1 = saisieParsedInit.isEqual(reponseParsedInit) // EE : Depuis la version 0.26 de cortexEngine, ce qui précède devrait être inutile sauf que (x+5)^2 différent de (x+5)(x+5)
 
   if (!['Multiply', 'Power', 'Square'].includes(saisieHead)) {
     let feedback = 'L\'expression saisie n\'est pas factorisée'
@@ -456,7 +460,15 @@ export function factorisationCompare (
     }
     return allFactorsMatch(reponseFactors, saisieFactors, signe, exclusifFactorisation)
   }
+  console.log(isOk1)
   if (!isOk1 || exclusifFactorisation) return allFactorsMatch(reponseFactors, saisieFactors, signe, exclusifFactorisation)
+  if (isOk1 && unSeulFacteurLitteral) {
+    let nbNumber = 0
+    for (const op of saisieFactors) {
+      if (!isNaN(Number(op.json))) nbNumber++
+    }
+    if (nbNumber === saisieFactors.length - 1) return { isOk: false, feedback: 'L\'expression saisie peut être davantage factorisée.' }
+  }
   return { isOk: true }
 }
 
@@ -528,6 +540,7 @@ export function fonctionComparaison (
     factorisation, // Documenté
     exclusifFactorisation, // Documenté
     nbFacteursIdentiquesFactorisation, // Documenté
+    unSeulFacteurLitteral,
     HMS,
     intervalle,
     estDansIntervalle,
@@ -560,6 +573,7 @@ export function fonctionComparaison (
     factorisation: false,
     exclusifFactorisation: false,
     nbFacteursIdentiquesFactorisation: false,
+    unSeulFacteurLitteral: false,
     HMS: false,
     intervalle: false,
     estDansIntervalle: false,
@@ -588,7 +602,7 @@ export function fonctionComparaison (
   if (estDansIntervalle) return intervalCompare(input, goodAnswer)
   if (ecritureScientifique) return scientificCompare(input, goodAnswer)
   if (unite) { return unitsCompare(input, goodAnswer, { precision: precisionUnite }) }
-  if (factorisation || exclusifFactorisation || nbFacteursIdentiquesFactorisation) return factorisationCompare(input, goodAnswer, { exclusifFactorisation, nbFacteursIdentiquesFactorisation })
+  if (factorisation || exclusifFactorisation || nbFacteursIdentiquesFactorisation || unSeulFacteurLitteral) return factorisationCompare(input, goodAnswer, { exclusifFactorisation, nbFacteursIdentiquesFactorisation, unSeulFacteurLitteral })
   if (puissance || seulementCertainesPuissances || sansExposantUn) return comparaisonPuissances(input, goodAnswer, { seulementCertainesPuissances, sansExposantUn })
   if (texteAvecCasse) return texteAvecCasseCompare(input, goodAnswer)
   if (texteSansCasse) return texteSansCasseCompare(input, goodAnswer)
