@@ -19,7 +19,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM cosinus dans le triangle rectangle (2023 Métropole)'
+export const titre = 'Trigonométrie dans le triangle rectangle (2023 Métropole)'
 export const dateDePublication = '28/10/2024'
 
 export default class MetropoleJuin24Exo4Q3 extends ExerciceQcmA {

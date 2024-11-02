@@ -768,7 +768,7 @@
       "3QCMN": "Nombres et calculs",
       "3QCMS": "Statistiques",
       "3QCMProb": "Probabilités",
-      "3QCMA": "Arithmétique",
+      "3QCMArith": "Arithmétique",
       "3QCMR": "Relatifs",
       "3QCML": "Calcul littéral",
       "3QCMProp": "Proportionnalité",
@@ -777,7 +777,7 @@
       "3QCMTrig": "Trigonométrie",
       "3QCMH": "Homothétie",
       "3QCME": "Espace",
-      "3QCMP": "Puissances",
+      "3QCMPuis": "Puissances",
       "3QCMAlgo": "Algorithmique",
       "3QCMO": "Opérations"
     }

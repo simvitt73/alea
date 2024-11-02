@@ -13,7 +13,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM calculating the image by a function (from the 2024 Metropole exam)'
+export const titre = 'Calculating the image by a function (from the 2024 Metropole exam)'
 export const dateDePublication = '10/28/2024'
 // This is an example of a QCM with original and random versions
 export default class MetropoleJuin24Exo4Q1 extends ExerciceQcmA {

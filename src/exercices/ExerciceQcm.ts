@@ -1,6 +1,8 @@
 import { qcmCamExport } from '../lib/amc/qcmCam'
 import { propositionsQcm } from '../lib/interactif/qcm'
+import { shuffle } from '../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../lib/outils/embellissements'
+import { range } from '../lib/outils/nombres'
 import { context } from '../modules/context'
 import Exercice from './Exercice'
 
@@ -16,31 +18,6 @@ export const amcType = 'qcmMono'
 export const nombreElementsDifferents = (liste: string[]) => {
   const elements = new Set(liste)
   return elements.size
-}
-
-function ajouteLettres (texte: string) {
-  const separateur = context.isHtml ? '<label' : !context.isAmc ? '\\square' : '\\AMCBox'
-  // Pour AMC ça ne marche pas parce que texte est vide : c'est AMC qui crée le qcm... je ne sais pas comment faire pour le moment
-  // Mais ça reste compatible...
-  const chunks = texte.split(separateur)
-  let texteAvecLettres = chunks[0]
-  const lettres = ['A  ', 'B  ', 'C  ', 'D  ', 'E  ', 'F  ', 'G  ', 'H  ', 'I  ', 'J  ']
-  for (let i = 0; i < chunks.length - 1; i++) {
-    texteAvecLettres += `${lettres[i]}:${separateur}${chunks[i + 1]}`
-  }
-  return texteAvecLettres
-}
-
-function retrouveLaBonneReponse (texte: string) {
-  const separateur = context.isHtml ? '<label' : !context.isAmc ? '\\square' : '\\AMCBox'
-  const matcher = context.isHtml ? 'checked' : '\\blacksquare'
-  const chunks = texte.split(separateur)
-  for (let i = 0; i < chunks.length - 1; i++) {
-    if (chunks[i].includes(matcher)) {
-      return i
-    }
-  }
-  return -1
 }
 
 // class à utiliser pour fabriquer des Qcms sans aléatoirisation (en cas d'aléatoirisation, on utilisera ExerciceQcmA à la place)
@@ -70,7 +47,7 @@ export default class ExerciceQcm extends Exercice {
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
     this.spacing = 1 // à adapter selon le contenu de l'énoncé
-    this.spacingCorr = 3 // idem pour la correction
+    this.spacingCorr = 2 // idem pour la correction
     // Les options pour le qcm à modifier éventuellement (vertical à true pour les longues réponses par exemple)
     this.options = { vertical: false, ordered: false }
     this.versionOriginale()
@@ -90,24 +67,28 @@ ${this.interactif || context.isAmc ? 'Cocher la case correspondante.' : 'Donner 
     let texte = this.enonce
     this.autoCorrection[0] = {}
     if (this.options != null) {
-      this.autoCorrection[0].options = this.options
+      this.autoCorrection[0].options = { ...this.options, ordered: true }
+    } else {
+      this.autoCorrection[0].options = { ordered: true } // Ordre fixé : le brassage a lieu ci dessous afin de conserver les lettres dans l'ordre sans avoir besoin de retrouver qui est qui
     }
-
+    const nbReponses = this.reponses.length
+    const lesReponses = range(nbReponses - 1)
+    const index = shuffle(lesReponses) // On crée la liste index qui contient les index mélangés des réponses
     this.autoCorrection[0].propositions = []
     for (let i = 0; i < this.reponses.length; i++) {
       this.autoCorrection[0].propositions.push({
-        texte: this.reponses[i],
-        statut: i === 0
+        texte: this.reponses[index[i]],
+        statut: index[i] === 0
       })
     }
     const lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].slice(0, this.reponses.length)
 
-    const monQcm = propositionsQcm(this, 0)
-    texte += `<br>${ajouteLettres(monQcm.texte)}`
+    const monQcm = propositionsQcm(this, 0, { style: 'margin:0 3px 0 3px;', format: this.interactif ? 'case' : 'lettre' })
+    texte += `<br>${monQcm.texte}`
 
-    const laBonneLettre = lettres[retrouveLaBonneReponse(monQcm.texteCorr)]
+    const laBonneLettre = lettres[index.findIndex(el => el === 0)]
     // Ici on colle le texte de la correction à partir du latex d'origine (vérifier la compatibilité Katex et doubler les \)s
-    const texteCorr = `${this.correction}<br>La bonne réponse est la réponse ${texteEnCouleurEtGras(laBonneLettre)}.`
+    const texteCorr = `${monQcm.texteCorr}${this.correction}<br>La bonne réponse est la réponse ${texteEnCouleurEtGras(laBonneLettre)}.`
 
     this.listeQuestions[0] = texte
     this.listeCorrections[0] = texteCorr

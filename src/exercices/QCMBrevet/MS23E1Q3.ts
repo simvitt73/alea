@@ -14,7 +14,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM calcul expression 2nd degré (septembre 2023 Métropole)'
+export const titre = 'Calcul expression 2nd degré (septembre 2023 Métropole)'
 export const dateDePublication = '28/10/2024'
 
 export default class MetropoleSep23Ex1Q3 extends ExerciceQcmA {

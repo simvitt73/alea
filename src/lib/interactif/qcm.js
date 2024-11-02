@@ -4,6 +4,8 @@ import { get } from '../html/dom.js'
 import { messageFeedback } from '../../modules/messages.js'
 import { gestionCan } from './gestionCan.js'
 import { afficheScore } from './gestionInteractif.ts'
+import { lettreDepuisChiffre } from '../outils/outilString'
+import { barreTexte, miseEnEvidence, texteEnCouleurEtGras, texteGras } from '../outils/embellissements'
 
 export function verifQuestionQcm (exercice, i) {
   let resultat
@@ -114,14 +116,18 @@ export function verifQuestionQcm (exercice, i) {
 /**
  * @param {exercice}
  * @param {number} i indice de la question
+ * @param {{style: string, format: string}} options
  * @returns {{texte: string, texteCorr: string}} {texte, texteCorr} le texte à ajouter pour la question traitée
  */
-export function propositionsQcm (exercice, i) {
+export function propositionsQcm (exercice, i, options) {
   let texte = ''
   let texteCorr = ''
   let espace = ''
   let nbCols = 1
   let vertical = false
+  const classCss = options?.style != null && options.style !== ''
+    ? `class="ml-2" style="${options.style};" `
+    : 'class="ml-2"'
   if (exercice?.autoCorrection[i]?.propositions === undefined) {
     window.notify(
       'propositionsQcm a reçu une liste de propositions undefined',
@@ -163,6 +169,27 @@ export function propositionsQcm (exercice, i) {
   // On regarde si il n'y a pas de doublons dans les propositions de réponse. Si c'est le cas, on enlève les mauvaises réponses en double.
   elimineDoublons(exercice.autoCorrection[i].propositions)
   if (!context.isHtml) {
+    const formateQ = (format, rep) => {
+      if (format == null || format === 'case') return '$\\square\\;$'
+      if (format === 'lettre') {
+        return `${texteGras(lettreDepuisChiffre(rep + 1))} :`
+      }
+      return `${texteGras(lettreDepuisChiffre(rep + 1))}$\\square\\;$`
+    }
+    const formateRV = (format, rep) => {
+      if (format == null || format === 'case') return '$\\blacksquare\\;$'
+      if (format === 'lettre') {
+        return `${texteEnCouleurEtGras(lettreDepuisChiffre(rep + 1))} :`
+      }
+      return `${texteEnCouleurEtGras(lettreDepuisChiffre(rep + 1))}$\\blacksquare\\;$`
+    }
+    const formateRF = (format, rep) => {
+      if (format == null || format === 'case') return '$\\square\\;$'
+      if (format === 'lettre') {
+        return `$${miseEnEvidence(`\\cancel{\\text{${lettreDepuisChiffre(rep + 1)}}}`, 'black')}$ :`
+      }
+      return `$${miseEnEvidence(`\\cancel{\\text{${lettreDepuisChiffre(rep + 1)}}}`, 'black')} \\square\\;$`
+    }
     texte += nbCols === 1 ? '\t' : `\n\n\\begin{multicols}{${nbCols}}\n\t`
     texteCorr += nbCols === 1 ? '\t' : `\n\n\\begin{multicols}{${nbCols}}\n\t`
     // texte += '\\\\\n\t'
@@ -171,11 +198,11 @@ export function propositionsQcm (exercice, i) {
       rep < exercice.autoCorrection[i].propositions.length;
       rep++
     ) {
-      texte += `$\\square\\;$ ${exercice.autoCorrection[i].propositions[rep].texte}`
+      texte += `${formateQ(options?.format, rep)} ${exercice.autoCorrection[i].propositions[rep].texte}`
       if (exercice.autoCorrection[i].propositions[rep].statut) {
-        texteCorr += `$\\blacksquare\\;$ ${exercice.autoCorrection[i].propositions[rep].texte}`
+        texteCorr += `${formateRV(options?.format, rep)} ${exercice.autoCorrection[i].propositions[rep].texte}`
       } else {
-        texteCorr += `$\\square\\;$ ${exercice.autoCorrection[i].propositions[rep].texte}`
+        texteCorr += `${formateRF(options?.format, rep)} ${exercice.autoCorrection[i].propositions[rep].texte}`
       }
       if (vertical) {
         texte += '\\\\\n\t'
@@ -189,6 +216,29 @@ export function propositionsQcm (exercice, i) {
     texteCorr += nbCols === 1 ? '' : '\\end{multicols}'
   }
   if (context.isHtml) {
+    const formateQ = (format, rep) => {
+      if (format == null || format === 'case') return `<input type="checkbox" tabindex="0" style="height: 1rem; width: 1rem;" class="disabled:cursor-default" id="checkEx${exercice.numeroExercice}Q${i}R${rep}">`
+      if (format === 'lettre') {
+        return `<label ${classCss} >${texteGras(lettreDepuisChiffre(rep + 1))} :</label>`
+      }
+      return `<input type="checkbox" tabindex="0" style="height: 1rem; width: 1rem;" class="disabled:cursor-default" id="checkEx${exercice.numeroExercice}Q${i}R${rep}"><label ${classCss} >${lettreDepuisChiffre(rep + 1)} : </label>`
+      // return `${lettreDepuisChiffre(rep + 1)}$\\square\\;$`
+    }
+    const formateRV = (format, rep) => {
+      if (format == null || format === 'case') return '<input type="checkbox" tabindex="0" style="height: 1rem; width: 1rem;" class="disabled:cursor-default" checked>'
+      if (format === 'lettre') {
+        return `<label ${classCss} >${texteEnCouleurEtGras(lettreDepuisChiffre(rep + 1))} :</label>`
+      }
+      return `<input type="checkbox" tabindex="0" style="height: 1rem; width: 1rem;" class="disabled:cursor-default" checked><label ${classCss} >${texteEnCouleurEtGras(lettreDepuisChiffre(rep + 1))}</label>`
+    }
+    const formateRF = (format, rep) => {
+      if (format == null || format === 'case') return '<input type="checkbox" tabindex="0" style="height: 1rem; width: 1rem;" class="disabled:cursor-default">'
+      if (format === 'lettre') {
+        return `<label ${classCss} >${texteGras(`${barreTexte(lettreDepuisChiffre(rep + 1))}`)} :</label>`
+      }
+      return `<input type="checkbox" tabindex="0" style="height: 1rem; width: 1rem;" class="disabled:cursor-default"><label ${classCss} >$${miseEnEvidence(`\\cancel{${lettreDepuisChiffre(rep + 1)}}`, 'black')}$</label>`
+    }
+
     texte = '<div class="my-3">'
     texteCorr = '<div class="my-3">'
     for (
@@ -198,22 +248,15 @@ export function propositionsQcm (exercice, i) {
     ) {
       if (nbCols > 1 && rep % nbCols === 0) texte += '<br>'
       texte += `<div class="ex${exercice.numeroExercice} ${vertical ? '' : 'inline'} my-2">
-      <input type="checkbox" 
-        ${!exercice.interactif ? 'disabled' : ''} 
-        tabindex="0"
-        style="height: 1rem; width: 1rem;"
-        class="disabled:cursor-default"  
-        id="checkEx${exercice.numeroExercice}Q${i}R${rep}">
-      <label id="labelEx${exercice.numeroExercice}Q${i}R${rep}" class="ml-2">${exercice.autoCorrection[i].propositions[rep].texte + espace}</label>
+      ${formateQ(options?.format, rep)}
+      <label id="labelEx${exercice.numeroExercice}Q${i}R${rep}" ${classCss} >${exercice.autoCorrection[i].propositions[rep].texte + espace}</label>
       <div id="feedbackEx${exercice.numeroExercice}Q${i}R${rep}" ${vertical ? '' : 'class="inline"'}></div></div>`
       texteCorr += `<div class="${vertical ? '' : 'inline'}">
-      <input type="checkbox" 
-        disabled ${exercice.autoCorrection[i].propositions[rep].statut ? 'checked' : ''} 
-        tabindex="0"
-        style="height: 1rem; width: 1rem;"
-        class="disabled:cursor-default"  
-      >
-      <label id="labelEx${exercice.numeroExercice}Q${i}R${rep}" class="ml-2">${exercice.autoCorrection[i].propositions[rep].texte + espace}</label>
+    ${exercice.autoCorrection[i].propositions[rep].statut
+     ? formateRV(options?.format, rep)
+     : formateRF(options?.format, rep)
+    }
+      <label id="labelEx${exercice.numeroExercice}Q${i}R${rep}" ${classCss} >${exercice.autoCorrection[i].propositions[rep].texte + espace}</label>
       </div>`
     }
     texte += `</div><div class="m-2" id="resultatCheckEx${exercice.numeroExercice}Q${i}"></div>`
@@ -252,9 +295,9 @@ export function exerciceQcm (exercice) {
             const uichecks = document.querySelectorAll(
               `.ui.checkbox.ex${exercice.numeroExercice}`
             )
-            uichecks.forEach((uicheck) => {
+            for (const uicheck of uichecks) {
               uicheck.classList.add('read-only')
-            })
+            }
             button.classList.add('disabled')
             afficheScore(exercice, nbQuestionsValidees, nbQuestionsNonValidees)
           })

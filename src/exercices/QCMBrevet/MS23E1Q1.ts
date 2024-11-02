@@ -1,6 +1,8 @@
 import { choice } from '../../lib/outils/arrayOutils'
-import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { egalOuApprox } from '../../lib/outils/ecritures'
+import { barreTexte, miseEnEvidence } from '../../lib/outils/embellissements'
 import { premierAvec } from '../../lib/outils/primalite'
+import { texNombre } from '../../lib/outils/texNombre'
 import { nombreElementsDifferents } from '../ExerciceQcm'
 import ExerciceQcmA from '../ExerciceQcmA'
 
@@ -13,7 +15,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM divisibilité (Septembre 2023 Métropole)'
+export const titre = 'Divisibilité (Septembre 2023 Métropole)'
 export const dateDePublication = '28/10/2024'
 
 export default class MetropoleSept23Exo1Q1 extends ExerciceQcmA {
@@ -26,7 +28,9 @@ export default class MetropoleSept23Exo1Q1 extends ExerciceQcmA {
       `$${detrompeurs2[0]}$, $${detrompeurs2[1]}$ et $${detrompeurs2[2]}$`
     ]
     this.enonce = `Citer trois diviseurs de $${detrompeurs2[0]}$.`
-    this.correction = `$${premierAvec}$ ne divise pas $${detrompeurs2[0]}$ ; $${detrompeurs2[1]}$ et $${detrompeurs2[2]}$ non plus ; par contre $${miseEnEvidence(`${bonneReponse[0]}\\text{, }${bonneReponse[1]}\\text{ et }${bonneReponse[2]}`)}$ divisent $${detrompeurs2[0]}$.`
+    this.correction = `$${premierAvec}$ ne divise pas $${detrompeurs2[0]}$ car $\\dfrac{${detrompeurs2[0]}}{${premierAvec}}${egalOuApprox(detrompeurs2[0] / premierAvec, 2)}${texNombre(detrompeurs2[0] / premierAvec, 2)}$.<br>
+    $${detrompeurs2[1]}$ et $${detrompeurs2[2]}$ ne divisent pas $${detrompeurs2[0]}$ car ce sont des multiples et non des diviseurs de $${detrompeurs2[0]}$.<br>
+    Par contre $${miseEnEvidence(`${bonneReponse[0]}\\text{, }${bonneReponse[1]}\\text{ et }${bonneReponse[2]}`)}$ divisent $${detrompeurs2[0]}$.`
   }
 
   versionOriginale: () => void = () => {

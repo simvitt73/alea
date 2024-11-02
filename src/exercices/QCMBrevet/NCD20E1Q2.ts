@@ -7,14 +7,14 @@ import ExerciceQcmA from '../ExerciceQcmA'
 
 export const uuid = '5d700'
 export const refs = {
-  'fr-fr': ['3QCMP-2'],
+  'fr-fr': ['3QCMPuis-2'],
   'fr-ch': []
 }
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM Donner l\'écriture scientifique d\'un nombre (issu du brevet 2020 Nouvelle Calédonie)'
+export const titre = 'Donner l\'écriture scientifique d\'un nombre (issu du brevet 2020 Nouvelle Calédonie)'
 export const dateDePublication = '01/11/2024'
 // Ceci est un exemple de QCM avec version originale et version aléatoire
 export default class NouvelleCaledonieDecembre2023Exo1Q2 extends ExerciceQcmA {
