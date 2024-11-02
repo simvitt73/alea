@@ -27,7 +27,7 @@ export default class CompleterEgalite extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 6
-    this.comment = 'Cet exercice permet de voir le symbole = autrement que la touche EXE de la calculatrice. Il y a 6 formes d\'égalité différentes à compléter'
+    this.comment = 'Cet exercice permet de voir le symbole = autrement que la touche EXE de la calculatrice. Il y a 6 formes d\'égalité différentes à compléter.'
   }
 
   nouvelleVersion () {
