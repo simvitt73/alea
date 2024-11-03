@@ -141,17 +141,30 @@
           >
             <span class="font-bold">{ending.id} - </span>{@html endingTitre}
             {#if isLessThanAMonth(ending.datePublication)}
-              &nbsp;<span
-                class="inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-warn-dark dark:bg-coopmathsdark-warn-dark text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 ml-2 font-semibold leading-normal"
+              &nbsp;
+              <span
+                class="tooltip tooltip-bottom tooltip-neutral"
+                data-tip="{ending.datePublication}"
               >
-                NEW
+                <span
+                  class="inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-warn-dark dark:bg-coopmathsdark-warn-dark text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 ml-2 font-semibold leading-normal"
+                >
+                  NEW
+                </span>
               </span>
             {/if}
             {#if isLessThanAMonth(ending.dateModification)}
-              &nbsp;<span
-                class="inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-struct-light dark:bg-coopmathsdark-struct-light text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 ml-2 font-semibold leading-normal"
+              &nbsp;
+              <span
+                class="tooltip tooltip-bottom tooltip-neutral"
+                data-tip="{ending.dateModification}"
               >
-                MAJ
+                <span
+                class="tooltip tooltip-bottom tooltip-neutral
+                  inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-struct-light dark:bg-coopmathsdark-struct-light text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 ml-2 font-semibold leading-normal"
+                >
+                  MAJ
+                </span>
               </span>
             {/if}
             {#if ending.id.includes('QCM')}
