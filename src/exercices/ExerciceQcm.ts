@@ -57,7 +57,9 @@ export default class ExerciceQcm extends Exercice {
     if (this.versionAleatoire != null) {
       if (this.sup) this.versionOriginale()
       else this.versionAleatoire()
-    } // il n'y a pas de else car si qcmAleatoire est faux, on reste sur la version originale qui est définie depuis le constructeur
+    } else {
+      this.versionOriginale()
+    }
     if (this.sup2) {
       this.consigne = `Parmi les ${this.reponses.length} réponses ci-dessous, une seule est correcte.<br>
 ${this.interactif || context.isAmc ? 'Cocher la case correspondante.' : 'Donner la lettre correspondante.'}`
