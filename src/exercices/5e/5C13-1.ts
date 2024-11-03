@@ -89,10 +89,10 @@ export default class EcrireNombreDifferentesFormes extends Exercice {
           if (n % 2 === 0) {
             texte += 'sous la forme du double d\'un nombre.'
             texteCorr = `$${n} = ${miseEnEvidence(`2 \\times ${texNombre(n / 2)}`)}$`
-            handleAnswers(this, i, { reponse: { value: [`2 \\times ${texNombre(n / 2)}`, `${texNombre(n / 2)} \\times 2}`], compare: fonctionComparaison } })
+            handleAnswers(this, i, { reponse: { value: `2 \\times ${texNombre(n / 2)}`, compare: fonctionComparaison, options: { operationSeulementEtNonResultat: true } } })
           } else {
             texte += 'sous la forme de la somme de deux nombres consécutifs.'
-            handleAnswers(this, i, { reponse: { value: [`${Math.floor(n / 2)} + ${Math.ceil(n / 2)}`, `${Math.ceil(n / 2)} + ${Math.floor(n / 2)}`], compare: fonctionComparaison } })
+            handleAnswers(this, i, { reponse: { value: `${Math.floor(n / 2)} + ${Math.ceil(n / 2)}`, compare: fonctionComparaison, options: { operationSeulementEtNonResultat: true } } })
 
             texteCorr = `$${n} = ${miseEnEvidence(`${Math.floor(n / 2)} + ${Math.ceil(n / 2)}`)}$`
           }
