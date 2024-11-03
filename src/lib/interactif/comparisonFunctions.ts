@@ -922,7 +922,7 @@ function expressionDeveloppeeEtReduiteCompare (
   /// Code JCL
   // Ci-dessous, si on a une comparaison fausse mais que l'expression donnée est mathématiquement correcte, on fait un feedback.
   const substitutions: Substitutions = { a: 2, b: 2, c: 2, x: 2, y: 2, z: 2 } // On peut ajouter d'autres variables si nécessaire
-  // Ajout d'un test sur goodAnswer pour vérifier la présence de lettres (après avoir retirer les div, times, frac...)
+  // Ajout d'un test sur goodAnswer pour vérifier la présence de lettres (après avoir retiré les div, times, frac...)
   const adjectif =
     localGoodAnswer
       .replaceAll('div', '')
@@ -937,6 +937,26 @@ function expressionDeveloppeeEtReduiteCompare (
       ? 'numérique'
       : 'littérale'
 
+  if (operationSeulementEtNonResultat || additionSeulementEtNonResultat || soustractionSeulementEtNonResultat || multiplicationSeulementEtNonResultat || divisionSeulementEtNonResultat) {
+    const parsedExpression = expressionWithHead(engine.parse(localInput, { canonical: false }))
+    if (parsedExpression.head === 'Add' && engine.parse(localInput, { canonical: false }).ops[0] && (engine.parse(localInput, { canonical: false }).ops[0].value === 0 || engine.parse(localInput, { canonical: false }).ops[1].value === 0)) {
+      feedback = 'Résultat incorrect car la somme par 0 est inutile.' // Sous-entendu : Pas de '+0'
+      return { isOk: false, feedback }
+    }
+    if (input.includes('-0')) {
+      feedback = 'Résultat incorrect car la différence par 0 est inutile.' // Sous-entendu : Pas de '-0'
+      return { isOk: false, feedback }
+    }
+    if (parsedExpression.head === 'Multiply' && (engine.parse(localInput, { canonical: false }).ops[0].value === 1 || engine.parse(localInput, { canonical: false }).ops[1].value === 1)) {
+      feedback = 'Résultat incorrect car le produit par 1 est inutile.' // Sous-entendu : Pas de 'fois 1'
+      return { isOk: false, feedback }
+    }
+    if ((parsedExpression.head === 'Divide' || parsedExpression.head === 'Rational') && engine.parse(localInput, { canonical: false }).ops[1].value === 1) {
+      feedback = 'Résultat incorrect car la division par 1 est inutile.' // Sous-entendu : Pas de 'divisé par 1'
+      return { isOk: false, feedback }
+    }
+  }
+
   if (saisieParsed.isEqual(reponseParsed) && !(saisieParsed.isSame(reponseParsed))) { // On va essayer de traiter ici tous les feedbacks de façon exhaustive
   // La saisie est égale à la réponse mais il faut vérifier que cela correspond l'option prévue
     if (resultatSeulementEtNonOperation) { // L'un peut être décimal et l'autre peut être fractionnaire ou les deux fractionnaires : Ex. 4C10
@@ -946,6 +966,7 @@ function expressionDeveloppeeEtReduiteCompare (
         return { isOk: true, feedback: '' }
       }
     }
+
     if (additionSeulementEtNonResultat || soustractionSeulementEtNonResultat || multiplicationSeulementEtNonResultat || divisionSeulementEtNonResultat) {
       const saisieCalculeeParsed = customCanonical(
         engine.parse(localInput, { canonical: false }),
@@ -1019,17 +1040,10 @@ function expressionDeveloppeeEtReduiteCompare (
           resultatSeulementEtNonOperation
         }
       )
+      console.log('toto')
       if (saisieCalculeeParsed.isSame(reponseCalculeeParsed)) {
         if (saisieParsed.head === 'Number') {
-          if (input.includes('+0') || input.includes('0+')) {
-            feedback = 'Résultat incorrect car la somme par 0 est inutile.' // Sous-entendu : Pas de '+0'
-          } else if (input.includes('-0')) {
-            feedback = 'Résultat incorrect car la différence par 0 est inutile.' // Sous-entendu : Pas de '-0'
-          } else if (input.includes('\\times1') || input.includes('1\\times')) {
-            feedback = 'Résultat incorrect car le produit par 1 est inutile.' // Sous-entendu : Pas de 'fois 1'
-          } else if (input.includes('\\div1')) {
-            feedback = 'Résultat incorrect car la division par 1 est inutile.' // Sous-entendu : Pas de 'divisé par 1'
-          } else { feedback = 'Résultat incorrect car un calcul est attendu.' } // Sous-entendu : Et pas une valeur numérique
+          feedback = 'Résultat incorrect car un calcul est attendu.'// Sous-entendu : Et pas une valeur numérique
         } else {
           feedback = 'Résultat incorrect car '
           feedback += additionSeulementEtNonResultat
