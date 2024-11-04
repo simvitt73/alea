@@ -116,7 +116,7 @@ export default function DivisionsEuclidiennes () {
           ? `$${texNombre(a)}=${b}\\times${miseEnEvidence(texNombre(q))}+${miseEnEvidence(r)}$`
           : `$${texNombre(a)}=(${b}\\times${miseEnEvidence(texNombre(q))})+${miseEnEvidence(r)}$`)
       }
-      texte += q + ajouteChampTexteMathLive(this, 2 * i, KeyboardType.clavierNumbers, { texteAvant: `<br>Quel est le quotient de la division euclidienne de $${texNombre(a)}$ par $${b}$ ?` })
+      texte += ajouteChampTexteMathLive(this, 2 * i, KeyboardType.clavierNumbers, { texteAvant: `<br>Quel est le quotient de la division euclidienne de $${texNombre(a)}$ par $${b}$ ?` })
       handleAnswers(this, 2 * i, {
         reponse: {
           value: `${q}`,
