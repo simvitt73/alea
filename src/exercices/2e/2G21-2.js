@@ -174,17 +174,11 @@ export default function SommeDeVecteurs () {
       let indice = 0
       const vecteur2 = {}
       do {
-        // console.log('longueurVecteurSomme:', longueurVecteurSomme)
         xPointIntermediaire = randint(-9, 9)
         yPointIntermediaire = randint(-9, 9)
-        // console.log('xPointIntermediaire:', xPointIntermediaire)
-        // console.log('yPointIntermediaire:', yPointIntermediaire)
         distanceOrigineProjOrthogonal = Math.abs(((xPointIntermediaire - pointOrigine.x) * xSomme[i] + (yPointIntermediaire - pointOrigine.y) * ySomme[i]) / Math.sqrt(xSomme[i] * xSomme[i] + ySomme[i] * ySomme[i]))
-        // console.log('distanceOrigineProjOrthogonal:', distanceOrigineProjOrthogonal)
         distancePointIntermediaireProjOrthogonal = Math.sqrt((xPointIntermediaire - pointOrigine.x) * (xPointIntermediaire - pointOrigine.x) + (yPointIntermediaire - pointOrigine.y) * (yPointIntermediaire - pointOrigine.y))
-        // console.log('distancePointIntermediaireProjOrthogonal:', distancePointIntermediaireProjOrthogonal)
         distanceVecteurSommeProfOrthogonal = Math.sqrt(distancePointIntermediaireProjOrthogonal * distancePointIntermediaireProjOrthogonal - distanceOrigineProjOrthogonal * distanceOrigineProjOrthogonal)
-        // console.log('distanceVecteurSommeProfOrthogonal:',  distanceVecteurSommeProfOrthogonal)
         vecteur2.x = pointExtremite[i].x - xPointIntermediaire
         vecteur2.y = pointExtremite[i].y - yPointIntermediaire
         indice++
@@ -196,7 +190,7 @@ export default function SommeDeVecteurs () {
       */
       if (indice >= 50) {
         // Mgu avec cette URL : http://localhost:5173/alea/?uuid=6cf42&id=2G21-2&n=1&d=10&s=1&alea=qOgl&cd=1
-        console.log('on a un problème houston!')
+        console.error('on a un problème houston!')
       }
       const vecteur1 = {}
       vecteur1.x = xPointIntermediaire - pointOrigine.x
