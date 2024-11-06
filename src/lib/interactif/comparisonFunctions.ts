@@ -373,7 +373,7 @@ function allFactorsMatch (ops1: readonly BoxedExpression[], ops2: readonly Boxed
  * @return ResultType
  * @author Jean-Claude Lhote
  */
-export function factorisationCompare (
+function factorisationCompare (
   input: string,
   goodAnswer: string,
   {
