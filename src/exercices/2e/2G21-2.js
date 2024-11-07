@@ -199,27 +199,27 @@ export default class SommeDeVecteurs extends Exercice {
       const limitygauche = pointOrigine.y + 9
       const limitydroite = 9 - pointOrigine.y
       do {
-        // console.log('longueurVecteurSomme:', longueurVecteurSomme)
-        // console.log('limitxgauche:', limitxgauche)
-        // console.log('limitxdroite:', limitxdroite)
-        // console.log('limitygauche:', limitygauche)
-        // console.log('limitydroite:', limitydroite)
+        // console.info('longueurVecteurSomme:', longueurVecteurSomme)
+        // console.info('limitxgauche:', limitxgauche)
+        // console.info('limitxdroite:', limitxdroite)
+        // console.info('limitygauche:', limitygauche)
+        // console.info('limitydroite:', limitydroite)
         if (pointExtremite[i].x >= pointOrigine.x) {
           xPointIntermediaire = randint(pointOrigine.x, pointOrigine.x + limitxdroite)
           xPointSecondIntermediaire = pointExtremite[i].x + pointOrigine.x - xPointIntermediaire
-          // console.log('xPointIntermediaire:', xPointIntermediaire)
-          // console.log('xPointSecondIntermediaire:', xPointSecondIntermediaire)
+          // console.info('xPointIntermediaire:', xPointIntermediaire)
+          // console.info('xPointSecondIntermediaire:', xPointSecondIntermediaire)
         } else {
           xPointIntermediaire = randint(pointOrigine.x - limitxgauche, pointOrigine.x)
           xPointSecondIntermediaire = pointExtremite[i].x + pointOrigine.x - xPointIntermediaire
-          // console.log('xPointIntermediaire:', xPointIntermediaire)
-          // console.log('xPointSecondIntermediaire:', xPointSecondIntermediaire)
+          // console.info('xPointIntermediaire:', xPointIntermediaire)
+          // console.info('xPointSecondIntermediaire:', xPointSecondIntermediaire)
         }
         while (xPointSecondIntermediaire > 9) {
           xPointSecondIntermediaire--
           xPointIntermediaire++
-          // console.log('while xPointIntermediaire:', xPointIntermediaire)
-          // console.log('while xPointSecondIntermediaire:', xPointSecondIntermediaire)
+          // console.info('while xPointIntermediaire:', xPointIntermediaire)
+          // console.info('while xPointSecondIntermediaire:', xPointSecondIntermediaire)
         }
         while (xPointSecondIntermediaire < -9) {
           xPointSecondIntermediaire++
@@ -228,34 +228,34 @@ export default class SommeDeVecteurs extends Exercice {
         if (pointExtremite[i].y >= pointOrigine.y) {
           yPointIntermediaire = randint(pointOrigine.y, pointOrigine.y + limitydroite)
           yPointSecondIntermediaire = pointExtremite[i].y + pointOrigine.y - yPointIntermediaire
-          // console.log('yPointIntermediaire:', yPointIntermediaire)
-          // console.log('yPointSecondIntermediaire:', yPointSecondIntermediaire)
+          // console.info('yPointIntermediaire:', yPointIntermediaire)
+          // console.info('yPointSecondIntermediaire:', yPointSecondIntermediaire)
         } else {
           yPointIntermediaire = randint(pointOrigine.y - limitygauche, pointOrigine.y)
           yPointSecondIntermediaire = pointExtremite[i].y + pointOrigine.y - yPointIntermediaire
-          // console.log('yPointIntermediaire:', yPointIntermediaire)
-          // console.log('yPointSecondIntermediaire:', yPointSecondIntermediaire)
+          // console.info('yPointIntermediaire:', yPointIntermediaire)
+          // console.info('yPointSecondIntermediaire:', yPointSecondIntermediaire)
         }
         while (yPointSecondIntermediaire > 9) {
           yPointSecondIntermediaire--
           yPointIntermediaire++
-          // console.log('whileyPointIntermediaire:', yPointIntermediaire)
-          // console.log('whileyPointSecondIntermediaire:', yPointSecondIntermediaire)
+          // console.info('whileyPointIntermediaire:', yPointIntermediaire)
+          // console.info('whileyPointSecondIntermediaire:', yPointSecondIntermediaire)
         }
         while (yPointSecondIntermediaire < -9) {
           yPointSecondIntermediaire++
           yPointIntermediaire--
-          // console.log('whileyPointIntermediaire:', yPointIntermediaire)
-          // console.log('whileyPointSecondIntermediaire:', yPointSecondIntermediaire)
+          // console.info('whileyPointIntermediaire:', yPointIntermediaire)
+          // console.info('whileyPointSecondIntermediaire:', yPointSecondIntermediaire)
         }
         distanceOrigineProjOrthogonal = Math.abs(((xPointIntermediaire - pointOrigine.x) * xSomme[i] + (yPointIntermediaire - pointOrigine.y) * ySomme[i]) / Math.sqrt(xSomme[i] * xSomme[i] + ySomme[i] * ySomme[i]))
         distancePointIntermediaireProjOrthogonal = Math.sqrt((xPointIntermediaire - pointOrigine.x) * (xPointIntermediaire - pointOrigine.x) + (yPointIntermediaire - pointOrigine.y) * (yPointIntermediaire - pointOrigine.y))
         distanceVecteurSommeProfOrthogonal = Math.sqrt(distancePointIntermediaireProjOrthogonal * distancePointIntermediaireProjOrthogonal - distanceOrigineProjOrthogonal * distanceOrigineProjOrthogonal)
-        // console.log('distanceVecteurSommeProfOrthogonal:', distanceVecteurSommeProfOrthogonal)
+        // console.info('distanceVecteurSommeProfOrthogonal:', distanceVecteurSommeProfOrthogonal)
         vecteur2.x = pointExtremite[i].x - xPointIntermediaire
         vecteur2.y = pointExtremite[i].y - yPointIntermediaire
-        // console.log('aire:', distanceVecteurSommeProfOrthogonal * longueurVecteurSomme / 2)
-        // console.log('indice:', indice)
+        // console.info('aire:', distanceVecteurSommeProfOrthogonal * longueurVecteurSomme / 2)
+        // console.info('indice:', indice)
         indice++
       } while (indice < 50 && !(distanceVecteurSommeProfOrthogonal > 1 && distanceVecteurSommeProfOrthogonal * longueurVecteurSomme / 2 > 4 && pointOrigine.x + vecteur2.x <= 9 && pointOrigine.x + vecteur2.x >= -9 && pointOrigine.y + vecteur2.y <= 9 && pointOrigine.y + vecteur2.y >= -9))
       /* Explications des conditions du while
