@@ -21,7 +21,7 @@ export const dateDePublication = '05/11/2024'
 export default class SujetZero2024Ex5Q5 extends ExerciceQcm {
   versionOriginale: () => void = () => {
     const u0 = randint(2, 10)
-    const r = randint(2, 6)
+    const r = 2 * randint(1, 5) + 1
     const k = randint(8, 20)
     const un = u0 + r * k
     this.reponses = [
