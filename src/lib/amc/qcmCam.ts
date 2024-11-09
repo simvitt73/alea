@@ -26,10 +26,10 @@ export function qcmCamExport (exercice: Exercice): {question: string, reponse: s
     const laConsigne = exercice.consigne.replaceAll(/\$([^$]*)\$/g, '<span class="math-tex">$1</span>') ?? ''
     const introduction = exercice.introduction.replaceAll(/\$([^$]*)\$/g, '<span class="math-tex">$1</span>') ?? ''
     const laQuestion = exercice.listeQuestions[j]
-    const enonceBis = laQuestion.split('<div class="my-3">')[0]
+    const enonceBis = laQuestion.split('<div class="my-3">')[0].replaceAll(/\$([^$]*)\$/g, '<span class="math-tex">$1</span>')
     let enonce: string
     if (exercice.autoCorrection[j].enonce != null && exercice.autoCorrection[j].enonce !== '') {
-      enonce = `${laConsigne}${laConsigne !== ''
+      enonce = `${j === 0 || !laConsigne.startsWith('Parmi les') ? laConsigne : ''}${j === 0 && laConsigne !== ''
        ? '<br>'
         : ''
         }
@@ -42,11 +42,23 @@ export function qcmCamExport (exercice: Exercice): {question: string, reponse: s
             : ''
             }
             ${exercice.autoCorrection[j].enonce != null
-             ? exercice.autoCorrection[j].enonce?.replaceAll(/&nbsp;/g, ' ')
+             ? exercice.autoCorrection[j].enonce?.replaceAll(/&nbsp;/g, ' ').replaceAll(/\$([^$]*)\$/g, '<span class="math-tex">$1</span>')
               : ''
               }`
     } else {
-      enonce = enonceBis
+      enonce = `${j === 0 ? laConsigne : ''}${j === 0 && laConsigne !== ''
+      ? '<br>'
+       : ''
+       }
+       ${introduction != null
+        ? introduction
+         : ''
+         }
+         ${(introduction != null && introduction !== '')
+          ? '<br>'
+           : ''
+           }
+           ${enonceBis.replaceAll(/&nbsp;/g, ' ')}`
     }
 
     const props = propositions.map(prop => prop.texte)

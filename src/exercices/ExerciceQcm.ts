@@ -79,6 +79,15 @@ ${this.interactif || context.isAmc ? 'Cocher la case correspondante.' : 'Donner 
               statut: j === 0
             })
           }
+          if (this.sup3) {
+            autoCorr.propositions.push({
+              texte: 'Je ne sais pas',
+              statut: false
+            })
+            if (autoCorr.options) {
+              autoCorr.options.lastChoice = this.reponses.length - 1
+            }
+          }
           const lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].slice(0, this.reponses.length)
           const monQcm = propositionsQcm(this, i, { style: 'margin:0 3px 0 3px;', format: this.interactif ? 'case' : 'lettre' })
           texte += `<br>${monQcm.texte}`
