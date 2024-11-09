@@ -97,8 +97,8 @@ class EquationSecondDegre {
             const b = this.coefficientsEqReduite[0].den * this.coefficientsEqReduite[1].den * racineDelta[0] / pgcdRacines
             const c = racineDelta[1]
             const d = 2 * this.coefficientsEqReduite[0].num * this.coefficientsEqReduite[1].den / pgcdRacines
-            const sol1RevisiteeTex = `\\dfrac{${a} - ${b}\\sqrt{${c}}}{${d}}`
-            const sol2RevisiteeTex = `\\dfrac{${a} + ${b}\\sqrt{${c}}}{${d}}`
+            const sol1RevisiteeTex = `\\dfrac{${a} - ${b === 1 ? '' : b}\\sqrt{${c}}}{${d}}`
+            const sol2RevisiteeTex = `\\dfrac{${a} + ${b === 1 ? '' : b}\\sqrt{${c}}}{${d}}`
             this.solutionsListeTex = [sol1RevisiteeTex, sol2RevisiteeTex]
           }
         } else {
@@ -302,6 +302,32 @@ class EquationSecondDegre {
       } else if (!(this.coefficients[i].num === 0) && !checkPreviousNull) {
         if (nomVal[i] === '') {
           expr = expr + `${this.coefficients[i].texFSD}${nomVal[i]}`
+        } else {
+          expr = expr + `${ecritureAlgebriqueSauf1(this.coefficients[i])}${nomVal[i]}`
+        }
+        checkPreviousNull = false
+      }
+    }
+    return expr
+  }
+
+  printToLatexMDG (): string {
+    let expr = ''
+    let checkPreviousNull = true
+    const nomVal = [`${this.variable}^2`, this.variable, '', `${this.variable}^2`, this.variable, '']
+    for (let i = 0; i < 3; i++) {
+      if ((this.coefficients.slice(0, 3).every(item => item.num === 0)) && i === 0) {
+        expr = expr + '0'
+      } else if (!(this.coefficients[i].num === 0) && checkPreviousNull) {
+        if (nomVal[i] === '') {
+          expr = expr + `${this.coefficients[i].texFSD}${nomVal[i]}`
+        } else {
+          expr = expr + `${rienSi1(this.coefficients[i])}${nomVal[i]}`
+        }
+        checkPreviousNull = false
+      } else if (!(this.coefficients[i].num === 0) && !checkPreviousNull) {
+        if (nomVal[i] === '') {
+          expr = expr + `${ecritureAlgebrique(this.coefficients[i])}${nomVal[i]}`
         } else {
           expr = expr + `${ecritureAlgebriqueSauf1(this.coefficients[i])}${nomVal[i]}`
         }
