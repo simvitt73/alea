@@ -1,9 +1,15 @@
+import { MathfieldElement } from 'mathlive'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texNombre } from '../../lib/outils/texNombre'
 import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../Exercice'
+import Hms from '../../modules/Hms'
 
 export const titre = 'Convertir des durées'
+export const interactifReady = true
+export const interactifType = 'custom'
 
 /**
  * Conversions de durées.
@@ -21,17 +27,25 @@ export const refs = {
   'fr-fr': ['6D10'],
   'fr-ch': ['10GM3-1']
 }
-export default function ConversionsDeDurees () {
-  Exercice.call(this)
-  this.sup = 5
-  this.titre = titre
-  this.consigne = 'Convertir.'
-  this.nbCols = 1
-  this.nbColsCorr = 1
-  this.spacing = 2
-  this.nbQuestions = 5
+export default class ConversionsDeDurees extends Exercice {
+  expectedAnswers: Hms[] = []
+  constructor () {
+    super()
+    this.sup = 5
+    this.titre = titre
+    this.consigne = 'Convertir.'
+    this.nbCols = 1
+    this.nbColsCorr = 1
+    this.spacing = 2
+    this.nbQuestions = 5
+    this.besoinFormulaireNumerique = [
+      'Niveau de difficulté',
+      5,
+      '1 : Conversions en secondes ou minutes\n2 : Conversions en jours-heures\n3 : Conversions en heures-minutes-secondes\n4 : Conversions en semaines-jours-heures\n5 : Mélange'
+    ]
+  }
 
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     const listeSousTypeDeQuestionV1 = combinaisonListes(
       [1, 2, 3, 4],
       this.nbQuestions
@@ -47,9 +61,15 @@ export default function ConversionsDeDurees () {
     if (parseInt(this.sup) === 5) {
       typesDeQuestions = combinaisonListes([1, 2, 3, 4], this.nbQuestions)
     }
+    let texte = ''
+    let texteCorr = ''
+    let h: number
+    let m: number
+    let s: number
+    let j: number
 
     for (
-      let i = 0, h, m, s, j, texte, texteCorr, cpt = 0;
+      let i = 0, cpt = 0;
       i < this.nbQuestions && cpt < 50;
 
     ) {
@@ -61,6 +81,7 @@ export default function ConversionsDeDurees () {
           texteCorr = `$${h}~\\text{h} = ${h}\\times60~~\\text{min} = ${texNombre(
               h * 60
             )}~\\text{min}$`
+          this.expectedAnswers[i] = new Hms({ minute: 60 * h })
         }
         if (sousTypeDeQuestion === 2) {
           h = choice([1, 2, 10, 20])
@@ -68,6 +89,7 @@ export default function ConversionsDeDurees () {
           texteCorr = `$${h}~\\text{h} = ${h}\\times3~600~\\text{s} = ${texNombre(
               h * 3600
             )}~\\text{s}$`
+          this.expectedAnswers[i] = new Hms({ second: h * 3600 })
         }
         if (sousTypeDeQuestion === 3) {
           m = randint(2, 59)
@@ -75,6 +97,7 @@ export default function ConversionsDeDurees () {
           texteCorr = `$${m}~\\text{min} = ${m}\\times60~\\text{s} = ${texNombre(
               m * 60
             )}~\\text{s}$`
+          this.expectedAnswers[i] = new Hms({ second: m * 60 })
         }
         if (sousTypeDeQuestion === 4) {
           h = randint(1, 2)
@@ -85,6 +108,7 @@ export default function ConversionsDeDurees () {
             )}+${texNombre(m * 60)}~\\text{s} = ${texNombre(
               h * 3600 + m * 60
             )}~\\text{s}$`
+          this.expectedAnswers[i] = new Hms({ second: h * 3600 + m * 60 })
         }
       }
       if (typesDeQuestions[i] === 2) {
@@ -94,6 +118,7 @@ export default function ConversionsDeDurees () {
         texteCorr = `$${texNombre(
             h + 24 * j
           )}~\\text{h} = ${j}\\times24~\\text{h} + ${h}~\\text{h} = ${j}~\\text{j}~${h}~\\text{h}$`
+        this.expectedAnswers[i] = new Hms({ day: j, hour: h })
       }
 
       if (typesDeQuestions[i] === 3) {
@@ -109,15 +134,17 @@ export default function ConversionsDeDurees () {
             )}~\\text{s} = ${texNombre(h * 3600)}~\\text{s}+${
               m * 60 + s
             }~\\text{s} =${h}~\\text{h}+${m}\\times60~\\text{s}+${s}~\\text{s}=${h}~\\text{h}~${m}~\\text{min}~${s}~\\text{s}$`
+          this.expectedAnswers[i] = new Hms({ hour: h, minute: m, second: s })
         } else {
           texte = `$${texNombre(m * 60 + s)}~\\text{s en heures, minutes et secondes.}$`
           texteCorr = `$${texNombre(
               m * 60 + s
             )}~\\text{s} = ${m}\\times60~\\text{s}+${s}~\\text{s}=${m}~\\text{min}~${s}~\\text{s}$`
+          this.expectedAnswers[i] = new Hms({ minute: m, second: s })
         }
       }
       if (typesDeQuestions[i] === 4) {
-        s = randint(1, 9) // nombre de semaines
+        s = randint(2, 9) // nombre de semaines
         j = randint(1, 6)
         h = randint(1, 23)
         texte = `$${texNombre(
@@ -130,13 +157,20 @@ export default function ConversionsDeDurees () {
             }\\times24~\\text{h} + ${h}~\\text{h} = ${
               j + 7 * s
             }~\\text{j}~${h}~\\text{h} = ${s}\\times7~\\text{j} + ${j}~\\text{j}~${h}~\\text{h} = ${s}~\\text{semaines}~${j}~\\text{j}~${h}~\\text{h}$`
+          this.expectedAnswers[i] = new Hms({ week: s, day: j, hour: h })
         } else {
           texteCorr = `$${texNombre(h + 24 * j + 24 * 7 * s)}~\\text{h} = ${
               j + 7 * s
             }\\times24~\\text{h} + ${h}~\\text{h} = ${
               j + 7 * s
             }~\\text{j}~${h}~\\text{h} = ${s}\\times7~\\text{j} + ${j}~\\text{j}~${h}~\\text{h} = ${s}~\\text{semaine}~${j}~\\text{j}~${h}~\\text{h}$`
+          this.expectedAnswers[i] = new Hms({ week: s, day: j, hour: h })
         }
+      }
+
+      if (this.interactif) {
+        texte = texte.replace('.', ' : ')
+        texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierHms)
       }
       if (this.listeQuestions.indexOf(texte) === -1) {
         // Si la question n'a jamais été posée, on en crée une autre
@@ -148,9 +182,48 @@ export default function ConversionsDeDurees () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireNumerique = [
-    'Niveau de difficulté',
-    5,
-    '1 : Conversions en secondes ou minutes\n2 : Conversions en jours-heures\n3 : Conversions en heures-minutes-secondes\n4 : Conversions en semaines-jours-heures\n5 : Mélange'
-  ]
+
+  correctionInteractive = (i: number) => {
+    const mf = document.querySelector(`math-field#champTexteEx${this.numeroExercice}Q${i}`)
+    if (mf instanceof MathfieldElement === false) return 'KO'
+    mf.readOnly = true
+    // Sauvegarde de la réponse pour Capytale
+    if (this.answers == null) this.answers = {}
+    this.answers[`Ex${this.numeroExercice}Q${i}`] = mf.getValue()
+    // Saisie fournie par l'utilisateur qu'on va comparer éventuellement avec la réponse attendue.
+    const input = mf.value
+    // Partie test de la saisie de l'utilisateur
+    let feedback = ''
+    const inputHms = Hms.fromString(input)
+    let isEqual = false
+    let isInGoodFormat = false
+    if (inputHms.isEqual(this.expectedAnswers[i])) {
+      isEqual = true
+    }
+    if (inputHms.isTheSame(this.expectedAnswers[i])) {
+      isInGoodFormat = true
+    }
+    let smiley = ''
+    let reponse = ''
+    if (isEqual && isInGoodFormat) {
+      smiley = '😎'
+      reponse = 'OK'
+    } else {
+      smiley = '☹️'
+      reponse = 'KO'
+    }
+    if (isEqual && !isInGoodFormat) {
+      feedback = 'La durée est bien égale mais pas dans le format attendu.'
+    }
+    // Affichage du feedback
+    const divFeedback = document.querySelector(`#feedbackEx${this.numeroExercice}Q${i}`)
+    if (divFeedback && divFeedback instanceof HTMLElement) {
+      divFeedback.innerHTML = feedback
+      divFeedback.style.display = 'block'
+    }
+    // Affichage du smiley
+    const divCheck = document.querySelector(`span#resultatCheckEx${this.numeroExercice}Q${i}`)
+    if (divCheck) divCheck.innerHTML = smiley
+    return reponse
+  }
 }
