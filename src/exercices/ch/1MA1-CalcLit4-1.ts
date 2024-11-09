@@ -72,9 +72,7 @@ export default class ExerciceEquationSecondDegre extends Exercice {
           }
           equation = EquationSecondDegre.aPartirDesSolutions(s1, s2, coeffLead, { variable: 'x', format: 'reduit' as string })
         } while ((s1.denIrred === 1 && s2.denIrred === 1) || (s1.den === s2.den && s1.num === s2.num))
-        // TODO multiplier par le dénominateur commun pour avoir des coefficients entiers ou pas dépendant du cas.
       } else if (listeTypeDeQuestions[i] === 'irrationnel') {
-        // Tant que b^2-4ac n'est pas un carré parfait
         do {
           if (this.sup2 === false) {
             a = new FractionEtendue(randint(-6, 6, [0]), 1)
