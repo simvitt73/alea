@@ -6,6 +6,7 @@ import { texNombre } from '../../lib/outils/texNombre'
 import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import Exercice from '../Exercice'
 import Hms from '../../modules/Hms'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 export const titre = 'Convertir des durées'
 export const interactifReady = true
@@ -21,6 +22,7 @@ export const interactifType = 'custom'
  * @author Rémi Angot
  * Référence 6D10
  */
+export const dateDeModifImportante = '10/11/2024'
 export const uuid = '8b0f9'
 export const ref = '6D10'
 export const refs = {
@@ -78,25 +80,22 @@ export default class ConversionsDeDurees extends Exercice {
         if (sousTypeDeQuestion === 1) {
           h = randint(2, 11)
           texte = `$${h}~\\text{h en minutes.}$`
-          texteCorr = `$${h}~\\text{h} = ${h}\\times60~~\\text{min} = ${texNombre(
-              h * 60
-            )}~\\text{min}$`
+          texteCorr = `$${h}~\\text{h} = ${h}\\times60~\\text{min} = `
+          texteCorr += miseEnEvidence(`${texNombre(h * 60)}~\\text{min}`) + '$'
           this.expectedAnswers[i] = new Hms({ minute: 60 * h })
         }
         if (sousTypeDeQuestion === 2) {
           h = choice([1, 2, 10, 20])
           texte = `$${h}~\\text{h en secondes.}$`
-          texteCorr = `$${h}~\\text{h} = ${h}\\times3~600~\\text{s} = ${texNombre(
-              h * 3600
-            )}~\\text{s}$`
+          texteCorr = `$${h}~\\text{h} = ${h}\\times3~600~\\text{s} = `
+          texteCorr += miseEnEvidence(`${texNombre(h * 3600)}~\\text{s}`) + '$'
           this.expectedAnswers[i] = new Hms({ second: h * 3600 })
         }
         if (sousTypeDeQuestion === 3) {
           m = randint(2, 59)
           texte = `$${m}~\\text{min en secondes.}$`
-          texteCorr = `$${m}~\\text{min} = ${m}\\times60~\\text{s} = ${texNombre(
-              m * 60
-            )}~\\text{s}$`
+          texteCorr = `$${m}~\\text{min} = ${m}\\times60~\\text{s} = `
+          texteCorr += miseEnEvidence(`${texNombre(m * 60)}~\\text{s}`) + '$'
           this.expectedAnswers[i] = new Hms({ second: m * 60 })
         }
         if (sousTypeDeQuestion === 4) {
@@ -105,9 +104,8 @@ export default class ConversionsDeDurees extends Exercice {
           texte = `$${h}~\\text{h}~${m}~\\text{min en secondes.}$`
           texteCorr = `$${h}~\\text{h}~${m}~\\text{min} = ${h}\\times3~600~\\text{s} + ${m}\\times60~\\text{s} = ${texNombre(
               h * 3600
-            )}+${texNombre(m * 60)}~\\text{s} = ${texNombre(
-              h * 3600 + m * 60
-            )}~\\text{s}$`
+            )}+${texNombre(m * 60)}~\\text{s} = `
+          texteCorr += miseEnEvidence(`${texNombre(h * 3600 + m * 60)}~\\text{s}`) + '$'
           this.expectedAnswers[i] = new Hms({ second: h * 3600 + m * 60 })
         }
       }
@@ -117,7 +115,8 @@ export default class ConversionsDeDurees extends Exercice {
         texte = `$${texNombre(h + 24 * j)}~\\text{h en jours et heures.}$`
         texteCorr = `$${texNombre(
             h + 24 * j
-          )}~\\text{h} = ${j}\\times24~\\text{h} + ${h}~\\text{h} = ${j}~\\text{j}~${h}~\\text{h}$`
+          )}~\\text{h} = ${j}\\times24~\\text{h} + ${h}~\\text{h} = `
+        texteCorr += miseEnEvidence(`${j}~\\text{j}~${h}~\\text{h}`) + '$'
         this.expectedAnswers[i] = new Hms({ day: j, hour: h })
       }
 
@@ -133,7 +132,8 @@ export default class ConversionsDeDurees extends Exercice {
               h * 3600 + m * 60 + s
             )}~\\text{s} = ${texNombre(h * 3600)}~\\text{s}+${
               m * 60 + s
-            }~\\text{s} =${h}~\\text{h}+${m}\\times60~\\text{s}+${s}~\\text{s}=${h}~\\text{h}~${m}~\\text{min}~${s}~\\text{s}$`
+            }~\\text{s} =${h}~\\text{h}+${m}\\times60~\\text{s}+${s}~\\text{s}= `
+          texteCorr += miseEnEvidence(`${h}~\\text{h}~${m}~\\text{min}~${s}~\\text{s}`) + '$'
           this.expectedAnswers[i] = new Hms({ hour: h, minute: m, second: s })
         } else {
           texte = `$${texNombre(m * 60 + s)}~\\text{s en heures, minutes et secondes.}$`
@@ -156,14 +156,16 @@ export default class ConversionsDeDurees extends Exercice {
               j + 7 * s
             }\\times24~\\text{h} + ${h}~\\text{h} = ${
               j + 7 * s
-            }~\\text{j}~${h}~\\text{h} = ${s}\\times7~\\text{j} + ${j}~\\text{j}~${h}~\\text{h} = ${s}~\\text{semaines}~${j}~\\text{j}~${h}~\\text{h}$`
+            }~\\text{j}~${h}~\\text{h} = ${s}\\times7~\\text{j} + ${j}~\\text{j}~${h}~\\text{h} = `
+          texteCorr += miseEnEvidence(`${s}~\\text{semaines}~${j}~\\text{j}~${h}~\\text{h}`) + '$'
           this.expectedAnswers[i] = new Hms({ week: s, day: j, hour: h })
         } else {
           texteCorr = `$${texNombre(h + 24 * j + 24 * 7 * s)}~\\text{h} = ${
               j + 7 * s
             }\\times24~\\text{h} + ${h}~\\text{h} = ${
               j + 7 * s
-            }~\\text{j}~${h}~\\text{h} = ${s}\\times7~\\text{j} + ${j}~\\text{j}~${h}~\\text{h} = ${s}~\\text{semaine}~${j}~\\text{j}~${h}~\\text{h}$`
+            }~\\text{j}~${h}~\\text{h} = ${s}\\times7~\\text{j} + ${j}~\\text{j}~${h}~\\text{h} = `
+          texteCorr += miseEnEvidence(`${s}~\\text{semaine}~${j}~\\text{j}~${h}~\\text{h}`) + '$'
           this.expectedAnswers[i] = new Hms({ week: s, day: j, hour: h })
         }
       }
