@@ -1,7 +1,7 @@
 import { point, pointAdistance } from '../../lib/2d/points.js'
 import { texFractionFromString } from '../../lib/outils/deprecatedFractions.js'
-import { texteGras } from '../../lib/format/style'
-import Exercice from '../deprecatedExercice.js'
+import { texteGras } from '../../lib/format/style.js'
+import Exercice from '../Exercice'
 import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import Alea2iep from '../../modules/Alea2iep.js'
 export const titre = 'Partager un segment au compas et à la règle non graduée'
@@ -19,20 +19,23 @@ export const refs = {
   'fr-fr': ['PEG20'],
   'fr-ch': []
 }
-export default function PartageSegmentCompasRegle () {
-  Exercice.call(this)
-  this.typeExercice = 'IEP'
-  this.nbQuestions = 1
-  this.nbQuestionsModifiable = false
+export default class PartageSegmentCompasRegle extends Exercice {
+  constructor () {
+    super()
+    this.typeExercice = 'IEP'
+    this.nbQuestions = 1
+    this.nbQuestionsModifiable = false
+  }
 
-  this.nouvelleVersion = function (numeroExercice) {
+  nouvelleVersion () {
     const d = randint(3, 5)
     let n
     if (d === 4) n = randint(1, d + 2, [2, 4, 6])
     else n = randint(1, d + 2, d)
     const anim = new Alea2iep()
     const A = point(1, -2, 'A')
-    const B = pointAdistance(A, randint(4, 7), randint(-10, 20))
+    const angleAvecHorizontale = randint(-10, 20)
+    const B = pointAdistance(A, randint(4, 7), angleAvecHorizontale)
     B.nom = 'B'
     anim.traitRapide(A, B)
     anim.pointCreer(A)
@@ -48,15 +51,12 @@ export default function PartageSegmentCompasRegle () {
     texteCorr += '<br><br>' + texteGras('Justification :')
     texteCorr += `<br>Les droites $(A_${d}B)$ et $(A_${n}M)$ sont parallèles donc d'après le théorème de Thalès, on a :`
     texteCorr += `<br><br>$\\dfrac{AA_${n}}{AA_${d}}=\\dfrac{AM}{AB}$ donc $\\dfrac{${n}}{${d}}=\\dfrac{AM}{AB}$ et finalement $AM=${texFractionFromString(n, d)}AB$. `
-    texteCorr += anim.html(numeroExercice)
+    texteCorr += anim.html(this.numeroExercice)
 
     this.listeQuestions = [texte]
     this.listeCorrections = [texteCorr]
     listeQuestionsToContenu(this)
 
     this.reponse = ''
-    // this.listeQuestions.push(this.question)
-    // this.listeCorrections.push()
-    // listeQuestionsToContenu(this)
   }
 }
