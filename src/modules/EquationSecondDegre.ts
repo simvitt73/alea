@@ -345,6 +345,7 @@ class EquationSecondDegre {
         } else {
           suiteExpr = miseEnEvidence(suiteExpr.split(this.variable)[0], option.couleur)
         }
+        suiteExpr = '\\,' + suiteExpr
       }
 
       expr = expr + suiteExpr
