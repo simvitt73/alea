@@ -4,9 +4,9 @@ import { randint } from '../../../modules/outils'
 import { nombreElementsDifferents } from '../../ExerciceQcm'
 import ExerciceQcmA from '../../ExerciceQcmA'
 
-export const uuid = 'QCME2023_Q1'
+export const uuid = 'QCME2023_Q4'
 export const refs = {
-  'fr-fr': ['TSP1-QCM03'],
+  'fr-fr': ['TSP1-QCM06'],
   'fr-ch': []
 }
 export const interactifReady = true
@@ -25,23 +25,22 @@ export default class MetropoleJuin24Exo4Q1 extends ExerciceQcmA {
   // Ceci est la fonction qui s'occupe d'écrire l'énoncé, la correction et les réponses
   // Elle factorise le code qui serait dupliqué dans versionAleatoire et versionOriginale
   private appliquerLesValeurs (p: number, nn: number): void {
+    const pourcent = p / 100
     this.reponses = [
-      `$${texNombre((1 - ((1 - p / 100) ** nn)), 3)}$`,
-      `$${texNombre((1 - ((1 - p / 100) ** nn) - ((1 - p / 100) ** (nn - 1) * p / 100 * nn)), 3)}$`,
-      '$1$',
-       `$${texNombre((1 - ((1 - p / 100) ** nn) - ((1 - p / 100) ** (nn - 1) * p / 100 * nn)) - 0.001, 3)}$`]
+      `$${texNombre(pourcent, 3)}^n$`,
+      `$${texNombre(1 - pourcent, 3)}^n$`,
+      `$1-${texNombre(1 - pourcent, 3)} ^ n$`,
+       `$1-${texNombre(pourcent, 3)} ^ n$`]
+
     this.enonce = this.sup3
       ? `Une chaîne de fabrication produit des pièces mécaniques.<br>
-     On estime que ${p} % des pièces produites par cette chaîne sont défectueuses.<br>
-    On choisit au hasard ${nn} pièces produites par la chaîne de fabrication. <br>
-    Le nombre de pièces produites est suffisamment grand pour que ce choix puisse être assimilé à un tirage avec remise. <br>
-    On note $X$ la variable aléatoire égale au nombre de pièces défectueuses tirées.<br>`
+      On estime que ${p} % des pièces produites par cette chaîne sont défectueuses.<br>
+     On choisit au hasard ${nn} pièces produites par la chaîne de fabrication. <br>
+     Le nombre de pièces produites est suffisamment grand pour que ce choix puisse être assimilé à un tirage avec remise. <br>
+     On note $X$ la variable aléatoire égale au nombre de pièces défectueuses tirées.<br>`
       : ''
-    this.enonce += 'Quelle est la probabilité, arrondie au millième, de tirer au moins une pièce défectueuse ?'
-    this.correction = `$X$ soit une loi binomiale de paramètres $(${NaN};${p / 100})$. <br>
-    On cherche : $p\\left(X\\geqslant 1\\right)=1-p\\left(X=0\\right)$.<br>
-    $p\\left(X=0\\right)=${1 - p / 100}^{${nn}}\\approx${texNombre(((1 - p / 100) ** nn), 3)}$<br>
-    $p\\left(X\\geqslant 1\\right)\\approx${texNombre((1 - ((1 - p / 100) ** nn)), 3)}$`
+    this.enonce += 'Quelle est la probabilité de ne tirer que des pièces défectueuses ?'
+    this.correction = `$p\\left(X=0\\right)=${texNombre((p / 100), 3)}^n $`
   }
 
   // S'occupe de passser les données originales à la fonction appliquerLesValeurs
@@ -54,8 +53,9 @@ export default class MetropoleJuin24Exo4Q1 extends ExerciceQcmA {
   versionAleatoire: () => void = () => {
     const n = 4 // nombre de réponses différentes voulues (on rappelle que la première réponse est la bonne)
     do {
-      const p = randint(2, 6)
-      const nn = randint(2, 7) * 10
+      const p = randint(2, 9)
+      const nn = randint(3, 7) * 10 + randint(1, 9)
+
       this.appliquerLesValeurs(nn, p)
     } while (nombreElementsDifferents(this.reponses) < n)
   }
