@@ -7,6 +7,7 @@ import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import Exercice from '../Exercice'
 import Hms from '../../modules/Hms'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
+import Operation from '../../modules/operations'
 
 export const titre = 'Convertir des durées'
 export const interactifReady = true
@@ -113,7 +114,8 @@ export default class ConversionsDeDurees extends Exercice {
         j = randint(1, 6)
         h = randint(1, 23)
         texte = `$${texNombre(h + 24 * j)}~\\text{h en jours et heures.}$`
-        texteCorr = `$${texNombre(
+        texteCorr = Operation({ operande1: h + 24 * j, operande2: 24, type: 'divisionE', style: 'margin-bottom: 1em' }) ?? ''
+        texteCorr += `<br>$${texNombre(
             h + 24 * j
           )}~\\text{h} = ${j}\\times24~\\text{h} + ${h}~\\text{h} = `
         texteCorr += miseEnEvidence(`${j}~\\text{j}~${h}~\\text{h}`) + '$'
@@ -128,10 +130,12 @@ export default class ConversionsDeDurees extends Exercice {
           texte = `$${texNombre(
               h * 3600 + m * 60 + s
             )}~\\text{s en heures, minutes et secondes.}$`
-          texteCorr = `$${texNombre(
+          texteCorr = Operation({ operande1: h * 3600 + m * 60 + s, operande2: 3600, type: 'divisionE', style: 'margin-bottom: 1em' }) ?? ''
+          texteCorr += Operation({ operande1: m * 60 + s, operande2: 60, type: 'divisionE', style: 'margin-bottom: 1em' }) ?? ''
+          texteCorr += `<br>$${texNombre(
               h * 3600 + m * 60 + s
             )}~\\text{s} = ${texNombre(h * 3600)}~\\text{s}+${
-              m * 60 + s
+              texNombre(m * 60 + s)
             }~\\text{s} =${h}~\\text{h}+${m}\\times60~\\text{s}+${s}~\\text{s}= `
           texteCorr += miseEnEvidence(`${h}~\\text{h}~${m}~\\text{min}~${s}~\\text{s}`) + '$'
           this.expectedAnswers[i] = new Hms({ hour: h, minute: m, second: s })
@@ -152,14 +156,16 @@ export default class ConversionsDeDurees extends Exercice {
           )}~\\text{h en semaines jours et heures.}$`
         if (s > 1) {
           // pour la gestion du pluriel de semaines
-          texteCorr = `$${texNombre(h + 24 * j + 24 * 7 * s)}~\\text{h} = ${
+          texteCorr = Operation({ operande1: h + 24 * j + 24 * 7 * s, operande2: 24, type: 'divisionE', style: 'margin-bottom: 1em' }) ?? ''
+          texteCorr += Operation({ operande1: 7 * s + j, operande2: 7, type: 'divisionE', style: 'margin-bottom: 1em' }) ?? ''
+          texteCorr += `<br>$${texNombre(h + 24 * j + 24 * 7 * s)}~\\text{h} = ${
               j + 7 * s
             }\\times24~\\text{h} + ${h}~\\text{h} = ${
               j + 7 * s
             }~\\text{j}~${h}~\\text{h} = ${s}\\times7~\\text{j} + ${j}~\\text{j}~${h}~\\text{h} = `
           texteCorr += miseEnEvidence(`${s}~\\text{semaines}~${j}~\\text{j}~${h}~\\text{h}`) + '$'
           this.expectedAnswers[i] = new Hms({ week: s, day: j, hour: h })
-        } else {
+        } else { // Plus utilisé pour ne pas avoir à gérer le pluriel de semaines dans le champ de réponse
           texteCorr = `$${texNombre(h + 24 * j + 24 * 7 * s)}~\\text{h} = ${
               j + 7 * s
             }\\times24~\\text{h} + ${h}~\\text{h} = ${
