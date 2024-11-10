@@ -30,12 +30,14 @@ export default class MetropoleJuin24Exo4Q1 extends ExerciceQcmA {
       `$p(X < ${b}) - p(X > ${a})$`,
        `$p(X < ${b}) - p(X \\geqslant ${a})$`]
 
-    this.enonce = `Une chaîne de fabrication produit des pièces mécaniques.<br>
-     On estime que ${p} % des pièces produites par cette chaîne sont défectueuses.<br>
-    On choisit au hasard ${nn} pièces produites par la chaîne de fabrication. <br>
-    Le nombre de pièces produites est suffisamment grand pour que ce choix puisse être assimilé à un tirage avec remise. <br>
-    On note $X$ la variable aléatoire égale au nombre de pièces défectueuses tirées.<br>
-   La probabilité $p(${a} < X \\leqslant ${b})$ est égale à :`
+    this.enonce = this.sup3
+      ? `Une chaîne de fabrication produit des pièces mécaniques.<br>
+      On estime que ${p} % des pièces produites par cette chaîne sont défectueuses.<br>
+     On choisit au hasard ${nn} pièces produites par la chaîne de fabrication. <br>
+     Le nombre de pièces produites est suffisamment grand pour que ce choix puisse être assimilé à un tirage avec remise. <br>
+     On note $X$ la variable aléatoire égale au nombre de pièces défectueuses tirées.<br>`
+      : ''
+    this.enonce += `La probabilité $p(${a} < X \\leqslant ${b})$ est égale à :`
     this.correction = `$p\\left(X\\leqslant ${b}\\right)$ calcule la probabilité que $X\\leqslant ${b}$.<br>
     On veut en même temps $X>${a}$, il faut donc enlever les premières valeurs de $X$, quand $X\\leqslant ${a}$.<br>
      La réponse est donc $p(X \\leqslant ${b})$ à qui on ôte $p(X \\leqslant ${a})$.<br>
@@ -69,5 +71,7 @@ export default class MetropoleJuin24Exo4Q1 extends ExerciceQcmA {
     super()
     this.options = { vertical: true, ordered: false }
     this.versionAleatoire()
+    this.besoinFormulaire3CaseACocher = ['Avec le préambule de l\'énoncé', true]
+    this.sup3 = true
   }
 }
