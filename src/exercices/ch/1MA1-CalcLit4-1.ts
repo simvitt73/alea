@@ -136,17 +136,6 @@ export default class ExerciceEquationSecondDegre extends Exercice {
         texteCorr += `&\\iff ${eqCoeffDom1.printToLatexMDG()}=0 \\quad \\text{équation équivalente avec coefficient dominant égal à 1}\\\\`
       }
       texteCorr += `&\\iff${miseEnEvidence(eqCoeffDom1SansConstant.printToLatexMDG(), 'red')}=${normalizedCoeff2.oppose().texFractionSimplifiee}\\quad\\text{isoler les termes avec les inconnues}\\\\`
-      // effectuer à présent la complétion du carré
-      const partieEq1 = EquationSecondDegre.aPartirDesCoefficients(
-        normalizedCoeff0,
-        normalizedCoeff1,
-        eqCoeffDom1.coefficientsEqReduite[1].entierDivise(2).produitFraction(eqCoeffDom1.coefficientsEqReduite[1].entierDivise(2)).simplifie(),
-        new FractionEtendue(0, 1),
-        new FractionEtendue(0, 1),
-        new FractionEtendue(0, 1),
-        { variable: 'x', format: 'reduit' as string }
-      )
-      const partieEq2String = miseEnEvidence(termeCompletion.oppose().simplifie().texFractionSignee, 'green')
       const partieEq3 = normalizedCoeff2.simplifie()
       let reponse1 = ''
       let reponse2 = ''
