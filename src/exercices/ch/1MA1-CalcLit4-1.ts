@@ -117,7 +117,7 @@ export default class ExerciceEquationSecondDegre extends Exercice {
           texteCorr += `On applique la méthode de la complétion du carré pour résoudre l'équation \\[${equation.printToLatexMDG({ indice: 1, couleur: 'blue' })}=0.\\]`
         }
         texteCorr += `On complète le carré en additionnant et soustrayant le carré du ${texteEnCouleurEtGras('coefficient de $x$', 'blue')} divisé par 2.<br>
-        C'est-à-dire que l'on ajoute et on soustrait à l'équation précédente \\[\\left(\\dfrac{${miseEnEvidence(`${eqCoeffDom1.coefficientsEqReduite[1].texFraction}`, 'blue')}}{2}\\right)^2=\\left(${eqCoeffDom1.coefficientsEqReduite[1].entierDivise(2).texFractionSimplifiee}\\right)^2=${miseEnEvidence(termeCompletion.texFractionSimplifiee, 'green')}.\\]`
+        C'est-à-dire que l'on ajoute et on soustrait à l'équation précédente \\[\\left(\\dfrac{${miseEnEvidence(`${eqCoeffDom1.coefficientsEqReduite[1].texFractionSimplifiee}`, 'blue')}}{2}\\right)^2=\\left(${eqCoeffDom1.coefficientsEqReduite[1].entierDivise(2).texFractionSimplifiee}\\right)^2=${miseEnEvidence(termeCompletion.texFractionSimplifiee, 'green')}.\\]`
       }
 
       texteCorr += '$\\begin{aligned}'
@@ -153,24 +153,25 @@ export default class ExerciceEquationSecondDegre extends Exercice {
         const racine2 = termeCompletionCarreRacine.sommeFraction(racineIdentite).simplifie()
         texteCorr += `&\\iff \\left(${eqCoeffDom1.variable}${racine1.oppose().texFractionSignee}\\right)\\left(${eqCoeffDom1.variable}${racine2.oppose().texFractionSignee}\\right)=0\\quad\\text{réduire}\\\\`
         texteCorr += `&\\iff \\left(${eqCoeffDom1.variable}${racine1.oppose().texFractionSignee}\\right)=0 \\text{ ou }\\left(${eqCoeffDom1.variable}${racine2.oppose().texFractionSignee}\\right)=0\\quad\\text{par le théorème du produit nul}\\\\`
-        texteCorr += `&\\iff ${eqCoeffDom1.variable}=${racine1.texFraction}\\, \\text{ ou }\\,${eqCoeffDom1.variable}=${racine2.texFraction}\\\\`
-        texteCorr += `&\\iff S=\\left\\{${miseEnEvidence(racine1.texFraction)};${miseEnEvidence(racine2.texFraction)}\\right\\}`
-        reponse1 = racine1.texFraction
-        reponse2 = racine2.texFraction
+        texteCorr += `&\\iff ${eqCoeffDom1.variable}=${racine1.texFractionSimplifiee}\\, \\text{ ou }\\,${eqCoeffDom1.variable}=${racine2.texFractionSimplifiee}\\\\`
+        texteCorr += `&\\text{Il s'ensuit que } S=\\left\\{${miseEnEvidence(racine1.texFractionSimplifiee)};${miseEnEvidence(racine2.texFractionSimplifiee)}\\right\\}`
+        reponse1 = racine1.texFractionSimplifiee
+        reponse2 = racine2.texFractionSimplifiee
       } else {
         texteCorr += `&\\iff \\left(${eqCoeffDom1.variable}${eqCoeffDom1.coefficients[1].signe < 0 ? '-' : '+'}${termeCompletion.texRacineCarree()}+${termeCompletion.oppose().sommeFraction(partieEq3).oppose().texRacineCarree()}\\right)=0 \\text{ ou }\\left(${eqCoeffDom1.variable}${eqCoeffDom1.coefficients[1].signe < 0 ? '-' : '+'}${termeCompletion.texRacineCarree()}-${termeCompletion.oppose().sommeFraction(partieEq3).oppose().texRacineCarree()}\\right)=0\\quad\\text{par le théorème du produit nul}\\\\`
         const racine1 = `${eqCoeffDom1.coefficients[1].signe < 0 ? '' : '-'}${termeCompletion.texRacineCarree()}-${termeCompletion.oppose().sommeFraction(partieEq3).oppose().texRacineCarree()}`
         const racine2 = `${eqCoeffDom1.coefficients[1].signe < 0 ? '' : '-'}${termeCompletion.texRacineCarree()}+${termeCompletion.oppose().sommeFraction(partieEq3).oppose().texRacineCarree()}`
         texteCorr += `&\\iff ${eqCoeffDom1.variable}=${racine1} \\,\\text{ ou }\\,${eqCoeffDom1.variable}=${racine2}\\\\`
-        texteCorr += `&\\iff S=\\left\\{${miseEnEvidence(racine1)};${miseEnEvidence(racine2)}\\right\\}`
+        texteCorr += `&\\text{Il s'ensuit que } S=\\left\\{${miseEnEvidence(racine1)};${miseEnEvidence(racine2)}\\right\\}`
         reponse1 = racine1
         reponse2 = racine2
       }
 
       texteCorr += '\\end{aligned}$'
-
-      texte += '<br><br>' + ajouteChampTexteMathLive(this, i, 'clavierFullOperations', { texteAvant: 'Donner l\'ensemble des solutions en séparant chaque solution par un point-virgule $S=\\{$', texteApres: '$\\}$' })
-      handleAnswers(this, i, { reponse: { value: `\\{${reponse1};${reponse2}\\}`, compare: fonctionComparaison, options: { ensembleDeNombres: true } } })
+      texte += '<br><br>' + ajouteChampTexteMathLive(this, 2 * i, 'clavierFullOperations', { texteAvant: 'Donner sous forme d\'un entier ou d\'une fraction irréductible le nombre qui permet de compléter le carré :' })
+      handleAnswers(this, 2 * i, { reponse: { value: termeCompletion.texFractionSimplifiee, compare: fonctionComparaison, options: { fractionIrreductible: true } } })
+      texte += '<br><br>' + ajouteChampTexteMathLive(this, 2 * i + 1, 'clavierFullOperations', { texteAvant: 'Donner l\'ensemble des solutions en séparant chaque solution par un point-virgule $S=$' })
+      handleAnswers(this, 2 * i + 1, { reponse: { value: `\\{${reponse1};${reponse2}\\}`, compare: fonctionComparaison, options: { ensembleDeNombres: true } } })
       if (this.questionJamaisPosee(i, equation.ensembleDeSolutionsTex, equation.equationTex)) {
         this.listeQuestions.push(texte)
         this.listeCorrections.push(texteCorr)
