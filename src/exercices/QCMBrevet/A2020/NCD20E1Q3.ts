@@ -36,7 +36,7 @@ export default class NouvelleCaledonieDec20Exo1Q3 extends ExerciceQcmA {
 
     this.enonce = 'Le médiane de la série ci-dessous est ... <br>'
     for (let i = 0; i < effectif; i++) {
-      this.enonce += (i === 0) ? `$${String(valeur[i])}$` : `$ ; ${String(valeur[i])}$`
+      this.enonce += (i === 0) ? `$${String(valeur[i])}$` : `$ \\leqslant ${String(valeur[i])}$`
     }
     const valeurOrdonnee = valeur.sort(function (a, b) {
       return a - b
@@ -44,7 +44,7 @@ export default class NouvelleCaledonieDec20Exo1Q3 extends ExerciceQcmA {
     this.correction = `Il y a $${String(effectif)}$ valeurs dans la série. C'est un nombre impair.<br>
      Donc la médiane est la $ ${String((effectif + 1) / 2)}^{\\text{e}}$ valeur de la série rangée dans l'ordre croissant.<br>`
     for (let i = 0; i < effectif; i++) {
-      this.correction += (i === 0) ? `$${String(valeurOrdonnee[i])}$` : `$ ; ${String(valeurOrdonnee[i])}$`
+      this.correction += (i === 0) ? `$${String(valeurOrdonnee[i])}$` : `$ \\leqslant ${String(valeurOrdonnee[i])}$`
     }
     this.correction += `<br>La médiane de cette série est donc : $${miseEnEvidence(`${String(mediane)}`)}$`
   }
