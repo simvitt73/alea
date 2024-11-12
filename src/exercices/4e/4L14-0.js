@@ -347,8 +347,8 @@ export default function TesterSiUnNombreEstSolutionDUneEquation () {
             c = randint(2, 5) * randint(-1, 1, 0)
             a = randint(2, 5) * randint(-1, 1, 0)
             x2 = randint(1, 6) * randint(-1, 1, 0)
-            x3 = randint(1, 6, x2) * randint(-1, 1, 0)
-            x1 = randint(1, 7, [x2, x3]) * randint(-1, 1, 0)
+            x3 = randint(-6, 6, [x2, 0, 1])
+            x1 = randint(-7, 7, [0, 1, x2, x3])
             b = a * x2
             d = c * x3
           }
