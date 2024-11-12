@@ -18,37 +18,11 @@ export const nombreElementsDifferents = (liste: string[]) => {
   return elements.size
 }
 
-function ajouteLettres (texte: string) {
-  const separateur = context.isHtml ? '<label' : !context.isAmc ? '\\square' : '\\AMCBox'
-  // Pour AMC ça ne marche pas parce que texte est vide : c'est AMC qui crée le qcm... je ne sais pas comment faire pour le moment
-  // Mais ça reste compatible...
-  const chunks = texte.split(separateur)
-  let texteAvecLettres = chunks[0]
-  const lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-  for (let i = 0; i < chunks.length - 1; i++) {
-    texteAvecLettres += `${lettres[i]}:${separateur}${chunks[i + 1]}`
-  }
-  return texteAvecLettres
-}
-
-function retrouveLaBonneReponse (texte: string) {
-  const separateur = context.isHtml ? '<label' : !context.isAmc ? '\\square' : '\\AMCBox'
-  const matcher = context.isHtml ? 'checked' : '\\blacksquare'
-  const chunks = texte.split(separateur)
-  for (let i = 0; i < chunks.length - 1; i++) {
-    if (chunks[i].includes(matcher)) {
-      return i
-    }
-  }
-  return -1
-}
-
 // class à utiliser pour fabriquer des Qcms sans aléatoirisation (en cas d'aléatoirisation, on utilisera ExerciceQcmA à la place)
 export default class ExerciceQcm extends Exercice {
   enonce!: string
   reponses!: string[]
-  options: {vertical?: boolean, ordered: boolean, lastchoice?: number}
-  qcmAleatoire: boolean
+  options: {vertical?: boolean, ordered: boolean, lastChoice?: number}
   versionAleatoire?: ()=>void
   versionOriginale:()=>void = () => {
     // Le texte récupéré avant le bloc des réponses (il ne faut pas oublier de doubler les \ du latex et de vérifier que les commandes latex sont supportées par Katex)
@@ -65,50 +39,99 @@ export default class ExerciceQcm extends Exercice {
 
   constructor () {
     super()
+    this.besoinFormulaire2CaseACocher = ['Consigne augmentée', false]
+    this.sup2 = false
     // Il n'est pas prévu d'avoir plus d'une question car ceci est prévu pour un seul énoncé statique à la base même si on pourra changer les valeurs et prévoir une aléatoirisation
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
     this.spacing = 1 // à adapter selon le contenu de l'énoncé
-    this.spacingCorr = 3 // idem pour la correction
+    this.spacingCorr = 2 // idem pour la correction
     // Les options pour le qcm à modifier éventuellement (vertical à true pour les longues réponses par exemple)
-    this.options = { vertical: false, ordered: false }
-    this.qcmAleatoire = false
+    this.options = { vertical: false, ordered: false, lastChoice: 8 }
     this.versionOriginale()
   }
 
   nouvelleVersion () {
-    if (this.qcmAleatoire && this.versionAleatoire != null) {
-      if (this.sup) this.versionOriginale()
-      else this.versionAleatoire()
-    } // il n'y a pas de else car si qcmAleatoire est faux, on reste sur la version originale qui est définie depuis le constructeur
-    let texte = this.enonce
-    this.autoCorrection[0] = {}
-    if (this.options != null) {
-      this.autoCorrection[0].options = this.options
+    this.autoCorrection = []
+    if (this.sup2) {
+      this.consigne = `Parmi les ${this.reponses.length} réponses ci-dessous, une seule est correcte.<br>
+${this.interactif || context.isAmc ? 'Cocher la case correspondante' : 'Donner la lettre correspondante'}${this.sup4 ? ', ou choisir "Je ne sais pas".' : '.'}`
+    } else {
+      this.consigne = ''
     }
+    if (this.versionAleatoire != null) {
+      for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 30;) {
+        if (this.sup) this.versionOriginale()
+        else this.versionAleatoire()
+        const bonneReponse = this.reponses[0]
+        if (this.questionJamaisPosee(i, bonneReponse)) {
+          let texte = this.enonce
+          this.autoCorrection[i] = {}
+          if (this.options != null) {
+            this.autoCorrection[i].options = { ...this.options }
+          }
+          const autoCorr = this.autoCorrection[i]
+          autoCorr.propositions = []
+          for (let j = 0; j < this.reponses.length; j++) {
+            autoCorr.propositions.push({
+              texte: this.reponses[j],
+              statut: j === 0
+            })
+          }
+          if (this.sup4) {
+            autoCorr.propositions.push({
+              texte: 'Je ne sais pas',
+              statut: false
+            })
+            if (autoCorr.options) {
+              autoCorr.options.lastChoice = this.reponses.length - 1
+            }
+          }
+          const lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].slice(0, this.reponses.length)
+          const monQcm = propositionsQcm(this, i, { style: 'margin:0 3px 0 3px;', format: this.interactif ? 'case' : 'lettre' })
+          texte += `<br>${monQcm.texte}`
 
-    this.autoCorrection[0].propositions = []
-    for (let i = 0; i < this.reponses.length; i++) {
-      this.autoCorrection[0].propositions.push({
-        texte: this.reponses[i],
-        statut: i === 0
-      })
+          const laBonneLettre = lettres[autoCorr.propositions.findIndex(el => el.statut)]
+          // Ici on colle le texte de la correction à partir du latex d'origine (vérifier la compatibilité Katex et doubler les \)s
+          const texteCorr = `${this.correction}<br>${this.interactif ? '' : `La bonne réponse est la réponse ${texteEnCouleurEtGras(laBonneLettre)}.`}`
+
+          this.listeQuestions[i] = texte
+          this.listeCorrections[i] = texteCorr
+          i++
+        }
+        cpt++
+        if (this.sup) break // Si on a coché pour la version originale, il n'y aura qu'une seule question
+      }
+    } else {
+      this.versionOriginale()
+      let texte = this.enonce
+      this.autoCorrection[0] = {}
+      if (this.options != null) {
+        this.autoCorrection[0].options = { ...this.options }
+      }
+      const autoCorr = this.autoCorrection[0]
+      autoCorr.propositions = []
+      for (let j = 0; j < this.reponses.length; j++) {
+        autoCorr.propositions.push({
+          texte: this.reponses[j],
+          statut: j === 0
+        })
+      }
+      const lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].slice(0, this.reponses.length)
+      const monQcm = propositionsQcm(this, 0, { style: 'margin:0 3px 0 3px;', format: this.interactif ? 'case' : 'lettre' })
+      texte += `<br>${monQcm.texte}`
+
+      const laBonneLettre = lettres[autoCorr.propositions.findIndex(el => el.statut)]
+      // Ici on colle le texte de la correction à partir du latex d'origine (vérifier la compatibilité Katex et doubler les \)s
+      const texteCorr = `${this.correction}<br>${this.interactif ? '' : `La bonne réponse est la réponse ${texteEnCouleurEtGras(laBonneLettre)}.`}`
+
+      this.listeQuestions[0] = texte
+      this.listeCorrections[0] = texteCorr
     }
-    const lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].slice(0, this.reponses.length)
-
-    const monQcm = propositionsQcm(this, 0)
-    texte += `<br>${ajouteLettres(monQcm.texte)}`
-
-    const laBonneLettre = lettres[retrouveLaBonneReponse(monQcm.texteCorr)]
-    // Ici on colle le texte de la correction à partir du latex d'origine (vérifier la compatibilité Katex et doubler les \)s
-    const texteCorr = `${this.correction}<br>La bonne réponse est la réponse ${texteEnCouleurEtGras(laBonneLettre)}.`
-
-    this.listeQuestions[0] = texte
-    this.listeCorrections[0] = texteCorr
   }
 
   // Pour permettre d'exporter tous les qcm pour en faire des séries de questions pour QcmCam. Ne pas y toucher
-  qcmCamExport (): string {
+  qcmCamExport (): {question: string, reponse: string}[] {
     return qcmCamExport(this)
   }
 }

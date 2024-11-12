@@ -164,6 +164,18 @@ export async function mathaleaLoadExerciceFromUuid (uuid: string) {
         } else if (filename != null) {
           module = await import(`../exercices/can/${directory}/${filename.replace('.js', '')}.js`)
         }
+      } else if (isCan === 'QCMBrevet') {
+        if (filename != null && filename.includes('.ts')) {
+          module = await import(`../exercices/QCMBrevet/${directory}/${filename.replace('.ts', '')}.ts`)
+        } else if (filename != null) {
+          module = await import(`../exercices/QCMBrevet/${directory}/${filename.replace('.js', '')}.js`)
+        }
+      } else if (isCan === 'QCMBac') {
+        if (filename != null && filename.includes('.ts')) {
+          module = await import(`../exercices/QCMBac/${directory}/${filename.replace('.ts', '')}.ts`)
+        } else if (filename != null) {
+          module = await import(`../exercices/QCMBac/${directory}/${filename.replace('.js', '')}.js`)
+        }
       } else {
         if (filename != null && filename.includes('.ts')) {
           module = await import(`../exercices/${directory}/${filename.replace('.ts', '')}.ts`)
@@ -620,7 +632,7 @@ export function mathaleaHandleExerciceSimple (exercice: TypeExercice, isInteract
     const options = exercice.optionsDeComparaison == null ? {} : exercice.optionsDeComparaison
     seedrandom(String(exercice.seed) + i + cptSecours, { global: true })
     if (exercice.nouvelleVersion && typeof exercice.nouvelleVersion === 'function') exercice.nouvelleVersion(numeroExercice)
-    if (exercice.questionJamaisPosee(i, String(exercice.question))) {
+    if (exercice.questionJamaisPosee(i, String(exercice.correction))) {
       if (exercice.compare != null) { /// DE LA AU PROCHAIN LA, ce sera à supprimer quand il n'y aura plus de this.compare
         let reponse = {}
         if (typeof exercice.reponse !== 'string') {
@@ -877,4 +889,15 @@ function animationLoading (state: boolean) {
   } else {
     document.getElementById('loading')?.classList.add('hidden')
   }
+}
+
+export async function getExercisesFromExercicesParams () {
+  const exercises = []
+  for (const paramsExercice of get(exercicesParams)) {
+    const exercise: TypeExercice = await mathaleaLoadExerciceFromUuid(paramsExercice.uuid)
+    mathaleaHandleParamOfOneExercice(exercise, paramsExercice)
+    exercise.duration = paramsExercice.duration ?? 10
+    exercises.push(exercise)
+  }
+  return exercises
 }

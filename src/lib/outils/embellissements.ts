@@ -80,14 +80,21 @@ export function texteEnCouleurEtGras (texte: string, couleur = '#f15929') {
   if (isArray(couleur)) couleur = couleur[0]
   if (context.isHtml) {
     return `<span style="color:${couleur};font-weight: bold;">${texte}</span>`
+  }
+  if (couleur[0] === '#') {
+    return `{\\bfseries \\color[HTML]{${couleur.replace('#', '')}}${texte}}`
+  }
+  if (couleur === 'green') {
+    return `{\\bfseries \\color[HTML]{008002} ${texte}}`
+  }
+  return `{\\bfseries \\color{${couleur.replace('#', '')}}${texte}}`
+}
+
+export function barreTexte (text: string) {
+  if (context.isHtml) {
+    return `<span class="oblique-strike">${text}</span>`
   } else {
-    if (couleur[0] === '#') {
-      return `{\\bfseries \\color[HTML]{${couleur.replace('#', '')}}${texte}}`
-    } else if (couleur === 'green') {
-      return `{\\bfseries \\color[HTML]{008002} ${texte}}`
-    } else {
-      return `{\\bfseries \\color{${couleur.replace('#', '')}}${texte}}`
-    }
+    return `\\strike{${text}}`
   }
 }
 

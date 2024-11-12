@@ -28,6 +28,8 @@ export type LatexFileInfos = {
   style: 'Coopmaths' | 'Classique' | 'ProfMaquette' | 'ProfMaquetteQrcode' | 'Can'
   nbVersions: number
   fontOption: 'StandardFont'| 'DysFont'
+  tailleFontOption: number,
+  dysTailleFontOption: number,
   correctionOption: 'AvecCorrection' | 'SansCorrection'
   qrcodeOption: 'AvecQrcode' | 'SansQrcode'
   titleOption: 'AvecTitre' | 'SansTitre'
@@ -284,7 +286,7 @@ Correction
         contents.preamble += `\\documentclass[a4paper,11pt,fleqn]{article}\n\n${addPackages(latexFileInfos, contents)}\n\n`
         contents.preamble += '\n\\newbool{correctionDisplay}'
         contents.preamble += `\n\\setbool{correctionDisplay}{${latexFileInfos.correctionOption === 'AvecCorrection' ? 'true' : 'false'}}`
-        contents.preamble += '\n\\Theme[CAN]{}{}{' + latexFileInfos.durationCanOption + '}{}'
+        contents.preamble += `\n\\Theme[CAN]{${latexFileInfos.title === '' ? 'Course aux nombres' : latexFileInfos.title}}{}{${latexFileInfos.durationCanOption}}{}`
         contents.intro += '\n\\begin{document}'
         contents.intro += '\n\\setcounter{nbEx}{1}'
         contents.intro += '\n\\pageDeGardeCan{nbEx}'
