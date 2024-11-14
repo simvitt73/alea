@@ -180,7 +180,7 @@ export default class LireUnePuissance extends Exercice {
 et celle de $${texNombre(nb2, 0)}$ est $${miseEnEvidence(texFactorisation(nb2, false))}$, soit respectivement : $${miseEnEvidence(texFactorisation(nb1, true))}$
 et $${miseEnEvidence(texFactorisation(nb2, true))}$.`)
         handleAnswers(this, indiceI + indiceII, { reponse: { value: texFactorisation(nb1, true), compare: fonctionComparaison, options: { nbFacteursIdentiquesFactorisation: true } } })
-        handleAnswers(this, indiceI + indiceII + 1, { reponse: { value: texFactorisation(nb2), compare: fonctionComparaison } })
+        handleAnswers(this, indiceI + indiceII + 1, { reponse: { value: texFactorisation(nb2), compare: fonctionComparaison, options: { nbFacteursIdentiquesFactorisation: true } } })
         indiceII += 2
       }
       if (listeQ.includes(2)) {
