@@ -23,9 +23,11 @@ export const refs = {
 export default class LireUnePuissance extends Exercice {
   constructor () {
     super()
-    this.nbQuestions = 5
+    this.nbQuestions = 1
     this.spacing = 1.5
     this.spacingCorr = 1.5
+    this.sup = 6
+    this.besoinFormulaireNumerique = ['Choix des questions', 6, '1 : Décomposition seulement\n2 : Decomposition et liste des diviseurs\n3 : Decomposition, liste des diviseurs et PGCD\n4 : Liste des diviseurs et PGCD\n5 : Liste des diviseurs, PGCD et conclusion\n6 : Toutes les questions']
   }
 
   situations = [
@@ -141,6 +143,15 @@ export default class LireUnePuissance extends Exercice {
 
   nouvelleVersion (): void {
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      const listeQuestParChoix = [
+        [1],
+        [1, 2],
+        [1, 2, 3],
+        [2, 3],
+        [2, 3, 4],
+        [1, 2, 3, 4]
+      ]
+      const listeQ = listeQuestParChoix[this.sup - 1]
       const situation = choice(this.situations)
       const [unPremier, unSecond] = shuffle(choice(situation.premiers))
       const facteurs1 = combinaisonListes([2, 3, 2, 3, 5, 2], 5).slice(0, 3)
@@ -154,52 +165,67 @@ export default class LireUnePuissance extends Exercice {
       let texte = `Un ${situation.qui} ${situation.faitQuoi} ${situation.ou} ${situation.pourQui}.<br>
       Il souhaite repartir les ${nb1} ${situation.espece1}${situation.especePluriel} et les ${nb2} ${situation.espece2}${situation.especePluriel} dans des ${situation.groupement}s.<br>
       Il souhaite que chaque ${situation.groupement} comporte le même nombre de ${situation.espece1}${situation.especePluriel} et le même nombre de ${situation.espece2}${situation.especePluriel}.<br>`
+      const indiceI = i * listeQ.length
+      let indiceII = 0
+
+      const items: string[] = []
+      const itemsCorr: string[] = []
+
+      if (listeQ.includes(1)) {
+        items.push(`Décomposer en produit de facteurs premiers les nombres ${nb1} et ${nb2}.<br>
+             ${this.interactif
+             ? `$${texNombre(nb1, 0)} =$ ${ajouteChampTexteMathLive(this, indiceI + indiceII)}<br>$${texNombre(nb2, 0)} =$ ${ajouteChampTexteMathLive(this, indiceI + indiceII + 1)}`
+: ''}`)
+        itemsCorr.push(`La décomposition en produit de facteurs premiers de $${texNombre(nb1, 0)}$ est $${miseEnEvidence(texFactorisation(nb1, false))}$
+et celle de $${texNombre(nb2, 0)}$ est $${miseEnEvidence(texFactorisation(nb2, false))}$, soit respectivement : $${miseEnEvidence(texFactorisation(nb1, true))}$
+et $${miseEnEvidence(texFactorisation(nb2, true))}$.`)
+        handleAnswers(this, indiceI + indiceII, { reponse: { value: texFactorisation(nb1, true), compare: fonctionComparaison, options: { nbFacteursIdentiquesFactorisation: true } } })
+        handleAnswers(this, indiceI + indiceII + 1, { reponse: { value: texFactorisation(nb2), compare: fonctionComparaison } })
+        indiceII += 2
+      }
+      if (listeQ.includes(2)) {
+        items.push(`Trouver tous les entiers positifs qui divisent ${nb1} et ${nb2}.<br>${this.interactif ? ' Écrire la liste des diviseurs en les séparant par des points-virgules.' : ''}<br>
+             ${this.interactif
+             ? `Pour $${texNombre(nb1, 0)}$ : ${ajouteChampTexteMathLive(this, indiceI + indiceII)}<br>Pour $${texNombre(nb2, 0)}$ : ${ajouteChampTexteMathLive(this, indiceI + indiceII + 1)}`
+: ''}`)
+        itemsCorr.push(`Les diviseurs de $${texNombre(nb1, 0)}$ sont $${miseEnEvidence(listDiv1.join('~;~'))}$.<br>
+        Et ceux de $${texNombre(nb2, 0)}$ sont $${miseEnEvidence(listDiv2.join('~;~'))}$.`)
+        handleAnswers(this, indiceI + indiceII, { reponse: { value: listDiv1.join(';'), compare: fonctionComparaison, options: { suiteDeNombres: true } } })
+        handleAnswers(this, indiceI + indiceII + 1, { reponse: { value: listDiv2.join(';'), compare: fonctionComparaison, options: { suiteDeNombres: true } } })
+        indiceII += 2
+      }
+      if (listeQ.includes(3)) {
+        items.push(`En déduire le plus grand nombre ${situation.groupementDet}${situation.groupement}s que le ${situation.qui} pourra constituer.` + ajouteChampTexteMathLive(this, indiceI + indiceII))
+        itemsCorr.push(`Le plus grand diviseur commun à $${texNombre(nb1, 0)}$ et $${texNombre(nb2, 0)}$ est $${miseEnEvidence(texNombre(pgcd12, 0))}$.`)
+        handleAnswers(this, indiceI + indiceII, { reponse: { value: String(pgcd12), compare: fonctionComparaison } })
+        indiceII += 2
+      }
+      if (listeQ.includes(4)) {
+        items.push(`Combien de ${situation.espece1}${situation.especePluriel} et de ${situation.espece2}${situation.especePluriel} y aura-t-il dans chaque ${situation.groupement} ?<br>
+          ${this.interactif
+          ? `Il y aura ${ajouteChampTexteMathLive(this, indiceI + indiceII)}  ${situation.espece1}${situation.especePluriel}.<br>Il y aura ${ajouteChampTexteMathLive(this, indiceI + indiceII + 1)} ${situation.espece2}${situation.especePluriel}.`
+: ''}`)
+        itemsCorr.push(`Il y aura $${texNombre(nb1, 0)}\\div ${texNombre(pgcd12, 0)}=${miseEnEvidence(texNombre(nb1parGroupe, 0))}$ ${situation.espece1}${situation.especePluriel}
+             et $${texNombre(nb2, 0)}\\div ${texNombre(pgcd12, 0)}=${miseEnEvidence(texNombre(nb2parGroupe, 0))}$ ${situation.espece2}${situation.especePluriel}
+              dans chaque ${situation.groupement}.`)
+        handleAnswers(this, indiceI + indiceII, { reponse: { value: String(nb1parGroupe), compare: fonctionComparaison } })
+        handleAnswers(this, indiceI + indiceII + 1, { reponse: { value: String(nb2parGroupe), compare: fonctionComparaison } })
+      }
       const liste = createList(
         {
-          items: [
-             `Décomposer en produit de facteurs premiers les nombres ${nb1} et ${nb2}.<br>
-             ${this.interactif
-             ? `$${texNombre(nb1, 0)} =$ ${ajouteChampTexteMathLive(this, 7 * i)}<br>$${texNombre(nb2, 0)} =$ ${ajouteChampTexteMathLive(this, 7 * i + 1)}`
-: ''}`,
-            `Trouver tous les entiers positifs qui divisent ${nb1} et ${nb2}.<br>
-             ${this.interactif
-             ? `Pour $${texNombre(nb1, 0)}$ : ${ajouteChampTexteMathLive(this, 7 * i + 2)}<br>Pour $${texNombre(nb2, 0)}$ : ${ajouteChampTexteMathLive(this, 7 * i + 3)}`
-: ''}`,
-            `En déduire le plus grand nombre ${situation.groupementDet}${situation.groupement}s que le ${situation.qui} pourra constituer.` + ajouteChampTexteMathLive(this, 7 * i + 4),
-            `Combien de ${situation.espece1}${situation.especePluriel} et de ${situation.espece2}${situation.especePluriel} y aura-t-il dans chaque ${situation.groupement} ?<br>
-             ${this.interactif
-             ? `Il y aura ${ajouteChampTexteMathLive(this, 7 * i + 5)}  ${situation.espece1}${situation.especePluriel} et ${ajouteChampTexteMathLive(this, 7 * i + 6)} ${situation.espece2}${situation.especePluriel}.`
-: ''}`
-          ],
+          items,
           style: 'alpha'
         }
       )
       texte += liste
       const listeCorr = createList(
         {
-          items: [
-            `La décomposition en produit de facteurs premiers de $${texNombre(nb1, 0)}$ est $${miseEnEvidence(texFactorisation(nb1, false))}$
-             et celle de $${texNombre(nb2, 0)}$ est $${miseEnEvidence(texFactorisation(nb2, false))}$, soit respectivement : $${miseEnEvidence(texFactorisation(nb1, true))}$
-             et $${miseEnEvidence(texFactorisation(nb2, true))}$.`,
-            `Les diviseurs de $${texNombre(nb1, 0)}$ sont $${miseEnEvidence(listDiv1.join('~;~'))}$.<br>
-             Et ceux de $${texNombre(nb2, 0)}$ sont $${miseEnEvidence(listDiv2.join('~;~'))}$.`,
-            `Le plus grand diviseur commun à $${texNombre(nb1, 0)}$ et $${texNombre(nb2, 0)}$ est $${miseEnEvidence(texNombre(pgcd12, 0))}$.`,
-            `Il y aura $${texNombre(nb1, 0)}\\div ${texNombre(pgcd12, 0)}=${miseEnEvidence(texNombre(nb1parGroupe, 0))}$ ${situation.espece1}${situation.especePluriel}
-             et $${texNombre(nb2, 0)}\\div ${texNombre(pgcd12, 0)}=${miseEnEvidence(texNombre(nb2parGroupe, 0))}$ ${situation.espece2}${situation.especePluriel}
-              dans chaque ${situation.groupement}.`
-          ],
+          items: itemsCorr,
           style: 'alpha'
         }
       )
       const texteCorr = listeCorr
       if (this.questionJamaisPosee(i, nb1, nb2)) {
-        handleAnswers(this, 7 * i, { reponse: { value: texFactorisation(nb1, true), compare: fonctionComparaison } })
-        handleAnswers(this, 7 * i + 1, { reponse: { value: texFactorisation(nb2), compare: fonctionComparaison } })
-        handleAnswers(this, 7 * i + 2, { reponse: { value: listDiv1.join(';'), compare: fonctionComparaison, options: { suiteRangeeDeNombres: true } } })
-        handleAnswers(this, 7 * i + 3, { reponse: { value: listDiv2.join(';'), compare: fonctionComparaison, options: { suiteRangeeDeNombres: true } } })
-        handleAnswers(this, 7 * i + 4, { reponse: { value: String(pgcd12), compare: fonctionComparaison } })
-        handleAnswers(this, 7 * i + 5, { reponse: { value: String(nb1parGroupe), compare: fonctionComparaison } })
-        handleAnswers(this, 7 * i + 6, { reponse: { value: String(nb2parGroupe), compare: fonctionComparaison } })
         this.listeQuestions.push(texte)
         this.listeCorrections.push(texteCorr)
         i++
