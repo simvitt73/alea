@@ -379,33 +379,43 @@ export function verifDragAndDrop (
             }
           } else {
             if (goodAnswer && goodAnswer[1] != null) {
-              const listeOfIds: string[] = goodAnswer[1].value
-              const ordered = goodAnswer[1].options.ordered ?? false
-              let isOk = true
-              if (ordered) {
-                for (let j = 0; j < listeOfIds.length; j++) {
-                  const etiquette = etiquettesDedans[j]
-                  const id = listeOfIds[j]
-                  const nbChar = id.length
-                  if (id === etiquette.id.split('I')[1].substring(0, nbChar)) {
-                    etiquette.classList.add('bg-coopmaths-warn-100')
-                  } else {
-                    etiquette.classList.add('bg-coopmaths-action-200')
-                    isOk = false
-                  }
+              let isOk: boolean = true
+              const value = Array.isArray(goodAnswer[1].value) ? goodAnswer[1].value : [goodAnswer[1].value]
+              for (const val of value) {
+                isOk = true
+                const listeOfIds: string[] = val.split('|')
+                const ordered = goodAnswer[1].options.ordered ?? false
+                if (listeOfIds.length !== etiquettesDedans.length) {
+                  isOk = false
+                  continue
                 }
-              } else {
+                if (ordered) {
+                  for (let j = 0; j < listeOfIds.length && isOk; j++) {
+                    const etiquette = etiquettesDedans[j]
+                    const id = listeOfIds[j]
+                    const nbChar = id.length
+                    if (id === etiquette.id.split('I')[1].substring(0, nbChar)) {
+                      etiquette.classList.add('bg-coopmaths-warn-100')
+                    } else {
+                      etiquette.classList.add('bg-coopmaths-action-200')
+                      isOk = false
+                    }
+                  }
+                  if (isOk === true) break
+                } else {
                 // @todo non ordered
-                for (const etiquette of etiquettesDedans) {
-                  const id = etiquette.id.split('I')[1].split('-')[0]
-                  if (listeOfIds.includes(id)) {
-                    etiquette.classList.add('bg-coopmaths-warn-100')
-                  } else {
-                    etiquette.classList.add('bg-coopmaths-action-200')
-                    isOk = false
+                  for (const etiquette of etiquettesDedans) {
+                    const id = etiquette.id.split('I')[1].split('-')[0]
+                    if (listeOfIds.includes(id)) {
+                      etiquette.classList.add('bg-coopmaths-warn-100')
+                    } else {
+                      etiquette.classList.add('bg-coopmaths-action-200')
+                      isOk = false
+                    }
                   }
+                  etiquettesAbsentes = listeOfIds.filter((el:string) => Array.from(etiquettesDedans).find(etiquette => etiquette.id.includes(el))).length - listeOfIds.length
+                  if (isOk === true && etiquettesAbsentes === 0) break
                 }
-                etiquettesAbsentes = listeOfIds.filter((el:string) => Array.from(etiquettesDedans).find(etiquette => etiquette.id.includes(el))).length - listeOfIds.length
               }
               if (isOk) {
                 nbBonnesReponses++

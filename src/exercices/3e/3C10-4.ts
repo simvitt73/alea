@@ -40,7 +40,14 @@ export default class LireUnePuissance extends Exercice {
         { id: '8', contenu: 'neuf' }
       ], [
         { id: '9', contenu: 'moins' },
-        { id: '10', contenu: 'exposant' }
+        { id: '11', contenu: 'au' },
+        { id: '14', contenu: 'à la' }
+      ],
+      [
+        { id: '10', contenu: 'exposant' },
+        { id: '12', contenu: 'carré' },
+        { id: '13', contenu: 'cube' },
+        { id: '15', contenu: 'puissance' }
       ]
     ]
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -53,7 +60,7 @@ export default class LireUnePuissance extends Exercice {
       const exposantEtiquette = etiquettes[0].find(e => e.contenu === nombreEnLettres(Math.abs(exposant)))
       const exposantId = exposantEtiquette?.id ?? '2'
       const texte = `Comment se lit : $${mantisse < 0 ? `(${String(mantisse)})` : String(mantisse)}^{${exposant}}$ ? `
-      const enonceATrous = '%{rectangle1} %{rectangle2} %{rectangle3} %{rectangle4} %{rectangle5}'
+      const enonceATrous = '%{rectangle1}'
 
       const leDragAndDrop = new DragAndDrop({ exercice: this, question: i, consigne: 'Écrire avec les étiquettes disponibles.', etiquettes, enonceATrous })
 
@@ -61,42 +68,35 @@ export default class LireUnePuissance extends Exercice {
       const texteCorr = `$${mantisse < 0 ? `(${String(mantisse)})` : String(mantisse)}^{${exposant}}$ se lit : ${value}.`
       if (this.questionJamaisPosee(i, mantisse, exposant)) {
         this.dragAndDrops.push(leDragAndDrop)
-        this.listeQuestions.push(texte + leDragAndDrop.ajouteDragAndDrop({ melange: false, duplicable: true }))
-        handleAnswers(this, i, {
-          rectangle1: {
-            value: mantisse < 0
-              ? '9'
-              : mantisseId
-          },
-          rectangle2: {
-            value: mantisse < 0
-              ? mantisseId
-              : '10'
-          },
-          rectangle3: {
-            value: mantisse < 0
-              ? '10'
-              : exposant < 0
-                ? '9'
-                : exposantId
-          },
-          rectangle4: {
-            value: mantisse > 0
-              ? exposant < 0
-                ? exposantId
-                : ''
-              : exposant < 0
-                ? '9'
-                : exposantId
-          },
-          rectangle5: {
-            value: mantisse > 0
-              ? ''
-              : exposant < 0
-                ? exposantId
-                : ''
+        this.listeQuestions.push(`${texte} ${this.interactif ? leDragAndDrop.ajouteDragAndDrop({ melange: false, duplicable: true }) : ''}`)
+        const values: string[] = []
+        if (mantisse < 0) {
+          if (exposant < 0) {
+            values.push(`9|${mantisseId}|10|9|${exposantId}`, `9|${mantisseId}|14|15|9|${exposantId}`)
+          } else {
+            values.push(`9|${mantisseId}|10|${exposantId}`, `9|${mantisseId}|14|15|${exposantId}`)
+            if (exposant === 2) {
+              values.push(`9|${mantisseId}|11|12`)
+            }
+            if (exposant === 3) {
+              values.push(`9|${mantisseId}|11|13`)
+            }
           }
-        }, { formatInteractif: 'dnd' })
+        }
+        if (mantisse > 0) {
+          if (exposant < 0) {
+            values.push(`${mantisseId}|10|9|${exposantId}`, `${mantisseId}|14|15|9|${exposantId}`)
+          } else {
+            values.push(`${mantisseId}|10|${exposantId}`, `${mantisseId}|14|15|${exposantId}`)
+            if (exposant === 2) {
+              values.push(`${mantisseId}|11|12`)
+            }
+            if (exposant === 3) {
+              values.push(`${mantisseId}|11|13`)
+            }
+          }
+        }
+        handleAnswers(this, i, { rectangle1: { value: [...values], options: { ordered: true, multi: true } } }, { formatInteractif: 'dnd' })
         this.listeCorrections.push(texteCorr)
         i++
       }

@@ -54,7 +54,9 @@ export type OptionsComparaisonType = {
   egaliteExpression?: boolean
   noUselessParen?: boolean
   nonReponseAcceptee?: boolean,
-  pluriels?: boolean
+  pluriels?: boolean,
+  multi?: boolean, // options pour le drag and drop
+  ordered?: boolean // options pour le drag and drop
 }
 export type CompareFunction = (
   input: string,
