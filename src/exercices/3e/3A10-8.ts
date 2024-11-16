@@ -125,7 +125,7 @@ export default class LireUnePuissance extends Exercice {
       especePluriel: '',
       groupement: 'plat',
       groupementDet: 'de ',
-      premiers: [[10, 12], [8, 9], [5, 5], [6, 7], [7, 8]]
+      premiers: [[10, 12], [8, 9], [5, 6], [6, 7], [7, 8]]
     },
     {
       qui: 'décorateur',
@@ -137,7 +137,7 @@ export default class LireUnePuissance extends Exercice {
       especePluriel: 's',
       groupement: 'bouquet',
       groupementDet: 'de ',
-      premiers: [[4, 6], [5, 7], [3, 3], [6, 8], [2, 4]]
+      premiers: [[4, 6], [5, 7], [3, 4], [6, 8], [2, 4]]
     }
   ]
 
