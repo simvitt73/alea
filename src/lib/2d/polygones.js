@@ -285,7 +285,7 @@ export function Polygone (...points) {
         const triangles = this.triangulation
         this._aire = 0
         for (let i = 0; i < triangles.length; i++) {
-          this._aire += aireTriangle(triangles[i])
+          this._aire += aireTriangle(polygone(...triangles[i]))
         }
       }
       return this._aire
