@@ -42,7 +42,7 @@ export default class EgaliteACompleter extends Exercice {
     this.reponse = texNombre(a + b + c, 0)
     this.consigne = 'Compléter l\'égalité.<br>'
     handleAnswers(this, 0, { champ1: { value: this.reponse } })
-    this.question = `${choix ? `${texNombre(a, 0)}+${b}= %{champ1} -${c}` : `%{champ1} -${c}=${texNombre(a, 0)}+${b} `}`
+    this.question = `${choix ? `${texNombre(a, 0)}+${b}=~%{champ1} -${c}` : `%{champ1}~-${c}=${texNombre(a, 0)}+${b} `}`
     this.correction = `Le nombre cherché vérifie  l'égalité : 
          ${choix ? `$${texNombre(a + b, 0)}= \\ldots -${c}$` : `$\\ldots -${c}=${texNombre(a + b, 0)}$ `}.<br>
          On cherche donc le nombre qui, diminué de $${c}$ est égal à  $${texNombre(a + b, 0)}$. <br>

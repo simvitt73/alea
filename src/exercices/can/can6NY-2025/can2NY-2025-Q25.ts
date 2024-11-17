@@ -51,7 +51,7 @@ export default class diviseur extends Exercice {
     this.canEnonce = `$${texNombre(2025)}$ est-il un multiple de $${a}$ ? `
     this.canReponseACompleter = `OUI ${sp(7)} NON`
     if (a === 13 || a === 17 || a === 11 || a === 7) {
-      this.correction = `$${a}$ est un nombre premier, il n'apparaît pas dans la décomposition, donc ${texteEnCouleurEtGras('Non')}, $${a}$ n'est pas un diviseur de $${texNombre(2025, 0)}$.`
+      this.correction = `$${a}$ est un nombre premier, il n'apparaît pas dans la décomposition, donc ${texteEnCouleurEtGras('non')}, $${a}$ n'est pas un diviseur de $${texNombre(2025, 0)}$.`
     } else if (a === 6) {
       this.correction = `${texteEnCouleurEtGras('Non')}, $${a}$ n'est pas un diviseur de $${texNombre(2025, 0)}$ car $3$ n'est pas un diviseur de $${texNombre(2025, 0)}$. `
     } else if (a === 8) {
