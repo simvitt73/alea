@@ -35,7 +35,7 @@ export default class simplifierFractionSimple extends Exercice {
     const d = choice([-1, 1, 2025, -2025])
     // this.optionsDeComparaison = abs(d) === 1 ? { fractionIrreductible: true } : { nombreDecimalSeulement: true }
     this.reponse = new FractionEtendue(n, d).toLatex()
-    this.question = `Écrire le plus simplement possible : $\\dfrac{${texNombre(n)}}{${texNombre(d)}}$`
+    this.question = `Écrire le plus simplement possible : $\\dfrac{${texNombre(n)}}{${texNombre(d)}}$.`
     this.correction = `$\\dfrac{${texNombre(n)}}{${texNombre(d)}}=${miseEnEvidence(this.reponse)}$`
     if (this.interactif) { this.question += '<br>' }
     this.canEnonce = this.question

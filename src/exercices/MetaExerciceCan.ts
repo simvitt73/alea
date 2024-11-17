@@ -100,12 +100,13 @@ export default class MetaExercice extends Exercice {
           const formatChampTexte = Question.formatChampTexte ?? ''
           const optionsChampTexte = Question.optionsChampTexte ?? {}
           if (Question.formatInteractif === 'fillInTheBlank' || (typeof Question.reponse === 'object' && 'champ1' in Question.reponse)) {
-            this.listeQuestions[indexQuestion] = consigne + remplisLesBlancs(this, indexQuestion, Question.question, 'fillInTheBlank', '\\ldots')
+            this.listeQuestions[indexQuestion] = consigne + remplisLesBlancs(this, indexQuestion, Question.question, formatChampTexte, '\\ldots')
             if (typeof Question.reponse === 'string') {
               handleAnswers(this, indexQuestion, {
                 champ1: {
                   value: Question.reponse,
-                  compare: Question.compare ?? fonctionComparaison
+                  compare: Question.compare ?? fonctionComparaison,
+                  options: optionsChampTexte
                 }
               }, { formatInteractif: 'mathlive' })
             } else if (typeof Question.reponse === 'object') {

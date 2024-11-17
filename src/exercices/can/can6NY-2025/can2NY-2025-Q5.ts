@@ -15,7 +15,6 @@ export const refs = {
 /**
  * Modèle d'exercice très simple pour la course aux nombres
  * @author GM+EE
- * Référence
 */
 export default class CalculDivers extends Exercice {
   constructor () {

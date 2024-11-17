@@ -40,7 +40,7 @@ export default class nombreATrouver extends Exercice {
     if (choice([true, false])) {
       this.reponse = new FractionEtendue(a * c + b, c).inverse()
       this.question = `Calculer $${Nom}$  sachant que : <br>
-     $\\dfrac{1}{${Nom}}=${a}+${texFractionFromString(b, c)}$`
+     $\\dfrac{1}{${Nom}}=${a}+${texFractionFromString(b, c)}$.`
       this.correction = `$\\dfrac{1}{${Nom}}=${a}+${texFractionFromString(b, c)} = \\dfrac{${a} \\times ${c}}{${c}} + \\dfrac{${b}}{${c}} = \\dfrac{${a * c}}{${c}} + \\dfrac{${b}}{${c}}  =${d.texFraction}$<br><br>
     Ainsi, $${Nom}=${miseEnEvidence(`${d.inverse().texFraction}`)}$.`
       this.canEnonce = `$\\dfrac{1}{${Nom}}=${a}+${texFractionFromString(b, c)}$`// 'Compléter'
@@ -48,7 +48,7 @@ export default class nombreATrouver extends Exercice {
     } else {
       this.reponse = new FractionEtendue(a * c - b, c).inverse()
       this.question = `Calculer $${Nom}$  sachant que : <br>
-         $\\dfrac{1}{${Nom}}=${a}-${texFractionFromString(b, c)}$`
+         $\\dfrac{1}{${Nom}}=${a}-${texFractionFromString(b, c)}$.`
       this.correction = `$\\dfrac{1}{${Nom}}=${a}-${texFractionFromString(b, c)} = \\dfrac{${a} \\times ${c}}{${c}} - \\dfrac{${b}}{${c}} = \\dfrac{${a * c}}{${c}} - \\dfrac{${b}}{${c}}  =${e.texFraction}$<br><br>
         Ainsi, $${Nom}=${miseEnEvidence(`${e.inverse().texFraction}`)}$.`
 
