@@ -13,10 +13,9 @@ export const titre = 'Nom de l\'exercice'
 
 export const dateDePublication = '4/5/2024' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
-export const uuid = '' // Quand on exécute pnpm start la première fois, le terminal renvoie une référence d'uuid, à copier-coller ici
-export const ref = ''// Référence de l'exercice
+export const uuid = '1eb36' // Quand on exécute pnpm start la première fois, le terminal renvoie une référence d'uuid, à copier-coller ici
 export const refs = {
-  'fr-fr': [ref],
+  'fr-fr': [],
   'fr-ch': []
 }
 
