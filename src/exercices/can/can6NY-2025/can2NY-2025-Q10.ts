@@ -7,6 +7,7 @@ import { randint } from '../../../modules/outils'
 import { abs } from '../../../lib/outils/nombres'
 import Decimal from 'decimal.js'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 export const titre = 'Calculer avec une puissance de 10'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -27,6 +28,7 @@ export default class calcPuissanceDe10 extends Exercice {
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
     this.formatInteractif = 'fillInTheBlank'
+    this.formatChampTexte = KeyboardType.clavierDeBase
     this.compare = fonctionComparaison
     this.optionsDeComparaison = { nombreDecimalSeulement: true }
   }
@@ -41,8 +43,8 @@ export default class calcPuissanceDe10 extends Exercice {
     this.reponse = texNombre(exp, 0)
     this.question = `${texNombre(a, 4)} \\times 10^{%{champ1}} =${texNombre(Decimal.pow(10, exp).mul(a), 6)}`
     handleAnswers(this, 0, { champ1: { value: this.reponse } })
-    this.correction = `Le résultat obtenu est $${texNombre(Decimal.pow(10, expABS), 0)}$ fois plus ${exp > 0 ? 'grand' : 'petit'}.<br>
-        ${exp > 0 ? `Comme $${texNombre(Decimal.pow(10, exp), 0)}=10^{${texNombre(exp, 0)}}$` : `Comme $\\dfrac{1}{${texNombre(Decimal.pow(10, exp), 5)}}=${texNombre(Decimal.pow(10, exp), 5)}=10^{${texNombre(exp, 0)}}$`}, 
+    this.correction = `$${texNombre(Decimal.pow(10, exp).mul(a), 6)}$ est $${texNombre(Decimal.pow(10, expABS), 0)}$ fois plus ${exp > 0 ? 'grand' : 'petit'} que $${texNombre(a, 4)}$.<br>
+        ${exp > 0 ? `Comme $${texNombre(Decimal.pow(10, exp), 0)}=10^{${texNombre(exp, 0)}}$` : `Comme $\\dfrac{1}{${texNombre(Decimal.pow(10, -exp), 5)}}=${texNombre(Decimal.pow(10, exp), 5)}=10^{${texNombre(exp, 0)}}$`}, 
         alors l'égalité est : $${texNombre(a, 4)} \\times 10^{${miseEnEvidence(texNombre(exp, 0))}} =${texNombre(Decimal.pow(10, exp).mul(a), 6)}$.`
 
     this.canEnonce = 'Compléter.'

@@ -16,7 +16,6 @@ export const refs = {
 /**
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Gilles Mora + Eric Elter
- * Référence
 */
 export default class CalculDivers extends Exercice {
   constructor () {
@@ -34,46 +33,39 @@ export default class CalculDivers extends Exercice {
     this.listeCanEnonces = []
     this.listeCanReponsesACompleter = []
     this.consigne = 'Compléter l\'égalité.<br>'
-    switch (randint(1, 6)) {
+    switch (randint(1, 5)) {
       case 1 :
         this.reponse = texNombre(2, 0)
         this.question = `${texNombre(202.5, 1)}=202+\\dfrac{1}{%{champ1}}`
-        this.correction = `$${texNombre(202.5, 1)}=202+\\dfrac{1}{${miseEnEvidence(this.reponse)}}$`
+        this.correction = `$${texNombre(202.5, 1)}=202+${texNombre(0.5, 1)}=202+\\dfrac{1}{${miseEnEvidence(this.reponse)}}$`
         handleAnswers(this, 0, { champ1: { value: this.reponse } })
         this.canReponseACompleter = `$${texNombre(202.5, 1)}=202+\\dfrac{1}{\\ldots}$`
         break
       case 2 :
         this.reponse = texNombre(1, 0)
         this.question = `${texNombre(202.5, 1)}=202+\\dfrac{%{champ1}}{2}`
-        this.correction = `$${texNombre(202.5, 1)}=202+\\dfrac{${miseEnEvidence(this.reponse)}}{2}$`
+        this.correction = `$${texNombre(202.5, 1)}=202+${texNombre(0.5, 1)}=202+\\dfrac{${miseEnEvidence(this.reponse)}}{2}$`
         handleAnswers(this, 0, { champ1: { value: this.reponse } })
         this.canReponseACompleter = `$${texNombre(202.5, 1)}=202+\\dfrac{\\ldots}{2}$`
         break
       case 3 :
         this.reponse = texNombre(25, 0)
         this.question = `${texNombre(20.25, 2)}=20+\\dfrac{%{champ1}}{100}`
-        this.correction = `$${texNombre(20.25, 2)}=20+\\dfrac{${miseEnEvidence(this.reponse)}}{100}$`
+        this.correction = `$${texNombre(20.25, 2)}=20+${texNombre(0.25, 2)}=20+\\dfrac{${miseEnEvidence(this.reponse)}}{100}$`
         handleAnswers(this, 0, { champ1: { value: this.reponse } })
         this.canReponseACompleter = `$${texNombre(20.25, 2)}=20+\\dfrac{\\ldots}{100}$`
         break
       case 4 :
-        this.reponse = texNombre(25, 0)
-        this.question = `${texNombre(20.25, 2)}=20+\\dfrac{%{champ1}}{100}`
-        this.correction = `$${texNombre(20.25, 2)}=20+\\dfrac{${miseEnEvidence(this.reponse)}}{100}$`
-        handleAnswers(this, 0, { champ1: { value: this.reponse } })
-        this.canReponseACompleter = `$${texNombre(20.25, 2)}=20+\\dfrac{\\ldots}{100}$`
-        break
-      case 5 :
         this.reponse = texNombre(1, 0)
         this.question = `${texNombre(20.25, 2)}=20+\\dfrac{%{champ1}}{4}`
-        this.correction = `$${texNombre(20.25, 2)}=20+\\dfrac{${miseEnEvidence(this.reponse)}}{4}$`
+        this.correction = `$${texNombre(20.25, 2)}=20+${texNombre(0.25, 2)}=20++\\dfrac{${miseEnEvidence(this.reponse)}}{4}$`
         handleAnswers(this, 0, { champ1: { value: this.reponse } })
         this.canReponseACompleter = `$${texNombre(20.25, 2)}=20+\\dfrac{\\ldots}{4}$`
         break
-      case 6 :
+      case 5 :
         this.reponse = texNombre(4, 0)
         this.question = `${texNombre(20.25, 2)}=20+\\dfrac{1}{%{champ1}}`
-        this.correction = `$${texNombre(20.25, 2)}=20+\\dfrac{1}{${miseEnEvidence(this.reponse)}}$`
+        this.correction = `$${texNombre(20.25, 2)}=20+${texNombre(0.25, 2)}=20++\\dfrac{1}{${miseEnEvidence(this.reponse)}}$`
         handleAnswers(this, 0, { champ1: { value: this.reponse } })
         this.canReponseACompleter = `$${texNombre(20.25, 2)}=20+\\dfrac{1}{\\ldots}$`
         break

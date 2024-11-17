@@ -36,7 +36,7 @@ export default class calcAvecChiffresRel extends Exercice {
     this.question = `Soit $f$ la fonction linéaire vérifiant $f(${texNombre(2025, 0)})=${texNombre(a * 2025, 0)}$.<br>
     Compléter : $f(x)=$ `
     this.correction = `Une fonction linéaire est une fonction de la forme $f(x)=ax$.<br>
-    Comme $f(${texNombre(2024)})=${texNombre(a * 2025, 0)}$, on a $${texNombre(a * 2025, 0)}=a\\times ${texNombre(2025, 0)}$, soit $a=${a}$.<br>
+    Comme $f(${texNombre(2025)})=${texNombre(a * 2025, 0)}$, on a $${texNombre(a * 2025, 0)}=a\\times ${texNombre(2025, 0)}$, soit $a=${a}$.<br>
     On obtient donc : $f(x)=${miseEnEvidence(`${rienSi1(a)}x`)}$.`
 
     if (!this.interactif) {

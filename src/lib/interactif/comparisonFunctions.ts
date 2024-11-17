@@ -795,7 +795,7 @@ function comparaisonFraction (
         }
         return { isOk: false, feedback: 'Résultat incorrect car dénominateur et numérateur doivent être entiers.' }
       }
-      return { isOk: false, feedback: 'Résultat incorrect car une fraction est attendue' }
+      return { isOk: false, feedback: 'Résultat incorrect car une fraction est attendue.' }
     }
     if (fractionDecimale) {
       if ((saisieNativeParsed.operator === 'Divide' || saisieNativeParsed.operator === 'Rational') &&
