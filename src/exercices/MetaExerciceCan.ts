@@ -155,6 +155,8 @@ export default class MetaExercice extends Exercice {
                   }, { formatInteractif: 'mathlive' })
                 } else if (reponse instanceof Grandeur) {
                   handleAnswers(this, indexQuestion, { reponse: { value: reponse.toString(), compare, options } }, { formatInteractif: 'mathlive' })
+                } else if (Array.isArray(reponse)) {
+                  handleAnswers(this, indexQuestion, { reponse: { value: reponse, compare, options } })
                 } else {
                   handleAnswers(this, indexQuestion, reponse, { formatInteractif: 'mathlive' }) // EE : Pourquoi ce handleAnswers n'est pas au même format que les autres ?
                 }
@@ -182,7 +184,6 @@ export default class MetaExercice extends Exercice {
             handleAnswers(this, indexQuestion, Question.autoCorrection[0].reponse.valeur, { formatInteractif: 'mathlive' })
           }
         }
-
         if (Question?.autoCorrection[0]?.propositions != null) {
         // qcm
           const monQcm = propositionsQcm(this, indexQuestion) // update les références HTML

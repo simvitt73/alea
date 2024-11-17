@@ -26,7 +26,6 @@ export default class resteDivEucl extends Exercice {
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBase
     this.compare = fonctionComparaison
-    // this.optionsDeComparaison = { expressionDeveloppeeEtNonReduiteCompare }
   }
 
   nouvelleVersion () {
@@ -35,9 +34,11 @@ export default class resteDivEucl extends Exercice {
     const choix = choice([3, 3])
     const a = randint(-2, 2, 0)
     const b = randint(-5, 5, 0)
+    let reponse1 = ''
     this.question = 'Développer '
     if (choix === 1) {
-      this.reponse = `${reduireAxPlusB(2025, a * 2025)}`
+      reponse1 = `${reduireAxPlusB(2025, a * 2025)}`
+      this.reponse = reponse1
       this.question += `$A=${texNombre(2025, 0)}(x${ecritureAlgebrique(a)})$.`
       this.correction = `On développe $A$ :<br>
       $\\begin{aligned}
@@ -45,20 +46,22 @@ export default class resteDivEucl extends Exercice {
       &=${miseEnEvidence(this.reponse)}
       \\end{aligned}$`
     } else if (choix === 2) {
-      this.reponse = `${reduirePolynomeDegre3(0, 2025, a * 2025, 0)}`
-      this.question += `$A=${texNombre(2025, 0)}x(x${ecritureAlgebrique(a)})$.`
+      reponse1 = `${reduirePolynomeDegre3(0, 2025, a * 2025, 0)}`
+      this.reponse = [reponse1, reponse1.replace('x^2', 'x \\times x ')]
+      this.question += `$AX=${texNombre(2025, 0)}x(x${ecritureAlgebrique(a)})$.`
       this.correction = `On développe $A$ :<br>
       $\\begin{aligned}
       A&=${texNombre(2025, 0)}x\\times x ${signe(a)}${texNombre(2025, 0)}x\\times ${abs(a)}\\\\
-      &=${miseEnEvidence(this.reponse)}
+      &=${miseEnEvidence(reponse1)}
       \\end{aligned}$`
-    } else if (choix === 3) {
-      this.reponse = `${reduirePolynomeDegre3(0, 2025, b, 0)}`
-      this.question += `$A=x(${texNombre(2025, 0)}x${ecritureAlgebrique(b)})$.`
+    } else {
+      reponse1 = `${reduirePolynomeDegre3(0, 2025, b, 0)}`
+      this.reponse = [reponse1, reponse1.replace('x^2', 'x \\times x ')]
+      this.question += `$AY=x(${texNombre(2025, 0)}x${ecritureAlgebrique(b)})$.`
       this.correction = `On développe $A$ :<br>
       $\\begin{aligned}
       A&=x\\times${texNombre(2025, 0)}x ${signe(b)}x\\times ${abs(b)}\\\\
-      &=${miseEnEvidence(this.reponse)}
+       &=${miseEnEvidence(reponse1)}
       \\end{aligned}$`
     }
     if (this.interactif) { this.question += '<br>$A=$' }
