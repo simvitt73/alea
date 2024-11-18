@@ -115,8 +115,8 @@ $\\begin{aligned}${e ** 2}(${a}x${ecritureAlgebrique(b)})^2-${f ** 2}(${c}x${ecr
           handleAnswers(this, i, { reponse: { value: `(${facteur1})(${facteur2})`, compare: fonctionComparaison, options: { factorisation: true } } })
         } break
       }
+      texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBaseAvecVariable, { texteAvant: ' $=$' })
       if (listeTypeDeQuestions[i] < 4) {
-        texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBaseAvecVariable, { texteAvant: ' $=$' })
         // Uniformisation : Mise en place de la réponse attendue en interactif en orange et gras
         const textCorrSplit = texteCorr.split('=')
         let aRemplacer = textCorrSplit[textCorrSplit.length - 1]
@@ -139,5 +139,5 @@ $\\begin{aligned}${e ** 2}(${a}x${ecritureAlgebrique(b)})^2-${f ** 2}(${c}x${ecr
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireTexte = ['Type d\'expression (numéros séparés par des tirets)', '1 :forme (ax+b)²-c²\n2 : forme c²-(ax+b)²\n3 : (ax+b)²-(cx+d)²\n 4 : a²(bx+c)²-d²(ex+f)²\n5 : Mélange des cas précédents']
+  this.besoinFormulaireTexte = ['Type d\'expression (numéros séparés par des tirets)', '1 : forme (ax+b)²-c²\n2 : forme c²-(ax+b)²\n3 : (ax+b)²-(cx+d)²\n4 : a²(bx+c)²-d²(ex+f)²\n5 : Mélange des cas précédents']
 }
