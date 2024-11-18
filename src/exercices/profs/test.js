@@ -21,10 +21,10 @@ export const uuid = 'testEE'
 const engine = new ComputeEngine()
 const expr1 = engine.parse('\\frac{-3+\\sqrt{41}}{4}', { canonical: true })
 const expr2 = engine.parse('-\\frac34+\\frac{\\sqrt{41}}{4}', { canonical: true })
-console.log(expr1.isEqual(expr2)) // -> false but should be true
+console.info(expr1.isEqual(expr2)) // -> false but should be true
 const expr3 = engine.parse('\\frac{-3-\\sqrt{41}}{4}', { canonical: true })
 const expr4 = engine.parse('-\\frac34-\\frac{\\sqrt{41}}{4}', { canonical: true })
-console.log(expr3.isEqual(expr4)) // -> true as it should
+console.info(expr3.isEqual(expr4)) // -> true as it should
 
 // -> ["Add",12,["Delimiter",["Negate",2]]]
 

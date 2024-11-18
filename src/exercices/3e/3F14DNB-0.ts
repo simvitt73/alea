@@ -54,7 +54,6 @@ export default class Exercice3F14DNB0 extends ExerciceBrevetA {
     const xMax = xSommet + 4
     const yMin = ySommet - 1
     const yMax = ySommet + 16
-    console.log(xSommet, ySommet, c, d)
     const poly = new Polynome({ coeffs: [c * d, (c + d), 1] })
     const rep = new RepereBuilder({ xMin, xMax, yMin, yMax }).setLabelX({ xMin, xMax, dx: 1 }).setLabelY({ yMin, yMax, dy: 1 }).setThickX({ xMin, xMax, dx: 1 }).setThickY({ yMin, yMax, dy: 1 }).setGrille({ grilleX: { dx: 1 }, grilleY: { dy: 1 } }).buildStandard()
     const laCourbe = courbe(poly.fonction, { repere: rep, color: 'red' })
