@@ -40,7 +40,7 @@ function checkDistance (points: {x: number, y:number}[]) {
 }
 
 /**
- * Construction interactive de symétriques de points
+ * Des droites sécantes sont tracées, il faut retrouver et nommer les points d'intersection.
  * @author Jean-Claude Lhote
  */
 export default class PointsIntersectionDroites extends Exercice {
@@ -59,14 +59,6 @@ export default class PointsIntersectionDroites extends Exercice {
 
   nouvelleVersion () {
     const colors: string[] = context.isHtml ? ['red', 'green', 'purple', 'blue', 'gray', 'pink'] : ['gray', 'gray', 'gray', 'gray', 'gray', 'gray']
-    const frenchColors = {
-      red: 'rouge',
-      green: 'verte',
-      purple: 'violette',
-      blue: 'bleue',
-      gray: 'grise',
-      pink: 'rose'
-    }
     this.answers = {}
     this.listeQuestions = []
     this.listeCorrections = []
