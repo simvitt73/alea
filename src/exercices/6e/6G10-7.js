@@ -17,9 +17,9 @@ import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { context } from '../../modules/context.js'
 import { clone } from 'mathjs'
 import { codageSegments } from '../../lib/2d/codages'
-export const interactifReady = true
+export const interactifReady = false
 export const interactifType = ['qcm', 'mathLive']
-export const amcReady = true
+export const amcReady = false
 export const amcType = 'AMCHybride'
 export const titre = 'Connaître le vocabulaire du cercle, version 2'
 
