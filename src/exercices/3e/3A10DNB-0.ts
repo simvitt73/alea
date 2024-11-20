@@ -9,10 +9,6 @@ export const refs = {
   'fr-fr': ['3A10DNB-0'],
   'fr-ch': []
 }
-export const interactifReady = true
-export const interactifType = 'qcm'
-export const amcReady = 'true'
-export const amcType = 'qcmMono'
 export const titre = 'Exercice 1 (Antilles-Guyane 06/2024)'
 export const dateDePublication = '15/11/2024'
 /**

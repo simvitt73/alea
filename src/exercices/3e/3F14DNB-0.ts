@@ -20,10 +20,6 @@ export const refs = {
   'fr-fr': ['3F14DNB-0'],
   'fr-ch': []
 }
-export const interactifReady = true
-export const interactifType = 'qcm'
-export const amcReady = 'true'
-export const amcType = 'qcmMono'
 export const titre = 'Exercice 5 (Nouvelle Calédonie 12/2023)'
 export const dateDePublication = '17/11/2024'
 /**
