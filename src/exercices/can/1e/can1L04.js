@@ -9,6 +9,7 @@ import { context } from '../../../modules/context'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { functionCompare } from '../../../lib/interactif/comparisonFunctions'
 
 export const titre = 'Résoudre une équation du second degré'
 export const interactifReady = true
@@ -68,8 +69,8 @@ export default function ResoudreEquationSecondDegre () {
       }
       handleAnswers(this, i, {
         bareme: (listePoints) => [Math.min(listePoints[0], listePoints[1]), 1],
-        champ1: { value: Math.min(x1, x2) },
-        champ2: { value: Math.max(x1, x2) }
+        champ1: { value: Math.min(x1, x2), compare: functionCompare },
+        champ2: { value: Math.max(x1, x2), compare: functionCompare }
       },
       { formatInteractif: 'mathlive' }
       )
