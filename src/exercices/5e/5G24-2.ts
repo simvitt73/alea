@@ -7,7 +7,7 @@ import { rotation, translation } from '../../lib/2d/transformations.js'
 import { triangle2points2longueurs } from '../../lib/2d/triangle.js'
 import { texteEnCouleur } from '../../lib/outils/embellissements.js'
 import { creerNomDePolygone } from '../../lib/outils/outilString.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import Exercice from '../Exercice.js'
 export const titre = 'Justifier que deux triangles sont égaux'
@@ -28,8 +28,7 @@ export default class TrianglesEgaux extends Exercice {
     super()
     this.consigne = 'Les triangles sont-ils égaux ? S\'ils sont égaux, justifier la réponse.'
     this.nbQuestions = 4
-    this.nbCols = 2
-    this.sup = 6 // Niveau de difficulté
+    this.sup = 6
     this.spacing = 2
     this.besoinFormulaireTexte = ['Choix des questions', 'Nombres séparés par des tirets\n1 : CCC\n2 : CAC\n3 : ACA\n4 : AAA\n5 : CC\n6 : mélange']
   }
@@ -43,11 +42,11 @@ export default class TrianglesEgaux extends Exercice {
       nbQuestions: this.nbQuestions,
       listeOfCase: ['CCC', 'CAC', 'ACA', 'AAA', 'CC']
     })
-    let listeDeNomsDePolygones: string[] = []
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      const listeDeNomsDePolygones: string[] = []
       texte = ''
       texteCorr = ''
-      if (i % 3 === 0) listeDeNomsDePolygones = ['QD']
+      if (i % 3 === 0) listeDeNomsDePolygones.push('QD')
       // Boucle principale où i+1 correspond au numéro de la question
       let l1 = randint(40, 70)
       let l2 = randint(40, 80, l1)
@@ -86,17 +85,10 @@ export default class TrianglesEgaux extends Exercice {
       listeDeNomsDePolygones.push(nom2)
       const nommeP1 = nommePolygone(p1, nom1)
       const nommeP2 = nommePolygone(p2, nom2)
+      const objetsAAfficher = []
       switch (listeTypeQuestions[i]) { // Suivant le type de question, le contenu sera différent
         case 'CCC':
-          texte = mathalea2d({
-            xmin: Math.min(A.x, B.x, C.x, D.x, E.x, F.x) - 3,
-            ymin: Math.min(A.y, B.y, C.y, D.y, E.y, F.y) - 3,
-            xmax: Math.max(A.x, B.x, C.x, D.x, E.x, F.x) + 3,
-            ymax: Math.max(A.y, B.y, C.y, D.y, E.y, F.y) + 3,
-            scale: 0.3,
-            optionsTikz: ['baseline=(current bounding box.north)']
-          },
-          p1, p2, code1, code2, code3, code4, code5, code6, nommeP1, nommeP2)
+          objetsAAfficher.push(p1, p2, code1, code2, code3, code4, code5, code6, nommeP1, nommeP2)
           texteCorr = `$${A.nom}${B.nom} = ${D.nom}${E.nom}$<br>
             $${B.nom}${C.nom} = ${E.nom}${F.nom}$<br>
             $${C.nom}${A.nom} = ${F.nom}${D.nom}$<br>
@@ -104,15 +96,7 @@ export default class TrianglesEgaux extends Exercice {
             Ils sont donc égaux.`
           break
         case 'CAC':
-          texte = mathalea2d({
-            xmin: Math.min(A.x, B.x, C.x, D.x, E.x, F.x) - 3,
-            ymin: Math.min(A.y, B.y, C.y, D.y, E.y, F.y) - 3,
-            xmax: Math.max(A.x, B.x, C.x, D.x, E.x, F.x) + 3,
-            ymax: Math.max(A.y, B.y, C.y, D.y, E.y, F.y) + 3,
-            scale: 0.5,
-            optionsTikz: ['baseline=(current bounding box.north)']
-          },
-          p1, p2, code1, code2, code3, code4, codeA1, codeA2, nommeP1, nommeP2)
+          objetsAAfficher.push(p1, p2, code1, code2, code3, code4, codeA1, codeA2, nommeP1, nommeP2)
           texteCorr = `$${A.nom}${B.nom} = ${D.nom}${E.nom}$<br>
             $${B.nom}${C.nom} = ${E.nom}${F.nom}$<br>
             $\\widehat{${A.nom}${B.nom}${C.nom}} = \\widehat{${D.nom}${E.nom}${F.nom}}$<br>
@@ -120,15 +104,7 @@ export default class TrianglesEgaux extends Exercice {
             Ils sont donc égaux.`
           break
         case 'ACA':
-          texte = mathalea2d({
-            xmin: Math.min(A.x, B.x, C.x, D.x, E.x, F.x) - 3,
-            ymin: Math.min(A.y, B.y, C.y, D.y, E.y, F.y) - 3,
-            xmax: Math.max(A.x, B.x, C.x, D.x, E.x, F.x) + 3,
-            ymax: Math.max(A.y, B.y, C.y, D.y, E.y, F.y) + 3,
-            scale: 0.5,
-            optionsTikz: ['baseline=(current bounding box.north)']
-          },
-          p1, p2, code1, code2, codeA1, codeA2, codeA5, codeA6, nommeP1, nommeP2)
+          objetsAAfficher.push(p1, p2, code1, code2, codeA1, codeA2, codeA5, codeA6, nommeP1, nommeP2)
           texteCorr = `$${A.nom}${B.nom} = ${D.nom}${E.nom}$<br>
             $\\widehat{${B.nom}${A.nom}${C.nom}} = \\widehat{${E.nom}${D.nom}${F.nom}}$<br>
             $\\widehat{${A.nom}${B.nom}${C.nom}} = \\widehat{${D.nom}${E.nom}${F.nom}}$<br>
@@ -136,30 +112,15 @@ export default class TrianglesEgaux extends Exercice {
             Ils sont donc égaux.`
           break
         case 'AAA':
-          texte = mathalea2d({
-            xmin: Math.min(A.x, B.x, C.x, D.x, E.x, F.x) - 3,
-            ymin: Math.min(A.y, B.y, C.y, D.y, E.y, F.y) - 3,
-            xmax: Math.max(A.x, B.x, C.x, D.x, E.x, F.x) + 3,
-            ymax: Math.max(A.y, B.y, C.y, D.y, E.y, F.y) + 3,
-            scale: 0.5,
-            optionsTikz: ['baseline=(current bounding box.north)']
-          },
-          p1, p2, codeA1, codeA2, codeA3, codeA4, codeA5, codeA6, nommeP1, nommeP2)
+          objetsAAfficher.push(p1, p2, codeA1, codeA2, codeA3, codeA4, codeA5, codeA6, nommeP1, nommeP2)
           texteCorr = `On ne peut pas déterminer si ces triangles sont égaux. Ils ont la même forme mais leurs longueurs peuvent être différentes. On dit qu'ils sont ${texteEnCouleur('semblables')}.`
           break
         case 'CC':
-          texte = mathalea2d({
-            xmin: Math.min(A.x, B.x, C.x, D.x, E.x, F.x) - 3,
-            ymin: Math.min(A.y, B.y, C.y, D.y, E.y, F.y) - 3,
-            xmax: Math.max(A.x, B.x, C.x, D.x, E.x, F.x) + 3,
-            ymax: Math.max(A.y, B.y, C.y, D.y, E.y, F.y) + 3,
-            scale: 0.5,
-            optionsTikz: ['baseline=(current bounding box.north)']
-          },
-          p1, p2, code1, code2, code5, code6, nommeP1, nommeP2)
+          objetsAAfficher.push(p1, p2, code1, code2, code5, code6, nommeP1, nommeP2)
           texteCorr = 'On ne peut pas déterminer si ces triangles sont égaux (il manque une troisième information).'
           break
       }
+      texte = mathalea2d(Object.assign({ scale: 0.3, optionsTikz: ['baseline=(current bounding box.north)'] }, fixeBordures(objetsAAfficher)), objetsAAfficher)
       if (this.listeQuestions.indexOf(texte) === -1) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions.push(texte)
