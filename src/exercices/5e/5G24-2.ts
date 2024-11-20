@@ -5,11 +5,11 @@ import { barycentre, nommePolygone } from '../../lib/2d/polygones.js'
 import { vecteur } from '../../lib/2d/segmentsVecteurs.js'
 import { rotation, translation } from '../../lib/2d/transformations.js'
 import { triangle2points2longueurs } from '../../lib/2d/triangle.js'
-import { texteEnCouleur } from '../../lib/outils/embellissements'
+import { texteEnCouleur } from '../../lib/outils/embellissements.js'
 import { creerNomDePolygone } from '../../lib/outils/outilString.js'
 import { mathalea2d } from '../../modules/2dGeneralites.js'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../Exercice'
+import Exercice from '../Exercice.js'
 export const titre = 'Justifier que deux triangles sont égaux'
 
 /**
