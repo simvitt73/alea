@@ -148,7 +148,11 @@ export default function OrganiserDonneesDepuisTexte () {
       const cellule = Object.fromEntries([[ref, valeur]])
       objetReponse = Object.assign(objetReponse, cellule)
     }
-
+    objetReponse = Object.assign(objetReponse, {
+      bareme: (listePoints) => {
+        return [listePoints.reduce((a, b) => a + b, 0), listePoints.length]
+      }
+    })
     texteCorr = `${numAlpha(0)} Voici le tableau complet. <br>`
     texteCorr += tableauColonneLigne(tabEntetesColonnes, tabEntetesLignes, tabLinesCorr)
     texteCorr += '<br>'
