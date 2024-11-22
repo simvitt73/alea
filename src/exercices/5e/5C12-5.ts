@@ -31,6 +31,7 @@ export default class CalculsAvecGrandsTraitsDeFraction extends Exercice {
     this.consigne = 'Calculer.'
     this.nbQuestions = 6
     this.comment = '6 types de calculs différents avec une division d\'un entier par 10 et 5 quotients entiers.'
+    this.listeAvecNumerotation = false
   }
 
   nouvelleVersion () {
