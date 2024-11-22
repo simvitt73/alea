@@ -20,10 +20,20 @@ export default class SchemaEnBoite {
   }
 
   display (): string {
-    if (context.isHtml) { // à refaire avec une table...
-      const haut = this.haut.map(barre => `<span style="color:${barre.color};">${barre.content.repeat(barre.longueur)}</span>`).join('') ?? ''
-      const bas = this.bas.map(barre => `<span style="color:${barre.color};">${barre.content.repeat(barre.longueur)}</span>`).join('') ?? ''
-      return `${haut}<br>${bas}`
+    if (context.isHtml) {
+      let ligne1 = ''
+      let start = 1
+      for (let k = 0; k < this.haut.length; k++) {
+        ligne1 += `<div class="SchemaItem" style="grid-row: 1; grid-column-start: ${start}; grid-column-end: ${start + this.haut[k].longueur}; background-color:${this.haut[k].color}; text-align:center;">${this.haut[k].content}</div>\n`
+        start += this.haut[k].longueur
+      }
+      let ligne2 = ''
+      start = 1
+      for (let k = 0; k < this.bas.length; k++) {
+        ligne2 += `<div class="SchemaItem" style="grid-row: 2; grid-column-start: ${start}; grid-column-end: ${start + this.bas[k].longueur}; background-color:${this.bas[k].color}; text-align:center;">${this.bas[k].content}</div>\n`
+        start += this.bas[k].longueur
+      }
+      return `<div class="SchemaContainer">${ligne1}\n${ligne2}</div>`
     } else {
       const ligne1 = this.haut.map(barre => `${barre.color} ${barre.longueur} "${barre.content}"`).join(' ') ?? ''
       const ligne2 = this.bas.map(barre => `${barre.color} ${barre.longueur} "${barre.content}"`).join(' ') ?? ''
