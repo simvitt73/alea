@@ -146,9 +146,9 @@ export default class SubstituerDansUneExpressionLitterale extends Exercice {
       const expressionX = simplify(expressionABCX, [], { a, b, c }).toString()
       const expression = simplify(expressionX, [], { x }).toString()
 
-      texte = `Pour $x=${x}$,${sp(1)} calculer : <br>`
-      texte += `$${toTex(expressionX)}$`
-      texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierEnsemble, { texteAvant: '' }) + '<br>'
+      texte = `Pour $x=${x}$,${sp(1)} calculer : `
+      texte += `$${toTex(expressionX)}$. <br>`
+      texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBase, { texteAvant: 'Résultat $=$ ' }) + '<br>'
 
       const corrDetails = calculer(expression, {})
       texteCorr = corrDetails.texteCorr + '<br>'
