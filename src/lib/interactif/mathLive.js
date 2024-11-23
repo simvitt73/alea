@@ -1,4 +1,4 @@
-import { calculCompare } from './comparisonFunctions'
+import engine, { calculCompare, egaliteCompare } from './comparisonFunctions'
 
 // Un barème qui ne met qu'un point si tout est juste
 export function toutPourUnPoint (listePoints) {
@@ -174,13 +174,29 @@ export function verifQuestionMathLive (exercice, i, writeResult = true) {
     reponses = reponses.reponse
     const compareFunction = reponses.compare ?? calculCompare
     const options = reponses.options
+    const testReponse = (saisie, reponse, options, compFonction) => {
+      const membres = saisie.split('=')
+      if (compFonction === egaliteCompare || membres.length < 2) return compFonction(saisie, reponse, options)
+      let feed = 'Seul le résultat final est évalué dans Mathaléa.<br>'
+      feed += 'Nous allons quand même regarder si les égalités sont respectées.<br>'
+      for (let m = 0; m < membres.length - 1; m++) {
+        const membre1 = membres[m]
+        const membre2 = membres[m + 1]
+        const isEqual = engine.parse(membre1).isEqual(engine.parse(membre2))
+        if (!isEqual) {
+          feed += `Les deux membres $${membre1}$ et $${membre2}$ de l'égalité ne sont pas égaux.<br>`
+        }
+      }
+      const resultat = compFonction(membres[membres.length - 1], reponse, options)
+      return { isOk: resultat.isOk, feedback: feed + resultat.feedback }
+    }
     if (Array.isArray(reponses.value)) {
       while ((!isOk) && (ii < reponses.value.length)) {
         reponse = reponses.value[ii]
-        const check = compareFunction(saisie, reponse, options)
+        const check = testReponse(saisie, reponse, options, compareFunction)
         if (check.isOk) {
           isOk = true
-          feedback = ''
+          feedback = check.feedback
           break
         }
         if (check.feedback) {
@@ -190,7 +206,7 @@ export function verifQuestionMathLive (exercice, i, writeResult = true) {
       }
     } else {
       reponse = reponses.value
-      const check = compareFunction(saisie, reponse, options)
+      const check = testReponse(saisie, reponse, options, compareFunction)
       if (check.isOk) {
         isOk = true
         feedback = check.feedback ?? ''
