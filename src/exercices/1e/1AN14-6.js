@@ -145,6 +145,7 @@ export default function DeriveeQuotient () {
         case 'mon/poly2centre': {
           const c = fDen.monomes[2]
           const d = fDen.monomes[0]
+          df = '\\R'
           const fDenDer = fDen.derivee().toLatex()
           if (c * d > 0) {
             texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ car $${termeDen.latex}${c < 0 ? '<0' : '>0'}$ pour tout $x$.<br>`
