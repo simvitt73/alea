@@ -7,6 +7,7 @@ import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import engine, { functionCompare } from '../../lib/interactif/comparisonFunctions'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
+import Trinome from '../../modules/Trinome'
 
 export const titre = 'Dériver $\\dfrac{u}{v}$'
 export const dateDePublication = '22/01/2022'
@@ -115,8 +116,8 @@ export default function DeriveeQuotient () {
           if (valI == null) {
             window.notify('Erreur dans la détermination de l\'ensemble de dérivation', { c, d })
           }
-          df = `\\R\\backslash\\{${valI.texFSD}\\}`
-          texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valI.texFSD}$.<br>`
+          df = `\\R\\backslash\\{${valI.texFractionSimplifiee}\\}`
+          texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valI.texFractionSimplifiee}$.<br>`
           texteCorr += 'On obtient alors : '
           if (fNum.deg === 1) {
             // fNum = ax+b
@@ -150,10 +151,12 @@ export default function DeriveeQuotient () {
           if (c * d > 0) {
             texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ car $${termeDen.latex}${c < 0 ? '<0' : '>0'}$ pour tout $x$.<br>`
           } else {
-            const valI = new FractionEtendue(-d, c)
-            df = `\\R\\backslash\\{${valI.texFSD}\\}`
-            const valeurInterdite = `\\sqrt{${valI.texFSD}}`
-            texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valeurInterdite}$ et $x\\neq-${valeurInterdite}$.<br>`
+            const trinom = new Trinome(c, 0, d)
+            const [racine1, racine2] = [trinom.texX1, trinom.texX2]
+            df = `\\R\\backslash\\{${racine1};${racine2}\\}`
+            const valeurInterdite1 = racine1
+            const valeurInterdite2 = racine2
+            texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valeurInterdite1}$ et $x\\neq${valeurInterdite2}$.<br>`
           }
           texteCorr += 'On obtient alors : '
           texteCorr += `\\[${nameF}'(x)=\\frac{${fNum.derivee()}(${fDen})-${fNum}\\times${fDenDer.startsWith('-') ? `(${fDenDer})` : `${fDenDer}`}}{(${termeDen.latex})^2}.\\]`
@@ -170,8 +173,8 @@ export default function DeriveeQuotient () {
           const c = fDen.monomes[1]
           const d = fDen.monomes[0]
           const valI = new FractionEtendue(-d, c)
-          df = `\\R\\backslash\\{${valI.texFSD}\\}`
-          texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valI.texFSD}$.<br>`
+          df = `\\R\\backslash\\{${valI.texFractionSimplifiee}\\}`
+          texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valI.texFractionSimplifiee}$.<br>`
           texteCorr += 'On obtient alors : '
           texteCorr += `\\[${nameF}'(x)=\\frac{${fNum.derivee()}(${fDen})-${fNum}\\times${c < 0 ? `(${c})` : c}}{(${termeDen.latex})^2}.\\]`
           texteCorr += 'D\'où, en développant le numérateur : '
@@ -187,8 +190,8 @@ export default function DeriveeQuotient () {
           const c = fDen.monomes[1]
           const d = fDen.monomes[0]
           const valI = new FractionEtendue(-d, c)
-          df = `\\R\\backslash\\{${valI.texFSD}\\}`
-          texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valI.texFSD}$.<br>`
+          df = `\\R\\backslash\\{${valI.texFractionSimplifiee}\\}`
+          texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valI.texFractionSimplifiee}$.<br>`
           texteCorr += 'On obtient alors : '
           texteCorr += `\\[${nameF}'(x)=\\frac{${fNum}(${fDen})-${fNum}\\times${c < 0 ? `(${c})` : c}}{(${termeDen.latex})^2}.\\]`
           texteCorr += 'On factorise par $e^x$, et on obtient : '
