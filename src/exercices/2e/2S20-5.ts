@@ -91,8 +91,8 @@ const trouveQuartiles = function (yGrecs: number[], pts: Point[]): [number, numb
 export default class Quartiles extends Exercice {
   constructor () {
     super()
-    this.besoinFormulaireNumerique = ['Besoin option ?', 1, 'Je sais pas']
-    this.sup = 1
+    this.nbQuestions = 1
+    this.titre = 'Lire graphiquement des quartiles et des EIQ'
   }
 
   nouvelleVersion () {
