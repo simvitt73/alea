@@ -64,7 +64,7 @@ export default function DeriveeQuotient () {
       melange: 5,
       defaut: 1
     })
-    for (let i = 0, texte, texteCorr, expression, nameF, maReponse, df, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, texte, texteCorr, expression, nameF, maReponse, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       // On créé les coefficients d'un monome x^m qu'ont va générer
       const coeffs = new Array(randint(2, 9)) // Au moins 2 coeffs, i.e. deg >= 1
       coeffs.fill(0)
@@ -103,6 +103,7 @@ export default function DeriveeQuotient () {
       texteCorr += '\\[\\left(\\frac{u}{v}\\right)\'=\\frac{u\'\\times v-u\\times v\'}{v^2}.\\]'
       texteCorr += `Ici $${nameF}=\\frac{u}{v}$ avec : `
       texteCorr += `\\[\\begin{aligned}u(x)&=${termeNum.latex},\\ u'(x)=${derNum.latex}\\\\ v(x)&=${termeDen.latex},\\ v'(x)=${derDen.latex}.\\end{aligned}\\]`
+      let df = ''
       switch (listeTypeDeQuestions[i]) {
         case 'poly1a/poly1':
         case 'poly/poly1': {
@@ -110,6 +111,9 @@ export default function DeriveeQuotient () {
           const c = fDen.monomes[1]
           const d = fDen.monomes[0]
           const valI = new FractionEtendue(-d, c)
+          if (valI == null) {
+            window.notify('Erreur dans la détermination de l\'ensemble de dérivation', { c, d })
+          }
           df = `\\R\\backslash\\{${valI.texFSD}\\}`
           texteCorr += `Ici la formule ci-dessus est applicable pour tout $x$ tel que $${termeDen.latex}\\neq 0$. C'est-à-dire $x\\neq${valI.texFSD}$.<br>`
           texteCorr += 'On obtient alors : '
@@ -194,6 +198,7 @@ export default function DeriveeQuotient () {
         }
         default:
           texteCorr += 'TODO'
+          df = '\\R'
           break
       }
       texte = texte.replaceAll('\\frac', '\\dfrac')
