@@ -42,7 +42,6 @@ export default class Exercice3A10DNB0 extends ExerciceBrevetA {
     }
     const nbFois = facteurs[facteur]
     const f = (x:number) => (x + a) * (x - b)
-    console.log(`a=${a} ; b=${b} ; depart=${depart} ; f(depart)=${f(depart)}`)
     // enonce
     let enonce = 'On considère le programme de calcul ci-dessous :<br>'
     enonce += texteEnBoite(createList({
