@@ -1,5 +1,5 @@
 import { createList } from '../../lib/format/lists'
-import { choice } from '../../lib/outils/arrayOutils'
+import { combinaisonListesSansChangerOrdre } from '../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1 } from '../../lib/outils/ecritures'
 import { texteEnBoite } from '../../lib/outils/embellissements'
 import { context } from '../../modules/context'
@@ -30,7 +30,7 @@ export default class Exercice3A10DNB0 extends ExerciceBrevetA {
     this.besoinFormulaireCaseACocher = ['Sujet original', false]
     this.sup = false
     this.nbQuestionsModifiable = true
-    this.versionAleatoire()
+    this.versionAleatoire(0)
   }
 
   private appliquerLesValeurs (facteur: 1|2|3|4, retrait: number, depart: number, a:number, b:number) {
@@ -118,9 +118,9 @@ export default class Exercice3A10DNB0 extends ExerciceBrevetA {
     this.appliquerLesValeurs(3, 4, 5, 1, 4)
   }
 
-  versionAleatoire: () => void = () => {
+  versionAleatoire: (i:number) => void = (i:number) => {
     const a = randint(1, 3)
-    const b = a + choice([1, 2, 3, 4])
+    const b = a + combinaisonListesSansChangerOrdre([2, 3, 4], this.nbQuestions)[i]
     const facteur = b - a
     const retrait = a * b
     const depart = randint(1, 10, [a, b])
