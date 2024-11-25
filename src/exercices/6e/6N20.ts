@@ -15,7 +15,7 @@ export const dateDeModifImportante = '24/11/2024'
  * Amélioration d'un exercice de Rémi Angot
  * @author Guillaume Valmont
  */
-export const uuid = '85a65'
+export const uuid = '6c8a1'
 export const refs = {
   'fr-fr': ['6N20'],
   'fr-ch': ['9NO10-9']
