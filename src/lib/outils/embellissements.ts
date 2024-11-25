@@ -155,6 +155,17 @@ export function texteGras (texte: string) {
   }
 }
 
+/**
+ * Texte en italique
+ */
+export function texteItalique (texte: string) {
+  if (context.isHtml) {
+    return `<i>${texte}</i>`
+  } else {
+    return `\\textit{${texte}}`
+  }
+}
+
 export function blocCode (texte: string) {
   if (context.isHtml) {
     return `<pre style="background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; padding: 10px; font-family: Courier New, monospace; white-space: pre-wrap;">
