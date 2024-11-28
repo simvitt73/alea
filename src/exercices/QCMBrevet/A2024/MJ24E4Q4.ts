@@ -36,7 +36,11 @@ export default class MetropoleJuin24Exo4Q4 extends ExerciceQcmA {
     const yMin = -Math.abs(a) - 0.5
     const yMax = Math.abs(a) + 1
     this.enonce = 'Quel est l\'antécédent de 3 par la fonction $f$ ?'
-    const theRepere = new RepereBuilder({ xMin: -1, xMax, yMin, yMax }).setGrille({ grilleX: { dx: 1, xMin: -1, xMax }, grilleY: { yMin: yMin + 0.5, yMax, dy: 1 } }).buildStandard().objets
+    const theRepere = new RepereBuilder({ xMin: -1, xMax, yMin, yMax })
+      .setGrille({ grilleX: { dx: 1, xMin: -1, xMax }, grilleY: { yMin: yMin + 0.5, yMax, dy: 1 } })
+      .setThickX({ xMin: -1, xMax, dx: 1 })
+      .setThickY({ yMin, yMax, dy: 1 })
+      .buildStandard().objets
     const cF = droite(point(0, a), point(Math.abs(a), -a))
     cF.color = colorToLatexOrHTML('blue')
     const labelF = latex2d('\\mathcal{C_F}', 1.5, 1.7, { color: 'blue' })
