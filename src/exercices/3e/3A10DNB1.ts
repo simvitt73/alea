@@ -81,7 +81,7 @@ ${deuxColonnesResp(
   `Elle est remplie aux $${fracR.texFractionSimplifiee}$ du volume.<br>
   1 m$^3$ d'eau coûte $${texNombre(prixM3, 2, true)}$ €.<br>
   Combien coûte le remplissage de la piscine ?`,
-  mathalea2d(Object.assign({}, fixeBordures(objets)), objets),
+  mathalea2d(Object.assign({ scale: 0.5 }, fixeBordures(objets)), objets),
   {
     largeur1: 50,
     widthmincol1: 150,
