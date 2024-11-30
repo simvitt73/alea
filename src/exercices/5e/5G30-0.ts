@@ -11,7 +11,7 @@ import Exercice from '../Exercice'
 export const interactifReady = true
 export const dateDePublication = '17/08/2024'
 export const interactifType = 'mathLive'
-export const titre = 'Calculer des mesures d\'angles adjacents supplémentaires ou complémentaires'
+export const titre = 'Calculer des mesures d\'angles adjacents, supplémentaires ou complémentaires'
 export const uuid = 'ed9f4'
 export const refs = {
   'fr-fr': ['5G30-0'],
@@ -106,7 +106,7 @@ export default class AnglesEtVocabulaire extends Exercice {
           texte = `Les angles $\\widehat{xOy}$ et $\\widehat{yOz}$ sont adjacents.<br>
           L'angle $\\widehat{xOy}$ mesure $${a}^\\circ$.<br>
           Combien mesure l'angle $\\widehat{yOz}$ s'ils sont complémentaires l'un de l'autre ?`
-          texteCorr = `Deux angles adjacents complémentaires sont deux angles dont dont les côtés non communs forment un angle droit.<br>
+          texteCorr = `Deux angles adjacents complémentaires sont deux angles dont les côtés non communs forment un angle droit.<br>
           Alors $\\widehat{yOz}=90^\\circ-${a}^\\circ=${miseEnEvidence(`${String(90 - a)}^\\circ`)}$.`
           goodAnswer = `${90 - a}^\\circ`
           break
@@ -117,7 +117,7 @@ export default class AnglesEtVocabulaire extends Exercice {
           texte = `Les angles $\\widehat{xOy}$ et $\\widehat{yOz}$ sont adjacents.<br>
           L'angle $\\widehat{xOy}$ mesure $${a}^\\circ$.<br>
           Combien mesure l'angle $\\widehat{yOz}$ s'ils sont supplémentaires l'un de l'autre ?`
-          texteCorr = `Deux angles adjacents supplémentaires sont deux angles dont dont les côtés non communs forment un angle plat.
+          texteCorr = `Deux angles adjacents supplémentaires sont deux angles dont les côtés non communs forment un angle plat.
           Alors $\\widehat{yOz}=180^\\circ-${a}^\\circ=${miseEnEvidence(`${String(180 - a)}^\\circ`)}$.`
           goodAnswer = `${180 - a}^\\circ`
           break
