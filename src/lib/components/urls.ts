@@ -99,10 +99,12 @@ export class MathAleaURL extends URL {
 export function buildMathAleaURL (options: {
   view: VueType,
   mode?: InterfaceGlobalOptions['presMode'],
-  isEncrypted?: boolean, isShort?: boolean,
+  isEncrypted?: boolean,
+  isShort?: boolean,
   removeSeed?: boolean
   /** S'il y a un recorder l'url est cachée et doit être construite à partir du store exercicesParams */
-  recorder?: 'Moodle'}
+  recorder?: 'Moodle'
+}
 ): URL {
   const url = options.recorder ? MathAleaURL.fromExercisesParams() : new MathAleaURL()
   if (options.removeSeed) {
@@ -207,29 +209,37 @@ export async function getShortenedCurrentUrl (addendum: string = ''): Promise<st
  * @returns {URL} URL encryptée
  * @author sylvain
  */
+
 export function encrypt (url: string): string {
   const urlParts = url.split('?')
   let newUrl = urlParts[0] + '?EEEE'
   let char, nextChar, combinedCharCode
   let partEncrypted = ''
-  const partToEncrypt = encodeURI(urlParts[1])
+
+  // Travailler directement avec la partie brute de la chaîne après '?'
+  const partToEncrypt = urlParts[1]
+
   for (let i = 0; i < partToEncrypt.length; i += 2) {
     char = partToEncrypt.charCodeAt(i)
+
     if (i + 1 < partToEncrypt.length) {
       nextChar = partToEncrypt.charCodeAt(i + 1) - 31
       combinedCharCode =
-        char +
-        '' +
+        char.toString() +
         nextChar.toLocaleString('fr-FR', { minimumIntegerDigits: 2 })
       partEncrypted += String.fromCharCode(parseInt(combinedCharCode, 10))
     } else {
       partEncrypted += partToEncrypt.charAt(i)
     }
   }
-  const hexPartEncrypted = partEncrypted.split('').reduce((hex, c) => {
-    hex += c.charCodeAt(0).toString(16).padStart(4, '0')
+
+  // Convertir la partie chiffrée en hexadécimal en UTF-8
+  const hexPartEncrypted = Array.from(partEncrypted).reduce((hex, c) => {
+    const codePoint = c.codePointAt(0)!
+    hex += codePoint.toString(16).padStart(4, '0')
     return hex
   }, '')
+
   newUrl += hexPartEncrypted
   return newUrl
 }
