@@ -1,6 +1,6 @@
 import {
   isExerciceItemInReferentiel,
-  isStaticType,
+  isStaticItemInReferentiel,
   type ResourceAndItsPath,
   isExamItemInReferentiel,
   resourceHasMonth
@@ -149,7 +149,7 @@ export const sortArrayOfResourcesBasedOnProp = (
     let string: string
     if (isExerciceItemInReferentiel(r) && key === 'id') {
       string = r[key].replace(/\d(?=[a-z])|[a-z](?=\.)/gi, '$&. .')
-    } else if (isStaticType(r) && key === 'uuid') {
+    } else if (isStaticItemInReferentiel(r) && key === 'uuid') {
       string = r[key].replace(/\d(?=[a-z])|[a-z](?=\.)/gi, '$&. .')
     } else {
       throw new Error(`La clé ${key} n'existe pas dans les ressources à trier.`)

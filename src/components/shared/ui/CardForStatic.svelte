@@ -1,9 +1,9 @@
 <script lang='ts'>
-  import type { StaticItemInreferentiel } from '../../../lib/types/referentiels'
+  import type { StaticItemInReferentiel } from '../../../lib/types/referentiels'
   import StarIcon from '../icons/StarIcon.svelte'
   import { exercicesParams } from '../../../lib/stores/generalStore'
 
-  export let exercise: StaticItemInreferentiel
+  export let exercise: StaticItemInReferentiel
   export let reversed: boolean = false
   export let selected: boolean = false
 

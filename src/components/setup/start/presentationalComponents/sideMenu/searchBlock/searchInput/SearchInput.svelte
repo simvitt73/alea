@@ -9,7 +9,7 @@
     type ToolItemInReferentiel,
     type Level,
 
-    isStaticType,
+    isStaticItemInReferentiel,
 
     isExamItemInReferentiel
 
@@ -92,7 +92,7 @@
       for (const item of unsortedResults) {
         if (isExerciceItemInReferentiel(item.resource)) {
           nonStatics.push(item)
-        } else if (isStaticType(item.resource)) {
+        } else if (isStaticItemInReferentiel(item.resource)) {
           statics.push(item)
         } else {
           others.push(item)

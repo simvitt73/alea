@@ -8,7 +8,7 @@ import {
   resourceHasPlace,
   isLevelType,
   isTool,
-  isStaticType,
+  isStaticItemInReferentiel,
   EXAMS,
   isExamItemInReferentiel,
   resourceHasMonth
@@ -139,7 +139,7 @@ export class AtLeastOneOfCriteria<T> implements Criterion<T> {
   ```
  */
 export function featuresCriteria (
-  specs: ('interactif' | 'amc'|'qcm')[]
+  specs: ('interactif' | 'amc' | 'qcm')[]
 ): Criterion<ResourceAndItsPath> {
   // construction du critère pour la spécification `amc`
   const amcCriterion: Criterion<ResourceAndItsPath> = {
@@ -244,10 +244,10 @@ export function levelCriterion (
       return items.filter((item) => {
         // static est considéré comme un niveau particulier
         if (level === 'alea') {
-          return !isStaticType(item.resource)
+          return !isStaticItemInReferentiel(item.resource)
         }
         if (level === 'static') {
-          return isStaticType(item.resource)
+          return isStaticItemInReferentiel(item.resource)
         }
         // CAN est considéré comme un niveau donc on court-circuite les tests
         if (level === 'CAN') {

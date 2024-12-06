@@ -4,7 +4,7 @@ import { globalOptions, exercicesParams } from '../stores/generalStore'
 import referentielStaticFR from '../../json/referentielStaticFR.json'
 import referentielStaticCH from '../../json/referentielStaticCH.json'
 import { retrieveResourceFromUuid } from '../../lib/components/refUtils'
-import { isStaticType, type JSONReferentielObject } from '../../lib/types/referentiels'
+import { isStaticItemInReferentiel, type JSONReferentielObject } from '../../lib/types/referentiels'
 import {
   mathaleaFormatExercice,
   mathaleaHandleExerciceSimple,
@@ -47,7 +47,7 @@ export const buildExercisesList = (filter: string[] = []): Promise<TypeExercice>
         exo.listeCorrections[0] = `Uuid ${paramsExercice.uuid}<br>`
         exo.nbQuestions = 1
         const foundResource = retrieveResourceFromUuid(allStaticReferentiels, paramsExercice.uuid)
-        if (isStaticType(foundResource)) {
+        if (isStaticItemInReferentiel(foundResource)) {
           const foundResourcePng = `static/${foundResource.uuid.substring(0, 3)}/${foundResource.annee}/tex/png/${foundResource.uuid}.png`
           const foundResourcePngCor = `static/${foundResource.uuid.substring(0, 3)}/${foundResource.annee}/tex/png/${foundResource.uuid}_cor.png`
           exo.listeQuestions[0] = exo.listeQuestions[0] + `<br>

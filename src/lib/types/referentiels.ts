@@ -99,7 +99,7 @@ export interface BaseItemInReferentiel {
  * @property {string} tex: chemin vers le source LaTeX du contenu
  * @property {string} texCor: chemin vers le source LaTeX de la correction du contenu
  */
-export interface crpeItemInreferentiel extends BaseItemInReferentiel {
+export interface crpeItemInReferentiel extends BaseItemInReferentiel {
   png: string[]
   pngCor: string[]
   tex?: string
@@ -119,24 +119,32 @@ export interface crpeItemInreferentiel extends BaseItemInReferentiel {
  * @property {string} tex: chemin vers le source LaTeX du contenu
  * @property {string} texCor: chemin vers le source LaTeX de la correction du contenu
  */
-export interface StaticItemInreferentiel extends BaseItemInReferentiel {
+export interface StaticItemInReferentiel extends BaseItemInReferentiel {
   png: string
   pngCor: string
   tex: string
   texCor: string
   typeExercice: 'static' | 'dnb' | 'bac' | 'e3c' | 'evacom'
 }
+export function isStaticItemInReferentiel (obj: unknown): obj is StaticItemInReferentiel {
+  if (obj == null || typeof obj !== 'object') return false
+  return 'png' in obj && typeof obj.png === 'string' &&
+    'pngCor' in obj && typeof obj.pngCor === 'string' &&
+    'tex' in obj && typeof obj.tex === 'string' &&
+    'texCor' in obj && typeof obj.texCor === 'string' &&
+    'typeExercice' in obj && typeof obj.typeExercice === 'string' && ['static', 'dnb', 'bac', 'e3c', 'evacom'].includes(obj.typeExercice)
+}
 
 /**
  * Description d'une ressource venant un examen dans un référentiel
  * @interface ExamItemInReferentiel
- * @extends StaticItemInreferentiel
+ * @extends StaticItemInReferentiel
  * @property {string|undefined} mois : mois de la publication de l'examen (optionnel)
  * @property {string} annee : année de la publication de l'examen
  * @property {string} lieu : endroit où a été diffusé l'examen
  * @property {string} numeroInitial : numérode positionnement de l'exercice dans le sujet initial de l'examen
  */
-export interface ExamItemInReferentiel extends StaticItemInreferentiel {
+export interface ExamItemInReferentiel extends StaticItemInReferentiel {
   mois?: string
   annee: string
   lieu: string
@@ -185,7 +193,7 @@ export interface ToolItemInReferentiel extends BaseItemInReferentiel {
 // Type pour un objet situé en fin de référentiel
 export type JSONReferentielEnding =
   // | BaseItemInReferentiel  <-- pas de terminaison aussi basique
-  | StaticItemInreferentiel
+  | StaticItemInReferentiel
   | ExamItemInReferentiel
   | ExerciceItemInReferentiel
   | ToolItemInReferentiel
@@ -249,7 +257,7 @@ export const isTool = (obj: any): obj is ToolItemInReferentiel =>
 
 export const resourceHasPlace = (
   obj: any
-): obj is ExamItemInReferentiel | crpeItemInreferentiel =>
+): obj is ExamItemInReferentiel | crpeItemInReferentiel =>
   obj !== null &&
   typeof obj !== 'undefined' &&
   Object.keys(obj).includes('lieu') &&
@@ -301,14 +309,7 @@ export const isRealJSONReferentielObject = (obj: any): boolean => {
   }
 }
 
-export const isStaticType = (obj: any): obj is StaticItemInreferentiel =>
-  obj !== null &&
-  typeof obj !== 'undefined' &&
-  Object.keys(obj).includes('png') &&
-  obj.png !== undefined &&
-  !isNonEmptyArrayOfStrings(obj.png)
-
-export const isCrpeType = (obj: any): obj is crpeItemInreferentiel =>
+export const isCrpeItemInReferentiel = (obj: any): obj is crpeItemInReferentiel =>
   obj !== null &&
   typeof obj !== 'undefined' &&
   Object.keys(obj).includes('typeExercice') &&
@@ -328,9 +329,9 @@ export const isGeoDynamic = (obj: JSONReferentielEnding): boolean => {
     typeof obj !== 'undefined' &&
     Object.keys(obj).includes('url') &&
     // À ce stade, on est sûr que l'objet ne peu tpas être de type StaticItemInreferentiel car il a la propriété `url`
-    (obj as Exclude<JSONReferentielEnding, StaticItemInreferentiel>).url !== undefined &&
-    typeof (obj as Exclude<JSONReferentielEnding, StaticItemInreferentiel>).url === 'string' &&
-    (obj as Exclude<JSONReferentielEnding, StaticItemInreferentiel>).url.match(geoDynRegExp) !== null
+    (obj as Exclude<JSONReferentielEnding, StaticItemInReferentiel>).url !== undefined &&
+    typeof (obj as Exclude<JSONReferentielEnding, StaticItemInReferentiel>).url === 'string' &&
+    (obj as Exclude<JSONReferentielEnding, StaticItemInReferentiel>).url.match(geoDynRegExp) !== null
   ) {
     return true
   } else {

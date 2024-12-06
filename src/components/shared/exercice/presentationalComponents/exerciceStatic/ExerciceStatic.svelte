@@ -1,7 +1,7 @@
 <script lang="ts">
   import HeaderExerciceVueProf from '../../shared/headerExerciceVueProf/HeaderExerciceVueProf.svelte'
   import { retrieveResourceFromUuid } from '../../../../../lib/components/refUtils'
-  import { resourceHasPlace, isStaticType, type JSONReferentielObject, isCrpeType } from '../../../../../lib/types/referentiels'
+  import { resourceHasPlace, isStaticItemInReferentiel, type JSONReferentielObject, isCrpeItemInReferentiel } from '../../../../../lib/types/referentiels'
   /**
    * Gestion du référentiel pour la recherche de l'uuid
   */
@@ -30,7 +30,7 @@
   export let zoomFactor: string
   export let isSolutionAccessible: boolean
   const foundResource = retrieveResourceFromUuid(allStaticReferentiels, uuid)
-  const resourceToDisplay = isStaticType(foundResource) || isCrpeType(foundResource)
+  const resourceToDisplay = isStaticItemInReferentiel(foundResource) || isCrpeItemInReferentiel(foundResource)
     ? { ...foundResource }
     : null
       
@@ -42,7 +42,7 @@
           ? [((resourceToDisplay.uuid.substring(0, 3) === 'dnb'||resourceToDisplay.uuid.substring(0, 3) === 'bac')
             ? `static/${resourceToDisplay.uuid.substring(0, 3)}/${resourceToDisplay.annee}/tex/png/${resourceToDisplay.uuid}.png`
             : resourceToDisplay.png)
-          ] 
+          ]
           : resourceToDisplay.png,
           pngCor: typeof resourceToDisplay.pngCor === 'string' 
           ? [((resourceToDisplay.uuid.substring(0, 3) === 'dnb'||resourceToDisplay.uuid.substring(0, 3) === 'bac')
