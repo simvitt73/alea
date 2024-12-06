@@ -2,7 +2,7 @@ import {
   isExerciceItemInReferentiel,
   isStaticItemInReferentiel,
   type ResourceAndItsPath,
-  isExamItemInReferentiel,
+  isExam2dItemInReferentiel,
   resourceHasMonth
 } from '../types/referentiels'
 import { monthes } from './handleDate'
@@ -184,7 +184,7 @@ export const sortArrayOfResourcesBasedOnYearAndMonth = (
   }
   return data.sort((a, b) => {
     // seuls les ressources de type examens ont des propriétés `annee` et des fois `mois`
-    if (isExamItemInReferentiel(a.resource) && isExamItemInReferentiel(b.resource)) {
+    if (isExam2dItemInReferentiel(a.resource) && isExam2dItemInReferentiel(b.resource)) {
       const resourceAYear = parseInt(a.resource.annee)
       const resourceBYear = parseInt(b.resource.annee)
       if (resourceAYear !== resourceBYear) {

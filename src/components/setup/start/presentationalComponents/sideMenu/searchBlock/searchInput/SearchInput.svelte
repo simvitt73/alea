@@ -11,7 +11,7 @@
 
     isStaticItemInReferentiel,
 
-    isExamItemInReferentiel
+    isExam2dItemInReferentiel
 
   } from '../../../../../../../lib/types/referentiels'
   import {
@@ -107,7 +107,7 @@
         const nameA = eltA.resource.uuid.slice(0, -1)
         const nameB = eltB.resource.uuid.slice(0, -1)
         if (nameA.localeCompare(nameB) === 0) {
-          if (isExamItemInReferentiel(eltA.resource) && (isExamItemInReferentiel(eltB.resource))) {
+          if (isExam2dItemInReferentiel(eltA.resource) && (isExam2dItemInReferentiel(eltB.resource))) {
             return parseInt(eltA.resource.numeroInitial) - parseInt(eltB.resource.numeroInitial)
           } else {
             return 0

@@ -1,7 +1,7 @@
 <script lang="ts">
   import HeaderExerciceVueProf from '../../shared/headerExerciceVueProf/HeaderExerciceVueProf.svelte'
   import { retrieveResourceFromUuid } from '../../../../../lib/components/refUtils'
-  import { resourceHasPlace, isStaticItemInReferentiel, type JSONReferentielObject, isCrpeItemInReferentiel } from '../../../../../lib/types/referentiels'
+  import { resourceHasPlace, isStaticItemInReferentiel, type JSONReferentielObject, isCrpeItemInReferentiel, isExam2dItemInReferentiel, type StaticItemInReferentiel, type Exam2dItemInReferentiel, type crpeItemInReferentiel } from '../../../../../lib/types/referentiels'
   /**
    * Gestion du référentiel pour la recherche de l'uuid
   */
@@ -10,6 +10,7 @@
 
   import referentielBibliotheque from '../../../../../json/referentielBibliotheque.json'
   import type { HeaderProps } from '../../../../../lib/types/ui'
+    import type { S } from 'vitest/dist/reporters-yx5ZTtEV.js';
   // on rassemble les deux référentiel statique
   const allStaticReferentiels: JSONReferentielObject = {
     ...referentielBibliotheque,
@@ -29,28 +30,11 @@
   export let indiceLastExercice: number
   export let zoomFactor: string
   export let isSolutionAccessible: boolean
-  const foundResource = retrieveResourceFromUuid(allStaticReferentiels, uuid)
-  const resourceToDisplay = isStaticItemInReferentiel(foundResource) || isCrpeItemInReferentiel(foundResource)
-    ? { ...foundResource }
-    : null
-      
-  const exercice =
-    resourceToDisplay === null
-      ? null
-      : {
-          png: typeof resourceToDisplay.png === 'string' 
-          ? [((resourceToDisplay.uuid.substring(0, 3) === 'dnb'||resourceToDisplay.uuid.substring(0, 3) === 'bac')
-            ? `static/${resourceToDisplay.uuid.substring(0, 3)}/${resourceToDisplay.annee}/tex/png/${resourceToDisplay.uuid}.png`
-            : resourceToDisplay.png)
-          ]
-          : resourceToDisplay.png,
-          pngCor: typeof resourceToDisplay.pngCor === 'string' 
-          ? [((resourceToDisplay.uuid.substring(0, 3) === 'dnb'||resourceToDisplay.uuid.substring(0, 3) === 'bac')
-            ? `static/${resourceToDisplay.uuid.substring(0, 3)}/${resourceToDisplay.annee}/tex/png/${resourceToDisplay.uuid}_cor.png`
-            : resourceToDisplay.pngCor)
-          ] 
-          : resourceToDisplay.pngCor
-        }
+
+  const foundResource = { ...retrieveResourceFromUuid(allStaticReferentiels, uuid)}
+  const resourceToDisplay = isStaticItemInReferentiel(foundResource) || isCrpeItemInReferentiel(foundResource) || isExam2dItemInReferentiel(foundResource) ? foundResource : null
+  const exercice = makeExercise(resourceToDisplay)
+
   let isCorrectionVisible = false
   let isContentVisible = true
   let headerExerciceProps: HeaderProps
@@ -77,6 +61,22 @@
   }
 
   let noCorrectionAvailable = false
+
+  function makeExercise (resourceToDisplay: StaticItemInReferentiel | crpeItemInReferentiel | Exam2dItemInReferentiel | null) {
+    if (resourceToDisplay === null) {
+      return null
+    }
+    if (isExam2dItemInReferentiel(resourceToDisplay)) {
+      return {
+        png: [`static/${resourceToDisplay.typeExercice}/${resourceToDisplay.annee}/tex/png/${resourceToDisplay.uuid}.png`],
+        pngCor: [`static/${resourceToDisplay.typeExercice}/${resourceToDisplay.annee}/tex/png/${resourceToDisplay.uuid}_cor.png`]
+      }
+    }
+    return {
+      png: typeof resourceToDisplay.png === 'string' ? [resourceToDisplay.png] : resourceToDisplay.png ?? '',
+      pngCor: typeof resourceToDisplay.pngCor === 'string' ? [resourceToDisplay.pngCor] : resourceToDisplay.pngCor ?? ''
+    }
+  }
 
   function handleNoCorrectionAvailable () {
     noCorrectionAvailable = true

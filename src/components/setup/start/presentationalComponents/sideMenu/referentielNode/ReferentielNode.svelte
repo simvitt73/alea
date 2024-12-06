@@ -1,7 +1,7 @@
 <script lang="ts">
   import { slide } from "svelte/transition"
   import {
-    isExamItemInReferentiel,
+    isExam2dItemInReferentiel,
     isJSONReferentielEnding,
     type JSONReferentielObject,
   } from "../../../../../../lib/types/referentiels"
@@ -83,8 +83,8 @@
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return Object.entries(s).sort(([keyA, valueA], [keyB, valueB]) => {
           if (
-            isExamItemInReferentiel(valueA) &&
-            isExamItemInReferentiel(valueB) &&
+            isExam2dItemInReferentiel(valueA) &&
+            isExam2dItemInReferentiel(valueB) &&
             valueA.jour &&
             valueB.jour
           ) {

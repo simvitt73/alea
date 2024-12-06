@@ -10,7 +10,7 @@ import {
   isTool,
   isStaticItemInReferentiel,
   EXAMS,
-  isExamItemInReferentiel,
+  isExam2dItemInReferentiel,
   resourceHasMonth
 } from '../types/referentiels'
 import { stringWithNoAccent } from './textUtils'
@@ -351,7 +351,7 @@ export function yearCriterion (
       return items.filter((item: ResourceAndItsPath) => {
         return (
           YEARS.includes(yearToMatch) &&
-          isExamItemInReferentiel(item.resource) &&
+          isExam2dItemInReferentiel(item.resource) &&
           item.resource.annee === yearToMatch
         )
       })

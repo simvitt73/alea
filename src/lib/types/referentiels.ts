@@ -110,7 +110,7 @@ export interface crpeItemInReferentiel extends BaseItemInReferentiel {
   typeExercice: 'crpe'
 }
 
-export function isCrpeItemInReferentiel (obj: any): obj is crpeItemInReferentiel {
+export function isCrpeItemInReferentiel (obj: unknown): obj is crpeItemInReferentiel {
   if (obj == null || typeof obj !== 'object') return false
   return 'png' in obj && typeof obj.png === 'string' &&
     'pngCor' in obj && typeof obj.pngCor === 'string' &&
@@ -132,17 +132,15 @@ export function isCrpeItemInReferentiel (obj: any): obj is crpeItemInReferentiel
  * @property {string} texCor: chemin vers le source LaTeX de la correction du contenu
  */
 export interface StaticItemInReferentiel extends BaseItemInReferentiel {
-  png: string
-  pngCor: string
+  png?: string
+  pngCor?: string
   tex: string
   texCor: string
   typeExercice: 'static' | 'dnb' | 'bac' | 'e3c' | 'evacom'
 }
 export function isStaticItemInReferentiel (obj: unknown): obj is StaticItemInReferentiel {
   if (obj == null || typeof obj !== 'object') return false
-  return 'png' in obj && typeof obj.png === 'string' &&
-    'pngCor' in obj && typeof obj.pngCor === 'string' &&
-    'tex' in obj && typeof obj.tex === 'string' &&
+  return 'tex' in obj && typeof obj.tex === 'string' &&
     'texCor' in obj && typeof obj.texCor === 'string' &&
     'typeExercice' in obj && typeof obj.typeExercice === 'string' && ['static', 'dnb', 'bac', 'e3c', 'evacom'].includes(obj.typeExercice)
 }
@@ -156,13 +154,21 @@ export function isStaticItemInReferentiel (obj: unknown): obj is StaticItemInRef
  * @property {string} lieu : endroit où a été diffusé l'examen
  * @property {string} numeroInitial : numérode positionnement de l'exercice dans le sujet initial de l'examen
  */
-export interface ExamItemInReferentiel extends StaticItemInReferentiel {
+export interface Exam2dItemInReferentiel extends StaticItemInReferentiel {
   mois?: string
   annee: string
   lieu: string
   numeroInitial: string
   jour?: 'J1' | 'J2'
   typeExercice: 'dnb' | 'bac'
+}
+
+export function isExam2dItemInReferentiel (obj: unknown): obj is Exam2dItemInReferentiel {
+  if (obj == null || typeof obj !== 'object') return false
+  return 'annee' in obj && typeof obj.annee === 'string' &&
+    'lieu' in obj && typeof obj.lieu === 'string' &&
+    'numeroInitial' in obj && typeof obj.numeroInitial === 'string' &&
+    'typeExercice' in obj && typeof obj.typeExercice === 'string' && ['dnb', 'bac'].includes(obj.typeExercice)
 }
 
 /**
@@ -206,7 +212,7 @@ export interface ToolItemInReferentiel extends BaseItemInReferentiel {
 export type JSONReferentielEnding =
   // | BaseItemInReferentiel  <-- pas de terminaison aussi basique
   | StaticItemInReferentiel
-  | ExamItemInReferentiel
+  | Exam2dItemInReferentiel
   | ExerciceItemInReferentiel
   | ToolItemInReferentiel
 // Type pour un référentiel complet
@@ -243,16 +249,6 @@ export const isExerciceItemInReferentiel = (
   Object.keys(obj).includes('features') &&
   obj.features !== undefined
 
-export const isExamItemInReferentiel = (
-  obj: any
-): obj is ExamItemInReferentiel =>
-  obj !== null &&
-  typeof obj !== 'undefined' &&
-  Object.keys(obj).includes('uuid') &&
-  obj.uuid !== undefined &&
-  Object.keys(obj).includes('annee') &&
-  obj.annee !== undefined
-
 export const isJSONReferentielEnding = (
   obj: any
 ): obj is JSONReferentielEnding =>
@@ -269,13 +265,13 @@ export const isTool = (obj: any): obj is ToolItemInReferentiel =>
 
 export const resourceHasPlace = (
   obj: any
-): obj is ExamItemInReferentiel | crpeItemInReferentiel =>
+): obj is Exam2dItemInReferentiel | crpeItemInReferentiel =>
   obj !== null &&
   typeof obj !== 'undefined' &&
   Object.keys(obj).includes('lieu') &&
   obj.lieu !== undefined
 
-export const resourceHasMonth = (obj: any): obj is ExamItemInReferentiel =>
+export const resourceHasMonth = (obj: any): obj is Exam2dItemInReferentiel =>
   obj !== null &&
   typeof obj !== 'undefined' &&
   Object.keys(obj).includes('mois') &&
