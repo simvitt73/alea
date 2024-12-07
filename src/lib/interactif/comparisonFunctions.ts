@@ -501,6 +501,12 @@ engine.latexDictionary = [
   } as unknown as LatexDictionaryEntry // Conversion en 'unknown' puis en 'LatexDictionaryEntry'
 ]
 
+// Pour éviter que G en Latex soit pris pour CatalanConstant
+engine.latexDictionary = [
+  ...engine.latexDictionary,
+  { identifierTrigger: 'G', name: 'G' } as LatexDictionaryEntry
+]
+
 /****************************************************************************************************
  *
  *                  C'est la fonction, ci-dessous, la future fonction couteauSuisse
