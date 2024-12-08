@@ -73,7 +73,6 @@ export default class ModeliserSuites extends Exercice {
       let texteCorr = ''
 
       let a, p, b, cm, reponse1, reponse2, choix, alt, temp
-
       switch (listeTypeDeQuestions[i]) {
         case 1:// abeilles
           a = randint(10, 35) * 10
@@ -81,7 +80,7 @@ export default class ModeliserSuites extends Exercice {
           cm = new Decimal(100).sub(p).div(100)
           b = randint(1, 8) * 10
           reponse1 = String(a)
-          reponse2 = `${cm.toFixed(2)}\\times c_n${ecritureAlgebrique(b)}`
+          reponse2 = `${cm.toFixed(2)}\\times c_{n}${ecritureAlgebrique(b)}`
           texte = `Un apiculteur souhaite étendre son activité de production de miel à une nouvelle région.<br>
          En juillet $2024$, il achète $${a}$ colonies d’abeilles qu'il installe dans cette région.<br>
         Après renseignements pris auprès des services spécialisés, il s'attend à perdre $${p}$ % des colonies durant
@@ -119,13 +118,13 @@ export default class ModeliserSuites extends Exercice {
           cm = new Decimal(100).sub(p).div(100)
           b = randint(-8, -4) * 100
           reponse1 = String(a)
-          reponse2 = `${cm.toFixed(2)}\\times c_n${ecritureAlgebrique(b)}`
+          reponse2 = `${cm.toFixed(2)}\\times u_{n}${ecritureAlgebrique(b)}`
           texte = `Une retenue d'eau artificielle contient $${texNombre(a, 0)}$ m$^3$ d'eau le 1er juillet 2024 au matin.<br>
 La chaleur provoque dans la retenue une évaporation de $${p}\\,\\%$  du volume total de l'eau par jour. <br>
 De plus, chaque soir, on doit libérer de la retenue $${abs(b)}$ m$^3$ pour l'irrigation des cultures aux alentours.<br>
 `
           if (!this.sup2 || this.interactif) {
-            texte += `On modélise l'évolution du  volume d'eau dans la retenue par une suite $(u_n)$ le terme $u_n$ donnant une estimation du volume d’eau en m$^3$ au matin du $n$-ième jour
+            texte += `On modélise l'évolution du  volume d'eau dans la retenue par une suite $(u_n)$, le terme $u_n$ donnant une estimation du volume d’eau en m$^3$ au matin du $n$-ième jour
 qui suit le 1er juillet 2024.<br>
             Préciser la valeur de $u_0$, puis exprimer pour tout entier $n$, le terme $u_{n+1}$ en fonction de $u_n$.`
           } else {
@@ -157,12 +156,11 @@ qui suit le 1er juillet $2024$ l'année $2024 + n$.<br>
           cm = new Decimal(100).sub(p).div(100)
           b = randint(40, 50)
           reponse1 = String(a)
-          reponse2 = `${cm.toFixed(2)}\\times c_n${ecritureAlgebrique(b)}`
+          reponse2 = `${cm.toFixed(2)}\\times v_{n}${ecritureAlgebrique(b)}`
           texte = `Depuis le 1er janvier $2022$, une commune dispose de vélos en libre service. <br>
           La société Bicycl'Aime est chargée de l'exploitation et de l'entretien du parc de vélos.<br>
 La commune disposait de $${a}$ vélos au 1er janvier $2022$.<br>
-La société estime que, chaque année, $${p}\\,\\%$ des vélos sont retirés de la circulation à cause de dégrada-
-tions et que $${b}$ nouveaux vélos sont mis en service.<br>
+La société estime que, chaque année, $${p}\\,\\%$ des vélos sont retirés de la circulation à cause de dégradations et que $${b}$ nouveaux vélos sont mis en service.<br>
 `
           if (!this.sup2 || this.interactif) {
             texte += `On modélise cette situation par une suite $(v_n)$ où $v_n$ représente le nombre de vélos de cette commune
@@ -197,9 +195,9 @@ au 1er janvier de l'année $2022 + n$.<br>
           b = randint(20, 30)
           choix = prenomF()
           reponse1 = String(a)
-          reponse2 = `${cm.toFixed(2)}\\times c_n${ecritureAlgebrique(b)}`
-          texte = `${choix} place $${a}$ € dans une banque le 1er janvier $2023$ au taux annuel de $${p}\\,\\%$.<br>
-           À la fin de chaque année les intérêts sont ajoutés au capital, mais les frais de gestion s’élèvent à $${b}$ € ( par an).<br>`
+          reponse2 = `${cm.toFixed(2)}\\times c_{n}-${b}`
+          texte = `${choix} place $${texNombre(a)}$ € dans une banque le 1er janvier $2023$ au taux annuel de $${p}\\,\\%$.<br>
+           À la fin de chaque année, les intérêts sont ajoutés au capital, mais les frais de gestion s’élèvent à $${b}$ € ( par an).<br>`
           if (!this.sup2 || this.interactif) {
             texte += `On modélise l'évolution du capital de ${choix} par une suite $(c_n)$, le terme $c_n$ donnant le capital au 1er janvier de l’année $2023 + n$.<br>
             Préciser la valeur de $c_0$, puis exprimer pour tout entier $n$, le terme $c_{n+1}$ en fonction de $c_n$.`
@@ -232,7 +230,7 @@ au 1er janvier de l'année $2022 + n$.<br>
           b = randint(20, 30) * 10
           choix = prenomF()
           reponse1 = String(a)
-          reponse2 = `${cm.toFixed(2)}\\times c_n${ecritureAlgebrique(b)}`
+          reponse2 = `${cm.toFixed(2)}\\times u_{n}${ecritureAlgebrique(b)}`
           texte = `Dans une ville, un opéra décide de proposer à partir de $2024$ un abonnement annuel pour ses spectacles.<br>
 Le directeur de l'opéra  prévoit que $${p}\\,\\%$ des personnes abonnées renouvelleront leur abonnement l'année suivante et
 qu'il y aura chaque année $${b}$ nouveaux abonnés.<br>
@@ -270,11 +268,11 @@ Pour l’année $2024$, il y a $${a}$ abonnés.<br>`
           b = randint(30, 40) * 10
           choix = prenomF()
           reponse1 = String(a)
-          reponse2 = `${cm.toFixed(2)}\\times c_n${ecritureAlgebrique(b)}`
+          reponse2 = `${cm.toFixed(2)}\\times v_{n}-${b}`
           texte = `En janvier $2024$, une personne se décide à acheter un scooter coûtant $${texNombre(a, 0)}$ euros sans apport personnel.<br>
            Le vendeur lui propose un crédit à la consommation d'un montant de $${texNombre(a, 0)}$ euros, au taux
 mensuel de $${texNombre(p, 2, true)}\\,\\%$. <br>
-Par ailleurs, la mensualité fixée à $${b}$ euros est versée par l'emprunteur à l'organisme de crédit le $25$ de chaque mois. <br>
+Par ailleurs, la mensualité, fixée à $${b}$ euros, est versée par l'emprunteur à l'organisme de crédit le $25$ de chaque mois. <br>
 Ainsi, le capital restant dû augmente de $${texNombre(p, 2, true)}\\,\\%$ puis baisse de $${b}$ euros.<br>
 Le premier versement a lieu le $25$ février $2024$.<br>`
           if (!this.sup2 || this.interactif) {
@@ -307,7 +305,7 @@ Le premier versement a lieu le $25$ février $2024$.<br>`
           b = new Decimal(randint(2, 7)).div(100)
           alt = randint(6, 11) * 100
           temp = randint(15, 25)
-          reponse1 = `${reduireAxPlusB(b, -temp, 'n')}`
+          reponse1 = `${reduireAxPlusB(-b, temp, 'n')}`
           texte = `Un randonneur se trouve  à $${texNombre(alt, 0)}$ m d'altitude.<br>
           Sur son parcours, la température diminue de $${texNombre(b, 2)}$ degré Celsius lorsque l'altitude augmente de $1$ mètre.<br>
 Au point de départ, la température est de $${temp}$ degrés Celsius.<br>`
