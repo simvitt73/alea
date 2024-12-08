@@ -17,6 +17,6 @@
   </div>
   <p class="text-center font-normal text-gray-700 dark:text-gray-400">
     Pour cette fin d'année 2024, la team Coopmaths, en collaboration avec la DRANE de Normandie, vous propose une Course Aux Nombres spéciale nouvelle année 2025.
-    Plus d'information sur notre blog.
+    Plus d'informations sur notre blog.
   </p>
 </a>
