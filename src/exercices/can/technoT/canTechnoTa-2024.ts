@@ -10,7 +10,7 @@ import Question9 from '../can5a-2024/can5a-2024-Q9.js' // TODO
 import Question10 from '../can5a-2024/can5a-2024-Q10.js' // TODO
 import Question11 from '../can3a-2024/can3-2024-Q11.js' // TODO
 import Question12 from '../canTechnoTa-2024/canTechnoTa-2024-Q12.js'
-import Question13 from '../can3a-2024/can3-2024-Q13.js' // TODO
+import Question13 from '../canTechnoTa-2024/canTechnoTa-2024-Q13.js'
 import Question14 from '../can3a-2024/can3-2024-Q14.js' // TODO
 import Question15 from '../can3a-2024/can3-2024-Q15.js' // TODO
 import Question16 from '../can3a-2024/can3-2024-Q16.js' // TODO
