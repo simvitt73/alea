@@ -34,9 +34,9 @@ export const refs = {
 export default function ProblemesDePlusEtDeMoins () {
   Exercice.call(this)
   this.consigne = 'Résoudre les problèmes suivants au brouillon et écrire les réponses dans les cases, ne pas préciser "€" ni "euros" ...'
-  this.nbQuestions = 3
-  this.nbCols = 2 // Uniquement pour la sortie LaTeX
-  this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
+  this.nbQuestions = 4
+  this.nbCols = 2 // Uniquement pour la sortie LaTeX //// OM : pourqquoi ?
+  this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX //// OM : pourqquoi ?
   this.sup = 1 // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
   this.video = '' // Id YouTube ou url
@@ -74,7 +74,7 @@ export default function ProblemesDePlusEtDeMoins () {
         couleur: 'nombres'
       })
     }
-    const typeQuestionsDisponibles = ['deplus', 'demoins', 'deplus'] // On créé 2 types de questions
+    const typeQuestionsDisponibles = ['dePlusPourSoustraction', 'deMoinsPourAddition', 'dePlusPourAddition', 'deMoinsPourSoustraction'] // On créé 2 types de questions /// j'en ajoute deux et supprime la répition pour l'equilibrage
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
 
     let r, e // argent de Romane et écart
@@ -90,7 +90,7 @@ export default function ProblemesDePlusEtDeMoins () {
       }
       [r, e] = nombreDecimales(n)
       switch (listeTypeQuestions[i]) { // Suivant le type de question, le contenu sera différent
-        case 'deplus':
+        case 'dePlusPourSoustraction':
           m = r - e
           somme = m + r
 
@@ -112,7 +112,7 @@ export default function ProblemesDePlusEtDeMoins () {
           texteCorr += texteEnCouleur(`<br>Les deux filles possèdent,  en tout, $${miseEnEvidence(texPrix(somme))}$ €.`)
 
           break
-        case 'demoins':
+        case 'deMoinsPourAddition':
           m = r + e
           somme = m + r
 
@@ -129,6 +129,50 @@ export default function ProblemesDePlusEtDeMoins () {
           texteCorr += ` que ${prenom1} signifie que ${prenom1} a $${texPrix(e)}$ € `
           texteCorr += texteEnCouleurEtGras('de plus')
           texteCorr += ` que ${prenom2}. <br>${prenom1} a donc : $${texPrix(r)}$ € + $${texPrix(e)}$ € = $${texPrix(m)}$ €.`
+          texteCorr += `<br>$${texPrix(r)}$ € + $${texPrix(m)}$ € = $${texPrix(somme)}$ € `
+          texteCorr += texteEnCouleur(`<br>Les deux filles possèdent,  en tout, $${miseEnEvidence(texPrix(somme))}$ €.`)
+
+          break
+        case 'dePlusPourAddition':
+          m = r + e
+          somme = m + r
+
+          texte = `${prenom2} dit à ${prenom1} : «${sp()}Tu as $${texPrix(r)}$ €, j'ai $${texPrix(e)}$ € de plus que toi.${sp()}»<br>`
+          if (this.interactif && !context.isAmc) {
+            texte += 'Combien d\'argent,  en tout, possèdent les deux filles ?<br>Les deux filles possèdent,  en tout, :'
+            texte += ajouteChampTexteMathLive(this, i, ' ', { texteApres: ' €' })
+            setReponse(this, i, somme)
+          } else {
+            texte += 'Combien d\'argent en euros possèdent,  en tout, les deux filles ?<br>'
+          }
+          texteCorr = `D'après l'énoncé, ${prenom1} a $${texPrix(r)}$ €.<br>${prenom2}  a $${texPrix(e)}$ € `
+          texteCorr += texteEnCouleurEtGras('de plus')
+          // texteCorr += ` que ${prenom1} signifie que ${prenom1} a $${texPrix(e)}$ € `
+          // texteCorr += texteEnCouleurEtGras('de moins')
+          // texteCorr += ` que ${prenom2}. <br>${prenom1} a donc : $${texPrix(r)}$ € + $${texPrix(e)}$ € = $${texPrix(m)}$ €.`
+          texteCorr += ` que ${prenom1}. <br>${prenom2} a donc : $${texPrix(r)}$ € + $${texPrix(e)}$ € = $${texPrix(m)}$ €.`
+          texteCorr += `<br>$${texPrix(r)}$ € + $${texPrix(m)}$ € = $${texPrix(somme)}$ € `
+          texteCorr += texteEnCouleur(`<br>Les deux filles possèdent,  en tout, $${miseEnEvidence(texPrix(somme))}$ €.`)
+
+          break
+        case 'deMoinsPourSoustraction':
+          m = r - e
+          somme = m + r
+
+          texte = `${prenom2} dit à ${prenom1} : «${sp()}Tu as $${texPrix(r)}$ €, j'ai $${texPrix(e)}$ € de moins que toi.${sp()}»<br>`
+          if (this.interactif && !context.isAmc) {
+            texte += 'Combien d\'argent,  en tout, possèdent les deux filles ?<br>Les deux filles possèdent,  en tout, :'
+            texte += ajouteChampTexteMathLive(this, i, ' ', { texteApres: ' €' })
+            setReponse(this, i, somme)
+          } else {
+            texte += 'Combien d\'argent en euros possèdent,  en tout, les deux filles ?<br>'
+          }
+          texteCorr = `D'après l'énoncé, ${prenom1} a $${texPrix(r)}$ €.<br>${prenom2}  a $${texPrix(e)}$ € `
+          texteCorr += texteEnCouleurEtGras('de moins')
+          // texteCorr += ` que ${prenom1} signifie que ${prenom1} a $${texPrix(e)}$ € `
+          // texteCorr += texteEnCouleurEtGras('de plus')
+          // texteCorr += ` que ${prenom2}. <br>${prenom1} a donc : $${texPrix(r)}$ € + $${texPrix(e)}$ € = $${texPrix(m)}$ €.`
+          texteCorr += ` que ${prenom1}. <br>${prenom2} a donc : $${texPrix(r)}$ € - $${texPrix(e)}$ € = $${texPrix(m)}$ €.`
           texteCorr += `<br>$${texPrix(r)}$ € + $${texPrix(m)}$ € = $${texPrix(somme)}$ € `
           texteCorr += texteEnCouleur(`<br>Les deux filles possèdent,  en tout, $${miseEnEvidence(texPrix(somme))}$ €.`)
 
