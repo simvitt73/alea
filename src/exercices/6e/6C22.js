@@ -4,10 +4,10 @@ import { sp } from '../../lib/outils/outilString.js'
 import { prenomF } from '../../lib/outils/Personne'
 import { texPrix } from '../../lib/format/style'
 import Exercice from '../Exercice'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import { context } from '../../modules/context.js'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif'
 
 export const titre = 'Résoudre des problèmes de type : ... de plus ou ... de moins'
 export const interactifReady = true
@@ -17,7 +17,6 @@ export const amcType = 'AMCNum'
 
 export const dateDePublication = '10/07/2021'
 export const dateDeModificationImportante = '11/12/2024'
-
 
 /**
  * Description didactique de l'exercice
@@ -133,7 +132,7 @@ export default class ProblemesDePlusEtDeMoins extends Exercice {
           if (this.interactif && !context.isAmc) {
             texte += 'Combien d\'argent,  en tout, possèdent les deux filles ?<br>Les deux filles possèdent,  en tout, :'
             texte += ajouteChampTexteMathLive(this, i, ' ', { texteApres: ' €' })
-            setReponse(this, i, somme)
+            handleAnswers(this, i, { reponse: { value: texPrix(somme) } })
           } else {
             texte += 'Combien d\'argent en euros possèdent,  en tout, les deux filles ?'
           }
@@ -165,12 +164,12 @@ function nombreDecimales (n) {
     e = randint(10, 30)
   }
   if (n === 1) {
-    r = calculANePlusJamaisUtiliser((randint(40, 60) * 100 + randint(1, 9) * 10) / 100) // évite de retomber dans le cas n=0 par ex  4200/100
-    e = calculANePlusJamaisUtiliser((randint(10, 20) * 100 + randint(1, 9) * 10) / 100)
+    r = (randint(40, 60) * 100 + randint(1, 9) * 10) / 100 // évite de retomber dans le cas n=0 par ex  4200/100
+    e = (randint(10, 20) * 100 + randint(1, 9) * 10) / 100
   }
   if (n === 2) {
-    r = calculANePlusJamaisUtiliser((randint(40, 60) * 100 + randint(1, 9) * 10 + randint(1, 9)) / 100)
-    e = calculANePlusJamaisUtiliser((randint(10, 20) * 100 + randint(1, 9) * 10 + randint(1, 9)) / 100)
+    r = (randint(40, 60) * 100 + randint(1, 9) * 10 + randint(1, 9)) / 100
+    e = (randint(10, 20) * 100 + randint(1, 9) * 10 + randint(1, 9)) / 100
   }
   return [r, e]
 }
