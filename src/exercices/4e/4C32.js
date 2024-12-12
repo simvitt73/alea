@@ -7,9 +7,10 @@ import Decimal from 'decimal.js'
 import { context } from '../../modules/context.js'
 
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions'
 
 export const titre = 'Associer un nombre décimal à sa notation scientifique'
 export const interactifReady = true
@@ -32,8 +33,6 @@ export default function NotationScientifique () {
   Exercice.call(this)
   this.sup = 1
   this.sup2 = 1
-  this.nbCols = 1
-  this.nbColsCorr = 1
   this.nbQuestions = 5
   this.interactif = false
   this.nouvelleVersion = function () {
@@ -121,16 +120,20 @@ export default function NotationScientifique () {
             approx: 0
           })
         } else {
-          setReponse(this, i, reponse, {
-            formatInteractif: 'nombreDecimal',
-            decimals: Math.max(0, listeTypeDeQuestions[i] - exp)
-          })
+          if (context.isAmc) {
+            setReponse(this, i, reponse, {
+            // formatInteractif: 'nombreDecimal',
+              decimals: Math.max(0, listeTypeDeQuestions[i] - exp)
+            })
+          } else {
+            handleAnswers(this, i, { reponse: { value: reponse, compare: fonctionComparaison, options: { nombreDecimalSeulement: true } } })
+          }
         }
 
         if (context.isAmc) {
           texteAMC += '.'
           this.autoCorrection[i].reponse.valeur = [mantisse.mul(Decimal.pow(10, exp)).toString()]
-          if (parseInt(this.sup) === 1) {
+          if (this.sup === 1) {
             this.amcType = 'AMCNum'
             this.autoCorrection[i].enonce = 'Donner la notation scientifique du nombre ' + texteAMC
           } else {
