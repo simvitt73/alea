@@ -24,7 +24,7 @@ import {
   type CompareFunction,
   type OptionsComparaisonType
 } from './comparisonFunctions'
-import Hms from '../../modules/Hms'
+// import Hms from '../../modules/Hms'
 import { context } from '../../modules/context.js'
 import type Exercice from '../../exercices/Exercice'
 import { verifDragAndDrop } from './DragAndDrop'
@@ -785,7 +785,8 @@ export function setReponse (
           params
         )
       }
-      case 'hms':
+      // Avec handleAnswers(), ce case n'a plus lieu d'être !
+      /* case 'hms':
         if (!(reponse instanceof Hms)) {
           window.notify(
             'setReponse : type "hms" la réponse n\'est pas une instance de Hms !',
@@ -803,7 +804,7 @@ export function setReponse (
             }
           },
           params
-        )
+        ) */
       case 'nombreDecimal':
         if (reponse instanceof Decimal) {
           return handleAnswers(
