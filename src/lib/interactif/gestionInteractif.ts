@@ -562,14 +562,14 @@ export function setReponse (
             .replace(',', '.')
         }
         break
-      case 'nombreDecimal':
+      /* case 'nombreDecimal':
         if (!(reponse instanceof Decimal)) {
           window.notify(
             'setReponse : type "nombreDecimal" un nombre est attendu !',
             { reponses, exercice: exercice.uuid }
           )
         }
-        break
+        break */
       case 'ecritureScientifique':
         if (!(typeof reponse === 'string')) {
           window.notify(
@@ -805,7 +805,8 @@ export function setReponse (
           },
           params
         ) */
-      case 'nombreDecimal':
+      // Avec handleAnswers(), ce case n'a plus lieu d'être !
+      /* case 'nombreDecimal':
         if (reponse instanceof Decimal) {
           return handleAnswers(
             exercice,
@@ -840,7 +841,7 @@ export function setReponse (
             }
           },
           params
-        )
+        ) */
       case 'ecritureScientifique':
         {
           if (typeof reponse !== 'string') {
