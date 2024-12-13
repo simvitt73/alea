@@ -32,7 +32,7 @@ export default class AiresCalculMental extends Exercice {
   }
 
   nouvelleVersion () {
-    const typeQuestionsDisponibles = ['carré', 'rectangle', 'cercleRayon', 'cercleDiametre']
+    const typeQuestionsDisponibles = ['carré', 'rectangle', 'disqueRayon', 'disqueDiametre']
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       let texte = ''
@@ -62,25 +62,25 @@ export default class AiresCalculMental extends Exercice {
             handleAnswers(this, i, { reponse: { value: texNombre(L * l), compare: fonctionComparaison } })
           }
           break
-        case 'cercleRayon':
+        case 'disqueRayon':
           {
             const r = randint(2, 9)
-            texte = `Cercle de rayon $${texNombre(r)}$ cm.`
-            texteCorr = '$\\mathcal{A}_\\text{cercle} = r \\times r \\times \\pi$'
-            texteCorr += `<br>$\\mathcal{A}_\\text{cercle} = ${texNombre(r)}~\\text{cm} \\times ${texNombre(r)}~\\text{cm} \\times \\pi$`
-            texteCorr += `<br>$\\mathcal{A}_\\text{cercle} = ${miseEnEvidence(`${texNombre(r * r)}\\pi`)}~\\text{cm}^2$`
-            texteInteractif += ajouteChampTexteMathLive(this, i, KeyboardType.college6eme, { texteAvant: '$\\mathcal{A}_\\text{cercle} =$', texteApres: '$~\\text{cm}^2$' })
+            texte = `Disque de rayon $${texNombre(r)}$ cm.`
+            texteCorr = '$\\mathcal{A}_\\text{disque} = r \\times r \\times \\pi$'
+            texteCorr += `<br>$\\mathcal{A}_\\text{disque} = ${texNombre(r)}~\\text{cm} \\times ${texNombre(r)}~\\text{cm} \\times \\pi$`
+            texteCorr += `<br>$\\mathcal{A}_\\text{disque} = ${miseEnEvidence(`${texNombre(r * r)}\\pi`)}~\\text{cm}^2$`
+            texteInteractif += ajouteChampTexteMathLive(this, i, KeyboardType.college6eme, { texteAvant: '$\\mathcal{A}_\\text{disque} =$', texteApres: '$~\\text{cm}^2$' })
             handleAnswers(this, i, { reponse: { value: `${r * r}\\pi`, compare: fonctionComparaison, options: { exclusifFactorisation: true } } })
           }
           break
-        case 'cercleDiametre':
+        case 'disqueDiametre':
         {
           const r = randint(2, 9)
-          texte = `Cercle de diamètre $${texNombre(2 * r)}$ cm.`
-          texteCorr = '$\\mathcal{A}_\\text{cercle} = r \\times r \\times \\pi$'
-          texteCorr += `<br>$\\mathcal{A}_\\text{cercle} = ${texNombre(r)}~\\text{cm} \\times ${texNombre(r)}~\\text{cm} $`
-          texteCorr += `<br>$\\mathcal{A}_\\text{cercle} = ${miseEnEvidence(`${texNombre(r * r)}\\pi`)}~\\text{cm}^2$`
-          texteInteractif += ajouteChampTexteMathLive(this, i, KeyboardType.college6eme, { texteAvant: '$\\mathcal{A}_\\text{cercle} =$', texteApres: '$~\\text{cm}^2$' })
+          texte = `Disque de diamètre $${texNombre(2 * r)}$ cm.`
+          texteCorr = '$\\mathcal{A}_\\text{disque} = r \\times r \\times \\pi$'
+          texteCorr += `<br>$\\mathcal{A}_\\text{disque} = ${texNombre(r)}~\\text{cm} \\times ${texNombre(r)}~\\text{cm} $`
+          texteCorr += `<br>$\\mathcal{A}_\\text{disque} = ${miseEnEvidence(`${texNombre(r * r)}\\pi`)}~\\text{cm}^2$`
+          texteInteractif += ajouteChampTexteMathLive(this, i, KeyboardType.college6eme, { texteAvant: '$\\mathcal{A}_\\text{disque} =$', texteApres: '$~\\text{cm}^2$' })
           handleAnswers(this, i, { reponse: { value: `${r * r}\\pi`, compare: fonctionComparaison, options: { exclusifFactorisation: true } } })
         }
       }
