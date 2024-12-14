@@ -16,23 +16,23 @@ export const titre = 'Modéliser une situation avec une suite'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
-export const dateDePublication = '04/12/2024'
+export const dateDePublication = '14/12/2024'
 
 /**
  * Description didactique de l'exercice
  * @author Gilles Mora
 */
 export const uuid = '6487c'
-export const ref = ''
+export const ref = '1AL10-1'
 export const refs = {
-  'fr-fr': [''],
+  'fr-fr': ['1AL10-1'],
   'fr-ch': []
 }
 export default class ModeliserSuites extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 1
-    this.sup = '5'
+    this.sup = '11'
     this.spacing = 1.5
     this.spacingCorr = 1.5
     this.besoinFormulaire2CaseACocher = ['Sans indication dans l\'énoncé']
@@ -305,7 +305,7 @@ Le premier versement a lieu le $25$ février $2024$.<br>`
           b = new Decimal(randint(2, 7)).div(100)
           alt = randint(6, 11) * 100
           temp = randint(15, 25)
-          reponse1 = `${reduireAxPlusB(-b, temp, 'n')}`
+          reponse1 = [`${reduireAxPlusB(-b, temp, 'n')}`, `${temp}-${b}\\times n`]
           texte = `Un randonneur se trouve  à $${texNombre(alt, 0)}$ m d'altitude.<br>
           Sur son parcours, la température diminue de $${texNombre(b, 2)}$ degré Celsius lorsque l'altitude augmente de $1$ mètre.<br>
 Au point de départ, la température est de $${temp}$ degrés Celsius.<br>`
@@ -330,7 +330,7 @@ Au point de départ, la température est de $${temp}$ degrés Celsius.<br>`
         case 8:// l'abonnement salle de sport
           a = randint(1, 4) * 10
           b = new Decimal(choice([3, 5, 7])).div(2)
-          reponse1 = `${reduireAxPlusB(b, a, 'n')}`
+          reponse1 = [`${reduireAxPlusB(b, a, 'n')}`, `${b}\\times n+${a}`]
           texte = `Une salle de sport propose une formule avec un abonnement mensuel.<br>
           L'abonnement de  $${a}$ € permet un tarif de  $${texNombre(b, 2, true)}$ € par séance.<br>`
           if (!this.sup2 || this.interactif) {
@@ -347,15 +347,15 @@ Au point de départ, la température est de $${temp}$ degrés Celsius.<br>`
             )
           }
           texteCorr = `$w_n$ est le prix payé par un abonné sur un mois pour $n$ séances.<br>
-          Ce prix comprend un abonnement de $${a}$ € puis un tarif de  $${texNombre(b, 2, true)}$ € par séance.
+          Ce prix comprend un abonnement de $${a}$ € puis un tarif de  $${texNombre(b, 2, true)}$ € par séance.<br>
           Ainsi, la suite $(w_n)$ est définie pour tout entier naturel $n$ par : $w_n=${miseEnEvidence(`${texNombre(a, 0)}+${texNombre(b, 2)}n`)}$.`
           break
 
         case 9:// location de voiture
           a = randint(80, 120)
           b = new Decimal(randint(41, 65, [50, 60])).div(100)// prix /km
-          reponse1 = `${reduireAxPlusB(b, a, 'n')}`
-          texte = `  Une société de location de véhicules particuliers propose le tarif suivant pour un week-end de location :<br>
+          reponse1 = [`${reduireAxPlusB(b, a, 'n')}`, `${b}\\times n+${a}`]
+          texte = `Une société de location de véhicules particuliers propose le tarif suivant pour un week-end de location :<br>
           ${texteGras('TARIF WEEK-END :')}  forfait de $${a}$ € puis $${texNombre(b, 2)}$ € par km parcouru.<br>`
           if (!this.sup2 || this.interactif) {
             texte += `Le prix payé par un client est modélisé par une suite $(u_n)$, le terme $u_n$ est le prix payé par ce client  pour $n$ km parcourus pendant le week-end.<br>
@@ -378,8 +378,8 @@ Au point de départ, la température est de $${temp}$ degrés Celsius.<br>`
         default:// budget d'une association
           a = randint(5, 20) * 1000
           b = randint(60, 120) * 10
-          reponse1 = `${reduireAxPlusB(b, a, 'n')}`
-          texte = `  Le budget initialement alloué à une association de  $${texNombre(a, 0)}$ € diminue chaque année de  $${texNombre(b, 2)}$ €.<br>`
+          reponse1 = [`${reduireAxPlusB(-b, a, 'n')}`, `${-b}\\times n+${a}`, `${a}${ecritureAlgebrique(-b)}\\times n`]
+          texte = `Le budget initialement alloué à une association de  $${texNombre(a, 0)}$ € diminue chaque année de  $${texNombre(b, 2)}$ €.<br>`
           if (!this.sup2 || this.interactif) {
             texte += `Le montant du budget est modélisé par une suite $(u_n)$, le terme $u_n$ est le montant du budget au bout de $n$ ans.<br>
             Exprimer pour tout entier $n$, le terme $u_{n}$ en fonction de $n$.`
@@ -395,7 +395,7 @@ Au point de départ, la température est de $${temp}$ degrés Celsius.<br>`
           }
           texteCorr = `$u_n$ est le montant du budget de l'association au bout de $n$ ans.<br>
           Le budget initial de diminue  de $${texNombre(a, 0)}$ € diminue de  $${texNombre(b, 2, true)}$ € par an.<br>
-          Ainsi, la suite $(u_n)$ est définie pour tout entier naturel $n$ par : $u_n=${miseEnEvidence(`${texNombre(a, 0)}+${texNombre(b, 2)}n`)}$.`
+          Ainsi, la suite $(u_n)$ est définie pour tout entier naturel $n$ par : $u_n=${miseEnEvidence(`${texNombre(a, 0)}-${texNombre(b, 2)}n`)}$.`
           break
       }
 
