@@ -1188,12 +1188,23 @@ function scientifiqueCompare (input: string, goodAnswer: string): ResultType {
   let saisieCleanFormattee = saisieClean.replace(/\s+/g, '') // Supprimer tous les espaces
     .replace(/\\times/g, '\\cdot') // Remplacer \times par \cdot
     .replace(/\^(\d+)/g, '^{$1}') // Ajouter des accolades autour des exposants
+    .replace(/\{\+(\d+)\}/g, '{$1}')  // Remplacer {+a} par {a}
 
   // Si la puissance est 0, on accepte mais computeEngine ne met pas en notation scientitique et donc la comparaison entre notation scientifique n'est pas possible.
   // Donc il faut ces trois lignes pour comparer les nombres décimaux, dans ce cas précis.
-  const match = saisieCleanFormattee.match(/\^{(-?\d+)}$/)
+  const match = saisieCleanFormattee.match(/\^{(-?\d+)}$/) // Recherche des nombres entre accolades
   const puissance = match ? number(match[match.length - 1]) : null
   if (puissance === 0) saisieCleanFormattee = engine.parse(saisieClean).toLatex({ notation: 'scientific', avoidExponentsInRange: [0, 0] })
+
+  // Ce code ci-dessous sera à supprimer après correction de l'issue 223 de computeEngine 0.27.0
+  const regex = /(?:\{(-?\d+)\}|(-?\d+))\\cdot(.+)/ // Expression régulière pour capturer le nombre avant et ce qui suit \cdot
+  const decoupageSaisie = saisieCleanFormattee.match(regex)
+  let mantisseSaisie: string | null = null
+  if (decoupageSaisie) {
+    mantisseSaisie = (decoupageSaisie[1] || decoupageSaisie[2]) || null
+    if (mantisseSaisie === '1' && decoupageSaisie[3]) saisieCleanFormattee = decoupageSaisie[3].trim()
+  }
+  // Ce code ci-dessus sera à supprimer après correction de l'issue 223 de computeEngine 0.27.0
 
   const reponseCleanFormattee = engine.parse(reponseClean).toLatex({ notation: 'scientific', avoidExponentsInRange: [0, 0] })
   if (saisieCleanFormattee === reponseCleanFormattee) return { isOk: true }
