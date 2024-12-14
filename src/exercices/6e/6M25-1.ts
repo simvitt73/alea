@@ -60,7 +60,7 @@ export default class PerimetresCalculMental extends Exercice {
             texteCorr += `<br>$\\mathcal{P}_\\text{rectangle} = 2 \\times ${texNombre(L + l)}~\\text{cm}$`
             texteCorr += `<br>$\\mathcal{P}_\\text{rectangle} = ${miseEnEvidence(texNombre(2 * (L + l)))}~\\text{cm}$`
             texteInteractif += ajouteChampTexteMathLive(this, i, KeyboardType.college6eme, { texteAvant: '$\\mathcal{P}_\\text{rectangle} =$', texteApres: '$~\\text{cm}$' })
-            handleAnswers(this, i, { reponse: { value: texNombre(2 * L + 2 * l), compare: fonctionComparaison } })
+            handleAnswers(this, i, { reponse: { value: texNombre(2 * L + 2 * l), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } } })
           }
           break
         case 'cercleRayon':

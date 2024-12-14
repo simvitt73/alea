@@ -26,13 +26,13 @@ export default class AiresCalculMental extends Exercice {
   constructor () {
     super()
     this.consigne = 'Calculer l\'aire exacte des figures suivantes.'
-    this.nbQuestions = 4
+    this.nbQuestions = 5
     this.spacingCorr = 2
     // this.besoinFormulaireCaseACocher = ['Tracer les figures', false]
   }
 
   nouvelleVersion () {
-    const typeQuestionsDisponibles = ['carré', 'rectangle', 'disqueRayon', 'disqueDiametre']
+    const typeQuestionsDisponibles = ['carré', 'rectangle', 'triangle', 'disqueRayon', 'disqueDiametre']
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       let texte = ''
@@ -59,7 +59,20 @@ export default class AiresCalculMental extends Exercice {
             texteCorr += `<br>$\\mathcal{A}_\\text{rectangle} = ${texNombre(L)}~\\text{cm} \\times ${texNombre(l)}~\\text{cm}$`
             texteCorr += `<br>$\\mathcal{A}_\\text{rectangle} = ${miseEnEvidence(texNombre(L * l))}~\\text{cm}^2$`
             texteInteractif += ajouteChampTexteMathLive(this, i, KeyboardType.college6eme, { texteAvant: '$\\mathcal{A}_\\text{rectangle} =$', texteApres: '$~\\text{cm}^2$' })
-            handleAnswers(this, i, { reponse: { value: texNombre(L * l), compare: fonctionComparaison } })
+            handleAnswers(this, i, { reponse: { value: texNombre(L * l), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } } })
+          }
+          break
+        case 'triangle':
+          {
+            const b = randint(2, 9)
+            const h = randint(2, 9)
+            texte = `Triangle de base $${texNombre(b)}$ cm et de hauteur $${texNombre(h)}$ cm.`
+            texteCorr = '$\\mathcal{A}_\\text{triangle} = (b \\times h) \\div 2$'
+            texteCorr += `<br>$\\mathcal{A}_\\text{triangle} = (${texNombre(b)}~\\text{cm} \\times ${texNombre(h)}~\\text{cm}) \\div 2$`
+            texteCorr += `<br>$\\mathcal{A}_\\text{triangle} = ${texNombre(b * h)}~\\text{cm}^2 \\div 2$`
+            texteCorr += `<br>$\\mathcal{A}_\\text{triangle} = ${miseEnEvidence(texNombre(b * h / 2))}~\\text{cm}^2$`
+            texteInteractif += ajouteChampTexteMathLive(this, i, KeyboardType.college6eme, { texteAvant: '$\\mathcal{A}_\\text{triangle} =$', texteApres: '$~\\text{cm}^2$' })
+            handleAnswers(this, i, { reponse: { value: texNombre(b * h / 2), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } } })
           }
           break
         case 'disqueRayon':
