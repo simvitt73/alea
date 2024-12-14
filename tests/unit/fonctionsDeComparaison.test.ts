@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { fonctionComparaison } from '../../src/lib/interactif/comparisonFunctions'
+import { ComputeEngine } from '@cortex-js/compute-engine'
 // import exp from 'constants'
 
 describe('fonctionComparaison', () => {
@@ -186,6 +187,8 @@ describe('fonctionComparaison', () => {
     expect(result.isOk).toBe(true)
     result = fonctionComparaison('1{,}357\\times 10^{3}', '1357', { ecritureScientifique: true })
     expect(result.isOk).toBe(true)
+    result = fonctionComparaison('1 \\times 10^{3}', '1000', { ecritureScientifique: true })
+    expect(result.isOk).toBe(true)
     const result2 = fonctionComparaison('1{,}357\\times 1000', '1357', { ecritureScientifique: true })
     expect(result2.isOk).toBe(false)
     const result3 = fonctionComparaison('1{,}357\\times 10^0', '1.357', { ecritureScientifique: true })
@@ -349,6 +352,7 @@ describe('fonctionComparaison', () => {
   })
 
   it('Vérifie le dysfonctionnement de 0.27.0 avant prochaine MAJ', () => {
+    // Bug 1
     let result = fonctionComparaison('(2+x)^2', '(2+x)(2+x)')
     expect(result.isOk).toBe(false)
     /* En fait, c'est parce que console.log(engine.parse('(2+x)^2').isEqual(engine.parse('(2+x)(2+x)'))) renvoie undefined (prévu par ArnoG, mais pas vraiment compris la raison)
@@ -360,11 +364,18 @@ describe('fonctionComparaison', () => {
         .simplify()
         .isSame(engine.parse('(2+x)(2+x)').expand().simplify())
     ) */
+
+    // Bug 2
     result = fonctionComparaison('-0.07\\times n+18', '-0.07n+18')
     expect(result.isOk).toBe(false)
     /* Actuellement les JSON sont différents alors qu'ils ne devraient pas
         console.log(engine.parse('-0.07\\times n+18').json.toString()) // -> Add,Multiply,-0.07,n,18
         console.log(engine.parse('-0.07\n+18').json.toString()) // -> Add,Negate,Multiply,0.07,n,18
         */
+
+    // Bug 3
+    const engine = new ComputeEngine()
+    const ecritureScientifique1000 = engine.parse('1000').toLatex({ notation: 'scientific', avoidExponentsInRange: [0, 0] }) // 10^{3} and why it is not 1\cdot10^{3}
+    expect(ecritureScientifique1000 === '1\\cdot10^{1}').toBe(false)
   })
 })
