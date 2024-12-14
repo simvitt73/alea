@@ -1,0 +1,78 @@
+.SchemaContainer {
+    display: grid;
+    grid-template-rows: repeat(4, auto); /* Deux lignes ajustées automatiquement */
+    grid-auto-columns: 15px;
+    grid-auto-flow: column; /* Remplissage en colonnes */
+    width: 50%; /* Assure que la largeur totale est utilisée */
+    margin: 15px;
+  }
+  
+  .SchemaItem {
+    border: 2px solid rgba(0, 0, 0, 0.6); /* Pour visualiser les blocs */
+    text-align: center;
+  }
+
+  .curly-brace {
+    width: 100%;
+    position: relative;
+    top: -15px;
+    left: 50%;
+    margin-left: -50%;
+    margin-top: 5px;
+  }
+  .curly-brace .brace {
+    width: 100%;
+    border-bottom: 5px solid;
+    margin: 5px 10% 0 10%;
+    width: 30%;
+    height: 20px;  
+    float: left;
+  }
+  
+  .curly-brace .brace:before,
+  .curly-brace .brace:after {
+    content: "";
+    width: 10%;
+    height: 50px;
+    position: absolute;
+    display: block;
+  }
+  
+  .curly-brace .left:before {  
+    border-bottom: 5px solid;  
+    border-bottom-left-radius: 20px;
+    margin-left: -10%;
+    margin-top: -30px;
+  }
+  
+  .curly-brace .left:after {
+    border-top: 5px solid;
+    border-top-right-radius: 20px;
+    margin-left: 30%;
+    margin-top: 15px;    
+  }
+  
+  .curly-brace .right:before {
+    border-top: 5px solid;
+    border-top-left-radius: 20px;
+    margin-left: -10%;
+    margin-top: 15px;
+  }
+  
+  .curly-brace .right:after {
+    border-bottom: 5px solid;
+    border-bottom-right-radius: 20px;
+    margin-left: 30%;
+    margin-top: -30px;
+  }
+
+  .latexAccoladeBottom {
+    position: relative;
+    margin-top: 20px;
+    left: -25%;
+  }
+
+  .latexAccoladeTop {
+    position: relative;
+    margin-bottom: 5px;
+}
