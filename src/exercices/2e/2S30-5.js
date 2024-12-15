@@ -167,7 +167,6 @@ export default class FonctionsProbabilite2 extends Exercice {
               }
             }
           }) */
-          console.log(issues, issues.split(' '))
           handleAnswers(this, 6 * i + 1, { reponse: { value: issues.split(' '), compare: fonctionComparaison, options: { texteSansCasse: true } } })
           // questions b, c, d, e
           handleAnswers(this, 6 * i + 2, { reponse: { value: 'non', compare: fonctionComparaison, options: { texteSansCasse: true } } })
