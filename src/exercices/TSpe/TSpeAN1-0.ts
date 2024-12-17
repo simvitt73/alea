@@ -12,7 +12,7 @@ import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions.js
 
 export const titre = 'Résolution d\'inéquations du type $a^x \\leq b$ avec log'
 export const dateDePublication = '4/5/2024'
-export const dateDeModificationImportante = '18/07/2024'
+export const dateDeModifImportante = '18/07/2024'
 export const uuid = '00a7a'
 export const interactifReady = true
 export const interactifType = 'mathLive'

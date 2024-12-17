@@ -13,7 +13,7 @@ import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions'
 import { tableauColonneLigne } from '../../lib/2d/tableau'
 import { propositionsQcm } from '../../lib/interactif/qcm'
 export const titre = 'Organiser des données dans un tableau'
-export const dateDeModificationImportante = '27/08/2024'
+export const dateDeModifImportante = '27/08/2024'
 
 /**
  * Organiser donnees depuis texte

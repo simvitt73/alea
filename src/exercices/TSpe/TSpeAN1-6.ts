@@ -11,7 +11,7 @@ import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 
 export const titre = 'Résolution d\'équations du type $a^x = b$ avec log'
 export const dateDePublication = '28/07/2024'
-export const dateDeModificationImportante = '28/07/2024'
+export const dateDeModifImportante = '28/07/2024'
 export const uuid = '00ec8'
 export const interactifReady = true
 export const interactifType = 'mathLive'

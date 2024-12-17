@@ -8,7 +8,7 @@ import { tableauColonneLigne } from '../../lib/2d/tableau'
 
 export const titre = 'Déterminer un angle dans un triangle et sa nature'
 export const dateDePublication = '11/01/2023'
-export const dateDeModificationImportante = '13/10/2024'
+export const dateDeModifImportante = '13/10/2024'
 
 /**
 * Déterminer la valeur d'un angle dans un triangle et sa nature.

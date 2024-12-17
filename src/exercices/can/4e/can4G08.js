@@ -18,7 +18,7 @@ import { functionCompare } from '../../../lib/interactif/comparisonFunctions'
 export const titre = 'Calculer une aire, un périmètre ou une longueur'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const dateDeModificationImportante = '23/11/2024'
+export const dateDeModifImportante = '23/11/2024'
 /**
  * @author Gilles Mora
  * Référence can4G08

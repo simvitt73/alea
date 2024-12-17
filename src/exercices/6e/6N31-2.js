@@ -17,7 +17,7 @@ export const interactifType = 'mathLive'
  * @author Sébastien Lozano
  */
 
-export const dateDeModificationImportante = '27/06/2024' // suppression de coquilles, nettoyage du code et interactivité. Jean-Claude Lhote
+export const dateDeModifImportante = '27/06/2024' // suppression de coquilles, nettoyage du code et interactivité. Jean-Claude Lhote
 export const uuid = '843e5'
 export const ref = '6N31-2'
 export const refs = {

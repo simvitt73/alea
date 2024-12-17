@@ -11,7 +11,7 @@ import Trinome from '../../modules/Trinome'
 
 export const titre = 'Dériver $\\dfrac{u}{v}$'
 export const dateDePublication = '22/01/2022'
-export const dateDeModificationImportante = '07/05/2024'
+export const dateDeModifImportante = '07/05/2024'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 

@@ -71,7 +71,7 @@ le menu sur le site MathALÉA et taggués avec 'New' ou 'MAJ'.
 Cela permet de montrer que le site est vivant et permet de suivre nos nouveautés.
 */
 export const dateDePublication = '01/01/2001'
-export const dateDeModificationImportante = '29/12/2034'
+export const dateDeModifImportante = '29/12/2034'
 
 /*
 Les lignes suivantes concernent l'interactivité et sont facultatives si vous n'utilisez pas l'interactivité

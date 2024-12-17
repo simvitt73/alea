@@ -14,7 +14,7 @@ export const interactifReady = true
 export const interactifType = ['mathLive', 'custom']
 
 export const titre = 'Traduire une succession d\'opérations par une expression'
-export const dateDeModificationImportante = '26/09/2024'
+export const dateDeModifImportante = '26/09/2024'
 
 /**
  * Transformer un programme de calcul avec les 4 opérations dans un ordre aléatoire en un seul calcul.

@@ -16,7 +16,7 @@ import { string } from 'mathjs'
 
 export const titre = 'Résoudre un problème avec les relatifs'
 export const dateDePublication = '05/10/2024' // fonctions de mise en place des éléments interactifs
-export const dateDeModificationImportante = '13/10/2024'
+export const dateDeModifImportante = '13/10/2024'
 
 export const interactifReady = true
 export const interactifType = 'mathLive'

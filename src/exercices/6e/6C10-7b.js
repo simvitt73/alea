@@ -1,7 +1,7 @@
 import FabriqueAYohaku from './_Yohaku.js'
 export const titre = 'Résoudre un Yohaku multiplicatif niveau 1'
 export const dateDePublication = '10/08/2022'
-export const dateDeModificationImportante = '16/12/2023'
+export const dateDeModifImportante = '16/12/2023'
 
 export const interactifReady = true
 export const interactifType = 'custom'

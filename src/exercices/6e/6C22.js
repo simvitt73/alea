@@ -17,7 +17,7 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 
 export const dateDePublication = '10/07/2021'
-export const dateDeModificationImportante = '11/12/2024'
+export const dateDeModifImportante = '11/12/2024'
 
 /**
  * Description didactique de l'exercice

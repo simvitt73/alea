@@ -18,7 +18,7 @@ import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions'
 export const titre = "Ranger des nombres entiers dans l'ordre croissant ou décroissant"
-export const dateDeModificationImportante = '28/08/2024'
+export const dateDeModifImportante = '28/08/2024'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 

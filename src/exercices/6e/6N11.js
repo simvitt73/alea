@@ -25,7 +25,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCHybride'
-export const dateDeModificationImportante = '26/08/2024'
+export const dateDeModifImportante = '26/08/2024'
 
 /**
  * Lire l'abscisse entière d'un point

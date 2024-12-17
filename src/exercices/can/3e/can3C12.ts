@@ -9,7 +9,7 @@ import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 export const titre = 'Encadrer une racine carrée'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const dateDeModificationImportante = '20/09/2024'
+export const dateDeModifImportante = '20/09/2024'
 /*!
  * @author Gilles Mora
  */
