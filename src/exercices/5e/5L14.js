@@ -34,14 +34,10 @@ export const refs = {
 }
 export default function CalculerLaValeurDUneExpressionLitterale () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 5
 
-
-
   this.nouvelleVersion = function () {
-
-
     // let typesDeQuestionsDisponibles = range1(10)
     let typesDeQuestionsDisponibles
 

@@ -20,7 +20,6 @@ export const refs = {
 export default function VocabulaireSur4Operations () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 5
   this.nbCols = 2
   this.nbColsCorr = 2

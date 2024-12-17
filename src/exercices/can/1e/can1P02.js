@@ -36,10 +36,10 @@ export default function LectureProbabilite () {
   Exercice.call(this)
   this.sup = true
   this.keyboard = ['numbers', 'fullOperations', 'variables', 'trigo', 'advanced']
-  this.consigne = ''
+
   this.nbQuestions = 1
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
-  this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
+
   // this.sup = 1; // Niveau de difficulté
   this.tailleDiaporama = 2 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
   this.video = '' // Id YouTube ou url

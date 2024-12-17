@@ -30,13 +30,11 @@ export default function FonctionsCalculsDImages () {
   Exercice.call(this)
   this.sup = 5
   // pas de différence entre la version html et la version latex pour la consigne
-  this.consigne = ''
 
   context.isHtml ? this.spacing = 2 : this.spacing = 1
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1
   this.nbQuestions = 4
   // this.correctionDetailleeDisponible = true;
-
 
   this.sup = 5
   let pourcentage, idDuDiv, idDuDivCorr, j
@@ -49,9 +47,6 @@ export default function FonctionsCalculsDImages () {
 
   this.nouvelleVersion = function (numeroExercice) {
     let typesDeQuestions
-
-    
-    
 
     // let typesDeQuestionsDisponibles = [1];
     const typesDeQuestionsDisponibles = gestionnaireFormulaireTexte({

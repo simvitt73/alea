@@ -25,7 +25,7 @@ export const refs = {
 export default class CoordonneesVecteur extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1
   }
 

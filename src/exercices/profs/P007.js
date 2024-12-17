@@ -22,12 +22,10 @@ export const uuid = 'ad5f8'
  */
 export default function PavagesMathalea2d () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-  this.nbColsCorr = 1
   this.sup = 4
   this.sup2 = '1-1'
   this.sup3 = true
@@ -48,9 +46,6 @@ export default function PavagesMathalea2d () {
         [Nx, Ny] = [parseInt(this.sup2.split('-')[0]), parseInt(this.sup2.split('-')[1])] // Sinon on créé un tableau à partir des valeurs séparées par des -
       }
     }
-    
-
-    
 
     const monpavage = pavage() // On crée l'objet Pavage qui va s'appeler monpavage
     const typeDePavage = this.sup === 8 ? randint(1, 7) : this.sup

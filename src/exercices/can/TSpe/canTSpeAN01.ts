@@ -39,7 +39,6 @@ export default class ExpressionsLog extends Exercice {
     else this.version = 'log'
     const logString = this.version !== 'ln' ? '\\log' : '\\ln'
 
-    this.consigne = ''
     const listeTypeQuestions = combinaisonListes([1, 2, 3, 4], this.nbQuestions)
     const listeDeA = combinaisonListes([2, 3, 5], this.nbQuestions)
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -47,7 +46,7 @@ export default class ExpressionsLog extends Exercice {
       let texte:string
       let texteCorr: string
       let answer: string
-      let k: number|FractionEtendue
+      let k: number | FractionEtendue
       const n = a === 2
         ? randint(2, 8)
         : a === 3

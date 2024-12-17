@@ -31,7 +31,7 @@ export const refs = {
 }
 export default function CourseAuxNombres5e () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 30
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
   this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX

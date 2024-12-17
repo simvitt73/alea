@@ -64,8 +64,6 @@ export default class ExerciceAdditionnerSoustraireFractions5e extends Exercice {
       this.consigne = ''
     }
 
-
-
     const typeQuestionsDisponibles = ['type1', 'type2', 'type3', 'type4'] // On crée 4 types de questions
 
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"

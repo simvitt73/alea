@@ -11,7 +11,7 @@ export const titre = 'Rotation 3d de polygones'
  */
 export default function BetaRotation3d () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.spacing = 2
   this.nbQuestions = 1
 

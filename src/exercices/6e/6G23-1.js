@@ -30,11 +30,9 @@ export const refs = {
 }
 export default function MesurerUnAngle () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 2
 
-
-  this.nbColsCorr = 1
   this.sup = 1
   this.sup2 = false
   this.video = 'TEzu9uky56M'

@@ -5,9 +5,7 @@ import { texteParPosition } from '../../lib/2d/textes.ts'
 import { choice } from '../../lib/outils/arrayOutils'
 import { createList } from '../../lib/format/lists.ts'
 import { egalOuApprox } from '../../lib/outils/ecritures'
-import { numAlpha } from '../../lib/outils/outilString.js'
 import { decompositionFacteursPremiers, premierAvec } from '../../lib/outils/primalite'
-import { texteGras } from '../../lib/format/style'
 import { texNombre, stringNombre } from '../../lib/outils/texNombre'
 import Exercice from '../deprecatedExercice.js'
 import { context } from '../../modules/context.js'
@@ -32,13 +30,11 @@ export default function DesChocolatsDansDesBoites () {
   Exercice.call(this)
 
   this.introduction = 'D’après Brevet des Collège - Centres étrangers - Juin 2022'
-  this.consigne = ''
+
   context.isHtml ? this.spacing = 1 : this.spacing = 2
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 2
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
-
-
 
   this.nouvelleVersion = function () {
     context.anglePerspective = 50

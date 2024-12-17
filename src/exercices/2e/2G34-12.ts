@@ -26,7 +26,7 @@ export const refs = {
 export default class IntersectionDroitesPoints extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1
     this.correctionDetaillee = true
     this.correctionDetailleeDisponible = true
@@ -34,16 +34,12 @@ export default class IntersectionDroitesPoints extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     const pointIntersectionExactDD = function (d1:Array<FractionEtendue>, d2:Array<FractionEtendue>) {
       const x = (d2[1]).differenceFraction(d1[1]).diviseFraction((d1[0]).differenceFraction(d2[0])).simplifie()
       const y = (d1[0]).produitFraction(x).sommeFraction(d1[1]).simplifie()
       return [x, y]
     }
-    const eqToLatex = function (vect : Array<number| FractionEtendue>, nomVal : Array<string>, inSys : boolean) {
+    const eqToLatex = function (vect : Array<number | FractionEtendue>, nomVal : Array<string>, inSys : boolean) {
       let expr = ''
       let checkPreviousNull = true
       for (let i = 0; i < 3; i++) {

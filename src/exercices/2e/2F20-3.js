@@ -35,7 +35,6 @@ export const refs = {
 }
 export default function LecturesGraphiques () {
   Exercice.call(this)
-  this.consigne = ''
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = true
   this.nbQuestions = 6
@@ -47,8 +46,6 @@ export default function LecturesGraphiques () {
   this.video = '' // Id YouTube ou url
 
   this.nouvelleVersion = function () {
-
-
     const typeFonctionsDisponibles = ['minimum', 'maximum', 'image', 'plusPetitAntécédent', 'plusGrandAntécédent', 'nombreAntécédents'] // On créé 3 types de questions
     const listeTypeQuestions = combinaisonListes(typeFonctionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
     let mini = 4

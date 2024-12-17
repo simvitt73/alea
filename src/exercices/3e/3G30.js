@@ -46,7 +46,6 @@ export default class CalculDeLongueur extends Exercice {
     super()
     this.nbQuestions = 3
 
-
     this.sup = false
     this.sup2 = '7'
     this.sup3 = 1
@@ -66,7 +65,6 @@ export default class CalculDeLongueur extends Exercice {
   }
 
   nouvelleVersion () {
-    this.consigne = ''
     let reponse
     let listeDeNomsDePolygones
     const typeQuestionsDisponibles = (this.level === 4)

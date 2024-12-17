@@ -29,7 +29,7 @@ export default function ProportionnaliteCompliquee () {
   this.tailleDiaporama = 2
   this.formatChampTexte = ' '
   this.optionsChampTexte = { texteApres: ' €' }
-  this.consigne = ''
+
   const fruits = [
     ['pêches', 4, 3, 7],
     ['noix', 5, 4, 9],

@@ -39,12 +39,10 @@ export default function CalculPointSurCourbe () {
   Exercice.call(this)
   this.sup = 1
   this.sup2 = 1
-  this.consigne = ''
 
   this.nbQuestions = 2
 
   this.nouvelleVersion = function () {
-
     let typesDeQuestionsDisponibles
     switch (this.sup) {
       case 1:

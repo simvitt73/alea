@@ -34,11 +34,7 @@ export const refs = {
 export default function EvolutionsSuccesives () {
   Exercice.call(this)
 
-
-
-  this.consigne = ''
   this.nbQuestions = 1
-
 
   this.sup = 1 // type de question
 

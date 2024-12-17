@@ -92,7 +92,6 @@ export default function ExercicesAnglesAIC () {
   this.nbQuestions = 1
   this.besoinFormulaireTexte = ['Type de questions', 'Nombres séparés par des tirets\n' + formulaire.join('\n')]
 
-  this.consigne = ''
   this.nbCols = 2
   this.nbColsCorr = 2
   this.tailleDiaporama = 1
@@ -105,7 +104,6 @@ export default function ExercicesAnglesAIC () {
   this.nbQuestions = 3
 
   this.nouvelleVersion = function () {
-
     const nquestion = gestionnaireFormulaireTexte({
       saisie: this.sup,
       max: 7,

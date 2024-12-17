@@ -30,12 +30,6 @@ export const refs = {
 export default function EtudierPariteFonction () {
   Exercice.call(this)
 
-  this.video = ''
-  this.consigne = ''
-
-
-
-
   this.nbQuestions = 1
 
   this.nouvelleVersion = function () {

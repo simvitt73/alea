@@ -25,7 +25,6 @@ export default function NombreDeDizaines () {
   this.nbQuestions = 1
   this.tailleDiaporama = 2
   this.formatChampTexte = ''
-  this.consigne = ''
 
   this.nouvelleVersion = function () {
     const a = randint(0, 4)

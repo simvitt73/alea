@@ -18,12 +18,10 @@ export const uuid = '4c7ca'
  */
 export default function TraceCourbeSpline () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-  this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
   this.sup = '(-3;-2)/(-1;0)/(1;-3)/(3;4)' // liste de points
   this.sup2 = '(2;2)/(0;0)/(0;0)/(1;1)'
   this.sup3 = '1/1/1/1'

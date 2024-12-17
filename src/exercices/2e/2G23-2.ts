@@ -31,7 +31,6 @@ export const refs = {
 export default class TranslationEtCoordonnes extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
     this.nbQuestions = 3
     this.sup = 2
     this.correctionDetailleeDisponible = true
@@ -39,7 +38,7 @@ export default class TranslationEtCoordonnes extends Exercice {
   }
 
   nouvelleVersion () {
-    let typeQuestionsDisponibles: ('coorImage' | 'coorPre' |'melange')[]
+    let typeQuestionsDisponibles: ('coorImage' | 'coorPre' | 'melange')[]
     if (this.sup === 1) {
       typeQuestionsDisponibles = ['coorImage']
     } else if (this.sup === 2) {

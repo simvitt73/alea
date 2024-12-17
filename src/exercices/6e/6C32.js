@@ -29,13 +29,11 @@ export const refs = {
 export default function ProblemeCourse () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.spacing = 2
   this.spacingCorr = 2
   // Modification de l'exercice pour avoir plusieurs question. On peut revenir à la version initiale en décommentant. Jean-Claude Lhote
   this.nbQuestions = 1
   // this.nbQuestionsModifiable = false
-
 
   this.sup = false
   // this.listeAvecNumerotation = false

@@ -34,9 +34,6 @@ export const refs = {
 export default function DeterminerFonctionAffine () {
   Exercice.call(this)
 
-
-
-  this.consigne = ''
   this.sup = 1
   this.nbQuestions = 2
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
@@ -46,11 +43,6 @@ export default function DeterminerFonctionAffine () {
   this.video = '' // Id YouTube ou url
 
   this.nouvelleVersion = function () {
-
-
-
-    
-    
     let typeDeQuestionsDisponibles
     if (parseInt(this.sup) === 1) {
       typeDeQuestionsDisponibles = [0, 1]

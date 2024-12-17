@@ -31,11 +31,10 @@ export const refs = {
 
 export default function Resolutionavecdelta () {
   Exercice.call(this)
-  this.titre = titre
-  // this.consigne = ''
+
+  this.consigne = ''
   this.nbQuestions = 4
 
-  this.nbColsCorr = 1
   this.spacingCorr = 3
 
   this.nouvelleVersion = function () {

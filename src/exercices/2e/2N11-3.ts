@@ -21,7 +21,7 @@ export const refs = {
 export default class nomExercice extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 4
     this.besoinFormulaireNumerique = ['Notations', 3, 'Ensemble \n2 : Intervalle \n3 : Mélange']
     // this.besoinFormulaireCaseACocher = ['Type de coefficients', 3, 'Entiers\nFractionnaires\nMélange']
@@ -30,10 +30,6 @@ export default class nomExercice extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     let typeQuestionsDisponibles: ('ensemble' | 'intervalle')[]
     if (this.sup === 1) {
       typeQuestionsDisponibles = ['ensemble']

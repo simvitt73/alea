@@ -206,12 +206,10 @@ export const refs = {
 }
 export default function CalculerDesFrequences () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 1
 
-
   this.spacingCorr = 1.5
-
 
   this.sup = 1
   this.besoinFormulaireNumerique = [

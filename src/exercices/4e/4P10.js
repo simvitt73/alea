@@ -31,11 +31,9 @@ export const refs = {
 }
 export default function ProblemesGrandeursComposees () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestions = 3
 
-  this.nbColsCorr = 1
   context.isHtml ? (this.spacing = 3) : (this.spacing = 1.5)
   context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
   this.sup = ''

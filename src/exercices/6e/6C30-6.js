@@ -33,16 +33,12 @@ export const refs = {
 export default function MultiplierUnNombreParPuissanceDeDix () {
   Exercice.call(this)
   this.nbQuestions = 5 // Ici le nombre de questions
-  this.consigne = ''
+
   this.sup = false
   this.sup2 = true
   this.sup3 = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const choixUnites = ['millièmes', 'centièmes', 'dixièmes', '', 'dizaines', 'centaines', 'milliers']
     let listeChoixAlea = range(6, [3])
     if (!this.sup2 || this.interactif || context.isAmc) { this.nbQuestions = min(this.nbQuestions, 6) }

@@ -26,7 +26,7 @@ export const refs = {
 export default class MilieuSegment extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1
   }
 

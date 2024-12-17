@@ -36,7 +36,7 @@ class PlacerPointsAbscissesFractionnaires extends Exercice {
   figuresApiGeom!: SuperFigure[]
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 5
     this.sup = 1
     this.exoCustomResultat = true
@@ -161,7 +161,7 @@ class PlacerPointsAbscissesFractionnaires extends Exercice {
     if (this == null) return ['KO']
     if (this.figures == null) return ['KO']
     this.answers[this.figuresApiGeom[i].id] = this.figuresApiGeom[i].json
-    const result: ('OK'|'KO')[] = []
+    const result: ('OK' | 'KO')[] = []
     const figure = this.figuresApiGeom[i]
     figure.isDynamic = false
     figure.divButtons.style.display = 'none'
@@ -222,7 +222,7 @@ function apigeomGraduatedLine ({ xMin, xMax, scale = 1, points, step = 1, stepBi
   step?: number,
   stepBis?: number,
   points?: Array<{ x: number, label: string }>
-}): { figure: Figure, latex: string} {
+}): { figure: Figure, latex: string } {
   const width = 750
   const height = 80
   const figure = new Figure({ xMin: xMin - 0.2 / scale, yMin: -1.5, width, height, dy: 10, dx: stepBis, xScale: 3 * scale, snapGrid: true })

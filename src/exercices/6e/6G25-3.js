@@ -39,12 +39,10 @@ export const refs = {
 export default function PavageEtReflexion2d () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 3
 
   this.correctionDetaillee = true
   this.correctionDetailleeDisponible = true
-
 
   this.sup = 1 // 1 pour des pavages modestes, 2 pour des plus grands.
   this.sup2 = false // On cache les centres par défaut.
@@ -152,9 +150,6 @@ export default function PavageEtReflexion2d () {
     if (this.nbQuestions > 5) {
       taillePavage = 2
     }
-    
-
-    
 
     let Nx
     let Ny

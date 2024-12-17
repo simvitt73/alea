@@ -25,7 +25,7 @@ export default function ArrondiDixiemeCentieme () {
   this.typeExercice = 'simple'
   this.nbQuestions = 1
   this.formatChampTexte = ''
-  this.consigne = ''
+
   this.tailleDiaporama = 2
   this.nouvelleVersion = function () {
     const a = randint(1, 20)

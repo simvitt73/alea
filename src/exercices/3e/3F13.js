@@ -1,4 +1,3 @@
-/* eslint-disable no-sequences */
 import Decimal from 'decimal.js'
 import { courbe } from '../../lib/2d/courbes.js'
 import { repere } from '../../lib/2d/reperes.js'
@@ -30,18 +29,14 @@ export const refs = {
 export default function AntecedentGraphique () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.sup = 2
 
   context.isHtml ? this.spacingCorr = 3 : this.spacingCorr = 1
   this.nbQuestions = 1
 
-
   // this.listeAvecNumerotation = false
 
   this.nouvelleVersion = function () {
-
-
     let a, b, c, x1, x2, x3, fx1, fx2, fx3, texte, texteCorr, f
     let indexInteractif = 0
     let incrementInteractif

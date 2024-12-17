@@ -20,7 +20,7 @@ export const interactifType = 'mathLive'
  */
 export default function AugmenterEtReduireDunPourcentage () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 2
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
   this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX

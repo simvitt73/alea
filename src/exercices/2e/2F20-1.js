@@ -31,14 +31,12 @@ export default function PointSurCourbe () {
   Exercice.call(this)
   this.sup = 1
   this.sup2 = 1
-  this.consigne = ''
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = false
 
   this.nbQuestions = 2
 
   this.nouvelleVersion = function () {
-
     this.sup = parseInt(this.sup)
     let typesDeQuestionsDisponibles
     switch (this.sup) {

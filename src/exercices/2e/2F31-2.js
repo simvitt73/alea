@@ -26,9 +26,7 @@ export const refs = {
 }
 export default function EncadrerAvecFctRef () {
   Exercice.call(this)
-  this.consigne = ''
   this.nbQuestions = 3
-  // this.nbQuestionsModifiable = false
 
   this.sup = 5
   context.isHtml ? (this.spacing = 2) : (this.spacing = 1)

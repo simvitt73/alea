@@ -43,17 +43,15 @@ export const refs = {
 export default function LireAbscisseDecimaleTroisFormes () {
   Exercice.call(this)
   this.niveau = 'sixième'
-  this.consigne = ''
+
   if (context.isHtml) {
     this.spacing = 2
     this.spacingCorr = 3
   } else {
 
-
   }
   this.vspace = -1
 
-  this.nbColsCorr = 1
   this.sup = 1
   this.nbQuestions = 1
 

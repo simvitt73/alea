@@ -32,15 +32,9 @@ export const refs = {
 export default function EvolutionsSuccesives () {
   Exercice.call(this)
 
-
-
-  this.consigne = ''
   this.nbQuestions = 3
 
-
   this.sup = 4 // type de questions
-
-
 
   this.nouvelleVersion = function () {
     this.sup = parseInt(this.sup)

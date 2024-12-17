@@ -24,7 +24,7 @@ export const refs = {
 }
 export default function DivisibleDiviseurMultiple () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 6 // 6 questions au maximum
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
   this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX

@@ -32,12 +32,10 @@ export const refs = {
 }
 export default function ListeDesDiviseurs5e () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   context.isHtml ? this.spacing = 2 : this.spacing = 1
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1
   this.nbQuestions = 3
-
 
   this.sup = 2
   this.sup2 = 6
@@ -46,9 +44,6 @@ export default function ListeDesDiviseurs5e () {
 
   this.nouvelleVersion = function () {
     let typesDeQuestions
-
-
-
 
     this.sup3 = contraindreValeur(2, 16, parseInt(this.sup3), 10)
     const nombresDeChiffresMax = gestionnaireFormulaireTexte({

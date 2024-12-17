@@ -14,10 +14,10 @@ export const titre = 'Probabilités simples'
 export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   Exercice.call(this)
   this.sup = true
-  this.consigne = ''
+
   this.nbQuestionsModifiable = false
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
-  this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
+
   // this.sup = 1; // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
   this.video = '' // Id YouTube ou url

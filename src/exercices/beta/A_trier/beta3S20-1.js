@@ -604,7 +604,7 @@ function exercicesPourcentagesConversion () {
 
 export default function CalculsProbabilites () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 10
   this.nbCols = 0
   this.nbColsCorr = 0
@@ -631,7 +631,6 @@ export default function CalculsProbabilites () {
     ].join('\n')
   ]
   this.nouvelleVersion = function () {
-
     for (let i = 0, exercice, cpt = 0; i < this.nbQuestions && cpt < 50;) { // Boucle principale où i+1 correspond au numéro de la question
       const nquestion = this.sup === 'all' ? randint(1, 10) : this.sup
       switch (nquestion) {

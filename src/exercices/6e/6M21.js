@@ -82,7 +82,6 @@ export const refs = {
 export default function CompareAireEtPerimetreAvecRectangle () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 3
 
   this.sup = 13

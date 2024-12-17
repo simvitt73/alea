@@ -32,7 +32,7 @@ export default class RepresenterUneFraction extends Exercice {
   numerators: number[] = []
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 4
     this.nbCols = 2
     this.nbColsCorr = 2

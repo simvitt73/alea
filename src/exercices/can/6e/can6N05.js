@@ -26,7 +26,7 @@ export default class ChiffreDes extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
     this.formatChampTexte = ''
-    this.consigne = ''
+
     this.tailleDiaporama = 2
   }
 

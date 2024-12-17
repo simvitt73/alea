@@ -38,16 +38,14 @@ export const refs = {
 }
 export default function Proportions () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 2
 
-  this.nbColsCorr = 1
   this.sup = 4 // type de questions mettre 4
 
   this.spacingCorr = 2
 
   this.nouvelleVersion = function () {
-
     let typesDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = ['sous-population']

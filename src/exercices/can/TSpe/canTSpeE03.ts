@@ -25,7 +25,7 @@ export const refs = {
 export default class nomExercice extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 2
   }
 

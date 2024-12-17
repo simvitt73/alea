@@ -25,7 +25,7 @@ const bleuMathalea = context.isHtml ? '#216D9A' : 'black'
 export default class EtudeSuiteRecurrence extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
     this.sup = 5

@@ -37,15 +37,9 @@ export default class AbscisseFractionnaire extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 1
-    this.consigne = ''
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const a = randint(2, 6) // dénominateur
       let b = randint(2, a * 4 - 1)

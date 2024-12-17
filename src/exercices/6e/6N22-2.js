@@ -30,7 +30,7 @@ export const refs = {
 }
 export default function AjouterDesFractionsDunite () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 4
   this.nbCols = 2
   this.nbColsCorr = 2

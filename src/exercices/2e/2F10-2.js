@@ -35,8 +35,6 @@ export const refs = {
 }
 export default function Lecturefonctionaffine () {
   Exercice.call(this)
-
-  this.consigne = ''
   this.nbQuestions = 1// On complète le nb de questions
   this.sup = 1
   this.correctionDetaillee = false

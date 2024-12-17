@@ -24,7 +24,7 @@ export const refs = {
 export default class AmplifierOuReduireFraction extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 6
     this.sup = 3
     this.besoinFormulaireNumerique = ['Type de questions', 3, '1 : Amplifier\n2 : Simplifier\n3 : Mélange']

@@ -31,7 +31,7 @@ export const refs = {
 export default class AssocierGraphiqueSysteme extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1
     this.correctionDetaillee = true
     this.correctionDetailleeDisponible = true
@@ -39,15 +39,11 @@ export default class AssocierGraphiqueSysteme extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     const listeFractions = [[1, 3], [2, 3], [3, 7], [2, 7], [4, 3], [3, 5], [4, 7], [1, 5], [4, 5], [3, 4], [1, 4], [2, 5], [5, 3], [6, 5], [1, 6], [5, 6], [1, 7]]
     // const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
     for (let i = 0, a, b, d, a2, a3, b2, b3, d2, d3, c, c2, c3, a4, b4, c4, d4, a4Frac, a5, b5, c5, d5, a5Frac, a6, b6, c6, d6, a6Frac, r, t1, t2, t3, s1, s2, s3, s4, s5, s6, aFrac, a2Frac, a3Frac, pente1, pente2, pente3, pente4, pente5, pente6, texte, texteCorr, lsys, ss1, ss2, ss3, vari, lass, cpt = 0;
       i < this.nbQuestions && cpt < 50;) {
-      const eqToLatex = function (vect : Array<number| FractionEtendue>, nomVal : Array<string>, inSys : boolean) {
+      const eqToLatex = function (vect : Array<number | FractionEtendue>, nomVal : Array<string>, inSys : boolean) {
         let expr = ''
         let checkPreviousNull = true
         for (let i = 0; i < 3; i++) {

@@ -23,10 +23,7 @@ export const refs = {
 }
 export default function SignefonctionaffineVariation () {
   Exercice.call(this)
-
-  this.consigne = ''
   this.nbQuestions = 2 // On complète le nb de questions
-
 
   this.video = ''
   this.spacing = 1.75
@@ -35,8 +32,6 @@ export default function SignefonctionaffineVariation () {
   this.nouvelleVersion = function () {
     this.sup = parseInt(this.sup)
 
-    
-    
     this.sup = parseInt(this.sup)
     let typeDeQuestionsDisponibles
     if (this.sup === 1) {

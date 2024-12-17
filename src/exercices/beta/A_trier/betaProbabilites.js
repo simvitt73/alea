@@ -11,17 +11,15 @@ export const titre = 'Probabilités simples'
 */
 export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestionsModifiable = false
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
-  this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
+
   // this.sup = 1; // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
   this.video = '' // Id YouTube ou url
 
   this.nouvelleVersion = function () {
-
-
     const pG = randint(20, 60) // pG est un pourcentage
     const pN = randint(10, 100 - pG - 10)
     const sport = choice(['hand-ball', 'football', 'rugby', 'basket', 'volley-ball', 'water-polo', 'baseball'])

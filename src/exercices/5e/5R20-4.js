@@ -30,11 +30,6 @@ export default function ProblemesAdditifsRelatifs5e () {
     this.nbQuestions = 1
   }
 
-  this.titre = titre
-  this.consigne = ''
-
-
-
   // this.nbQuestionsModifiable = false;
   context.isHtml ? this.spacing = 2 : this.spacing = 1
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 0.5
@@ -48,8 +43,6 @@ export default function ProblemesAdditifsRelatifs5e () {
       //   typesDeQuestionsDisponibles = shuffle([choice([1,3]),choice([2,4]),0]);
       typesDeQuestionsDisponibles = [0]
     }
-
-
 
     // typesDeQuestionsDisponibles=[1];
 

@@ -36,7 +36,6 @@ export default function EquationsFonctionsRef () {
   Exercice.call(this)
   this.sup = 1
   this.sup2 = 1
-  this.consigne = ''
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = false
 
@@ -54,7 +53,6 @@ export default function EquationsFonctionsRef () {
   ]
 
   this.nouvelleVersion = function () {
-
     const typesDeQuestionsDisponibles = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,

@@ -15,7 +15,7 @@ export const titre = 'Exercice exemple'
 */
 export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 10
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
   this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
@@ -27,8 +27,6 @@ export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   this.listeAvecNumerotation = false
 
   this.nouvelleVersion = function () {
-
-
     const typesDeQuestionsDisponibles = ['type1']// , 'type2', 'type3']; // On créé 3 types de questions
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
     let a, b, c, c1, c2, e1, e2, e3, e4, e5
