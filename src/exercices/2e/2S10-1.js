@@ -13,7 +13,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Connaître les différentes écritures d\'une proportion'
 export const dateDePublication = '21/04/2023'
-export const dateDeModificationImportante = '31/01/2024'
+export const dateDeModifImportante = '31/01/2024'
 /**
 * Ecriture des  proportions
 *
@@ -34,8 +34,6 @@ export const refs = {
 export default function DiffentesEcrituresProportions () {
   Exercice.call(this)
   this.nbQuestions = 4
-  this.nbCols = 1
-  this.nbColsCorr = 1
   this.sup = 4 // type de questions
 
   this.nouvelleVersion = function () {
@@ -112,7 +110,7 @@ export default function DiffentesEcrituresProportions () {
             }
           }
           texteCorr = `$${texNombre(dec, 4)}=\\dfrac{${miseEnEvidence(texNombre(pourc, 3))}}{${miseEnEvidence(100)}}=${miseEnEvidence(texNombre(pourc, 3))} \\,\\%$`
-          handleAnswers(this, i, { bareme: (listePoints) => [listePoints[0] * listePoints[1] + listePoints[2], 2], champ1: { value: pourc.toFixed(4), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } }, champ2: { value: String(100), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } }, champ3: { value: pourc.toFixed(4) }, compare: fonctionComparaison, options: { nombreDecimalSeulement: true } })
+          handleAnswers(this, i, { bareme: (listePoints) => [listePoints[0] * listePoints[1] + listePoints[2], 2], champ1: { value: pourc.toFixed(4), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } }, champ2: { value: String(100), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } }, champ3: { value: pourc.toFixed(4), compare: fonctionComparaison, options: { nombreDecimalSeulement: true } } })
           break
 
         case 'Pourcentage':
