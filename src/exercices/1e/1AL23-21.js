@@ -15,6 +15,7 @@ import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Équation du second degré (égale 0)'
+export const dateDeModifImportante = '17/12/2024'
 
 /**
  * Calcul de discriminant pour identifier la forme graphique associée (0 solution dans IR, 1 ou 2)
