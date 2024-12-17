@@ -9,7 +9,7 @@ import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions.js
 
 export const titre = 'Résolution d\'équations du type $x^a = b$'
 export const dateDePublication = '28/08/2024'
-export const dateDeModificationImportante = '28/08/2024'
+export const dateDeModifImportante = '28/08/2024'
 export const uuid = '364dd'
 export const interactifReady = true
 export const interactifType = 'mathLive'

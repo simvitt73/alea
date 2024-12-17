@@ -13,7 +13,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Connaître les différentes écritures d\'une proportion'
 export const dateDePublication = '21/04/2023'
-export const dateDeModificationImportante = '31/01/2024'
+export const dateDeModifImportante = '31/01/2024'
 /**
 * Ecriture des  proportions
 *

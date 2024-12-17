@@ -20,7 +20,7 @@ export const interactifType = 'custom'
 export const amcReady = true
 export const amcType = 'AMCOpen'
 export const dateDePublication = '14/08/2022'
-export const dateDeModificationImportante = '24/08/2024'
+export const dateDeModifImportante = '24/08/2024'
 export const glossaire = [
   ['unité', 'unités'],
   ['dizaine', 'dizaines'],

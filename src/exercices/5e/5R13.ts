@@ -10,7 +10,7 @@ import { miseEnEvidence } from '../../lib/outils/embellissements.js'
 
 export const titre = 'Comparer des nombres relatifs'
 export const dateDePublication = '1/08/2024'
-export const dateDeModificationImportante = '01/08/2024'
+export const dateDeModifImportante = '01/08/2024'
 export const uuid = '19060'
 export const interactifReady = true
 export const interactifType = 'mathLive'

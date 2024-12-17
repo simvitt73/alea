@@ -9,7 +9,7 @@ import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions'
 export const titre = 'Encadrer un entier'
 export const interactifType = 'mathLive'
 export const interactifReady = true
-export const dateDeModificationImportante = '30/09/2024'
+export const dateDeModifImportante = '30/09/2024'
 /**
 * * Encadrer un nombre entier
 * @author Sébastien Lozano

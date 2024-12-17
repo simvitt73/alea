@@ -10,7 +10,7 @@ import FractionEtendue from '../../modules/FractionEtendue'
 export const titre = 'Déterminer les termes d\'une suite définie de façon explicite'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const dateDeModificationImportante = '22/09/2024'
+export const dateDeModifImportante = '22/09/2024'
 /**
  * 1N10
  * @author Gilles Mora (Gaelle Morvan)

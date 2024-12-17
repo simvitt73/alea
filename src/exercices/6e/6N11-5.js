@@ -7,7 +7,7 @@ import { propositionsQcm } from '../../lib/interactif/qcm'
 export const titre = 'Comparer deux nombres entiers'
 
 export const dateDePublication = '07/08/2022'
-export const dateDeModificationImportante = '14/10/2024'
+export const dateDeModifImportante = '14/10/2024'
 export const interactifReady = true
 export const interactifType = 'qcm'
 

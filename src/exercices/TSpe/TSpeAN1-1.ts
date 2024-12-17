@@ -2,7 +2,7 @@ import InequationsLog from './TSpeAN1-0'
 
 export const titre = 'Résolution d\'inéquations du type $a^x \\leq b$ avec ln'
 export const dateDePublication = '4/5/2024'
-export const dateDeModificationImportante = '18/07/2024'
+export const dateDeModifImportante = '18/07/2024'
 export const uuid = 'e7929'
 export const interactifReady = true
 export const interactifType = 'mathLive'

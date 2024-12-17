@@ -7,7 +7,7 @@ export const titre = 'Trouver une valeur dans un Yohaku (multiplicatif)'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '10/08/2022'
-export const dateDeModificationImportante = '16/12/2023'
+export const dateDeModifImportante = '16/12/2023'
 
 export const uuid = '892f2'
 export const ref = 'can6C39'

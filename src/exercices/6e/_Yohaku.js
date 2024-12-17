@@ -18,7 +18,7 @@ export const refs = {
   'fr-fr': ['Yohaku'],
   'fr-ch': []
 }
-export const dateDeModificationImportante = '16/12/2023'
+export const dateDeModifImportante = '16/12/2023'
 /**
  * @author Jean-Claude Lhote
  * @constructor
