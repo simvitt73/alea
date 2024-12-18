@@ -44,11 +44,6 @@ export default function ProblemesEvenementsRecurrents () {
   this.interactif = false
 
   this.nouvelleVersion = function () {
-
-    
-    
-
-
     const preListePremiers = listeNombresPremiersStrictJusqua(12)
     const listePremiers = combinaisonListes(preListePremiers, this.nbQuestions * 5)
 

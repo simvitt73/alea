@@ -19,7 +19,4 @@ export const refs = {
 }
 export default function EgalitesEntreFractions5e () {
   EgalitesEntreFractions.call(this)
-
-
-
 }

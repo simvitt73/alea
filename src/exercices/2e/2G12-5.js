@@ -40,7 +40,6 @@ export default function ParallélogrammeSommet () {
 
   this.nbQuestions = 1
 
-
   this.sup = 1 //
   // this.correctionDetaillee = false
   // this.correctionDetailleeDisponible = true

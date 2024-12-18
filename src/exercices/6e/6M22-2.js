@@ -43,10 +43,6 @@ export default function Perimetre_aire_et_portions_de_disques () {
   this.nbQuestions = 3
 
   this.nouvelleVersion = function () {
-    
-
-    
-
     const listeTypeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup2,
       max: 3,

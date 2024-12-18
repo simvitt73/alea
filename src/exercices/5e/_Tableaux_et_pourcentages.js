@@ -78,8 +78,6 @@ export default function TableauxEtPourcentages () {
     this.consigne = 'Compléter le tableau suivant.'
   }
 
-
-
   this.nbQuestionsModifiable = false
   // context.isHtml? this.spacing = 3 : this.spacing = 2;
   // context.isHtml? this.spacingCorr = 2.5 : this.spacingCorr = 1.5;
@@ -121,8 +119,6 @@ export default function TableauxEtPourcentages () {
         typesDeQuestionsDisponibles = [4]
       }
     }
-
-
 
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus
 

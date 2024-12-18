@@ -34,14 +34,12 @@ export default function ExerciceAdditionsRelatifsATrou (max = 20) {
   this.amcReady = amcReady
   this.amcType = amcType
 
-
   this.consigne = 'Compléter :'
   this.spacing = 0.5
   this.nbCols = 3
   this.nbColsCorr = 3
 
   this.nouvelleVersion = function (numeroExercice) {
-    
     this.numeroExercice = numeroExercice
     for (let i = 0, a, b, k, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) { // On limite le nombre d'essais pour chercher des valeurs nouvelles
       a = randint(1, this.sup)

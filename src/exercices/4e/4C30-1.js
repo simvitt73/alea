@@ -30,7 +30,6 @@ export default function PuissancesEncadrement () {
   this.sup = 4
   this.nbQuestions = 5
 
-
   this.nbColsCorr = 1
   this.classe = 4 // Ce distinguo permet de supprimer les 10^0 du niveau 4ème
   this.nouvelleVersion = function () {
@@ -67,7 +66,6 @@ export default function PuissancesEncadrement () {
           break
       }
     }
-
 
     for (
       let i = 0, signe, texte, texteCorr, consigneAMC, exposantInf, exposantSup, cpt = 0;

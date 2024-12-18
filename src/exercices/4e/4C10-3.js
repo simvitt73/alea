@@ -29,8 +29,6 @@ export default function ExerciceMultiplicationsRelatifs (max = 10) {
   this.sup = max
   this.sup2 = false // écriture simplifiée
 
-
-
   this.consigne = 'Calculer.'
   this.spacing = 2
 

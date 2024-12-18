@@ -31,7 +31,6 @@ export default function MultiplierPar001 () {
   Exercice.call(this)
   this.nbQuestions = 4 // Ici le nombre de questions
 
-
   this.nbColsCorr = 1// Le nombre de colonne pour la correction LaTeX
   this.consigne = 'Choisir la bonne réponse pour compléter les pointillés.'
 
@@ -42,11 +41,6 @@ export default function MultiplierPar001 () {
   this.nouvelleVersion = function MultiplierPar0001 () {
     // la variable numeroExercice peut être récupérée pour permettre de différentier deux copies d'un même exo
     // Par exemple, pour être certain de ne pas avoir les mêmes noms de points en appelant 2 fois cet exo dans la même page
-
-
-    
-    
-
 
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup2,

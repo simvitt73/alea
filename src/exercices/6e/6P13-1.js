@@ -24,14 +24,10 @@ export default function CompleterUneFacture () {
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-
   this.sup = 2 // Niveau de difficulté
   // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
 
-
   this.nouvelleVersion = function () {
-
-
     for (let i = 0, article1, q1, p1, article2, q2, p2, article3, q3, p3, r, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const listeArticles = [['Feuilletés au fromage', calculANePlusJamaisUtiliser(randint(50, 80) / 10)],
         ['Feuilletés à la viande', calculANePlusJamaisUtiliser(randint(50, 80) / 10)],
@@ -51,7 +47,7 @@ export default function CompleterUneFacture () {
       q2 = randint(2, 8, [q1])
       q3 = randint(2, 8, [q1, q2])
       r = randint(3, 9)
-      
+
       if (this.sup === 1) {
         if (context.isHtml) {
           texte = '$\\def\\arraystretch{2.5}\\begin{array}{|c|c|c|c|}\n'

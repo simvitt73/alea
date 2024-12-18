@@ -34,7 +34,6 @@ export default function ComprendreScriptListeMultiples () {
   this.nbQuestions = 1
   this.typeExercice = 'Scratch'
 
-
   this.nouvelleVersion = function () {
     this.introduction = lampeMessage({
       titre: context.isHtml ? `${scratchblock('\\begin{scratch}[print,fill,blocks,scale=0.5]\n\\ovaloperator{\\ovalnum{ } modulo \\ovalnum{ }}\\end{scratch}')}` : 'Information',
@@ -47,9 +46,6 @@ export default function ComprendreScriptListeMultiples () {
     const nbBriquesATrouver = contraindreValeur(1, 10, this.sup2, randint(1, 10))
     this.consigne = 'Compléter '
     this.consigne += nbBriquesATrouver > 1 ? 'les briques manquantes.' : 'la brique manquante.'
-
-    
-    
 
     /*
     if (!this.sup2) { // Si aucune liste n'est saisie

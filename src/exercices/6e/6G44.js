@@ -45,9 +45,6 @@ export default function NombreDeFacesEtDAretes () {
       this.sup = 3
     }
 
-    
-    
-
     let typeDeQuestion = []
     const choixA = []
     const choixB = []

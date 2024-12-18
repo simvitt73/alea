@@ -39,11 +39,6 @@ export default class nomExercice extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     const problemesNaturels = [
       /* {
         intitule: 'la distance entre la Terre et la Lune',

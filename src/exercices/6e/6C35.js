@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import { point } from '../../lib/2d/points.js'
 import { polygone } from '../../lib/2d/polygones.js'
 import { segment } from '../../lib/2d/segmentsVecteurs.js'
@@ -73,8 +71,6 @@ export default function ModelisationProblemes () {
   this.sup2 = 3
   this.sup3 = 3
 
-
-
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = true
 
@@ -88,9 +84,6 @@ export default function ModelisationProblemes () {
     } else {
       this.consigne = 'Associer chaque problème avec sa modélisation.'
     }
-
-    
-    
 
     let colorA, colorB
     const schemas = []

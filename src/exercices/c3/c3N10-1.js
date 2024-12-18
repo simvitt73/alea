@@ -56,10 +56,6 @@ export default function RecomposerEntierC3 () {
   this.sup5 = false
   this.nombreDeChiffresMin = 4
   this.nouvelleVersion = function () {
-
-    
-    
-
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup3,
       max: 4,

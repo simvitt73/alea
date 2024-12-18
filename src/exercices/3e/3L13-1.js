@@ -49,7 +49,6 @@ export default function ExerciceEquation1Tiret2 () {
   this.nouvelleVersion = function () {
     this.consigne = 'Résoudre ' + (this.nbQuestions !== 1 ? 'les équations suivantes' : 'l\'équation suivante') + '.'
 
-
     // let listeTypeDeQuestions = ['ax+b=cx+d', 'k(ax+b)=cx+d', 'k-(ax+b)=cx+d']
     let listeTypeDeQuestions = ['k(ax+b)=cx+d', 'k-(ax+b)=cx+d']
     listeTypeDeQuestions = combinaisonListes(listeTypeDeQuestions, this.nbQuestions)

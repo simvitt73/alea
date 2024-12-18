@@ -26,14 +26,10 @@ export default function FractionsIrreductibles () {
   context.isHtml ? this.spacingCorr = 4 : this.spacingCorr = 2
   this.nbQuestions = 1
 
-
   this.sup = true
 
   this.nouvelleVersion = function () {
     let typesDeQuestions
-
-
-
 
     const typesDeQuestionsDisponibles = [1]
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions)

@@ -26,8 +26,6 @@ export default class CalculerAvecEcritureScientifique extends Exercice {
   constructor () {
     super()
 
-
-
     this.correctionDetailleeDisponible = true
     context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
     if (!context.isHtml) {
@@ -45,7 +43,6 @@ export default class CalculerAvecEcritureScientifique extends Exercice {
   }
 
   nouvelleVersion () {
-    
     let typesDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = [1] // Produit

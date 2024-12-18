@@ -31,7 +31,6 @@ export default function MesurePrincipale () {
   this.nbColsddd = 2 // Uniquement pour la sortie LaTeX
   this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
 
-
   this.nouvelleVersion = function () {
     const lettresGrecques = [['α', '\\alpha'], ['β', '\\beta'], ['δ', '\\delta'], ['γ', '\\gamma'], ['ω', '\\omega'], ['ε', '\\epsilon'], ['θ', '\\theta'], ['λ', '\\lambda']]
     const alfa = lettresGrecques[randint(0, 7)][1]

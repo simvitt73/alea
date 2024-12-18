@@ -42,12 +42,7 @@ export default function SimplifierFractions () {
   this.nbColsCorr = 2
   this.tailleDiaporama = 3
 
-
   this.nouvelleVersion = function () {
-
-    
-    
-
     if (this.nbQuestions === 1) {
       this.consigne = 'Simplifier le plus possible la fraction suivante.'
     }

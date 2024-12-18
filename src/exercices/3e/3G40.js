@@ -37,12 +37,6 @@ export default function ReperageSurLaSphere () {
   Exercice.call(this)
 
   this.nbQuestions = 4
-
-
-
-
-   = false
-
   this.sup = 3
   this.sup2 = false
   this.sup3 = false
@@ -54,11 +48,6 @@ export default function ReperageSurLaSphere () {
   const Sph = sphere3d(O, 10, (context.isAmc ? 'darkgray' : 'red'), 'black', 18, 'black', 36, 'black', false, 'black', inclinaison)
 
   this.nouvelleVersion = function () {
-    
-
-    
-    
-
     let listeTypeDeQuestions
     if (this.sup === 1) listeTypeDeQuestions = combinaisonListes([1], this.nbQuestions)
     else if (this.sup === 2) listeTypeDeQuestions = combinaisonListes([2], this.nbQuestions)

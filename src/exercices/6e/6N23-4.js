@@ -42,8 +42,6 @@ export default function NombreDecimalOraliseDeDifferentesManieres () {
   this.sup = 6
 
   this.nouvelleVersion = function () {
-
-
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({
       max: 5,
       defaut: 6,

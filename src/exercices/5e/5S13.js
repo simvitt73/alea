@@ -38,7 +38,6 @@ export default function CalculerDesFrequences () {
 
   this.spacingCorr = 1.5
 
-
   this.sup = 1
 
   this.nouvelleVersion = function () {

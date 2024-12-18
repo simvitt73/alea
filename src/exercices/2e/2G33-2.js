@@ -25,14 +25,9 @@ export default function PositionsDeDroites () {
   this.sup = 1 // Niveau de difficulté
   this.tailleDiaporama = 2 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
 
-
   const typeQuestionsDisponibles = ['type1', 'type1', 'type2'] //, 'type1', 'type2' On créé 2 types de questions
   const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
   this.nouvelleVersion = function () {
-
-    
-    
-
     for (let i = 0, a1, b1, c1, k, a2, b2, c2, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       // Boucle principale où i+1 correspond au numéro de la question
       a1 = randint(-9, 9, 0)

@@ -47,8 +47,6 @@ export default class ComparerDecimaux extends Exercice {
   }
 
   nouvelleVersion () {
-
-
     const typesDeQuestionsDisponibles = [
       choice([1, 4, 5]),
       2,

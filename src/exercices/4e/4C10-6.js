@@ -34,10 +34,7 @@ export default function ExerciceTableauMultiplicationsRelatifs () {
   this.spacing = 2
   this.nbQuestions = 3
 
-
   this.nouvelleVersion = function () {
-
-    
     let typesDeQuestionsDisponibles
     switch (this.sup) {
       case 1: // multiplications

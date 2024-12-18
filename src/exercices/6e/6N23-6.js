@@ -52,8 +52,6 @@ export default function DivisionFraction () {
   this.sup3 = '10'
 
   this.nouvelleVersion = function () {
-
-
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup3,
       min: this.sup === 1 ? 1 : 7,

@@ -33,10 +33,6 @@ export default function Moitie () {
   this.tailleDiaporama = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = range1(6)
     const listeTypeDeQuestions = combinaisonListes(
       typesDeQuestionsDisponibles,

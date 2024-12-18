@@ -21,5 +21,4 @@ export const refs = {
 export default function Transformations6e () {
   Transformations.call(this)
   this.sup = 1
-
 }

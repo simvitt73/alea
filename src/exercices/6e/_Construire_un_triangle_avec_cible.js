@@ -41,8 +41,6 @@ export default function ConstruireUnTriangleAvecCible () {
     let xMin
     let yMax
 
-    
-    
     let listeDeNomsDePolygones
     const celluleAleaRonde = function (rang) {
       const lettre = lettreDepuisChiffre(randint(1, 8))

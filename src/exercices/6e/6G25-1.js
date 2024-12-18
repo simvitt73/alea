@@ -34,10 +34,6 @@ export const refs = {
 export default function SymetrieAxialePavageTriangulaire () {
   Exercice.call(this)
   this.nbQuestionsModifiable = false // désactive le formulaire nombre de questions
-
-
-
-   = false // mettre à true si on ne veut pas de l'exercice en ligne
   this.nbQuestions = 3
   this.nbQuestionsModifiable = false
   // Voir la Classe Exercice pour une liste exhaustive des propriétés disponibles.

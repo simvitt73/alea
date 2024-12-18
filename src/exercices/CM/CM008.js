@@ -30,10 +30,6 @@ export default function Soustraire11 () {
   this.tailleDiaporama = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = [1, 1, 1, 1, 2]
     const listeTypeDeQuestions = combinaisonListes(
       typesDeQuestionsDisponibles,

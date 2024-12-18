@@ -44,9 +44,6 @@ export default class nomExercice extends Exercice {
   nouvelleVersion () {
     this.consigne = this.nbQuestions > 1 ? 'Factoriser au maximum les expressions suivantes' : 'Factoriser au maximum l\'expression suivante'
 
-    
-    
-
     const listeDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,

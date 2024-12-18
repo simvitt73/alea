@@ -49,7 +49,6 @@ export default function DivisionDecimale () {
   this.sup = 1
 
   this.nouvelleVersion = function () {
-    
     let typesDeQuestionsDisponibles
 
     parseInt(this.sup) === 1

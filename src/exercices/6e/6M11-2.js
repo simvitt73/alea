@@ -66,10 +66,6 @@ export default function PerimetreOuAireDeFiguresComposees () {
         break
     }
 
-    
-    
-
-
     const tripletsPythagoriciens = [
       [3, 4, 5],
       [6, 8, 10],

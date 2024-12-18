@@ -34,7 +34,6 @@ export default function ConstruireHomothetiePoint3e () {
   Exercice.call(this)
   this.nbQuestions = 2
 
-
   this.sup = 3
   this.sup2 = 3
 

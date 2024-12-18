@@ -35,22 +35,12 @@ export default function ConstruireUnDiagramme () {
   Exercice.call(this)
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
-
-
-
-   = false
   this.sup = 3
   this.sup2 = 1
   this.sup3 = 1
   this.sup4 = true
   this.listeAvecNumerotation = false
-
-  //  this.sup3 = false;
   this.nouvelleVersion = function () {
-
-    
-    
-
     let typesDeQuestionsDisponibles
     if (this.sup3 < 5) {
       typesDeQuestionsDisponibles = [parseInt(this.sup3)]

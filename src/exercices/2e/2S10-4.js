@@ -32,7 +32,6 @@ export const uuid = '3f39d'
 export default function TableauProportion () {
   Exercice.call(this)
 
-
   this.spacing = context.isHtml ? 1.5 : 2
   this.spacingCorr = context.isHtml ? 1 : 2
   this.nbQuestions = 1
@@ -43,7 +42,6 @@ export default function TableauProportion () {
   this.nbQuestionsModifiable = false
   this.nouvelleVersion = function () {
     this.answers = {}
-
 
     let typesDeQuestionsDisponibles = [1]
     if (this.sup === 2) {

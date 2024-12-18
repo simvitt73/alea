@@ -29,7 +29,6 @@ export default function ReduireDinstinctionSommeProduit () {
   Exercice.call(this)
   this.nbQuestions = 2
 
-
   let typesDeQuestionsDisponibles
   this.sup = 3
   this.nouvelleVersion = function () {

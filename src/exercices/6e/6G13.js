@@ -43,11 +43,6 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
   }
 
   nouvelleVersion (numeroExercice) {
-
-    
-    
-
-
     const listeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,

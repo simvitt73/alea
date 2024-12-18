@@ -43,10 +43,8 @@ export default function AireCarresRectanglesTriangles () {
   this.amcType = amcType
   this.interactif = false
 
-
   this.consigne = 'Calculer le périmètre des 3 figures suivantes.'
   this.spacing = 2
-
 
   context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
   this.nbQuestions = 1
@@ -56,9 +54,6 @@ export default function AireCarresRectanglesTriangles () {
     let texte = ''
     let texteCorr = ''
     const nom = creerNomDePolygone(11, 'QD')
-
-    
-    
 
     const c = randint(2, 6)
     const L = randint(2, 5)

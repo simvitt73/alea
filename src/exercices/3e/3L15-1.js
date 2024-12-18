@@ -1,7 +1,7 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js' // eslint-disable-next-line camelcase
+import { context } from '../../modules/context.js'
 import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
@@ -24,9 +24,8 @@ export default function ResoudreEquatioeX2EgalA () {
   Exercice.call(this)
   this.nbQuestions = 5
 
-
   this.sup = 1
-  // eslint-disable-next-line no-undef
+
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1.5
 
   this.tailleDiaporama = 3

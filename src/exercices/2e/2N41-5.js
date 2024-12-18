@@ -26,17 +26,12 @@ export const refs = {
 export default function DevelopperIdentitesRemarquables4 () {
   Exercice.call(this)
 
-
-
   this.correctionDetailleeDisponible = true
   context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
   if (!context.isHtml) {
     this.correctionDetaillee = false
   }
   this.consigne = 'Développer puis réduire les expressions suivantes.'
-
-
-
 
   this.nbQuestions = 4
   this.sup = 5

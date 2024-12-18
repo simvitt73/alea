@@ -27,12 +27,9 @@ export default class nomExercice extends Exercice {
     this.nbQuestions = 1 // Nombre de questions par défaut
     this.nbCols = 2 // Uniquement pour la sortie LaTeX
     this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
-
   }
 
   nouvelleVersion () {
-
-
     const typeQuestionsDisponibles = ['type1', 'type2'] // On créé 3 types de questions
 
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"

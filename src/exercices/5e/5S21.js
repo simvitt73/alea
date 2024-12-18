@@ -26,8 +26,6 @@ export default class FonctionsProbabilite1 extends Exercice {
     super()
     this.nbQuestions = 4
 
-
-
     context.isHtml ? this.spacing = 2 : this.spacing = 1
     context.isHtml ? this.spacingCorr = 3 : this.spacingCorr = 1
     this.niveau = 1

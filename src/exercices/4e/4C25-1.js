@@ -30,8 +30,6 @@ export default function ProblemesMultiplicatifsFractions () {
 
   this.consigne = 'Justifier vos réponses aux problèmes suivants.'
 
-
-
   context.isHtml ? (this.spacing = 2) : (this.spacing = 1.5)
   context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 1.15)
 

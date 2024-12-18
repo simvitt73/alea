@@ -30,7 +30,6 @@ export default function EncadrerUnDecimalParDeuxEntiersConsecutifs () {
 
   this.consigne = 'Encadrer chaque nombre proposé par deux nombres entiers consécutifs.'
 
-
   this.nbColsCorr = 1
   // this.nbQuestionsModifiable = false;
   context.isHtml ? this.spacing = 3 : this.spacing = 2
@@ -45,8 +44,6 @@ export default function EncadrerUnDecimalParDeuxEntiersConsecutifs () {
       // typesDeQuestionsDisponibles = shuffle([choice([1,3]),choice([2,4]),0]);
       typesDeQuestionsDisponibles = shuffle([0, 1, 2])
     }
-
-
 
     // let listeTypeDeQuestions  = combinaisonListes(typesDeQuestionsDisponibles,this.nbQuestions) // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus

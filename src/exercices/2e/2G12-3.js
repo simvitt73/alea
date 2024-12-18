@@ -30,15 +30,12 @@ export const refs = {
 export default function Parallélogramme () {
   Exercice.call(this)
 
-  
   this.nbQuestions = 1
-
 
   this.sup = 1 //
   this.correctionDetaillee = false
   this.correctionDetailleeDisponible = true
   this.nouvelleVersion = function () {
-    
     const typesDeQuestionsDisponibles = [1, 2]; let typesDeQuestions
 
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)

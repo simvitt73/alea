@@ -34,9 +34,7 @@ export default function ExerciceTablesMultiplicationsEtDecimaux (
   this.spacing = 2
   this.tailleDiaporama = 3
 
-
   this.nouvelleVersion = function () {
-
     /* if (!this.sup) {
       // Si aucune table n'est saisie
       this.sup = '2-3-4-5-6-7-8-9'

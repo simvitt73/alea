@@ -29,27 +29,11 @@ export const refs = {
 export default function DiviserPar101001000 () {
   Exercice.call(this)
   this.nbQuestions = 4 // Ici le nombre de questions
-
-
-
-
-   = false // mettre à true si on ne veut pas de l'exercice en ligne
   this.consigne = 'Compléter les pointillés.'
-  // Voir la Classe Exercice pour une liste exhaustive des propriétés disponibles.
-
   this.sup = false
   this.sup2 = true
   this.sup3 = 4
-
-  // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
   this.nouvelleVersion = function () {
-    // la variable numeroExercice peut être récupérée pour permettre de différentier deux copies d'un même exo
-    // Par exemple, pour être certain de ne pas avoir les mêmes noms de points en appelant 2 fois cet exo dans la même page
-
-
-    
-    
-
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({ min: 1, max: 3, melange: 4, defaut: 4, nbQuestions: this.nbQuestions, saisie: this.sup3 })
     const rang = ['millièmes', 'centièmes', 'dixièmes']
 

@@ -46,10 +46,6 @@ export default class NomExercice extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = [1]
 
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)

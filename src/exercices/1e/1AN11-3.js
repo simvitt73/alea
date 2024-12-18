@@ -31,10 +31,6 @@ export default function Equationdetangente () {
 
   this.sup = 2
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = [this.sup]
     const listeTypeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
 

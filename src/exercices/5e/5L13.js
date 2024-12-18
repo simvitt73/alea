@@ -29,7 +29,6 @@ export default function Reductionaxbx () {
   Exercice.call(this)
   this.nbQuestions = 5
 
-
   this.sup = true
 
   this.nouvelleVersion = function () {

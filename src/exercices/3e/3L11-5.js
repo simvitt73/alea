@@ -35,8 +35,6 @@ export default function IdentitesCalculs () {
   this.sup = 1
   this.nbQuestions = 3
 
-
-
   // this.nbQuestionsModifiable = false;
   context.isHtml ? this.spacing = 1 : this.spacing = 1
   context.isHtml ? this.spacingCorr = 1 : this.spacingCorr = 1
@@ -73,10 +71,6 @@ export default function IdentitesCalculs () {
         this.introduction = warnMessage(`$(a+b)^2 = a^2 +2ab + b^2$ ${myhfill()} $(a-b)^2 = a^2-2ab+b^2$ ${myhfill()} $(a+b)(a-b)=a^2-b^2$`, 'nombres', 'Coup de pouce')
         break
     }
-
-
-    
-    
 
     // let listeTypeDeQuestions  = combinaisonListes(typesDeQuestionsDisponibles,this.nbQuestions) // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus

@@ -34,10 +34,6 @@ export default function EcritureDecimaleApresPuissancesDeDix () {
   this.besoinFormulaireNumerique = ['Exposants', 3, '1 : Positifs\n2 : Négatifs\n3 : Mélange']
   this.sup = 3
   this.nouvelleVersion = function () {
-
-    
-    
-
     this.consigne = this.nbQuestions === 1
       ? 'Donner le résultat du calcul suivant en écriture décimale.'
       : 'Donner le résultat des calculs suivants en écriture décimale.'

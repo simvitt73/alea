@@ -59,8 +59,6 @@ export default class PrioritesEtRelatifs extends Exercice {
   constructor () {
     super()
 
-
-
     this.consigne = 'Calculer.'
     this.spacing = 2
     this.nbQuestions = 6
@@ -77,7 +75,6 @@ export default class PrioritesEtRelatifs extends Exercice {
   }
 
   nouvelleVersion () {
-    
     let listeQuestionsDisponibles
     if (this.sup === 1) {
       listeQuestionsDisponibles = range1(11)

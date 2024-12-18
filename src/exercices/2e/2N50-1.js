@@ -94,10 +94,6 @@ export default class ProblemesAvecEquations extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     const listeDeProblemes = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,

@@ -38,10 +38,9 @@ export default class constructionPerpendiculaires extends Exercice {
 
     this.nbQuestions = 1
 
-
     this.sup = 1
     this.sup2 = '1'
-      this.spacing = (context.isHtml) ? 2 : 1
+    this.spacing = (context.isHtml) ? 2 : 1
     this.besoinFormulaireNumerique = [
       'Type de cahier',
       3,
@@ -60,8 +59,6 @@ export default class constructionPerpendiculaires extends Exercice {
   }
 
   nouvelleVersion () {
-
-
     let listeTypeDeQuestions = []
     listeTypeDeQuestions = gestionnaireFormulaireTexte({
       max: 4,

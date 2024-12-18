@@ -24,16 +24,11 @@ export default function EquationDuPremierDegreDansC () {
   this.consigne = 'Résoudre dans $\\mathbb{C}$ les équations ci-dessous. On écrira les solutions sous forme algébrique.'
   this.nbQuestions = 2
 
-
   this.sup = 1 // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
 
   this.spacingCorr = 2
   this.nouvelleVersion = function () {
-
-    
-    
-
     for (let i = 0, texte, texteCorr, z2, z1, z1m, z2m, z2n, z1c, fr, fi, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       // Boucle principale où i+1 correspond au numéro de la question
 

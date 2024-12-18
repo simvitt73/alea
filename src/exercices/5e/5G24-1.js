@@ -30,7 +30,6 @@ export default function TrianglesEgaux () {
   this.consigne = 'Compléter les phrases suivantes.'
   this.nbQuestions = 3
 
-
   this.sup = 1 // Niveau de difficulté
 
   this.spacing = 2

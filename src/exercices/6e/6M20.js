@@ -44,7 +44,7 @@ export const refs = {
 export default function AireDeTriangles () {
   Exercice.call(this)
   this.spacing = 2
-  // eslint-disable-next-line no-undef
+
   context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
   this.nbQuestions = 3
 
@@ -55,10 +55,6 @@ export default function AireDeTriangles () {
   this.correctionDetaillee = false
 
   this.nouvelleVersion = function () {
-    
-
-    
-
     const tableauDesCotes = shuffle([5, 6, 7, 8, 9]) // pour s'assurer que les 3 côtés sont différents
     const tableauDesHauteurs = shuffle([3, 4, 5, 6]) // pour s'assurer que les 3 hauteurs sont différents
     const cotes = combinaisonListesSansChangerOrdre(tableauDesCotes, this.nbQuestions)

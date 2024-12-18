@@ -38,7 +38,6 @@ export default function HeuresDecimales () {
   this.nouvelleVersion = function () {
     this.consigne = this.nbQuestions > 1 ? 'Écrire les durées suivantes en heures et minutes.' : 'Écrire la durée suivante en heures et minutes.'
 
-
     for (let i = 0, partieEntiere, partieDecimale, minutes, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       partieEntiere = randint(1, 12)
       partieDecimale = choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 25, 75])

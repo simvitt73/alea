@@ -20,6 +20,5 @@ export default class ConstruireQuadrilatèresParticuliers extends TracerQuadrila
   constructor () {
     super()
     this.sup = '0'
-
   }
 }

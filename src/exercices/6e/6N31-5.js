@@ -37,8 +37,6 @@ export default function EncadrerUnDecimal () {
   context.isHtml ? this.spacingCorr = 1.2 : this.spacingCorr = 1.5
 
   this.nouvelleVersion = function () {
-
-
     /*
         let listeTypeDeQuestions = []
         if (!this.sup) { // Si aucune liste n'est saisie ou mélange demandé

@@ -30,7 +30,6 @@ export default function Resolutionavecformecanonique () {
   this.consigne = 'Utiliser la forme canonique pour résoudre une équation du second degré : '
   this.nbQuestions = 4
 
-
   this.spacingCorr = 3
 
   this.nouvelleVersion = function () {

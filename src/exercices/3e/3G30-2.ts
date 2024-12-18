@@ -37,11 +37,6 @@ class EquationTrigo extends Exercice {
   }
 
   nouvelleVersion (): void {
-
-    
-    
-
-
     type TypeQuestionsDisponibles = 'num' | 'den' | 'angle'
     type Trigo = 'cos' | 'sin' | 'tan'
     let typeQuestionsDisponibles: TypeQuestionsDisponibles[]

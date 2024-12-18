@@ -20,6 +20,4 @@ export default function Reglages6M23 () {
 
   this.interactif = false
   this.sup = 3
-
-
 }

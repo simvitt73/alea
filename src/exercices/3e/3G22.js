@@ -28,15 +28,11 @@ export default function AgrandissementReduction () {
   context.isHtml ? this.spacingCorr = 3.5 : this.spacingCorr = 1.5
   context.isHtml ? this.spacing = 3 : this.spacing = 2
 
-
   this.quatrieme = false
   this.sup = 1 //
   this.sup2 = 1
 
   this.nouvelleVersion = function (numeroExercice) {
-
-    
-    
     let texte, texteCorr, r, r2, h1, h2, h3, c, c2, kprime
     const pi = Decimal.acos(-1)
     this.typeExercice = 'MG32'
@@ -692,10 +688,7 @@ export default function AgrandissementReduction () {
 
     if (context.isHtml) {
       texte += `<div id="MG32div${numeroExercice}"><svg id="svgMtg${numeroExercice}"></svg></div>`
-
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const that = this
-
       const listener = function () {
         const div = document.getElementById(`MG32div${numeroExercice}`)
         if (div) {

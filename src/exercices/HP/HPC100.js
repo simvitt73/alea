@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-sequences */
-/* eslint-disable no-unexpected-multiline */
 import { xcas, listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import Exercice from '../deprecatedExercice.js'
 import { context } from '../../modules/context.js'
@@ -24,7 +21,6 @@ export default function DivisionDePolynomes () {
 
   this.nbQuestions = 2
 
-
   context.isHtml ? (this.spacingCorr = 2) : (this.spacingCorr = 1)
   this.sup = 1 // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
@@ -32,10 +28,6 @@ export default function DivisionDePolynomes () {
   this.typeExercice = 'xcas'
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     for (let i = 0, texte, texteCorr, a, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       // Boucle principale où i+1 correspond au numéro de la question
       a = randint(-5, 5, 0)

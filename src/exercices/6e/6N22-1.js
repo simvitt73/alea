@@ -26,7 +26,6 @@ export default function RapportsSurUnSegment () {
 
   this.consigne = 'Sur tous les axes, les graduations sont régulières.'
 
-
   this.nbColsCorr = 1
   // this.nbQuestionsModifiable = false;
   context.isHtml ? this.spacing = 3 : this.spacing = 2
@@ -36,8 +35,6 @@ export default function RapportsSurUnSegment () {
 
   this.nouvelleVersion = function () {
     typesDeQuestionsDisponibles = [0, 1]
-
-
 
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus
 

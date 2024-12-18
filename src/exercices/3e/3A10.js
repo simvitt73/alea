@@ -27,7 +27,6 @@ export default function DivisionEuclidienneMultiplesDiviseursCriteres () {
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 2
   this.nbQuestions = 5
 
-
   this.sup = '3'
   this.sup2 = '10'
   this.sup3 = 13
@@ -38,9 +37,6 @@ export default function DivisionEuclidienneMultiplesDiviseursCriteres () {
     this.sup3 = contraindreValeur(2, 16, this.sup3, 10)
     let nbChiffresMax = contraindreValeur(1, 5, this.sup, 2)
     const nbDiviseursMax = contraindreValeur(2, this.sup3, this.sup2, 6)
-
-
-
 
     const typesDeQuestionsDisponibles = [1, 2, 3, 4, 5]
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions)

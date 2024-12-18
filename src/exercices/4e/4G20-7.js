@@ -146,7 +146,6 @@ export default class Pythagore2DBlockly extends Exercice {
     listeQuestionsToContenu(this)
 
     init() // blockly initialisation
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this
     const createAllBlockly = function () {
       const nbQ = that.nbQuestions

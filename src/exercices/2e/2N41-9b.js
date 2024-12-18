@@ -47,9 +47,6 @@ export default function DevelopperReduireExprComplexe () {
               ? 'Développer puis réduire les expressions littérales suivantes.'
               : 'Développer puis réduire l\'expression littérale suivante.'
 
-    
-    
-
     const lettresPossibles = ['a', 'b', 'c', 'x', 'y', 'z', 't']
 
     let listeTypeDeQuestions = gestionnaireFormulaireTexte({

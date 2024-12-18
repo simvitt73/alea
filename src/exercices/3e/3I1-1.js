@@ -87,25 +87,12 @@ export const refs = {
 export default function ConjectureDeSyracuse () {
   Exercice.call(this)
 
-  this.nbQuestions = 5 // Ici le nombre de questions
-  this.nbQuestionsModifiable = false // Active le formulaire nombre de questions
-
-   = false // mettre à true si on ne veut pas de l'exercice en ligne
+  this.nbQuestions = 5
+  this.nbQuestionsModifiable = false
   this.correctionDetailleeDisponible = true
-  // Voir la Classe Exercice pour une liste exhaustive des propriétés disponibles.
-
-  //  this.sup = false; // A décommenter : valeur par défaut d'un premier paramètre
-  //  this.sup2 = false; // A décommenter : valeur par défaut d'un deuxième paramètre
-  //  this.sup3 = false; // A décommenter : valeur par défaut d'un troisième paramètre
-
-  // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
   this.nouvelleVersion = function () {
     const typesDeQuestionsDisponibles = [1, 2, 3, 4, 5] // tableau à compléter par valeurs possibles des types de questions
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions)
-    // On choisit un entier pour l'étude de la suite de Syracuse correspondante
-    // On contraint le temps de vol entre 5 et 25
-    // On contraint l'altitude maximale en dessous de 100
-    // let entier = 15;
     let entier = randint(1, 200)
     while (syracuse({ N: entier }).tempsDeVol() > 25 || syracuse({ N: entier }).tempsDeVol() < 5 || syracuse({ N: entier }).altitudeMaximale() > 100) {
       entier = randint(1, 200)

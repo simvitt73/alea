@@ -34,7 +34,7 @@ export default class Exercice3L14DNB0 extends ExerciceBrevetA {
     this.versionAleatoire(0)
   }
 
-  private appliquerLesValeurs (facteur: 1|2|3|4, retrait: number, depart: number, a:number, b:number) {
+  private appliquerLesValeurs (facteur: 1 | 2 | 3 | 4, retrait: number, depart: number, a:number, b:number) {
     const facteurs = {
       1: 'nombre de départ',
       2: 'double du nombre de départ',
@@ -125,6 +125,6 @@ export default class Exercice3L14DNB0 extends ExerciceBrevetA {
     const facteur = b - a
     const retrait = a * b
     const depart = randint(1, 10, [a, b])
-    this.appliquerLesValeurs(facteur as 1|2|3|4, retrait, depart, a, b)
+    this.appliquerLesValeurs(facteur as 1 | 2 | 3 | 4, retrait, depart, a, b)
   }
 }

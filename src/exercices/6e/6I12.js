@@ -42,20 +42,11 @@ export default function AlgoTortue () { // ça c'est la classe qui permet de cr�
 
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
-
-
-
-   = false
   this.typeExercice = 'Scratch'
   this.sup = 9 // 7 instructions par défaut, paramètre réglable.
   this.sup2 = 1 // types d'instructionsde déplacement (ici seulement avancer et tourner)
   this.listeAvecNumerotation = false
-
   this.nouvelleVersion = function (numeroExercice) {
-
-    
-    
-
     const angleDepart = 90 // On choisit l'orientation de départ (On pourrait en faire un paramètre de l'exo)
     // const xDepart = 0 // Le départ est en (0,0) pour avoir la même marge dans toutes les directions
     // const yDepart = 0

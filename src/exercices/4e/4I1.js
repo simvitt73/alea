@@ -28,7 +28,6 @@ export default function TracerAvecScratch () {
   this.titre = titre
   this.consigne = 'Laquelle des 4 figures ci-dessous va être tracée avec le script fourni ?'
 
-
   this.nbColsCorr = 1
 
   this.typeExercice = 'Scratch'

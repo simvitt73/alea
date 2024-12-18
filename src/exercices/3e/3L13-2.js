@@ -39,8 +39,6 @@ export default function EqResolvantesThales () {
   this.consigneSingulier = 'Résoudre l\'équation suivante.'
   this.tailleDiaporama = 3
 
-
-
   context.isHtml ? this.spacing = 3 : this.spacing = 2
   context.isHtml ? this.spacingCorr = 2.5 : this.spacingCorr = 1.5
 
@@ -49,10 +47,6 @@ export default function EqResolvantesThales () {
   this.nouvelleVersion = function () {
     this.consigne = (this.nbQuestions === 1 || context.vue === 'diap') ? this.consigneSingulier : this.consignePluriel
     typesDeQuestionsDisponibles = shuffle([choice([0, 1]), choice([2, 3])])
-
-
-    
-    
 
     // let listeTypeDeQuestions  = combinaisonListes(typesDeQuestionsDisponibles,this.nbQuestions) // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus

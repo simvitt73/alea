@@ -29,10 +29,6 @@ export default function Soustraire9 () {
   this.tailleDiaporama = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     for (
       let i = 0, texte, texteCorr, a, cpt = 0;
       i < this.nbQuestions && cpt < 50;

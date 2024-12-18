@@ -38,9 +38,6 @@ export default function VocabulaireNotationsFonctions () {
   this.consigne = 'Cocher toutes les réponses correctes.'
 
   this.nouvelleVersion = function () {
-
-
-
     let typesDeQuestionsDisponibles
     const r = repere({ xMin: -10, xMax: 10, yMin: -10, yMax: 10 })
     switch (this.sup) {

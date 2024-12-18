@@ -22,14 +22,9 @@ export const refs = {
 export default function ResoudreEquationsQuotient () {
   Exercice.call(this)
 
-
-
-
-
   this.nbQuestions = 2
   this.sup = 3
   this.nouvelleVersion = function () {
-    
     let typesDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = [1, 2]

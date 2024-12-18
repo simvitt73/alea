@@ -42,7 +42,6 @@ export default function ReciproqueThales () {
   context.isHtml ? (this.spacingCorr = 3.5) : (this.spacingCorr = 1)
   context.isHtml ? (this.spacing = 2) : (this.spacing = 1.5)
 
-
   this.quatrieme = false
   this.sup = 1
   this.sup2 = 3
@@ -50,10 +49,6 @@ export default function ReciproqueThales () {
 
   // coefficient de l'homothétie compris entre -0,8 et -0,2 ou entre 0,2 et 0,8 pour éviter les constructions trop serrées
   this.nouvelleVersion = function (numeroExercice) {
-
-
-    
-    
     this.sup = contraindreValeur(1, 3, parseInt(this.sup), 1)
     this.sup2 = contraindreValeur(1, 3, parseInt(this.sup2), 1)
     this.sup3 = contraindreValeur(1, 3, parseInt(this.sup3), 3)

@@ -34,11 +34,6 @@ export default class UtilerAppartientA extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     const objetsEnonce = []
     const lettres = choisitLettresDifferentes(6)
     let rayon = 3

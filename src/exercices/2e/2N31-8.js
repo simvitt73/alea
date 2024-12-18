@@ -34,10 +34,6 @@ export default function ConversionsPuissancesDe10 () {
   this.correctionDetaillee = !context.isHtml
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = ['m>km', 'u>M', 'u>G', 'g>t', 'M>G', 'M>T', 'G>T', 'm>mm', 'm>um', 'm>nm'] // On créé 3 types de questions
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque `cycle`
     const listeDeSens = combinaisonListes(['div', 'fois'], this.nbQuestions)

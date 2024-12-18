@@ -20,24 +20,10 @@ export const refs = {
 export default function ProblemeDeRatio () {
   Exercice.call(this)
   this.nbQuestions = 4 // Ici le nombre de questions
-
-
-
-
-   = false
   this.sup = 3
   this.spacing = 2
   this.spacingCorr = 3
-
-  // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
   this.nouvelleVersion = function () {
-    // la variable numeroExercice peut être récupérée pour permettre de différentier deux copies d'un même exo
-    // Par exemple, pour être certain de ne pas avoir les mêmes noms de points en appelant 2 fois cet exo dans la même page
-
-
-    
-    
-
     let prenoms = []
     const objets = ['billes', 'livres', 'perles', 'gâteaux', 'bonbons']
     const sirops = ['de fraise', 'de citron', 'de cerise', 'de menthe', 'd\'orange']

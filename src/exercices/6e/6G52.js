@@ -46,11 +46,6 @@ export default class TracerCarresRectangleslongueurDonnees extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     let typesDeQuestionsDisponibles = ['Parallèles', 'Perpendiculaires']
     if (this.sup === 1) typesDeQuestionsDisponibles = ['Parallèles']
     if (this.sup === 2) typesDeQuestionsDisponibles = ['Perpendiculaires']

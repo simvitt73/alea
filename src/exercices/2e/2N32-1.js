@@ -22,7 +22,6 @@ export const refs = {
 export default function ExistenceDUneRacineCarree () {
   Exercice.call(this)
 
-
   this.nbQuestions = 5
   this.nbCols = 2
   this.nbColsCorr = 2

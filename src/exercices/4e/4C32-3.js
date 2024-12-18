@@ -23,8 +23,6 @@ export default function ProblemesPuissancesDe10EtConversions () {
   Exercice.call(this)
   this.nbQuestions = 4
 
-
-
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1
 
   this.nouvelleVersion = function () {

@@ -36,8 +36,6 @@ export default class TrouverOppose extends Exercice {
   }
 
   nouvelleVersion () {
-    
-    
     const listeSignesPositifs = combinaisonListes(['+', ''], 6 * this.nbQuestions)
     const listeSignes = combinaisonListes(['+', '-'], 6 * this.nbQuestions)
 

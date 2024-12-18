@@ -35,11 +35,6 @@ export default class MesurerDistancePointDroite extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const objetsEnonce = []
       const objetsCorrection = []

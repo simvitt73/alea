@@ -47,8 +47,6 @@ export default function EncodeurTexte (type = 'générateur') {
       'Pour tracer des/droites ou des segments/on utilise une règle', 'Pour tracer des/droites perpendiculaires/utilise ton équerre']
     this.sup3 = contraindreValeur(1, 3, this.sup3, 1)
 
-    
-    
     if (type === 'exo') {
       switch (this.sup3) {
         case 1:

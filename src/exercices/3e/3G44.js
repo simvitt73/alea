@@ -58,8 +58,6 @@ export default function CalculPythagoreEspace () {
   this.sup = 10
 
   this.nouvelleVersion = function () {
-
-
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,

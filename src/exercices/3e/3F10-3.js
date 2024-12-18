@@ -37,12 +37,7 @@ export default function VocabulaireNotationsFonctions2 () {
   this.spacing = 1.5
   this.nbQuestions = 3
 
-
   this.nouvelleVersion = function () {
-
-    
-    
-
     this.consigne = this.interactif ? 'Cocher toutes les réponses correctes.' : ''
 
     const r = repere({

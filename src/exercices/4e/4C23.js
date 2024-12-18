@@ -45,10 +45,6 @@ export default function SommeOuProduitFractions () {
   this.listeAvecNumerotation = false
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let typeQuestionsDisponibles = []
     const typeQuestionsPossibles = [
       ['sommeMult', 'sommeAvecEntier'],

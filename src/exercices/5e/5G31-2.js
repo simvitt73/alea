@@ -171,8 +171,6 @@ export default class anglesTrianglesTableau extends Exercice {
   }
 
   nouvelleVersion () {
-
-
     let typesDeQuestionsDisponibles
     switch (this.sup) {
       case 1: // quelconque

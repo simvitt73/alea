@@ -29,7 +29,6 @@ export default function RacineCareeDeCarresParfaits () {
   this.amcReady = amcReady
   this.amcType = amcType
 
-
   this.nbQuestions = 4
   this.nbCols = 2
   this.nbColsCorr = 2
@@ -41,7 +40,7 @@ export default function RacineCareeDeCarresParfaits () {
   this.nouvelleVersion = function () {
     let listeRacines = []
     let listeQuestions = []
-    
+
     this.sup2 = parseInt(this.sup2)
     if (this.sup === 1) {
       listeQuestions = [1]

@@ -43,7 +43,6 @@ export default function TrianglesEgaux () {
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-
   this.nouvelleVersion = function () {
     let texte = ''
     let texteCorr = ''

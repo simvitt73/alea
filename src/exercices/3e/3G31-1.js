@@ -40,8 +40,6 @@ export default function CalculDAngleFigureComplexe () {
   this.consigne = 'Calculer la mesure de tous les angles de cette figure.'
   this.nbQuestions = 2
 
-
-
   this.spacingCorr = 3
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = context.isHtml

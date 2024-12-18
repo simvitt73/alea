@@ -34,8 +34,6 @@ export default function MesurePrincipale () {
 
   this.sup = 1
   this.nouvelleVersion = function () {
-
-
     const typeQuestionsDisponibles = [
       {
         texte: '$\\cos\\big(x+\\pi\\big)=$',

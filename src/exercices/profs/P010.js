@@ -28,7 +28,6 @@ export default function VariationPolynomeDegre3 () {
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-
   this.sup = '-1/-2/3/1' // Niveau de difficulté
   this.sup2 = true
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
@@ -36,10 +35,6 @@ export default function VariationPolynomeDegre3 () {
   this.typeExercice = 'xcas'
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     // un tableau correct en exemple
     // escpl=taille en cm entre deux antécédents, deltacl=distance entre la bordure et les premiers et derniers antécédents
     // lgt = taille de la première colonne tout est en cm

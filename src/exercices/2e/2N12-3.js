@@ -28,10 +28,8 @@ export default function EncadrerRacineCarreeEntre2Entiers () {
   Exercice.call(this)
   this.nbQuestions = 2
 
-
   this.sup = 1
   this.nouvelleVersion = function () {
-    
     let typeDeQuestionsDisponibles
     if (this.sup === 1) {
       typeDeQuestionsDisponibles = ['Encadrer1']

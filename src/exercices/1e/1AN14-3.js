@@ -33,7 +33,6 @@ export default function DeriveePoly () {
   this.nbQuestions = 3
   // Sortie LaTeX
 
-
   this.spacing = 2
   this.spacingCorr = 2
   this.sup = '6'

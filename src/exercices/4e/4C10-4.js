@@ -26,8 +26,6 @@ export default function ExerciceQuotientsRelatifs () {
   Exercice.call(this)
   this.sup = false
 
-
-
   this.consigne = 'Calculer.'
   this.spacing = 2
   this.nbQuestions = 6

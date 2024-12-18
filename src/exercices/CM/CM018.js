@@ -30,10 +30,6 @@ export default function SommeDeDeuxNombresMariesEtUnEntier () {
   this.tailleDiaporama = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = [1, 2]
     const listeTypeDeQuestions = combinaisonListes(
       typesDeQuestionsDisponibles,

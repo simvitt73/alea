@@ -42,11 +42,6 @@ export const refs = {
 export default function SerieDeTransformations () {
   Exercice.call(this)
   this.nbQuestions = 1
-
-
-
-
-   = false
   const A = point(0, 0)
   let typeDeTransfos
   this.sup = 4

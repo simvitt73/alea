@@ -40,8 +40,6 @@ export default function ExerciceEcritureDecimaleOuFractionDecimale () {
   this.sup3 = true
 
   this.nouvelleVersion = function () {
-
-
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({
       max: 2,
       defaut: 3,

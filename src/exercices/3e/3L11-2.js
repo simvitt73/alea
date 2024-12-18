@@ -29,7 +29,6 @@ export default function ReductionSiPossible () {
   Exercice.call(this)
   this.nbQuestions = 5
 
-
   this.spacing = context.isHtml ? 3 : 2
   this.spacingCorr = context.isHtml ? 3 : 2
   this.tailleDiaporama = 3
@@ -40,7 +39,6 @@ export default function ReductionSiPossible () {
 
   this.nouvelleVersion = function () {
     this.consigne = this.nbQuestions > 1 ? 'Réduire les expressions suivantes, si cela est possible.' : 'Réduire l\'expression suivante, si cela est possible.'
-
 
     const exclus = []
     if (this.sup) {
@@ -170,7 +168,6 @@ export default function ReductionSiPossible () {
           break
       }
       if (this.sup2) {
-
         // On découpe
         const etapes = texteCorr.split('=')
         texteCorr = ''

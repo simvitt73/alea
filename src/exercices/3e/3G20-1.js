@@ -30,7 +30,6 @@ export default function ProblemesThales () {
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-
   this.sup = 3
 
   this.nouvelleVersion = function () {

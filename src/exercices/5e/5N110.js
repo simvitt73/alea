@@ -33,7 +33,6 @@ export default function VariationEnPourcentages () {
 
   this.spacingCorr = 2
 
-
   this.interactifType = 'mathLive'
 
   this.nouvelleVersion = function () {

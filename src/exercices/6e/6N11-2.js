@@ -34,9 +34,7 @@ export default function PlacerUnPointAbscisseEntiere2d () {
   Exercice.call(this)
   this.nbQuestions = 5
 
-
   this.nbColsCorr = 1
-
 
   this.sup = 1
   this.pointsNonSolutions = []
@@ -51,12 +49,8 @@ export default function PlacerUnPointAbscisseEntiere2d () {
     // numeroExercice est 0 pour l'exercice 1
     let typesDeQuestions
 
-    
-    
-
     this.pointsNonSolutions = []
     this.pointsSolutions = []
-
 
     if (this.sup === 4) { typesDeQuestions = combinaisonListes([1, 2, 3], this.nbQuestions) } else {
       typesDeQuestions = combinaisonListes(

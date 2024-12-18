@@ -52,7 +52,6 @@ export default class ExerciceAdditionsDe5Relatifs extends Exercice {
     this.nbCols = 2
     this.nbColsCorr = 2
 
-
     this.amcType = amcType
     this.amcReady = amcReady
     this.besoinFormulaireNumerique = ['Valeur maximale', 99999]

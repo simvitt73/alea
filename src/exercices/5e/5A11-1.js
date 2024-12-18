@@ -31,7 +31,6 @@ export default function ExerciceLabyrintheDivisibilite1 () {
   this.niveau = '5e'
   this.nbQuestions = 5
 
-
   this.sup = '2-5-10'
   this.sup3 = 1
   this.sup4 = 1
@@ -39,10 +38,6 @@ export default function ExerciceLabyrintheDivisibilite1 () {
   // this.consigne=`Trouver la sortie en ne passant que par les cases contenant un nombre divisible par $${parseInt(this.sup)}$.`
   this.nouvelleVersion = function () {
     const tailleChiffre = 0.8
-
-    
-
-    
 
     let texte, texteCorr
     let laby = []

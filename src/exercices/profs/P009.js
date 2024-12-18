@@ -27,7 +27,6 @@ export default function SimulateurAleatoire () {
   Exercice.call(this)
   this.nbQuestions = 1 // Ici le nombre de questions
 
-
   this.nbColsCorr = 1// Le nombre de colonne pour la correction LaTeX
   // Voir la Classe Exercice pour une liste exhaustive des propriétés disponibles.
   this.correctionDetailleeDisponible = true
@@ -50,9 +49,7 @@ export default function SimulateurAleatoire () {
     const tabEff = []// tableau d'effectifs temporaires - une dimension [eff]
     let S = 0 // effectif total
     const tabRes = [] // tableau des fréqeunces observées - deux dimensions [val, freq]
-    
 
-    
     const tabcoul = ['rouges', 'vertes', 'bleues', 'noires']
     const tabNbBoules = [randint(2, 5), randint(2, 5), randint(2, 5), randint(2, 5)]
     let nbBoules = 0; let f; let choix

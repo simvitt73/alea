@@ -35,14 +35,11 @@ export default function TesterUneEgalite () {
   Exercice.call(this)
   this.nbQuestions = 3
 
-
   this.sup = 1
   this.sup2 = false
   this.sup3 = 2
 
   this.nouvelleVersion = function () {
-
-
     let typesDeQuestionsDisponibles // = range1(5)
 
     if (!this.sup2) { typesDeQuestionsDisponibles = [1, 2, 3, 4, 5] } else { typesDeQuestionsDisponibles = [6, 7, 3] }

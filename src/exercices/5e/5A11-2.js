@@ -29,7 +29,6 @@ export default function ExerciceLabyrintheDivisibilite2 () {
   this.niveau = '6e'
   this.nbQuestions = 4
 
-
   this.sup = 6
   this.sup3 = 1
   this.sup4 = 1
@@ -37,10 +36,6 @@ export default function ExerciceLabyrintheDivisibilite2 () {
   // this.consigne=`Trouver la sortie en ne passant que par les cases contenant un nombre divisible par $${parseInt(this.sup)}$.`
   this.nouvelleVersion = function () {
     const tailleChiffre = 0.8
-    
-
-    
-
 
     let texte; let texteCorr; let laby; let monChemin = [[]]
     const listeCouples = shuffle([[2, 3], [2, 9], [5, 3], [5, 9], [10, 3], [10, 9]])

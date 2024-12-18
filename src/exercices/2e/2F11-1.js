@@ -52,11 +52,6 @@ export default function ImageFonctionsRefs () {
   this.tailleDiaporama = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
-
     const typeQuestionsDisponibles = []
     this.sup && typeQuestionsDisponibles.push('carré')
     this.sup2 && typeQuestionsDisponibles.push('cube')

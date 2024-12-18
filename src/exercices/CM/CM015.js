@@ -28,10 +28,6 @@ export default function SommeDeDeuxNombresMaries () {
   this.nbColsCorr = 2
   this.tailleDiaporama = 3
   this.nouvelleVersion = function () {
-
-    
-    
-
     for (
       let i = 0, texte, texteCorr, a, b, u1, u2, cpt = 0;
       i < this.nbQuestions && cpt < 50;

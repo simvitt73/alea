@@ -28,7 +28,6 @@ export const refs = {
 export default function TableDoubleDistributivite () {
   Exercice.call(this)
 
-
   this.spacing = context.isHtml ? 3 : 2
   this.spacingCorr = context.isHtml ? 3 : 2
   this.nbQuestions = 5
@@ -40,7 +39,6 @@ export default function TableDoubleDistributivite () {
   this.nouvelleVersion = function () {
     this.answers = {}
     this.consigne = this.nbQuestions > 1 ? 'Dans chaque cas, compléter les tables de multiplication, écrire le développement obtenu et le réduire.' : 'Compléter la table de multiplication, écrire le développement obtenu et le réduire.'
-
 
     let typesDeQuestionsDisponibles = [1, 2]
     if (this.sup === 2) {

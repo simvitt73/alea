@@ -30,7 +30,6 @@ export default function ModeliserEquations () {
   this.sup = 3
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
 
-
   this.nouvelleVersion = function () {
     let typeDeQuestionsDisponibles
     if (this.sup === 1) {

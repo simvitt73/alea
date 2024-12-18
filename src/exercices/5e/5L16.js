@@ -27,7 +27,6 @@ export const refs = {
 export default function SimplifierEcritureLitterale () {
   Exercice.call(this)
 
-
   this.besoinFormulaireNumerique = ['Type de simplification', 3, '1 : × devant une lettre ou une parenthèse\n2 : Carré et cube\n3 : Mélange']
   this.sup = 3
   this.besoinFormulaire2CaseACocher = ['Procédure inverse']
@@ -36,11 +35,6 @@ export default function SimplifierEcritureLitterale () {
   this.nbColsCorr = 2
 
   this.nouvelleVersion = function () {
-
-    
-    
-
-
     if (this.sup2) {
       this.consigne = 'On a simplifié des écritures littérales.<br>Réécrire chaque expression en écrivant les symboles × qui sont sous-entendus.'
     } else {

@@ -29,13 +29,9 @@ export default function DevelopperIdentitesRemarquables2 () {
 
   this.consigne = 'Développer et réduire les expressions suivantes.'
 
-
-
-
   this.nbQuestions = 5
   this.sup = 4
   this.sup2 = 4
-
 
   this.correctionDetailleeDisponible = true
   context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
@@ -43,7 +39,6 @@ export default function DevelopperIdentitesRemarquables2 () {
     this.correctionDetaillee = false
   }
   this.nouvelleVersion = function () {
-    
     const listeFractions = [
       [1, 2],
       [1, 3],

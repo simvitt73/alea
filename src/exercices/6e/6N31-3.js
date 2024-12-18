@@ -59,9 +59,6 @@ export default function ArrondirUneValeur6e () {
       this.consigne = 'Quels sont les encadrements où la valeur orange est la valeur arrondie du nombre à l\'unité, au dixième et au centième ?'
     }
 
-
-    
-    
     let m, c, d, u, di, ci, mi, me, ce, de, n, den, num, nb, nbSansDegree, rac, angle, v
     const listeTypeDeQuestion = this.sup < 5 ? combinaisonListes([this.sup], this.nbQuestions) : combinaisonListes([1, 2, 3, 4], this.nbQuestions)
     for (let i = 0, texte = '', texteCorr = '', cpt = 0; i < this.nbQuestions && cpt < 50;) {

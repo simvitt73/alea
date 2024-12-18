@@ -31,10 +31,6 @@ export default class nomExercice extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     if (this.nbQuestions === 1) {
       this.consigne = 'Résoudre l\'équation suivante.'
     } else {

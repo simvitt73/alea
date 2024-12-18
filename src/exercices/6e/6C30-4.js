@@ -26,21 +26,10 @@ export const refs = {
 }
 export default function PlacerLaVirgule () {
   Exercice.call(this)
-
   this.nbQuestions = 4 // Ici le nombre de questions
-
-
-
-
-   = false // mettre à true si on ne veut pas de l'exercice en ligne
   this.consigne = 'Les calculs suivants sont faux. Placer la virgule correctement dans le résultat pour que le calcul soit juste.'
   this.sup = false
-
-  // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
   this.nouvelleVersion = function () {
-    // la variable numeroExercice peut être récupérée pour permettre de différentier deux copies d'un même exo
-    // Par exemple, pour être certain de ne pas avoir les mêmes noms de points en appelant 2 fois cet exo dans la même page
-
     if (this.nbQuestions > 1) {
       if (this.interactif) {
         this.consigne = 'Déterminer le résultat de ces multiplications.'

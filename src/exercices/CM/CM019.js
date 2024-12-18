@@ -29,7 +29,6 @@ export default function LeCompteEstBonV3 () {
   let maxSolution = 70
 
   this.nouvelleVersion = function () {
-
     let solutionMathador = []
     let tirage, solution, expression
     let minSolution = parseInt(this.sup)

@@ -41,11 +41,6 @@ export default function EquivalenceProgrammesCalcul () {
   }
 
   this.nouvelleVersion = function () {
-
-    
-    
-
-
     for (let i = 0, texte, texteCorr, texteOperationA1, texteOperationA2, texteOperationB1, texteOperationB3, signeA2, signeB1, signeB3, signeB1B2, signeB1B2B3, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const B1 = randint(-9, 9, [0])
       const B2 = randint(2, 6)

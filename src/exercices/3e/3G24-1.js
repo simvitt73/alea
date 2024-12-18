@@ -33,7 +33,6 @@ export default class TrianglesSemblables extends Exercice {
 
     this.nbQuestions = 3
 
-
     this.sup = 1
 
     this.spacing = 2
@@ -43,8 +42,6 @@ export default class TrianglesSemblables extends Exercice {
 
   // c'est ici que commence le code de l'exercice cette méthode crée une copie de l'exercice
   nouvelleVersion () {
-    
-    
     const zoom = context.vue === 'diap' ? 0.5 : 1
     const typeQuestionsDisponibles = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 5, defaut: 1, melange: 6, nbQuestions: this.nbQuestions })
 

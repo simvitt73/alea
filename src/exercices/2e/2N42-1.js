@@ -25,9 +25,6 @@ export const refs = {
 export default function ExprimerEnFonctionDesAutres () {
   Exercice.call(this)
 
-
-
-
   this.nbQuestions = 1
   this.sup = 1
   this.nouvelleVersion = function () {

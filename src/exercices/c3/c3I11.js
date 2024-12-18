@@ -37,11 +37,6 @@ export default function NoteLaCouleurC3 () {
   Exercice.call(this)
 
   this.nbQuestions = 1
-
-
-
-
-   = false
   this.typeExercice = 'Scratch'
   this.sup = 1
   this.sup2 = true

@@ -27,7 +27,6 @@ export const refs = {
 export default function TableauCriteresDeDivisibilite () {
   Exercice.call(this)
 
-
   this.nbQuestions = 5
   this.nbColsCorr = 1
 
@@ -44,7 +43,6 @@ export default function TableauCriteresDeDivisibilite () {
       this.consigne =
         'Mettre une croix dans la case qui convient (ou les cases qui conviennent).'
     }
-
 
     const listeDesNombresPossibles = [
       'div2', // Divisible uniquement par 2

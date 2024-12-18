@@ -41,7 +41,6 @@ export default function ExprimerCosSinTan () {
   Exercice.call(this)
   this.nbQuestions = 1
 
-
   this.sup = 1
   this.sup2 = '4'
   if (context.isHtml) {
@@ -53,10 +52,6 @@ export default function ExprimerCosSinTan () {
   }
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let fonctionsTrigonometriques = gestionnaireFormulaireTexte({
       saisie: this.sup2,
       min: 1,

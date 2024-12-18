@@ -98,7 +98,6 @@ export default function ChiffreNombreDe () {
 
   this.nbQuestions = 6
 
-
   this.nbColsCorr = 1
   context.isHtml ? this.spacing = 3 : this.spacing = 2
   context.isHtml ? this.spacingCorr = 2.5 : this.spacingCorr = 1.5
@@ -126,8 +125,6 @@ export default function ChiffreNombreDe () {
         }
         break
     }
-
-
 
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus
     const reponses = []

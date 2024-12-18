@@ -33,10 +33,6 @@ export default function Tiers () {
   this.tailleDiaporama = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = range1(4)
     const listeTypeDeQuestions = combinaisonListes(
       typesDeQuestionsDisponibles,

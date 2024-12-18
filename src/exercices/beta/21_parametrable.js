@@ -20,7 +20,6 @@ export default class nomExercice extends Exercice {
     super()
     this.consigne = 'Calcule'
 
-
     this.besoinFormulaireNumerique = ['Difficulté', 3, '1 : Facile\n2 : Moyen\n3 : Difficile'] // le paramètre sera numérique de valeur max 3 (le 3 en vert)
     this.sup = 2 // Valeur du paramètre par défaut
     // Remarques : le paramètre peut aussi être un texte avec : this.besoinFormulaireTexte = [texte, tooltip]
@@ -28,11 +27,6 @@ export default class nomExercice extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const a = randint(1, 12) // Comme la valeur ne sera pas modifiée, on la déclare avec const
       let NombreAAjouter // Comme la valeur sera modifiée, on la déclare avec let

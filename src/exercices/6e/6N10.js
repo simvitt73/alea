@@ -109,7 +109,6 @@ export default function EcrirePetitsNombresEntiers () {
   this.besoinFormulaire4CaseACocher = ['Activer le drag and drop pour l\'écriture en lettres', false]
   this.sup4 = false
 
-
   this.tailleDiaporama = 3
 
   this.dragAndDrops = []
@@ -127,8 +126,6 @@ export default function EcrirePetitsNombresEntiers () {
       this.consigne = 'Passer de l\'écriture en chiffres à celle en lettres et inversement.'
       typeDeConsigne = combinaisonListes([1, 2], this.nbQuestions)
     }
-    
-    
 
     const listeQuestions = gestionnaireFormulaireTexte({
       min: 2,

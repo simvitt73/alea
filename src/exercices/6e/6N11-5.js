@@ -43,10 +43,6 @@ export default class ComparerDeuxNombresEntiers extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     this.consigne = this.interactif ? 'Choisir la bonne comparaison.' : 'Comparer :'
 
     let typeDeQuestionsDisponibles

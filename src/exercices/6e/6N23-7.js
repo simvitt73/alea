@@ -28,19 +28,9 @@ export default function RecompositionDecimale () {
   Exercice.call(this)
   this.nbQuestions = 1 // Ici le nombre de questions
   this.spacingCorr = 3
-
-
-
-
-   = false // mettre à true si on ne veut pas de l'exercice en ligne
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = true
-
   this.nouvelleVersion = function () {
-
-    
-    
-
     context.anglePerspective = 30
     context.coeffPerspective = 0.5
     const cubeUnite = paveLPH3d(0, 0, 0, 0.6, 10, 10, 10, 'black')

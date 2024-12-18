@@ -35,7 +35,6 @@ export default class NomExercice extends Exercice {
     // la variable numeroExercice peut être récupérée pour permettre de différentier deux copies d'un même exo
     // Par exemple, pour être certain de ne pas avoir les mêmes noms de points en appelant 2 fois cet exo dans la même page
 
-
     const typesDeQuestionsDisponibles = [1] // tableau à compléter par valeurs possibles des types de questions
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
     // let A, B, C, D, kare, triangle // c'est une mauvaise idée d'avoir des variables globales, il vaut mieux des constantes renouvelées à chaque tour de boucle et propres à chaque case : ça évite les valeurs résiduelles

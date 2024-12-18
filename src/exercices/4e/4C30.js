@@ -48,10 +48,6 @@ export default function PuissancesDeDix () {
     this.correctionDetailleeDisponible = this.sup !== 2
     let typesDeQuestions
 
-
-    
-    
-
     let typesDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = [1, 2, 3] // produit, quotient et exponentiation de puissances de 10
@@ -65,16 +61,16 @@ export default function PuissancesDeDix () {
     }
     const listeTypeDeQuestions = this.besoinFormulaireNumerique
       ? combinaisonListes(
-        typesDeQuestionsDisponibles,
-        this.nbQuestions
-      )
+          typesDeQuestionsDisponibles,
+          this.nbQuestions
+        )
       : gestionnaireFormulaireTexte({
-        nbQuestions: this.nbQuestions,
-        saisie: this.sup2,
-        max: 3,
-        melange: 4,
-        defaut: 4
-      })
+          nbQuestions: this.nbQuestions,
+          saisie: this.sup2,
+          max: 3,
+          melange: 4,
+          defaut: 4
+        })
 
     // pour pouvoir adapter les couleurs en cas de besoin
     const coul0 = 'red'

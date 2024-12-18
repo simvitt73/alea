@@ -49,9 +49,6 @@ export default function CalculerCoeffPropo () {
       return false
     }
 
-    
-    
-
     const typeDeCoefficient = ['Entier', 'Decimal', 'Fraction']
     let listeTypesDeCoefficient = []
     const tableauxEntiers = [[2, 3, 4, 5, 6, 7, 8, 9], [10, 12, 15, 16], [20, 24, 25, 30, 35, 40], [50, 60, 70, 80, 90]]

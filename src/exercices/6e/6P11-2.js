@@ -54,7 +54,6 @@ export default class ProportionnaliteParLineariteTableau extends Exercice {
       this.consigne += '<br><br><div style="font-style: italic; margin-bottom: 2em;">Si ce n\'est pas une situation de proportionnalité, écrire : N.</div>'
     }
 
-
     let typeDeQuestionsDisponibles
     if (this.sup === 1) {
       typeDeQuestionsDisponibles = this.sup3 ? [1, 1, 1, 1, 4] : [1]

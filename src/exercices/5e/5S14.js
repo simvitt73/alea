@@ -34,7 +34,6 @@ export default function CalculerDesMoyennes () {
 
   this.spacingCorr = 2.5
 
-
   this.sup = 1
 
   this.nouvelleVersion = function () {

@@ -15,11 +15,6 @@ export default class Pyramides extends Exercice {
     super()
     this.nbQuestions = 1 // Ici le nombre de questions (une seule pour cet exercice non modifiable)
     this.nbQuestionsModifiable = false // désactive le formulaire nombre de questions
-
-
-
-     = false // mettre à true si on ne veut pas de l'exercice en ligne
-
     this.besoinFormulaireNumerique = ['Type de pyramide', 2, '1 : Pyramide additive\n 2 : Pyramide multiplicative']
     this.besoinFormulaire2Texte = ['Valeur minimale de base']
     this.besoinFormulaire3Texte = ['Valeur maximale de base']

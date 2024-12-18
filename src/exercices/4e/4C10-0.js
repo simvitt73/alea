@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { ecritureNombreRelatif } from '../../lib/outils/ecritures'
@@ -40,7 +39,6 @@ export default function SigneProduitQuotientRelatifs () {
   let typesDeQuestionsDisponibles
 
   this.nouvelleVersion = function () {
-
     this.sup = Number(this.sup) // attention le formulaire renvoie un string, on a besoin d'un number pour le switch !
     if (this.exo === this.beta + '4C10-1') {
       // signe d'un produit
@@ -83,9 +81,6 @@ export default function SigneProduitQuotientRelatifs () {
     }
 
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus
-
-    
-    
 
     for (let i = 0, texte, texteCorr, reponse, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       this.autoCorrection[i] = {}

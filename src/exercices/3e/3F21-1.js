@@ -44,7 +44,6 @@ export default function LectureExpressionFonctionsAffines () {
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-
   context.isHtml ? this.spacing = 2 : this.spacing = 1
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1
   this.sup = 1
@@ -60,11 +59,7 @@ export default function LectureExpressionFonctionsAffines () {
     let k = Math.pow(2, preK - 1)
     let nbDroites = parseInt(this.sup2)
 
-    
-    
-
     const colors = ['blue', 'red', 'black', 'purple', 'brown']
-
 
     const listeDroites = []
     const posLab = []

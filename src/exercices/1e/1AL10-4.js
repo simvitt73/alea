@@ -44,10 +44,6 @@ export default function TermeDUneSuiteDefinieParRecurrence () {
     ].join('\n')
   ]
   this.nouvelleVersion = function () {
-
-
-    
-    
     const typesDeQuestionsDisponibles = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,
@@ -58,8 +54,6 @@ export default function TermeDUneSuiteDefinieParRecurrence () {
     })
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
 
-    
-    
     for (let i = 0, texte, texteCorr, cpt = 0, u, a, b, reponse, k; i < this.nbQuestions && cpt < 50;) {
       const nomSuite = ['u', 'v', 'w']
       const s = choice(nomSuite)

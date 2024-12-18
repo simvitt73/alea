@@ -33,7 +33,6 @@ export default function ExerciceVraiFauxDivisibleMultipleDiviseur () {
   this.sup = 1 // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
 
-
   function justification (N, a, booleen) {
     let result
     if (booleen === true) {
@@ -66,9 +65,7 @@ export default function ExerciceVraiFauxDivisibleMultipleDiviseur () {
   }
 
   this.nouvelleVersion = function () {
-    
     this.sup2 = parseInt(this.sup2)
-
 
     let typeDeQuestionsDisponibles = ['Ndiviseur', 'divisibleParN', 'multipleDeN', 'NdiviseurF', 'divisibleParNF', 'multipleDeNF', 'NdiviseurEnvers', 'divisibleParNEnvers', 'multipleDeNEnvers']
     if (this.nbQuestions < 8) {

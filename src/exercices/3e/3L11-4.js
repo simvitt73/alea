@@ -41,7 +41,6 @@ export default function FactoriserParNombreOux () {
   this.nouvelleVersion = function () {
     this.consigne = this.nbQuestions > 1 ? 'Factoriser les expressions suivantes.' : 'Factoriser l\'expression suivante.'
 
-
     let typesDeQuestionsDisponibles
     switch (this.sup) {
       case 1 :

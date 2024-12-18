@@ -30,7 +30,6 @@ export default function FactoriserIdentitesRemarquables2 () {
 
   this.nbColsCorr = 1
 
-
   this.nbQuestions = 5
   this.sup = 1
 

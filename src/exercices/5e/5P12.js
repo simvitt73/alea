@@ -26,8 +26,6 @@ export default function PartagerSelonUnRatio () {
   this.correctionDetailleeDisponible = true
 
   this.nouvelleVersion = function () {
-
-
     for (let i = 0, texte, texteCorr, objet1, prenom1, prenom2, prenom3, quantite1, quantite2, quantite3, facteur, total, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       objet1 = objet()
       prenom1 = prenomF()

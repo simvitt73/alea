@@ -24,27 +24,10 @@ export default class DistributiviteNumerique extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 6 // Ici le nombre de questions
-
-
-
-
-     = false // mettre à true si on ne veut pas de l'exercice en ligne
-    // Voir la Classe Exercice pour une liste exhaustive des propriétés disponibles.
-
-    //  this.sup = false; // A décommenter : valeur par défaut d'un premier paramètre
-    //  this.sup2 = false; // A décommenter : valeur par défaut d'un deuxième paramètre
-    //  this.sup3 = false; // A décommenter : valeur par défaut d'un troisième paramètre
     this.consigne = 'Calculer les expressions suivantes de deux manières différentes.'
   }
 
-  // c'est ici que commence le code de l'exercice cette méthode crée une copie de l'exercice
   nouvelleVersion () {
-    // la variable numeroExercice peut être récupérée pour permettre de différentier deux copies d'un même exo
-    // Par exemple, pour être certain de ne pas avoir les mêmes noms de points en appelant 2 fois cet exo dans la même page
-
-
-    
-    
     const typesDeQuestionsDisponibles = [1, 2, 3, 4, 5, 6] // tableau à compléter par valeurs possibles des types de questions
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
 

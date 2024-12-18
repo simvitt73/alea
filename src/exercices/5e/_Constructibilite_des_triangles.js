@@ -30,9 +30,6 @@ export default function ConstructibiliteDesTriangles () {
   this.nbQuestions = 3
   this.beta = ''
 
-
-
-
   let typesDeQuestionsDisponibles
 
   this.nouvelleVersion = function () {

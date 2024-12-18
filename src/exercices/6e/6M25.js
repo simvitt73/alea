@@ -19,8 +19,6 @@ export default function ConnaitreFormulesDePerimetreEtAires () {
 
   this.nbQuestions = 4
 
-
-
   this.nouvelleVersion = function () {
     const listeTypeDeQuestions = combinaisonListes(
       [

@@ -21,16 +21,10 @@ export default function DeterminerDerniereOperationExpressionLitterale () {
   this.debug = false
   this.nbQuestions = 4
 
-
   this.sup3 = 5
   this.consigne = 'Déterminer la dernière opération à effectuer s\'il fallait faire le calcul pour des valeurs données de $x$ et de $y$.'
 
   this.nouvelleVersion = function () {
-
-    
-    
-
-
     /*
     let typesDeQuestionsDisponibles = []
     if (!this.sup3 || this.sup3 === 'NaN') { // Si aucune liste n'est saisie

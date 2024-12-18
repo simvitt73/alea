@@ -51,7 +51,6 @@ export default function EnsembleDeNombres () {
   ]
 
   this.nouvelleVersion = function () {
-
     const typesDeQuestionsDisponibles = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,

@@ -67,7 +67,6 @@ export default function FonctionNotionVocabulaire () {
   this.nbQuestionsModifiable = false
   // this.correctionDetailleeDisponible = true;
 
-
   this.sup = 5
 
   const numEx = '3F1-act' // pour rendre unique les id des SVG, en cas d'utilisation dans plusieurs exercices y faisant appel
@@ -75,7 +74,6 @@ export default function FonctionNotionVocabulaire () {
   this.nouvelleVersion = function (numeroExercice) {
     let typesDeQuestions
     let j, idDuDivDiag, idDuDivCorr
-
 
     let typesDeQuestionsDisponibles
     this.sup = Number(this.sup) // attention le formulaire renvoie un string, on a besoin d'un number pour le switch !

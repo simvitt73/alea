@@ -43,9 +43,6 @@ export default function FractionsCalculsSimples () {
   this.correctionDetailleeDisponible = true
 
   this.nouvelleVersion = function () {
-
-
-
     if (this.sup) {
       this.consigne = 'Calculer en s\'aidant éventuellement du schéma.'
     } else {

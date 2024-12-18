@@ -43,9 +43,7 @@ export default function ExerciceInformationsProblemes () {
 
   this.spacing = 2
 
-
   this.nouvelleVersion = function () {
-
     // Ebauche de la consigne en fonction des possibilités
     const chaqueCe = ['chaque', 'ce']
     this.consigne = 'Résoudre '

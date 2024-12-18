@@ -31,12 +31,9 @@ export default class nomExercice extends Exercice {
     this.nbCols = 2 // Uniquement pour la sortie LaTeX
     this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
     this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
-
   }
 
   nouvelleVersion () {
-
-
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) { // Boucle principale où i+1 correspond au numéro de la question
       const matrices = [] // vecteur qui stocke les matrices
       const matricesprint = [] // vecteur qui stocke les matrices écrites en LaTeX

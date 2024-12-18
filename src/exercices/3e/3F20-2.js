@@ -56,10 +56,6 @@ export default function FonctionsAffinesOuLineaires () {
     fonctionsLineaires.numeroExercice = this.numeroExercice // indispensable pour l'interactif
     fonctionsLineaires.nouvelleVersion()
 
-
-    
-    
-
     const choixFonction = gestionnaireFormulaireTexte({ saisie: this.sup4, min: 1, max: 2, defaut: 3, melange: 3, listeOfCase: ['linéaire', 'affine'], nbQuestions: this.nbQuestions })
     for (let i = 0; i < this.nbQuestions; i++) {
       if (choixFonction[i] === 'affine') {

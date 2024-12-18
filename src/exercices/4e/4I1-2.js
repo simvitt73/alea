@@ -40,11 +40,6 @@ export default function AlgoTortue () { // √ßa c'est la classe qui permet de cr√
   this.listeAvecNumerotation = false
 
   this.nouvelleVersion = function (numeroExercice) {
-
-    
-    
-
-
     this.figures = []
     const objetsCorrection = []
     const paramsCorrection = {}

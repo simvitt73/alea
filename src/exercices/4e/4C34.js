@@ -90,7 +90,6 @@ export default function PrioritesEtRelatifsEtPuissances () {
     if (this.sup) this.amcType = 'AMCNum'
     let reponse
 
-
     const listeQuestionsDisponibles = range1(7)
 
     const listeTypeDeQuestions = combinaisonListes(

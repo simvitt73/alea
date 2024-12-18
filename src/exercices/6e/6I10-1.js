@@ -36,7 +36,6 @@ export default function ColorierDeplacement () {
 
   this.consigne = 'Dans le quadrillage, effectuer le programme.'
 
-
   this.nbQuestionsModifiable = false
   context.isHtml ? this.spacing = 2 : this.spacing = 1
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1

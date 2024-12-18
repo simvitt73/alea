@@ -33,18 +33,9 @@ export const refs = {
 export default function SensDeLaFraction () {
   Exercice.call(this)
   this.nbQuestions = 4
-
-
-
-
-   = false
   this.sup = '5'
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({ saisie: this.sup, nin: 1, max: 4, defaut: 5, melange: 5, nbQuestions: this.nbQuestions })
 
     for (let i = 0, texte, texteCorr, a, b, f, cpt = 0; i < this.nbQuestions && cpt < 50;) {

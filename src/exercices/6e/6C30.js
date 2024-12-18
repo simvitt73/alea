@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { grille, seyes } from '../../lib/2d/reperes.js'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texNombre } from '../../lib/outils/texNombre'

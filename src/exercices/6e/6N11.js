@@ -50,11 +50,6 @@ export default function LireAbscisseEntiere2d () {
     if (this.interactif) { this.consigne += texteGras(' Penser à mettre les espaces nécessaires.') }
     let typesDeQuestions
 
-    
-    
-
-
-
     if (this.sup === 4) {
       typesDeQuestions = combinaisonListes([1, 2, 3], this.nbQuestions)
     } else {

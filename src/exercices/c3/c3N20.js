@@ -36,10 +36,6 @@ export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   this.sup = 2
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let typesDeQuestionsDisponibles = ['type1', 'type2', 'type3', 'type4', 'type5', 'type6'] // On créé 3 types de questions
     if (parseInt(this.sup) === 1) {
       typesDeQuestionsDisponibles = ['type1', 'type5']

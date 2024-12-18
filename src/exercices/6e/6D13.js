@@ -37,10 +37,6 @@ export default function ConversionHeuresMinutesOuMinutesEtSecondes (can = false)
   this.correctionDetaillee = false
   this.sup = 1
   this.nouvelleVersion = function () {
-
-    
-    
-
     let typeQuestionsDisponibles = ['min vers h et min', 's vers min et s']
     if (this.sup === 1) typeQuestionsDisponibles = ['min vers h et min']
     else if (this.sup === 2) typeQuestionsDisponibles = ['s vers min et s']

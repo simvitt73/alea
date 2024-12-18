@@ -36,9 +36,6 @@ export default function ReperagePointDuPlan () {
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-
-
-
   this.sup = 1
   this.sup2 = true
   this.sup3 = 5
@@ -46,12 +43,7 @@ export default function ReperagePointDuPlan () {
   this.listeAvecNumerotation = false
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let texte, texteCorr
-
 
     let listePoints = []
     const points = []

@@ -45,16 +45,10 @@ export default function TransformationsDuPlanEtCoordonnees () {
   Exercice.call(this)
   this.nbQuestions = 1
 
-
   context.fenetreMathalea2d = [-9, -9, 9, 9]
   this.sup = '4-5-6'
 
   this.nouvelleVersion = function () {
-
-    
-    
-
-    
     const k = []
     let A, B, C, Aprime, Bprime, Cprime
     const xP = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] // ces nombres sont juste là pour compter combien il y en a... ils seront remplacés plus tard par les coordonnées utiles ou pas.

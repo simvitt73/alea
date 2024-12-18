@@ -40,13 +40,8 @@ export default function ConservationTransformation () {
   this.sup = 1
   this.sup2 = 3
 
-
-
   this.nouvelleVersion = function () {
     context.fenetreMathalea2d = [-6, -6, 6, 6]
-
-    
-    
 
     this.sup = Number(this.sup)
     this.sup2 = Number(this.sup2)

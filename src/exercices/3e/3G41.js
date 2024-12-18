@@ -33,10 +33,6 @@ export default function VuesEmpilementCubes () {
   this.nbQuestions = 2
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let objetsEnonce, objetsCorrection
 
     const dimensionsTab = gestionnaireFormulaireTexte({

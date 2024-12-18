@@ -33,20 +33,13 @@ export default class EngrenagesAnimes extends Exercice {
     super()
     this.nbQuestions = 4
 
-
     this.sup = 1
     this.sup2 = false
     this.besoinFormulaireNumerique = ['Niveau de difficulté', 4, '1 : Calculer le nombre de dents (n tours à gauche)\n2 : Calculer le nombre de dents (tourne de n dents à gauche)\n3 : Calculer le nombre de tours (2 roues)\n4 : Calculer le nombre de tours à droite (tourne de n dents à gauche)\n5 : Synchroniser 3 roues\n6 : Mélange']
     this.besoinFormulaire2CaseACocher = ['Arrêt de l\'animation après un cycle lors de la correction']
   }
 
-  // eslint-disable-next-line no-unused-vars
-
   nouvelleVersion (numeroExercice) {
-
-    
-    
-
     const listeTypesDeQuestions = gestionnaireFormulaireTexte({
       min: 1,
       max: 5,

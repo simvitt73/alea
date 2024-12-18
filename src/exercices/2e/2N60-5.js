@@ -33,18 +33,9 @@ export const refs = {
 export default function SolInequation () {
   Exercice.call(this)
 
-
-
-
-
-
   this.nbQuestions = 1
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const listeTypeDeQuestions = combinaisonListes([1, 2, 3], this.nbQuestions)//, 2, 3
     for (let i = 0, texte, texteCorr, monQcm, cpt = 0, x0, a, b, c, d, e, m, p, k = [], typesDeQuestions; i < this.nbQuestions && cpt < 50;) {
       typesDeQuestions = listeTypeDeQuestions[i]

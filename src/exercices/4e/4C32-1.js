@@ -32,16 +32,12 @@ export default function CalculsAvecPuissancesDeDix () {
   this.classe = 4
 
   this.nouvelleVersion = function () {
-
     if (this.interactif) {
       this.consigne = this.nbQuestions === 1 ? 'Choisir la notation scientifique associée au nombre suivant.' : 'Choisir la notation scientifique associée à chacun des nombres suivants.'
     } else {
       this.consigne = this.nbQuestions === 1 ? 'Donner la notation scientifique du nombre suivant.' : 'Donner la notation scientifique des nombres suivants.'
     }
     // let typeDeQuestionsDisponibles
-
-    
-    
 
     for (let i = 0, texte, texteCorr, mantisse1, exp1, decalage, mantisse, exp, decimalstring, scientifiquestring, cpt = 0;
       i < this.nbQuestions && cpt < 50;) {

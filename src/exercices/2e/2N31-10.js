@@ -41,8 +41,6 @@ export default function PuissancesDUnRelatif2 () {
   this.nbColsCorr = 1
 
   this.nouvelleVersion = function () {
-
-
     const typesDeQuestionsDisponibles = [1, 2, 3, 4, 5, 6, 7, 8]
     const listeTypeDeQuestions = combinaisonListes(
       typesDeQuestionsDisponibles,

@@ -41,13 +41,6 @@ export const refs = {
 }
 export default function CanNoteLaCouleur6 () {
   Exercice.call(this)
-
-  this.nbQuestions = 1
-
-
-
-
-   = false
   this.typeExercice = 'Scratch'
   this.sup = 1
   this.sup2 = true

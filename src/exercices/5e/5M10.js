@@ -36,8 +36,6 @@ export default function AireDuParallelogramme () {
   this.spacingCorr = 2
   this.nbQuestions = 1
 
-
-
   /* const cadre = function (p, params) {
     let xmin = 0; let xmax = 0; let ymin = 0; let ymax = 0
     for (let i = 0; i < 4; i++) {
@@ -54,10 +52,6 @@ export default function AireDuParallelogramme () {
   } */
 
   this.nouvelleVersion = function () {
-    
-
-    
-
     if (this.nbQuestions === 1) this.consigne = "Calculer l'aire du parallélogramme suivant."
     const typeQuestionsDisponibles = ['type1', 'type2', 'type3'] // On créé 3 types de questions
     const nom = creerNomDePolygone(this.nbQuestions * 4, 'QD')

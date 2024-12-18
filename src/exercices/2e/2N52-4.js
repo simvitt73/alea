@@ -26,11 +26,6 @@ export const refs = {
 export default function Equationspresqueproduitnulle () {
   Exercice.call(this)
 
-
-
-
-
-
   this.nbQuestions = 3
   this.spacingCorr = 3
   this.nbQuestions = 5

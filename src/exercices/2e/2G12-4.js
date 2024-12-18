@@ -29,13 +29,8 @@ export default function NaturePolygone () {
 
   this.nbQuestions = 1
 
-
   this.sup = 3
   this.nouvelleVersion = function () {
-
-    
-    
-
     let objets
     let A, B, C, D, P, XMIN, XMAX, YMIN, YMAX
 

@@ -29,8 +29,6 @@ export const refs = {
 export default function Determinerfonctionaffine () {
   Exercice.call(this)
 
-
-
   this.nbQuestions = 3
   this.spacingCorr = context.isHtml ? 2 : 1
   this.sup = 1

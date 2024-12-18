@@ -32,21 +32,13 @@ export default function LireAbscisseDecimale () {
   this.consigne = "Lire l'abscisse de chacun des points suivants."
   this.nbQuestions = 3
 
-
   this.nbColsCorr = 1
-
 
   this.sup = 1
   this.interactif = false
   this.nouvelleVersion = function () {
-
     // numeroExercice est 0 pour l'exercice 1
     let typesDeQuestions
-
-    
-    
-
-
 
     if (this.sup === 4) {
       typesDeQuestions = combinaisonListes([1, 2, 3], this.nbQuestions)

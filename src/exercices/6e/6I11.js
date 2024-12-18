@@ -37,11 +37,6 @@ export const refs = {
 export default function NoteLaCouleur6e () {
   Exercice.call(this)
   this.nbQuestions = 1
-
-
-
-
-   = false
   this.typeExercice = 'Scratch'
   this.sup = 1
   this.sup2 = 1

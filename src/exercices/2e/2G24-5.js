@@ -29,7 +29,6 @@ export default function Calculercoordonneesegalitevecteurs () {
 
   this.nbQuestions = 2
 
-
   this.sup = '1'
   this.correctionDetaillee = false
   this.correctionDetailleeDisponible = true

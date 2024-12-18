@@ -33,10 +33,6 @@ export default function ExerciceLabyrintheMultiples () {
   Exercice.call(this)
   this.niveau = '6e'
   this.nbQuestions = 3
-
-
-
-   = false
   this.tailleDiaporama = 2
   this.sup = 4
   const maximum = this.niveau === 'CM' ? 10 : 13
@@ -45,10 +41,6 @@ export default function ExerciceLabyrintheMultiples () {
   this.sup4 = 1
 
   this.nouvelleVersion = function () {
-    
-
-    
-
     let table
     if (this.sup === 1) {
       table = combinaisonListes([2, 5, 10], this.nbQuestions)

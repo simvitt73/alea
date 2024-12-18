@@ -36,7 +36,6 @@ export default function CriteresDeDivisibilite () {
   this.nbQuestions = 5
 
   this.nouvelleVersion = function () {
-    
     let listeExercicesDisponibles
     if (this.sup === 1) {
       listeExercicesDisponibles = [2, 5, 10]

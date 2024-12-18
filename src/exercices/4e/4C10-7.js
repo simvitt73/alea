@@ -41,7 +41,6 @@ export default function ExerciceOperationsRelatifs () {
   this.consigne = 'Calculer.'
   this.spacing = 2
 
-
   this.nouvelleVersion = function () {
     const listeTypeDeSignes = combinaisonListes(['-+', '+-', '--', '-+', '+-', '--', '++'], this.nbQuestions)
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({

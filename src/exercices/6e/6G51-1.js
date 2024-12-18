@@ -30,11 +30,6 @@ export default class ReconnaitreDesPointsAlignes extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     const typesDeQuestionsDisponibles = ['oui', 'non']
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
     let A, B, C, D, d

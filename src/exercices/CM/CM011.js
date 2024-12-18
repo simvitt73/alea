@@ -32,10 +32,6 @@ export default function Quart () {
   this.tailleDiaporama = 3
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typesDeQuestionsDisponibles = range1(5)
     const listeTypeDeQuestions = combinaisonListes(
       typesDeQuestionsDisponibles,

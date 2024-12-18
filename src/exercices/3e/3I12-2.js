@@ -36,7 +36,6 @@ export default function ComprendreScriptMultiples () {
   this.nbQuestions = 1
   this.typeExercice = 'Scratch'
 
-
   this.nouvelleVersion = function () {
     /*
     let optionsBriques = []

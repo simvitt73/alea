@@ -27,9 +27,6 @@ export default function Reconnaitrefonctionaffine () {
 
   this.consigne = 'Déterminer, en expliquant, si les fonctions suivantes sont, ou non, des fonctions affines.'
 
-
-
-
   this.nbQuestions = 5
 
   this.nouvelleVersion = function () {

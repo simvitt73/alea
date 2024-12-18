@@ -34,27 +34,12 @@ export default function DernierChiffre () {
   this.nbCols = 2 // Le nombre de colonnes dans l'énoncé LaTeX
   this.nbColsCorr = 2// Le nombre de colonne pour la correction LaTeX
   this.tailleDiaporama = 3
-
-   = false // mettre à true si on ne veut pas de l'exercice en ligne
-
   this.correctionDetailleeDisponible = true
-  // Voir la Classe Exercice pour une liste exhaustive des propriétés disponibles.
-
   this.sup = 1 // A décommenter : valeur par défaut d'un premier paramètre
-
-  // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
   this.nouvelleVersion = function () {
     if (this.version === 2) {
       this.sup = 2
     }
-    
-    // la variable numeroExercice peut être récupérée pour permettre de différentier deux copies d'un même exo
-    // Par exemple, pour être certain de ne pas avoir les mêmes noms de points en appelant 2 fois cet exo dans la même page
-
-
-    
-    
-
     let typeDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typeDeQuestionsDisponibles = ['somme']

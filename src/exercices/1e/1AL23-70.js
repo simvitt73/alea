@@ -35,7 +35,6 @@ export default function TrouverEquationParabole () {
 
   this.nbQuestions = 5
 
-
   this.spacingCorr = 3
   this.sup = 4
   this.correctionDetailleeDisponible = true

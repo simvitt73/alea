@@ -44,16 +44,12 @@ export const refs = {
 export default function ReductionsPiegesClassiques () {
   Exercice.call(this)
 
-
   this.sup = true
   this.listeAvecNumerotation = false
 
   this.nouvelleVersion = function () {
     this.consigne = 'Réduire et simplifier, si possible, '
     this.consigne += this.nbQuestions > 1 ? 'les expressions suivantes.' : 'l\'expression suivante.'
-
-    
-    
 
     const typesDeQuestionsDisponibles = [
       'ax+b',

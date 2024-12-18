@@ -41,7 +41,6 @@ export default class nomExercice extends Exercice {
 
   nouvelleVersion () {
     this.consigne = 'Développer et réduire en utilisant les identités remarquables.'
-    
 
     const listeDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup,

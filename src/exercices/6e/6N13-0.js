@@ -28,7 +28,6 @@ export default class sensDesPrefixes extends Exercice {
 
     this.nbQuestions = 4
 
-
     this.sup = 1
     this.sup2 = 1
     this.besoinFormulaireNumerique = ['Type de questions', 3, '1 : Donner la signification du préfixe\n2 : Donner le préfixe correspondant\n3 : Mélange']
@@ -37,14 +36,11 @@ export default class sensDesPrefixes extends Exercice {
 
   nouvelleVersion () {
     this.consigne = 'Compléter '
-    
+
     this.sup2 = parseInt(this.sup2)
     if (this.sup === 1) this.consigne += 'avec le calcul correspondant.'
     if (this.sup === 2) this.consigne += 'avec le préfixe correspondant.'
     if (this.sup === 3) this.consigne += 'avec le calcul ou le préfixe correspondant.'
-
-    
-    
 
     let typeQuestionsDisponibles
     if (this.sup === 1) {

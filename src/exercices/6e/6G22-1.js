@@ -40,11 +40,6 @@ export default class VocabulaireDeBaseDesAngles extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     const listeTypeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup,
       max: 4,

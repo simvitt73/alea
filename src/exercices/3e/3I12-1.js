@@ -32,7 +32,6 @@ export default function CompleterScriptMultiple () {
   this.nbQuestions = 1
   this.typeExercice = 'Scratch'
 
-
   this.nouvelleVersion = function () {
     this.introduction = lampeMessage({
       titre: context.isHtml ? `${scratchblock('\\begin{scratch}[print,fill,blocks,scale=0.5]\n\\ovaloperator{\\ovalnum{ } modulo \\ovalnum{ }}\\end{scratch}')}` : 'Information',

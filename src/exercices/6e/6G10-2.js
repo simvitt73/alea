@@ -18,5 +18,4 @@ export const refs = {
 export default function UtiliserLeCodagePourDecrire6e () {
   this.classe = 6
   UtiliserLeCodagePourDecrire.call(this)
-
 }

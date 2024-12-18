@@ -33,22 +33,12 @@ export default function CalculsPuissancesDe10 () {
   this.amcReady = amcReady
   this.amcType = amcType
 
-
-
-
   this.nbQuestions = 5
   this.correctionDetailleeDisponible = true // booléen qui indique si une correction détaillée est disponible.
   this.correctionDetaillee = false // booléen indiquant si la correction détaillée doit être affiché par défaut (récupéré dans l'url avec le paramètre `,cd=`).
 
   this.nouvelleVersion = function () {
-    
-
-
     this.consigne = 'Donner la notation scientifique.'
-
-
-    
-    
 
     const listeFacteurs1 = [2, 3, 5, 7]
 

@@ -37,14 +37,10 @@ export default class nomExercice extends Exercice {
     this.nbCols = 2
     this.nbColsCorr = 2
     this.tailleDiaporama = 3
-
   }
 
   nouvelleVersion () {
     const computeEngine = new ComputeEngine()
-
-    
-    
 
     let listeTypeDeQuestionsDisponibles
     if (this.sup === 1) { // On ajuste la difficulté selon le paramètre.

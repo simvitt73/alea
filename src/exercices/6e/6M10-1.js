@@ -345,10 +345,6 @@ export default function ProblemesAiresRectangles () {
   }
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let choixDesTables
 
     const nombreTotalEtapes = gestionnaireFormulaireTexte({

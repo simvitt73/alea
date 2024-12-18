@@ -48,7 +48,7 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "transpile": "tsc > journal.log",
-    "lint": "eslint src/exercices/**/* --ext .js,.ts --fix",
+    "lint": "eslint src/exercices/**/*.js --fix && eslint src/exercices/**/*.ts --fix",
     "lintSvelte": "eslint src/components/**/* --ext .js,.ts,.svelte --fix",
     "docs": "jsdoc -d docs --configure jsdocConf.json",
     "addDNB": "pnpm --package=git+https://forge.apps.education.fr/coopmaths/dnb -c dlx dnbindex",

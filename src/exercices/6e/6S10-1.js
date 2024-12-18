@@ -34,19 +34,9 @@ export const refs = {
 export default function LireUnDiagramme () {
   Exercice.call(this)
   this.nbQuestions = 2
-
-
-
-
-   = false
   this.sup = 3
   this.sup2 = 5
-
   this.nouvelleVersion = function () {
-
-    
-    
-
     let typesDeQuestionsDisponibles
     if (this.sup2 < 5) {
       typesDeQuestionsDisponibles = [this.sup2]

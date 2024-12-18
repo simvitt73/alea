@@ -38,9 +38,6 @@ export default function FabriqueAYohaku () {
   this.besoinFormulaire3Numerique = ['Taille de la grille (nombre de cases horizontales)', 5]
   this.besoinFormulaire4CaseACocher = ['Avec aide', false]
   this.nouvelleVersion = function () {
-
-    
-    
     const type = this.type
     for (let i = 0, cpt = 0, texte, texteCorr; i < this.nbQuestions && cpt < 50;) {
       const donnees = []

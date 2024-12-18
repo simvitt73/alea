@@ -89,7 +89,6 @@ export default function VocabulaireDuCercle () {
     ].join('\n')
   ]
 
-
   this.spacingCorr = 1.5 // Interligne des réponses
 
   this.avecLeCentreQuiEstAussiLeMilieu = false
@@ -98,9 +97,6 @@ export default function VocabulaireDuCercle () {
     const typesDeQuestions = String(this.sup3 ?? typesDeQuestionsParDefaut)
     this.consigne = this.sup2 ? 'Cocher la (ou les) bonne(s) réponse(s).' : 'Compléter.'
     if (context.isHtml) this.consigne += '<br><br>'
-
-    
-    
 
     this.interactifType = this.sup2 ? 'qcm' : 'mathLive'
     const nbSousQuestionMax = 7 // Il y a 6 types de sous-questions pour l'instant... si ça venait à changer, mettre à jour ce paramètre

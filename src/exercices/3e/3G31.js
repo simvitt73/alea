@@ -42,8 +42,6 @@ export default function CalculDAngle () {
   Exercice.call(this)
   this.nbQuestions = 2
 
-
-
   this.sup = false
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = false
@@ -56,10 +54,6 @@ export default function CalculDAngle () {
   }
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let listChoixRapportTrigo = []
     for (let i = 0; i < this.nbQuestions; i++) {
       const nom = creerNomDePolygone(3, 'QD')

@@ -88,8 +88,6 @@ export default function TableauxEtProportionnalite () {
 
   this.interactif = false
 
-
-
   context.isHtml ? this.spacing = 3 : this.spacing = 2
   context.isHtml ? this.spacingCorr = 2.5 : this.spacingCorr = 1.5
 
@@ -98,8 +96,6 @@ export default function TableauxEtProportionnalite () {
   this.nouvelleVersion = function () {
     typesDeQuestionsDisponibles = [choice([0, 1]), 2, choice([3, 4]), 5]
     typesDeQuestionsDisponibles = shuffle(typesDeQuestionsDisponibles)
-
-
 
     this.consigne = this.interactif ? '' : 'Dire si les tableaux suivants sont de tableaux de proportionnalité. Justifier.'
 

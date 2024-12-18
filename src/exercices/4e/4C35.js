@@ -36,11 +36,6 @@ export default function PuissanceDecimaleOuFractionnaire () {
   this.besoinFormulaire2CaseACocher = ['Avec que des exposants positifs (incontournable pour AMC)']
 
   this.nouvelleVersion = () => {
-
-    
-    
-
-
     const typeQuestionsDisponibles = ['puissancePos', 'puissanceNeg', 'negPuissancePaire', 'negPuissanceImpaire', 'negParenthesePuissancePaire', 'negParenthesePuissanceImpaire', 'puissance0', 'puissance1', 'negParenthesePuissancePaireNeg', 'negParenthesePuissanceImpaireNeg'] // On créé 3 types de questions
     const typesDeQuestions = this.sup2 || context.isAmc // Ici on ne prends que les exposants positifs pour ne pas influencer par le format de réponse AMC
       ? ['puissance0', 'puissance1', 'puissancePos', 'puissancePos', 'puissancePos', 'puissancePos']

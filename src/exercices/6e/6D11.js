@@ -36,8 +36,6 @@ export default function SommeDeDurees () {
   this.nbColsCorr = 1
 
   this.nouvelleVersion = function () {
-
-
     /*
     if (this.sup === 1) {
       typesDeQuestions = combinaisonListes([1, 3], this.nbQuestions)

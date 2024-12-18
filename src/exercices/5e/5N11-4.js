@@ -35,10 +35,7 @@ export default function ValeurApprocheeDePourcentages () {
   this.sup = 1 // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
 
-
   this.nouvelleVersion = function () {
-
-
     const denominateurDisponibles = [100, 200, 300, 1000]
     const listeTypeDeQuestions = combinaisonListes(denominateurDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
     this.consigne = this.interactif

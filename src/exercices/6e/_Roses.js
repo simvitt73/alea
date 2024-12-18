@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { point } from '../../lib/2d/points.js'
 import { polygoneRegulierParCentreEtRayon } from '../../lib/2d/polygones.js'
 import { longueur, segment } from '../../lib/2d/segmentsVecteurs.js'

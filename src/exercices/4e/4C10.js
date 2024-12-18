@@ -35,9 +35,6 @@ export default function ProduitsEtQuotientRelatifs () {
   this.besoinFormulaire2Numerique = ['Opérandes', 4, '1 : Entiers relatifs (quotient exact)\n2 : Un entier et un décimal (quotient décimal simple)\n3 : Rationnels\n4 : Mélange']
 
   this.nouvelleVersion = function () {
-
-    
-    
     this.sup = contraindreValeur(1, 3, this.sup, 3)
     this.sup2 = contraindreValeur(1, 4, this.sup2, 1)
     const typesDeQuestions = []

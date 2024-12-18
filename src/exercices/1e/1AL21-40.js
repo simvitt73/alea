@@ -34,7 +34,6 @@ export default function Resolutionavecformecanonique () {
 
   this.nbQuestions = 4
 
-
   this.spacingCorr = 1.5
   this.sup = 1
 

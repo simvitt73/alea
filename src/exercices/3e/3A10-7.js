@@ -28,8 +28,6 @@ export const refs = {
 export default function ExerciceLabyrinthePremiers3e () {
   Exercice.call(this)
   this.nbQuestions = 3
-
-   = false
   this.sup = 3
   this.sup2 = 6
   this.sup3 = 1

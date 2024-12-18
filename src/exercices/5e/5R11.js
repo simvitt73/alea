@@ -34,10 +34,6 @@ export default function LireAbscisseRelative () {
   this.consigne = "Lire l'abscisse de chacun des points suivants."
   this.nbQuestions = 3
 
-
-
-
-
   this.sup = 4
   const changeCoord = function (x, abs0, pas1) {
     return (abs0 + (x - abs0) * 3 * pas1)
@@ -46,11 +42,7 @@ export default function LireAbscisseRelative () {
   this.nouvelleVersion = function () {
     let typesDeQuestions
 
-    
-    
-
     let objets = []
-
 
     if (this.sup === 4) {
       typesDeQuestions = combinaisonListes([1, 2, 3], this.nbQuestions)

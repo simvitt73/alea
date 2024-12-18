@@ -31,7 +31,6 @@ export default function RepresenterUnSolide () {
 
   this.nbQuestions = 1
 
-
   this.sup = 1
   this.sup2 = 1
   this.classe = 6
@@ -39,7 +38,6 @@ export default function RepresenterUnSolide () {
   this.amcType = amcType
 
   this.nouvelleVersion = function () {
-
     let typeDeQuestionsDisponibles
 
     if (this.sup === 3) { typeDeQuestionsDisponibles = [1, 2] } else if (this.sup === 5) { typeDeQuestionsDisponibles = [1, 2, 4] } else if (this.sup === 7) { typeDeQuestionsDisponibles = [1, 2, 4, 6] } else { typeDeQuestionsDisponibles = [parseInt(this.sup)] }

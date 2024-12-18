@@ -28,13 +28,10 @@ export default function PpcmEngrenages () {
   this.nbQuestionsModifiable = false
   this.nbQuestions = 4
 
-
   this.sup = false
 
   this.nouvelleVersion = function (numeroExercice) {
     let typesDeQuestions
-
-
 
     const typesDeQuestionsDisponibles = [1, 2, 3]
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions)

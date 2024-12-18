@@ -37,10 +37,6 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     const propositionsAMC = []
     const typeQuestionsDisponibles = ['nom', 'sommet', 'cote', 'diagonale']
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)

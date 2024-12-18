@@ -27,16 +27,11 @@ export const refs = {
 export default function MettreAuMemeDenominateurLit () {
   Exercice.call(this)
 
-
-
-
-
   this.nbQuestions = 2
   this.sup = 3
   this.comment = `Les expressions du niveau 1 sont des expressions du type $a+\\dfrac{b}{x}$ ou $ax+\\dfrac{b}{x}$ ou $a+\\dfrac{b}{cx+d}$.<br>
   Les expressions de niveau 2 sont plus complexes. Elles nécessitent par exemple un développement du numérateur et peuvent avoir deux valeurs interdites.`
   this.nouvelleVersion = function () {
-    
     let typesDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = [1, 2, 3]

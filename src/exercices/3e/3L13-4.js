@@ -39,10 +39,6 @@ export default class problemes extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     for (let i = 0, solutionDecimale, cpt = 0, exercice = {}; i < this.nbQuestions && cpt < 50;) {
       const numeroquestion = this.nbQuestions % 2 === 0 ? i % 2 + 1 : Math.floor(Math.random() * 2) + 1
       switch (numeroquestion) {

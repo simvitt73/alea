@@ -31,14 +31,11 @@ export default function AntecedentEtImageGraphique () {
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-
   if (context.isHtml) {
     this.spacingCorr = 2
   }
 
   this.nouvelleVersion = function () {
-
-    
     const r = repere({
       xMin: -5,
       xMax: 5,

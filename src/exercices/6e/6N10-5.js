@@ -39,10 +39,6 @@ export default function ExerciceLabyrintheNumeration () {
   this.sup5 = false
 
   this.nouvelleVersion = function () {
-    
-
-    
-
     const tailleChiffre = !this.sup5 ? 0.7 : 1.1
     let texte, texteCorr
     const nbL = this.sup3 === 1 ? randint(2, 7) : Math.max(2, this.sup3)

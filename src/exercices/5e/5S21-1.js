@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import { choice } from '../../lib/outils/arrayOutils'
 import { numAlpha, sp } from '../../lib/outils/outilString.js'
 import { texNombre } from '../../lib/outils/texNombre'
@@ -30,7 +28,6 @@ export default function ProbabilitesSimples () {
 
   // this.sup = 1  // Niveau de difficulté
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
-
 
   this.nouvelleVersion = function () {
     for (let i = 0; i < this.nbQuestions; i++) {

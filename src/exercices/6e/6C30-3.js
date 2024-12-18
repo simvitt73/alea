@@ -34,17 +34,7 @@ export default function MultiplicationMentalDecimaux () {
   this.interactif = true // Il n'existe pas de version non QCM
   this.consigne = 'Trouver la réponse exacte du calcul parmi les réponses proposées.'
   this.nbQuestions = 4 // Ici le nombre de questions
-
-
-
-
-
-   = false // mettre à true si on ne veut pas de l'exercice en ligne
-
   this.nouvelleVersion = function () {
-
-    
-    
     const typeDeQuestionsDisponibles = ['add', 'mul', 'add_deci', 'mul_deci'] // tableau à compléter par valeurs possibles des types de questions
     const listeTypeDeQuestions = combinaisonListes(typeDeQuestionsDisponibles, this.nbQuestions)
     this.interactif = true // Il n'existe pas de version non QCM

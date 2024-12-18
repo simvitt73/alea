@@ -42,11 +42,6 @@ export default class VitesseDistanceTemps extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     let typesDeQuestionsDisponibles = ['vitesse', 'temps', 'distance']
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = ['vitesse']

@@ -38,9 +38,6 @@ export default function OpposeExpression () {
   this.nouvelleVersion = function () {
     this.consigne = this.nbQuestions > 1 ? 'Supprimer les parenthèses et réduire les expressions suivantes.' : 'Supprimer les parenthèses et réduire l\'expression suivante.'
 
-    
-    
-
     const lettresPossibles = ['a', 'b', 'c', 'x', 'y', 'z']
 
     let listeTypeDeQuestions = gestionnaireFormulaireTexte({

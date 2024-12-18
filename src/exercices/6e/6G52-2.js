@@ -18,6 +18,5 @@ export const refs = {
 export default class ProprietesParallelesPerpendiculaires2 extends ProprietesParallelesPerpendiculaires {
   constructor () {
     super()
-
   }
 }

@@ -37,7 +37,6 @@ export default function TrouverErreurResolEqDeg1 () {
     this.consigne = this.consigne.replace('<br>', '')
   }
 
-
   this.nbColsCorr = 1
   // this.nbQuestionsModifiable = false;
   context.isHtml ? this.spacing = 3 : this.spacing = 2
@@ -51,10 +50,6 @@ export default function TrouverErreurResolEqDeg1 () {
     } else {
       typeDeQuestionsDisponibles = shuffle([choice([1, 3]), choice([2, 4]), 5])
     }
-
-
-    
-    
 
     // typesDeQuestionsDisponibles=[1];
 

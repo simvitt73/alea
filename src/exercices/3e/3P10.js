@@ -33,11 +33,9 @@ export default function EvolutionsEnPourcentage () {
   Exercice.call(this)
   this.nbQuestions = 4
 
-
   this.sup = 4 // type de questions
 
   this.nouvelleVersion = function () {
-    
     let typesDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = ['finale']

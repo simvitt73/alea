@@ -31,9 +31,6 @@ export default function CalculerDiscriminant () {
   this.nouvelleVersion = function () {
     this.sup = contraindreValeur(1, 4, this.sup, 1)
 
-
-    
-    
     if (this.nbQuestions > 1) this.consigne = 'Calculer le discriminant de chacune de ces expressions :'
     else this.consigne = 'Calculer le discriminant de cett expression :'
     let listeTypesDeQuestions
