@@ -31,10 +31,9 @@ export const refs = {
 }
 export default function DroiteRemarquableDuTriangle () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.spacing = 2
   this.nbQuestions = 1
-
 
   this.sup = 1
 

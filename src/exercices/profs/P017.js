@@ -28,8 +28,7 @@ export const uuid = '0ff0f'
 */
 export default function EncadrerAireDisque () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.spacing = context.isHtml ? 2 : 1
 
   this.nbQuestions = 1
@@ -39,7 +38,6 @@ export default function EncadrerAireDisque () {
   this.nouvelleVersion = function () {
     let texte = ''
 
-    
     this.listeCorrections = [''] // Liste de questions corrigées
     let objets = []
 

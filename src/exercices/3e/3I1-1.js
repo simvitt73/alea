@@ -87,10 +87,8 @@ export const refs = {
 export default function ConjectureDeSyracuse () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 5 // Ici le nombre de questions
   this.nbQuestionsModifiable = false // Active le formulaire nombre de questions
-
 
   this.pasDeVersionLatex = false // mettre à true si on ne veut pas de l'exercice dans le générateur LaTeX
   this.pas_de_version_HMTL = false // mettre à true si on ne veut pas de l'exercice en ligne
@@ -103,9 +101,6 @@ export default function ConjectureDeSyracuse () {
 
   // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
   this.nouvelleVersion = function () {
-
-    
-    
     const typesDeQuestionsDisponibles = [1, 2, 3, 4, 5] // tableau à compléter par valeurs possibles des types de questions
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions)
     // On choisit un entier pour l'étude de la suite de Syracuse correspondante

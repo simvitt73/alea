@@ -40,11 +40,6 @@ export default function NotationPuissance () {
   this.classe = 4
 
   this.nouvelleVersion = function () {
-    this.titre = titre
-
-    
-    
-
     let listeTypeDeQuestions
     switch (this.sup) {
       case 1:

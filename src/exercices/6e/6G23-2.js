@@ -23,9 +23,7 @@ export const refs = {
 export default function TracerTriangle2Angles () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 3
-
 
   this.sup = false
 

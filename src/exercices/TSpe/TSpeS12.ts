@@ -27,7 +27,7 @@ const bleuMathalea = context.isHtml ? '#216D9A' : 'black'
 export default class EtudeSuiteFonctionRecurrence extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
   }

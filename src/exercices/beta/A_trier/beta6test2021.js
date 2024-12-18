@@ -9,8 +9,7 @@ export const titre = 'Exercice exemple'
 */
 export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestionsModifiable = false
   // this.nbQuestions = 10;
   this.nbCols = 2 // Uniquement pour la sortie LaTeX

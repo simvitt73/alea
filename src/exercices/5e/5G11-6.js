@@ -29,9 +29,8 @@ export const refs = {
 }
 export default function CompleterParSymetrie5e () {
   Exercice.call(this)
-  this.consigne = ''
-  this.nbQuestions = 1
 
+  this.nbQuestions = 1
 
   this.sup2 = 1
   this.pointsNonSolution = []

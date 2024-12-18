@@ -34,15 +34,11 @@ export const refs = {
 export default function DiviserUnNombreParPuissanceDeDix () {
   Exercice.call(this)
   this.nbQuestions = 5 // Ici le nombre de questions
-  this.consigne = ''
+
   this.sup = false
   this.sup2 = true
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const choixUnites = ['millièmes', 'centièmes', 'dixièmes']
     let listeChoixAlea = range(2)
     if (!this.sup2 || this.interactif) { this.nbQuestions = min(this.nbQuestions, 3) }

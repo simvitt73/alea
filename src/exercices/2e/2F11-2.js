@@ -25,10 +25,7 @@ export const refs = {
 }
 export default function ComparerAvecFonctionRef () {
   Exercice.call(this)
-  this.consigne = ''
   this.nbQuestions = 1
-  // this.nbQuestionsModifiable = false
-
 
   this.sup = 6
   this.sup2 = true

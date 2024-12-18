@@ -38,10 +38,8 @@ export const interactifType = 'mathLive'
 export default function SymetrieAxialeProprietes () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.spacing = 2
   this.nbQuestions = 3
-
 
   this.sup = '5'
   this.sup2 = true

@@ -18,12 +18,10 @@ export const uuid = '5b767'
 */
 export default function TraceCourbeInterpolee1 () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
 
-  this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
   this.sup = '(-5;0)/(0;5)/(5;0)' // liste de points
   this.sup2 = true
   this.sup3 = 1

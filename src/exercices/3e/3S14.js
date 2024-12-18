@@ -32,7 +32,6 @@ export const refs = {
 export default function CalculerCaracteristiques () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 4
 
   this.sup = 7

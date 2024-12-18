@@ -20,30 +20,15 @@ export const uuid = 'ad5f5'
  */
 export default function FeuilleDAxesGradues () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestions = 1
 
-
-  this.nbColsCorr = 1
   this.spacing = 3
   this.sup = 10
-  this.consigneModifiable = false
   this.nbQuestions = 4
-  // this.nbQuestionsModifiable = false
-  this.nbColsModifiable = false
-  this.nbColsCorrModifiable = false
-  this.spacingModifiable = false
-  this.spacingCorrModifiable = false
-  this.listeAvecNumerotation = false
 
   this.nouvelleVersion = function () {
     const pas = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 10, defaut: 10, melange: 11, nbQuestions: this.nbQuestions, shuffle: false })
-
-    
-    
-
-
 
     for (let i = 0, texte; i < this.nbQuestions; i++) {
       texte = mathalea2d({ xmin: -0.5, ymin: -1, xmax: 20, ymax: 1 },

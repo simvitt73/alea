@@ -26,7 +26,6 @@ export const refs = {
 export default class systemeEquationsPremDegComp extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
     this.nbQuestions = 3
     this.sup = 1
     this.correctionDetailleeDisponible = true
@@ -39,9 +38,6 @@ export default class systemeEquationsPremDegComp extends Exercice {
     } else {
       this.consigne = 'Déterminer la position relative des droites et en déduire le nombre de solutions des systèmes d\'équations :'
     }
-
-    
-    
 
     const typeQuestionsDisponibles = ['unique', 'unique', 'inf', 'aucune']
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)

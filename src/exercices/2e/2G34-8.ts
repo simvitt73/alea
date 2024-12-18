@@ -27,7 +27,6 @@ export const refs = {
 export default class systemeEquationsPremDeg extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
     this.nbQuestions = 3
     this.sup = 3
     this.correctionDetailleeDisponible = true
@@ -41,11 +40,7 @@ export default class systemeEquationsPremDeg extends Exercice {
       this.consigne = 'Les systèmes suivants ont-ils une, aucune ou une infinité de solutions ?'
     }
 
-    
-    
-
-
-    let typeQuestionsDisponibles: ('lv1Uni' |'lv1Auc' |'lv1Inf' |'lv2Uni' |'lv2Auc' |'lv2Inf')[]
+    let typeQuestionsDisponibles: ('lv1Uni' | 'lv1Auc' | 'lv1Inf' | 'lv2Uni' | 'lv2Auc' | 'lv2Inf')[]
     if (this.sup === 1) {
       typeQuestionsDisponibles = ['lv1Uni', 'lv1Auc', 'lv1Inf']
     } else if (this.sup === 2) {

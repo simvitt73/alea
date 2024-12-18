@@ -25,7 +25,6 @@ export const refs = {
 export default class systemeEquationsPremDegComp extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
     this.nbQuestions = 3
     this.sup = 1
     this.correctionDetailleeDisponible = true
@@ -39,10 +38,7 @@ export default class systemeEquationsPremDegComp extends Exercice {
       this.consigne = 'Résoudre les systèmes suivants par substitution :'
     }
 
-    
-    
-
-    let typeQuestionsDisponibles : ('lv1'|'lv2')[]
+    let typeQuestionsDisponibles : ('lv1' | 'lv2')[]
     if (this.sup === 1) {
       typeQuestionsDisponibles = ['lv1']
     } else if (this.sup === 2) {

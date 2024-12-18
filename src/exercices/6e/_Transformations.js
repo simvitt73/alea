@@ -40,10 +40,9 @@ export const amcType = 'AMCHybride'
 export default function Transformations () {
   Exercice.call(this)
   this.can = false
-  this.consigne = ''
+
   this.nbQuestions = 1
 
-  this.nbColsCorr = 1
   this.sup = 1
 
   this.nouvelleVersion = function () {
@@ -79,8 +78,6 @@ export default function Transformations () {
     d4.opacite = 0.5
     const couleurs = ['brown', 'green', 'blue']
 
-    
-    
     const xO = 4
     const yO = 4
     const xuPossibles = combinaisonListes(rangeMinMax(-3, 3), 1)

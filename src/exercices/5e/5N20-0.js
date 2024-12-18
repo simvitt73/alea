@@ -64,11 +64,6 @@ export default function ProblemesAdditifsFractions5e () {
   this.sup = 1
   this.nbQuestions = 1
 
-  this.titre = titre
-  this.consigne = ''
-
-
-
   // this.nbQuestionsModifiable = false;
   context.isHtml ? this.spacing = 1 : this.spacing = 1
   context.isHtml ? this.spacingCorr = 1 : this.spacingCorr = 1
@@ -82,8 +77,6 @@ export default function ProblemesAdditifsFractions5e () {
       // typesDeQuestionsDisponibles = shuffle([choice([1,3]),choice([2,4]),0]);
       typesDeQuestionsDisponibles = [0]
     }
-
-
 
     // let listeTypeDeQuestions  = combinaisonListes(typesDeQuestionsDisponibles,this.nbQuestions) // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées --> à remettre comme ci-dessus

@@ -26,11 +26,9 @@ export default class NomExercice extends Exercice {
   nbParts = []
   constructor () {
     super()
-    this.titre = titre
-    this.consigne = ''
+
     this.nbQuestions = 5 // Nombre de questions par défaut
 
-    this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
     this.tailleDiaporama = 3
   }
 

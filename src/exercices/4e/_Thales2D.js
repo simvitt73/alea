@@ -32,10 +32,8 @@ export const titre = 'Calculer des longueurs avec le théorème de Thalès'
 export default function Thales2D () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 1
 
-  this.nbColsCorr = 1
   this.sup = 1 // Triangles imbriqués / configuration papillon / les 2
   this.sup2 = 1 // correction Triangles imbriqués / correction droites sécantes
   this.vspace = -0.5 // Monter un peu l'énoncé pour gagner de la place dans la sortie PDF

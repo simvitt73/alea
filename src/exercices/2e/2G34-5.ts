@@ -28,7 +28,6 @@ export const refs = {
 export default class systemeEquationsPremDeg extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
     this.nbQuestions = 3
     this.sup = 4
     this.sup2 = false
@@ -43,9 +42,6 @@ export default class systemeEquationsPremDeg extends Exercice {
     } else {
       this.consigne = 'Résoudre les systèmes d\'équations suivants par combinaison linéaire :'
     }
-
-    
-    
 
     this.besoinFormulaire2CaseACocher = ['Solution contenant des fractions']
     let typeQuestionsDisponibles: ('lv1' | 'lv2' | 'lv3')[]

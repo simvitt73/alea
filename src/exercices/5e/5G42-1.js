@@ -24,18 +24,13 @@ export const amcType = 'qcmMult'
 export default class QcmProprietesParallelogrammesParticuliers extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 4
     this.sup = 3 // Mélange de questions directes et indirectes
     this.sup2 = false // Par défaut on n'écrit pas « non croisé » dans les énoncés
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     let texte, texteCorr
     let questionsDirects = ['par1', 'par2', 'par3', 'par4', 'par5', 'rect1', 'rect2', 'rect3', 'rect4', 'rect5', 'losange1', 'losange2', 'losange3', 'losange4', 'losange5', 'carre1', 'carre2', 'carre3', 'carre4', 'carre5']
     let questionsIndirects = ['reciproque1', 'reciproque2', 'reciproque3', 'reciproque4', 'reciproque5', 'reciproque6', 'reciproque7', 'reciproque8', 'reciproque9', 'reciproque10', 'reciproque11', 'reciproque12', 'reciproque13', 'reciproque14', 'reciproque15', 'reciproque16']

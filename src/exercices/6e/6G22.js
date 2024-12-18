@@ -40,7 +40,7 @@ export const refs = {
 }
 export default function NommerUnAngle () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 2
   this.sup = 2
   this.sup2 = 1

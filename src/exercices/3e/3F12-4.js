@@ -34,7 +34,6 @@ export const refs = {
 export default function ImageGraphique () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.sup = 3
 
   context.isHtml ? this.spacingCorr = 3 : this.spacingCorr = 1
@@ -42,12 +41,7 @@ export default function ImageGraphique () {
   this.pointsParQuestions = 3
   // this.nbQuestionsModifiable = false
 
-
   this.nouvelleVersion = function () {
-
-
-
-
     this.sup = parseInt(this.sup)
     let a, b, c, d, x1, x2, x3, fx1, fx2, fx3, ymax, f
 

@@ -28,10 +28,7 @@ export const refs = {
 export default function IntervallesDeR () {
   Exercice.call(this)
 
-  // this.consigne = ''
   this.nbQuestions = 4
-
-
 
   this.nouvelleVersion = function () {
     const typesDeQuestionsDisponibles = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]; let typeDeQuestion

@@ -21,7 +21,7 @@ export const interactifType = 'qcm'
 */
 export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestionsModifiable = false
   this.nbQuestions = 19 // Pour la boucle des feedbacks
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
@@ -32,11 +32,6 @@ export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
   this.spacing = 3
 
   this.nouvelleVersion = function () {
-
-
-    
-    
-
     let question0 = '15 centaines + 32 dizaines'
     this.autoCorrection[0] = {}
     this.autoCorrection[0].options = { ordered: true, vertical: true }

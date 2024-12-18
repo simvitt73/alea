@@ -28,7 +28,7 @@ export const refs = {
 export default class systemeEquationsPremDeg extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 3
     this.sup = 3
     this.correctionDetailleeDisponible = true
@@ -41,10 +41,6 @@ export default class systemeEquationsPremDeg extends Exercice {
     } else {
       this.consigne = 'Résourdre les problèmes suivants :'
     }
-
-    
-    
-
 
     let typeQuestionsDisponibles: ('p1' | 'p2')[]
     if (this.sup === 1) {

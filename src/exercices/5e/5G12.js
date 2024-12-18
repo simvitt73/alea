@@ -36,13 +36,11 @@ export const refs = {
 }
 export default function PavageEtDemiTour2D () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestions = 3
 
   this.correctionDetailleeDisponible = true
   this.correctionDetaillee = true
-
 
   this.sup = 1 // 1 pour des pavages modestes, 2 pour des plus grand.
   this.sup2 = false // On cache les barycentres par défaut.
@@ -148,9 +146,6 @@ export default function PavageEtDemiTour2D () {
     if (this.nbQuestions > 5) {
       taillePavage = 2
     }
-    
-
-    
 
     let Nx
     let Ny

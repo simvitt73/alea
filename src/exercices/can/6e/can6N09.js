@@ -25,7 +25,7 @@ export default function PositionDesChiffres () {
   this.typeExercice = 'simple'
   this.nbQuestions = 1
   this.formatChampTexte = ''
-  this.consigne = ''
+
   this.tailleDiaporama = 2
   this.nouvelleVersion = function () {
     const f = choice([1, 10, 100])

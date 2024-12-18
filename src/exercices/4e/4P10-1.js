@@ -34,12 +34,8 @@ export default function GraphiquesEtProportionnalite2 () {
     this.nbQuestions = 1
   }
 
-  this.titre = titre
-  this.consigne = ''
   this.spacingCorr = 2
 
-
-  this.nbColsCorr = 1
   // this.nbQuestionsModifiable = false;
   context.isHtml ? this.spacing = 2 : this.spacing = 1
   // context.isHtml? this.spacingCorr = 3 : this.spacingCorr = 2;
@@ -52,10 +48,6 @@ export default function GraphiquesEtProportionnalite2 () {
     } else {
       typesDeQuestionsDisponibles = [1]
     }
-
-
-    
-    
 
     // typesDeQuestionsDisponibles=[1];
 

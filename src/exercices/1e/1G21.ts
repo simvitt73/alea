@@ -145,28 +145,22 @@ function questionMediatrice (i: number = 0): [string, string] {
 export default class nomExercice extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
     this.nbQuestions = 5
   }
 
   nouvelleVersion () {
-
-    
-    
-
-
     const questions = [questionPointvNorm,
-		       questionPointvDir,
-		       questionDeuxPoints,
-		       questionHauteur,
-		       questionMediatrice]
+      questionPointvDir,
+      questionDeuxPoints,
+      questionHauteur,
+      questionMediatrice]
 
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; cpt++) {
-      const [texte, texteCorr] = questions[i%questions.length](i)
+      const [texte, texteCorr] = questions[i % questions.length](i)
       if (this.questionJamaisPosee(i, texte)) {
-	this.listeQuestions.push(texte)
-	this.listeCorrections.push(texteCorr)
-	i++
+        this.listeQuestions.push(texte)
+        this.listeCorrections.push(texteCorr)
+        i++
       }
     }
     listeQuestionsToContenu(this)

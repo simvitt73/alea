@@ -34,7 +34,7 @@ export const refs = {
 }
 export default function Questions2023 () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 1
   this.nbQuestionsModifiable = false
   this.spacing = context.isHtml ? 2 : 1

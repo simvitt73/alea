@@ -23,19 +23,12 @@ export const refs = {
 }
 export default function PasserDUneBaseA1Autre () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
-  this.nbQuestions = 3
 
-  this.nbColsCorr = 1
+  this.nbQuestions = 3
 
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     let typesDeQuestionsDisponibles = ['vers_base_10', choice(['vers_base_n_3_chiffres', 'vers_base_n_4_chiffres']), choice(['plus_grand_4_chiffres', 'plus_grand_3_chiffres', 'plus_petit_4_chiffres', 'plus_petit_3_chiffres'])]
     if (this.nbQuestions > 3) {
       typesDeQuestionsDisponibles = ['vers_base_10', 'vers_base_n_3_chiffres', 'vers_base_n_4_chiffres', 'plus_grand_4_chiffres', 'plus_grand_3_chiffres', 'plus_petit_4_chiffres', 'plus_petit_3_chiffres']

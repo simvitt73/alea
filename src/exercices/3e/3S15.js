@@ -28,21 +28,12 @@ export const refs = {
 export default function CalculerEtendues () {
   Exercice.call(this)
 
-
-
-  this.consigne = ''
   this.nbQuestions = 1
-
-
-
 
   this.sup = 1
 
   this.nouvelleVersion = function () {
     this.sup = parseInt(this.sup)
-
-    
-    
 
     let typeQuestionsDisponibles = ['notes', 'températures']
     if (this.sup === 1) typeQuestionsDisponibles = ['notes']

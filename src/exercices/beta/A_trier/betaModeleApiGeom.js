@@ -16,7 +16,7 @@ export const dateDePublication = '11/07/2024' // La date de publication initiale
 export default class ExerciceApiGeom extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1 // Nombre de questions par défaut
   }
 

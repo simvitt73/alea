@@ -73,7 +73,7 @@ export default function EquationsProgression () {
   this.besoinFormulaireNumerique = [
     'Type de questions', nbCase, formulaire.join('\n')
   ]
-  this.consigne = ''
+
   this.nbCols = 0
   this.nbColsCorr = 0
   this.tailleDiaporama = 1

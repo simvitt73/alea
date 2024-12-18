@@ -28,7 +28,7 @@ export const refs = {
 export default class IntersectionDroites extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 1
     this.sup = 1
     this.sup2 = 1
@@ -40,11 +40,7 @@ export default class IntersectionDroites extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
-    let typeDeQuestionsDisponibles: ('deuxDroitesSG' |'troisDroitesSG' |'deuxDroitesHG'|'troisDroitesHG')[]
+    let typeDeQuestionsDisponibles: ('deuxDroitesSG' | 'troisDroitesSG' | 'deuxDroitesHG' | 'troisDroitesHG')[]
     if (this.sup === 1 && this.sup2 === 1) {
       typeDeQuestionsDisponibles = ['deuxDroitesSG']
     } else if (this.sup === 1 && this.sup2 === 2) {

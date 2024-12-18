@@ -17,11 +17,9 @@ export const dateDePublication = '06/04/2022'
 */
 export default function SimulateurDes () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
+
   this.nbQuestions = 1
 
-  this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
   this.sup = '6' // liste de dés
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
   this.video = '' // Id YouTube ou url

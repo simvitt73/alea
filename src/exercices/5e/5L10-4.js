@@ -33,16 +33,10 @@ export default function TableauxEtFonction () {
   this.sup = 1
   this.nbQuestions = 1
 
-  this.consigne = ''
-
-
-
   context.isHtml ? this.spacing = 3 : this.spacing = 2
   context.isHtml ? this.spacingCorr = 2.5 : this.spacingCorr = 1
 
   this.nouvelleVersion = function () {
-
-
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const L1 = randint(3, 7)
       const L2 = L1 + 1

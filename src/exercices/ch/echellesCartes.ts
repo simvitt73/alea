@@ -28,17 +28,13 @@ export const refs = {
 export default class EchellesCartes extends Exercice {
   constructor () {
     super()
-    this.consigne = ''
+
     this.nbQuestions = 3
     this.sup = 4
     this.besoinFormulaireNumerique = ['Type de questions', 4, '1 : Distance sur la carte\n2 : Distance réelle\n3 : Échelle\n4 : Mélange']
   }
 
   nouvelleVersion () {
-
-    
-    
-
     let typeQuestionsDisponibles: ('carte' | 'reelle' | 'echelle')[]
     if (this.sup === 1) {
       typeQuestionsDisponibles = ['carte']

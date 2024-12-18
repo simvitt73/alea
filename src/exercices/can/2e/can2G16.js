@@ -29,7 +29,6 @@ export default function VecteursCol () {
   this.tailleDiaporama = 2
   this.formatChampTexte = ''
   this.formatInteractif = 'fractionEgale'
-  this.consigne = ''
 
   this.nouvelleVersion = function () {
     const a = randint(3, 10) // abscisse de C

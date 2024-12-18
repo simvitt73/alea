@@ -32,7 +32,7 @@ export default function CalculerProbabiliteIntersection () {
   Exercice.call(this)
   this.sup = true
   this.keyboard = ['numbers', 'fullOperations', 'variables', 'trigo', 'advanced']
-  this.consigne = ''
+
   this.nbQuestions = 1
   this.tailleDiaporama = 2 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
   this.video = '' // Id YouTube ou url

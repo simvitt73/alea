@@ -24,17 +24,12 @@ export const refs = {
 export default function SimplifierUneSommeDeRacinesCarrees () {
   Exercice.call(this)
 
-  // this.consigne = ''
   this.nbQuestions = 4
   this.nbCols = 2
   this.nbColsCorr = 2
   this.sup = 1
   this.spacingCorr = context.isHtml ? 2 : 1
   this.nouvelleVersion = function () {
-
-    
-    
-
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const e1 = randint(2, 8) * choice([-1, 1])
       const e2 = randint(2, 8) * choice([-1, 1])

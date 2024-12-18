@@ -29,11 +29,8 @@ export const refs = {
 }
 export default function ResoudreGraphFonctionRef () {
   Exercice.call(this)
-  this.consigne = ''
   this.nbQuestions = 1
-  // this.nbQuestionsModifiable = false
 
-  this.nbColsCorr = 1 // Uniquement pour la sortie LaTeX
   this.sup = 4
   this.tailleDiaporama = 2 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
   this.spacing = 1.5 // Interligne des questions

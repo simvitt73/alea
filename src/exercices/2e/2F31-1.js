@@ -27,9 +27,7 @@ export const refs = {
 }
 export default function ComparerAvecFctRef () {
   Exercice.call(this)
-  this.consigne = ''
   this.nbQuestions = 2
-  // this.nbQuestionsModifiable = false
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
   this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
   this.sup = 1

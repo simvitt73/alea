@@ -26,20 +26,15 @@ export const refs = {
 export default function Variationsfonctionaffine () {
   Exercice.call(this)
 
-  this.consigne = ''
   this.nbQuestions = 2 // On complète le nb de questions
 
-
   this.video = ''
-
 
   this.sup = 4
 
   this.nouvelleVersion = function () {
     this.sup = parseInt(this.sup)
 
-    
-    
     let typesDeQuestionsDisponibles = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = [1]

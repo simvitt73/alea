@@ -28,7 +28,7 @@ export const refs = {
 }
 export default function ModeliserEquationsGeometrie () {
   Exercice.call(this)
-  this.consigne = ''
+
   this.nbQuestions = 1
   this.nbCols = 2 // Uniquement pour la sortie LaTeX
   this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
@@ -37,10 +37,6 @@ export default function ModeliserEquationsGeometrie () {
   this.video = '' // Id YouTube ou url
 
   this.nouvelleVersion = function () {
-
-    
-    
-
     const typeQuestionsDisponibles = ['typeE1', 'typeE2', 'typeE3', 'typeE4', 'typeE5', 'typeE6', 'typeE7', 'typeE8'] //
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
     for (let i = 0, a, b, c, d, e, A, B, C, D, E, M, N, P, H, F, K, L, objets, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {

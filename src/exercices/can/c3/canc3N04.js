@@ -26,7 +26,6 @@ export default function ArrondiUnite () {
   this.nbQuestions = 1
   this.tailleDiaporama = 2
   this.formatChampTexte = KeyboardType.clavierDeBase
-  this.consigne = ''
 
   this.nouvelleVersion = function () {
     const a = randint(1, 20)

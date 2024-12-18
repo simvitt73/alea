@@ -71,11 +71,8 @@ export function baseValeur (n) {
 
 export default function PasserDeLaBase12Ou16ALaBase10 () {
   Exercice.call(this)
-  this.titre = titre
-  this.consigne = ''
-  this.nbQuestions = 3
 
-  this.nbColsCorr = 1
+  this.nbQuestions = 3
 
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1
 

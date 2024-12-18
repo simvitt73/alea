@@ -32,12 +32,11 @@ export default function DecompositionFacteursPremiers () {
   Exercice.call(this)
   // pas de différence entre la version html et la version latex pour la consigne
   // mais une différence selon que l'exo est affiché en interactif ou non
-  this.consigne = ''
+
   context.isHtml ? this.spacing = 2 : this.spacing = 2
   context.isHtml ? this.spacingCorr = 2 : this.spacingCorr = 1
   this.nbQuestions = 3
   // this.correctionDetailleeDisponible = true;
-
 
   this.besoinFormulaireCaseACocher = ['Afficher la liste des nombres premiers inférieurs à 100']
   this.besoinFormulaire2Texte = ['Choix des décompositions', 'Nombres séparés par des tirets\n1 : 3 à 5 petits facteurs premiers max\n2 : 2 facteurs premiers entre 30 et 100\n3 : Un seul grand nombre premier\n4 : Mélange']
@@ -45,7 +44,6 @@ export default function DecompositionFacteursPremiers () {
   this.sup2 = 4
   this.nouvelleVersion = function () {
     let typesDeQuestions
-
 
     /* From Sebastien Lozano
         let typesDeQuestionsDisponibles = [1, 2, 3]
