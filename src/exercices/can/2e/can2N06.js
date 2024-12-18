@@ -7,10 +7,10 @@ export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Écrire un nombre décimal sous la forme $\\dfrac{a}{10^n}$'
 export const dateDePublication = '19/10/2023'
-/*!
+/**
  * @author  Gilles Mora
  *
- * Référence can2N06
+
  */
 export const uuid = 'e57cb'
 export const ref = 'can2N06'

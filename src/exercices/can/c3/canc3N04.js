@@ -9,10 +9,10 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCHybride'
 
-/*!
+/**
  * Jean-Claude Lhote
  * Publié le 11 / 09 / 2021
- * Référence canc3N03
+
  */
 export const uuid = 'de7d5'
 export const ref = 'canc3N04'

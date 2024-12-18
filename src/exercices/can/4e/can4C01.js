@@ -8,10 +8,10 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
- * Référence can4C01
+
  */
 export const uuid = '1da2d'
 export const ref = 'can4C01'

@@ -36,9 +36,9 @@ export const glossaire = [
   ['centaine de milliards', 'centaines de milliards']
 ]
 
-/*!
+/**
  * @author Jean-Claude Lhote
- * Référence c3N10-1
+
  */
 export const uuid = 'c96de'
 

@@ -6,10 +6,10 @@ export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Additionner des entiers relatifs (avec parenthèses)'
 export const dateDePublication = '04/10/2023'
-/*!
+/**
  * @author  Gilles Mora (J'ai repris l'ex 5R20)
  *
- * Référence can5C25
+
  */
 export const uuid = 'a7061'
 export const ref = 'can5C25'

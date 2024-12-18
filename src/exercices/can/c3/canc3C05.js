@@ -13,9 +13,9 @@ export const amcReady = true
 export const amcType = 'qcmMono'
 export const dateDePublication = '20/11/2021'
 
-/*!
+/**
  * @author Jean-Claude Lhote
- * Référence canc3C05
+
  */
 export const uuid = 'd0287'
 export const ref = 'canc3C05'

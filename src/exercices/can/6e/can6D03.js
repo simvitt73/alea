@@ -9,10 +9,10 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Jean-Claude Lhote & Gilles Mora
  * Créé pendant l'été 2021
- * Référence can6D03
+
  */
 export const uuid = '05b2e'
 export const ref = 'can6D03'

@@ -10,9 +10,9 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '20/11/2021'
 
-/*!
+/**
  * @author Jean-Claude Lhote
- * Référence canc3C06
+
  */
 export const uuid = '3ca23'
 export const ref = 'canc3C06'

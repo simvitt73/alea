@@ -9,10 +9,10 @@ export const interactifType = 'qcm'
 export const amcReady = true
 export const amcType = 'qcmMono'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
- * Référence can6M01
+
  */
 export const uuid = '79035'
 export const ref = 'can6M01'

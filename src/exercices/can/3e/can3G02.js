@@ -5,10 +5,10 @@ export const amcReady = true
 export const amcType = 'AMCHybride'
 export const titre = 'Trouver l’image d’un point par une  transformation 3e'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
- * Référence can3G02
+
  */
 export const uuid = '8e651'
 export const ref = 'can3G02'

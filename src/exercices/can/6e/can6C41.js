@@ -12,7 +12,7 @@ export const titre = 'Comparer des fractions de même dénominateur/numérateur'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '04/11/2022'
-/*!
+/**
  * @author Gilles Mora
  */
 

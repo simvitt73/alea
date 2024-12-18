@@ -10,9 +10,9 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '10/11/2022'
-/*!
+/**
  * @author Gilles Mora
- * Référence can2C15
+
 */
 
 export const uuid = 'd9488'

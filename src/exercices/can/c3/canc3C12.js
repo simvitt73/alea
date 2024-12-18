@@ -8,9 +8,9 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '17/11/2022'
 
-/*!
+/**
  * @author Gilles Mora
- * Référence canc3C12
+
  */
 
 export const uuid = '9e7c7'

@@ -12,7 +12,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCHybride'
 
-/*!
+/**
  * @author Gilles Mora
  */
 export const dateDePublication = '22/06/2022'

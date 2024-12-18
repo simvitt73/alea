@@ -13,10 +13,10 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Résoudre une inéquation graphiquement'
 
-/*!
+/**
  * @author Gilles MORA
   *
- * Référence can2F22
+
 */
 export const uuid = '61271'
 export const ref = 'can2F22'

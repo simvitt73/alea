@@ -5,10 +5,10 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé le 7/11/2021
- * Référence 6G44 clone à 4 question de can6G06
+
  */
 export const uuid = '86ea3'
 export const ref = 'can6G06'

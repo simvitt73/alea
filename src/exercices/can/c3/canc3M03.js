@@ -8,10 +8,10 @@ export const dateDePublication = '05/11/2022'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
-/*!
+/**
  * @author Gilles Mora
  * Créé le 5/11/2022
- * Référence canc3M03
+
  */
 
 export const uuid = '85e82'

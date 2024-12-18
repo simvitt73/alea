@@ -10,10 +10,10 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCOpen'
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé le 4/11/2021
- * Référence canc3M01
+
  */
 export const uuid = 'd0314'
 export const ref = 'canc3M01'

@@ -14,7 +14,7 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '04/03/2022'
 
-/*!
+/**
  * @author  Gilles Mora
  */
 export const uuid = '16ea9'

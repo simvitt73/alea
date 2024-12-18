@@ -8,9 +8,9 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const dateDePublication = '09/09/2023'
 
-/*!
+/**
  * @author Gilles Mora
- * Référence can4C18
+
  */
 
 export const uuid = 'f84d1'

@@ -13,7 +13,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021 modifié le 21/05/2022 (support de la classe Decimal)
  */

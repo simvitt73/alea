@@ -12,9 +12,9 @@ export const amcReady = true
 export const amcType = 'qcmMono'
 export const dateDePublication = '17/11/2022'
 
-/*!
+/**
  * @author Gilles Mora
- * Référence canc3N06
+
  */
 
 export const uuid = 'a8597'

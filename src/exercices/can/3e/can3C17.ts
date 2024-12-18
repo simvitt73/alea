@@ -12,7 +12,7 @@ export const titre = 'Calculer avec des puissances de 10'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '15/10/2024'
-/*!
+/**
  * @author Gilles Mora
  */
 export const uuid = 'b9584'

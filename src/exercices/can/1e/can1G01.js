@@ -5,7 +5,7 @@ export const titre = 'Déterminer les valeurs remarquables du cosinus et sinus'
 
 export const dateDePublication = '01/06/2022'
 
-/*!
+/**
  * @author Stéphane et cie
  */
 export const uuid = '4c2a0'

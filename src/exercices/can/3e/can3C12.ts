@@ -10,7 +10,7 @@ export const titre = 'Encadrer une racine carrée'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDeModifImportante = '20/09/2024'
-/*!
+/**
  * @author Gilles Mora
  */
 export const uuid = '0ad86'

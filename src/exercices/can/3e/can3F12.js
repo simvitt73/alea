@@ -11,10 +11,10 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Lire des antécédents graphiquement'
 
-/*!
+/**
  * @author Gilles MORA
   *
- * Référence can3F12
+
 */
 export const uuid = '0e1c6'
 export const ref = 'can3F12'

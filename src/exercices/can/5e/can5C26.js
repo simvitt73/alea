@@ -7,10 +7,10 @@ export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Additionner des entiers relatifs (écriture simplifiée)'
 export const dateDePublication = '04/10/2023'
-/*!
+/**
  * @author  Gilles Mora (J'ai repris l'ex 5R20)
  *
- * Référence can5C25
+
  */
 export const uuid = '8a835'
 export const ref = 'can5C26'

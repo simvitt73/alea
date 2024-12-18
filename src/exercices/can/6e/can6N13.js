@@ -7,10 +7,10 @@ export const titre = 'Passer d’un calcul de fractions décimales à une écrit
 
 export const dateDePublication = '20/01/2022'
 
-/*!
+/**
  * @author Eric Elter
  * Créé le 20/01/2022
- * Référence can6N13
+
  */
 export const uuid = 'ce3da'
 export const ref = 'can6N13'

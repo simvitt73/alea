@@ -16,10 +16,10 @@ export const dateDePublication = '4/11/2021'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé le 4/11/2021
- * Référence canc3D01
+
  */
 export const uuid = '0861b'
 export const ref = 'canc3D02'

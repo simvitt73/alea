@@ -5,7 +5,7 @@ export const amcType = 'AMCNum'
 export const amcReady = true
 export const titre = 'Compter les cubes manquants'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
  */

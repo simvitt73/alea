@@ -41,7 +41,7 @@ function remplaceParZero (chaine, place) {
   }
 }
 
-/*!
+/**
  * @author Jean-Claude Lhote
  */
 export const uuid = 'f899b'

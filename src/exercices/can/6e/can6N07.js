@@ -13,10 +13,10 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '29/08/2021'
 export const dateDeModifImportante = '12/10/2024'
-/*!
+/**
  * Jean-Claude Lhote
  * Publié le 11 / 09 / 2021
- * Référence can6N07
+
  */
 export const uuid = '34d01'
 export const ref = 'can6N07'

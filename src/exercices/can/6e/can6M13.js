@@ -7,10 +7,10 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true
 
-/*!
+/**
  * @author Gilles Mora
  * Créé le 05/10/2023
- * Référence can6M13
+
  */
 export const uuid = '59144'
 export const ref = 'can6M13'

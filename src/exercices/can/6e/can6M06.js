@@ -16,10 +16,10 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Gilles Mora
  * Créé pendant l'été 2021
- * Référence can6M06
+
  */
 export const uuid = 'e52ba'
 export const ref = 'can6M06'

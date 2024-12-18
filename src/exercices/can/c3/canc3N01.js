@@ -11,10 +11,10 @@ export const interactifType = 'qcm'
 export const amcReady = true
 export const amcType = 'qcmMono'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Date de publication septembre 2021
- * Référence canc3N01
+
  */
 export const uuid = 'f7ad2'
 export const ref = 'canc3N01'

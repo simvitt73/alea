@@ -9,7 +9,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Gilles Mora
  */
 export const uuid = '56a2d'

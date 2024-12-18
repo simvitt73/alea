@@ -5,10 +5,10 @@ export const amcReady = true
 export const amcType = 'AMCHybride'
 export const titre = 'Trouver le symétrique d’un point'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
- * Référence can6G01
+
  */
 export const uuid = '135d4'
 export const ref = 'can6G01'
