@@ -1,6 +1,6 @@
 import { choice, combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { obtenirListeFractionsIrreductibles } from '../../lib/outils/deprecatedFractions.js'
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../Exercice'
 import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import { context } from '../../modules/context.js'
 import FractionEtendue from '../../modules/FractionEtendue.ts'
@@ -8,6 +8,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 
 export const titre = 'Multiplier ou/et diviser des fractions'
 export const amcReady = true
@@ -33,20 +34,33 @@ export const refs = {
   'fr-fr': ['4C22'],
   'fr-ch': ['10NO5-6']
 }
-export default function ExerciceMultiplierFractions () {
-  Exercice.call(this)
-  const space = '\\phantom{\\dfrac{(_(^(}{(_(^(}}' // Utilisé pour mettre de l'espace dans une fraction de fraction
-  const space2 = '\\phantom{(_(^(}' // Utilisé pour mettre de l'espace dans une fraction de fraction lorsque le numérateur ou le dénominateur est entier
-  this.sup = 1 // Avec ou sans relatifs
-  this.sup3 = true
-  if (context.isAmc) this.titre = 'Multiplier des fractions et donner le résultat sous forme irréductible'
-  this.spacing = 3
-  this.spacingCorr = 3
-  this.nbQuestions = 5
 
-  this.sup2 = true // méthode de simplification par défaut = factorisation
-  this.sup4 = 1 // multiplications par défaut
-  this.nouvelleVersion = function () {
+const space = '\\phantom{\\dfrac{(_(^(}{(_(^(}}' // Utilisé pour mettre de l'espace dans une fraction de fraction
+const space2 = '\\phantom{(_(^(}' // Utilisé pour mettre de l'espace dans une fraction de fraction lorsque le numérateur ou le dénominateur est entier
+
+export default class ExerciceMultiplierFractions extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = [
+      'Niveau de difficulté',
+      3,
+      ' 1 : Tout positif avec une fois sur 4 un entier\n 2 : Deux fractions (50% de type 1 et 50% de type 3)\n3 : Fractions avec nombres relatifs (au moins 2 négatifs)'
+    ]
+    this.besoinFormulaire2CaseACocher = ['Avec décomposition']
+    this.besoinFormulaire3CaseACocher = ['Demander une fraction irréductible']
+    this.besoinFormulaire4Numerique = ['Type d\'opération', 3, '1 : Multiplication\n2 : Division\n3 : Mélange']
+    this.listeAvecNumerotation = false
+    this.sup = 1 // Avec ou sans relatifs
+    this.sup3 = true
+    if (context.isAmc) this.titre = 'Multiplier des fractions et donner le résultat sous forme irréductible'
+    this.spacing = 3
+    this.spacingCorr = 3
+    this.nbQuestions = 5
+    this.sup2 = true // méthode de simplification par défaut = factorisation
+    this.sup4 = 1 // multiplications par défaut
+  }
+
+  nouvelleVersion () {
     let typesDeQuestionsDisponibles
     const listeFractions = obtenirListeFractionsIrreductibles()
     const fractionIrreductibleDemandee = this.sup3
@@ -137,13 +151,13 @@ export default function ExerciceMultiplierFractions () {
       const f1 = new FractionEtendue(a, b)
       if (listeTypesDoperation[i] === 'mul') {
         const f2 = new FractionEtendue(c, d)
-        texte = `$${f1.texFraction}\\times${f2.texFraction}$`
-        texteCorr = `$${f1.texProduitFraction(f2, this.sup2)}$`
+        texte = `$${lettreDepuisChiffre(i + 1)} = ${f1.texFraction}\\times${f2.texFraction}$`
+        texteCorr = `$${lettreDepuisChiffre(i + 1)} = ${f1.texProduitFraction(f2, this.sup2)}$`
         reponse = f1.produitFraction(f2).simplifie()
       } else {
         const f2 = new FractionEtendue(d, c)
-        texte = `$\\dfrac{${(f1.den === 1 ? space2 : space) + f1.texFSD + (f1.den === 1 ? space2 : space)}}{${(f2.den === 1 ? space2 : space) + f2.texFraction + (f2.den === 1 ? space2 : space)}}$`
-        texteCorr = `$${f1.texDiviseFraction(f2, this.sup2, '/')}$`
+        texte = `$${lettreDepuisChiffre(i + 1)} = \\dfrac{${(f1.den === 1 ? space2 : space) + f1.texFSD + (f1.den === 1 ? space2 : space)}}{${(f2.den === 1 ? space2 : space) + f2.texFraction + (f2.den === 1 ? space2 : space)}}$`
+        texteCorr = `$${lettreDepuisChiffre(i + 1)} = ${f1.texDiviseFraction(f2, this.sup2, '/')}$`
         reponse = f1.diviseFraction(f2).simplifie()
       }
       if (this.questionJamaisPosee(i, a, b, c, d, typesDeQuestions)) {
@@ -193,12 +207,4 @@ export default function ExerciceMultiplierFractions () {
 
     listeQuestionsToContenu(this) // Espacement de 2 em entre chaque questions.
   }
-  this.besoinFormulaireNumerique = [
-    'Niveau de difficulté',
-    3,
-    ' 1 : Tout positif avec une fois sur 4 un entier\n 2 : Deux fractions (50% de type 1 et 50% de type 3)\n3 : Fractions avec nombres relatifs (au moins 2 négatifs)'
-  ]
-  this.besoinFormulaire2CaseACocher = ['Avec décomposition']
-  this.besoinFormulaire3CaseACocher = ['Demander une fraction irréductible']
-  this.besoinFormulaire4Numerique = ['Type d\'opération', 3, '1 : Multiplication\n2 : Division\n3 : Mélange']
 }
