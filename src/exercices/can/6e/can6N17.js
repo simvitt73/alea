@@ -12,7 +12,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '29/08/2022'
 export const dateDeModifImportante = '12/10/2024'
-/*!
+/**
  * @author Gilles Mora
  *
  */

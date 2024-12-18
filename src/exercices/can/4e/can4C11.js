@@ -7,7 +7,7 @@ export const titre = 'Déterminer le signe d’une puissance'
 
 export const dateDePublication = '04/07/2022'
 
-/*!
+/**
  * @author Delphine David (reprise de 4C37)
  */
 export const uuid = '4239a'

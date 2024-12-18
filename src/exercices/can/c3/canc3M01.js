@@ -10,7 +10,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCOpen'
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé le 4/11/2021
 

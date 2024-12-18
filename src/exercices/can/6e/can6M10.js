@@ -9,7 +9,7 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '04/07/2022'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  *
 

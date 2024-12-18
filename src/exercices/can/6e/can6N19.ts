@@ -12,7 +12,7 @@ export const titre = 'Décomposer un nombre décimal'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '02/11/2024'
-/*!
+/**
  * @author Gilles Mora
  */
 export const uuid = '3a8f8'

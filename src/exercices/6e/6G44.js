@@ -22,7 +22,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
-/*!
+/**
  * @author Jean-Claude Lhote (Adapté par Eric Elter pour que les nouvelles fonctions 3d soient bien utilisées)
  * Créé le 3/11/2021
 

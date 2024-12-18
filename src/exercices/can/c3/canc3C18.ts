@@ -9,7 +9,7 @@ export const titre = 'Résoudre un problème avec une soustraction'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '31/10/2024'
-/*!
+/**
  * @author Gilles Mora
  */
 export const uuid = '31e91'

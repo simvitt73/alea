@@ -7,7 +7,7 @@ export const titre = 'Écrire sous forme d\'une fraction décimale'
 
 export const dateDePublication = '20/01/2022'
 
-/*!
+/**
  * @author Eric Elter
  * Créé le 20/01/2022
 

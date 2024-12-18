@@ -11,7 +11,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Déterminer un extremum graphiquement'
 
-/*!
+/**
  * @author Gilles MORA
   *
 

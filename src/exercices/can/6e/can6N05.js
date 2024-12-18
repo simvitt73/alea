@@ -9,7 +9,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Gilles Mora & Jean-Claude Lhote
  * Créé pendant l'été 2021
 

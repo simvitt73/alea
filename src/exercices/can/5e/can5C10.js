@@ -3,7 +3,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Décomposer en produit de facteurs premiers'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
 

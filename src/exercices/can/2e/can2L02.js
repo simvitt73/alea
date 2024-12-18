@@ -6,7 +6,7 @@ export const titre = 'Calculer les coordonnées d’un point sur une droite'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '04/11/2022'
-/*!
+/**
  * @author Gilles Mora
  */
 

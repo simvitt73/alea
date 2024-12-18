@@ -12,7 +12,7 @@ export const dateDePublication = '05/05/2024'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Déterminer graphiquement le nombre de solutions de l\'équation $f\\prime(x)=0$'
-/*!
+/**
  * @author Gilles MORA
   *
 

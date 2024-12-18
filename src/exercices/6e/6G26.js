@@ -6,7 +6,7 @@ export const amcReady = true
 export const amcType = 'AMCOpen'
 export const dateDePublication = '4/12/2021'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé le 4/12/2021
 

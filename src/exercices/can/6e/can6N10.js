@@ -9,7 +9,7 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '15/12/2021' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
-/*!
+/**
  * @author Gilles Mora
  */
 export const uuid = '93bb5'

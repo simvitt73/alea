@@ -9,7 +9,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * Jean-Claude Lhote
  * Publié le 11 / 09 / 2021
 

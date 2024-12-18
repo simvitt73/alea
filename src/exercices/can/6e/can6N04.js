@@ -21,7 +21,7 @@ export const amcReady = true
 export const amcType = 'AMCHybride'
 export const dateDePublication = '29/08/2021'
 export const dateDeModifImportante = '12/10/2024'
-/*!
+/**
  * @author Jean-Claude Lhote et Gilles Mora
  * Créé pendant l'été 2021
 

@@ -10,7 +10,7 @@ export const titre = 'Déterminer des racines carrées ou des carrés parfaits'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '21/10/2024'
-/*!
+/**
  * @author Gilles Mora
  */
 export const uuid = '59365'

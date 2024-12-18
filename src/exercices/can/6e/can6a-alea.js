@@ -11,7 +11,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = false
 
-/*!
+/**
  * @author Mickael Guironnet
  * Créé 12 novembre 2023
  * Exercice qui permet de charger les différentes questions du CAN 6e pour un export LATEX ou la vue PROF

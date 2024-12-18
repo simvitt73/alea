@@ -11,7 +11,7 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDePublication = '12/01/2023'
 
-/*!
+/**
  * @author Gilles Mora
  *
  */

@@ -7,7 +7,7 @@ export const amcType = 'AMCNum'
 
 export const dateDePublication = '05/08/2024' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
-/*!
+/**
  * @author
  */
 export const uuid = 'ce463'

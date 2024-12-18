@@ -15,7 +15,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
-/*!
+/**
  * @author Gilles Mora
  * Créé le 03/08/2022
 

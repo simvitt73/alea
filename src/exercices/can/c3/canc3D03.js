@@ -8,7 +8,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '20/11/2021'
 
-/*!
+/**
  * @author Jean-Claude Lhote
 
  */

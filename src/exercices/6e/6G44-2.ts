@@ -18,7 +18,7 @@ import { notify } from '../../bugsnag'
 
 export const titre = 'Décrire un assemblage de solides'
 export const dateDePublication = '9/3/2024'
-/*!
+/**
  * @author Guillaume Valmont à partir de 6G44 de Jean-Claude Lhote
  */
 export const uuid = '083b9'

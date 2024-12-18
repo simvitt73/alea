@@ -36,7 +36,7 @@ export const glossaire = [
   ['centaine de milliards', 'centaines de milliards']
 ]
 
-/*!
+/**
  * @author Jean-Claude Lhote
 
  */

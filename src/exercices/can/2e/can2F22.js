@@ -13,7 +13,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Résoudre une inéquation graphiquement'
 
-/*!
+/**
  * @author Gilles MORA
   *
 

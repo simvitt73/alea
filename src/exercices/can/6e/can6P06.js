@@ -7,7 +7,7 @@ export const titre = 'Résoudre un problème de calcul de pourcentage par compl�
 
 export const dateDePublication = '15/11/2022'
 
-/*!
+/**
  * @author Gilles Mora
  * Créé le 20/01/2022
 

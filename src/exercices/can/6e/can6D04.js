@@ -5,7 +5,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCHybride'
 
-/*!
+/**
  * Alias de 6D13.js
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021

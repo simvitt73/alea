@@ -11,7 +11,7 @@ export const interactifType = 'qcm'
 export const amcReady = true
 export const amcType = 'qcmMono'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Date de publication septembre 2021
 

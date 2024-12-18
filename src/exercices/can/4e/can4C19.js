@@ -6,7 +6,7 @@ export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Mutiplier des entiers relatifs'
 export const dateDePublication = '04/10/2023'
-/*!
+/**
  * @author  Gilles Mora (J'ai repris l'ex 4C10-3)
  *
 

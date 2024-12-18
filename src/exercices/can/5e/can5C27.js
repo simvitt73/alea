@@ -6,7 +6,7 @@ export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Trouver un  entier relatif (addition à trou)'
 export const dateDePublication = '19/10/2023'
-/*!
+/**
  * @author  Gilles Mora (J'ai repris l'ex 5R20-2)
  *
 

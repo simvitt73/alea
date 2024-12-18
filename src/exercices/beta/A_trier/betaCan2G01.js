@@ -13,7 +13,7 @@ export const interactifType = ['qcm', 'mathLive']
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Gilles Mora
  */
 export default function PerimetreCarreRectangle () {

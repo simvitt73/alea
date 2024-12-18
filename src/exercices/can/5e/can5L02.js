@@ -3,7 +3,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const titre = 'Écrire une expression littérale'
 export const dateDePublication = '23/11/2023'
-/*!
+/**
  * @author Gilles Mora
  *
 

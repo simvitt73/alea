@@ -5,7 +5,7 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 export const titre = 'Résoudre une équation $x+a=b$ ou $ax=b$'
 
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
 

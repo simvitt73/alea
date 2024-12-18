@@ -6,7 +6,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 
-/*!
+/**
  * @author Gilles Mora
  * Réference : can4L06
  */

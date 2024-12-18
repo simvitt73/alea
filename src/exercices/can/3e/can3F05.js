@@ -8,7 +8,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDeModifImportante = '13/10/2022'
-/*!
+/**
  * @author Jean-Claude Lhote/Gilles Mora
   * Créé pendant l'été 2021
 

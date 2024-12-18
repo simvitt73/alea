@@ -7,7 +7,7 @@ export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
 export const dateDeModifImportante = '05/12/2021'
-/*!
+/**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
 
