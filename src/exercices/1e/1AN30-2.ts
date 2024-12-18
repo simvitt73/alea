@@ -19,7 +19,7 @@ export const refs = {
 }
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Rémi Angot
 
 */

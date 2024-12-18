@@ -7,7 +7,7 @@ import { Arbre, texProba } from '../../../modules/arbres.js'
 export const titre = 'Probabilités simples'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Rémi Angot et Matthieu Devillers
 
 */

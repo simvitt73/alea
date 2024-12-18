@@ -15,7 +15,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Rémi Angot (questions de Martine Loubet)
 
 */

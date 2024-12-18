@@ -22,7 +22,7 @@ export const refs = {
 }
 
 /**
- * Description didactique de l'exercice
+ * 
  * @autor Claire Rousset (un peu aidé par Jean-Claude Lhote)
 
  */

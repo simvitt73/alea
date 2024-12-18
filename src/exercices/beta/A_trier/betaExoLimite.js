@@ -11,7 +11,7 @@ export const dateDePublication = '01/02/2022' // La date de publication initiale
 export const dateDeModifImportante = '09/02/2022' // Une date de modification importante au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Mathieu Degrange
 
 */

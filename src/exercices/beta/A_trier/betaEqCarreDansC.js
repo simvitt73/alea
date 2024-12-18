@@ -6,7 +6,7 @@ import { complex } from 'mathjs'
 export const titre = 'Racine carrée nombre complexe'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Eric Schrafstetter
 
 */

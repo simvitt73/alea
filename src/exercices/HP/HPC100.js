@@ -5,7 +5,7 @@ export const dateDePublication = '30/10/2021'
 export const titre = 'Division de polynômes'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Eric Schrafstetter
 
 */

@@ -43,7 +43,7 @@ function anglesSecantes (A, rot = { O: 60, A: 0 }) {
   }
 }
 /**
- * Description didactique de l'exercice
+ * 
  * @author Frédéric PIOU
 
 */

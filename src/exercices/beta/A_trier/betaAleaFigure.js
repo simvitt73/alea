@@ -29,7 +29,7 @@ export const dateDePublication = '03/02/2022' // La date de publication initiale
 // export const dateDeModifImportante = '08/01/2022' // Une date de modification importante au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Frédéric PIOU
 
 */

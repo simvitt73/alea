@@ -3,7 +3,7 @@ import { listeQuestionsToContenu } from '../../../modules/outils.js'
 export const titre = 'Exercice exemple'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author
 
 */

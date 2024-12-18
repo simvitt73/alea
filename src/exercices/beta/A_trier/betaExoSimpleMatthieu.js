@@ -3,7 +3,7 @@ import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
 export const titre = 'Ceci est le titre de l\'exercice BetaExosimpleMatthieu'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @Matthieu_Devillers
 
 */

@@ -16,7 +16,7 @@ export const refs = {
 }
 
 /**
- * Description didactique de l'exercice Différencier événéments compatibles, incompatibles, contraires.
+ *  Différencier événéments compatibles, incompatibles, contraires.
  * @author Mireille Gain
 
 */

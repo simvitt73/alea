@@ -12,7 +12,7 @@ export const refs = {
 }
 
 /**
- * Description didactique de l'exercice
+ * 
  * @autor clone de TSpeAN1-0 de Claire Rousset réalisé par Jean-Claude Lhote
 
  */

@@ -21,7 +21,7 @@ const choixFnct = [
 ]
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Eric Schrafstetter
 
 */

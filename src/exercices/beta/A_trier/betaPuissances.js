@@ -9,7 +9,7 @@ import { listeQuestionsToContenuSansNumero, randint } from '../../../modules/out
 export const titre = 'Exercice exemple'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author
 
 */

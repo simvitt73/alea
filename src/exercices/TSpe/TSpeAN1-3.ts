@@ -18,7 +18,7 @@ export const refs = {
   'fr-ch': []
 }
 /**
- * Description didactique de l'exercice
+ * 
  * @author Jean-Claude Lhote et modifié par Claire Rousset
 
 */

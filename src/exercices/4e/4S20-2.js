@@ -16,7 +16,7 @@ export const refs = {
   'fr-ch': []
 }
 /**
- * Description didactique de l'exercice Différencier événéments impossibles, certains, ou possibles
+ *  Différencier événéments impossibles, certains, ou possibles
  * @author Mireille Gain
 
 */

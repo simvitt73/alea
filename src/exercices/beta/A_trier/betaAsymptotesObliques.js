@@ -7,7 +7,7 @@ import { context } from '../../../modules/context.js'
 export const titre = 'Asymptote oblique'
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Eric Schrafstetter
 
 */

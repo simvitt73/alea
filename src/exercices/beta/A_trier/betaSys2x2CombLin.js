@@ -25,7 +25,7 @@ const dessSysteme = (s, d, niveau) =>
                     ${axby(s.a21, s.a22, niveau)} & =  ${d[1]} \\end{cases}`
 
 /**
- * Description didactique de l'exercice
+ * 
  * @author Eric Schrafstetter
 
  */

@@ -19,7 +19,7 @@ export const refs = {
 }
 
 /**
- * Description didactique de l'exercice : Résolution d'équations du type x^a = b
+ *  : Résolution d'équations du type x^a = b
  * @autor Claire Rousset
 
  */

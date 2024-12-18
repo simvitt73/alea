@@ -19,7 +19,7 @@ export const titre = 'Modéliser une situation à l\'aide d\'une fonction'
 export const dateDePublication = '14/02/2023'
 export const dateDeModifImportante = '13/12/2024'
 /**
- * Description didactique de l'exercice
+ * 
  * @author Gilles Mora
 
 */
