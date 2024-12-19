@@ -9,7 +9,7 @@ import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { context } from '../../modules/context.js'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
-import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions'
+
 import { texNombre } from '../../lib/outils/texNombre'
 import { egalOuApprox } from '../../lib/outils/ecritures'
 
@@ -22,7 +22,7 @@ export const dateDePublication = '23/07/2021'
 export const dateDeModifImportante = '16/04/2023'
 
 /**
- * 
+ *
  * augmenter ou diminuer un prix d'un pourcentage,
  * le calcul intermédiaire du montant de l'augmentation ou de la baisse est demandé
  * Quatre niveaux :
@@ -143,10 +143,10 @@ export default function AugmenterEtReduireDunPourcentage () {
   this.nouvelleVersion = function () {
     this.introduction = (this.sup2 && this.interactif && context.isHtml)
       ? lampeMessage({
-          titre: 'Calculatrice autorisée.',
-          texte: 'Écrire les réponses dans les cases sans arrondir, ne pas préciser "€" ni "euros" ...',
-          couleur: 'nombres'
-        })
+        titre: 'Calculatrice autorisée.',
+        texte: 'Écrire les réponses dans les cases sans arrondir, ne pas préciser "€" ni "euros" ...',
+        couleur: 'nombres'
+      })
       : ''
     const typeQuestionsDisponibles = ['augmentation', 'réduction'] // On créé 2 types de questions
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
@@ -171,7 +171,7 @@ export default function AugmenterEtReduireDunPourcentage () {
           texte += ajouteChampTexteMathLive(this, 2 * i, ' ', { texteApres: ' €.' })
           texte += '<br>'
           if (!context.isAmc && this.interactif) {
-            handleAnswers(this, 2 * i, { reponse: { value: String(montantReduction), compare: fonctionComparaison } })
+            handleAnswers(this, 2 * i, { reponse: { value: String(montantReduction) } })
           } else {
             propositionsAMC = [
               {
@@ -199,7 +199,7 @@ export default function AugmenterEtReduireDunPourcentage () {
           texte += enonceAMC
           texte += (this.interactif && context.isHtml) ? ajouteChampTexteMathLive(this, 2 * i + 1, ' ', { texteApres: ' €.' }) : ''
           if (!context.isAmc) {
-            handleAnswers(this, 2 * i + 1, { reponse: { value: String(prixFinal), compare: fonctionComparaison } })
+            handleAnswers(this, 2 * i + 1, { reponse: { value: String(prixFinal) } })
           } else {
             propositionsAMC.push(
               {
@@ -242,7 +242,7 @@ export default function AugmenterEtReduireDunPourcentage () {
           texte += ajouteChampTexteMathLive(this, 2 * i, ' ', { texteApres: ' €.' })
           texte += '<br>'
           if (!context.isAmc) {
-            handleAnswers(this, 2 * i, { reponse: { value: texNombre(montantAugmentation, 2), compare: fonctionComparaison } })
+            handleAnswers(this, 2 * i, { reponse: { value: texNombre(montantAugmentation, 2) } })
           } else {
             propositionsAMC = [
               {
@@ -270,7 +270,7 @@ export default function AugmenterEtReduireDunPourcentage () {
           texte += enonceAMC
           texte += (this.interactif && context.isHtml) ? ajouteChampTexteMathLive(this, 2 * i + 1, ' ', { texteApres: ' €.' }) : ''
           if (!context.isAmc) {
-            handleAnswers(this, 2 * i + 1, { reponse: { value: texNombre(prixFinal, 2), compare: fonctionComparaison } })
+            handleAnswers(this, 2 * i + 1, { reponse: { value: texNombre(prixFinal, 2) } })
           } else {
             propositionsAMC.push(
               {

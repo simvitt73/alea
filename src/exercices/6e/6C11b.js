@@ -9,7 +9,6 @@ import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteracti
 import { sp } from '../../lib/outils/outilString.js'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
-import { fonctionComparaison } from '../../lib/interactif/comparisonFunctions'
 
 export const amcReady = true
 export const amcType = 'AMCOpen'
@@ -111,11 +110,11 @@ export default function DivisionsEuclidiennesEgaliteFondamentale () {
       a = b * q + r
       texte = this.sup2
         ? Operation({
-            operande1: a,
-            operande2: b,
-            type: 'divisionE',
-            options: { solutions: false }
-          })
+          operande1: a,
+          operande2: b,
+          type: 'divisionE',
+          options: { solutions: false }
+        })
         : `La division euclidienne de $${texNombre(a)}$ par $${b}$.`
       if (r === 0) {
         texteCorr = Operation({
@@ -145,7 +144,6 @@ export default function DivisionsEuclidiennesEgaliteFondamentale () {
         `${b}\\times ${q}+${r}=${a}`, `${q}\\times ${b}+${r}=${a}`,
         `${a}=(${b}\\times ${q})+${r}`, `${a}=(${q}\\times ${b})+${r}`,
         `(${b}\\times ${q})+${r}=${a}`, `(${q}\\times ${b})+${r}=${a}`],
-            compare: fonctionComparaison,
             options: { operationSeulementEtNonResultat: true }
           }
         })
