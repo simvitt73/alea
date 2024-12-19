@@ -28,6 +28,7 @@ export default class fractionsDecimaux extends Exercice {
     this.formatChampTexte = KeyboardType.clavierDeBase
     // this.formatInteractif = 'calcul'
     this.compare = fonctionComparaison
+    this.optionsDeComparaison = { nombreDecimalSeulement: true }
   }
 
   nouvelleVersion () {
