@@ -107,7 +107,7 @@ class PlacerPointsAbscissesFractionnaires extends Exercice {
 
       switch (true) {
         case context.isHtml && this.interactif:
-          texte += '<br>' + figureApigeom({ exercice: this as Exercice, i, idAddendum: ref, figure, defaultAction: 'POINT' })
+          texte += '<br>' + figureApigeom({ exercice: this as Exercice, i, idAddendum: refs['fr-fr'][0], figure, defaultAction: 'POINT' })
           texteCorr += figureCorr.getStaticHtml()
           break
         case context.isHtml:

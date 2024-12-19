@@ -39,10 +39,6 @@ class PlacerPointsSurAxe extends Exercice {
     this.consigne = 'Placer trois points sur un axe gradué.'
     this.nbQuestions = 5
 
-
-
-
-
     this.sup = 1
     this.exoCustomResultat = true
     this.besoinFormulaireNumerique = [
@@ -53,14 +49,7 @@ class PlacerPointsSurAxe extends Exercice {
   }
 
   nouvelleVersion () {
-    
-    // numeroExercice est 0 pour l'exercice 1
     let typesDeQuestions
-
-    
-    
-
-
 
     if (this.sup > 3) {
       typesDeQuestions = combinaisonListes([1, 2, 3], this.nbQuestions)
@@ -171,7 +160,7 @@ class PlacerPointsSurAxe extends Exercice {
 
   correctionInteractive = (i?: number) => {
     if (i === undefined) return ['KO']
-    const result: ('OK'|'KO')[] = []
+    const result: ('OK' | 'KO')[] = []
     const figure = this.figures[i]
     // Sauvegarde de la réponse pour Capytale
     if (this.answers === undefined) this.answers = {}
