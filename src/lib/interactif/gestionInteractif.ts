@@ -338,6 +338,7 @@ export function prepareExerciceCliqueFigure (exercice: Exercice) {
             fig.addEventListener('click', mouseSvgClick)
             fig.etat = false
             fig.style.margin = '10px'
+            fig.style.border = '3px solid transparent'
             fig.hasMathaleaListener = true
             // On enregistre que l'élément a déjà un listenner pour ne pas lui remettre le même à l'appui sur "Nouvelles Données"
           }
@@ -392,19 +393,19 @@ function verifQuestionCliqueFigure (exercice: Exercice, i: number) {
 
 function mouseOverSvgEffect (event: MouseEvent) {
   const elt = event.target as MathaleaSVG
-  elt.style.border = '1px solid #1DA962'
+  elt.style.border = '3px solid #1DA962'
 }
 
 function mouseOutSvgEffect (event: MouseEvent) {
   const elt = event.target as MathaleaSVG
-  elt.style.border = 'none'
+  elt.style.border = '3px solid transparent'
 }
 
 function mouseSvgClick (event: MouseEvent) {
   const elt = event.target as MathaleaSVG
   if (elt.etat) {
     // Déja choisi, donc on le réinitialise
-    elt.style.border = 'none'
+    elt.style.border = '3px solid transparent'
     elt.addEventListener('mouseover', mouseOverSvgEffect)
     elt.addEventListener('mouseout', mouseOutSvgEffect)
     elt.addEventListener('click', mouseSvgClick)
