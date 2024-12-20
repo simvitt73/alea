@@ -805,8 +805,8 @@ export class Latex2d extends ObjetMathalea2D {
         : `{${this.col}}`
     }
     return this.backgroundCol !== '' && this.backgroundCol !== 'none'
-      ? `\\draw (${this.x},${this.y}) node[anchor = center] {\\colorbox{${this.backgroundCol}} {\\${this.letterSize}  \\color${this.col}{$${this.latex}$}}};`
-      : `\\draw (${this.x},${this.y}) node[anchor = center] {\\${this.letterSize} \\color${this.col}{$${this.latex}$}};`
+      ? `\\draw (${this.x},${this.y}) node[anchor = center, rotate=${this.orientation}] {\\colorbox{${this.backgroundCol}} {\\${this.letterSize}  \\color${this.col}{$${this.latex}$}}};`
+      : `\\draw (${this.x},${this.y}) node[anchor = center, rotate=${this.orientation}] {\\${this.letterSize} \\color${this.col}{$${this.latex}$}};`
   }
 }
 
