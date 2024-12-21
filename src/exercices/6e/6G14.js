@@ -9,6 +9,10 @@ export const titre = 'Utiliser les propriétés des droites parallèles et perpe
  * @author Guillaume Valmont
  */
 export const uuid = '6a336'
-
+// J'ajoute des réfs vide pour éviter le message rouge dans le updateMenuInternationnal (au pnpm start, ça fait peur)
+export const refs = {
+  'fr-fr': [],
+  'fr-ch': []
+}
 export default class ProprietesParallelesPerpendiculaires2 extends ProprietesParallelesPerpendiculaires {
 }
