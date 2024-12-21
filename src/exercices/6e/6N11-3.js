@@ -145,8 +145,8 @@ export default class EncadrerUnEntierParDeuxEntiersConsecutifs extends Exercice 
       handleAnswers(this, i, { champ1: { value: String(inf) }, champ2: { value: String(sup) } })
 
       if (this.questionJamaisPosee(i, nombre)) { // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

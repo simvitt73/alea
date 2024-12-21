@@ -2532,8 +2532,8 @@ export default function CourseAuxNombresSpeciale2024 () {
         // Pour savoir de quelle question il s'agit
         // texte += ' <--- Question n°' + typeQuestionsDisponibles[i]
         // texte += '<br>Réponse attendue : ' + reponse // Pour avoir les réponses quand on débuggue.
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
         index++
       }

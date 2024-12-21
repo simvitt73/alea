@@ -338,8 +338,9 @@ export default function LectureGraphiqueParabole () {
       }
 
       if (this.questionJamaisPosee(i, a, alpha, beta)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canEnonce = texte
         this.canReponseACompleter = '$a\\ldots 0$ et $\\Delta \\ldots 0$'
         this.listeCanEnonces.push(this.canEnonce)

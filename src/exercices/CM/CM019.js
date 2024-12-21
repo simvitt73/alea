@@ -57,8 +57,9 @@ export default function LeCompteEstBonV3 () {
       }
       if (this.questionJamaisPosee(i, ...solutionMathador)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.autoCorrection[i] = { enonce: texte, propositions: [{ texte: texteCorr, statut: 4, feedback: '' }] }
         i++
       }

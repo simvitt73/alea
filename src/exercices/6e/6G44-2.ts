@@ -180,8 +180,8 @@ export default class DecrireAssemblageDeSolides extends Exercice {
       }
       this.question = mathalea2d(Object.assign({}, fixeBordures(objets), { scale: 0.4 }), objets)
       if (this.questionJamaisPosee(j, tronc, chapeau, rayon)) {
-        this.listeQuestions.push(this.question)
-        this.listeCorrections.push(this.correction)
+        this.listeQuestions[j] = this.question
+        this.listeCorrections[j] = this.correction
         j++
       }
       cpt++

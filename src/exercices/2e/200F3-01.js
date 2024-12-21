@@ -74,8 +74,8 @@ export default class LectureSigneAffine extends Exercice {
       const repere = new RepereBuilder({ xMin: -6, xMax: 6, yMin: -6, yMax: 6 }).buildStandard()
       const d = droite(a, -1, b)
       if (this.questionJamaisPosee(i, listeTypeDeQuestion[i], a, b)) {
-        this.listeQuestions.push('Dresser le tableau de signes de la fonction représentée ci-dessous.<br>' + mathalea2d(Object.assign({}, fixeBordures([repere, d])), [repere, d]))
-        this.listeCorrections.push('Le tableau de signes de la fonction est représenté ci-dessous.<br>' + tableau)
+        this.listeQuestions[i] = 'Dresser le tableau de signes de la fonction représentée ci-dessous.<br>' + mathalea2d(Object.assign({}, fixeBordures([repere, d])), [repere, d])
+        this.listeCorrections[i] = 'Le tableau de signes de la fonction est représenté ci-dessous.<br>' + tableau
         i++
       }
       cpt++

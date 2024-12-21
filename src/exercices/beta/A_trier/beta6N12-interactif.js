@@ -88,8 +88,8 @@ export default function MultiplierEntierPar101001000 () {
         // Si la question n'a jamais été posée, on en crée une autre
         texte += ajouteChampTexteMathLive(this, i)
         setReponse(this, i, a * b)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -167,8 +167,8 @@ export default function VocabulaireEtOperations () {
       // texte += this.nbQuestions - 1 === i ? '<br>' : ''
       if (this.questionJamaisPosee(i, expn)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

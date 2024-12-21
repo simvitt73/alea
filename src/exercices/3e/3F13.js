@@ -116,8 +116,9 @@ export default function AntecedentGraphique () {
       const Cf = courbe(f, { repere: r, step: 0.2, color: 'purple' })
       texte += mathalea2d({ xmin: -10, xmax: 10, ymin: -10, ymax: 10, scale: 0.5 }, r, Cf)
       if (this.questionJamaisPosee(i, a, fx1)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         indexInteractif += incrementInteractif
         i++
       }

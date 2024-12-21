@@ -572,8 +572,9 @@ export default function ExprimerCosSinTan () {
         }
       }
       if (this.questionJamaisPosee(i, nom)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
       }
     }
     listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page

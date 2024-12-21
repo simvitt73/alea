@@ -864,24 +864,6 @@ export default function ProportionnaliteParLinearite () {
       this.consigne = this.nbQuestions === 1 ? 'Répondre à la question posée en justifiant.' : 'Répondre aux questions posées en justifiant.'
     }
     let indiceQuestion = 0
-    /*
-        let listeIndexSituationsDisponible = []
-
-        if (!this.sup2) { // Si aucune liste n'est saisie
-          listeIndexSituationsDisponible = rangeMinMax(1, 6)
-        } else {
-          if (typeof (this.sup2) === 'number') { // Si c'est un nombre, c'est que le nombre a été saisi dans la barre d'adresses
-            listeIndexSituationsDisponible[0] = contraindreValeur(1, 7, this.sup2, 7)
-          } else {
-            listeIndexSituationsDisponible = this.sup2.split('-')// Sinon on créé un tableau à partir des valeurs séparées par des -
-            for (let i = 0; i < listeIndexSituationsDisponible.length; i++) { // on a un tableau avec des strings : ['1', '5', '2','toto','45']
-              listeIndexSituationsDisponible[i] = contraindreValeur(1, 7, parseInt(listeIndexSituationsDisponible[i]), 7) // parseInt en fait un tableau d'entiers
-            }
-          }
-        }
-        if (compteOccurences(listeIndexSituationsDisponible, 7) > 0) listeIndexSituationsDisponible = rangeMinMax(1, 6) // Teste si l'utilisateur a choisi tout
-        const listeIndexSituations = combinaisonListes(listeIndexSituationsDisponible, this.nbQuestions) // permet de ne pas avoir 2 fois la même situation si - de questions que de situations
-        */
 
     const listeIndexSituations = gestionnaireFormulaireTexte({
       max: 6,
@@ -952,9 +934,9 @@ export default function ProportionnaliteParLinearite () {
           }
           break
       }
-      if (this.listeQuestions.indexOf(question.qtexte) === -1) { // Si la question n'a jamais été posée, on la garde.
-        this.listeQuestions.push(question.qtexte)
-        this.listeCorrections.push(question.qtexteCorr)
+      if (this.questionJamaisPosee(i, indexN, ...listeIndexSituations)) { // Si la question n'a jamais été posée, on la garde.
+        this.listeQuestions[i] = question.qtexte
+        this.listeCorrections[i] = question.qtexteCorr
         i++
       }
       cpt++

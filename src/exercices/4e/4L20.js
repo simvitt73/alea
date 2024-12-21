@@ -297,8 +297,8 @@ export default function ExerciceEquation1 () {
 
       if (this.questionJamaisPosee(i, a, b, c, listeTypeDeQuestions[i])) {
         // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte) // replace(/1x/g,'${inconnue}')); //remplace 1x par ${inconnue}
-        this.listeCorrections.push(texteCorr) // .replace(/1x/g,'${inconnue}')); //remplace 1x par ${inconnue}
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: '', // `Résoudre ${texte} et donner la solution sous la forme d'une fraction irréductible`,

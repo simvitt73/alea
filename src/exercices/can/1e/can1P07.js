@@ -285,8 +285,9 @@ export default function CalculProbaTableauEff () {
           break
       }
       if (this.questionJamaisPosee(i, F, V)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)
         i++

@@ -119,8 +119,8 @@ export default function EquivalenceProgrammesCalcul () {
       // Si la question n'a jamais été posée, on l'enregistre
       if (this.questionJamaisPosee(i, A1, A2, B1, B3)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Supprime b, c et d dans la ligne ci-dessus et remplace les par NombreAAjouter !
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

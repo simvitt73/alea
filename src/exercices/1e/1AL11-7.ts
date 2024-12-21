@@ -130,8 +130,8 @@ Montrer que  $(${NomSA}_n)$ est une suite géométrique.<br>
       handleAnswers(this, 3 * i + 1, { reponse: { value: reponse1 } })
       handleAnswers(this, 3 * i + 2, { reponse: { value: reponse2 } })
       if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

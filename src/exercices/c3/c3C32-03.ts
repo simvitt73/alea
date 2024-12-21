@@ -113,8 +113,8 @@ Pour parcourir $${distanceBase * nbFoisPlus + 1}$ km en continuant à ${sportif.
         style: 'alpha'
       })
       if (this.questionJamaisPosee(i, correction)) {
-        this.listeQuestions.push(enonce)
-        this.listeCorrections.push(correction)
+        this.listeQuestions[i] = enonce
+        this.listeCorrections[i] = correction
         i++
       }
       cpt++

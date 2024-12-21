@@ -116,8 +116,9 @@ export default function LireAbscissesFractionnairesComplexes () {
 
       if (this.questionJamaisPosee(i, num1, num2, num3)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
 
         if (context.isAmc) {
           this.autoCorrection[i] = {

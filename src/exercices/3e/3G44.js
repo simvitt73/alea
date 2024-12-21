@@ -547,8 +547,8 @@ export default function CalculPythagoreEspace () {
 
       if (this.questionJamaisPosee(i, nomSolide, r, h)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -286,8 +286,9 @@ export default function CalculDAngleFigureComplexe () {
       }
 
       if (this.questionJamaisPosee(i, nom, BAC)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
       }
     }
 

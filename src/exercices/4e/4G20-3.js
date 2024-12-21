@@ -119,8 +119,8 @@ export default class calculsDeCarre extends Exercice {
 
       if (this.questionJamaisPosee(i, texte)) {
         texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBaseAvecFraction)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

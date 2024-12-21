@@ -195,8 +195,9 @@ export default function CalculValeurApprocheeRacineCarree () {
             }
           }
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (listeAvecOuSansCalculatrice[i] === 'avec') {
           indexRep++
         } else {

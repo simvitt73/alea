@@ -173,8 +173,8 @@ export default class systemeEquationsPremDeg extends Exercice {
             )
           }
           if (this.questionJamaisPosee(i, a, b, tot)) {
-            this.listeQuestions.push(texte)
-            this.listeCorrections.push(texteCorr)
+            this.listeQuestions[i] = texte
+            this.listeCorrections[i] = texteCorr
             i++
           }
           break
@@ -194,8 +194,8 @@ export default class systemeEquationsPremDeg extends Exercice {
             )
           }
           if (this.questionJamaisPosee(i, largeur, longueur, cLargeur, cLongueur)) {
-            this.listeQuestions.push(texte)
-            this.listeCorrections.push(texteCorr)
+            this.listeQuestions[i] = texte
+            this.listeCorrections[i] = texteCorr
             i++
           }
           break

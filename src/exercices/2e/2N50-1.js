@@ -391,8 +391,9 @@ export default class ProblemesAvecEquations extends Exercice {
       texteCorr += conclusion
 
       if (this.questionJamaisPosee(i, x, a, b, d)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         setReponse(this, i, x, { formatInteractif: 'calcul' })
         i++
       }

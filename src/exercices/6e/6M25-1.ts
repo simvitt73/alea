@@ -88,8 +88,8 @@ export default class PerimetresCalculMental extends Exercice {
         if (this.interactif) {
           texte += '<br>' + texteInteractif
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

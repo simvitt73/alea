@@ -164,8 +164,9 @@ export default function ExerciceDecomposerEnFacteursPremiers () {
       handleAnswers(this, i, { reponse: { value: [reponse, produitAvecPuissances], options: { exclusifFactorisation: true } } })
 
       if (this.questionJamaisPosee(i, ...facteurs)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (!context.isHtml) {
           this.canEnonce = `Décomposer $${texNombre(n)}$ en produit de facteurs premiers. `
           this.correction = this.listeCorrections[0]

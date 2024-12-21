@@ -64,8 +64,8 @@ export default class nomExercice extends Exercice {
       // texteCorr += `ce qui donne finalement : $I${miseEnEvidence`(${((xA + xB)/2,1)}   ;   ${texNombre((yA + yB)/2,1)}  ;  ${texNombre((zA + zB)/2,1)})`}$<br>`
 
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

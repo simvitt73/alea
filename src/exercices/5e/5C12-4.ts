@@ -423,8 +423,8 @@ class MettreDesParentheses extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, a, b, c, d, materiel.expAP)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

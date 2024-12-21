@@ -360,8 +360,9 @@ export function ExoRose () {
       texteCorr = mathalea2d(Object.assign({ scale: 0.6 }, fixeBordures(objetsCorr)), objetsCorr)
       if (this.questionJamaisPosee(i, ...this.roses[i].values)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: this.introduction + '<br>' + texte,

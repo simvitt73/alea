@@ -131,8 +131,8 @@ export default class ExerciceAdditionsRelatifs extends Exercice {
         handleAnswers(this, i, { reponse: { value: (arrondi(a + b)).toString(), options: { resultatSeulementEtNonOperation: true } } })
       }
       if (this.questionJamaisPosee(i, a, b)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

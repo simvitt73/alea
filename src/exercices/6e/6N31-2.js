@@ -206,8 +206,8 @@ export default function OrdreDeGrandeurOperationsDecimaux () {
       texteCorr = `${material.correction}`
 
       if (this.questionJamaisPosee(i, nb11, nb21, nb31, nb41, nb51)) { // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

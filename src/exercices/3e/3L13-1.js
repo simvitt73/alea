@@ -196,8 +196,8 @@ export default function ExerciceEquation1Tiret2 () {
       }
 
       if (this.questionJamaisPosee(i, a, b, c, d, k)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte) // replace(/1x/g,'x')); //remplace 1x par x
-        this.listeCorrections.push(texteCorr) // .replace(/1x/g,'x')); //remplace 1x par x
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

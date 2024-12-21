@@ -134,8 +134,9 @@ class EquaDiffs extends Exercice {
           texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: '$y=$ ' })
           handleAnswers(this, i, { reponse: { value: reponse } })
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         // handleAnswers(this, i, { reponse: { value: laDerivee, options: { variable: 'x' }, compare: functionCompare } })
         i++
         cpt--

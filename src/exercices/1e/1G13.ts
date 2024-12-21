@@ -229,8 +229,8 @@ class EqCartDroite extends Exercice {
       texte += '<br>' + ajouteChampTexteMathLive(this, i, ' ', { texteAvant: 'Équation cartésienne de la droite $(d)$ :' })
       handleAnswers(this, i, { reponse: { value: reponse }, callback })
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

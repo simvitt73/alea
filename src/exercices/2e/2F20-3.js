@@ -292,8 +292,8 @@ export default function LecturesGraphiques () {
       graph.epaisseur = 2
       if (this.questionJamaisPosee(i, listeTypeQuestions[i], x0, y0, k)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

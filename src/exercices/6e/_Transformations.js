@@ -573,8 +573,9 @@ export default function Transformations () {
       }
 
       if (this.questionJamaisPosee(ee, antecedents)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[ee] = texte
+        this.listeCorrections[ee] = texteCorr
+
         if (!context.isHtml) {
           this.canEnonce = this.listeQuestions[0]
           this.correction = this.listeCorrections[0]

@@ -293,8 +293,8 @@ export default function SommeOuProduitFractions () {
       if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         texte += ajouteChampTexteMathLive(this, i, '')
         setReponse(this, i, fraction(num, den), { formatInteractif: 'fractionEgale' })
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
 

@@ -100,8 +100,8 @@ export default function Formacanonique () {
 
       texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: `$${sp()}=${sp()}$` })
       if (this.questionJamaisPosee(i, a, b, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

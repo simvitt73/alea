@@ -192,8 +192,8 @@ export default function SymetrieAxialeProprietes () {
             texte += ajouteChampTexteMathLive(this, i, ' alphanumeric')
           }
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

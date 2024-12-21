@@ -250,8 +250,8 @@ export default class TraduireUnProgrammeDeCalcul extends Exercice {
           texte = texte.replace(', quel est le résultat du programme de calcul ?', ',<br> quel est le résultat de ce programme ?')
         }
         if (!context.isHtml && i === 0) { texte = '\\setlength\\itemsep{1em}' + texte } // espacement entre les questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

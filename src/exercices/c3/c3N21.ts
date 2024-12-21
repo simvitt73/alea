@@ -34,8 +34,9 @@ export default class LireUneFraction extends Exercice {
       const value = `${nombreEnLettres(numerateur)} ${denominateurEnLettre(denominateur, numerateur > 1)}`
       const texteCorr = `La fraction $\\dfrac{${numerateur}}{${denominateur}}$ se lit ${value}.`
       if (this.questionJamaisPosee(i, numerateur, denominateur)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         handleAnswers(this, i, { reponse: { value, options: { texteSansCasse: true } } })
         i++
       }

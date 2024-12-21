@@ -103,8 +103,8 @@ export default function ProblemeCourse () {
             })}`
       }
       if (this.questionJamaisPosee(i, reponse, masseEnKgDeAliment1, masseEnKgDeAliment2)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

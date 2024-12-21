@@ -815,8 +815,8 @@ export default function UnionEtIntersectionIntervallesDeR () {
           texte += ajouteChampTexteMathLive(this, i, ` ${KeyboardType.clavierCompare} ${KeyboardType.clavierEnsemble}`, { texteAvant: '<br>$I=$' })
           handleAnswers(this, i, { reponse: { value: aRemplacer, options: { intervalle: true } } })
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

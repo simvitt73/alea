@@ -88,8 +88,9 @@ export default function VolumesPavesParDenombrement () {
       }
       if (dimensions.indexOf([l, p, h]) === -1) {
         setReponse(this, q, l * p * h)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         dimensions.push([l, p, h])
         q++
       }

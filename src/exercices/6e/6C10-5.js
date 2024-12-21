@@ -95,8 +95,9 @@ export default function ExerciceLabyrintheMultiples () {
       }
       /****************************************************/
       if (this.questionJamaisPosee(q, listeMultiples[0], listeNonMultiples[0])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         q++
       }
       listeQuestionsToContenu(this)

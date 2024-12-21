@@ -442,8 +442,8 @@ export default function CalculerDesFrequences () {
           exercice.corrections.push(transit.corrections)
       }
       if (this.questionJamaisPosee(i, ...transit.effectifs)) {
-        this.listeQuestions.push(...exercice.questions)
-        this.listeCorrections.push(...exercice.corrections)
+        this.listeQuestions[i] = exercice.questions[0]
+        this.listeCorrections[i] = exercice.corrections[0]
         i++
       }
       cpt++

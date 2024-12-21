@@ -85,8 +85,8 @@ export default function ÉcrireUneExpressionMathador () {
       }
 
       if (this.questionJamaisPosee(i, solutionMathador, this.tirage[i], this.cible[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

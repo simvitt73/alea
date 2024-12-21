@@ -442,8 +442,8 @@ export default function TrouverChiffre () {
       texte += this.interactif ? ('<br>' + ajouteChampTexteMathLive(this, i, KeyboardType.clavierEnsemble)) : ''
       if (this.questionJamaisPosee(i, nbAvecChiffreCache)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

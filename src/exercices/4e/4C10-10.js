@@ -88,8 +88,8 @@ export default function ExerciceMultiplicationsRelatifsATrou (max = 10) {
         texte += props.texte
       }
       if (this.questionJamaisPosee(i, a, b, k)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

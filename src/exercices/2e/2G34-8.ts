@@ -279,8 +279,8 @@ export default class systemeEquationsPremDeg extends Exercice {
         handleAnswers(this, i, { reponse: { value: rep, options: { texteSansCasse: true } } }, { formatInteractif: 'listeDeroulante' })
       }
       if (this.questionJamaisPosee(i, solX, solY)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

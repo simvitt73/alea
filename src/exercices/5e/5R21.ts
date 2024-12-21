@@ -111,8 +111,9 @@ export default class ExerciceSoustractionsRelatifs extends Exercice {
         }
       }
       if (this.questionJamaisPosee(i, a, b)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           setReponse(this, i, [arrondi(a - b), `(${ecritureAlgebrique(a - b)})`], {
             signe: true,

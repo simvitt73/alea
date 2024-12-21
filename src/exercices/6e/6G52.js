@@ -134,8 +134,8 @@ export default class TracerCarresRectangleslongueurDonnees extends Exercice {
       texte += '<br>' + (context.vue === 'diap' ? '<center>' : '') + mathalea2d(params, objetsEnonce) + (context.vue === 'diap' ? '</center>' : '')
       // Si la question n'a jamais été posée, on l'enregistre
       if (this.questionJamaisPosee(i, x, y)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

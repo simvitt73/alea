@@ -217,8 +217,8 @@ export default class RepresenterUneFraction extends Exercice {
       texte += monQcm.texte
       const texteCorr = reponseRedigee + monQcm.texteCorr
       if (this.questionJamaisPosee(i, ...reponses)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

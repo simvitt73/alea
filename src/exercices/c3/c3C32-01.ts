@@ -119,8 +119,8 @@ ${this.sup3 ? `${Operation({ operande1: masseCoquillages.toNumber(), operande2: 
         )
       }
       if (this.questionJamaisPosee(i, nbCoquillages, masseCoquillages.toString(), coquillage.nomPluriel)) {
-        this.listeQuestions.push(listePrincipale)
-        this.listeCorrections.push(correction)
+        this.listeQuestions[i] = listePrincipale
+        this.listeCorrections[i] = correction
         i++
       }
       cpt++

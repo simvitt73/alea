@@ -145,8 +145,8 @@ class EquationTrigo extends Exercice {
       }
       setReponse(this, i, reponse)
       if (this.questionJamaisPosee(i, cosSinTan, angle, lAB.toFixed(1))) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

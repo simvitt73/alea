@@ -48,8 +48,8 @@ export default function ExosScratch () {
           questions += exo.listeQuestions[j] + '<br>'
           corrections += exo.listeCorrections[j] + '<br>'
         }
-        this.listeQuestions.push(questions)
-        this.listeCorrections.push(corrections)
+        this.listeQuestions[i] = questions
+        this.listeCorrections[i] = corrections
         i++
       }
       cpt++

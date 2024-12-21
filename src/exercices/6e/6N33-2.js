@@ -120,9 +120,8 @@ export default function CalculerUnPourcentage () {
 
       if (this.questionJamaisPosee(i, moy1, moy2, moy3)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
-
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

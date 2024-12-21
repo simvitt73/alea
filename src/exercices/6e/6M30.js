@@ -432,8 +432,8 @@ export default function CalculDeVolumes () {
       }
       if (this.questionJamaisPosee(i, resultat, resultat2, resultat3, resultat4)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

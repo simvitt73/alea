@@ -81,8 +81,9 @@ Ainsi $${d} = ${Math.floor(d / 60) * 60} + ${d % 60}$ donc $${d}$min $= ${Math.f
         texteCorr += `$${d} = ${a} \\times 60 + ${b}$ donc $${d}$ s = ${texteEnCouleurEtGras(`${a}${sp()}min${sp()}${b}${sp()}s`)}.`
       }
       if (this.questionJamaisPosee(i, a, b, d)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           if (listeTypeQuestions[i] === 'min vers h et min') {
             this.autoCorrection[i] = {

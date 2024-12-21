@@ -532,8 +532,9 @@ export default function VocabulaireNotationsFonctions2 () {
         texte += propositionsQcm(this, i).texte
       }
       if (this.questionJamaisPosee(i, x, y)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         indice[typeDeQuestions[i] - 1]++
         i++
       }

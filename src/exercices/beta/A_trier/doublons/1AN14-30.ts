@@ -144,8 +144,9 @@ class DerivationSimple extends Exercice {
       // texteCorr += `L'expression de la dérivée de la fonction $f$ est :<br> $f^\\prime(x) =${miseEnEvidence(laFonction.toLatex())}$<br>`
       // On vérifie qu'on n'a pas deux fois la même fonction
       if (this.questionJamaisPosee(i, laFonctionEnLatex)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         handleAnswers(this, i, { reponse: { value: laDerivee, options: { variable: 'x' }, compare: functionCompare } })
         i++
         cpt--

@@ -7,7 +7,6 @@ import Exercice from '../../deprecatedExercice.js'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-
 export const titre = 'Encadrer à la dizaine, centaine'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -31,8 +30,6 @@ export default function EncadrerDizaine () {
   this.nbQuestions = 1
   this.formatChampTexte = ''
   this.tailleDiaporama = 2
-
-    
 
   this.nouvelleVersion = function () {
     let question1, correction1, N
@@ -91,10 +88,10 @@ export default function EncadrerDizaine () {
       }
 
       if (this.questionJamaisPosee(i, N)) {
-        this.listeQuestions.push(question1)
-        this.listeCorrections.push(correction1)
-        this.listeCanEnonces.push(this.canEnonce)
-        this.listeCanReponsesACompleter.push(this.canReponseACompleter)
+        this.listeQuestions[i] = question1
+        this.listeCorrections[i] = correction1
+        this.listeCanEnonces[i] = this.canEnonce
+        this.listeCanReponsesACompleter[i] = this.canReponseACompleter
         i++
       }
       cpt++

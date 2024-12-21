@@ -6,6 +6,13 @@ import type Decimal from 'decimal.js'
 type EventListener = (evt: Event) => void
 
 export function exportedNouvelleVersionWrapper (this: Exercice, numeroExercice?: number): void {
+  const signature = [this.seed, this.sup, this.sup2, this.sup3, this.sup4, this.sup5, this.correctionDetaillee, this.interactif, this.nbQuestions].map(String).join('')
+  if (this.lastCallback === signature) {
+    // identique
+    // pas de recalcul à faire
+    return
+  }
+  this.lastCallback = signature
   this.reinit()
   this.nouvelleVersion(numeroExercice)
 }

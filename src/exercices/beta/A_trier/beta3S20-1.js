@@ -673,8 +673,8 @@ export default function CalculsProbabilites () {
       }
       // Fin Probabilites
       if (this.questionJamaisPosee(i, nquestion)) {
-        this.listeQuestions.push(exercice.texte)
-        this.listeCorrections.push(exercice.texteCorr)
+        this.listeQuestions[i] = exercice.texte
+        this.listeCorrections[i] = exercice.texteCorr
         i++
       }
       cpt++

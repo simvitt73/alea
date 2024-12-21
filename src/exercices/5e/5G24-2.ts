@@ -123,8 +123,8 @@ export default class TrianglesEgaux extends Exercice {
       texte = mathalea2d(Object.assign({ scale: 0.3, optionsTikz: ['baseline=(current bounding box.north)'] }, fixeBordures(objetsAAfficher)), objetsAAfficher)
       if (this.listeQuestions.indexOf(texte) === -1) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -201,8 +201,8 @@ export default class BetaReperage2e extends Exercice {
         ? figureApigeom({ exercice: this, figure: figureCorrection, i, idAddendum: 'correction', isDynamic: false })
         : figureCorrection.tikz()
       if (this.questionJamaisPosee(i, ...x[i], ...y[i], ...coordsI, ...coordsK)) {
-        this.listeQuestions.push(question)
-        this.listeCorrections.push(reponse)
+        this.listeQuestions[i] = question
+        this.listeCorrections[i] = reponse
         i++
       }
     }

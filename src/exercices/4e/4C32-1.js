@@ -116,8 +116,8 @@ export default function CalculsAvecPuissancesDeDix () {
         texte += props.texte
       }
       if (this.listeQuestions.indexOf(texte) === -1) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

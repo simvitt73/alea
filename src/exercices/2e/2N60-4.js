@@ -300,10 +300,10 @@ export default function ExerciceInequation1 () {
       // texte += `<br> Solution : $${reponse}$`// pour test
       texte += '<br>' + ajouteChampTexteMathLive(this, i, KeyboardType.clavierEnsemble, { texteAvant: ' $S=$' })
       handleAnswers(this, i, { reponse: { value: reponse, options: { intervalle: true } } })
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, JSON.stringify([a, b, c, d, symboleInegalite]))) {
         // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte) // replace(/1x/g,'x')); //remplace 1x par x
-        this.listeCorrections.push(texteCorr) // .replace(/1x/g,'x')); //remplace 1x par x
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -137,8 +137,8 @@ export default class CalculsAvecGrandsTraitsDeFraction extends Exercice {
         handleAnswers(this, i, { reponse: { value: answer, options: { resultatSeulementEtNonOperation: true } } })
       }
       if (this.questionJamaisPosee(i, answer)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

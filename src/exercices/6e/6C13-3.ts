@@ -125,8 +125,8 @@ class OperationsReciproques extends Exercice {
         setReponse(this, i, depart)
       }
       if (this.questionJamaisPosee(i, depart, operande1, operande2)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

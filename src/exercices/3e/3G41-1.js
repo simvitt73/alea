@@ -157,8 +157,9 @@ export default function ConstruireSectionPaveDroit () {
 
       if (this.questionJamaisPosee(i, nomSolide)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: texte,

@@ -138,8 +138,8 @@ export default class RangerOrdreCroissantDecroissant extends Exercice {
 
       if (this.questionJamaisPosee(i, c1, c2, c3, c4, c5)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

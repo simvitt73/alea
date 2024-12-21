@@ -65,8 +65,8 @@ export default class PuissancesEtPrefixe extends Exercice {
         this.autoCorrection[i].propositions = [{ statut: 1, sanscadre: true, texte: texteCorr }]
       }
       if (this.questionJamaisPosee(i, exposant)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

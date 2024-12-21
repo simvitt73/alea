@@ -157,8 +157,8 @@ export default class CalculsLog extends Exercice {
           texte += ajouteChampTexteMathLive(this, i, KeyboardType.logPuissance, { texteAvant: '=' })
           handleAnswers(this, i, { reponse: { value: answer } })
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -54,7 +54,7 @@ export default function DroiteRemarquableDuTriangle () {
     else if (this.sup === 2) typesDeQuestionsDisponibles = [3, 4]
     else typesDeQuestionsDisponibles = [1, 2, 3, 4]
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
-    for (let i = 0, a, angle, rapport, texte, texteCorr; i < this.nbQuestions; i++) { // this.nbQuestions && cpt<50;) { // On limite le nombre d'essais pour chercher des valeurs nouvelles
+    for (let i = 0, a, angle, rapport, texte, texteCorr; i < this.nbQuestions;) { // this.nbQuestions && cpt<50;) { // On limite le nombre d'essais pour chercher des valeurs nouvelles
       triangles[i] = new Triangle()
       sommets[i] = triangles[i].getSommets(false)
 
@@ -114,9 +114,11 @@ export default function DroiteRemarquableDuTriangle () {
         pixelsParCm: 20
       }, ...objets[i])
 
-      if (this.listeQuestions.indexOf(texte) === -1) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(i, angle, rapport, a)) { // Si la question n'a jamais été posée, on en créé une autre
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
+        i++
       }
     }
     listeQuestionsToContenu(this)

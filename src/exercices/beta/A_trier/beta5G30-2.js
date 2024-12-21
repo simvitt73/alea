@@ -43,7 +43,7 @@ function anglesSecantes (A, rot = { O: 60, A: 0 }) {
   }
 }
 /**
- * 
+ *
  * @author Frédéric PIOU
 
 */
@@ -451,8 +451,8 @@ export default function ExercicesAnglesAIC () {
       }
       // Les lignes ci-dessous permettent d'avoir un affichage aux dimensions optimisées
       if (this.questionJamaisPosee(i, nquestion)) {
-        this.listeQuestions.push(exercice.texte)
-        this.listeCorrections.push(exercice.texteCorr)
+        this.listeQuestions[i] = exercice.texte
+        this.listeCorrections[i] = exercice.texteCorr
         i++
       }
       cpt++

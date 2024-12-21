@@ -99,7 +99,7 @@ export default class ParalleleEtPerpendiculaires extends Exercice {
 
     let p
     for (
-      let i = 0, texte, cpt = 0;
+      let i = 0, cpt = 0;
       i < this.nbQuestions && cpt < 50;
 
     ) {
@@ -423,10 +423,10 @@ export default class ParalleleEtPerpendiculaires extends Exercice {
       // this.autoCorrection = [{ enonce: enonce + '<br>', propositions: [{ texte: correction, statut: 3, sanscadre: true }] }]
       /****************************************************/
       correction += anim.htmlBouton(this.numeroExercice, i)
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, Xmax, Xmin, Ymax, Ymin)) {
       // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(enonce + '<br>')
-        this.listeCorrections.push(correction + '<br>')
+        this.listeQuestions[i] = enonce + '<br>'
+        this.listeCorrections[i] = correction + '<br>'
         i++
       }
       cpt++

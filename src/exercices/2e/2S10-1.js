@@ -157,8 +157,8 @@ export default function DiffentesEcrituresProportions () {
       }
 
       if (this.questionJamaisPosee(i, dec, pourc)) { // on utilise donc cette fonction basée sur les variables aléatoires pour éviter les doublons
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

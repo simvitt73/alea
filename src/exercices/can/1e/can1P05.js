@@ -221,8 +221,8 @@ export default function CalculProbaFormuleProbaTotale () {
           break
       }
       if (this.questionJamaisPosee(i, pA, pBsachantA, pBsachantAbarre)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

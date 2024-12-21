@@ -98,8 +98,8 @@ export default function PasserEcritureDecimaleEcritureFractionnaireInversement (
       }
 
       if (this.questionJamaisPosee(i, numerateur, denominateur, listeTypeFractions[i], listeDesSensDemandes[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

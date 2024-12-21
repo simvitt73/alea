@@ -112,8 +112,8 @@ export default function ConstruireMediatrices6e () {
         }
 
       if (this.questionJamaisPosee(ee, A.x, A.y, B.x, B.y)) {
-        this.listeQuestions.push(texte + mathalea2d(params, objetsEnonce))
-        this.listeCorrections.push(texteCorr + mathalea2d(params, objetsCorrection))
+        this.listeQuestions[ee] = texte + mathalea2d(params, objetsEnonce)
+        this.listeCorrections[ee] = texteCorr + mathalea2d(params, objetsCorrection)
         ee++
       }
       cpt++

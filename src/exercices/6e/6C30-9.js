@@ -69,8 +69,8 @@ export default class ProduitEtSommeOuDifferenceDeDecimaux extends Exercice {
       // on retire le dernier <br>
       texteCorr = texteCorr.slice(0, texteCorr.length - 4)
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

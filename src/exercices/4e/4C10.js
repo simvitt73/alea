@@ -112,8 +112,8 @@ export default function ProduitsEtQuotientRelatifs () {
       // Fin de cette uniformisation
 
       if (this.questionJamaisPosee(i, a, b, listeTypesDeQuestion[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

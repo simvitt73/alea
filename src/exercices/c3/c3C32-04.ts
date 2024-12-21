@@ -181,8 +181,8 @@ La somme totale restant à payer par les familles est de $${this.sup !== 3 ? mis
         })
       }
       if (this.questionJamaisPosee(i, sommeTotale, aideMairie, nbEleves)) {
-        this.listeQuestions.push(listePrincipale)
-        this.listeCorrections.push(listeCorrections)
+        this.listeQuestions[i] = listePrincipale
+        this.listeCorrections[i] = listeCorrections
         i++
       }
       cpt++

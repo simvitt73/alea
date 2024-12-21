@@ -111,8 +111,8 @@ export default class CompleterEgalite extends Exercice {
         champ1: { value: x }
       })
       if (this.questionJamaisPosee(i, x.toString(), a.toString(), b.toString(), c.toString())) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

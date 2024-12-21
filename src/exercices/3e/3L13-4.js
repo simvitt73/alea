@@ -247,8 +247,8 @@ Donc l'aire du rectangle $${ABCD}$ est ${environ} $${miseEnEvidence(toTex(soluti
 
       // exercice.texte += numeroquestion
       if (this.questionJamaisPosee(i, i)) {
-        this.listeQuestions.push(exercice.texte.replaceAll('\n\n', '<br>'))
-        this.listeCorrections.push(exercice.texteCorr.replaceAll('\n\n', '<br>'))
+        this.listeQuestions[i] = exercice.texte.replaceAll('\n\n', '<br>')
+        this.listeCorrections[i] = exercice.texteCorr.replaceAll('\n\n', '<br>')
         i++
       }
       cpt++

@@ -427,8 +427,8 @@ export default class VocabulaireAngles extends Exercice {
       texte += mathalea2d({ zoom: 1, scale: 0.25, xmin: -8, xmax: 8, ymin: -8, ymax: 8, optionsTikz: ['baseline=(current bounding box.north)'] }, objets) // On trace le graphique
       texte += '<br>' + texteSousFigure
       if (this.questionJamaisPosee(i, ARot.x, ARot.y, BRot.x, BRot.y, CRot.x, CRot.y, choixQuestion)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

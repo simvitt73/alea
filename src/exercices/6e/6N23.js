@@ -68,8 +68,8 @@ export default function ExerciceEcritureDecimaleApartirDeFractionDecimale () {
         if (context.isDiaporama) {
           texte = texte.replace('=\\dotfill', '')
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

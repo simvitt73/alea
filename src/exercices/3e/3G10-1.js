@@ -752,7 +752,7 @@ export default function TransformationsDuPlanEtCoordonnees () {
         )
       }
       if (this.questionJamaisPosee(ee, xA, yA, xB, yB, xC, yC)) {
-        this.listeQuestions.push(texte + '<br>' + mathalea2d({
+        this.listeQuestions[ee] = texte + '<br>' + mathalea2d({
           xmin: -10,
           ymin: -10,
           xmax: 10,
@@ -760,8 +760,8 @@ export default function TransformationsDuPlanEtCoordonnees () {
           pixelsParCm: 20,
           scale: 0.45,
           mainlevee: false
-        }, objetsEnonce))
-        this.listeCorrections.push(texteCorr + '<br>' + mathalea2d({
+        }, objetsEnonce)
+        this.listeCorrections[ee] = texteCorr + '<br>' + mathalea2d({
           xmin: -10,
           ymin: -10,
           xmax: 10,
@@ -769,7 +769,7 @@ export default function TransformationsDuPlanEtCoordonnees () {
           pixelsParCm: 20,
           scale: 0.45,
           mainlevee: false
-        }, objetsCorrection))
+        }, objetsCorrection)
         ee++
       }
       cpt++

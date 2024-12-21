@@ -72,8 +72,8 @@ class CalculsFractionsSimples extends Exercice {
       if (this.questionJamaisPosee(i, a, b, den, listeTypeQuestions[i])) {
         texte += ajouteChampTexteMathLive(this, i, `  ${KeyboardType.clavierDeBaseAvecFraction}`)
         if (this.interactif) handleAnswers(this, i, { reponse: { value, compare: equalFractionCompareSansRadical } })
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

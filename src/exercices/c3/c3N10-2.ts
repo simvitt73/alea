@@ -96,8 +96,8 @@ class Decomp1 extends Exercice {
       const decompStr = morceaux.join('+')
       const texteCorr = `$${texNombre(Number(nombreStr), 0)}=${decompStr}$`
       if (this.questionJamaisPosee(i, nombreStr)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -252,8 +252,8 @@ export default function ExerciceConversions (niveau = 1) {
             '................................................'
           )
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

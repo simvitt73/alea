@@ -151,8 +151,8 @@ export default class ExerciceAdditionsDe5Relatifs extends Exercice {
           digits: Math.max(2, nombreDeChiffresDansLaPartieEntiere(reponse)),
           decimals: 0
         })
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

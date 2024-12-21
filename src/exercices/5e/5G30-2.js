@@ -1411,8 +1411,8 @@ export default function ExercicesAnglesAIC () {
         if (this.interactif) {
           exercice.texte = exercice.texte + monQcm.texte
         }
-        this.listeQuestions.push(exercice.texte)
-        this.listeCorrections.push(exercice.texteCorr)
+        this.listeQuestions[i] = exercice.texte
+        this.listeCorrections[i] = exercice.texteCorr
         i++
       }
       cpt++

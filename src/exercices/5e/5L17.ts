@@ -137,8 +137,8 @@ En s'aidant d'un tableau, calculer les prix totaux correspondant à ${lister(nom
         style: 'display:block'
       }), monTableau)
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

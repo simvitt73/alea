@@ -307,9 +307,10 @@ export default function EcrirePetitsNombresEntiers () {
       }
 
       // Si la question n'a jamais été posée, on l'enregistre
-      if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(i, NombreAEcrire)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         this.listeCanEnonces.push(this.canEnonce ?? '')
         this.listeCanReponsesACompleter.push(this.canReponseACompleter ?? '')
         i++

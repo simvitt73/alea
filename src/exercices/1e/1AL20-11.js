@@ -126,8 +126,8 @@ export default function CalculDiscriminant () {
         texteCorr += modalTexteLong(numeroExercice, '<br>Complément graphique', correctionComplementaire, '<br>Complément graphique', 'info circle')
       }
       if (this.questionJamaisPosee(i, a, b, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -173,8 +173,8 @@ export default function FractionDuneQuantite () {
       if (this.listeCorrections.indexOf(texteCorr) === -1) {
         index += nbreponse
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -89,8 +89,8 @@ export default function EcritureDecimaleApresPuissancesDeDix () {
       texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: `${sp(2)}$=$${sp(2)}` })
 
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

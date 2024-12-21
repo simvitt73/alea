@@ -369,8 +369,8 @@ Le choix a été fait d'un antécédent primaire entier positif, le coefficient 
         texteCorr += `$ $${miseEnEvidence(aRemplacer)}$`
         // Fin de cette uniformisation
 
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

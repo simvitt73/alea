@@ -422,8 +422,9 @@ export default function ScratchMultiScript () {
         texteCorr += '\\columnbreak'
       }
       if (this.questionJamaisPosee(i, ...couleurs[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         if (!context.isAmc) {
           indexReponse += couleurs[i].length
         } else {

@@ -349,7 +349,7 @@ export default function IdentitesCalculs () {
       if (!this.can) {
         texte += ajouteChampTexteMathLive(this, i, '', { texteAvant: ' $=$ ' })
       }
-      if (this.listeQuestions.indexOf(texte) === -1) { // Si la question n'a jamais été posée, on en créé une autre
+      if (this.questionJamaisPosee(i, a, coeff, coeffSomDif)) { // Si la question n'a jamais été posée, on en créé une autre
         // ToDo traiter les éventuelles questions interactives en double
         let mybool = false
         this.listeQuestions.forEach(elt => {
@@ -358,8 +358,8 @@ export default function IdentitesCalculs () {
           }
         })
         if (!mybool && this.typeExercice !== 'simple') {
-          this.listeQuestions.push(texte)
-          this.listeCorrections.push(texteCorr)
+          this.listeQuestions[i] = texte
+          this.listeCorrections[i] = texteCorr
           i++
         }
       }

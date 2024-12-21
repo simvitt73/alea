@@ -79,8 +79,8 @@ export default class nomExercice extends Exercice {
         champ2: { value: String(b) }
       }, { formatInteractif: 'fillInTheBlank' })
       if (this.questionJamaisPosee(i, num, den)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

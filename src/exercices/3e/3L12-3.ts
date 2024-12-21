@@ -271,8 +271,8 @@ export default class nomExercice extends Exercice {
       texteCorr = transformEquation(texteCorr)
 
       if (this.questionJamaisPosee(i, p1.toString(), groupement.toString())) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

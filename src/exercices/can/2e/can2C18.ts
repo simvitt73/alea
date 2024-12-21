@@ -29,10 +29,6 @@ export default class entiersConsecutifs extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     this.listeCanEnonces = []
     this.listeCanReponsesACompleter = []
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -59,10 +55,10 @@ Ainsi le double du plus petit nombre est $${n1 + n2 - 1}$.<br>
       this.canEnonce = texte
       this.canReponseACompleter = '$\\ldots$ et $\\ldots$'
       if (this.questionJamaisPosee(i, n1, n2)) {
-        this.listeCorrections.push(this.correction)
-        this.listeQuestions.push(texte)
-        this.listeCanEnonces.push(this.canEnonce)
-        this.listeCanReponsesACompleter.push(this.canReponseACompleter)
+        this.listeCorrections[i] = this.correction
+        this.listeQuestions[i] = texte
+        this.listeCanEnonces[i] = this.canEnonce
+        this.listeCanReponsesACompleter[i] = this.canReponseACompleter
         i++
       }
       cpt++

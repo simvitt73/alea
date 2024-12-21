@@ -101,8 +101,8 @@ export default function LectureGraphiqueVecteurRepere () {
       this.reponse = xa
 
       if (this.questionJamaisPosee(i, xa, ya, k1, k2)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

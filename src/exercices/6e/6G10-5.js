@@ -240,8 +240,8 @@ export default class constructionElementaire extends Exercice {
 
       if (this.questionJamaisPosee(i, texte)) {
       // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(enonce + '<br>')
-        this.listeCorrections.push(correction + '<br>')
+        this.listeQuestions[i] = enonce + '<br>'
+        this.listeCorrections[i] = correction + '<br>'
         i++
       }
       cpt++

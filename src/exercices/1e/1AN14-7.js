@@ -135,8 +135,9 @@ export default function DeriveeComposee () {
 
       if (this.liste_valeurs.indexOf(expression) === -1) {
         this.liste_valeurs.push(expression)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         handleAnswers(this, i, { reponse: { value, compare: functionCompare } })
         i++
       }

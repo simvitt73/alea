@@ -91,8 +91,9 @@ export default function CoordonneesSommetParabole () {
       handleAnswers(this, i, { champ1: { value: String(-b), options: { nombreDecimalSeulement: true } }, champ2: { value: String(c), options: { nombreDecimalSeulement: true } } })
 
       if (this.questionJamaisPosee(i, a, b, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)
         i++

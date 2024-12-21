@@ -135,8 +135,9 @@ export default class Pythagore2DBlockly extends Exercice {
       }
       if (this.questionJamaisPosee(i, B1.x, B1.y, C1.x, C1.y)) {
         // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         const key = nomDuPolygone + longueurBC.toString() + longueurAC.toString() + longueurAB.toString()
         this.saveArguments[i] = { nomDuPolygone, longueurBC, longueurAC, longueurAB, listeTypeDeQuestion: listeTypeDeQuestions[i], key }
         i++

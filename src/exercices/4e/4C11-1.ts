@@ -159,8 +159,8 @@ export default class resoudreProblemeRelatifs extends Exercice {
         }
       }
       if (this.questionJamaisPosee(i, nombreQuestions, nombresPoints.join(''))) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

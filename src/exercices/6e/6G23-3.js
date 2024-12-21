@@ -144,8 +144,8 @@ export default function TracerTriangle2Angles () {
 
       if (this.questionJamaisPosee(i, angle1 < angle2 ? angle1 : angle2, angle1 > angle2 ? angle1 : angle2)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
     }

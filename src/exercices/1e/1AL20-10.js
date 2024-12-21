@@ -64,8 +64,8 @@ export default function CalculerDiscriminant () {
       texteCorr = `$\\Delta_${lettreDepuisChiffre(i + 1)} = ${p.texCalculDiscriminantSansResultat}$`
       texteCorr += `<br><br>$\\Delta_${lettreDepuisChiffre(i + 1)} = ${miseEnEvidence(p.discriminant.texFractionSimplifiee)}$`
       if (this.questionJamaisPosee(i, a, b, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

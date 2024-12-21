@@ -206,8 +206,8 @@ export default class ExerciceProbleme006 extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, nb1, nb2)) {
-        this.listeQuestions.push(enonce)
-        this.listeCorrections.push(correction)
+        this.listeQuestions[i] = enonce
+        this.listeCorrections[i] = correction
         i++
       }
       cpt++

@@ -25,9 +25,6 @@ export default function QuestionDePerimetres () {
   this.nbQuestions = 1
   this.tailleDiaporama = 2
   this.nouvelleVersion = function () {
-
-    
-    
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const a = randint(3, 25)
       const b = randint(0, 1)
@@ -68,10 +65,10 @@ export default function QuestionDePerimetres () {
       `)
 
       if (this.questionJamaisPosee(i, a, b)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(this.correction)
-        this.listeCanEnonces.push(this.canEnonce)
-        this.listeCanReponsesACompleter.push(monQcm.texte)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = this.correction
+        this.listeCanEnonces[i] = this.canEnonce
+        this.listeCanReponsesACompleter[i] = monQcm.texte
         i++
       }
       cpt++

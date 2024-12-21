@@ -27,10 +27,6 @@ export default class calculsRacinesCarresPafaits extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     this.listeCanEnonces = []
     this.listeCanReponsesACompleter = []
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -83,9 +79,9 @@ export default class calculsRacinesCarresPafaits extends Exercice {
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           break
       }
-      if (this.questionJamaisPosee(i, exp, texte)) {
-        this.listeCorrections.push(texteCorr)
-        this.listeQuestions.push(texte)
+      if (this.questionJamaisPosee(i, exp, String(a), String(b))) {
+        this.listeCorrections[i] = texteCorr
+        this.listeQuestions[i] = texte
 
         i++
       }

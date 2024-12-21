@@ -125,8 +125,9 @@ export default function CalculProbaArbre2e () {
       this.canReponseACompleter = `   
       $x=\\ldots$ `
       if (this.questionJamaisPosee(i, pA, pAC, pBC)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)
         i++

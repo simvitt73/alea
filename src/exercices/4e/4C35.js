@@ -148,8 +148,8 @@ export default function PuissanceDecimaleOuFractionnaire () {
 
       texte += ajouteChampTexteMathLive(this, i)
       if (this.questionJamaisPosee(i, a, n, listeTypeQuestions[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

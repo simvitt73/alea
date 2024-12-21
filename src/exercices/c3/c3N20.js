@@ -83,8 +83,8 @@ export default function NomQuelconqueDeLaFonctionQuiCreeExercice () {
       if (this.questionJamaisPosee(i, a, b, c)) {
         setReponse(this, i, reponse)
         texte += ajouteChampTexteMathLive(this, i)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

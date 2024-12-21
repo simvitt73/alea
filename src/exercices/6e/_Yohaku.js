@@ -71,8 +71,9 @@ export default function FabriqueAYohaku () {
 
       this.yohaku[i] = yohaku
       if (this.questionJamaisPosee(i, ...yohaku.cellules)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: this.introduction + texte,

@@ -216,8 +216,8 @@ export default function ComparerAvecFctCarre () {
           break
       }
       if (this.questionJamaisPosee(i, choix, a, b)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

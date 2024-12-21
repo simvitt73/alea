@@ -111,8 +111,8 @@ export default function TablesDeMultiplications (tablesParDefaut = '2-3-4-5-6-7-
         }
       }
       if (this.questionJamaisPosee(i, a, b, typeDeQuestion)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

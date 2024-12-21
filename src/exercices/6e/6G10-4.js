@@ -366,8 +366,9 @@ export default function VocabulaireDuCercle () {
       // Si la question n'a jamais été posée, on l'enregistre
       if (this.questionJamaisPosee(i, nomsDesPoints, objetsEnonce)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Dans cet exercice, on n'utilise pas a, b, c et d mais A, B, C et D alors remplace-les !
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
 
         if (context.isAmc) {
           this.autoCorrection[i] = {

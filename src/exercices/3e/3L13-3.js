@@ -428,8 +428,9 @@ export default class ProblemesEnEquation extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, x, a, b, d)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (uniteOptions[0] === '') setReponse(this, i, x, { formatInteractif: 'calcul' })
         else setReponse(this, i, uniteOptions[1], { formatInteractif: 'unites' })
         i++

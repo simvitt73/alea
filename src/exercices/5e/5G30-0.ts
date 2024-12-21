@@ -130,8 +130,9 @@ export default class AnglesEtVocabulaire extends Exercice {
             ` ${KeyboardType.nombresEtDegre}`
           )
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (listeTypesDeQuestions[i] !== 1) {
           handleAnswers(
             this,

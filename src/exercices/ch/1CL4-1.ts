@@ -172,8 +172,8 @@ export default class ExerciceEquationSecondDegre extends Exercice {
       texte += '<br><br>' + ajouteChampTexteMathLive(this, 2 * i + 1, 'clavierFullOperations', { texteAvant: 'Donner l\'ensemble des solutions en séparant chaque solution par un point-virgule $S=$' })
       handleAnswers(this, 2 * i + 1, { reponse: { value: `\\{${reponse1};${reponse2}\\}`, options: { ensembleDeNombres: true } } })
       if (this.questionJamaisPosee(i, equation.ensembleDeSolutionsTex, equation.equationTex)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

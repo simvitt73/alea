@@ -227,8 +227,8 @@ export default function DeterminerFonctionAffine () {
       texte += ajouteChampTexteMathLive(this, i)
       if (this.questionJamaisPosee(i, x1, x2, y1, y2, a, b, listeTypeDeQuestions[i])) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

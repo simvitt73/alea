@@ -309,11 +309,11 @@ class ConstrctionsSymetriquesPoints extends Exercice {
         }
         this.figuresApiGeom[i].options.limitNumberOfElement.set('Point', 1)
         const emplacementPourFigure = figureApigeom({ exercice: this, i, figure: this.figuresApiGeom[i] })
-        this.listeQuestions.push(enonce + '<br><br>' + emplacementPourFigure)
+        this.listeQuestions[i] = enonce + '<br><br>' + emplacementPourFigure
       } else {
-        this.listeQuestions.push(enonce + '<br><br>' + mathalea2d({ xmin: -10, xmax: 10, ymin: -10, ymax: 10, scale: 0.5, pixelsParCm: 15 }, objets))
+        this.listeQuestions[i] = enonce + '<br><br>' + mathalea2d({ xmin: -10, xmax: 10, ymin: -10, ymax: 10, scale: 0.5, pixelsParCm: 15 }, objets)
       }
-      this.listeCorrections.push(mathalea2d({ xmin: -10, xmax: 10, ymin: -10, ymax: 10, scale: 0.5, pixelsParCm: 15 }, objetsCorrection))
+      this.listeCorrections[i] = mathalea2d({ xmin: -10, xmax: 10, ymin: -10, ymax: 10, scale: 0.5, pixelsParCm: 15 }, objetsCorrection)
     }
   }
 

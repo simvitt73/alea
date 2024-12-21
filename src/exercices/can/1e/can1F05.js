@@ -84,8 +84,9 @@ export default function LectureGraphiqueParabolebEtc () {
           L'énoncé indique que $a=${a}$, on en déduit $-\\dfrac{b}{${2 * a}}=${alpha}$, soit $b=${a * alpha * (-2)}$.`
 
       if (this.questionJamaisPosee(i, alpha, beta)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(texte)
         this.listeCanReponsesACompleter.push('$b=\\ldots$')
         i++

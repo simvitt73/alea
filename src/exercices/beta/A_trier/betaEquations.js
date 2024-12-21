@@ -1674,8 +1674,8 @@ export default function EquationsProgression () {
       }
       if (this.questionJamaisPosee(i, nquestion)) {
         // this.listeQuestions.push(exercice.texte + '<br>--------$\\textbf{CORRECTION}$----------<br>' + exercice.texteCorr)
-        this.listeQuestions.push(exercice.texte)
-        this.listeCorrections.push(exercice.texteCorr)
+        this.listeQuestions[i] = exercice.texte
+        this.listeCorrections[i] = exercice.texteCorr
         i++
       }
       cpt++

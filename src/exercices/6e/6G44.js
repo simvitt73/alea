@@ -343,8 +343,8 @@ export default function NombreDeFacesEtDAretes () {
       if (this.questionJamaisPosee(j, choix, n)) {
         setReponse(this, j, this.reponse)
         this.question += ajouteChampTexteMathLive(this, j, '')
-        this.listeQuestions.push(this.question)
-        this.listeCorrections.push(this.correction)
+        this.listeQuestions[j] = this.question
+        this.listeCorrections[j] = this.correction
         j++
       }
     }

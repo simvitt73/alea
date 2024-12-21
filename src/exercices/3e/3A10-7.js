@@ -83,8 +83,9 @@ export default function ExerciceLabyrinthePremiers3e () {
       texteCorr += mathalea2d(params, laby.murs2d, laby.nombres2d, laby.chemin2d)
 
       if (this.questionJamaisPosee(q, bonnesReponses[0], mauvaisesReponses[0])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         q++
       }
     }

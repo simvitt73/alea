@@ -514,8 +514,8 @@ export default function Solide6e () {
       texte += props.texte
       if (this.questionJamaisPosee(i, texte, k, l, s)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte + '<br>')
-        this.listeCorrections.push(correction + '<br>')
+        this.listeQuestions[i] = texte + '<br>'
+        this.listeCorrections[i] = correction + '<br>'
         i++
       }
       cpt++

@@ -94,6 +94,7 @@ export default class Exercice {
   besoinFormulaire5CaseACocher: boolean | [string] | [string, boolean]
   mg32Editable: boolean
   listeArguments: string[] // Variable servant à comparer les exercices pour ne pas avoir deux exercices identiques
+  lastCallback: string // La dernière signature de listeArguments afin de comparaison : permet d'éviter un nouvelleVersionWrapper inutile
   examen?: string // Pour les exercices statiques
   mois?: string // Pour les exercices statiques
   annee?: string // Pour les exercices statiques
@@ -198,6 +199,7 @@ export default class Exercice {
     // this.typeExercice = 'simple' // Pour les exercices plus simples destinés aux courses aux nombres
 
     this.listeArguments = [] // Variable servant à comparer les exercices pour ne pas avoir deux exercices identiques
+    this.lastCallback = ''
     this.answers = {}
     this.listeAvecNumerotation = true
   }

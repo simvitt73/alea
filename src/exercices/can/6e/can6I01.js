@@ -290,8 +290,9 @@ export default function CanNoteLaCouleur6 () {
         texteCorr += '\n\\newpage'
       }
       if (this.questionJamaisPosee(q, xdepart, ydepart, angledepart)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         q++
       }
     }

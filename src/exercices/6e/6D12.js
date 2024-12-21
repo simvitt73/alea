@@ -338,8 +338,8 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
 
       if (this.questionJamaisPosee(i, m1, d1, h1, m2, d2, h2)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -410,8 +410,8 @@ export default function CalculerProbabiliteIntersection () {
           break
       }
       if (this.questionJamaisPosee(i, pA, pBsachantA)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++
