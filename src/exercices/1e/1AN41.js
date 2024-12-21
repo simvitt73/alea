@@ -104,8 +104,8 @@ export default function MesurePrincipale () {
       texteCorr += `<br> La mesure principale de $${alfa}$ est donc $\\dfrac{${rienSi1(p)}\\pi}{${n}}$.`
       // Si la question n'a jamais été posée, on l'enregistre
       if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -178,8 +178,8 @@ class DragAndDropNumerationEntiere extends Exercice {
       texteCorr = `${texteCorr.substring(0, texteCorr.length - 1)}$`
       if (this.questionJamaisPosee(i, nombreStr)) {
         this.dragAndDrops.push(leDragAndDrop) // on stocke les instances de dragAndDrop dans l'exercice pour pouvoir accéder aux listeners à supprimer lors de la vérification.
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

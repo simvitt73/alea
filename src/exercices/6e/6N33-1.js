@@ -124,8 +124,8 @@ $${p}~\\%~\\text{de }${n}= ${calculANePlusJamaisUtiliser(p / 10)} \\times ${n}\\
 
       if (this.questionJamaisPosee(i, p, n)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       } else cpt++
     }

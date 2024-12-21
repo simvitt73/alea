@@ -80,8 +80,8 @@ export default class nomExercice extends Exercice {
       // Si la question n'a jamais été posée, on l'enregistre
       // Ne pas mettre texte (il peut être différent avec les mêmes données à cause des listeners de l'interactif qui sont labelisés de façon unique par question)
       if (this.questionJamaisPosee(i, ...tabY, listeTypeQuestions[i])) { // <- laisser le i et ajouter toutes les variables qui rendent les questions différentes
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

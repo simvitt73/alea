@@ -380,8 +380,8 @@ export default class SommeDeVecteurs extends Exercice {
       texteCorr += `Le point $${this.nomExtremite[i]}$ tel que $\\overrightarrow{${nomOrigine}${this.nomExtremite[i]}} = \\vec{u} + \\vec{v}$ a pour coordonnées ${texteEnCouleurEtGras(`( ${this.pointExtremite[i].x} ; ${this.pointExtremite[i].y} )`)}.<br>`
 
       if (this.questionJamaisPosee(i, xSomme[i], xSomme[i])) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

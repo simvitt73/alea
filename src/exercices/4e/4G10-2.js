@@ -184,8 +184,8 @@ export default class nomExercice extends Exercice {
       texteCorr = mathalea2d(paramsCorrection, objetsCorrectionOnly, objetsEnonceEtCorr)
       texteCorr += anim.htmlBouton()
       if (this.questionJamaisPosee(i, B.x, B.y, C.x, C.y)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

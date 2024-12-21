@@ -86,8 +86,9 @@ export default function NombresPremiers () {
       }
       if (this.questionJamaisPosee(i, nbrePremier)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canEnonce = `Indiquer si $${nbre}$ est un nombre premier ou pas.  `
         this.canReponseACompleter = props.texte
         this.listeCanEnonces.push(this.canEnonce)

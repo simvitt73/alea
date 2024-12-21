@@ -211,8 +211,8 @@ export default function CriteresDeDivisibilite () {
 
       if (this.questionJamaisPosee(i, n)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

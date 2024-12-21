@@ -207,8 +207,8 @@ export default class TranslationEtCoordonnes extends Exercice {
       // setReponse(this, 2 * i, AbsRep)
       // setReponse(this, 2 * i + 1, OrdRep)
       if (this.questionJamaisPosee(i, xA, yA, xB, yB)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

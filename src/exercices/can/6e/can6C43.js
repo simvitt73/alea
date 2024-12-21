@@ -77,8 +77,9 @@ export default class ExerciceComparerDeuxFractionsCAN extends Exercice {
       handleAnswers(this, i, { champ1: { value: ordreDesFractions ? signe : signe2, options: { texteSansCasse: true } } }, { formatInteractif: 'fillInTheBlank' })
 
       if (this.questionJamaisPosee(i, fractionAbsolue.num, fractionAbsolue.den, k)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)
         i++

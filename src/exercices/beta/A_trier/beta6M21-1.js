@@ -59,8 +59,8 @@ export default class AireAssemblageRectangles extends Exercice {
         texteCorr += `$\\mathcal{A} = ${L}~\\text{cm} \\times ${l}~\\text{cm} + ${l2}~\\text{cm} \\times ${l2}~\\text{cm}= ${L * l}~\\text{cm}^2 + ${l2 * l2}~\\text{cm}^2 = ${L * l + l2 * l2}~\\text{cm}^2$`
       }
       if (this.questionJamaisPosee(i, i)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

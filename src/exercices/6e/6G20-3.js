@@ -183,8 +183,9 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, ...pointsX, ...pointsY, listeTypeQuestions[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: mathalea2d(parametres2d, objets2d),

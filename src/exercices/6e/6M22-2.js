@@ -160,8 +160,8 @@ export default function Perimetre_aire_et_portions_de_disques () {
       }
       if (this.questionJamaisPosee(i, r)) { // Si la question n'a jamais été posée, on en créé une autre
         const figure = mathalea2d(Object.assign({ zoom: 1, scale: 0.6 }, fixeBordures(objetsEnonce)), objetsEnonce)
-        this.listeQuestions.push(figure + texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = figure + texte
+        this.listeCorrections[i] = texteCorr
 
         if (context.isAmc) {
           if (this.sup === 1) {

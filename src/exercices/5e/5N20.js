@@ -258,8 +258,8 @@ export default class ExerciceAdditionnerSoustraireFractions5ebis extends Exercic
       texteCorr += `$ $${miseEnEvidence(aRemplacer)}$`
       // Fin de cette uniformisation
       if (this.questionJamaisPosee(i, a, k, b, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
     }

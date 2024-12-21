@@ -29,10 +29,6 @@ export default class calculsAvecPuissance10 extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     this.listeCanEnonces = []
     this.listeCanReponsesACompleter = []
     const typesDeQuestionsDisponibles = combinaisonListes([1, 2, 3], this.nbQuestions) // EE : tu mets ici toutes les possibiiltés et tu les mélanges jusqu'à obtenir au moins nbQuestions
@@ -112,9 +108,9 @@ export default class calculsAvecPuissance10 extends Exercice {
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           break
       }
-      if (this.questionJamaisPosee(i, exp, texte)) {
-        this.listeCorrections.push(texteCorr)
-        this.listeQuestions.push(texte)
+      if (this.questionJamaisPosee(i, exp, String(a))) {
+        this.listeCorrections[i] = texteCorr
+        this.listeQuestions[i] = texte
 
         i++
       }

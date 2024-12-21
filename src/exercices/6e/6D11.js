@@ -133,8 +133,8 @@ export default function SommeDeDurees () {
 
       if (this.questionJamaisPosee(i, m1, s1, h1, t1, m2, s2, h2, t2)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -100,8 +100,9 @@ export default function RecompositionDecimale () {
       if (this.questionJamaisPosee(q, e, d, c, m)) {
         // Si la question n'a jamais été posée, on en crée une autre
         reponses[q] = arrondi(e + d / 10 + c / 100 + m / 1000, 3)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         setReponse(this, q, reponses[q], { digits: 4, decimals: 3 })
         q++
       }

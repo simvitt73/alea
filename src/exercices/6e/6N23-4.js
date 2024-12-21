@@ -142,11 +142,11 @@ export default function NombreDecimalOraliseDeDifferentesManieres () {
 
       if (this.questionJamaisPosee(i, a, b, c)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
+        this.listeQuestions[i] = texte
         if (!context.isHtml && i === 0) {
           texteCorr = '\\setlength\\itemsep{2em}' + texteCorr
         } // espacement entre les questions
-        this.listeCorrections.push(texteCorr)
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

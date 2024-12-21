@@ -116,8 +116,9 @@ class DerivationSommesSimples extends Exercice {
       texteCorr += `$f'(x)=${miseEnEvidence(laDerivee)}$.<br>`
 
       if (this.questionJamaisPosee(i, laFonction)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         handleAnswers(this, i, { reponse: { value: laDerivee, options: { variable: 'x' }, compare: functionCompare } })
         i++
         cpt--

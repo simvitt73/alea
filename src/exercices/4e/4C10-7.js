@@ -152,8 +152,9 @@ export default function ExerciceOperationsRelatifs () {
       }
 
       if (this.questionJamaisPosee(i, listeTypeDeQuestions[i], a, b)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i].propositions = [{ statut: 0, sanscadre: false, texte: texteCorr }]
           this.autoCorrection[i].enonce = 'Calculer.\\\\' + texte

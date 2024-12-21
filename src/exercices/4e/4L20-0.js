@@ -226,8 +226,8 @@ export default function ExerciceEquationASolutionEntiere () {
       this.sup ? setReponse(this, i, reponse, { signe: true }) : setReponse(this, i, reponse, { signe: false })
       if (this.questionJamaisPosee(i, a, b, c)) {
         // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte) // replace(/1x/g,'x')); //remplace 1x par x
-        this.listeCorrections.push(texteCorr) // .replace(/1x/g,'x')); //remplace 1x par x
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

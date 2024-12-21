@@ -149,8 +149,8 @@ export default class NomExercice extends Exercice {
       }
       // Si la question n'a jamais été posée, on l'enregistre
       if (this.questionJamaisPosee(i, exercice.texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(exercice.texte)
-        this.listeCorrections.push(exercice.texteCorr)
+        this.listeQuestions[i] = exercice.texte
+        this.listeCorrections[i] = exercice.texteCorr
         i++
       }
       cpt++

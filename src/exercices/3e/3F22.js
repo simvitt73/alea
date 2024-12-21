@@ -127,8 +127,8 @@ export default function AntecedentParCalcul () {
           handleAnswers(this, i, { reponse: { value: ante.simplifie().texFSD, options: { fractionEgale: true } } })
         }
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

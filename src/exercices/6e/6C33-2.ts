@@ -168,8 +168,8 @@ Les écrire en une seule ligne. ${ajouteChampTexteMathLive(this, i, ' college6em
 
       const nombreCibleValide = Number(nombreCible) < 100 * Number(nbOps[i])
       if (this.questionJamaisPosee(i, ...nombres, ...signes, redaction) && nombreCibleValide) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
     }

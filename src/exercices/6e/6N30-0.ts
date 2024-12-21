@@ -279,7 +279,7 @@ class ReperageEntiersOuDecimaux extends Exercice {
       }
       const correctionRapide = `L'abscisse du point $${lettreDepuisChiffre(i + 1)}$ est : $${miseEnEvidence(texNombre(nombreATrouver, nbDecimales))}$.<br>Notation : $${lettreDepuisChiffre(i + 1)}(${miseEnEvidence(texNombre(nombreATrouver, nbDecimales))})$.`
       if (this.questionJamaisPosee(i, repere1, repere2, nombreATrouver, pas)) {
-        this.listeQuestions.push(texte)
+        this.listeQuestions[i] = texte
         if (this.interactif) {
           handleAnswers(this, i, {
             reponse: {
@@ -288,9 +288,9 @@ class ReperageEntiersOuDecimaux extends Exercice {
             }
           })
         }
-        this.listeCorrections.push(
+        this.listeCorrections[i] =
           `${this.correctionDetaillee ? `${texteCorr}<br>${correctionRapide}` : correctionRapide}<br>${figureCorrection}`
-        )
+
         i++
       }
       cpt++

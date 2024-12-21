@@ -254,8 +254,8 @@ export default function LireAbscisseEntiere2d () {
 
       if (this.questionJamaisPosee(i, abs0, x1, x2, x3)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

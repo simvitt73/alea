@@ -60,8 +60,8 @@ export default class CoordonneesVecteur extends Exercice {
       texteCorr += `Cela donne au final :  $\\overrightarrow{${pointA}${pointB}}${miseEnEvidence(`\\begin{pmatrix} ${xB - xA}\\\\${yB - yA}\\\\${zB - zA}\\end{pmatrix}`)}$<br>`
 
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

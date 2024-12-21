@@ -179,11 +179,11 @@ export default function AdditionsSoustractionsMultiplicationsPosees () {
 
       if (this.questionJamaisPosee(i, a, b, c, d, e, f, g)) {
         // Si la question n'a jamais été posée, on l'enregistre
-        this.listeQuestions.push(texte)
+        this.listeQuestions[i] = texte
         if (!context.isHtml && i === 0) {
           texteCorr = '\\setlength\\itemsep{2em}' + texteCorr
         } // espacement entre les questions
-        this.listeCorrections.push(texteCorr)
+        this.listeCorrections[i] = texteCorr
         if (!context.isAmc) {
           setReponse(this, i, reponse, { digits: 0 }) // fonction qui va renseigner this.autocorrection[i]
         } else {

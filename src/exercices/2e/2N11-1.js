@@ -360,8 +360,8 @@ export default function IntervallesDeR () {
           }
           texte += ajouteChampTexteMathLive(this, i, ` ${KeyboardType.clavierEnsemble} ${KeyboardType.clavierCompare}`)
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

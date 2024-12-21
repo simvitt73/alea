@@ -94,8 +94,8 @@ export default class ExerciceCalculsProprietesLog extends Exercice {
         texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierFonctionsTerminales)
       }
       if (this.questionJamaisPosee(i, A.base, A.exp, B.base, B.exp, signe)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

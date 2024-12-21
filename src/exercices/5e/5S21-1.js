@@ -30,7 +30,7 @@ export default function ProbabilitesSimples () {
   this.tailleDiaporama = 3 // Pour les exercices chronométrés. 50 par défaut pour les exercices avec du texte
 
   this.nouvelleVersion = function () {
-    for (let i = 0; i < this.nbQuestions; i++) {
+    for (let i = 0; i < this.nbQuestions;) {
       let texte
 
       const pG = randint(20, 60) // pG est un pourcentage
@@ -56,8 +56,9 @@ export default function ProbabilitesSimples () {
       if (this.questionJamaisPosee(i, pG)) {
         handleAnswers(this, 2 * i, { reponse: { value: reponse1 } })
         handleAnswers(this, 2 * i + 1, { reponse: { value: reponse2 } })
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(correction1)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = correction1
+        i++
       }
     }
     listeQuestionsToContenu(this)

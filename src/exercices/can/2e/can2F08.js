@@ -34,8 +34,6 @@ export default function EncadrerTableau () {
   this.formatChampTexte = ''
   this.tailleDiaporama = 2
 
-    
-
   this.nouvelleVersion = function () {
     let question1, correction1, ligne1
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -170,10 +168,10 @@ export default function EncadrerTableau () {
         }
       }
       if (this.questionJamaisPosee(i, x1, x2, x3, x4)) {
-        this.listeQuestions.push(question1)
-        this.listeCorrections.push(correction1)
-        this.listeCanEnonces.push(this.canEnonce)
-        this.listeCanReponsesACompleter.push(this.canReponseACompleter)
+        this.listeQuestions[i] = question1
+        this.listeCorrections[i] = correction1
+        this.listeCanEnonces[i] = this.canEnonce
+        this.listeCanReponsesACompleter[i] = this.canReponseACompleter
         i++
       }
       cpt++

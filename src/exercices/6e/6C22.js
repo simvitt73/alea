@@ -145,8 +145,8 @@ export default class ProblemesDePlusEtDeMoins extends Exercice {
 
       if (this.questionJamaisPosee(i, m, somme)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

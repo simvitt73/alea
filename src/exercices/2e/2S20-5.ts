@@ -178,8 +178,8 @@ export default class Quartiles extends Exercice {
 
       texte = fig + texte
       if (this.questionJamaisPosee(i, texte, q1, q2, q3)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

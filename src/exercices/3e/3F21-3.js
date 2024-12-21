@@ -137,8 +137,9 @@ export default function PenteEtOrdonneeOrigineDroite () {
       texteCorr = (vocabulaire === 'affine' ? (correction1 + '<br>') : '') + correction2 + '<br>' + correction3
 
       if (this.questionJamaisPosee(i, a, b, num, den)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: introduction + '<br>',

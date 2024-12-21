@@ -158,8 +158,8 @@ export default function MesurerUnAngle () {
         texte += '<br>' + props.texte
       }
       if (this.questionJamaisPosee(i, angle)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

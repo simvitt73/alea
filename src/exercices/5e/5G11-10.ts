@@ -35,7 +35,7 @@ export const refs = {
  */
 function positionneLabel (pointA: Point, pointB: Point) {
   if (pointA.x < pointB.x) return 'above left'
-  else if (pointA > pointB.x) return 'below right'
+  else if (pointA.x > pointB.x) return 'below right'
   else {
     if (pointA.y > pointB.y) return 'above left'
     else return 'below right'
@@ -213,11 +213,11 @@ class ConstrctionsSymetrieCentralePoints extends Exercice {
           }
           this.figuresApiGeom[i].options.limitNumberOfElement.set('Point', 1)
           const emplacementPourFigure = figureApigeom({ exercice: this, i, figure: this.figuresApiGeom[i], defaultAction: 'NAME_POINT' })
-          this.listeQuestions.push(enonce + '<br><br>' + emplacementPourFigure)
+          this.listeQuestions[i] = enonce + '<br><br>' + emplacementPourFigure
         } else {
-          this.listeQuestions.push(enonce + '<br><br>' + mathalea2d(Object.assign({ scale: 0.5, pixelsParCm: 20 }, fixeBordures([...objets, ...objetsCorrection])), objets))
+          this.listeQuestions[i] = enonce + '<br><br>' + mathalea2d(Object.assign({ scale: 0.5, pixelsParCm: 20 }, fixeBordures([...objets, ...objetsCorrection])), objets)
         }
-        this.listeCorrections.push(mathalea2d(Object.assign({ scale: 0.5, pixelsParCm: 20 }, fixeBordures(objetsCorrection)), objetsCorrection))
+        this.listeCorrections[i] = mathalea2d(Object.assign({ scale: 0.5, pixelsParCm: 20 }, fixeBordures(objetsCorrection)), objetsCorrection)
         i++
       }
       cpt++

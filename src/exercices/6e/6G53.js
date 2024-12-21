@@ -67,8 +67,8 @@ export default class MesurerDistancePointDroite extends Exercice {
       texte = `Mesurer la distance entre le point $${A.nom}$ et la droite ($d$).<br>`
       texte += mathalea2d(paramsEnonce, objetsEnonce)
       if (this.questionJamaisPosee(i, A.nom)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

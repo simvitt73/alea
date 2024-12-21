@@ -96,8 +96,8 @@ export default function EncodeurTexte (type = 'générateur') {
       texte += '<br><br>'
 
       if (this.questionJamaisPosee(i, texteAEncoder[i], table)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteAEncoder[i].replaceAll('~', ' ').replaceAll('/', ' '))
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteAEncoder[i].replaceAll('~', ' ').replaceAll('/', ' ')
         i++
       }
       cpt++

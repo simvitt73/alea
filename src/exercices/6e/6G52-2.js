@@ -350,10 +350,10 @@ export default function ProprietesParallelesPerpendiculaires () {
       ]
       /****************************************************/
 
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, numDroites, JSON.stringify(code), JSON.stringify(code2))) {
       // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte + '<br>')
-        this.listeCorrections.push(texteCorr + '<br>')
+        this.listeQuestions[i] = texte + '<br>'
+        this.listeCorrections[i] = texteCorr + '<br>'
         i++
       }
       cpt++

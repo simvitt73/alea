@@ -131,8 +131,8 @@ export default class FractionsDunite extends Exercice {
         }
       }
       if (this.questionJamaisPosee(i, num, den)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

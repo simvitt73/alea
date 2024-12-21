@@ -191,8 +191,8 @@ export default class BetaReperage2e extends Exercice {
       const reponse = `Dans le repère $(${labelO},${labelI},${labelK})$ sont :<br>
             $${points[i].map((p, k) => `${listeNoms[k + 3]}(${x[i][k].texFractionSimplifiee};${y[i][k].texFractionSimplifiee})`).join(', ')}$`
       if (this.questionJamaisPosee(i, ...X[i], ...Y[i], ...coordsI, ...coordsK)) {
-        this.listeQuestions.push(question)
-        this.listeCorrections.push(reponse)
+        this.listeQuestions[i] = question
+        this.listeCorrections[i] = reponse
         i++
       }
     }

@@ -318,8 +318,8 @@ export default function QuestionsDivisionsEuclidiennes () {
       }
       if (this.questionJamaisPosee(i, dividende, diviseur)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       } else indiceInteractif = indiceInteractifAvant
       cpt++

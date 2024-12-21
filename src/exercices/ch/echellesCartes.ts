@@ -177,8 +177,8 @@ export default class EchellesCartes extends Exercice {
           break
       }
       if (this.questionJamaisPosee(i, dCarte, dReelle.toString(), echelle.toString())) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

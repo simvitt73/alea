@@ -58,9 +58,10 @@ export default function Reductionaxbx () {
 
       handleAnswers(this, i, { reponse: { value: reponse, options: { strict: false } } })
       texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: ' $=$' })
-      if (this.questionJamaisPosee(i, texte)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(i, x, a, b)) { // Si la question n'a jamais été posée, on en créé une autre
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             // enonce: 'Réduire l\'expression ' + '$' + texte.split('=')[1] + '.',

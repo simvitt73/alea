@@ -203,8 +203,9 @@ export default function Exercice_fractions_simplifier (max = 11) {
       }
       if ((this.interactif && context.isHtml) || this.sup3) texte = texte.replace(' \\dfrac{\\phantom{00000000000000}}{} = \\dfrac{\\phantom{0000}}{}', '')
       if (this.questionJamaisPosee(i, a, b)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (this.interactifType === 'mathLive' || this.amcType === 'AMCNum') {
           handleAnswers(this, i, { reponse: { value: reponse.toLatex(), options: { fractionIrreductible: this.sup2, fractionSimplifiee: !this.sup2 } } })
           if (context.isAmc) {

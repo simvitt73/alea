@@ -89,8 +89,8 @@ export default class AmplifierOuReduireFraction extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, num, den, k)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

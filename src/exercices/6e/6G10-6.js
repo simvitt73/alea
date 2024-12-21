@@ -171,10 +171,10 @@ export default class constructionElementaire extends Exercice {
       const correction = deuxColonnesResp(colonne1, correction2, optionsSol)
 
       /****************************************************/
-      if (this.questionJamaisPosee(i, enonce)) {
+      if (this.questionJamaisPosee(i, correction)) {
       // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(enonce + '<br>')
-        this.listeCorrections.push(correction + '<br>')
+        this.listeQuestions[i] = enonce + '<br>'
+        this.listeCorrections[i] = correction + '<br>'
 
         if (context.isAmc) {
           this.autoCorrection[i] = {

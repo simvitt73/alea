@@ -111,8 +111,8 @@ export default function PositionsDeDroites () {
 
       if (this.questionJamaisPosee(i, a1, b1, c1, b2, c2, a2)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

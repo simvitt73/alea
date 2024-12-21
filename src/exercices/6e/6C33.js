@@ -375,8 +375,8 @@ export default function Priorites () {
           this.autoCorrection[i].reponse.param.decimals = 0
         }
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -94,9 +94,10 @@ export default function ReduireDinstinctionSommeProduit () {
       texteCorr += listeTypeDeQuestions[i] > 1 ? enonces[listeTypeDeQuestions[i]].correction_produit : enonces[listeTypeDeQuestions[i]].correction_somme
       texteCorr += listeTypeDeQuestions[i] > 1 ? correctionProduitFinal : correctionSommeFinale
 
-      if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(i, n, p, inc)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: texte + '<br>',

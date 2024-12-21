@@ -170,9 +170,10 @@ export default function VuesEmpilementCubes () {
           )
         }
       }
-      if (this.questionJamaisPosee(q, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(q, JSON.stringify(L))) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+
         q++
       }
       cpt++

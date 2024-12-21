@@ -63,12 +63,12 @@ export default function FonctionsAffinesOuLineaires () {
     for (let i = 0; i < this.nbQuestions; i++) {
       if (choixFonction[i] === 'affine') {
         // On récupère tout ce qui fait la question, sa correction et l'interactif...
-        this.listeQuestions.push(fonctionsAffines.listeQuestions[i])
-        this.listeCorrections.push(fonctionsAffines.listeCorrections[i])
+        this.listeQuestions[i] = fonctionsAffines.listeQuestions[i]
+        this.listeCorrections[i] = fonctionsAffines.listeCorrections[i]
         this.autoCorrection.push(fonctionsAffines.autoCorrection[i])
       } else {
-        this.listeQuestions.push(fonctionsLineaires.listeQuestions[i])
-        this.listeCorrections.push(fonctionsLineaires.listeCorrections[i])
+        this.listeQuestions[i] = fonctionsLineaires.listeQuestions[i]
+        this.listeCorrections[i] = fonctionsLineaires.listeCorrections[i]
         this.autoCorrection.push(fonctionsLineaires.autoCorrection[i])
       }
     }

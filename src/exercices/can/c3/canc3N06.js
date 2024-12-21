@@ -29,9 +29,6 @@ export default function ComparerDroiteGrad () {
   this.tailleDiaporama = 2
   this.formatChampTexte = ''
   this.nouvelleVersion = function () {
-
-    
-    
     const listeFractions1 = [[1, 2], [1, 3], [2, 3], [3, 2], [1, 4], [3, 4], [4, 3], [1, 5], [2, 5], [3, 5], [5, 3], [4, 5], [5, 4],
       [1, 6], [5, 6], [6, 5], [1, 7], [2, 7], [3, 7], [7, 3], [4, 7], [7, 4], [5, 7], [6, 7], [7, 6], [1, 8], [3, 8], [8, 3], [5, 8], [8, 5], [7, 8], [8, 7],
       [1, 9], [2, 9], [9, 2], [4, 9], [5, 9], [9, 5], [7, 9], [9, 7], [8, 9], [9, 8], [1, 10], [3, 10], [10, 3], [10, 7], [7, 10], [9, 10], [10, 9]]
@@ -103,10 +100,11 @@ export default function ComparerDroiteGrad () {
       if (!context.isAmc) {
         texte += monQcm.texte
       }
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, f.texFraction)) {
       // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         if (i === 0) this.canReponseACompleter = monQcm.texte // FIXME Dans un exercice permettant plusieurs questions il n'y a qu'un this.canReponseACompleter ???
         i++
       }

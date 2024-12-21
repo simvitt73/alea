@@ -625,8 +625,8 @@ export default function ExerciceAnglesTriangles () {
       }
 
       if (this.questionJamaisPosee(i, texte)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorrFinal)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorrFinal
         i++
       }
       cpt++

@@ -310,8 +310,8 @@ export default function ExerciceConversionsVolumes () {
         if (this.sup4 && i === this.nbQuestions - 1) {
           texte += '<br><br>' + buildTab(0, '', 0, '', Math.min(10, this.nbQuestions), true, true)
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

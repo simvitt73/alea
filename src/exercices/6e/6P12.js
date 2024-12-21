@@ -536,8 +536,8 @@ export default function ProportionnaliteParCoefDeProportionnalite () {
       }
 
       if (this.questionJamaisPosee(i, listeIndexSituations[i], question.qreponse)) { // Si la question n'a jamais été posée, on la garde.
-        this.listeQuestions.push(question.qtexte)
-        this.listeCorrections.push(question.qtexteCorr)
+        this.listeQuestions[i] = question.qtexte
+        this.listeCorrections[i] = question.qtexteCorr
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: question.qtexte + '<br>' + question.qreponseAMC,

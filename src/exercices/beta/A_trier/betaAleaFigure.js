@@ -29,7 +29,7 @@ export const dateDePublication = '03/02/2022' // La date de publication initiale
 // export const dateDeModifImportante = '08/01/2022' // Une date de modification importante au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
 /**
- * 
+ *
  * @author Frédéric PIOU
 
 */
@@ -1552,8 +1552,8 @@ Donc l'aire du rectangle $${ABCD}$ est ${environ} $${toTex(solutionDecimale)}~cm
       }
       // Les lignes ci-dessous permettent d'avoir un affichage aux dimensions optimisées
       if (this.questionJamaisPosee(i, i)) {
-        this.listeQuestions.push(exercice.texte.replaceAll('\n\n', '<br>'))
-        this.listeCorrections.push(exercice.texteCorr.replaceAll('\n\n', '<br>').replaceAll('$$', '$\\hspace{0.5cm}'))
+        this.listeQuestions[i] = exercice.texte.replaceAll('\n\n', '<br>')
+        this.listeCorrections[i] = exercice.texteCorr.replaceAll('\n\n', '<br>').replaceAll('$$', '$\\hspace{0.5cm}')
         i++
       }
       cpt++

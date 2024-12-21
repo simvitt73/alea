@@ -327,9 +327,8 @@ Le contenu de son panier pèse $${texNombre(masseTotale, 3, true)}$ kg.`
           style: 'alpha'
         })
       if (this.questionJamaisPosee(i, [quantiteFruit1, quantiteFruit2, quantiteFruit3].map(el => JSON.stringify(el)).join(''))) {
-        this.listeQuestions.push(enonce)
-        this.listeCorrections.push(correction)
-        // this.listeCorrections.push(correction)
+        this.listeQuestions[i] = enonce
+        this.listeCorrections[i] = correction
         i++
       }
       cpt++

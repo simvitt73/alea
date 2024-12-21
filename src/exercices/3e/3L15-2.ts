@@ -143,8 +143,8 @@ export default class nomExercice extends Exercice {
       }
       texteCorr += ` L'ensemble de solutions est $S=${sol}`
       if (this.questionJamaisPosee(i, coeffConstant, coeffX)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

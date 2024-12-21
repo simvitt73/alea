@@ -198,8 +198,8 @@ export default class ExerciceMultiplierFractions extends Exercice {
         texteCorr += `$ $${miseEnEvidence(aRemplacer)}$`
         // Fin de cette uniformisation
 
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

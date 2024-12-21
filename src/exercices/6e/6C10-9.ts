@@ -100,8 +100,8 @@ export default class nomExercice extends Exercice {
       const texteCorr = `$${a * b}=${miseEnEvidence(String(a))} \\times ${miseEnEvidence(String(b))}$`
 
       if (this.questionJamaisPosee(i, a * b)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

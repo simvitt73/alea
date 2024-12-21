@@ -29,10 +29,6 @@ export default class EncadreRacine extends Exercice {
   }
 
   nouvelleVersion () {
-
-    
-    
-
     this.listeCanEnonces = []
     this.spacingCorr = 1.5
     this.listeCanReponsesACompleter = []
@@ -66,10 +62,10 @@ $${Math.floor(Math.sqrt(a))}^2< ${a} < ${Math.ceil(Math.sqrt(a))}^2$<br>`
       this.canEnonce = 'Compléter par deux entiers consécutifs.'
       this.canReponseACompleter = `$\\ldots < \\sqrt{${a}} <\\ldots$`
       if (this.questionJamaisPosee(i, a)) {
-        this.listeCorrections.push(this.correction)
-        this.listeQuestions.push(texte)
-        this.listeCanEnonces.push(this.canEnonce)
-        this.listeCanReponsesACompleter.push(this.canReponseACompleter)
+        this.listeCorrections[i] = this.correction
+        this.listeQuestions[i] = texte
+        this.listeCanEnonces[i] = this.canEnonce
+        this.listeCanReponsesACompleter[i] = this.canReponseACompleter
         i++
       }
       cpt++

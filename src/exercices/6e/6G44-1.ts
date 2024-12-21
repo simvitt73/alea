@@ -363,8 +363,8 @@ export default class ReconnaitreDesSolides extends Exercice {
           setReponse(this, j, reponse, { formatInteractif: 'ignorerCasse' })
           this.question += '<br>' + ajouteChampTexte(this, j)
         }
-        this.listeQuestions.push(this.question)
-        this.listeCorrections.push(texteCorrection)
+        this.listeQuestions[j] = this.question
+        this.listeCorrections[j] = texteCorrection
         j++
       }
     }

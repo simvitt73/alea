@@ -106,8 +106,9 @@ export default function NotationScientifique () {
       }
 
       if (this.questionJamaisPosee(i, mantisse, exp)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (this.sup === 1) {
           if (context.isAmc) {
             setReponse(this, i, reponse.replace(/\\thickspace /g, '').replace(/ /g, ''), {

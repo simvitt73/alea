@@ -389,8 +389,9 @@ export default function ProblemesAiresRectangles () {
       setReponse(this, q, reponse)
       texte += ajouteChampTexteMathLive(this, q, ' unites[longueurs,aires]', { texteAvant: 'Réponse : ', texteApres: this.sup4 === 1 ? '$ \\text{ cm}$' : '$ \\text{ cm}^2$' })
       if (this.questionJamaisPosee(q, ...longueursHorizontales, ...longueursVerticales)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         q++
       }
       cpt++

@@ -107,8 +107,8 @@ export default class FonctionsProbabilite1 extends Exercice {
         }
       }
       if (this.questionJamaisPosee(i, n[0], n[1], n[2], n[3], n[4], m, p, q)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

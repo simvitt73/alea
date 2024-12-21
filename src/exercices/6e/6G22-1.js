@@ -210,8 +210,8 @@ export default class VocabulaireDeBaseDesAngles extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, ...pointsX, ...pointsY)) {
-        this.listeQuestions.push(texteFigure + texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texteFigure + texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

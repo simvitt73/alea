@@ -13,7 +13,6 @@ import { mathalea2d } from '../../../modules/2dGeneralites.js'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-
 export const titre = 'Lire une abscisse sur une droite graduée'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -88,12 +87,12 @@ export default class AbscisseFractionnaire extends Exercice {
         `
       }
 
-      if (this.questionJamaisPosee(i, this.question)) {
-        this.listeQuestions.push(this.question)
-        this.listeCorrections.push(this.correction)
+      if (this.questionJamaisPosee(i, a, b)) {
+        this.listeQuestions[i] = this.question
+        this.listeCorrections[i] = this.correction
 
         if (context.isAmc) {
-          this.autoCorrection.push({
+          this.autoCorrection[i] = {
             enonce: this.question,
             options: { multicols: true },
             propositions: [
@@ -132,7 +131,7 @@ export default class AbscisseFractionnaire extends Exercice {
                 }]
               }
             ]
-          })
+          }
         }
 
         i++

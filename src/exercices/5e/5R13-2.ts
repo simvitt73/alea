@@ -92,8 +92,8 @@ export default class EncadrerRelatif extends Exercice {
         }
       )
       if (this.questionJamaisPosee(i, a.toString())) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

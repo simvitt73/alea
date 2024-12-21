@@ -169,8 +169,8 @@ export default function TableauProportion () {
 
       if (this.questionJamaisPosee(i, total, typesDeQuestions[i])) {
         // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
         index += increment
       }

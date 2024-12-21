@@ -211,8 +211,8 @@ export default class EquationsLog extends Exercice {
           handleAnswers(this, 2 * i, { reponse: { value: domaine, options: { intervalle: true } } })
           handleAnswers(this, 2 * i + 1, { reponse: { value: solution } })
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

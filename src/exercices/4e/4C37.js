@@ -149,8 +149,8 @@ export default class SignePuissance extends Exercice {
       this.autoCorrection[i].options = { ordered: true }
       monQcm = propositionsQcm(this, i)
       if (this.questionJamaisPosee(i, a, n)) {
-        this.listeQuestions.push(texte + monQcm.texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte + monQcm.texte
+        this.listeCorrections[i] = texteCorr
         this.listeCanReponsesACompleter[i] = monQcm.texte
         this.listeCanEnonces[i] = 'Quel est le signe de ' + texte + '?'
         this.correction = this.listeCorrections[i]

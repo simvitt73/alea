@@ -138,8 +138,8 @@ export default class BetaSchemaEnBoite extends Exercice {
         }
       }
       if (this.questionJamaisPosee(i, nb1, nb2)) {
-        this.listeQuestions.push(`${texte}<br>${seb.display()}`)
-        this.listeCorrections.push('') // TODO
+        this.listeQuestions[i] = `${texte}<br>${seb.display()}`
+        this.listeCorrections[i] = ''
         i++
       }
       cpt++

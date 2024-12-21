@@ -120,8 +120,8 @@ export default class ExerciceCalculsDeLog extends Exercice {
         texte += ajouteChampTexteMathLive(this, i, KeyboardType.logPuissance)
       }
       if (this.questionJamaisPosee(i, a, b, listeOperators[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

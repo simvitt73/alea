@@ -93,8 +93,9 @@ export default function TermeInconnuDeSomme () {
       texteCorr += `. En effet : $${texNombre(b)}-${texNombre(a)}=${texNombre(b - a)}$`
 
       if (this.questionJamaisPosee(i, a, b)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         setReponse(this, i, arrondi(b - a, 2), {
           signe: true,
           digits: Math.max(2, nombreDeChiffresDansLaPartieEntiere(b - a)),

@@ -415,8 +415,8 @@ Les écrire en une seule ligne. ${ajouteChampTexteMathLive(this, i, ' clavierDeB
 
       const nombreCibleValide = Number(nombreCible) < 100 * Number(nombreDeCalculs[i])
       if (this.questionJamaisPosee(i, ...nombres, ...signes, listeTypeQuestions[i]) && nombreCibleValide) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
     }

@@ -129,9 +129,8 @@ export default class CosEtsin extends Exercice {
 
       // Si la question n'a jamais été posée, on l'enregistre
       if (this.questionJamaisPosee(i, listeTypeQuestions[i][0][0], listeTypeQuestions[i][1].radians)) { // On regarde l'angle en radian et le type de fonction
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
-
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

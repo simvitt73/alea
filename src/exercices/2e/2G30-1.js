@@ -206,8 +206,8 @@ export default function CoefficientDirecteurDeDroite () {
       texte += ajouteChampTexteMathLive(this, i, KeyboardType.alphanumeric, { texteAvant: '<br>Coefficient directeur de la droite $(AB)$ :' })
       if (this.questionJamaisPosee(i, xA, yA, xB, yB)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

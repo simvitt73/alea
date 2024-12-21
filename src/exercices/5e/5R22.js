@@ -124,9 +124,10 @@ export default function ExerciceAdditionsSoustractionRelatifsV2 (max = 20) {
         }
       }
 
-      if (this.listeQuestions.indexOf(texte) === -1) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(i, a, b, c, d, e)) { // Si la question n'a jamais été posée, on en créé une autre
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         if (!this.sup2) {
           handleAnswers(this, i, { reponse: { value: a + s1 * b + s2 * c + s3 * d + s4 * e, options: { resultatSeulementEtNonOperation: true } } })
           if (context.isAmc) {

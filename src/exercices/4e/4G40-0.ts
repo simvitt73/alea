@@ -147,8 +147,8 @@ export default class VocabulaireTriangleRectangle extends Exercice {
       const monQcm = propositionsQcm(this, i)
       texte += `<br>${monQcm.texte}`
       if (this.questionJamaisPosee(i, ab, ac)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

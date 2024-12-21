@@ -938,8 +938,9 @@ export default function ResoudreEquationsFonctionDeReference2 () {
           break
       }
       if (this.questionJamaisPosee(i, k, b, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         listeQuestionsToContenu(this)
         i++
       }

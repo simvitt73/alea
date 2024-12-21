@@ -81,8 +81,9 @@ export default function ExerciceLabyrintheDivisibilite1 () {
       texteCorr = `Voici le chemin en couleur ($${miseEnEvidence(laby.chemin2d.length - 1)}$ nombres rencontrés avant la sortie) et la sortie est le numéro $${miseEnEvidence(nbL - monChemin[monChemin.length - 1][1])}$.<br>`
       texteCorr += mathalea2d(params, laby.murs2d, laby.nombres2d, laby.chemin2d)
       if (this.questionJamaisPosee(q, listeMultiples[0], listeNonMultiples[0])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         q++
       }
     }

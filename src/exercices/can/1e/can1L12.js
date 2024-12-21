@@ -197,8 +197,9 @@ Il est donc négatif entre ses racines. On en déduit que l'ensemble des solutio
       }
       if (this.questionJamaisPosee(i, a)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canEnonce = texte
         this.canReponseACompleter = ''
         this.listeCanEnonces.push(this.canEnonce)

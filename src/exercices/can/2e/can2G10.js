@@ -270,8 +270,9 @@ export default function RelationChasles1 () {
       }
       if (this.questionJamaisPosee(i, nom, choix)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canEnonce = texte
         this.canReponseACompleter = props.texte
         this.listeCanEnonces.push(this.canEnonce)

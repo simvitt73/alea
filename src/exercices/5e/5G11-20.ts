@@ -177,12 +177,12 @@ class ConstructionsSymetrieCentraleFigures extends Exercice {
       this.figuresApiGeom[i].options.limitNumberOfElement.set('Point', 1)
       if (context.isHtml) {
         if (this.interactif) {
-          this.listeQuestions.push(enonce + '<br>' + figureApigeom({ exercice: this, figure: this.figuresApiGeom[i], i, isDynamic: true, defaultAction: 'NAME_POINT' }))
+          this.listeQuestions[i] = enonce + '<br>' + figureApigeom({ exercice: this, figure: this.figuresApiGeom[i], i, isDynamic: true, defaultAction: 'NAME_POINT' })
         } else {
-          this.listeQuestions.push(enonce + '<br>' + wrapperApigeomToMathalea(this.figuresApiGeom[i]))
+          this.listeQuestions[i] = enonce + '<br>' + wrapperApigeomToMathalea(this.figuresApiGeom[i])
         }
       } else {
-        this.listeQuestions.push(enonce + '<br><br>' + this.figuresApiGeom[i].tikz())
+        this.listeQuestions[i] = enonce + '<br><br>' + this.figuresApiGeom[i].tikz()
       }
       // On crée la figure pour la correction
       const correctionFig = new SuperFigure(Object.assign(options, { xMin: -10, yMin: -10, width: 300, height: 300, scale: 0.5, isDynamic: false }))
@@ -247,7 +247,7 @@ class ConstructionsSymetrieCentraleFigures extends Exercice {
       }
       if (this.questionJamaisPosee(i, this.typesDeQuestions[i], this.labels.join(''), labelCentre)) {
         i++
-        this.listeCorrections.push(context.isHtml ? wrapperApigeomToMathalea(correctionFig) : correctionFig.tikz())
+        this.listeCorrections[i] = context.isHtml ? wrapperApigeomToMathalea(correctionFig) : correctionFig.tikz()
       }
       cpt++
     }

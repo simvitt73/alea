@@ -316,8 +316,8 @@ export default class TrianglesSemblables extends Exercice {
       }
       if (this.questionJamaisPosee(i, longueur(A, B).toFixed(1), longueur(B, C).toFixed(1), longueur(C, A).toFixed(1), longueur(D, E).toFixed(1))) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -110,8 +110,8 @@ export default class EcrireNombreDifferentesFormes extends Exercice {
       }
       texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBase, { texteAvant: `${sp(5)}$${n}=$` })
       if (this.questionJamaisPosee(i, listeTypeQuestions[i], n)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

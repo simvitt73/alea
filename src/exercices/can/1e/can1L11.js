@@ -115,8 +115,9 @@ export default function TableauSignesSecondDegre () {
 
       if (this.questionJamaisPosee(i, a, b, c)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canEnonce = texte
         this.canReponseACompleter = ''
         this.listeCanEnonces.push(this.canEnonce)

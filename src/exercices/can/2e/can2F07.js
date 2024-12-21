@@ -487,8 +487,9 @@ export default function ExtremumsTableau () {
         }
       }
       if (this.questionJamaisPosee(i, x1, x2, x3, x4)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)
         i++

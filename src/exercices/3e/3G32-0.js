@@ -1300,8 +1300,8 @@ export default class ProblemesTrigoLongueur extends Exercice {
       }
       if (this.questionJamaisPosee(i, alfa, baita, beta, alpha)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
         ii-- // si on pousse la question, il ne faut pas que l'incrément de i et de ii se cumulent !
         iiAMC--

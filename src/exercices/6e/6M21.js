@@ -1080,9 +1080,10 @@ export default function CompareAireEtPerimetreAvecRectangle () {
           texte += monQcmAire.texte
         }
       }
-      if (this.questionJamaisPosee(q, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(q, A.x, A.y, B.x, B.y, C.x, C.y, D.x, D.y)) {
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+
         q++
       }
       cpt++

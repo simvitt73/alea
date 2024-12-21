@@ -279,8 +279,9 @@ On en déduit que $(${s}_n)$ est une suite géométrique de raison $${texFractio
       }
 
       if (this.questionJamaisPosee(i, u, a)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canEnonce = texte
         this.canReponseACompleter = `Nature de la suite : $\\ldots$\\\\
          Raison $=\\ldots$`

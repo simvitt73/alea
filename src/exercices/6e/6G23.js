@@ -94,8 +94,9 @@ export default function ConstruireUnAngle () {
       if ((!context.isHtml) && ((i + 1) % 4 === 0)) texte += '\\newpage '
       texteCorr = mathalea2d(Object.assign({}, fixeBordures(objetsCorrection), { pixelsParCm: 20, scale: 0.6 }), objetsCorrection)
       if (this.questionJamaisPosee(i, angle, signe[i])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: texte,

@@ -134,8 +134,9 @@ export default function ReduireUneExpressionLitterale () {
       handleAnswers(this, i, { reponse: { value: reponse } })
       texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: sp() + '= ' })
       if (this.questionJamaisPosee(i, a, b, c, d)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: 'Réduire l\'expression ' + texte + '. Si ce n\'est pas possible, recopier juste l\'expression.<br>',

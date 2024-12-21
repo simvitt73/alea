@@ -257,8 +257,8 @@ export default function ProportionnaliteParLineariteBis () {
             propositions: propositionsAMC
           }
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

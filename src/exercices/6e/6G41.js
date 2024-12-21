@@ -341,8 +341,8 @@ export default function RepresenterUnSolide () {
       correction += mathalea2d(params, objetsCorrection)
       if (this.listeQuestions.indexOf(texte) === -1) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(enonce + '<br>')
-        this.listeCorrections.push(correction + '<br>')
+        this.listeQuestions[i] = enonce + '<br>'
+        this.listeCorrections[i] = correction + '<br>'
         // Pour AMC question AmcOpen
         this.autoCorrection[i] = { enonce, propositions: [{ texte: correction, statut: 3, feedback: '', sanscadre: true }] }
         i++

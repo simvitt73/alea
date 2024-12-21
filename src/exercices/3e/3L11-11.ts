@@ -117,8 +117,8 @@ export default class NomExercice extends Exercice {
       const solution = texteCorr.split('=')[1]
       if (this.questionJamaisPosee(i, solution)) {
         handleAnswers(this, i, { reponse: { value: rep.toString() } })
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

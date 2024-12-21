@@ -161,10 +161,11 @@ export default function DenombrerCubes () {
           setReponse(this, q, longueur * largeur * hauteur - L.length)
           break
       }
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(q, JSON.stringify(L))) { // Si la question n'a jamais été posée, on la stocke dans la liste des questions
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+
         q++
       }
       cpt++

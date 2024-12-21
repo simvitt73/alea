@@ -420,8 +420,8 @@ export default function ReciproqueThales () {
       }
       if (this.questionJamaisPosee(i, x2, y2, x3, y3)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

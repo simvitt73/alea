@@ -111,8 +111,8 @@ export default class CalculerAvecEcritureScientifique extends Exercice {
       handleAnswers(this, i, { reponse: { value: reponse, options: { ecritureScientifique: true } } })
       if (this.questionJamaisPosee(i, reponse, somme, a, b, c, prod)) {
         // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

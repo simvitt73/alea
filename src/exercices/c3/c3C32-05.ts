@@ -161,8 +161,8 @@ export default class ExerciceProbleme005 extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, volume, frac.texFraction)) {
-        this.listeQuestions.push(enonce)
-        this.listeCorrections.push(correction)
+        this.listeQuestions[i] = enonce
+        this.listeCorrections[i] = correction
         i++
       }
       cpt++

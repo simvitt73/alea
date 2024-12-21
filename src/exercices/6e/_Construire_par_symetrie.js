@@ -679,8 +679,8 @@ export default class ConstruireParSymetrie extends Exercice {
 
       if (this.listeQuestions.indexOf(enonce) === -1) {
       // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(enonce + '<br>')
-        this.listeCorrections.push(correction + '<br>')
+        this.listeQuestions[i] = enonce + '<br>'
+        this.listeCorrections[i] = correction + '<br>'
         i++
       }
       cpt++

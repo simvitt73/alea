@@ -312,13 +312,13 @@ export default function SommeFractionsDecimales () {
         }
       }
 
-      if (this.questionJamaisPosee(i, texte)) {
+      if (this.questionJamaisPosee(i, a, b, c, choix)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
+        this.listeQuestions[i] = texte
         if (!context.isHtml && i === 0) {
           texteCorr = '\\setlength\\itemsep{2em}' + texteCorr
         } // espacement entre les questions
-        this.listeCorrections.push(texteCorr)
+        this.listeCorrections[i] = texteCorr
         this.listeCanEnonces.push(this.canEnonce ?? '')
         this.listeCanReponsesACompleter.push(this.canReponseACompleter ?? '')
         i++

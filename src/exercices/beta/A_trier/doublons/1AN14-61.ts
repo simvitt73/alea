@@ -98,8 +98,9 @@ class DerivationGRondF extends Exercice {
       texteCorr += `$f'(x)=${miseEnEvidence(fPrime)}$.`
 
       if (this.questionJamaisPosee(i, laFonctionFEnLatex, fPrime)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         handleAnswers(this, i, { reponse: { value: fPrime, compare: functionCompare, options: { variable: 'x', domaine } } })
         i++
         cpt--

@@ -78,7 +78,7 @@ export default function RepresenterUnSolide4e () {
     let objetsEnonce = []
     let objetsCorrection = []
     let listeDeNomsDePolygones
-    for (let i = 0, texte, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       if (i % 2 === 0) listeDeNomsDePolygones = ['QD'] // lettres à éviter
       const nom = creerNomDePolygone(8, listeDeNomsDePolygones)
       listeDeNomsDePolygones.push(nom)
@@ -404,10 +404,10 @@ export default function RepresenterUnSolide4e () {
           ]
         }
       }
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(I, A, B, C, D, E, F, G, H)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(enonce + '<br>')
-        this.listeCorrections.push(correction + '<br>')
+        this.listeQuestions[i] = enonce + '<br>'
+        this.listeCorrections[i] = correction + '<br>'
         i++
       }
       cpt++

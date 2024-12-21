@@ -102,8 +102,8 @@ class MultiplierPar001 extends Exercice {
       if (this.questionJamaisPosee(i, nombre, coef)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
         handleAnswers(this, i, { champ1: { value: reponse } })
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

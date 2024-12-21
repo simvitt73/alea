@@ -92,8 +92,8 @@ export default class sensDesPrefixes extends Exercice {
           break
       }
       if (this.questionJamaisPosee(i, prefixe)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

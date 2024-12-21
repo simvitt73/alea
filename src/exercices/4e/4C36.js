@@ -240,8 +240,8 @@ export default class nomExercice extends Exercice {
         texteCorr += '<br>' + monQcm.texteCorr // texteCorr est la correction globale de l'exercice
       }
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

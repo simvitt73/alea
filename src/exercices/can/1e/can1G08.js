@@ -57,8 +57,8 @@ export default function VecteurNormEqCart () {
      Tout vecteur colinéaire à $\\vec{u}$ est aussi un vecteur normal de $d$.`
 
       if (this.questionJamaisPosee(i, a, b)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

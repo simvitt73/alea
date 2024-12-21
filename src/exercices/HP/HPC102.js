@@ -291,8 +291,8 @@ export default function CalculsLoiNormale () {
 
       if (this.questionJamaisPosee(i, bornea, borneb, bornec, borned)) { // Si la question n'a jamais été posée, on en créé une autre
         this.liste_valeurs.push(expression)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

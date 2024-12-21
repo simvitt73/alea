@@ -88,9 +88,9 @@ export default class nomExercice extends Exercice {
           texte = `$${lettreDepuisChiffre(i + 1)}=${t}$`
           texteCorr = `$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence(p.toString())}$`
         }
-          if (this.questionJamaisPosee(i, texte)) {
-            this.listeQuestions.push(texte)
-            this.listeCorrections.push(texteCorr)
+          if (this.questionJamaisPosee(i, texteCorr)) {
+            this.listeQuestions[i] = texte
+            this.listeCorrections[i] = texteCorr
             i++
           }
           cpt++

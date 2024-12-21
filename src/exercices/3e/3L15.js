@@ -238,10 +238,11 @@ export default function ExerciceEquations () {
           break
       }
 
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.lquestionJamaisPosee(i, a, b)) {
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         indiceQ += increment
         i++
       }

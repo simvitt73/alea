@@ -168,8 +168,8 @@ export default class UtilerAppartientA extends Exercice {
       texte += `$${possibilites[i].point.nom}$ $\\ldots{}$ ${possibilites[i].borne1}$${possibilites[i].extremite1.nom + possibilites[i].extremite2.nom}$${possibilites[i].borne2}`
       texteCorr += `$${possibilites[i].point.nom}$ ${possibilites[i].reponse} ${possibilites[i].borne1}$${possibilites[i].extremite1.nom + possibilites[i].extremite2.nom}$${possibilites[i].borne2}`
       if (this.questionJamaisPosee(i, possibilites[i].point.nom, possibilites[i].extremite1.nom, possibilites[i].extremite2.nom, possibilites[i].borne1, possibilites[i].borne2)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

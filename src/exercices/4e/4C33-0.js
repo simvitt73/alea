@@ -201,8 +201,8 @@ export default function NotationPuissance () {
 
       // Si la question n'mantisse jamais été posée, on l'enregistre
       if (this.questionJamaisPosee(i, mantisse, exposant, listeTypeDeQuestions[i], listeSignesExposants[i], listeSignes[i])) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple mantisse, exposant, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

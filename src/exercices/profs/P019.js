@@ -26,8 +26,8 @@ export default function GenerateurShikaku () {
       texte = `${shikaku.represente('')}`
       texteCorr = shikaku.represente('solution')
       if (this.questionJamaisPosee(i, shikaku.pavage.rectangles)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

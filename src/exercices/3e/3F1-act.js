@@ -649,8 +649,8 @@ Ces machines sont appelées $\\textit{fonctions}$, on a l'habitude de leur donne
       }
 
       if (this.questionJamaisPosee(i, typesDeQuestions, x, y, z)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -468,8 +468,9 @@ export default function ReconnaitreFonctionDegre2 () {
       }
 
       if (this.questionJamaisPosee(i, a, x1, x2, b, c, alpha, beta)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canReponseACompleter = monQcm.texte
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)

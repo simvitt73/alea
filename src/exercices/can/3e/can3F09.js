@@ -153,8 +153,9 @@ export default function ReconnaitreFonctionAffine () {
 
       this.canReponseACompleter = 'Les valeurs de $a$ et de $b$ sont : <br>$a=\\ldots $ et $b=\\ldots$'
       if (this.questionJamaisPosee(i, a, b, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)
         i++

@@ -572,8 +572,8 @@ export default function PerimetreOuAireDeFiguresComposees () {
         if (this.sup4 === 2 || this.sup4 === 3) setReponse(this, (this.sup4 === 3 ? 1 : 0) + i * (this.sup4 === 3 ? 2 : 1), new Grandeur(aire, 'cm^2'), { formatInteractif: 'unites', precision: this.sup3 - 1 })
       }
       if (this.questionJamaisPosee(i, perimetre, aire)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
     }

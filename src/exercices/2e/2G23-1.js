@@ -442,8 +442,8 @@ export default function ImagePtParTranslation () {
           break
       }
       if (this.questionJamaisPosee(i, xSOL, xPtArrivSeg, xPt2Triangle)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

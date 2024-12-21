@@ -123,8 +123,9 @@ export default function SigneFonctionAffine () {
       }
       if (this.questionJamaisPosee(i, a, b, n)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.canReponseACompleter = monQcm.texte
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)

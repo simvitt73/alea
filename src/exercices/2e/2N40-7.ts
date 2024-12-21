@@ -159,8 +159,8 @@ export default class SubstituerDansUneExpressionLitterale extends Exercice {
       })
 
       if (this.questionJamaisPosee(i, a, b, x, c)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

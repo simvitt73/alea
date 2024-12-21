@@ -95,7 +95,7 @@ export default class AcosOmegaTPlusBSinOmegaT extends Exercice {
       texteCorr += `Donc, $f(t)=${miseEnEvidence(value)}$.`
 
       if (this.questionJamaisPosee(i, a, b, w)) {
-        this.listeQuestions.push(
+        this.listeQuestions[i] =
           texte +
             ajouteChampTexteMathLive(
               this,
@@ -103,8 +103,8 @@ export default class AcosOmegaTPlusBSinOmegaT extends Exercice {
               `  ${KeyboardType.grecTrigo}`,
               { texteAvant: '<br>$f(t)=$' }
             )
-        )
-        this.listeCorrections.push(texteCorr)
+
+        this.listeCorrections[i] = texteCorr
         handleAnswers(this, i, { reponse: { value } })
         i++
       }

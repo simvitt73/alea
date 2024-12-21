@@ -193,8 +193,9 @@ class DerivationFonctionsUsuelles extends Exercice {
       texte = texte.replaceAll('\\frac', '\\dfrac')
       texteCorr = texteCorr.replaceAll('\\frac', '\\dfrac')
       if (this.questionJamaisPosee(i, laFonction)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+
         handleAnswers(this, i, { reponse: { value: reponse, options: { variable: 'x', domaine: [-10, 10] } }, compare: functionCompare })
         i++
         cpt--

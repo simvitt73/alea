@@ -226,8 +226,8 @@ et $${miseEnEvidence(texFactorisation(nb2, true))}$.`)
       )
       const texteCorr = listeCorr
       if (this.questionJamaisPosee(i, nb1, nb2)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -333,8 +333,9 @@ export default function LireUnDiagramme () {
       }
 
       if (this.questionJamaisPosee(q, effectiftotal)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[q] = texte
+        this.listeCorrections[q] = texteCorr
+   
         q++
       }
     }

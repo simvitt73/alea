@@ -125,8 +125,9 @@ export default function DecompositionNombre () {
       }
 
       if (this.questionJamaisPosee(i, n)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(this.canReponseACompleter)
         i++

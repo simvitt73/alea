@@ -159,7 +159,7 @@ export default class AcosOmegaTPlusBSinOmegaT extends Exercice {
       texteCorr += `Par conséquent, $z=${miseEnEvidence(value)}$.`
 
       if (this.questionJamaisPosee(i, a, b)) {
-        this.listeQuestions.push(
+        this.listeQuestions[i] =
           texte +
             ajouteChampTexteMathLive(
               this,
@@ -167,8 +167,8 @@ export default class AcosOmegaTPlusBSinOmegaT extends Exercice {
               `  ${KeyboardType.lycee}`,
               { texteAvant: '<br>$z=$' }
             )
-        )
-        this.listeCorrections.push(texteCorr)
+
+        this.listeCorrections[i] = texteCorr
         handleAnswers(this, i, { reponse: { value } })
         i++
       }

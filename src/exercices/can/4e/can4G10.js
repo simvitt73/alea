@@ -119,8 +119,9 @@ export default function TripletsPythagoriciensOuPas () {
       texteCorr += choix ? '' : '<br>' + texteEnCouleur(`On aurait pu regarder uniquement la somme des chiffres des unités : $${(triplet[0] ** 2 % 10)}+${(triplet[1] ** 2) % 10}$ finit par  $${((triplet[0] ** 2 % 10) + ((triplet[1] ** 2) % 10)) % 10}$ qui n'est pas compatible avec $${(triplet[2] ** 2)}$`)
 
       if (this.questionJamaisPosee(i, triplet)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
         this.listeCanEnonces.push(this.canEnonce)
         this.listeCanReponsesACompleter.push(monQcm.texte)
         i++

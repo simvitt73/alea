@@ -276,8 +276,8 @@ export default function ArrondirUneValeur6e () {
           const props = propositionsQcm(this, i)
           texte += props.texte
         }
-        this.listeQuestions.push(texte) // Sinon on enregistre la question dans listeQuestions
-        this.listeCorrections.push(texteCorr) // On fait pareil pour la correction
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         tabrep.length = 0
         tabicone.length = 0
         i++ // On passe à la question suivante

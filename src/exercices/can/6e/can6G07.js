@@ -132,8 +132,8 @@ export default function CompleterParSymetrieCan () {
       }, ...objetsEnonce, ...objetsCorrection)
       setReponse(this, i, pointsEnPlusCorr.length)
       if (this.questionJamaisPosee(i, nbCouplesChoisis, nbCouplesComplets, pointsChoisis[0][0], pointsChoisis[0][1])) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

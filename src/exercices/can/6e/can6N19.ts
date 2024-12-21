@@ -29,13 +29,9 @@ export default class decomposerDecimal extends Exercice {
     this.spacingCorr = 1.5
 
     this.formatChampTexte = KeyboardType.clavierDeBase
-    }
+  }
 
   nouvelleVersion () {
-
-    
-    
-
     this.listeCanEnonces = []
     this.listeCanReponsesACompleter = []
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -188,8 +184,8 @@ export default class decomposerDecimal extends Exercice {
           break
       }
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeCorrections.push(texteCorr)
-        this.listeQuestions.push(texte)
+        this.listeCorrections[i] = texteCorr
+        this.listeQuestions[i] = texte
 
         i++
       }

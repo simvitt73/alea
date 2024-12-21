@@ -684,8 +684,8 @@ export default class CalculsHomothetie extends Exercice {
       }
 
       if (this.questionJamaisPosee(i, k)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

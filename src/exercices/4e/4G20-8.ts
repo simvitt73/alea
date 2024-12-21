@@ -81,8 +81,8 @@ export default class CalculMentalPythagore extends Exercice {
       handleAnswers(this, 2 * i + 1, { reponse: { value: String(reponse) } })
 
       if (this.questionJamaisPosee(i, AB, BC, AC)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

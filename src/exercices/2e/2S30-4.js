@@ -343,8 +343,8 @@ export default function CalculProbaExperience2Epreuves2e () {
           break
       }
       if (this.questionJamaisPosee(i, ...question.alea)) {
-        this.listeQuestions.push(question.texte)
-        this.listeCorrections.push(question.texteCorr)
+        this.listeQuestions[i] = question.texte
+        this.listeCorrections[i] = question.texteCorr
         i++
       }
       cpt++

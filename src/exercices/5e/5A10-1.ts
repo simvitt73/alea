@@ -61,8 +61,8 @@ export default class ListeDiviseurs extends Exercice {
           this.consigne = `Donner la liste de tous les diviseurs des nombres suivants ${texteGras('séparés par un point-virgule')}.`
           handleAnswers(this, i, { reponse: { value: divisors.join(';'), options: { suiteDeNombres: true } } })
         }
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

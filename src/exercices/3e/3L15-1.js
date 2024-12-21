@@ -82,8 +82,8 @@ export default function ResoudreEquatioeX2EgalA () {
       }
       texte += ajouteChampTexteMathLive(this, i, '')
       if (this.questionJamaisPosee(i, a)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

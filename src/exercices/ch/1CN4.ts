@@ -61,8 +61,8 @@ export default class NombrePeriodiqueVersFraction extends Exercice {
       texteCorr = `${nombrePerio.toFractionNouvelProcedure()}`
 
       if (this.questionJamaisPosee(i, periode)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -157,8 +157,8 @@ export default function TermeDUneSuiteDefinieParRecurrence () {
 
       texte += '<br>' + ajouteChampTexteMathLive(this, i, ' ', { texteAvant: `$${s}_{${k}}=$` })
       if (this.questionJamaisPosee(i, a, u, k)) { // Si la question n'a jamais été posée, on en créé une autre
-        this.listeQuestions.push(texte) // Sinon on enregistre la question dans listeQuestions
-        this.listeCorrections.push(texteCorr) // On fait pareil pour la correction
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++ // On passe à la question suivante
       }
       cpt++ // Sinon on incrémente le compteur d'essai pour avoir une question nouvelle

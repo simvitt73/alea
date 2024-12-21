@@ -82,8 +82,8 @@ export default function ArrondirUneValeur4e () {
 
       if (this.questionJamaisPosee(i, n)) { // Si la question n'a jamais été posée, on en créé une autre
         // Si la question n'a jamais été posée, on en crée une autre
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

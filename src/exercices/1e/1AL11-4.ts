@@ -230,8 +230,8 @@ export default class TermesSASG extends Exercice {
 
       if (listeTypeDeQuestions[i] === 1 || listeTypeDeQuestions[i] === 2 || listeTypeDeQuestions[i] === 3) { texte += '<br>' + ajouteChampTexteMathLive(this, i, ' ', { texteAvant: `$${NomS}_{${k}}=$` }) } else { texte += '<br>' + ajouteChampTexteMathLive(this, i, ' ', { texteAvant: `$${NomS}_{${k}}\\simeq$` }) }
       if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

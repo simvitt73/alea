@@ -383,8 +383,9 @@ export default function CalculerCoeffPropo () {
         }
       }
       if (this.questionJamaisPosee(i, ...premiereLigne.map(elt => elt.nombre), ...deuxiemeLigne.map(elt => elt.nombre))) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
       }
     }
     listeQuestionsToContenu(this)

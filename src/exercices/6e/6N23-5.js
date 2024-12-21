@@ -199,8 +199,8 @@ export default function SensDeLaFraction () {
         texte = texte.replace(`$${texFractionFromString('\\phantom{00000}', '\\phantom{00000}')}$`, '')
       }
       if (this.listeQuestions.indexOf(texte) === -1) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
         i++
       }
       cpt++

@@ -327,8 +327,9 @@ export default function CalculDAngle () {
       texte += ajouteChampTexteMathLive(this, i, '', { texteApres: ' °' })
 
       if (this.questionJamaisPosee(i, nom, choixRapportTrigo)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+   
       }
     }
     listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page

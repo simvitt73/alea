@@ -262,9 +262,10 @@ export default function CalculEffectifFrequence () {
       }
 
       // Si la question n'a jamais été posée, on l'enregistre
-      if (this.questionJamaisPosee(ee, texte)) {
-        this.listeQuestions.push(texte)
-        this.listeCorrections.push(texteCorr)
+      if (this.questionJamaisPosee(ee, lstAnimauxExo.join(''), lstNombresAnimaux.join(''), lstOiseaux.join(''), lstQuadri.join(''))) {
+        this.listeQuestions[ee] = texte
+        this.listeCorrections[ee] = texteCorr
+
         ee++
       }
       cpt++
