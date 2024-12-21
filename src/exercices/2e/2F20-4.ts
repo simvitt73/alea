@@ -3,23 +3,18 @@ import Exercice from '../Exercice'
 import { context } from '../../modules/context'
 import figureApigeom from '../../lib/figureApigeom'
 import { randint } from '../../modules/outils'
-import Figure from 'apigeom'
 import { choice } from '../../lib/outils/arrayOutils'
-import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
-import RepereBuilder from '../../lib/2d/RepereBuilder'
-import { courbe } from '../../lib/2d/courbes'
 import { texNombre } from '../../lib/outils/texNombre'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { Polynome } from '../../lib/mathFonctions/Polynome'
 import { interpolationDeLagrange } from '../../lib/mathFonctions/outilsMaths'
 import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString'
 import { reduirePolynomeDegre3 } from '../../lib/outils/ecritures'
-import { latex2d } from '../../lib/2d/textes'
-import { segment } from '../../lib/2d/segmentsVecteurs'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
-import { point } from '../../lib/2d/points'
+import { wrapperApigeomToMathalea } from '../../lib/apigeom/apigeomZoom'
+import SuperFigure from 'apigeom'
 
 export const titre = 'Résoudre graphiquement une équation ou une inéquation'
 export const dateDePublication = '29/10/2023'
@@ -138,7 +133,7 @@ export function chercheIntervalles (fonc: Polynome, soluces: number[], inferieur
 
 class resolutionEquationInequationGraphique extends Exercice {
   // On déclare des propriétés supplémentaires pour cet exercice afin de pouvoir les réutiliser dans la correction
-  figure!: Figure
+  figureApiGeom!: SuperFigure
 
   constructor () {
     super()
@@ -149,11 +144,9 @@ class resolutionEquationInequationGraphique extends Exercice {
     this.answers = {}
     this.sup2 = 10
     this.sup = 1
-    this.sup3 = false
     this.besoinFormulaireNumerique = ['Choix des questions', 3, '1 : Résoudre une équation\n2 : Résoudre une inéquation\n3: Résoudre une équation et une inéquation']
     this.besoinFormulaire2Numerique = ['Choix des deux fonctions', 10,
       'Constante-affine\nConstante-degré2\nConstante-degré3\nAffine-affine\nAffine-degré2\nAffine-degré3\nDegré2-degré2\nDegré2-degré3\nDegré3-degré3\nMélange']
-    this.besoinFormulaire3CaseACocher = ['Avec point mobile', false]
   }
 
   nouvelleVersion (): void {
@@ -450,11 +443,10 @@ class resolutionEquationInequationGraphique extends Exercice {
     } while (integraleDiff < 0.2 && cpt < 50)
     const yMax = yMin + 12
     const polyDiff = fonction1.poly.add(fonction2.poly.multiply(-1))
-    this.figure = new Figure({ xMin: xMin - 0.2, yMin, width: 348, height: 378 })
-    this.figure.options.automaticUserMessage = false
-    if (this.sup3) this.figure.userMessage = 'Cliquer sur le point $M$ pour le déplacer.'
-    this.figure.create('Grid')
-    // this.figure.options.limitNumberOfElement.set('Point', this.sup3 ? 1 : 0)
+    this.figureApiGeom = new SuperFigure({ xMin: xMin - 0.2, yMin, width: 348, height: 378, isDynamic: true })
+    this.figureApiGeom.options.automaticUserMessage = false
+    this.figureApiGeom.userMessage = 'Cliquer sur le point $M$ pour le déplacer.'
+    this.figureApiGeom.create('Grid')
 
     // on s'occupe de la fonction 1 et du point mobile dessus on trace tout ça.
     // Maintenant, la fonction1 n'est jamais une spline !
@@ -463,27 +455,27 @@ class resolutionEquationInequationGraphique extends Exercice {
     if (f1Type === 'constante' || f1Type === 'affine') {
       const a = fonction1.poly.monomes[1]
       const b = fonction1.poly.monomes[0]
-      const B = this.figure.create('Point', {
+      const B = this.figureApiGeom.create('Point', {
         x: xMin - 1,
         y: (xMin - 1) * a + b,
         isVisible: false
       })
-      const A = this.figure.create('Point', {
+      const A = this.figureApiGeom.create('Point', {
         x: xMax + 1.5,
         y: (xMax + 1.5) * a + b,
         isVisible: false
       })
-      const d = this.figure.create('Segment', { point1: B, point2: A })
+      const d = this.figureApiGeom.create('Segment', { point1: B, point2: A })
       d.color = 'blue'
       d.thickness = 2
       d.isDashed = false
-      if (this.sup3) {
-        M = this.figure.create('PointOnLine', { line: d })
+      if (this.interactif) {
+        M = this.figureApiGeom.create('PointOnLine', { line: d })
         M.shape = 'o'
         M.color = 'blue'
       }
     } else {
-      courbeF = this.figure.create('Graph', {
+      courbeF = this.figureApiGeom.create('Graph', {
         expression: fonction1.expr as string,
         color: 'blue',
         thickness: 2,
@@ -492,33 +484,32 @@ class resolutionEquationInequationGraphique extends Exercice {
         xMax: x3 + 2.55 - decalAxe,
         isDashed: false
       })
-      if (this.sup3) {
-        M = this.figure.create('PointOnGraph', { graph: courbeF })
+      if (this.interactif) {
+        M = this.figureApiGeom.create('PointOnGraph', { graph: courbeF })
         M.shape = 'o'
         M.color = 'blue'
+        M!.label = 'M'
       }
     }
-    // M.draw()
-    if (this.sup3) {
-      M!.label = 'M'
+    if (this.interactif) {
       M!.createSegmentToAxeX()
       M!.createSegmentToAxeY()
-      const textX = this.figure.create('DynamicX', { point: M! })
-      const textY = this.figure.create('DynamicY', { point: M! })
+      const textX = this.figureApiGeom.create('DynamicX', { point: M! })
+      const textY = this.figureApiGeom.create('DynamicY', { point: M! })
       textX.dynamicText.maximumFractionDigits = 1
       textY.dynamicText.maximumFractionDigits = 1
     }
     if (f2Type === 'affine') {
       const a = fonction2.poly.monomes[1]
       const b = fonction2.poly.monomes[0]
-      const B = this.figure.create('Point', { x: xMin - 1, y: a * (xMin - 1) + b, isVisible: false })
-      const A = this.figure.create('Point', { x: xMax + 1.5, y: a * (xMax + 1.5) + b, isVisible: false })
-      const d = this.figure.create('Segment', { point1: B, point2: A })
+      const B = this.figureApiGeom.create('Point', { x: xMin - 1, y: a * (xMin - 1) + b, isVisible: false })
+      const A = this.figureApiGeom.create('Point', { x: xMax + 1.5, y: a * (xMax + 1.5) + b, isVisible: false })
+      const d = this.figureApiGeom.create('Segment', { point1: B, point2: A })
       d.color = 'red'
       d.thickness = 2
       d.isDashed = false
     } else {
-      this.figure.create('Graph', {
+      this.figureApiGeom.create('Graph', {
         expression: fonction2.expr as string,
         color: 'red',
         thickness: 2,
@@ -527,14 +518,14 @@ class resolutionEquationInequationGraphique extends Exercice {
         xMax: xMax + 2.55
       })
     }
-    this.figure.create('TextByPosition', { x: xMin + 0.5, y: yMax - 1, text: `$\\mathscr{C_${f1}}$`, color: 'blue' })
-    this.figure.create('TextByPosition', { x: xMin + 0.5, y: yMax - 2, text: `$\\mathscr{C_${f2}}$`, color: 'red' })
-    const p1A = this.figure.create('Point', { x: xMin + 1, y: yMax - 1, isVisible: false })
-    const p1B = this.figure.create('Point', { x: xMin + 2, y: yMax - 1, isVisible: false })
-    const p2A = this.figure.create('Point', { x: xMin + 1, y: yMax - 2, isVisible: false })
-    const p2B = this.figure.create('Point', { x: xMin + 2, y: yMax - 2, isVisible: false })
-    this.figure.create('Segment', { point1: p1A, point2: p1B, color: 'blue', thickness: 2 })
-    this.figure.create('Segment', { point1: p2A, point2: p2B, color: 'red', thickness: 2 })
+    this.figureApiGeom.create('TextByPosition', { x: xMin + 0.5, y: yMax - 1, text: `$\\mathscr{C_${f1}}$`, color: 'blue' })
+    this.figureApiGeom.create('TextByPosition', { x: xMin + 0.5, y: yMax - 2, text: `$\\mathscr{C_${f2}}$`, color: 'red' })
+    const p1A = this.figureApiGeom.create('Point', { x: xMin + 1, y: yMax - 1, isVisible: false })
+    const p1B = this.figureApiGeom.create('Point', { x: xMin + 2, y: yMax - 1, isVisible: false })
+    const p2A = this.figureApiGeom.create('Point', { x: xMin + 1, y: yMax - 2, isVisible: false })
+    const p2B = this.figureApiGeom.create('Point', { x: xMin + 2, y: yMax - 2, isVisible: false })
+    this.figureApiGeom.create('Segment', { point1: p1A, point2: p1B, color: 'blue', thickness: 2 })
+    this.figureApiGeom.create('Segment', { point1: p2A, point2: p2B, color: 'red', thickness: 2 })
 
     // De -6.3 à 6.3 donc width = 12.6 * 30 = 378
     let enonce = `On considère les fonctions $${f1}$ et $${f2}$ définies sur $\\R$ et dont on a représenté ci-dessous une partie de leurs courbes respectives.<br><br>`
@@ -595,24 +586,22 @@ class resolutionEquationInequationGraphique extends Exercice {
       texteCorr += `Pour trouver l'ensemble des solutions de l'inéquation $${f1}(x)${inferieur ? miseEnEvidence('\\leqslant', 'black') : miseEnEvidence('~\\geqslant~', 'black')}${f2}(x)$ sur [$${xMin};$${xMax + 1}] , on regarde les portions où la courbe $${miseEnEvidence('\\mathscr{C}_' + f1, 'blue')}$ est située ${inferieur ? 'en dessous' : 'au-dessus'} de la  courbe $${miseEnEvidence('\\mathscr{C}_' + f2, 'red')}$.<br>`
       texteCorr += `On lit les intervalles correspondants sur l'axe des abscisses : $${soluces2}$`
     }
-    this.figure.setToolbar({ tools: ['DRAG'], position: 'top' })
-    if (this.figure.ui) this.figure.ui.send('DRAG')
-    this.figure.isDynamic = true
-    if (!this.sup3) {
-      const callback = () => {
-        this.figure.divButtons.style.display = 'none'
-        document.removeEventListener('exercicesAffiches', callback)
-      }
-      document.addEventListener('exercicesAffiches', callback)
-    }
+    this.figureApiGeom.setToolbar({ tools: ['DRAG'], position: 'top' })
+    this.figureApiGeom.isDynamic = true
     // Il est impératif de choisir les boutons avant d'utiliser figureApigeom
-    const emplacementPourFigure = figureApigeom({ exercice: this, i: 0, figure: this.figure })
 
-    this.figure.divButtons.style.display = 'flex'
+    this.figureApiGeom.divButtons.style.display = 'flex'
+    this.figureApiGeom.ui.send('DRAG')
     if (context.isHtml) {
-      this.listeQuestions = [enonce + emplacementPourFigure]
+      if (this.interactif) {
+        this.listeQuestions = [enonce + figureApigeom({ exercice: this, i: 0, figure: this.figureApiGeom, isDynamic: true, width: 348, height: 378 })]
+      } else {
+        this.listeQuestions = [enonce + wrapperApigeomToMathalea(this.figureApiGeom)]
+      }
     } else {
-      const repere = new RepereBuilder({ xMin: xMin - 0.2, yMin: yMin - 0.2, xMax: xMax + 0.2, yMax: yMax + 0.2 })
+      this.listeQuestions = [enonce + this.figureApiGeom.tikz()]
+    }
+    /* const repere = new RepereBuilder({ xMin: xMin - 0.2, yMin: yMin - 0.2, xMax: xMax + 0.2, yMax: yMax + 0.2 })
         .setGrille({
           grilleX: {
             dx: 1, xMin, xMax
@@ -657,7 +646,7 @@ class resolutionEquationInequationGraphique extends Exercice {
       const courbes = [courbe1, courbe2, trait1, trait2, nomCourbe1, nomCourbe2]
       this.listeQuestions = [enonce + mathalea2d(Object.assign({}, fixeBordures([...repere.objets, ...courbes])), ...repere.objets, ...courbes)]
     }
-
+*/
     // Uniformisation : Mise en place de la réponse attendue en interactif en orange et gras
     const textCorrSplit = texteCorr.split(':')
     let aRemplacer = textCorrSplit[textCorrSplit.length - 1]
