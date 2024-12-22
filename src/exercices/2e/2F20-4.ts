@@ -455,16 +455,8 @@ class resolutionEquationInequationGraphique extends Exercice {
     if (f1Type === 'constante' || f1Type === 'affine') {
       const a = fonction1.poly.monomes[1]
       const b = fonction1.poly.monomes[0]
-      const B = this.figureApiGeom.create('Point', {
-        x: xMin - 1,
-        y: (xMin - 1) * a + b,
-        isVisible: false
-      })
-      const A = this.figureApiGeom.create('Point', {
-        x: xMax + 1.5,
-        y: (xMax + 1.5) * a + b,
-        isVisible: false
-      })
+      const B = this.figureApiGeom.create('Point', { x: xMin - 0.5, y: (xMin - 0.5) * a + b, isVisible: false })
+      const A = this.figureApiGeom.create('Point', { x: xMax + 2.5, y: (xMax + 2.5) * a + b, isVisible: false })
       const d = this.figureApiGeom.create('Segment', { point1: B, point2: A })
       d.color = 'blue'
       d.thickness = 2
@@ -480,8 +472,8 @@ class resolutionEquationInequationGraphique extends Exercice {
         color: 'blue',
         thickness: 2,
         fillOpacity: 0.5,
-        xMin: xMin - 1,
-        xMax: x3 + 2.55 - decalAxe,
+        xMin: xMin - 0.5,
+        xMax: xMax + 2.5,
         isDashed: false
       })
       if (this.interactif) {
@@ -502,8 +494,8 @@ class resolutionEquationInequationGraphique extends Exercice {
     if (f2Type === 'affine') {
       const a = fonction2.poly.monomes[1]
       const b = fonction2.poly.monomes[0]
-      const B = this.figureApiGeom.create('Point', { x: xMin - 1, y: a * (xMin - 1) + b, isVisible: false })
-      const A = this.figureApiGeom.create('Point', { x: xMax + 1.5, y: a * (xMax + 1.5) + b, isVisible: false })
+      const B = this.figureApiGeom.create('Point', { x: xMin - 0.5, y: a * (xMin - 0.5) + b, isVisible: false })
+      const A = this.figureApiGeom.create('Point', { x: xMax + 2.5, y: a * (xMax + 2.5) + b, isVisible: false })
       const d = this.figureApiGeom.create('Segment', { point1: B, point2: A })
       d.color = 'red'
       d.thickness = 2
@@ -514,8 +506,8 @@ class resolutionEquationInequationGraphique extends Exercice {
         color: 'red',
         thickness: 2,
         fillOpacity: 0.5,
-        xMin: xMin - 1,
-        xMax: xMax + 2.55
+        xMin: xMin - 0.5,
+        xMax: xMax + 2.5
       })
     }
     this.figureApiGeom.create('TextByPosition', { x: xMin + 0.5, y: yMax - 1, text: `$\\mathscr{C_${f1}}$`, color: 'blue' })
