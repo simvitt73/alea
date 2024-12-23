@@ -2,8 +2,8 @@ import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { minToHoraire, minToHour } from '../../lib/outils/dateEtHoraires'
 import { prenom, prenomF } from '../../lib/outils/Personne'
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
 import Hms from '../../modules/Hms'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
@@ -73,7 +73,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
       m2 = 0
       d1 = 0
       d2 = 0
-      let reponse
+      let reponse: Hms
       if (typeDeContexte[i] === 1) {
         h1 = randint(20, 22)
         m1 = randint(35, 58)
@@ -84,7 +84,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
         d = d2 - d1
         d1 = minToHoraire(d1)
         d2 = minToHoraire(d2)
-        h = parseInt(d / 60)
+        h = Math.floor(d / 60)
         m = d % 60
         d = minToHour(d)
         if (typesDeQuestions[i] === 1) {
@@ -103,7 +103,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
           texteCorr += `Le film terminera à ${texteEnCouleurEtGras(d2)}.`
           texteInteractif = 'Le film terminera à'
           reponse = Hms.fromString(d2)
-        } else if (typesDeQuestions[i] === 3) {
+        } else {
           texte = `Un film de ${d} termine à ${d2}. À quelle heure a-t-il commencé ?`
           texteCorr = `$${h2 % 24}~\\text{h}~${m2}~\\text{min}`
           if (h > 0) texteCorr += `\\xrightarrow{-${h}~\\text{h}} ${h2 - h}~\\text{h}~${m2}~\\text{min}`
@@ -133,7 +133,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
         }
         d1 = minToHoraire(d1)
         d2 = minToHoraire(d2)
-        h = parseInt(d / 60)
+        h = Math.floor(d / 60)
         m = d % 60
         d = minToHour(d)
 
@@ -153,7 +153,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
           texteCorr += `La série s'achèvera à ${texteEnCouleurEtGras(d2)}. `
           reponse = Hms.fromString(d2)
           texteInteractif = 'La série s\'achèvera à'
-        } else if (typesDeQuestions[i] === 3) {
+        } else {
           texte = `${prenom()} termine de regarder une série de ${d} à ${d2}. À quelle heure la série a-t-elle commencé ?`
           texteCorr = `$${h2 % 24}~\\text{h}~${m2}~\\text{min}`
           if (h > 0) texteCorr += `\\xrightarrow{-${h}~\\text{h}} ${h2 - h}~\\text{h}~${m2}~\\text{min}`
@@ -174,7 +174,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
         d = d2 - d1
         d1 = minToHoraire(d1)
         d2 = minToHoraire(d2)
-        h = parseInt(d / 60)
+        h = Math.floor(d / 60)
         m = d % 60
         d = minToHour(d)
 
@@ -194,7 +194,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
           texteCorr += `L'émission s'achèvera à ${texteEnCouleurEtGras(d2)}. `
           reponse = Hms.fromString(d2)
           texteInteractif = 'L\'émission s\'achèvera à'
-        } else if (typesDeQuestions[i] === 3) {
+        } else {
           texte = `À ${d2}, ${prenom()} termine de regarder une émission de ${d}. À quelle heure l'émission a-t-elle commencé ?`
           texteCorr = `$${h2 % 24}~\\text{h}~${m2}~\\text{min}`
           if (h > 0) texteCorr += `\\xrightarrow{-${h}~\\text{h}} ${h2 - h}~\\text{h}~${m2}~\\text{min}`
@@ -224,7 +224,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
         }
         d1 = minToHoraire(d1)
         d2 = minToHoraire(d2)
-        h = parseInt(d / 60)
+        h = Math.floor(d / 60)
         m = d % 60
         d = minToHour(d)
 
@@ -244,7 +244,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
           texteCorr += `La compétition terminera à ${texteEnCouleurEtGras(d2)}. `
           reponse = Hms.fromString(d2)
           texteInteractif = 'La compétition terminera à'
-        } else if (typesDeQuestions[i] === 3) {
+        } else {
           texte = `Une compétition de gymnastique qui se termine à ${d2} a duré ${d}. À quelle heure a-t-elle commencé ?`
           texteCorr = `$${h2 % 24}~\\text{h}~${m2}~\\text{min}`
           if (h > 0) texteCorr += `\\xrightarrow{-${h}~\\text{h}} ${h2 - h}~\\text{h}~${m2}~\\text{min}`
@@ -255,7 +255,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
           reponse = Hms.fromString(d1)
           texteInteractif = 'La compétition a commencé à'
         }
-      } else if (typeDeContexte[i] === 5) {
+      } else {
         h1 = randint(8, 15)
         m1 = randint(25, 58)
         d1 = h1 * 60 + m1
@@ -274,7 +274,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
         }
         d1 = minToHoraire(d1)
         d2 = minToHoraire(d2)
-        h = parseInt(d / 60)
+        h = Math.floor(d / 60)
         m = d % 60
         d = minToHour(d)
 
@@ -295,7 +295,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
           texteCorr += `${prenom} arrivera à ${texteEnCouleurEtGras(d2)}. `
           reponse = Hms.fromString(d2)
           texteInteractif = `${prenom} arrivera à`
-        } else if (typesDeQuestions[i] === 3) {
+        } else {
           texte = `Un train arrive en gare à ${d2} après un trajet de ${d}. À quelle heure le voyage a-t-il commencé ?`
           texteCorr = `$${h2 % 24}~\\text{h}~${m2}~\\text{min}`
           if (h > 0) texteCorr += `\\xrightarrow{-${h}~\\text{h}} ${h2 - h}~\\text{h}~${m2}~\\text{min}`
@@ -317,6 +317,7 @@ export default class CalculsDeDureesOuHoraires extends Exercice {
                       propositions: [
                         {
                           type: 'AMCOpen',
+                          // @ts-expect-error trop compliqué à typer
                           propositions: [
                             {
                               texte: ' ',

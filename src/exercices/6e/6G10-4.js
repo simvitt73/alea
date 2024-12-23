@@ -8,15 +8,15 @@ import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { numAlpha, premiereLettreEnMajuscule } from '../../lib/outils/outilString.js'
+import Exercice from '../deprecatedExercice.js'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu } from '../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../modules/outils.js'
 import { propositionsQcm } from '../../lib/interactif/qcm.js'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { context } from '../../modules/context.js'
 import { clone } from 'mathjs'
 import { codageSegments } from '../../lib/2d/codages'
-import Exercice from '../Exercice'
 export const interactifReady = true
 export const interactifType = ['qcm', 'mathLive']
 export const amcReady = true
@@ -65,39 +65,36 @@ function segmentAlternatif (reponses) {
   }
 }
 
-export default class VocabulaireDuCercle extends Exercice {
-  constructor () {
-    super()
+export default function VocabulaireDuCercle () {
+  Exercice.call(this)
+  this.nbQuestions = 1
 
-    this.nbQuestions = 1
+  this.besoinFormulaireNumerique = ['Sens des questions', 3, '1 : Un rayon est...\n2 : [AB] est ...\n3 : Mélange']
+  this.sup = 3
+  this.besoinFormulaire2CaseACocher = ['QCM']
+  this.sup2 = true
+  this.correctionDetailleeDisponible = true
+  const typesDeQuestionsParDefaut = '1-2-3-4-5-6-7'
+  this.sup3 = typesDeQuestionsParDefaut
+  this.besoinFormulaire3Texte = [
+    'Type de questions', [
+      'Nombres séparés par des tirets',
+      '1 : Le rayon',
+      '2 : Un rayon',
+      '3 : Le diamètre',
+      '4 : Un diamètre',
+      '5 : Une corde',
+      '6 : Le centre',
+      '7 : Le centre, qui est aussi le milieu'
+    ].join('\n')
+  ]
 
-    this.besoinFormulaireNumerique = ['Sens des questions', 3, '1 : Un rayon est...\n2 : [AB] est ...\n3 : Mélange']
-    this.sup = 3
-    this.besoinFormulaire2CaseACocher = ['QCM']
-    this.sup2 = true
-    this.correctionDetailleeDisponible = true
-    const typesDeQuestionsParDefaut = '1-2-3-4-5-6-7'
-    this.sup3 = typesDeQuestionsParDefaut
-    this.besoinFormulaire3Texte = [
-      'Type de questions', [
-        'Nombres séparés par des tirets',
-        '1 : Le rayon',
-        '2 : Un rayon',
-        '3 : Le diamètre',
-        '4 : Un diamètre',
-        '5 : Une corde',
-        '6 : Le centre',
-        '7 : Le centre, qui est aussi le milieu'
-      ].join('\n')
-    ]
+  this.spacingCorr = 1.5 // Interligne des réponses
 
-    this.spacingCorr = 1.5 // Interligne des réponses
+  this.avecLeCentreQuiEstAussiLeMilieu = false
 
-    this.avecLeCentreQuiEstAussiLeMilieu = false
-  }
-
-  nouvelleVersion () {
-    const typesDeQuestions = gestionnaireFormulaireTexte({ saisie: this.sup3, min: 1, max: 6, defaut: 7, melange: 7, nbQuestions: this.nbQuestions }).map(String)
+  this.nouvelleVersion = function () {
+    const typesDeQuestions = String(this.sup3 ?? typesDeQuestionsParDefaut)
     this.consigne = this.sup2 ? 'Cocher la (ou les) bonne(s) réponse(s).' : 'Compléter.'
     if (context.isHtml) this.consigne += '<br><br>'
 

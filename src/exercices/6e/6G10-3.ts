@@ -1,13 +1,13 @@
-import { droite } from '../../lib/2d/droites.js'
-import { point } from '../../lib/2d/points.js'
-import { demiDroite, segmentAvecExtremites } from '../../lib/2d/segmentsVecteurs.js'
-import { labelPoint } from '../../lib/2d/textes.ts'
+import { droite } from '../../lib/2d/droites'
+import { point } from '../../lib/2d/points'
+import { demiDroite, segmentAvecExtremites } from '../../lib/2d/segmentsVecteurs'
+import { labelPoint } from '../../lib/2d/textes'
 import { combinaisonListes, enleveElement, shuffle } from '../../lib/outils/arrayOutils'
-import { lettreDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
-import { mathalea2d, vide2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
+import { mathalea2d, vide2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
 import { setCliqueFigure } from '../../lib/interactif/gestionInteractif'
 export const titre = 'Choisir la bonne figure'
 export const amcReady = true
@@ -33,6 +33,7 @@ export default class CliqueFigure extends Exercice {
   }
 
   nouvelleVersion () {
+    this.figures = [[], [], [], []]
     this.consigne = (this.interactif) ? 'Cliquer sur la bonne figure.' : context.vue !== 'diap' && !context.isAmc ? 'Entourer la bonne figure.' : 'Choisir la bonne figure représentant : ' /// Penser ici à AMC aussi.
     const typesDeQuestions = combinaisonListes(['segment', 'droite', 'demidroite', 'demidroite2'], this.nbQuestions)
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -80,6 +81,7 @@ export default class CliqueFigure extends Exercice {
           figCorrecteAMC = figDemiDroiteAMC
           break
         case 'demidroite2':
+        default:
           texte = `La demi-droite d'origine $${B.nom}$ passant par $${A.nom}$.`
           this.figures[i][3].solution = true
           figCorr = demiDroite(B, A)
@@ -129,7 +131,7 @@ export default class CliqueFigure extends Exercice {
       if (this.questionJamaisPosee(i, texte)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
-        this.listeCorrections[i] = texteCorr
+        this.listeCorrections[i] = texteCorr ?? ''
         i++
       }
       cpt++

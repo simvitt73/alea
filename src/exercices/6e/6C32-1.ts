@@ -1,10 +1,10 @@
-import { numAlpha, sp } from '../../lib/outils/outilString.js'
+import { numAlpha, sp } from '../../lib/outils/outilString'
 import { personne, prenom, prenomF } from '../../lib/outils/Personne'
 import { texPrix } from '../../lib/format/style'
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { max, min } from 'mathjs'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
@@ -69,7 +69,7 @@ export default class ExerciceProblemesComplexes extends Exercice {
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; cpt++) {
       let texte = ''
       let texteCorr = ''
-      let questionParametre = ''
+      let questionParametre: number[] = []
       switch (listeDesProblemes[i]) {
         case 1 : {
           const calAgneau = 3 + randint(1, 3) * 0.1 // 3.3
@@ -267,9 +267,9 @@ export default class ExerciceProblemesComplexes extends Exercice {
           texteCorr += ((60 + min) * 30) - Math.floor(((60 + min) * 30) / 600) * 600 !== 0 ? ` (et $1$ bobine de  $${texNombre(((60 + min) * 30) - Math.floor(((60 + min) * 30) / 600) * 600)}$ mètres).<br>` : '.<br>'
           texteCorr += `${numAlpha(4)} $${texNombre(Math.floor(longueur / 30))} \\times 30${sp()}\\text{m} = ${texNombre(longueur)}$ m<br>
                         Donc la durée de la pellicule est de $${texNombre(Math.floor(longueur / 30))}$ minutes.<br>
-                        ${numAlpha(5)} $${texNombre(Math.floor(longueur / 30))} \\times 60 = ${texNombre(Math.floor(longueur / 30)) * 60}$ secondes<br>
-                        $${texNombre(Math.floor(longueur / 30)) * 60}${sp()}\\text{secondes} \\times 24${sp()}\\text{images} = ${texNombre(Math.floor(longueur / 30) * 60 * 24)}${sp()}\\text{images}$<br>
-                        Il y a $${texNombre(Math.floor(longueur / 30) * 60 * 24)}${sp()}\\text{images}$ dans la pellicule.`
+                        ${numAlpha(5)} $${texNombre(Math.floor(longueur / 30))} \\times 60 = ${texNombre(Math.floor(longueur / 30) * 60)}$ secondes<br>
+                        $${texNombre(Math.floor(longueur / 30) * 60)}${sp()}\\text{secondes} \\times 24${sp()}\\text{images} = ${texNombre(Math.floor(longueur / 30) * 60 * 24)}${sp()}\\text{images}$<br>
+                         Il y a $${texNombre(Math.floor(longueur / 30) * 60 * 24)}${sp()}\\text{images}$ dans la pellicule.`
 
           indiceInteractif += 6
 
@@ -293,7 +293,7 @@ export default class ExerciceProblemesComplexes extends Exercice {
                         $${nbBo} \\times ${texNombre(prixBo)} =${texNombre(nbBo * prixBo, 2)}$<br>
                         Le prix des boisons est de $${texPrix(nbBo * prixBo)}$ €.<br>
                         $${texNombre(nbBo * prixBo, 2)} + ${texNombre(nbSch * prixSch, 2)} =${texNombre(nbBo * prixBo + nbSch * prixSch, 2)}$<br>
-                        Le prix total à payer est $${texPrix(nbBo * prixBo + nbSch * prixSch, 2)}$ €.<br>
+                        Le prix total à payer est $${texPrix(nbBo * prixBo + nbSch * prixSch)}$ €.<br>
                         $50 -  (${texNombre(nbBo * prixBo)} + ${texNombre(nbSch * prixSch, 2)}) = ${texNombre(50 - (nbBo * prixBo + nbSch * prixSch), 2)}$<br>
                         Le caissier va rendre la somme de $${texPrix(50 - (nbBo * prixBo + nbSch * prixSch))}$ €.<br>`
 

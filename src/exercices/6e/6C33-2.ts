@@ -1,9 +1,9 @@
 import Exercice from '../Exercice'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { prenom } from '../../lib/outils/Personne'
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { miseEnCouleur, miseEnEvidence } from '../../lib/outils/embellissements'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif.js' // fonction qui va préparer l'analyse de la saisie
+import { handleAnswers } from '../../lib/interactif/gestionInteractif' // fonction qui va préparer l'analyse de la saisie
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive' // fonctions de mise en place des éléments interactifs
 
 import { parseExpression, type Expression, type Operator } from '../../lib/types/expression'

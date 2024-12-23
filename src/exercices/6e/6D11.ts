@@ -1,11 +1,11 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import Hms from '../../modules/Hms'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import Exercice from '../Exercice'
 
 export const titre = 'Additionner des durées'
 export const interactifReady = true
@@ -26,23 +26,17 @@ export const refs = {
   'fr-fr': ['6D11'],
   'fr-ch': ['10GM3-3']
 }
-export default function SommeDeDurees () {
-  Exercice.call(this)
-  this.consigne = this.nbQuestions > 1 ? 'Compléter les égalités suivantes.' : 'Compléter l\'égalité suivante.'
-  this.sup = '1-2' // 2 niveaux de difficultés
-  this.spacing = 2
-  this.nbQuestions = 5
+export default class SommeDeDurees extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireTexte = ['Niveau de difficulté', 'Nombres séparés par des tirets\n1 : Additions minutes-secondes sans conversion\n2 : Additions heures-minutes sans conversion\n3 : Additions heures-minutes-secondes sans conversion\n4 : Additions minutes-secondes avec potentielle conversion\n5 : Additions heures-minutes-secondes avec potentielle conversion\n6 : Mélange']
+    this.consigne = this.nbQuestions > 1 ? 'Compléter les égalités suivantes.' : 'Compléter l\'égalité suivante.'
+    this.sup = '1-2' // 2 niveaux de difficultés
+    this.spacing = 2
+    this.nbQuestions = 5
+  }
 
-  this.nouvelleVersion = function () {
-    /*
-    if (this.sup === 1) {
-      typesDeQuestions = combinaisonListes([1, 3], this.nbQuestions)
-    } else {
-      typesDeQuestions = combinaisonListes(
-        [1, 2, 3, 4, 5],
-        this.nbQuestions
-      )
-    } */
+  nouvelleVersion () {
     const typesDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup,
       min: 1,
@@ -50,17 +44,17 @@ export default function SommeDeDurees () {
       defaut: 6,
       melange: 6,
       nbQuestions: this.nbQuestions
-    })
+    }).map(Number)
 
-    for (let i = 0, h1, h2, m1, m2, s1, s2, t1, t2, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, h1, h2, m1, m2, s1, s2, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       h1 = 0
       h2 = 0
       m1 = 0
       m2 = 0
       s1 = 0
       s2 = 0
-      t1 = 0
-      t2 = 0
+      let t1: Hms
+      let t2: Hms
       if (typesDeQuestions[i] === 1) {
         s1 = randint(11, 39)
         s2 = randint(1, 20)
@@ -99,7 +93,7 @@ export default function SommeDeDurees () {
         t2 = new Hms({ minute: m2, second: s2 })
         texte = `$${m1}~\\text{min}~${s1}~\\text{s}+${m2}~\\text{min}~${s2}~\\text{s}=$`
         texteCorr = `$${m1}~\\text{min}~${s1}~\\text{s}+${m2}~\\text{min}~${s2}~\\text{s}= ${m1 + m2}~\\text{min}~${s1 + s2}~\\text{s} = ${m1 + m2 + 1}~\\text{min}~${s1 + s2 - 60}~\\text{s} = ${miseEnEvidence(`1~\\text{h}~${m1 + m2 + 1 - 60}~\\text{min}~${s1 + s2 - 60}~\\text{s}`)}$`
-      } else if (typesDeQuestions[i] === 5) {
+      } else {
         if (choice([true, false])) {
           h1 = randint(2, 12)
           h2 = randint(2, 11)
@@ -131,7 +125,7 @@ export default function SommeDeDurees () {
         handleAnswers(this, i, { reponse: { value: t1.add(t2).toString(), options: { HMS: true } } })
       }
 
-      if (this.questionJamaisPosee(i, m1, s1, h1, t1, m2, s2, h2, t2)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+      if (this.questionJamaisPosee(i, m1, s1, h1, m2, s2, h2, t2.toString())) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
@@ -141,5 +135,4 @@ export default function SommeDeDurees () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireTexte = ['Niveau de difficulté', 'Nombres séparés par des tirets\n1 : Additions minutes-secondes sans conversion\n2 : Additions heures-minutes sans conversion\n3 : Additions heures-minutes-secondes sans conversion\n4 : Additions minutes-secondes avec potentielle conversion\n5 : Additions heures-minutes-secondes avec potentielle conversion\n6 : Mélange']
 }

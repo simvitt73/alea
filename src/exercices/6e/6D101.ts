@@ -1,7 +1,6 @@
 import { choice } from '../../lib/outils/arrayOutils'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import Hms from '../../modules/Hms'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
@@ -10,6 +9,7 @@ import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { minToHoraire } from '../../lib/outils/dateEtHoraires'
 import { sp } from '../../lib/outils/outilString'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import Exercice from '../Exercice'
 
 export const titre = 'Utiliser les heures décimales'
 export const interactifReady = true
@@ -29,13 +29,15 @@ export const refs = {
   'fr-fr': ['6D101'],
   'fr-ch': ['10GM3-2']
 }
-export default function HeuresDecimales () {
-  Exercice.call(this)
-  this.spacing = 2
-  this.nbQuestions = 5
-  this.comment = 'La partie décimale peut être 0,1 ; 0,2 ; 0,3 ; 0,4 ; 0,5 ; 0,6 ; 0,7 ; 0,8 ; 0,9 ; 0,25 ou 0,75 de manière équiprobable.'
+export default class HeuresDecimales extends Exercice {
+  constructor () {
+    super()
+    this.spacing = 2
+    this.nbQuestions = 5
+    this.comment = 'La partie décimale peut être 0,1 ; 0,2 ; 0,3 ; 0,4 ; 0,5 ; 0,6 ; 0,7 ; 0,8 ; 0,9 ; 0,25 ou 0,75 de manière équiprobable.'
+  }
 
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     this.consigne = this.nbQuestions > 1 ? 'Écrire les durées suivantes en heures et minutes.' : 'Écrire la durée suivante en heures et minutes.'
 
     for (let i = 0, partieEntiere, partieDecimale, minutes, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
@@ -71,6 +73,7 @@ export default function HeuresDecimales () {
           propositions: [
             {
               type: 'AMCNum',
+              // @ts-expect-error Trop compliqué à typer
               propositions: [{
                 texte: texteCorr,
                 statut: '',
@@ -88,6 +91,7 @@ export default function HeuresDecimales () {
             },
             {
               type: 'AMCNum',
+              // @ts-expect-error Trop compliqué à typer
               propositions: [{
                 texte: '',
                 statut: '',

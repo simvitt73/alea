@@ -1,9 +1,9 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { texNombre2 } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
+import Exercice from '../Exercice'
 
 export const amcReady = true
 export const amcType = 'qcmMono'
@@ -26,18 +26,25 @@ export const refs = {
   'fr-fr': ['6C30-8'],
   'fr-ch': ['9NO8-16']
 }
-export default function DiviserPar101001000 () {
-  Exercice.call(this)
-  this.nbQuestions = 4 // Ici le nombre de questions
-  this.consigne = 'Compléter les pointillés.'
-  this.sup = false
-  this.sup2 = true
-  this.sup3 = 4
-  this.nouvelleVersion = function () {
+export default class DiviserPar101001000 extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireCaseACocher = ['Le dividende est un nombre entier', false]
+    this.besoinFormulaire2CaseACocher = ['Trois décimales maximum', true]
+    this.besoinFormulaire3Texte = ['Type de questions', 'Nombres séparés par des tirets\n1 : Résultat à calculer\n2 : Nombre à retrouver\n3 : 10, 100 ou 1 000 à retrouver\n4 : Mélange']
+
+    this.nbQuestions = 4 // Ici le nombre de questions
+    this.consigne = 'Compléter les pointillés.'
+    this.sup = false
+    this.sup2 = true
+    this.sup3 = 4
+  }
+
+  nouvelleVersion () {
     const listeTypeDeQuestions = gestionnaireFormulaireTexte({ min: 1, max: 3, melange: 4, defaut: 4, nbQuestions: this.nbQuestions, saisie: this.sup3 })
     const rang = ['millièmes', 'centièmes', 'dixièmes']
 
-    for (let i = 0, texte, texteCorr, coef, nombre, nombreentier, resultat, exposant, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, texte, texteCorr, coef, nombre, nombreEntier, resultat, exposant, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       texte = '' // Nous utilisons souvent cette variable pour construire le texte de la question.
       texteCorr = '' // Idem pour le texte de la correction.
       coef = -randint(1, 3)
@@ -53,6 +60,7 @@ export default function DiviserPar101001000 () {
               exposant = -randint(0, 1)
               break
             case -3:
+            default:
               exposant = -randint(0, 0)
               break
           }
@@ -60,8 +68,8 @@ export default function DiviserPar101001000 () {
       } else {
         exposant = this.sup ? 0 : -randint(1, 3)
       }
-      nombreentier = (randint(10, 1000) + randint(10, 999) * choice([0, 1000]))
-      nombre = (nombreentier * 10 ** exposant)
+      nombreEntier = (randint(10, 1000) + randint(10, 999) * choice([0, 1000]))
+      nombre = (nombreEntier * 10 ** exposant)
       resultat = (nombre * 10 ** coef)
       switch (Number(listeTypeDeQuestions[i])) { // Chaque question peut être d'un type différent, ici 4 cas sont prévus...
         case 1:
@@ -163,7 +171,7 @@ export default function DiviserPar101001000 () {
         texte += `<br>${props.texte}`
       }
 
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, nombreEntier, coef)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
@@ -173,10 +181,4 @@ export default function DiviserPar101001000 () {
     }
     listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page
   }
-  // Si les variables suivantes sont définies, elles provoquent l'affichage des formulaires des paramètres correspondants
-  // Il peuvent être de 3 types : _numerique, _case_a_cocher ou _texte.
-  // Il sont associés respectivement aux paramètres sup, sup3 et sup3.
-  this.besoinFormulaireCaseACocher = ['Le dividende est un nombre entier', false]
-  this.besoinFormulaire2CaseACocher = ['Trois décimales maximum', true]
-  this.besoinFormulaire3Texte = ['Type de questions', 'Nombres séparés par des tirets\n1 : Résultat à calculer\n2 : Nombre à retrouver\n3 : 10, 100 ou 1 000 à retrouver\n4 : Mélange']
-} // Fin de l'exercice.
+}
