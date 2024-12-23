@@ -85,7 +85,6 @@ export default class CalculDAngleFigureComplexe extends Exercice {
       const ACB = Math.round(angle(A, C, B))
 
       const objetsMathalea = [t1, t2, c1, c2, labels]
-      console.log(typesDeQuestion)
       switch (typesDeQuestion) { // Suivant le type de question, le contenu sera différent
         case 'BA-AD-BAC':
           if (this.sup) {
