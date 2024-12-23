@@ -1,16 +1,16 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texteEnCouleur, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { sp } from '../../lib/outils/outilString.js'
-import { context } from '../../modules/context.js'
+import { sp } from '../../lib/outils/outilString'
+import { context } from '../../modules/context'
 import Hms from '../../modules/Hms'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { minToHoraire } from '../../lib/outils/dateEtHoraires'
+import Exercice from '../Exercice'
 
 export const titre = 'Convertir en min vers h et min ou en s vers min et s'
 export const interactifReady = true
@@ -30,13 +30,21 @@ export const refs = {
   'fr-fr': ['6D13'],
   'fr-ch': ['10GM3-5']
 }
-export default function ConversionHeuresMinutesOuMinutesEtSecondes (can = false) {
-  Exercice.call(this)
-  this.nbQuestions = 5
-  this.correctionDetailleeDisponible = true
-  this.correctionDetaillee = false
-  this.sup = 1
-  this.nouvelleVersion = function () {
+export default class ConversionHeuresMinutesOuMinutesEtSecondes extends Exercice {
+  can: boolean
+  constructor (can = false) {
+    super()
+    this.besoinFormulaireNumerique = ['Type d\'unité de départ', 3, '1 : Minutes\n2 : Secondes\n3 : Mélange']
+    this.nbQuestions = 5
+    this.correctionDetailleeDisponible = true
+    this.correctionDetaillee = false
+    this.sup = 1
+    this.can = can
+  }
+
+  nouvelleVersion () {
+    this.listeCanEnonces = []
+    this.listeCanReponsesACompleter = []
     let typeQuestionsDisponibles = ['min vers h et min', 's vers min et s']
     if (this.sup === 1) typeQuestionsDisponibles = ['min vers h et min']
     else if (this.sup === 2) typeQuestionsDisponibles = ['s vers min et s']
@@ -54,7 +62,7 @@ export default function ConversionHeuresMinutesOuMinutesEtSecondes (can = false)
         this.canEnonce = `Convertir $${d}$ secondes en minutes et secondes.`
         this.canReponseACompleter = '$\\ldots$ min $\\ldots$ s'
       }
-      if (can) {
+      if (this.can) {
         if (listeTypeQuestions[i] === 'min vers h et min') {
           texteCorr = texteEnCouleur(`
     Mentalement : <br>
@@ -83,7 +91,7 @@ Ainsi $${d} = ${Math.floor(d / 60) * 60} + ${d % 60}$ donc $${d}$min $= ${Math.f
       if (this.questionJamaisPosee(i, a, b, d)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           if (listeTypeQuestions[i] === 'min vers h et min') {
             this.autoCorrection[i] = {
@@ -92,6 +100,7 @@ Ainsi $${d} = ${Math.floor(d / 60) * 60} + ${d % 60}$ donc $${d}$min $= ${Math.f
               propositions: [
                 {
                   type: 'AMCNum',
+                  // @ts-expect-error trop compliqué à typer
                   propositions: [{
                     texte: texteCorr,
                     statut: '',
@@ -109,6 +118,7 @@ Ainsi $${d} = ${Math.floor(d / 60) * 60} + ${d % 60}$ donc $${d}$min $= ${Math.f
                 },
                 {
                   type: 'AMCNum',
+                  // @ts-expect-error trop compliqué à typer
                   propositions: [{
                     texte: '',
                     statut: '',
@@ -133,6 +143,7 @@ Ainsi $${d} = ${Math.floor(d / 60) * 60} + ${d % 60}$ donc $${d}$min $= ${Math.f
               propositions: [
                 {
                   type: 'AMCNum',
+                  // @ts-expect-error trop compliqué à typer
                   propositions: [{
                     texte: texteCorr,
                     statut: '',
@@ -150,6 +161,7 @@ Ainsi $${d} = ${Math.floor(d / 60) * 60} + ${d % 60}$ donc $${d}$min $= ${Math.f
                 },
                 {
                   type: 'AMCNum',
+                  // @ts-expect-error trop compliqué à typer
                   propositions: [{
                     texte: '',
                     statut: '',
@@ -182,5 +194,4 @@ Ainsi $${d} = ${Math.floor(d / 60) * 60} + ${d % 60}$ donc $${d}$min $= ${Math.f
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireNumerique = ['Type d\'unité de départ', 3, '1 : Minutes\n2 : Secondes\n3 : Mélange']
 }

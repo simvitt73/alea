@@ -1,13 +1,13 @@
-import { grille, seyes } from '../../lib/2d/reperes.js'
+import { grille, seyes } from '../../lib/2d/reperes'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Operation from '../../modules/operations.js'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Operation from '../../modules/operations'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
+import { mathalea2d } from '../../modules/2dGeneralites'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const amcReady = true
 export const amcType = 'AMCNum'
@@ -32,22 +32,23 @@ export const refs = {
   'fr-fr': ['6C30'],
   'fr-ch': ['9NO8-8']
 }
-export default function MultiplierDecimaux () {
-  Exercice.call(this)
+export default class MultiplierDecimaux extends Exercice {
+  constructor () {
+    super()
+    this.consigne = 'Poser et effectuer les calculs suivants.'
+    this.spacing = 2
 
-  this.consigne = 'Poser et effectuer les calculs suivants.'
-  this.spacing = 2
+    this.nbQuestions = 4
+    this.sup = false
+    this.sup2 = 3
+    this.besoinFormulaire2Numerique = [
+      'Type de cahier',
+      3,
+      ' 1 : Cahier à petits carreaux\n 2 : Cahier à gros carreaux (Seyes)\n 3 : Feuille blanche'
+    ]
+  }
 
-  this.nbQuestions = 4
-  this.sup = false
-  this.sup2 = 3
-  this.besoinFormulaire2Numerique = [
-    'Type de cahier',
-    3,
-    ' 1 : Cahier à petits carreaux\n 2 : Cahier à gros carreaux (Seyes)\n 3 : Feuille blanche'
-  ]
-
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     this.sup2 = parseInt(this.sup2)
     const typesDeQuestionsDisponibles = [1, 2, 3, 4]
     const listeTypeDeQuestions = combinaisonListes(
@@ -72,25 +73,26 @@ export default function MultiplierDecimaux () {
       switch (typesDeQuestions) {
         case 1: // xxx * xx,x chiffres inférieurs à 5
           a = randint(2, 5) * 100 + randint(2, 5) * 10 + randint(2, 5)
-          b = calculANePlusJamaisUtiliser(randint(2, 5) * 10 + randint(2, 5) + randint(2, 5) / 10)
+          b = randint(2, 5) * 10 + randint(2, 5) + randint(2, 5) / 10
           break
         case 2: // xx,x * x,x
-          a = calculANePlusJamaisUtiliser(randint(2, 9) * 10 + randint(2, 9) + randint(2, 9) / 10)
-          b = calculANePlusJamaisUtiliser(randint(6, 9) + randint(6, 9) / 10)
+          a = randint(2, 9) * 10 + randint(2, 9) + randint(2, 9) / 10
+          b = randint(6, 9) + randint(6, 9) / 10
           break
         case 3: // x,xx * x0x
-          a = calculANePlusJamaisUtiliser(randint(2, 9) + randint(2, 9) / 10 + randint(2, 9) / 100)
-          b = calculANePlusJamaisUtiliser(randint(2, 9) * 100 + randint(2, 9))
+          a = randint(2, 9) + randint(2, 9) / 10 + randint(2, 9) / 100
+          b = randint(2, 9) * 100 + randint(2, 9)
           break
         case 4: // 0,xx * x,x
-          a = calculANePlusJamaisUtiliser(randint(2, 9) / 10 + randint(2, 9) / 100)
-          b = calculANePlusJamaisUtiliser(randint(2, 9) + randint(2, 9) / 10)
+        default:
+          a = randint(2, 9) / 10 + randint(2, 9) / 100
+          b = randint(2, 9) + randint(2, 9) / 10
           break
       }
 
       texte = `$${texNombre(a)}\\times${texNombre(b)}$`
       texte += grilletxt
-      reponse = calculANePlusJamaisUtiliser(a * b)
+      reponse = a * b
       texteCorr = Operation({ operande1: a, operande2: b, type: 'multiplication', style: 'display: inline' })
       texteCorr += context.isHtml ? '' : '\\hspace*{30mm}'
       texteCorr += Operation({ operande1: b, operande2: a, type: 'multiplication', style: 'display: inline' })
@@ -105,7 +107,7 @@ export default function MultiplierDecimaux () {
         approx: 0
       }
 
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, a, b)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr

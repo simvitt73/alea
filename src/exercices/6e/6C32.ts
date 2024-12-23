@@ -3,11 +3,11 @@ import { egalOuApprox } from '../../lib/outils/ecritures'
 import { texPrix } from '../../lib/format/style'
 import { arrondi } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const titre = 'Résoudre des problèmes de courses au marché'
 export const interactifReady = true
@@ -26,19 +26,21 @@ export const refs = {
   'fr-fr': ['6C32'],
   'fr-ch': ['9FA3-7']
 }
-export default function ProblemeCourse () {
-  Exercice.call(this)
+export default class ProblemeCourse extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireCaseACocher = ['Calculs faciles']
+    this.spacing = 2
+    this.spacingCorr = 2
+    // Modification de l'exercice pour avoir plusieurs question. On peut revenir à la version initiale en décommentant. Jean-Claude Lhote
+    this.nbQuestions = 1
+    // this.nbQuestionsModifiable = false
 
-  this.spacing = 2
-  this.spacingCorr = 2
-  // Modification de l'exercice pour avoir plusieurs question. On peut revenir à la version initiale en décommentant. Jean-Claude Lhote
-  this.nbQuestions = 1
-  // this.nbQuestionsModifiable = false
-
-  this.sup = false
+    this.sup = false
   // this.listeAvecNumerotation = false
+  }
 
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const prenom = choice([
         'Benjamin',
@@ -92,14 +94,17 @@ export default function ProblemeCourse () {
       const reponse = prixTotal.toFixed(2)
       setReponse(this, i, reponse)
       if (context.isAmc) {
+        // @ts-ignore this.autoCorrection[i] est bien défini
         this.autoCorrection[i].reponse.valeur[0] = arrondi(prixTotal, 2)
+        // @ts-ignore this.autoCorrection[i] est bien défini
         this.autoCorrection[i].reponse.param.digits = 5
+        // @ts-ignore this.autoCorrection[i] est bien défini
         this.autoCorrection[i].reponse.param.decimals = 2
       }
       if (this.interactif) {
         texte += `<br> ${ajouteChampTexteMathLive(this, i, '', {
                 texteApres: ' €',
-                texte: 'Le prix total à payer sera de '
+                texteAvant: 'Le prix total à payer sera de '
             })}`
       }
       if (this.questionJamaisPosee(i, reponse, masseEnKgDeAliment1, masseEnKgDeAliment2)) {
@@ -111,5 +116,4 @@ export default function ProblemeCourse () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireCaseACocher = ['Calculs faciles']
 }

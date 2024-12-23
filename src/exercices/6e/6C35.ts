@@ -1,20 +1,20 @@
-import { point } from '../../lib/2d/points.js'
-import { polygone } from '../../lib/2d/polygones.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
-import { texteParPosition } from '../../lib/2d/textes.ts'
+import { point } from '../../lib/2d/points'
+import { polygone } from '../../lib/2d/polygones'
+import { segment } from '../../lib/2d/segmentsVecteurs'
+import { texteParPosition } from '../../lib/2d/textes'
 import { choice, shuffle } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { jourAuHasard } from '../../lib/outils/dateEtHoraires'
-import { deuxColonnes } from '../../lib/format/miseEnPage.js'
+import { deuxColonnes } from '../../lib/format/miseEnPage'
 import { range, rangeMinMax } from '../../lib/outils/nombres'
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { prenomF, prenomM } from '../../lib/outils/Personne'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { randint } from '../../modules/outils'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const titre = 'Modéliser des problèmes'
 export const interactifReady = true
@@ -62,18 +62,24 @@ export function objet () {
   return choice(['billes', 'bonbons', 'bougies', 'cartes de vœux', 'crayons', 'gâteaux', 'gommes', 'photos', 'stickers', 'cahiers'])
 }
 
-export default function ModelisationProblemes () {
-  Exercice.call(this)
-  this.nbQuestions = 1
-  this.nbQuestionsModifiable = false
-  this.sup = 2
-  this.sup2 = 3
-  this.sup3 = 3
+export default class ModelisationProblemes extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = ['Niveau de difficulté', 2, '1 : Valeurs différentes suivant les exercices\n2 : Valeurs identiques dans tous les exercices']
+    this.besoinFormulaire2Numerique = ['Sélection de problèmes', 4, '1 : 3 problèmes basés sur les mêmes nombres\n2 : 4 problèmes basés sur les mêmes nombres\n3 : 8 problèmes (par groupe de 4, avec distinction de 2 couleurs)\n4 : 8 problèmes mélangés (sans distinction de couleurs)']
+    this.besoinFormulaire3Numerique = ['Variante avec les schémas', 4, '1 : Sans schéma\n2 : Schémas dans la correction (non interactif)\n3 : Schémas dans l\'énoncé et la correction']
 
-  this.correctionDetailleeDisponible = true
-  this.correctionDetaillee = true
+    this.nbQuestions = 1
+    this.nbQuestionsModifiable = false
+    this.sup = 2
+    this.sup2 = 3
+    this.sup3 = 3
 
-  this.nouvelleVersion = function () {
+    this.correctionDetailleeDisponible = true
+    this.correctionDetaillee = true
+  }
+
+  nouvelleVersion () {
     const presenceSchemas = this.sup3 === 3 && !context.isDiaporama
     // const nbSchemas = 8
     if (this.sup3 === 1) {
@@ -111,6 +117,7 @@ export default function ModelisationProblemes () {
         brouilleLesCartes = shuffle(range(7))
         break
       case 4:
+      default:
         // nbSchemas = 8
         typesDeQuestionsDisponibles = [1, 2, 3, 4, 5, 6, 7, 8]
         colorA = 'black'
@@ -502,7 +509,7 @@ export default function ModelisationProblemes () {
       this.listeCorrections.push(texteCorr)
     }
 
-    const listeSchemas = []
+    const listeSchemas: string[][] = []
     listeSchemas[0] = []
     listeSchemas[1] = []
     listeSchemas[2] = []
@@ -539,7 +546,4 @@ export default function ModelisationProblemes () {
       )
     } else this.introduction = ''
   }
-  this.besoinFormulaireNumerique = ['Niveau de difficulté', 2, '1 : Valeurs différentes suivant les exercices\n2 : Valeurs identiques dans tous les exercices']
-  this.besoinFormulaire2Numerique = ['Sélection de problèmes', 4, '1 : 3 problèmes basés sur les mêmes nombres\n2 : 4 problèmes basés sur les mêmes nombres\n3 : 8 problèmes (par groupe de 4, avec distinction de 2 couleurs)\n4 : 8 problèmes mélangés (sans distinction de couleurs)']
-  this.besoinFormulaire3Numerique = ['Variante avec les schémas', 4, '1 : Sans schéma\n2 : Schémas dans la correction (non interactif)\n3 : Schémas dans l\'énoncé et la correction']
 }

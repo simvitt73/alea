@@ -7,13 +7,13 @@ import {
 } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { nombreDeChiffresDansLaPartieEntiere, range1 } from '../../lib/outils/nombres'
-import { lettreDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { listeDesDiviseurs } from '../../lib/outils/primalite'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const titre = 'Calculer en utilisant les priorités opératoires'
 export const amcReady = true
@@ -61,19 +61,28 @@ export const refs = {
   'fr-fr': ['6C33'],
   'fr-ch': []
 }
-export default function Priorites () {
-  Exercice.call(this)
+export default class Priorites extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = [
+      'Type de calculs',
+      3,
+      '1 : Sans parenthèses\n2 : Avec parenthèses\n3 : Mélange'
+    ]
+    this.besoinFormulaire2CaseACocher = ['Présentation des corrections en colonnes']
+    this.besoinFormulaire3CaseACocher = ['Équilibre entre les questions']
+    this.besoinFormulaire4CaseACocher = ['Inclure des divisions']
+    this.consigne = 'Calculer.'
+    this.nbQuestions = 5
+    this.nbCols = 2
 
-  this.consigne = 'Calculer.'
-  this.nbQuestions = 5
-  this.nbCols = 2
+    this.sup = 3
+    this.sup2 = false
+    this.sup3 = true
+    this.sup4 = true
+  }
 
-  this.sup = 3
-  this.sup2 = false
-  this.sup3 = true
-  this.sup4 = true
-
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     const deuxOperations = [1, 2, 3, 4, 5, 6, 7, 13, 14, 15, 16, 17] // 12 possibilités
     const troisOperations = [8, 9, 10, 11, 12, 18, 19, 20, 21, 22] // 10 possibilités
 
@@ -109,9 +118,11 @@ export default function Priorites () {
     }
 
     for (
-      let i = 0, texte, texteCorr, liste, somme, a, b, c, d, cpt = 0;
+      let i = 0, liste, somme, a, b, c, d, cpt = 0;
       i < this.nbQuestions && cpt < 50;
     ) {
+      let texte: string
+      let texteCorr: string
       switch (listeTypeDeQuestions[i]) {
         case 1:
           a = randint(2, 11)
@@ -340,6 +351,7 @@ export default function Priorites () {
           setReponse(this, i, (a * b) / (c + d))
           break
         case 22:
+        default:
           a = randint(2, 11)
           c = randint(2, 11)
           b = c * randint(2, 5)
@@ -370,8 +382,10 @@ export default function Priorites () {
       if (this.listeQuestions.indexOf(texte) === -1) {
         if (context.isAmc) {
           this.autoCorrection[i].enonce = texte.substring(0, texte.length - 1) + '~=$'
-          this.autoCorrection[i].propositions = [{ texte: texteCorr, statut: '' }]
+          this.autoCorrection[i].propositions = [{ texte: texteCorr }]
+          // @ts-expect-error Trop compliqué à type
           this.autoCorrection[i].reponse.param.digits = nombreDeChiffresDansLaPartieEntiere(this.autoCorrection[i].reponse.valeur[0]) + 1
+          // @ts-expect-error Trop compliqué à type
           this.autoCorrection[i].reponse.param.decimals = 0
         }
         // Si la question n'a jamais été posée, on en crée une autre
@@ -383,12 +397,4 @@ export default function Priorites () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireNumerique = [
-    'Type de calculs',
-    3,
-    '1 : Sans parenthèses\n2 : Avec parenthèses\n3 : Mélange'
-  ]
-  this.besoinFormulaire2CaseACocher = ['Présentation des corrections en colonnes']
-  this.besoinFormulaire3CaseACocher = ['Équilibre entre les questions']
-  this.besoinFormulaire4CaseACocher = ['Inclure des divisions']
 }

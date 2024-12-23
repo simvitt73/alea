@@ -5,12 +5,12 @@ import {
   nombreDeChiffresDansLaPartieEntiere
 } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import Operation from '../../modules/operations.js'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import Operation from '../../modules/operations'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const amcReady = true
 export const interactifReady = true
@@ -39,16 +39,22 @@ export const refs = {
   'fr-fr': ['6C31'],
   'fr-ch': ['9NO8-14']
 }
-export default function DivisionDecimale () {
-  Exercice.call(this)
+export default class DivisionDecimale extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = [
+      'Type de questions',
+      2,
+      '1 : Déterminer le quotient exact\n2 : Déterminer un quotient approché au millième près'
+    ]
+    this.consigne = 'Effectuer les divisions décimales suivantes et donner la valeur exacte de leur quotient.'
+    this.spacing = 2
+    context.isHtml ? (this.spacingCorr = 2) : (this.spacingCorr = 1) // Important sinon opdiv n'est pas joli
+    this.nbQuestions = 4
+    this.sup = 1
+  }
 
-  this.consigne = 'Effectuer les divisions décimales suivantes et donner la valeur exacte de leur quotient.'
-  this.spacing = 2
-  context.isHtml ? (this.spacingCorr = 2) : (this.spacingCorr = 1) // Important sinon opdiv n'est pas joli
-  this.nbQuestions = 4
-  this.sup = 1
-
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     let typesDeQuestionsDisponibles
 
     parseInt(this.sup) === 1
@@ -68,54 +74,52 @@ export default function DivisionDecimale () {
         case 1: // entier divisé par 4 quotient : xx,25 ou xx,75
           b = 4
           a = (randint(2, 9) * 10 + randint(2, 9)) * 4 + choice([1, 3])
-          q = calculANePlusJamaisUtiliser(a / b)
+          q = a / b
           break
         case 2: // entier divisé par 8 quotient : x,125 ou x,375 ou x,625 ou x,875
           b = 8
           a = randint(2, 9) * 8 + choice([1, 3, 5, 7])
-          q = calculANePlusJamaisUtiliser(a / b)
+          q = a / b
           break
         case 3: // entier divisé par 6 quotient : xxx,5
           b = 6
-          q = calculANePlusJamaisUtiliser(
+          q =
             randint(2, 9) * 100 + randint(2, 9) * 10 + randint(2, 9) + 0.5
-          )
+
           a = q * 6
           break
         case 4: // quotient xx,xx division par 2, 3 , 4 ou 5
-          q = calculANePlusJamaisUtiliser(
+          q =
             randint(2, 5) * 10 +
                         randint(2, 5) +
                         randint(2, 5) / 10 +
                         randint(2, 5) / 100
-          )
+
           b = randint(2, 5)
-          a = calculANePlusJamaisUtiliser(b * q)
+          a = b * q
           break
         case 5: // quotient x,xxx division par 6 à 9
-          q = calculANePlusJamaisUtiliser(
+          q =
             randint(6, 9) +
                         randint(5, 9) / 10 +
                         randint(6, 9) / 100 +
                         randint(6, 9) / 1000
-          )
+
           b = randint(6, 9)
-          a = calculANePlusJamaisUtiliser(b * q)
+          a = b * q
           break
         case 6: // un 0 dans le quotient
           if (randint(1, 2) === 1) {
             // x0x,x
-            q = calculANePlusJamaisUtiliser(
+            q =
               randint(2, 9) * 100 + randint(2, 9) + randint(2, 9) / 10
-            )
           } else {
             // xx0,x
-            q = calculANePlusJamaisUtiliser(
+            q =
               randint(2, 9) * 100 + randint(2, 9) * 10 + randint(2, 9) / 10
-            )
           }
           b = randint(7, 9)
-          a = calculANePlusJamaisUtiliser(b * q)
+          a = b * q
           break
         case 7: // division par 7
           a = randint(2, 9) * 7 + randint(1, 6)
@@ -123,12 +127,13 @@ export default function DivisionDecimale () {
           q = arrondi(a / b, 3)
           break
         case 8: // division par 9
-          a = calculANePlusJamaisUtiliser((randint(11, 19) * 9) / 10 + randint(1, 8) / 10)
+          a = (randint(11, 19) * 9) / 10 + randint(1, 8) / 10
           b = 9
           q = arrondi(a / b, 3)
           break
         case 9: // division par 3
-          a = calculANePlusJamaisUtiliser((randint(11, 99) * 3) / 100 + randint(1, 2) / 100)
+        default:
+          a = (randint(11, 99) * 3) / 100 + randint(1, 2) / 100
           b = 3
           q = arrondi(a / b, 3)
       }
@@ -150,7 +155,8 @@ export default function DivisionDecimale () {
       if (context.isHtml && this.interactif) texte += ajouteChampTexteMathLive(this, i, '')
       if (context.isAmc) {
         this.autoCorrection[i].enonce = texte
-        this.autoCorrection[i].propositions = [{ texte: texteCorr, statut: '' }]
+        this.autoCorrection[i].propositions = [{ texte: texteCorr }]
+        // @ts-expect-error trop compliqué à typer
         this.autoCorrection[i].reponse.param = {
           digits: nombreDeChiffresDansLaPartieEntiere(q) + nombreDeChiffresDansLaPartieDecimale(q) + 2,
           decimals: nombreDeChiffresDansLaPartieDecimale(q) + 1,
@@ -158,7 +164,7 @@ export default function DivisionDecimale () {
           exposantNbChiffres: 0
         }
       }
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, a, b)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
@@ -168,9 +174,4 @@ export default function DivisionDecimale () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireNumerique = [
-    'Type de questions',
-    2,
-    '1 : Déterminer le quotient exact\n2 : Déterminer un quotient approché au millième près'
-  ]
 }

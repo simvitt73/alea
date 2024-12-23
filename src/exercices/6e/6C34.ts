@@ -1,10 +1,10 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texteGras } from '../../lib/format/style'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const titre = 'Déterminer le dernier chiffre d\'un calcul'
 export const amcReady = true
@@ -24,23 +24,28 @@ export const refs = {
   'fr-fr': ['6C34'],
   'fr-ch': []
 }
-export default function DernierChiffre () {
-  Exercice.call(this)
-  this.sup = 3
+export default class DernierChiffre extends Exercice {
+  version: number
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = ['Niveau de difficulté', 3, '1 : Sommes\n2 : Sommes et produits\n3 : Sommes, produits et différences']
+    this.sup = 3
+    this.consigne = 'Pour chaque calcul, déterminer le dernier chiffre du résultat.'
+    this.nbQuestions = 4 // Ici le nombre de questions
 
-  this.consigne = 'Pour chaque calcul, déterminer le dernier chiffre du résultat.'
-  this.nbQuestions = 4 // Ici le nombre de questions
+    this.nbCols = 2 // Le nombre de colonnes dans l'énoncé LaTeX
+    this.nbColsCorr = 2// Le nombre de colonne pour la correction LaTeX
+    this.tailleDiaporama = 3
+    this.correctionDetailleeDisponible = true
+    this.sup = 1 // A décommenter : valeur par défaut d'un premier paramètre
+    this.version = 1
+  }
 
-  this.nbCols = 2 // Le nombre de colonnes dans l'énoncé LaTeX
-  this.nbColsCorr = 2// Le nombre de colonne pour la correction LaTeX
-  this.tailleDiaporama = 3
-  this.correctionDetailleeDisponible = true
-  this.sup = 1 // A décommenter : valeur par défaut d'un premier paramètre
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     if (this.version === 2) {
       this.sup = 2
     }
-    let typeDeQuestionsDisponibles = []
+    let typeDeQuestionsDisponibles: string[] = []
     if (this.sup === 1) {
       typeDeQuestionsDisponibles = ['somme']
     }
@@ -100,8 +105,10 @@ export default function DernierChiffre () {
       if (context.isHtml && this.interactif) texte += '<br>Le chiffre des unités est : ' + ajouteChampTexteMathLive(this, i, '')
       if (context.isAmc) {
         this.autoCorrection[i].enonce = texte.substring(0, texte.length - 1) + '~=$<br>Le chiffre des unités est : '
-        this.autoCorrection[i].propositions = [{ texte: texteCorr, statut: '' }]
+        this.autoCorrection[i].propositions = [{ texte: texteCorr }]
+        // @ts-expect-error trop compliqué à typer
         this.autoCorrection[i].reponse.param.digits = 1
+        // @ts-expect-error trop compliqué à typer
         this.autoCorrection[i].reponse.param.decimals = 0
       }
       if (this.listeQuestions.indexOf(texte) === -1) {
@@ -114,5 +121,4 @@ export default function DernierChiffre () {
     }
     listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page
   }
-  this.besoinFormulaireNumerique = ['Niveau de difficulté', 3, '1 : Sommes\n2 : Sommes et produits\n3 : Sommes, produits et différences']
 }

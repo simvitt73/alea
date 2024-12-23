@@ -1,16 +1,16 @@
 import { glisseNombre } from '../../lib/2d/GlisseNombre.js'
-import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
+import { choice, combinaisonListes } from '../../lib/outils/arrayOutils.js'
+import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements.js'
 import { lampeMessage } from '../../lib/format/message.js'
-import { range, rangeMinMax } from '../../lib/outils/nombres'
+import { range, rangeMinMax } from '../../lib/outils/nombres.js'
 import { numAlpha } from '../../lib/outils/outilString.js'
-import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
+import { texNombre } from '../../lib/outils/texNombre.js'
 import { mathalea2d } from '../../modules/2dGeneralites.js'
 import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
 import { propositionsQcm } from '../../lib/interactif/qcm.js'
 import { min } from 'mathjs'
 import { context } from '../../modules/context.js'
+import Exercice from '../Exercice.js'
 export const amcReady = true
 export const amcType = 'qcmMono'
 export const interactifReady = true
@@ -31,14 +31,17 @@ export const refs = {
   'fr-fr': ['6C30-7'],
   'fr-ch': ['9NO8-13']
 }
-export default function DiviserUnNombreParPuissanceDeDix () {
-  Exercice.call(this)
-  this.nbQuestions = 5 // Ici le nombre de questions
+export default class DiviserUnNombreParPuissanceDeDix extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireCaseACocher = ['Les nombres-exemples sont entiers', false]
+    this.besoinFormulaire2CaseACocher = ['Exercice avec un raisonnement associé', true]
+    this.nbQuestions = 5 // Ici le nombre de questions
+    this.sup = false
+    this.sup2 = true
+  }
 
-  this.sup = false
-  this.sup2 = true
-
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     const choixUnites = ['millièmes', 'centièmes', 'dixièmes']
     let listeChoixAlea = range(2)
     if (!this.sup2 || this.interactif) { this.nbQuestions = min(this.nbQuestions, 3) }
@@ -116,7 +119,7 @@ export default function DiviserUnNombreParPuissanceDeDix () {
       }
       if (context.isHtml) texteCorr += mathalea2d({ xmin: 2.5, xmax: 27.5, ymin: -5, ymax: 5.5 }, glisseNombre(exemple, choixAlea - 3))
 
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, dizaine, centaine, unite, dixieme, centieme)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
@@ -126,6 +129,4 @@ export default function DiviserUnNombreParPuissanceDeDix () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireCaseACocher = ['Les nombres-exemples sont entiers', false]
-  this.besoinFormulaire2CaseACocher = ['Exercice avec un raisonnement associé', true]
 }

@@ -52,13 +52,13 @@ export default class ProduitEtSommeOuDifferenceDeDecimaux extends Exercice {
       }
       const couples = shuffle(couplesPossibles).slice(0, this.sup)
       texte = 'Calculer.'
-      texteCorr = Operation({ operande1: A, operande2: B, type: 'multiplication', style: 'display: inline', solution: true }) + '<br>'
+      texteCorr = Operation({ operande1: A.toNumber(), operande2: B.toNumber(), type: 'multiplication', style: 'display: inline', options: { solution: true, colore: '' } }) + '<br>'
       let indice = 0
       for (const couple of couples) {
         const addition = this.sup2 ? choice([true, false]) : true
         texte += `<br>${numAlpha(indice)}$${texNombre(couple.A)} ${addition ? '+' : '-'} ${texNombre(couple.B)}$ ${sp()} ${sp()} ${sp()} et ${sp()} ${sp()} ${sp()} $${texNombre(couple.A)} \\times ${texNombre(couple.B)}$.`
         texteCorr += `<br>${numAlpha(indice)}<br>`
-        texteCorr += Operation({ operande1: couple.A, operande2: couple.B, type: addition ? 'addition' : 'soustraction', style: 'display: inline', methodeParCompensation: addition })
+        texteCorr += Operation({ operande1: couple.A.toNumber(), operande2: couple.B.toNumber(), type: addition ? 'addition' : 'soustraction', style: 'display: inline', methodeParCompensation: addition })
 
         texteCorr += `<br> Je sais que $${texNombre(A)}\\times${texNombre(B)}=${texNombre(B.mul(A))}$.`
         texteCorr += '<br>'

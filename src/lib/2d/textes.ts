@@ -440,7 +440,8 @@ export function texteParPositionEchelle (texte:string, x:number, y:number, orien
  *
  * @author Rémi Angot
  */
-export function texteParPosition (texte:string, x:number, y:number, orientation:number = 0, color:string = 'black', scale:number = 1, ancrageDeRotation:'milieu' | 'gauche' | 'droite' = 'milieu', mathOn:boolean = false, opacite?:number) {
+export function texteParPosition (texte:string | number, x:number, y:number, orientation:number = 0, color:string = 'black', scale:number = 1, ancrageDeRotation:'milieu' | 'gauche' | 'droite' = 'milieu', mathOn:boolean = false, opacite?:number) {
+  if (typeof texte === 'number') texte = String(texte)
   if (typeof orientation !== 'number') {
     ancrageDeRotation = orientation
     orientation = 0
