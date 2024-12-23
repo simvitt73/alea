@@ -1,6 +1,6 @@
 import Exercice from '../Exercice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import { fraction } from '../../modules/fractions'
 import { context } from '../../modules/context'
 export const titre = 'Calculer des probabilités.'

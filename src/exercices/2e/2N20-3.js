@@ -1,4 +1,4 @@
-import DivisionEuclidienneMultiplesDiviseursCriteres from '../3e/3A10.js'
+import DivisionEuclidienneMultiplesDiviseursCriteres from '../3e/3A10'
 export const titre = 'Comprendre le vocabulaire : division euclidienne, diviseurs, multiples'
 export const dateDeModifImportante = '29/10/2021'
 export const interactifReady = false

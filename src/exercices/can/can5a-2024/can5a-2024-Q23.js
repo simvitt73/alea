@@ -1,4 +1,4 @@
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 
 import { plaque3d } from '../../../modules/3d'

@@ -1,10 +1,10 @@
 import { texteParPosition } from '../../lib/2d/textes.ts'
 import { nombreAvecEspace } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { pavage } from '../../modules/Pavage.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { pavage } from '../../modules/Pavage'
 
 export const titre = 'Fabriquer des pavages pour travailler les transformations'
 

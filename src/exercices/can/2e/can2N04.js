@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 export const titre = 'Déterminer la réunion de deux intervalles'

@@ -1,14 +1,14 @@
-import { pointSurSegment, tracePoint } from '../../lib/2d/points.js'
-import { longueur, segment, vecteur } from '../../lib/2d/segmentsVecteurs.js'
+import { pointSurSegment, tracePoint } from '../../lib/2d/points'
+import { longueur, segment, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes.ts'
-import { translation } from '../../lib/2d/transformations.js'
+import { translation } from '../../lib/2d/transformations'
 import { choice } from '../../lib/outils/arrayOutils'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { pave3d, point3d } from '../../modules/3d.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { pave3d, point3d } from '../../modules/3d'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 export const titre = 'Construire la section d\'un plan dans un un pavé droit'
 export const amcReady = true
 export const amcType = 'AMCOpen'
@@ -159,7 +159,7 @@ export default function ConstruireSectionPaveDroit () {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: texte,

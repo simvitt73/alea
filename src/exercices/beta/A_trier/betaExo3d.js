@@ -1,9 +1,9 @@
-import Exercice from '../../deprecatedExercice.js'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
-import { context } from '../../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { mathalea2d } from '../../../modules/2dGeneralites'
+import { context } from '../../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 
-import { barre3d, cube3d, paveLPH3d, plaque3d } from '../../../modules/3d.js'
+import { barre3d, cube3d, paveLPH3d, plaque3d } from '../../../modules/3d'
 
 export const titre = 'Exo zéroMathalea2d3d'
 

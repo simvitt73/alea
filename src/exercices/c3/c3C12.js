@@ -1,4 +1,4 @@
-import DernierChiffre from '../6e/6C34.js'
+import DernierChiffre from '../6e/6C34'
 export const titre = 'Dernier chiffre d\'un calcul'
 export const amcReady = true
 export const interactifReady = true

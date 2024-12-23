@@ -6,12 +6,12 @@ import {
   reduirePolynomeDegre3
 } from '../../lib/outils/ecritures'
 import { abs, signe } from '../../lib/outils/nombres'
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../deprecatedExercice'
 import {
   listeQuestionsToContenu, randint
-} from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+} from '../../modules/outils'
+import { context } from '../../modules/context'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 export const dateDePublication = '22/05/2023'
 export const titre = 'Montrer qu\'un nombre est ou n\'est pas solution d\'une inéquation'
 export const interactifReady = true

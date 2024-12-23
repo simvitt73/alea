@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Trouver un  entier relatif (addition à trou, écriture simplifiée)'

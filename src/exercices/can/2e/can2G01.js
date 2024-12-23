@@ -1,6 +1,6 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
 export const titre = 'Déterminer un agrandissement/réduction avec fraction'
 export const interactifReady = true

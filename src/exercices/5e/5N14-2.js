@@ -1,9 +1,9 @@
 import { choice, combinaisonListes, enleveElement, shuffle } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { compareFractions, texFractionFromString } from '../../lib/outils/deprecatedFractions.js'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { compareFractions, texFractionFromString } from '../../lib/outils/deprecatedFractions'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import FractionEtendue from '../../modules/FractionEtendue'
 import Decimal from 'decimal.js'
 

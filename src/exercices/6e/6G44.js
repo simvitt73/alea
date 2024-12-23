@@ -8,12 +8,12 @@ import {
   pyramideTronquee3d,
   translation3d,
   vecteur3d
-} from '../../modules/3d.js'
-import { context } from '../../modules/context.js'
+} from '../../modules/3d'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
+import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 
 export const titre = 'Trouver le nombre de faces ou d\'arêtes d\'un solide'

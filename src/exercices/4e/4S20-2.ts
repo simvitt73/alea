@@ -1,8 +1,8 @@
 import Exercice from '../Exercice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { texNombre } from '../../lib/outils/texNombre'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 export const interactifReady = true
 export const interactifType = 'qcm'
 

@@ -1,11 +1,11 @@
-import { point } from '../../lib/2d/points.js'
-import { droiteGraduee } from '../../lib/2d/reperes.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+import { point } from '../../lib/2d/points'
+import { droiteGraduee } from '../../lib/2d/reperes'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { troncature } from '../../lib/outils/nombres'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { calculANePlusJamaisUtiliser, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { calculANePlusJamaisUtiliser, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 
 export const titre = 'Droites graduées avec zoom'
 

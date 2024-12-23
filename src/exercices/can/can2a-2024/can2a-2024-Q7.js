@@ -1,6 +1,6 @@
 import Exercice from '../../Exercice'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { texNombre } from '../../../lib/outils/texNombre'
 import Decimal from 'decimal.js'
 import { choice } from '../../../lib/outils/arrayOutils'

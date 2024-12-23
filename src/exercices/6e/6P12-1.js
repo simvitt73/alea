@@ -1,4 +1,4 @@
-import EchellesProblemes from '../5e/5P13.js'
+import EchellesProblemes from '../5e/5P13'
 
 export const titre = 'Utiliser ou trouver l\'échelle d\'un plan'
 

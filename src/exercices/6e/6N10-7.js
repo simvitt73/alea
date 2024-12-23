@@ -1,19 +1,19 @@
 import {
   shuffle2tableaux
 } from '../../lib/outils/arrayOutils'
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import {
   contraindreValeur,
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu,
   randint
-} from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+} from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 
 import Decimal from 'decimal.js'
 import { ajouteChampTexteMathLive, remplisLesBlancs } from '../../lib/interactif/questionMathLive'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 

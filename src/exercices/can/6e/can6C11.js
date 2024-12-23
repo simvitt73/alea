@@ -1,10 +1,10 @@
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import Decimal from 'decimal.js'
 import { bleuMathalea } from '../../../lib/colors'
 export const titre = 'Calculer le double ou le triple (décimal)'

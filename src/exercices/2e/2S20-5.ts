@@ -1,5 +1,5 @@
 import { choice } from '../../lib/outils/arrayOutils'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 import { point, Point, pointIntersectionDD } from '../../lib/2d/points'
 import { polyline } from '../../lib/2d/polygones'

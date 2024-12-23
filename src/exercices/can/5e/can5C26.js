@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureAlgebrique } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Additionner des entiers relatifs (écriture simplifiée)'

@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { simplificationDeFractionAvecEtapes } from '../../../lib/outils/deprecatedFractions.js'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { simplificationDeFractionAvecEtapes } from '../../../lib/outils/deprecatedFractions'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
 export const titre = 'Calculer une probabilité'
 export const interactifReady = true

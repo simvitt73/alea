@@ -3,7 +3,7 @@ import { texteGras } from '../../lib/format/style'
 import { arrondi } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
-import { randint } from '../../modules/outils.js'
+import { randint } from '../../modules/outils'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 

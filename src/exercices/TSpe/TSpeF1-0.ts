@@ -1,23 +1,23 @@
 import Exercice from '../Exercice'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { KeyboardType } from '../../lib/interactif/claviers/keyboard.js'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif.js'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import {
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu,
   randint
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 import {
   ecritureParentheseSiNegatif,
   reduireAxPlusB,
   reduirePolynomeDegre3,
   rienSi1
-} from '../../lib/outils/ecritures.js'
-import FractionEtendue from '../../modules/FractionEtendue.js'
+} from '../../lib/outils/ecritures'
+import FractionEtendue from '../../modules/FractionEtendue'
 import { choice } from '../../lib/outils/arrayOutils'
-import { miseEnEvidence } from '../../lib/outils/embellissements.js'
-import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction.js'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
 
 export const titre = "Domaine de définition d'une fonction logarithme"
 export const dateDePublication = '22/7/2024'

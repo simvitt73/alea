@@ -1,20 +1,20 @@
-import { angle, codageAngleDroit } from '../../lib/2d/angles.js'
-import { codageSegment } from '../../lib/2d/codages.js'
-import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites.js'
-import { milieu, point, pointIntersectionDD, pointSurDroite, tracePoint } from '../../lib/2d/points.js'
-import { grille, seyes } from '../../lib/2d/reperes.js'
+import { angle, codageAngleDroit } from '../../lib/2d/angles'
+import { codageSegment } from '../../lib/2d/codages'
+import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
+import { milieu, point, pointIntersectionDD, pointSurDroite, tracePoint } from '../../lib/2d/points'
+import { grille, seyes } from '../../lib/2d/reperes'
 import { labelPoint, latexParPoint } from '../../lib/2d/textes.ts'
-import { homothetie, rotation } from '../../lib/2d/transformations.js'
+import { homothetie, rotation } from '../../lib/2d/transformations'
 import { shuffle } from '../../lib/outils/arrayOutils'
-import { lettreDepuisChiffre, numAlpha } from '../../lib/outils/outilString.js'
-import { mathalea2d, vide2d } from '../../modules/2dGeneralites.js'
-import Alea2iep from '../../modules/Alea2iep.js'
-import { context } from '../../modules/context.js'
+import { lettreDepuisChiffre, numAlpha } from '../../lib/outils/outilString'
+import { mathalea2d, vide2d } from '../../modules/2dGeneralites'
+import Alea2iep from '../../modules/Alea2iep'
+import { context } from '../../modules/context'
 import {
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu,
   randint
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 import Exercice from '../Exercice'
 
 export const titre = 'Tracer des perpendiculaires'

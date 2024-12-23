@@ -1,6 +1,6 @@
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { texNombre } from '../../../lib/outils/texNombre'
 
 import { bleuMathalea } from '../../../lib/colors'

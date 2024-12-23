@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Recomposer un entier'
 export const interactifReady = true
 export const interactifType = 'mathLive'

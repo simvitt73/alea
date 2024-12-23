@@ -1,4 +1,4 @@
-import FonctionsAffinesOuLineaires from '../3e/3F20-2.js'
+import FonctionsAffinesOuLineaires from '../3e/3F20-2'
 export const titre = 'Faire un bilan sur les fonctions affines et/ou linéaires'
 export const interactifType = 'mathLive'
 export const interactifReady = true

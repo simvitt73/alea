@@ -1,8 +1,8 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Trouver le nombre manquant dans une somme'
 export const interactifReady = true
 export const interactifType = 'mathLive'

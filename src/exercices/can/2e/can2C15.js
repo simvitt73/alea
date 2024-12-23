@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { texFractionFromString, obtenirListeFractionsIrreductibles } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString, obtenirListeFractionsIrreductibles } from '../../../lib/outils/deprecatedFractions'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer un nombre connaissant son inverse'
 export const interactifReady = true
 export const interactifType = 'mathLive'

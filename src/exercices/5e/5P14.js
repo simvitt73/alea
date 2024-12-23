@@ -1,4 +1,4 @@
-import ExercicePourcentage from '../2e/2S10-2.js'
+import ExercicePourcentage from '../2e/2S10-2'
 export const titre = 'Exprimer une proportion sous la forme d\'un pourcentage'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,16 +1,16 @@
-import { point } from '../../lib/2d/points.js'
-import { polygone } from '../../lib/2d/polygones.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+import { point } from '../../lib/2d/points'
+import { polygone } from '../../lib/2d/polygones'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { latexParCoordonnees, texteParPositionEchelle } from '../../lib/2d/textes.ts'
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { texteExposant } from '../../lib/outils/ecritures'
 import { arrondi } from '../../lib/outils/nombres'
 import { stringNombre, texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
 // import Grandeur from '../../modules/Grandeur'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
@@ -391,7 +391,7 @@ export default function ProblemesAiresRectangles () {
       if (this.questionJamaisPosee(q, ...longueursHorizontales, ...longueursVerticales)) {
         this.listeQuestions[q] = texte
         this.listeCorrections[q] = texteCorr
-   
+
         q++
       }
       cpt++

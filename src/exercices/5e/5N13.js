@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import { choice, enleveElement, shuffle } from '../../lib/outils/arrayOutils'
-import { texFractionFromString } from '../../lib/outils/deprecatedFractions.js'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { texFractionFromString } from '../../lib/outils/deprecatedFractions'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import FractionEtendue from '../../modules/FractionEtendue.ts'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { listeDesDiviseurs } from '../../lib/outils/primalite'
 import Decimal from 'decimal.js'
@@ -205,7 +205,7 @@ export default function Exercice_fractions_simplifier (max = 11) {
       if (this.questionJamaisPosee(i, a, b)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (this.interactifType === 'mathLive' || this.amcType === 'AMCNum') {
           handleAnswers(this, i, { reponse: { value: reponse.toLatex(), options: { fractionIrreductible: this.sup2, fractionSimplifiee: !this.sup2 } } })
           if (context.isAmc) {

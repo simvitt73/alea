@@ -1,11 +1,11 @@
-import { droiteGraduee } from '../../lib/2d/reperes.js'
+import { droiteGraduee } from '../../lib/2d/reperes'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString.js'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
-import { fraction } from '../../modules/fractions.js'
+import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
+import { fraction } from '../../modules/fractions'
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
@@ -118,7 +118,6 @@ export default function LireAbscissesFractionnairesComplexes () {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
 
         if (context.isAmc) {
           this.autoCorrection[i] = {

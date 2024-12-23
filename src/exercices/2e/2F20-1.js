@@ -1,18 +1,18 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { simplificationDeFractionAvecEtapes } from '../../lib/outils/deprecatedFractions.js'
+import { simplificationDeFractionAvecEtapes } from '../../lib/outils/deprecatedFractions'
 import {
   ecritureAlgebrique,
   ecritureParentheseSiNegatif,
   reduireAxPlusB,
   reduirePolynomeDegre3, rienSi1
 } from '../../lib/outils/ecritures'
-import { texteCentre } from '../../lib/format/miseEnPage.js'
+import { texteCentre } from '../../lib/format/miseEnPage'
 import { pgcd } from '../../lib/outils/primalite'
-import Exercice from '../deprecatedExercice.js'
-import { fraction, obtenirListeFractionsIrreductibles, obtenirListeFractionsIrreductiblesFaciles } from '../../modules/fractions.js'
+import Exercice from '../deprecatedExercice'
+import { fraction, obtenirListeFractionsIrreductibles, obtenirListeFractionsIrreductiblesFaciles } from '../../modules/fractions'
 import {
   listeQuestionsToContenu, randint
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 export const titre = 'Montrer qu\'un point appartient ou non à une courbe'
 
 /**

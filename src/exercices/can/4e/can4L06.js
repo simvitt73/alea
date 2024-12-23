@@ -1,5 +1,5 @@
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer une expression pour une valeur particulière*'
 export const interactifReady = true
 export const interactifType = 'mathLive'

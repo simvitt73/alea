@@ -1,20 +1,20 @@
-import { codageBissectrice, codageMediatrice } from '../../lib/2d/codages.js'
-import { bissectrice, mediatrice } from '../../lib/2d/droites.js'
-import { point } from '../../lib/2d/points.js'
-import { nommePolygone, polygone } from '../../lib/2d/polygones.js'
-import { rotation, similitude } from '../../lib/2d/transformations.js'
+import { codageBissectrice, codageMediatrice } from '../../lib/2d/codages'
+import { bissectrice, mediatrice } from '../../lib/2d/droites'
+import { point } from '../../lib/2d/points'
+import { nommePolygone, polygone } from '../../lib/2d/polygones'
+import { rotation, similitude } from '../../lib/2d/transformations'
 import {
   centreGraviteTriangle,
   codageHauteurTriangle,
   codageMedianeTriangle,
   hauteurTriangle,
   medianeTriangle
-} from '../../lib/2d/triangle.js'
+} from '../../lib/2d/triangle'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { Triangle } from '../../modules/Triangle.js'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { Triangle } from '../../modules/Triangle'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
 export const titre = 'Déterminer la nature d\'une droite remarquable'
 

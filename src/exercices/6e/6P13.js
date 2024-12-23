@@ -1,13 +1,13 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { lampeMessage } from '../../lib/format/message.js'
-import { numAlpha, sp } from '../../lib/outils/outilString.js'
+import { lampeMessage } from '../../lib/format/message'
+import { numAlpha, sp } from '../../lib/outils/outilString'
 import { prenomF, prenomM } from '../../lib/outils/Personne'
 import { texPrix } from '../../lib/format/style'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import { texNombre } from '../../lib/outils/texNombre'
@@ -143,10 +143,10 @@ export default function AugmenterEtReduireDunPourcentage () {
   this.nouvelleVersion = function () {
     this.introduction = (this.sup2 && this.interactif && context.isHtml)
       ? lampeMessage({
-        titre: 'Calculatrice autorisée.',
-        texte: 'Écrire les réponses dans les cases sans arrondir, ne pas préciser "€" ni "euros" ...',
-        couleur: 'nombres'
-      })
+          titre: 'Calculatrice autorisée.',
+          texte: 'Écrire les réponses dans les cases sans arrondir, ne pas préciser "€" ni "euros" ...',
+          couleur: 'nombres'
+        })
       : ''
     const typeQuestionsDisponibles = ['augmentation', 'réduction'] // On créé 2 types de questions
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"

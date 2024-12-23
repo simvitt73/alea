@@ -5,8 +5,8 @@ import {
   reduirePolynomeDegre3,
   rienSi1
 } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Déterminer la fonction dérivée d’un polynôme de degré 2'
 export const interactifReady = true
 export const interactifType = 'mathLive'

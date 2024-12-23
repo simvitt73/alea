@@ -1,4 +1,4 @@
-import ExerciceAdditionnerOuSoustraireDesFractions from '../4e/4C21.js'
+import ExerciceAdditionnerOuSoustraireDesFractions from '../4e/4C21'
 export const titre = 'Additionner ou soustraire deux fractions'
 export const amcReady = true
 export const amcType = 'AMCNum'

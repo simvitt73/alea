@@ -1,9 +1,9 @@
-import { courbeSpline } from '../../lib/2d/courbes.js'
-import { point, tracePoint } from '../../lib/2d/points.js'
-import { repere } from '../../lib/2d/reperes.js'
-import { splineCatmullRom } from '../../lib/mathFonctions/SplineCatmullRom.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import Exercice from '../deprecatedExercice.js'
+import { courbeSpline } from '../../lib/2d/courbes'
+import { point, tracePoint } from '../../lib/2d/points'
+import { repere } from '../../lib/2d/reperes'
+import { splineCatmullRom } from '../../lib/mathFonctions/SplineCatmullRom'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import Exercice from '../deprecatedExercice'
 
 export const titre = 'Interpollation de Catmull-Rom'
 

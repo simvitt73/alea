@@ -1,26 +1,26 @@
-import { codageAngleDroit } from '../../lib/2d/angles.js'
+import { codageAngleDroit } from '../../lib/2d/angles'
 import {
   droite,
   droiteParPointEtParallele,
   droiteParPointEtPente,
   droiteParPointEtPerpendiculaire
-} from '../../lib/2d/droites.js'
-import { point, pointIntersectionDD, pointSurDroite } from '../../lib/2d/points.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+} from '../../lib/2d/droites'
+import { point, pointIntersectionDD, pointSurDroite } from '../../lib/2d/points'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { latexParCoordonneesBox } from '../../lib/2d/textes.ts'
-import { rotation } from '../../lib/2d/transformations.js'
+import { rotation } from '../../lib/2d/transformations'
 import { choice, combinaisonListesSansChangerOrdre, shuffle } from '../../lib/outils/arrayOutils'
 import { range, rangeMinMax } from '../../lib/outils/nombres'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d, vide2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d, vide2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
 import {
   listeQuestionsToContenu,
   randint,
   egal,
   contraindreValeur,
   gestionnaireFormulaireTexte
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 
 export const amcReady = true
 export const amcType = 'AMCOpen'

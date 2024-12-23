@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionReduite } from '../../../lib/outils/deprecatedFractions'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
 import { abs } from '../../../lib/outils/nombres'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Déterminer le coefficient d’une fonction affine'
 export const interactifReady = true
 export const interactifType = 'mathLive'

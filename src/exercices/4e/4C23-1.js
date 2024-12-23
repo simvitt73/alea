@@ -6,14 +6,14 @@ import {
   obtenirListeFractionsIrreductiblesFaciles,
   produitDeDeuxFractions,
   simplificationDeFractionAvecEtapes
-} from '../../lib/outils/deprecatedFractions.js'
+} from '../../lib/outils/deprecatedFractions'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
-import { lettreDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { pgcd } from '../../lib/outils/primalite'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, ppcm, randint } from '../../modules/outils.js'
-import { fraction } from '../../modules/fractions.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, ppcm, randint } from '../../modules/outils'
+import { fraction } from '../../modules/fractions'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 

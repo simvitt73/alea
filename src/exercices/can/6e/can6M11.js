@@ -1,7 +1,7 @@
-import { paveLPH3d } from '../../../modules/3d.js'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
+import { paveLPH3d } from '../../../modules/3d'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
+import { mathalea2d } from '../../../modules/2dGeneralites'
 export const titre = 'Volume de pavé droit par dénombrement de cubes unités'
 export const interactifReady = true
 export const interactifType = 'mathLive'

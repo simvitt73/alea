@@ -1,4 +1,4 @@
-import LectureDiagrammeBaton from '../6e/6S10.js'
+import LectureDiagrammeBaton from '../6e/6S10'
 export const titre = 'Lire un diagramme en bâtons'
 export const amcReady = true
 export const amcType = 'AMCHybride'

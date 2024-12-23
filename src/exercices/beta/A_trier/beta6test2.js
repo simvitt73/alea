@@ -1,6 +1,6 @@
 import { combinaisonListes } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 
 export const titre = 'Mon test'
 

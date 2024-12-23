@@ -1,4 +1,4 @@
-import CalculerEtendues from '../3e/3S15.js'
+import CalculerEtendues from '../3e/3S15'
 export const titre = 'Calculer des étendues'
 export const interactifReady = true
 export const interactifType = 'mathLive'

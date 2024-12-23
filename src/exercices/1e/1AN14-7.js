@@ -1,9 +1,9 @@
-import { Polynome } from '../../lib/mathFonctions/Polynome.js'
+import { Polynome } from '../../lib/mathFonctions/Polynome'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { rienSi1 } from '../../lib/outils/ecritures'
-import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { functionCompare } from '../../lib/interactif/comparisonFunctions'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
@@ -137,7 +137,7 @@ export default function DeriveeComposee () {
         this.liste_valeurs.push(expression)
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         handleAnswers(this, i, { reponse: { value, compare: functionCompare } })
         i++
       }

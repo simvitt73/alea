@@ -1,4 +1,4 @@
-import LireAbscisseDecimaleBis2d from '../6e/6N30-1.js'
+import LireAbscisseDecimaleBis2d from '../6e/6N30-1'
 export const titre = 'Lire l’abscisse décimale d’un point'
 export const interactifReady = true
 export const interactifType = 'mathLive'

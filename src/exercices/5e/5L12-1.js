@@ -1,12 +1,12 @@
 import { choice, combinaisonListesSansChangerOrdre } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { rienSi1 } from '../../lib/outils/ecritures'
-import { sp } from '../../lib/outils/outilString.js'
-import { context } from '../../modules/context.js'
+import { sp } from '../../lib/outils/outilString'
+import { context } from '../../modules/context'
 
 export const titre = 'Réduire et simplifier, si possible, un produit et une somme à partir des mêmes éléments algébriques pour distinguer la différence'
 export const interactifReady = true

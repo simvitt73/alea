@@ -1,7 +1,7 @@
 import Exercice from '../../Exercice'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 export const titre = 'Ajouter un nombre se finissant par 9'
 export const interactifReady = true
 export const interactifType = 'mathLive'

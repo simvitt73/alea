@@ -1,4 +1,4 @@
-import calculEffectifFrequence from '../3e/3S12.js'
+import calculEffectifFrequence from '../3e/3S12'
 export const titre = 'Calculer des effectifs et des fréquences'
 export const interactifReady = true
 export const interactifType = 'mathLive'

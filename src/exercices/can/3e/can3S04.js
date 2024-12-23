@@ -1,9 +1,9 @@
 import { listeDeNotes } from '../../../lib/outils/aleatoires'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { prenom } from '../../../lib/outils/Personne'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Calculer une étendue'
 export const interactifReady = true
 export const interactifType = 'mathLive'

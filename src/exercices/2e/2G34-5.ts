@@ -1,6 +1,6 @@
 import { combinaisonListes, shuffle2tableaux } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
 import { lcm } from 'mathjs'
 import { texNombre } from '../../lib/outils/texNombre'

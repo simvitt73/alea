@@ -1,8 +1,8 @@
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../lib/outils/embellissements'
 import { rienSi1, ecritureParentheseSiNegatif, ecritureAlgebrique } from '../../lib/outils/ecritures'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser, gestionnaireFormulaireTexte } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser, gestionnaireFormulaireTexte } from '../../modules/outils'
 
 export const titre = 'Tester si un nombre est solution d\'une équation'
 

@@ -1,12 +1,12 @@
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { contraindreValeur, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { contraindreValeur, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { factorisation } from '../../lib/outils/primalite'
 
@@ -225,7 +225,7 @@ export default function RecourirDecompositionFacteursPremiers () {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: this.consigne.substring(0, this.consigne.length - 1) + ' : ' + texte + '.<br>',

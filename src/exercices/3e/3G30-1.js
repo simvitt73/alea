@@ -1,18 +1,18 @@
-import { codageAngleDroit } from '../../lib/2d/angles.js'
-import { afficheMesureAngle, texteSurSegment } from '../../lib/2d/codages.js'
-import { droite } from '../../lib/2d/droites.js'
-import { point, pointSurSegment } from '../../lib/2d/points.js'
-import { nommePolygone, polygone } from '../../lib/2d/polygones.js'
-import { longueur, segment } from '../../lib/2d/segmentsVecteurs.js'
+import { codageAngleDroit } from '../../lib/2d/angles'
+import { afficheMesureAngle, texteSurSegment } from '../../lib/2d/codages'
+import { droite } from '../../lib/2d/droites'
+import { point, pointSurSegment } from '../../lib/2d/points'
+import { nommePolygone, polygone } from '../../lib/2d/polygones'
+import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
 import { texteParPoint } from '../../lib/2d/textes.ts'
-import { projectionOrtho, rotation, similitude } from '../../lib/2d/transformations.js'
+import { projectionOrtho, rotation, similitude } from '../../lib/2d/transformations'
 import { enleveDoublonNum, shuffleLettres } from '../../lib/outils/arrayOutils'
-import { creerNomDePolygone, numAlpha } from '../../lib/outils/outilString.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
+import { creerNomDePolygone, numAlpha } from '../../lib/outils/outilString'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 
@@ -574,7 +574,6 @@ export default function ExprimerCosSinTan () {
       if (this.questionJamaisPosee(i, nom)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
       }
     }
     listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page

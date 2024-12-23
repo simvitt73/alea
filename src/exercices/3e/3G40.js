@@ -1,9 +1,9 @@
-import { tracePoint } from '../../lib/2d/points.js'
+import { tracePoint } from '../../lib/2d/points'
 import { labelLatexPoint, labelPoint, texteParPoint } from '../../lib/2d/textes.ts'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
-import { numAlpha } from '../../lib/outils/outilString.js'
-import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
+import { numAlpha } from '../../lib/outils/outilString'
+import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import {
   arete3d,
   demicercle3d,
@@ -14,13 +14,13 @@ import {
   sensDeRotation3d,
   sphere3d,
   vecteur3d
-} from '../../modules/3d.js'
-import { context } from '../../modules/context.js'
+} from '../../modules/3d'
+import { context } from '../../modules/context'
 import {
   listeQuestionsToContenuSansNumero,
   randint
-} from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+} from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 
 export const dateDeModifImportante = '02/11/2022' // EE : Mise en place de this.sup2, des unités et du grossissement des points
 export const titre = 'Repérage sur la sphère'

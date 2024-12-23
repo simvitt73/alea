@@ -1,11 +1,11 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { fraction } from '../../modules/fractions.js'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { fraction } from '../../modules/fractions'
+import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 
 export const titre = 'Fractions égales et égalité des produits en croix'
 

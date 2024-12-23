@@ -1,7 +1,7 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu } from '../../modules/outils'
+import { context } from '../../modules/context'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'

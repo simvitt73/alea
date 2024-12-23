@@ -1,7 +1,7 @@
-import { repere } from '../../lib/2d/reperes.js'
-import { spline } from '../../lib/mathFonctions/Spline.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import Exercice from '../deprecatedExercice.js'
+import { repere } from '../../lib/2d/reperes'
+import { spline } from '../../lib/mathFonctions/Spline'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import Exercice from '../deprecatedExercice'
 
 export const titre = 'Interpollation par splines avec tangentes'
 

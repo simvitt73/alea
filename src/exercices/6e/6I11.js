@@ -1,18 +1,18 @@
 /* eslint-disable camelcase */
-import { point } from '../../lib/2d/points.js'
+import { point } from '../../lib/2d/points'
 import { texteParPositionEchelle } from '../../lib/2d/textes.ts'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { createLink } from '../../lib/outils/modales.js'
+import { createLink } from '../../lib/outils/modales'
 import { stringNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { allerA, angleScratchTo2d, attendre, baisseCrayon, clone, creerLutin, orienter } from '../../modules/2dLutin.js'
-import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { scratchblock } from '../../modules/scratchblock.js'
-import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante.js'
+import Exercice from '../deprecatedExercice'
+import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { allerA, angleScratchTo2d, attendre, baisseCrayon, clone, creerLutin, orienter } from '../../modules/2dLutin'
+import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { scratchblock } from '../../modules/scratchblock'
+import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
 
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
@@ -419,7 +419,7 @@ export default function NoteLaCouleur6e () {
       if (this.questionJamaisPosee(q, xdepart, ydepart, angledepart)) {
         this.listeQuestions[q] = texte
         this.listeCorrections[q] = texteCorr
-   
+
         q++
       }
     }

@@ -2,9 +2,9 @@ import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { ecritureParentheseSiMoins } from '../../lib/outils/ecritures'
 import { arrondi, nombreDeChiffresDansLaPartieEntiere } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 
@@ -95,7 +95,7 @@ export default function TermeInconnuDeSomme () {
       if (this.questionJamaisPosee(i, a, b)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         setReponse(this, i, arrondi(b - a, 2), {
           signe: true,
           digits: Math.max(2, nombreDeChiffresDansLaPartieEntiere(b - a)),

@@ -1,9 +1,9 @@
-import { cercleTrigo } from '../../lib/2d/angles.js'
+import { cercleTrigo } from '../../lib/2d/angles'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { valeursTrigo } from '../../lib/mathFonctions/trigo.js'
+import { valeursTrigo } from '../../lib/mathFonctions/trigo'
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
-import { context } from '../../modules/context.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu } from '../../modules/outils'
 import Exercice from '../Exercice'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 

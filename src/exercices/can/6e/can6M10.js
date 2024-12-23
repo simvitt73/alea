@@ -1,7 +1,7 @@
-import { pave } from '../../../lib/2d/projections3d.js'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
-import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites.js'
+import { pave } from '../../../lib/2d/projections3d'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
+import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
 export const titre = 'Volume de pavé droit'
 export const interactifReady = true
 export const interactifType = 'mathLive'

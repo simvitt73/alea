@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
 import { signe } from '../../../lib/outils/nombres'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Développer avec la simple distributivité'
 export const interactifReady = true
 export const interactifType = 'mathLive'

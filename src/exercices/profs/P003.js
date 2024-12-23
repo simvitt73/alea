@@ -1,7 +1,7 @@
-import { droiteGraduee } from '../../lib/2d/reperes.js'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenuSansNumero } from '../../modules/outils.js'
+import { droiteGraduee } from '../../lib/2d/reperes'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenuSansNumero } from '../../modules/outils'
 
 export const titre = 'Tracer des droites graduées'
 

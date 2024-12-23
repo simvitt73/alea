@@ -1,7 +1,7 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import { arrondi } from '../../lib/outils/nombres'
 import { nombreAvecEspace, texNombre } from '../../lib/outils/texNombre'
-import { randint, calculANePlusJamaisUtiliser } from '../../modules/outils.js'
+import { randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
 
 /**
  * Chosis aléatoirement une expressions numérique parmi de nombreuses variantes.

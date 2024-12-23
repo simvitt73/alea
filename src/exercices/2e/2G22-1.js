@@ -1,25 +1,25 @@
-import { milieu, point } from '../../lib/2d/points.js'
-import { repere } from '../../lib/2d/reperes.js'
+import { milieu, point } from '../../lib/2d/points'
+import { repere } from '../../lib/2d/reperes'
 import {
   longueur,
   nomVecteurParPosition,
   vecteur
-} from '../../lib/2d/segmentsVecteurs.js'
+} from '../../lib/2d/segmentsVecteurs'
 import {
   labelPoint,
   latex2d,
   latexParPoint,
   texteParPosition
 } from '../../lib/2d/textes.ts'
-import { homothetie } from '../../lib/2d/transformations.js'
+import { homothetie } from '../../lib/2d/transformations'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { mathalea2d, colorToLatexOrHTML } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { mathalea2d, colorToLatexOrHTML } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Figure from 'apigeom'
 import figureApigeom from '../../lib/figureApigeom'
 import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
-import { lettreDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 
 export const titre = 'Représenter un vecteur dans un repère, à partir de ses coordonnées'

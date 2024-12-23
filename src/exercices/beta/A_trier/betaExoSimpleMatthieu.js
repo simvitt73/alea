@@ -1,5 +1,5 @@
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 export const titre = 'Ceci est le titre de l\'exercice BetaExosimpleMatthieu'
 
 /**

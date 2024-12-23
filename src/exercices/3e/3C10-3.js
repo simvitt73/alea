@@ -1,4 +1,4 @@
-import NotationPuissance from '../4e/4C33-0.js'
+import NotationPuissance from '../4e/4C33-0'
 export const titre = 'Utiliser la notation puissance'
 export const interactifReady = true
 export const interactifType = 'mathLive'

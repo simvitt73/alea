@@ -1,9 +1,9 @@
-import { lettreDepuisChiffre, sp } from '../../lib/outils/outilString.js'
-import { context } from '../../modules/context.js'
+import { lettreDepuisChiffre, sp } from '../../lib/outils/outilString'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
-import choisirExpressionNumerique from './_choisirExpressionNumerique.js'
+import choisirExpressionNumerique from './_choisirExpressionNumerique'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 

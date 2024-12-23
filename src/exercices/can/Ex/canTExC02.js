@@ -1,5 +1,5 @@
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 import { complex, multiply } from 'mathjs'
 export const titre = 'produit de nombres complexes'
 export const interactifReady = true

@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texPrix } from '../../../lib/format/style'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
 export const titre = 'Résoudre un problème de proportionnalité**'
 export const interactifReady = true

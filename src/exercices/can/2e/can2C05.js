@@ -1,4 +1,4 @@
-import identitesCalculs from '../../3e/3L11-5.js'
+import identitesCalculs from '../../3e/3L11-5'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 

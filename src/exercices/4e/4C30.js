@@ -1,9 +1,9 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { lettreDepuisChiffre, sp } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre, sp } from '../../lib/outils/outilString'
 import { eclatePuissance, simpExp } from '../../lib/outils/puissance'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
@@ -61,16 +61,16 @@ export default function PuissancesDeDix () {
     }
     const listeTypeDeQuestions = this.besoinFormulaireNumerique
       ? combinaisonListes(
-        typesDeQuestionsDisponibles,
-        this.nbQuestions
-      )
+          typesDeQuestionsDisponibles,
+          this.nbQuestions
+        )
       : gestionnaireFormulaireTexte({
-        nbQuestions: this.nbQuestions,
-        saisie: this.sup2,
-        max: 3,
-        melange: 4,
-        defaut: 4
-      })
+          nbQuestions: this.nbQuestions,
+          saisie: this.sup2,
+          max: 3,
+          melange: 4,
+          defaut: 4
+        })
 
     // pour pouvoir adapter les couleurs en cas de besoin
     const coul0 = 'red'

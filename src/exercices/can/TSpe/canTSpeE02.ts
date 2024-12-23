@@ -1,11 +1,11 @@
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import { lettreDepuisChiffre } from '../../../lib/outils/outilString.js'
-import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures.js'
-import { miseEnEvidence } from '../../../lib/outils/embellissements.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import { lettreDepuisChiffre } from '../../../lib/outils/outilString'
+import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { remplisLesBlancs } from '../../../lib/interactif/questionMathLive'
-import { handleAnswers } from '../../../lib/interactif/gestionInteractif.js'
-import { texNombre } from '../../../lib/outils/texNombre.js'
-import Exercice from '../../Exercice.js'
+import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
+import { texNombre } from '../../../lib/outils/texNombre'
+import Exercice from '../../Exercice'
 
 export const titre = "Calculer les coordonnées d'un vecteur"
 export const dateDePublication = '04/10/2024'

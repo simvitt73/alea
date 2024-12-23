@@ -4,13 +4,13 @@ import {
   ecritureNombreRelatif,
   ecritureNombreRelatifc,
   ecritureParentheseSiNegatif
-} from '../../lib/outils/ecritures.js'
+} from '../../lib/outils/ecritures'
 import { arrondi, nombreDeChiffresDansLaPartieEntiere } from '../../lib/outils/nombres'
 import Exercice from '../Exercice'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif.js'
+import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif'
 import Decimal from 'decimal.js'
 import { texNombre } from '../../lib/outils/texNombre'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
@@ -113,7 +113,7 @@ export default class ExerciceSoustractionsRelatifs extends Exercice {
       if (this.questionJamaisPosee(i, a, b)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           setReponse(this, i, [arrondi(a - b), `(${ecritureAlgebrique(a - b)})`], {
             signe: true,

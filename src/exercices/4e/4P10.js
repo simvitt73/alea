@@ -1,20 +1,20 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { produitsEnCroix, quatriemeProportionnelle } from '../../lib/outils/calculs'
-import { texFractionReduite } from '../../lib/outils/deprecatedFractions.js'
+import { texFractionReduite } from '../../lib/outils/deprecatedFractions'
 import { egalOuApprox, texteExposant } from '../../lib/outils/ecritures'
-import { katexPopup2 } from '../../lib/format/message.js'
-import { numAlpha, sp } from '../../lib/outils/outilString.js'
+import { katexPopup2 } from '../../lib/format/message'
+import { numAlpha, sp } from '../../lib/outils/outilString'
 import { prenom, prenomF } from '../../lib/outils/Personne'
 import { texPrix } from '../../lib/format/style'
 import { stringNombre, texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
 import {
   listeQuestionsToContenu,
   randint,
   gestionnaireFormulaireTexte
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 import { round } from 'mathjs'
 export const titre = 'Résoudre des problèmes de grandeurs composées et de conversion d\'unités complexes'
 

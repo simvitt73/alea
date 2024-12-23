@@ -1,8 +1,8 @@
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { Polynome } from '../../lib/mathFonctions/Polynome.js'
+import { Polynome } from '../../lib/mathFonctions/Polynome'
 import { ecritureAlgebrique } from '../../lib/outils/ecritures'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import engine, { functionCompare } from '../../lib/interactif/comparisonFunctions'
 import FractionEtendue from '../../modules/FractionEtendue'
@@ -220,7 +220,7 @@ export default function DeriveeQuotient () {
         this.liste_valeurs.push(expression)
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         handleAnswers(this, i, { reponse: { value: maReponse, compare: functionCompare } })
         i++
       }

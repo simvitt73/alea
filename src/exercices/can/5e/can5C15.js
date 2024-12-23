@@ -1,8 +1,8 @@
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
 import { abs } from '../../../lib/outils/nombres'
-import Exercice from '../../deprecatedExercice.js'
-import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils'
 export const titre = 'Rechercher un nombre à ajouter'
 export const interactifReady = true
 export const interactifType = 'mathLive'

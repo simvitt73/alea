@@ -1,5 +1,5 @@
 import Exercice from '../../Exercice'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 import { ajouteChampTexteMathLive, remplisLesBlancs } from '../../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'

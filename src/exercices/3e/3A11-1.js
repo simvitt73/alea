@@ -1,4 +1,4 @@
-import ProblemesEvenementsRecurrents from '../4e/4A12.js'
+import ProblemesEvenementsRecurrents from '../4e/4A12'
 export const titre = 'Résoudre des problèmes de conjonction de phénomènes'
 export const interactifReady = true
 export const interactifType = 'mathLive'

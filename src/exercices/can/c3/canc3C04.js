@@ -1,7 +1,7 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { choice } from '../../../lib/outils/arrayOutils'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer le double ou la moitié'
 export const interactifReady = true
 export const interactifType = 'mathLive'

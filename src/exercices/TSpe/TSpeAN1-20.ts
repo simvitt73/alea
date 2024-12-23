@@ -136,7 +136,7 @@ class EquaDiffs extends Exercice {
         }
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         // handleAnswers(this, i, { reponse: { value: laDerivee, options: { variable: 'x' }, compare: functionCompare } })
         i++
         cpt--

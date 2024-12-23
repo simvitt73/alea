@@ -1,10 +1,10 @@
 import { choice, compteOccurences, enleveDoublonNum, shuffle } from '../../lib/outils/arrayOutils'
-import { numAlpha } from '../../lib/outils/outilString.js'
-import Exercice from '../deprecatedExercice.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils.js'
-import { cube } from '../../modules/3d.js'
-import { context } from '../../modules/context.js'
+import { numAlpha } from '../../lib/outils/outilString'
+import Exercice from '../deprecatedExercice'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils'
+import { cube } from '../../modules/3d'
+import { context } from '../../modules/context'
 export const titre = "Dessiner différentes vues d'un empilement de cubes"
 export const dateDePublication = '06/10/2022'
 export const dateDeModifImportante = '08/11/2023' // Retour du formulaire numérique en supprimant le tooltip

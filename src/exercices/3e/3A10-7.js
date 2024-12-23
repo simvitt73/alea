@@ -1,9 +1,9 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { labyrinthe } from '../../modules/Labyrinthe.js'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { labyrinthe } from '../../modules/Labyrinthe'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
@@ -85,7 +85,7 @@ export default function ExerciceLabyrinthePremiers3e () {
       if (this.questionJamaisPosee(q, bonnesReponses[0], mauvaisesReponses[0])) {
         this.listeQuestions[q] = texte
         this.listeCorrections[q] = texteCorr
-   
+
         q++
       }
     }

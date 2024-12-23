@@ -1,6 +1,6 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { gestionnaireFormulaireTexte, randint } from '../../modules/outils.js'
+import { gestionnaireFormulaireTexte, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'

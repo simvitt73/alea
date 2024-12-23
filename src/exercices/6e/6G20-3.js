@@ -1,13 +1,13 @@
-import { cercle } from '../../lib/2d/cercle.js'
-import { point, pointSurCercle } from '../../lib/2d/points.js'
-import { polygoneAvecNom } from '../../lib/2d/polygones.js'
+import { cercle } from '../../lib/2d/cercle'
+import { point, pointSurCercle } from '../../lib/2d/points'
+import { polygoneAvecNom } from '../../lib/2d/polygones'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { lettreDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
-import { context } from '../../modules/context.js'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
+import { context } from '../../modules/context'
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = true
@@ -185,7 +185,7 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
       if (this.questionJamaisPosee(i, ...pointsX, ...pointsY, listeTypeQuestions[i])) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: mathalea2d(parametres2d, objets2d),

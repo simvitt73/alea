@@ -2,8 +2,8 @@ import { bleuMathalea } from '../../../lib/colors'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Soustraire $10n + 9$'
 export const interactifReady = true
 export const interactifType = 'mathLive'

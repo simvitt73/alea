@@ -1,4 +1,4 @@
-import PuissancesDunRelatif1 from '../4e/4C33-1.js'
+import PuissancesDunRelatif1 from '../4e/4C33-1'
 export const titre = 'Effectuer des calculs avec des puissances'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,4 +1,4 @@
-import SigneProduitQuotientRelatifs from './4C10-0.js'
+import SigneProduitQuotientRelatifs from './4C10-0'
 
 export const titre = 'Signe d\'un produit de nombres relatifs'
 export const interactifReady = true

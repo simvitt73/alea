@@ -1,13 +1,13 @@
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { numAlpha } from '../../lib/outils/outilString.js'
+import { numAlpha } from '../../lib/outils/outilString'
 import { cribleEratostheneN, listeDesDiviseurs } from '../../lib/outils/primalite'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
 import {
   listeQuestionsToContenu,
   randint
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 import { tableauColonneLigne } from '../../lib/2d/tableau'
 import { choice } from '../../lib/outils/arrayOutils'
 

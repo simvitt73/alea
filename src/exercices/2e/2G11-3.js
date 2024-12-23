@@ -1,4 +1,4 @@
-import CalculDAngleFigureComplexe from '../3e/3G31-1.js'
+import CalculDAngleFigureComplexe from '../3e/3G31-1'
 export const titre = 'Résoudre des problèmes utilisant la trigonométrie'
 
 export const interactifReady = true

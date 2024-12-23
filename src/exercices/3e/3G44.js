@@ -1,15 +1,15 @@
-import { tracePoint } from '../../lib/2d/points.js'
-import { longueur, segment } from '../../lib/2d/segmentsVecteurs.js'
+import { tracePoint } from '../../lib/2d/points'
+import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes.ts'
 import { choice, shuffle } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { arrondi, nombreDeChiffresDe, rangeMinMax } from '../../lib/outils/nombres'
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { calculANePlusJamaisUtiliser, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { calculANePlusJamaisUtiliser, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Grandeur from '../../modules/Grandeur'
 import {
   CodageAngleDroit3D,
@@ -25,10 +25,10 @@ import {
   sphere3d,
   translation3d,
   vecteur3d
-} from '../../modules/3d.js'
-import { assombrirOuEclaircir, colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
+} from '../../modules/3d'
+import { assombrirOuEclaircir, colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { RedactionPythagore } from '../4e/_pythagore.js'
+import { RedactionPythagore } from '../4e/_pythagore'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 
 export const titre = 'Déterminer des longueurs dans la géométrie dans l\'espace'

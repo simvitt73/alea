@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Appliquer un pourcentage'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,9 +1,9 @@
 import { texteEnCouleur, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { texteGras } from '../../lib/format/style'
 import { sommeDesChiffres } from '../../lib/outils/nombres'
-import { numAlpha, sp } from '../../lib/outils/outilString.js'
-import Exercice from '../deprecatedExercice.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { numAlpha, sp } from '../../lib/outils/outilString'
+import Exercice from '../deprecatedExercice'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 

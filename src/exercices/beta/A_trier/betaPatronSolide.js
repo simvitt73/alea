@@ -1,9 +1,9 @@
 import { shuffle } from '../../../lib/outils/arrayOutils'
 import { range } from '../../../lib/outils/nombres'
 import Exercice from '../../Exercice'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites.js'
-import { BoiteBuilder } from '../../../lib/2d/polygones.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
+import { BoiteBuilder } from '../../../lib/2d/polygones'
 
 export const titre = 'Compléter des patrons de solides'
 export const interactifReady = true

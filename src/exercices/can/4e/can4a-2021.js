@@ -1,7 +1,7 @@
-import { codageAngleDroit } from '../../../lib/2d/angles.js'
-import { milieu, point } from '../../../lib/2d/points.js'
-import { polygoneAvecNom } from '../../../lib/2d/polygones.js'
-import { segment } from '../../../lib/2d/segmentsVecteurs.js'
+import { codageAngleDroit } from '../../../lib/2d/angles'
+import { milieu, point } from '../../../lib/2d/points'
+import { polygoneAvecNom } from '../../../lib/2d/polygones'
+import { segment } from '../../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPosition } from '../../../lib/2d/textes.ts'
 import { choice, combinaisonListes, shuffle } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
@@ -9,18 +9,18 @@ import {
   texFractionFromString,
   simplificationDeFractionAvecEtapes,
   texFractionReduite
-} from '../../../lib/outils/deprecatedFractions.js'
+} from '../../../lib/outils/deprecatedFractions'
 import { arrondi } from '../../../lib/outils/nombres'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { stringNombre, texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
-import { fraction, obtenirListeFractionsIrreductibles } from '../../../modules/fractions.js'
+import Exercice from '../../deprecatedExercice'
+import { mathalea2d } from '../../../modules/2dGeneralites'
+import { fraction, obtenirListeFractionsIrreductibles } from '../../../modules/fractions'
 import { min, round } from 'mathjs'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
-import { context } from '../../../modules/context.js'
+import { context } from '../../../modules/context'
 import { handleAnswers, setReponse } from '../../../lib/interactif/gestionInteractif'
 
 

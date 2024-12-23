@@ -1,4 +1,4 @@
-import ProportiondeProportion from '../techno1/techno1P4.js'
+import ProportiondeProportion from '../techno1/techno1P4'
 export const titre = 'Travailler sur des situations mettant en jeu des pourcentages de pourcentages'
 export const interactifReady = true
 export const interactifType = 'mathLive'

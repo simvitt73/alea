@@ -1,4 +1,4 @@
-import demonstrationsParallelogrammes from '../5e/5G42.js'
+import demonstrationsParallelogrammes from '../5e/5G42'
 export const titre = 'Déterminer la nature de parallélogrammes'
 export const interactifReady = false
 

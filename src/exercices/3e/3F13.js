@@ -1,11 +1,11 @@
 import Decimal from 'decimal.js'
-import { courbe } from '../../lib/2d/courbes.js'
-import { repere } from '../../lib/2d/reperes.js'
-import { resolutionSystemeLineaire2x2 } from '../../lib/mathFonctions/outilsMaths.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { courbe } from '../../lib/2d/courbes'
+import { repere } from '../../lib/2d/reperes'
+import { resolutionSystemeLineaire2x2 } from '../../lib/mathFonctions/outilsMaths'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 
@@ -118,7 +118,7 @@ export default function AntecedentGraphique () {
       if (this.questionJamaisPosee(i, a, fx1)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         indexInteractif += incrementInteractif
         i++
       }

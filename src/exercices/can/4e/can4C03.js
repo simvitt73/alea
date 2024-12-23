@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { obtenirListeFractionsIrreductibles } from '../../../modules/fractions.js'
+import { obtenirListeFractionsIrreductibles } from '../../../modules/fractions'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Effectuer une division avec une fraction'
 export const interactifReady = true
 export const interactifType = 'mathLive'

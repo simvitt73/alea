@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { texNombre } from '../../../lib/outils/texNombre'
 import Decimal from 'decimal.js'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Écrire un nombre décimal sous la forme $\\dfrac{a}{10^n}$'

@@ -1,10 +1,10 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, reduireAxPlusB } from '../../../lib/outils/ecritures'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import Decimal from 'decimal.js'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 export const titre = 'Déterminer la fonction dérivée d’une fonction affine*'
 export const interactifReady = true
 export const interactifType = 'mathLive'

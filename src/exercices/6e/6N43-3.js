@@ -1,9 +1,9 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { sommeDesChiffres } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, calculANePlusJamaisUtiliser, randint } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, calculANePlusJamaisUtiliser, randint } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 export const amcReady = true
 export const amcType = 'qcmMono'
 export const interactifReady = true

@@ -1,6 +1,6 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { simplificationDeFractionAvecEtapes } from '../../lib/outils/deprecatedFractions.js'
+import { simplificationDeFractionAvecEtapes } from '../../lib/outils/deprecatedFractions'
 import {
   ecritureAlgebrique,
   ecritureParentheseSiNegatif,
@@ -8,15 +8,15 @@ import {
   reduirePolynomeDegre3, rienSi1
 } from '../../lib/outils/ecritures'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { texteCentre } from '../../lib/format/miseEnPage.js'
-import { sp } from '../../lib/outils/outilString.js'
+import { texteCentre } from '../../lib/format/miseEnPage'
+import { sp } from '../../lib/outils/outilString'
 import { pgcd } from '../../lib/outils/primalite'
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../deprecatedExercice'
 import FractionEtendue from '../../modules/FractionEtendue.ts'
-import { fraction, obtenirListeFractionsIrreductibles, obtenirListeFractionsIrreductiblesFaciles } from '../../modules/fractions.js'
+import { fraction, obtenirListeFractionsIrreductibles, obtenirListeFractionsIrreductiblesFaciles } from '../../modules/fractions'
 import {
   listeQuestionsToContenu, randint
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 export const titre = 'Calculer des coordonnées de points appartenant à une coube connaissant l\'abscisse ou l\'ordonnée'

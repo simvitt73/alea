@@ -1,4 +1,4 @@
-import FonctionsProbabilite1 from '../5e/5S21.js'
+import FonctionsProbabilite1 from '../5e/5S21'
 export const titre = 'Utiliser le vocabulaire des probabilités'
 export const interactifReady = false
 export const dateDePublication = '03/04/2022'

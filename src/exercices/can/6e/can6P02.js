@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texPrix } from '../../../lib/format/style'
 import Decimal from 'decimal.js'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 
 export const titre = 'Utiliser une proportionnalité*'

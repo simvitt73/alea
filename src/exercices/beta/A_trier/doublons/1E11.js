@@ -1,6 +1,6 @@
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { choice, combinaisonListes } from '../../../lib/outils/arrayOutils'
-import { texFractionFromString, texFractionReduite, texFractionSigne } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString, texFractionReduite, texFractionSigne } from '../../../lib/outils/deprecatedFractions'
 import {
   ecritureAlgebrique,
   ecritureAlgebriqueSauf1,
@@ -8,7 +8,7 @@ import {
   rienSi1
 } from '../../../lib/outils/ecritures'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 
 export const titre = 'Résoudre une équation du second degré'
 

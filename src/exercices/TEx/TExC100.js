@@ -1,9 +1,9 @@
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { texFractionFromString, fractionSimplifiee } from '../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString, fractionSimplifiee } from '../../lib/outils/deprecatedFractions'
 import { abs } from '../../lib/outils/nombres'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../deprecatedExercice'
 import { complex, multiply } from 'mathjs'
 export const titre = 'Résoudre une équation du premier degré dans C'
 export const dateDePublication = '30/10/2021'

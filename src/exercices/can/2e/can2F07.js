@@ -1,11 +1,11 @@
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
-import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction.js'
+import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction'
 import { choice } from '../../../lib/outils/arrayOutils'
 
-import { context } from '../../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { context } from '../../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 
 export const titre = 'Lire les extremums dans un tableau de variations'

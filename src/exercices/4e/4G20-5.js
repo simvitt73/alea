@@ -1,4 +1,4 @@
-import ArrondirUneValeur6e from '../6e/6N31-3.js'
+import ArrondirUneValeur6e from '../6e/6N31-3'
 export const titre = 'Trouver la valeur arrondie d\'une racine carrée'
 export const dateDePublication = '13/04/2021'
 

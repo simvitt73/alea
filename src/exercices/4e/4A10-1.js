@@ -1,4 +1,4 @@
-import ExerciceLabyrinthePremiers3e from '../3e/3A10-7.js'
+import ExerciceLabyrinthePremiers3e from '../3e/3A10-7'
 export const titre = 'Explorer un labyrinthe de nombres premiers'
 export const interactifReady = true
 export const interactifType = 'mathLive'

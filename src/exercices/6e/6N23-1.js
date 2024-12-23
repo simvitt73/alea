@@ -1,8 +1,8 @@
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
-import { fraction } from '../../modules/fractions.js'
+import Exercice from '../deprecatedExercice'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
+import { fraction } from '../../modules/fractions'
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'

@@ -1,5 +1,5 @@
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import { texteEnCouleur, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { context } from '../../modules/context'
 import Trinome from '../../modules/Trinome'

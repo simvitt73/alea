@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
 export const titre = 'Reconnaître une expression numérique (QCM)'
 export const interactifReady = true
 export const interactifType = 'qcm'

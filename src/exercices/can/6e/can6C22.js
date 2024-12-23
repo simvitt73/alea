@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { bleuMathalea } from '../../../lib/colors'

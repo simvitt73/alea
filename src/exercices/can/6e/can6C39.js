@@ -1,6 +1,6 @@
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { Yohaku } from '../../../lib/outils/Yohaku'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 export const titre = 'Trouver une valeur dans un Yohaku (multiplicatif)'

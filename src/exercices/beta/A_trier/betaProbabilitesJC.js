@@ -1,8 +1,8 @@
-import Exercice from '../../deprecatedExercice.js'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { mathalea2d } from '../../../modules/2dGeneralites'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 import { number, fraction } from 'mathjs'
-import { Arbre, texProba } from '../../../modules/arbres.js'
+import { Arbre, texProba } from '../../../modules/arbres'
 
 export const titre = 'Probabilités simples'
 

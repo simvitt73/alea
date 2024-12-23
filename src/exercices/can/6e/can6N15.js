@@ -1,6 +1,6 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { randint } from '../../../modules/outils.js'
-import EcrirePetitsNombresEntiers from '../../6e/6N10.js'
+import { randint } from '../../../modules/outils'
+import EcrirePetitsNombresEntiers from '../../6e/6N10'
 export const titre = 'Lire et écrire des nombres'
 export const interactifReady = true
 export const interactifType = 'mathLive'

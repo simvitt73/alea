@@ -1,14 +1,14 @@
 // on importe les fonctions nécessaires.
-import { point, tracePoint } from '../../lib/2d/points.js'
-import { grille } from '../../lib/2d/reperes.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+import { point, tracePoint } from '../../lib/2d/points'
+import { grille } from '../../lib/2d/reperes'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { texteParPoint } from '../../lib/2d/textes.ts'
 import { combinaisonListesSansChangerOrdre, shuffle } from '../../lib/outils/arrayOutils'
 import { texteGras } from '../../lib/format/style'
-import Exercice from '../deprecatedExercice.js'
-import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'
 // Ici ce sont les fonctions de la librairie maison 2d.js qui gèrent tout ce qui est graphique (SVG/tikz) et en particulier ce qui est lié à l'objet lutin
 import {
   allerA,
@@ -20,8 +20,8 @@ import {
   orienter,
   tournerD,
   tournerG
-} from '../../modules/2dLutin.js'
-import { scratchblock } from '../../modules/scratchblock.js'
+} from '../../modules/2dLutin'
+import { scratchblock } from '../../modules/scratchblock'
 import { afficheScore } from '../../lib/interactif/gestionInteractif'
 
 export const interactifReady = true

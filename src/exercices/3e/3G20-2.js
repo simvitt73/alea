@@ -1,4 +1,4 @@
-import RelationDeThales from '../4e/_RelationDeThales.js'
+import RelationDeThales from '../4e/_RelationDeThales'
 export const dateDePublication = '05/01/2023'
 export const interactifReady = false
 export const titre = 'Écrire une relation de Thalès'

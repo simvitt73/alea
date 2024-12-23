@@ -3,11 +3,11 @@ import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { compareNombres } from '../../lib/outils/nombres'
 import { texFactorisation } from '../../lib/outils/primalite'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
@@ -166,7 +166,7 @@ export default function ExerciceDecomposerEnFacteursPremiers () {
       if (this.questionJamaisPosee(i, ...facteurs)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (!context.isHtml) {
           this.canEnonce = `Décomposer $${texNombre(n)}$ en produit de facteurs premiers. `
           this.correction = this.listeCorrections[0]

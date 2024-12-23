@@ -1,10 +1,10 @@
 import { choice, combinaisonListes } from '../../../lib/outils/arrayOutils'
-import { texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionReduite } from '../../../lib/outils/deprecatedFractions'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
-import { lettreDepuisChiffre } from '../../../lib/outils/outilString.js'
+import { lettreDepuisChiffre } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenuSansNumero, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenuSansNumero, randint } from '../../../modules/outils'
 
 export const titre = 'Exercice exemple'
 

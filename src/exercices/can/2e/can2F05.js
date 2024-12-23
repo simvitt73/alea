@@ -1,7 +1,7 @@
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import Exercice from '../../Exercice'
-import { fraction } from '../../../modules/fractions.js'
-import { randint } from '../../../modules/outils.js'
+import { fraction } from '../../../modules/fractions'
+import { randint } from '../../../modules/outils'
 import { context } from '../../../modules/context'
 export const titre = 'Déterminer un antécédent avec la racine carrée'
 export const interactifReady = true

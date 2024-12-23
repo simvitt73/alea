@@ -1,5 +1,5 @@
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { Vecteur } from '../../lib/2d/segmentsVecteurs'
 import { Point, milieu } from '../../lib/2d/points'
 import engine from '../../lib/interactif/comparisonFunctions'

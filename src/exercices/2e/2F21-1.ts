@@ -1,6 +1,6 @@
 import Exercice from '../Exercice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { texNombre, texPrix } from '../../lib/outils/texNombre'
 import Decimal from 'decimal.js'
 import { createList } from '../../lib/format/lists'
@@ -665,7 +665,7 @@ On considère la fonction $${nom}$ qui associe à chaque valeur de $x$, le prix 
             texte += createList(
               {
                 items: [`Quel est l'ensemble de définition de $${nom}$.`,
-                  ` Quelle inéquation a pour ensemble de solution l\'imtervalle de temps pendant lequel la pression artérielle est supérieure ou égale à $${a}$ mmHg ?`,
+                  ` Quelle inéquation a pour ensemble de solution l'imtervalle de temps pendant lequel la pression artérielle est supérieure ou égale à $${a}$ mmHg ?`,
                   ' Déterminer la valeur systolique mesurée, c’est-à-dire la valeur maximale de la pression artérielle.',
                   '  Déterminer la valeur diastolique mesurée, c’est-à-dire la valeur minimale de la pression artérielle.',
                `  Un patient est en hypertension artérielle lorsque la pression systolique est supérieure ou égale à $140$ mmHg
@@ -789,13 +789,13 @@ Ainsi, $g(t)=${rest}-${texNombre(new Decimal(m).div(2), 1)}t$.
 On donne au  hand-spinner  une vitesse de rotation initiale au temps $t = 0$, puis, au cours du temps, sa vitesse de rotation diminue jusqu'à l'arrêt complet du hand-spinner.<br>
 Sa vitesse de rotation est alors égale à $0$.<br>
 Pour calculer la vitesse de rotation du  hand-spinner  en fonction du temps $t$, notée $V(t)$, on utilise la fonction suivante :
-$V(t) = ${texNombre(a, 3)} \\times t + V_{\\text{initiale}}.$<br>	
+$V(t) = ${texNombre(a, 3)} \\times t + V_{\\text{initiale}}.$<br>
 $\\bullet$ $t$ est le temps (exprimé en s) qui s'est écoulé depuis le début de rotation du hand-spinner  ;<br>
 $\\bullet$ $V_{\\text{initiale}}$ est la vitesse de rotation à laquelle on a lancé le  hand-spinner  au départ.`
 
             texte += createList(
               {
-                items: [`On lance le  hand-spinner  à une vitesse initiale de $${v}$ tours par seconde.<br>		
+                items: [`On lance le  hand-spinner  à une vitesse initiale de $${v}$ tours par seconde.<br>
 Calculer sa vitesse de rotation au bout de $1$ minute.`,
                 'Le temps et la vitesse de rotation du  hand-spinner sont-ils proportionnels ? Justifier.',
                 'Au bout de combien de temps le hand-spinner va-t-il s\'arrêter ? Arrondir le résultat à la seconde.',

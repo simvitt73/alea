@@ -1,7 +1,7 @@
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
-import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante.js'
+import { listeQuestionsToContenu } from '../../modules/outils'
+import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
 
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 

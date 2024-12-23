@@ -1,4 +1,4 @@
-import ConstruireParSymetrie from '../6e/_Construire_par_symetrie.js'
+import ConstruireParSymetrie from '../6e/_Construire_par_symetrie'
 export const titre = 'Construire le symétrique d\'une figure par rapport à une droite (cas simples)'
 export const dateDeModifImportante = '14/11/2021'
 export const interactifReady = false

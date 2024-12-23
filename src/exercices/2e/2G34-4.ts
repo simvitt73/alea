@@ -1,5 +1,5 @@
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { eqToLatex, printSystem, timesIfNotUn } from '../../lib/outils/systemeEquations'
 import { texNombre } from '../../lib/outils/texNombre'
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'

@@ -8,7 +8,7 @@ import {
 import Exercice from '../Exercice'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 

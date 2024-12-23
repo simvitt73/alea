@@ -1,4 +1,4 @@
-import OrganiserDonneesDepuisTexte from '../6e/6S11.js'
+import OrganiserDonneesDepuisTexte from '../6e/6S11'
 export const titre = 'Organiser des données dans un tableau'
 export const interactifReady = false
 

@@ -1,6 +1,6 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer avec un programme de calcul'
 export const interactifReady = true
 export const interactifType = 'mathLive'

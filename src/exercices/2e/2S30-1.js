@@ -1,4 +1,4 @@
-import CalculProbaExperience2Epreuves3e from '../3e/3S21.js'
+import CalculProbaExperience2Epreuves3e from '../3e/3S21'
 export const titre = 'Simuler une expérience aléatoire à deux épreuves (indépendantes ou avec remise)'
 export const dateDePublication = '26/06/2024'
 export const interactifReady = true

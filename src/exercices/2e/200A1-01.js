@@ -1,5 +1,5 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { listeDesDiviseurs, premiersEntreBornes } from '../../lib/outils/primalite'
 import Exercice from '../Exercice'
 

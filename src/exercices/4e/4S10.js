@@ -1,4 +1,4 @@
-import ConstruireUnDiagramme from '../5e/5S12.js'
+import ConstruireUnDiagramme from '../5e/5S12'
 export const titre = 'Construire un diagramme'
 export const interactifReady = false
 

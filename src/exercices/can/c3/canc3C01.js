@@ -1,5 +1,5 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 export const titre = 'Déterminer un nombre à partir d’une phrase'
 export const interactifReady = true

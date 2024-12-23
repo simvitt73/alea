@@ -1,4 +1,4 @@
-import problemesTrigoLongueur from '../3e/3G32-0.js'
+import problemesTrigoLongueur from '../3e/3G32-0'
 export const titre = "Calcul d'un parallèle terrestre"
 export const interactifReady = true
 export const interactifType = 'mathLive'

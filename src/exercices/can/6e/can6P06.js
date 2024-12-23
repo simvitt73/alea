@@ -1,4 +1,4 @@
-import CalculerUnPourcentage from '../../6e/6N33-2.js'
+import CalculerUnPourcentage from '../../6e/6N33-2'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcType = 'AMCNum'

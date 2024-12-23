@@ -1,10 +1,10 @@
 /*
-import { Courbe } from '../../lib/2d/courbes.js'
-import { Repere } from '../../lib/2d/reperes.js'
-import { brent, tableauSignesFonction, tableauVariationsFonction } from '../../lib/mathFonctions/etudeFonction.js'
-// import { Polynome } from '../../lib/mathFonctions/Polynome.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
+import { Courbe } from '../../lib/2d/courbes'
+import { Repere } from '../../lib/2d/reperes'
+import { brent, tableauSignesFonction, tableauVariationsFonction } from '../../lib/mathFonctions/etudeFonction'
+// import { Polynome } from '../../lib/mathFonctions/Polynome'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import FractionEtendue from '../../modules/FractionEtendue.ts'
 */
 import Exercice from '../Exercice.ts'

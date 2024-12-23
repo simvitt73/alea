@@ -2,11 +2,11 @@ import { choice } from '../../../lib/outils/arrayOutils'
 import { prenomF } from '../../../lib/outils/Personne'
 import { texPrix } from '../../../lib/format/style'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import Decimal from 'decimal.js'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 export const titre = 'Résoudre un problème de rendu de monnaie'
 export const interactifReady = true

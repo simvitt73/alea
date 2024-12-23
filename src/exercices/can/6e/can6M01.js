@@ -1,8 +1,8 @@
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { context } from '../../../modules/context.js'
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { context } from '../../../modules/context'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Comparer des périmètres (V/F)'
 export const interactifReady = true
 export const interactifType = 'qcm'

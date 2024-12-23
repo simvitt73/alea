@@ -3,7 +3,7 @@ import { egalOuApprox } from '../../../lib/outils/ecritures'
 import { range } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
 import Exercice from '../../Exercice'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 
 export const titre = 'Problèmes concret et pourcentages'
 

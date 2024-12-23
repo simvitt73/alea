@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import Decimal from 'decimal.js'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 export const titre = 'Prendre t % d’une quantité'
 export const interactifReady = true

@@ -3,18 +3,18 @@ import {
   texFractionFromString,
   simplificationDeFractionAvecEtapes,
   texFractionReduite
-} from '../../lib/outils/deprecatedFractions.js'
-import { numAlpha } from '../../lib/outils/outilString.js'
+} from '../../lib/outils/deprecatedFractions'
+import { numAlpha } from '../../lib/outils/outilString'
 import { prenomF, prenomM } from '../../lib/outils/Personne'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { createList } from '../../lib/format/lists.ts'
-import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils'
 
 import { handleAnswers } from '../../lib/interactif/gestionInteractif.ts' // fonction qui va préparer l'analyse de la saisie
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive' // fonctions de mise en place des éléments interactifs
 
-import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante.js'
-import { fraction } from '../../modules/fractions.js'
+import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
+import { fraction } from '../../modules/fractions'
 import Exercice from '../Exercice'
 export const dateDeModifImportante = '20/06/2024'
 

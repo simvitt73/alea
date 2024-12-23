@@ -1,13 +1,13 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { choisitLettresDifferentes } from '../../../lib/outils/aleatoires'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { mathalea2d } from '../../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import Decimal from 'decimal.js'
-import { Arbre } from '../../../modules/arbres.js'
+import { Arbre } from '../../../modules/arbres'
 
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 

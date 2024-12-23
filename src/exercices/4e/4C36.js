@@ -1,5 +1,5 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { premiereLettreEnMajuscule } from '../../lib/outils/outilString.js'
+import { premiereLettreEnMajuscule } from '../../lib/outils/outilString'
 import { prenomPronom } from '../../lib/outils/Personne'
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
@@ -7,9 +7,9 @@ import {
   randint,
   listeQuestionsToContenu,
   gestionnaireFormulaireTexte
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 import Decimal from 'decimal.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = true

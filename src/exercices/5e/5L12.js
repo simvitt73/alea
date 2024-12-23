@@ -1,14 +1,14 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { rienSi1 } from '../../lib/outils/ecritures'
 import { range1 } from '../../lib/outils/nombres'
-import { lettreIndiceeDepuisChiffre, sp } from '../../lib/outils/outilString.js'
+import { lettreIndiceeDepuisChiffre, sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 
 export const titre = 'Réduire une expression littérale'
 export const interactifReady = true
@@ -119,7 +119,7 @@ export default function ReduireUneExpressionLitterale () {
       if (this.questionJamaisPosee(i, a, b, c, d)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: 'Réduire l\'expression ' + texte + '.',

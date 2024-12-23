@@ -1,4 +1,4 @@
-import CalculDeVolumes from '../6e/6M30.js'
+import CalculDeVolumes from '../6e/6M30'
 
 export const titre = 'Calculer des volumes'
 export const amcReady = true

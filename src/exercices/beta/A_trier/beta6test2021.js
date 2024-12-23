@@ -1,5 +1,5 @@
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 export const titre = 'Exercice exemple'
 
 /**

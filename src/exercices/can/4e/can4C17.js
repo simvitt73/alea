@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Simplifier des fractions (cas simples)'
 export const interactifReady = true
 export const interactifType = 'mathLive'

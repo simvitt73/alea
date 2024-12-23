@@ -1,12 +1,12 @@
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { range1 } from '../../lib/outils/nombres'
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../deprecatedExercice'
 import {
   listeQuestionsToContenu,
   randint,
   calculANePlusJamaisUtiliser,
   gestionnaireFormulaireTexte
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 
 export const titre = 'Le compte est bon original'
 

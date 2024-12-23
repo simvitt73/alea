@@ -1,11 +1,11 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { texFractionFromString } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString } from '../../../lib/outils/deprecatedFractions'
 import { arrondi } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 export const titre = 'Multiplier ou diviser par 10, 100,  1000 ou 0,1 ou 0,01'
 export const interactifReady = true

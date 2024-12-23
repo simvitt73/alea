@@ -1,16 +1,16 @@
-import { cibleCouronne } from '../../lib/2d/cibles.js'
-import { afficheMesureAngle } from '../../lib/2d/codages.js'
-import { point } from '../../lib/2d/points.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+import { cibleCouronne } from '../../lib/2d/cibles'
+import { afficheMesureAngle } from '../../lib/2d/codages'
+import { point } from '../../lib/2d/points'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { texteParPoint } from '../../lib/2d/textes.ts'
-import { homothetie, rotation, sensDeRotation, similitude } from '../../lib/2d/transformations.js'
+import { homothetie, rotation, sensDeRotation, similitude } from '../../lib/2d/transformations'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { lettreDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
 export const titre = 'Construire un angle de mesure donnée'
 export const amcReady = true
@@ -96,7 +96,7 @@ export default function ConstruireUnAngle () {
       if (this.questionJamaisPosee(i, angle, signe[i])) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: texte,

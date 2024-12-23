@@ -1,25 +1,25 @@
-import { codageAngleDroit } from '../../lib/2d/angles.js'
-import { afficheMesureAngle, codageSegments } from '../../lib/2d/codages.js'
+import { codageAngleDroit } from '../../lib/2d/angles'
+import { afficheMesureAngle, codageSegments } from '../../lib/2d/codages'
 import {
   droiteAvecNomLatex,
   droiteHorizontaleParPoint,
   droiteParPointEtPente,
   droiteVerticaleParPoint
-} from '../../lib/2d/droites.js'
-import { milieu, point, pointSurDroite, tracePoint } from '../../lib/2d/points.js'
-import { repere } from '../../lib/2d/reperes.js'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs.js'
+} from '../../lib/2d/droites'
+import { milieu, point, pointSurDroite, tracePoint } from '../../lib/2d/points'
+import { repere } from '../../lib/2d/reperes'
+import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes.ts'
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnCouleur, miseEnEvidence } from '../../lib/outils/embellissements'
-import { texFractionReduite } from '../../lib/outils/deprecatedFractions.js'
-import { numAlpha } from '../../lib/outils/outilString.js'
+import { texFractionReduite } from '../../lib/outils/deprecatedFractions'
+import { numAlpha } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import { imagePointParTransformation } from '../../modules/imagePointParTransformation.js'
-import Exercice from '../deprecatedExercice.js'
-import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { imagePointParTransformation } from '../../modules/imagePointParTransformation'
+import Exercice from '../deprecatedExercice'
+import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif'
 

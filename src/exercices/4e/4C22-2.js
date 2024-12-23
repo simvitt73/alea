@@ -3,17 +3,17 @@ import {
   texFractionFromString,
   obtenirListeFractionsIrreductibles,
   texFractionSigne
-} from '../../lib/outils/deprecatedFractions.js'
+} from '../../lib/outils/deprecatedFractions'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
 import { abs } from '../../lib/outils/nombres'
 import { pgcd } from '../../lib/outils/primalite'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { fraction } from '../../modules/fractions.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { fraction } from '../../modules/fractions'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 export const titre = 'Diviser des fractions'

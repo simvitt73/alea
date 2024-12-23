@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { arrondi } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import Decimal from 'decimal.js'
 export const titre = 'Calculer une fraction de dénominateur un décimal'
 export const interactifReady = true

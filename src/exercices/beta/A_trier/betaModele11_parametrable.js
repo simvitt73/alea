@@ -1,5 +1,5 @@
 import Exercice from '../../Exercice'
-import { randint, listeQuestionsToContenu } from '../../../modules/outils.js'
+import { randint, listeQuestionsToContenu } from '../../../modules/outils'
 export const titre = 'Nom de l\'exercice'
 
 // Les exports suivants sont optionnels mais au moins la date de publication semble essentielle

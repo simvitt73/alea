@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras, texteEnCouleur } from '../../../lib/outils/embellissements'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../../modules/outils'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
 export const titre = 'Reconnaître des vecteurs colinéaires (V/F)'
 export const interactifReady = true
 export const interactifType = 'qcm'

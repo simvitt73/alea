@@ -1,9 +1,9 @@
-import { milieu, point, tracePoint } from '../../lib/2d/points.js'
-import { cone as cone2d, sphere2d } from '../../lib/2d/projections3d.js'
-import { Segment, segment } from '../../lib/2d/segmentsVecteurs.js'
-import { homothetie } from '../../lib/2d/transformations.js'
+import { milieu, point, tracePoint } from '../../lib/2d/points'
+import { cone as cone2d, sphere2d } from '../../lib/2d/projections3d'
+import { Segment, segment } from '../../lib/2d/segmentsVecteurs'
+import { homothetie } from '../../lib/2d/transformations'
 import { choice } from '../../lib/outils/arrayOutils'
-import { premiereLettreEnMajuscule } from '../../lib/outils/outilString.js'
+import { premiereLettreEnMajuscule } from '../../lib/outils/outilString'
 import {
   arc3d,
   arete3d,
@@ -16,12 +16,12 @@ import {
   pyramide3d,
   rotation3d,
   vecteur3d
-} from '../../modules/3d.js'
-import { context } from '../../modules/context.js'
+} from '../../modules/3d'
+import { context } from '../../modules/context'
 import { ajouteChampTexte } from '../../lib/interactif/questionMathLive'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
+import { propositionsQcm } from '../../lib/interactif/qcm'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import Exercice from '../Exercice'
 

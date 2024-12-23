@@ -1,8 +1,8 @@
 import { texMasse } from '../../../lib/format/style'
-import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction.js'
-import { context } from '../../../modules/context.js'
-import { listeQuestionsToContenu, randint, xcas } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction'
+import { context } from '../../../modules/context'
+import { listeQuestionsToContenu, randint, xcas } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 
 export const titre = 'Résoudre une équation avec une valeur absolue'
 

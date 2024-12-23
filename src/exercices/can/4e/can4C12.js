@@ -2,7 +2,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer la moitié d’une fraction'
 export const interactifReady = true
 export const interactifType = 'mathLive'

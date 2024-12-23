@@ -1,7 +1,7 @@
 import Exercice from '../../Exercice'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
-import { tableauSignesFonction } from '../../../lib/mathFonctions/etudeFonction.js'
+import { tableauSignesFonction } from '../../../lib/mathFonctions/etudeFonction'
 import { rienSi1, reduireAxPlusB } from '../../../lib/outils/ecritures'
 
 import { abs } from '../../../lib/outils/nombres'

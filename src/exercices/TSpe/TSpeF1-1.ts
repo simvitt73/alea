@@ -105,7 +105,7 @@ class DerivationLnU extends Exercice {
       if (this.questionJamaisPosee(i, laFonctionFEnLatex, fPrime)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         // @ts-expect-error problème de typage handleAnswers
         handleAnswers(this, i, { reponse: { value: fPrime, options: { variable: 'x', domaine }, compare: functionCompare } })
         i++

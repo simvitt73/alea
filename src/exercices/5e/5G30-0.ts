@@ -132,7 +132,7 @@ export default class AnglesEtVocabulaire extends Exercice {
         }
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (listeTypesDeQuestions[i] !== 1) {
           handleAnswers(
             this,

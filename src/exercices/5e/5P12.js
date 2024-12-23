@@ -1,8 +1,8 @@
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { prenom, prenomF, prenomM } from '../../lib/outils/Personne'
-import { objet } from '../6e/6C35.js'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { objet } from '../6e/6C35'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
 export const titre = 'Partager une quantité en deux ou trois parts selon un ratio donné'
 

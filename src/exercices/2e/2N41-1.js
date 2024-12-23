@@ -1,4 +1,4 @@
-import FactoriserUneExpression3e from '../3e/3L11-6.js'
+import FactoriserUneExpression3e from '../3e/3L11-6'
 export const titre = 'Factoriser une expression complexe'
 export const interactifReady = true
 export const interactifType = 'mathLive'

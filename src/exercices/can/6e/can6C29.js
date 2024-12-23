@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { bleuMathalea } from '../../../lib/colors'
 export const titre = 'Résoudre un problème de partage'
 export const interactifReady = true

@@ -1,7 +1,7 @@
-import { Matrice } from '../../lib/mathFonctions/Matrice.js'
+import { Matrice } from '../../lib/mathFonctions/Matrice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { lettreIndiceeDepuisChiffre, lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString.js'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
+import { lettreIndiceeDepuisChiffre, lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import { ComputeEngine } from '@cortex-js/compute-engine'
 import Exercice from '../Exercice'
 

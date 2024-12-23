@@ -1,8 +1,8 @@
 import { texteGras } from '../../lib/format/style'
 
-import { xcas, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
+import { xcas, listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
 export const titre = 'Nombre de solutions d\'une équation du second degré à paramètre'
 export const dateDePublication = '30/10/2021'
 

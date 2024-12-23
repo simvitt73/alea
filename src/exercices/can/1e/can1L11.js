@@ -1,10 +1,10 @@
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
-import { tableauSignesFonction } from '../../../lib/mathFonctions/etudeFonction.js'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
+import { tableauSignesFonction } from '../../../lib/mathFonctions/etudeFonction'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, rienSi1 } from '../../../lib/outils/ecritures'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 
 export const titre = 'Dresser le tableau de signes d’un polynôme du second degré'
 export const interactifReady = true

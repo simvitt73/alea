@@ -1,8 +1,8 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { simpExp } from '../../lib/outils/puissance'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures.ts'
 
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'

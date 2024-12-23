@@ -1,4 +1,4 @@
-import ReperagePointDuPlan from './5R12-2.js'
+import ReperagePointDuPlan from './5R12-2'
 export const titre = 'Déterminer les coordonnées (positives) d\'un point'
 export const interactifReady = true
 export const interactifType = 'mathLive'

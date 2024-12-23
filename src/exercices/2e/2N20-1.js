@@ -1,4 +1,4 @@
-import ListeDesDiviseurs5e from '../5e/5A10.js'
+import ListeDesDiviseurs5e from '../5e/5A10'
 export const titre = 'Écrire la liste de tous les diviseurs d\'un entier'
 export const interactifReady = true
 export const interactifType = 'mathLive'

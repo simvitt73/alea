@@ -1,8 +1,8 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Connaître les tables de multiplication (de 5 à 9)'
 export const interactifReady = true
 export const interactifType = 'mathLive'

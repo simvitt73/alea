@@ -1,4 +1,4 @@
-import CosEtsin from '../../1e/1AN40.js'
+import CosEtsin from '../../1e/1AN40'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Déterminer les valeurs remarquables du cosinus et sinus'

@@ -1,4 +1,4 @@
-import PerimetreOuAireDeFiguresComposees from './6M11-2.js'
+import PerimetreOuAireDeFiguresComposees from './6M11-2'
 export const titre = 'Décomposer une figure complexe en figures simples'
 export const interactifReady = true
 export const interactifType = 'mathLive'

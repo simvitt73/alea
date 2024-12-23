@@ -1,7 +1,7 @@
 import { texteEnCouleur } from '../../lib/outils/embellissements'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils.js'
-import ChoisirExpressionLitterale from './_Choisir_expression_litterale.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils'
+import ChoisirExpressionLitterale from './_Choisir_expression_litterale'
 export const titre = 'Déterminer la dernière opération à effectuer dans une expression littérale'
 
 /**

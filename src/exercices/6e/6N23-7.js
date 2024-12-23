@@ -1,11 +1,11 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
-import { barre3d, cube3d, paveLPH3d, plaque3d } from '../../modules/3d.js'
+import { barre3d, cube3d, paveLPH3d, plaque3d } from '../../modules/3d'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { arrondi } from '../../lib/outils/nombres'
@@ -102,7 +102,7 @@ export default function RecompositionDecimale () {
         reponses[q] = arrondi(e + d / 10 + c / 100 + m / 1000, 3)
         this.listeQuestions[q] = texte
         this.listeCorrections[q] = texteCorr
-   
+
         setReponse(this, q, reponses[q], { digits: 4, decimals: 3 })
         q++
       }

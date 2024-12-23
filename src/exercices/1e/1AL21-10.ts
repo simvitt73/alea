@@ -1,8 +1,8 @@
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import engine from '../../lib/interactif/comparisonFunctions.js'
-import { Point } from '../../lib/2d/points.js'
-import { numAlpha } from '../../lib/outils/outilString.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import engine from '../../lib/interactif/comparisonFunctions'
+import { Point } from '../../lib/2d/points'
+import { numAlpha } from '../../lib/outils/outilString'
 import type { SemiBoxedExpression, BoxedExpression } from '@cortex-js/compute-engine'
 
 export const titre = 'Interpolation polynomiale'

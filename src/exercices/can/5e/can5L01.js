@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils'
 export const titre = 'Trouver $a+1$ ou $a-1$ connaissant $2a$'
 export const interactifReady = true
 export const interactifType = 'mathLive'

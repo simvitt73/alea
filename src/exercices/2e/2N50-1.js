@@ -1,9 +1,9 @@
-import { codageSegments } from '../../lib/2d/codages.js'
-import { point } from '../../lib/2d/points.js'
-import { polygone, polygoneAvecNom } from '../../lib/2d/polygones.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+import { codageSegments } from '../../lib/2d/codages'
+import { point } from '../../lib/2d/points'
+import { polygone, polygoneAvecNom } from '../../lib/2d/polygones'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../../lib/2d/textes.ts'
-import { homothetie } from '../../lib/2d/transformations.js'
+import { homothetie } from '../../lib/2d/transformations'
 import { choice } from '../../lib/outils/arrayOutils'
 import { ecritureAlgebrique } from '../../lib/outils/ecritures'
 import { abs, arrondi } from '../../lib/outils/nombres'
@@ -11,10 +11,10 @@ import { prenom } from '../../lib/outils/Personne'
 import { texPrix } from '../../lib/format/style'
 import { stringNombre, texNombre } from '../../lib/outils/texNombre'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { resoudre } from '../../modules/outilsMathjs.ts'
 import Exercice from '../Exercice'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
+import { mathalea2d } from '../../modules/2dGeneralites'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
@@ -393,7 +393,7 @@ export default class ProblemesAvecEquations extends Exercice {
       if (this.questionJamaisPosee(i, x, a, b, d)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         setReponse(this, i, x, { formatInteractif: 'calcul' })
         i++
       }

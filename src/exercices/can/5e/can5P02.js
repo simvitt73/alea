@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { simplificationDeFractionAvecEtapes, texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
+import { simplificationDeFractionAvecEtapes, texFractionReduite } from '../../../lib/outils/deprecatedFractions'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
 export const titre = 'Déterminer (ou calculer avec) un pourcentage de proportion'
 export const interactifReady = true
 export const interactifType = 'mathLive'

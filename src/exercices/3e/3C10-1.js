@@ -1,4 +1,4 @@
-import EcritureDecimalePuissance from '../4e/4C30-3.js'
+import EcritureDecimalePuissance from '../4e/4C30-3'
 export const titre = 'Donner l\'écriture entière ou fractionnaire d\'une puissance'
 export const dateDePublication = '05/09/2023'
 export const interactifReady = true

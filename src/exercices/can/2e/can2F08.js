@@ -1,13 +1,13 @@
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 
-import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction.js'
+import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction'
 import { choice } from '../../../lib/outils/arrayOutils'
-import { sp } from '../../../lib/outils/outilString.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { sp } from '../../../lib/outils/outilString'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
-import { context } from '../../../modules/context.js'
+import { context } from '../../../modules/context'
 
 export const titre = 'Encadrer en utilisant un tableau de variations'
 export const interactifReady = true

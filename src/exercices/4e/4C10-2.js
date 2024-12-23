@@ -1,4 +1,4 @@
-import SigneProduitQuotientRelatifs from './4C10-0.js'
+import SigneProduitQuotientRelatifs from './4C10-0'
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = true

@@ -1,8 +1,8 @@
 import { choice, combinaisonListes } from '../../../lib/outils/arrayOutils'
-import { texFractionFromString, texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import { context } from '../../../modules/context.js'
-import Exercice from '../../deprecatedExercice.js'
+import { texFractionFromString, texFractionReduite } from '../../../lib/outils/deprecatedFractions'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import { context } from '../../../modules/context'
+import Exercice from '../../deprecatedExercice'
 export const titre = '2S30-6'
 
 const multiple = (n, d) => n % d === 0

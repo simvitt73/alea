@@ -6,11 +6,11 @@ import {
   ecritureParentheseSiNegatif
 } from '../../lib/outils/ecritures'
 import { nombreDeChiffresDansLaPartieEntiere } from '../../lib/outils/nombres'
-import Exercice from '../deprecatedExercice.js'
-import { calculANePlusJamaisUtiliser, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { calculANePlusJamaisUtiliser, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { sp } from '../../lib/outils/outilString'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
@@ -154,7 +154,7 @@ export default function ExerciceOperationsRelatifs () {
       if (this.questionJamaisPosee(i, listeTypeDeQuestions[i], a, b)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i].propositions = [{ statut: 0, sanscadre: false, texte: texteCorr }]
           this.autoCorrection[i].enonce = 'Calculer.\\\\' + texte

@@ -1,4 +1,4 @@
-import TrouverLaTransformation from '../4e/4G12-1.js'
+import TrouverLaTransformation from '../4e/4G12-1'
 export const titre = 'Identifier une transformation'
 export const interactifReady = true
 export const interactifType = 'listeDeroulante'

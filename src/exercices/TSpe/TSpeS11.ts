@@ -1,5 +1,5 @@
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { texteEnCouleur, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { texNombre } from '../../lib/outils/texNombre'

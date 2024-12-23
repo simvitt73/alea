@@ -1,19 +1,19 @@
 /* eslint-disable camelcase */
-import { point, tracePoint } from '../../lib/2d/points.js'
+import { point, tracePoint } from '../../lib/2d/points'
 import { texteParPositionEchelle } from '../../lib/2d/textes.ts'
 import { choice } from '../../lib/outils/arrayOutils'
-import { createLink } from '../../lib/outils/modales.js'
+import { createLink } from '../../lib/outils/modales'
 import { stringNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { contraindreValeur, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { scratchblock } from '../../modules/scratchblock.js'
-import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur.js'
-import { allerA, angleScratchTo2d, attendre, baisseCrayon, clone, creerLutin, orienter } from '../../modules/2dLutin.js'
+import Exercice from '../deprecatedExercice'
+import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { contraindreValeur, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { scratchblock } from '../../modules/scratchblock'
+import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur'
+import { allerA, angleScratchTo2d, attendre, baisseCrayon, clone, creerLutin, orienter } from '../../modules/2dLutin'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante.js'
+import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
 
 export const titre = 'Note la couleur (Scratch)'
 export const interactifReady = true
@@ -308,7 +308,7 @@ export default function NoteLaCouleurC3 () {
       if (this.questionJamaisPosee(q, xdepart, ydepart, angledepart)) {
         this.listeQuestions[q] = texte
         this.listeCorrections[q] = texteCorr
-   
+
         q++
       }
     }

@@ -1,4 +1,4 @@
-import ParalleleEtPerpendiculaires from './6G12-1.js'
+import ParalleleEtPerpendiculaires from './6G12-1'
 export const titre = 'Tracer des parallèles'
 export const interactifReady = false
 export const amcReady = true

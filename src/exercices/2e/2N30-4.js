@@ -1,4 +1,4 @@
-import ExerciceDiviserFractions from '../4e/4C22-2.js'
+import ExerciceDiviserFractions from '../4e/4C22-2'
 
 export const titre = 'Diviser des fractions'
 export const amcReady = true

@@ -1,4 +1,4 @@
-import Solide6e from './_Solide_6e.js'
+import Solide6e from './_Solide_6e'
 export const titre = 'Connaître les propriétés du cube et du pavé droit'
 export const interactifReady = true
 export const interactifType = 'qcm'

@@ -1,6 +1,6 @@
 import RepereBuilder from '../../../lib/2d/RepereBuilder'
-import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 
 export const titre = 'essai de RepereBuilder'

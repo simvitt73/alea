@@ -1,10 +1,10 @@
 import {
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu
-} from '../../modules/outils.js'
-import FonctionsAffines from './3F20-1.js'
-import FonctionsLineaires from './3F20.js'
-import Exercice from '../deprecatedExercice.js'
+} from '../../modules/outils'
+import FonctionsAffines from './3F20-1'
+import FonctionsLineaires from './3F20'
+import Exercice from '../deprecatedExercice'
 
 export const titre = 'Fonctions affines et/ou linéaires'
 export const interactifType = 'mathLive'

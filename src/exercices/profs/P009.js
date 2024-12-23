@@ -1,10 +1,10 @@
-import { repere } from '../../lib/2d/reperes.js'
-import { traceBarre } from '../../lib/2d/diagrammes.js'
+import { repere } from '../../lib/2d/reperes'
+import { traceBarre } from '../../lib/2d/diagrammes'
 import { nombreAvecEspace, texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils.js'
-import { fraction } from '../../modules/fractions.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
+import { fraction } from '../../modules/fractions'
 
 export const titre = 'Simulation d\'expériences aléatoires'
 

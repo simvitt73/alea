@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
 import { abs } from '../../../lib/outils/nombres'
-import Exercice from '../../deprecatedExercice.js'
-import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils'
 export const titre = 'Calculer avec des carrés/priorité opératoire'
 export const interactifReady = true
 export const interactifType = 'mathLive'

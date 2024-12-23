@@ -1,4 +1,4 @@
-import CalculValeurApprocheeRacineCarree from '../4e/4G20-6.js'
+import CalculValeurApprocheeRacineCarree from '../4e/4G20-6'
 export const titre = 'Encadrer une racine carrée'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import Decimal from 'decimal.js'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 export const titre = 'Déterminer la fonction dérivée d’une fonction $k/x$ ou $k\\sqrt{x}$'
 export const interactifReady = true
 export const interactifType = 'mathLive'

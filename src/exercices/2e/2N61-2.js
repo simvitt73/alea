@@ -1,16 +1,16 @@
-import { lampeMessage } from '../../lib/format/message.js'
+import { lampeMessage } from '../../lib/format/message'
 import { texSymbole, texteGras } from '../../lib/format/style'
 
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction.js'
+import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { texFractionFromString, texFractionReduite } from '../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString, texFractionReduite } from '../../lib/outils/deprecatedFractions'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { sp } from '../../lib/outils/outilString.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { sp } from '../../lib/outils/outilString'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 export const interactifReady = true

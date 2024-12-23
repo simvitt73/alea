@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Résoudre un problème de vitesse'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,11 +1,11 @@
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
 
-import { fraction } from '../../modules/fractions.js'
+import { fraction } from '../../modules/fractions'
 import {
   gestionnaireFormulaireTexte
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 
 export const titre = 'Faire des camemberts pour travailler les fractions'
 

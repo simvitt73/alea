@@ -118,7 +118,7 @@ class DerivationSommesSimples extends Exercice {
       if (this.questionJamaisPosee(i, laFonction)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         handleAnswers(this, i, { reponse: { value: laDerivee, options: { variable: 'x' }, compare: functionCompare } })
         i++
         cpt--

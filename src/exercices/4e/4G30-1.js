@@ -1,4 +1,4 @@
-import RelationDeThales from './_RelationDeThales.js'
+import RelationDeThales from './_RelationDeThales'
 
 export const titre = 'Écrire une relation de Thalès'
 export const interactifReady = false

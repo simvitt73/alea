@@ -1,21 +1,21 @@
-import { angleOriente, codageAngle, codageAngleDroit } from '../../lib/2d/angles.js'
-import { milieu, point, pointIntersectionDD, tracePoint } from '../../lib/2d/points.js'
-import { barycentre, nommePolygone, polygone } from '../../lib/2d/polygones.js'
-import { longueur, segment } from '../../lib/2d/segmentsVecteurs.js'
+import { angleOriente, codageAngle, codageAngleDroit } from '../../lib/2d/angles'
+import { milieu, point, pointIntersectionDD, tracePoint } from '../../lib/2d/points'
+import { barycentre, nommePolygone, polygone } from '../../lib/2d/polygones'
+import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
 import { latexParPoint } from '../../lib/2d/textes.ts'
-import { homothetie, rotation, similitude } from '../../lib/2d/transformations.js'
+import { homothetie, rotation, similitude } from '../../lib/2d/transformations'
 import { choice, shuffle } from '../../lib/outils/arrayOutils'
-import { texFractionFromString } from '../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString } from '../../lib/outils/deprecatedFractions'
 import { arrondi } from '../../lib/outils/nombres'
-import { creerNomDePolygone } from '../../lib/outils/outilString.js'
+import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { texNombre2 } from '../../lib/outils/texNombre'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
-import { droite } from '../../lib/2d/droites.js'
+import { droite } from '../../lib/2d/droites'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 export const interactifReady = true
@@ -329,7 +329,6 @@ export default function CalculDAngle () {
       if (this.questionJamaisPosee(i, nom, choixRapportTrigo)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
       }
     }
     listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page

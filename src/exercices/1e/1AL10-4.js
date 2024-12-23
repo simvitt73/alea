@@ -4,8 +4,8 @@ import { ecritureAlgebrique, ecritureAlgebriqueSauf1, ecritureParentheseSiNegati
 import { arcenciel } from '../../lib/format/style'
 import { signe } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'

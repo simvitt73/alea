@@ -1,4 +1,4 @@
-import SerieDeTransformations from '../4e/4G12.js'
+import SerieDeTransformations from '../4e/4G12'
 export const titre = 'Trouver les symétries successives dans un damier'
 export const interactifReady = true
 export const interactifType = 'mathLive'

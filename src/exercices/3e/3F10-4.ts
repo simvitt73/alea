@@ -1,6 +1,6 @@
 import Exercice from '../Exercice'
 import Figure from 'apigeom'
-import { randint } from '../../modules/outils.js'
+import { randint } from '../../modules/outils'
 import { context } from '../../modules/context'
 import figureApigeom from '../../lib/figureApigeom'
 import { Spline, noeudsSplineAleatoire } from '../../lib/mathFonctions/Spline'

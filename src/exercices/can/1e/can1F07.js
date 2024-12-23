@@ -1,5 +1,5 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { simplificationDeFractionAvecEtapes } from '../../../lib/outils/deprecatedFractions.js'
+import { simplificationDeFractionAvecEtapes } from '../../../lib/outils/deprecatedFractions'
 import {
   ecritureAlgebrique,
   ecritureParentheseSiNegatif,
@@ -7,10 +7,10 @@ import {
   reduirePolynomeDegre3, rienSi1
 } from '../../../lib/outils/ecritures'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 import Decimal from 'decimal.js'
-import { fraction } from '../../../modules/fractions.js'
+import { fraction } from '../../../modules/fractions'
 export const titre = 'Déterminer une équation de l’axe de symétrie d’une parabole'
 export const interactifReady = true
 export const interactifType = 'mathLive'

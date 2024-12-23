@@ -1,8 +1,8 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { arrondi } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Arrondir à l\'unité'
 export const interactifReady = true
 export const interactifType = 'mathLive'

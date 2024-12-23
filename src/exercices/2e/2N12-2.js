@@ -1,4 +1,4 @@
-import PuissancesEncadrement from '../4e/4C30-1.js'
+import PuissancesEncadrement from '../4e/4C30-1'
 export const titre = 'Encadrer des nombres relatifs avec des puissances de 10'
 export const dateDeModifImportante = '05/09/2023'
 export const interactifReady = true

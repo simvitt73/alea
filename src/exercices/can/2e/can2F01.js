@@ -2,10 +2,10 @@ import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur, miseEnEvidence } from '../../../lib/outils/embellissements'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif, rienSi1 } from '../../../lib/outils/ecritures'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import {
   randint, calculANePlusJamaisUtiliser
-} from '../../../modules/outils.js'
+} from '../../../modules/outils'
 export const titre = 'Calculer une image avec le second degré'
 export const interactifReady = true
 export const interactifType = 'mathLive'

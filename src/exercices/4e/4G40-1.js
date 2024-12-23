@@ -1,4 +1,4 @@
-import ArrondirUneValeur6e from '../6e/6N31-3.js'
+import ArrondirUneValeur6e from '../6e/6N31-3'
 export const titre = 'Encadrer puis arrondir une valeur comprenant un cosinus'
 
 export const amcReady = true

@@ -1,6 +1,6 @@
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
-import TrouverSolutionMathador from '../5e/_TrouverSolutionMathador.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu } from '../../modules/outils'
+import TrouverSolutionMathador from '../5e/_TrouverSolutionMathador'
 export const titre = 'Générateur de compte est bon'
 export const amcReady = true
 export const interactifReady = false
@@ -59,7 +59,7 @@ export default function LeCompteEstBonV3 () {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         this.autoCorrection[i] = { enonce: texte, propositions: [{ texte: texteCorr, statut: 4, feedback: '' }] }
         i++
       }

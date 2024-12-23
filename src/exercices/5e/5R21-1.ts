@@ -70,7 +70,7 @@ class SoustractionRelatifs extends Exercice {
       if (this.questionJamaisPosee(i, a, b, listeTypeQuestions[i])) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: '',

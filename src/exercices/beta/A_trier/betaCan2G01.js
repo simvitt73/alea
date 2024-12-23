@@ -1,10 +1,10 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { context } from '../../../modules/context.js'
+import { context } from '../../../modules/context'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenuSansNumero, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
+import { calculANePlusJamaisUtiliser, listeQuestionsToContenuSansNumero, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 
 export const titre = 'Périmètres de carrés et de rectangles'

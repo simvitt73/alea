@@ -1,6 +1,6 @@
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
-import { choisiDelta } from '../../../lib/mathFonctions/outilsMaths.js'
+import { choisiDelta } from '../../../lib/mathFonctions/outilsMaths'
 import { combinaisonListes } from '../../../lib/outils/arrayOutils'
 import { extraireRacineCarree } from '../../../lib/outils/calculs'
 import {
@@ -10,8 +10,8 @@ import {
   rienSi1
 } from '../../../lib/outils/ecritures'
 import { pgcd } from '../../../lib/outils/primalite'
-import { fraction } from '../../../modules/fractions.js'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import { fraction } from '../../../modules/fractions'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 
 export const interactifReady = false
 // export const interactifType = 'mathLive'

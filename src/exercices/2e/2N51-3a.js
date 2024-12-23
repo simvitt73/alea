@@ -1,4 +1,4 @@
-import EqResolvantesThales from '../3e/3L13-2.js'
+import EqResolvantesThales from '../3e/3L13-2'
 export const titre = 'Résoudre une équation du type $\\dfrac{x}{a}=\\dfrac{b}{c}$'
 
 /**

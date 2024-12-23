@@ -1,6 +1,6 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Figure from 'apigeom'
 import figureApigeom from '../../lib/figureApigeom'
 import { rangeMinMax } from '../../lib/outils/nombres'

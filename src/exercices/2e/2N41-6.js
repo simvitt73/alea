@@ -1,12 +1,12 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import FractionEtendue from '../../modules/FractionEtendue.ts'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
-import { fraction } from '../../modules/fractions.js'
+import { fraction } from '../../modules/fractions'
 
 export const interactifReady = true
 export const interactifType = 'mathLive'

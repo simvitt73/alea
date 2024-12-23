@@ -1,10 +1,10 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { texFractionSigne } from '../../lib/outils/deprecatedFractions.js'
+import { texFractionSigne } from '../../lib/outils/deprecatedFractions'
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1, reduireAxPlusB } from '../../lib/outils/ecritures'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 
 export const titre = 'Reconnaître une fonction affine'
 export const interactifReady = true

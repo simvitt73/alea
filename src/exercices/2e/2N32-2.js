@@ -1,9 +1,9 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif, rienSi1 } from '../../lib/outils/ecritures'
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../deprecatedExercice'
 import { abs } from '../../lib/outils/nombres'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 export const titre = 'Connaître les propriétés calculatoires des racines carrées'
 export const interactifReady = true
 export const interactifType = 'qcm'

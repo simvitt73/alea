@@ -1,15 +1,15 @@
 /* eslint-disable camelcase */
-import { point, tracePoint } from '../../../lib/2d/points.js'
+import { point, tracePoint } from '../../../lib/2d/points'
 import { texteParPositionEchelle } from '../../../lib/2d/textes.ts'
 import { choice } from '../../../lib/outils/arrayOutils'
-import { createLink } from '../../../lib/outils/modales.js'
+import { createLink } from '../../../lib/outils/modales'
 import { texteGras } from '../../../lib/format/style'
 import { stringNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../../modules/2dGeneralites.js'
-import { context } from '../../../modules/context.js'
-import { contraindreValeur, listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import { noteLaCouleur, plateau2dNLC } from '../../../modules/noteLaCouleur.js'
+import Exercice from '../../deprecatedExercice'
+import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
+import { context } from '../../../modules/context'
+import { contraindreValeur, listeQuestionsToContenu, randint } from '../../../modules/outils'
+import { noteLaCouleur, plateau2dNLC } from '../../../modules/noteLaCouleur'
 import {
   allerA,
   angleScratchTo2d,
@@ -18,9 +18,9 @@ import {
   clone,
   creerLutin,
   orienter
-} from '../../../modules/2dLutin.js'
+} from '../../../modules/2dLutin'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
-import { roseDesVents, scratchblock } from '../../../modules/scratchblock.js'
+import { roseDesVents, scratchblock } from '../../../modules/scratchblock'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 
 export const dateDePublication = '11/04/2021'

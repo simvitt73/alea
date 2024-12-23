@@ -1,4 +1,4 @@
-import TransformationsDuPlanEtCoordonnees from '../3e/3G10-1.js'
+import TransformationsDuPlanEtCoordonnees from '../3e/3G10-1'
 export const titre = 'Trouver les coordonnées de l\'image d\'un point par une translation et une rotation'
 export const interactifReady = true
 export const interactifType = 'mathLive'

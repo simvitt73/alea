@@ -1,11 +1,11 @@
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { combinaisonListes } from '../../../lib/outils/arrayOutils'
 import {
   reduireAxPlusB,
   reduirePolynomeDegre3
 } from '../../../lib/outils/ecritures'
-import { lettreMinusculeDepuisChiffre, sp } from '../../../lib/outils/outilString.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { lettreMinusculeDepuisChiffre, sp } from '../../../lib/outils/outilString'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import { remplisLesBlancs } from '../../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
 import { functionCompare } from '../../../lib/interactif/comparisonFunctions'

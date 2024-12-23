@@ -1,6 +1,6 @@
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer un quotient entier'
 export const interactifReady = true
 export const interactifType = 'mathLive'

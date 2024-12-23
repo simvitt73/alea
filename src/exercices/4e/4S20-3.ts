@@ -1,7 +1,7 @@
 import Exercice from '../Exercice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { listeQuestionsToContenu } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { context } from '../../modules/context'
 

@@ -1,12 +1,12 @@
 import Exercice from '../Exercice'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { KeyboardType } from '../../lib/interactif/claviers/keyboard.js'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif.js'
-import { miseEnEvidence } from '../../lib/outils/embellissements.js'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { ecritureAlgebriqueSauf1, rienSi1 } from '../../lib/outils/ecritures.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { ecritureAlgebriqueSauf1, rienSi1 } from '../../lib/outils/ecritures'
 
 export const titre = 'Exprimer en fonction de log(x)'
 export const dateDePublication = '22/7/2024'

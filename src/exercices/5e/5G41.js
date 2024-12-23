@@ -1,9 +1,9 @@
-import { codageAngleDroit } from '../../lib/2d/angles.js'
+import { codageAngleDroit } from '../../lib/2d/angles'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
-import { cercle, cercleCentrePoint, traceCompas } from '../../lib/2d/cercle.js'
-import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles.js'
-import { afficheLongueurSegment, afficheMesureAngle, codageSegments } from '../../lib/2d/codages.js'
-import { droite } from '../../lib/2d/droites.js'
+import { cercle, cercleCentrePoint, traceCompas } from '../../lib/2d/cercle'
+import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
+import { afficheLongueurSegment, afficheMesureAngle, codageSegments } from '../../lib/2d/codages'
+import { droite } from '../../lib/2d/droites'
 import {
   milieu,
   point,
@@ -11,20 +11,20 @@ import {
   pointIntersectionCC,
   pointIntersectionDD,
   tracePoint
-} from '../../lib/2d/points.js'
-import { polygoneAvecNom } from '../../lib/2d/polygones.js'
-import { demiDroite, longueur, segment } from '../../lib/2d/segmentsVecteurs.js'
+} from '../../lib/2d/points'
+import { polygoneAvecNom } from '../../lib/2d/polygones'
+import { demiDroite, longueur, segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPosition } from '../../lib/2d/textes.ts'
-import { rotation, similitude } from '../../lib/2d/transformations.js'
+import { rotation, similitude } from '../../lib/2d/transformations'
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { arrondi } from '../../lib/outils/nombres'
-import { lettreDepuisChiffre, numAlpha } from '../../lib/outils/outilString.js'
+import { lettreDepuisChiffre, numAlpha } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { context } from '../../modules/context'
 
 export const titre = 'Construire des quadrilatères particuliers'
 export const dateDeModifImportante = '18/04/2024'

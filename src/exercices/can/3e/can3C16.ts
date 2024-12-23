@@ -1,4 +1,4 @@
-import NotationScientifique from '../../4e/4C32.js'
+import NotationScientifique from '../../4e/4C32'
 export const titre = 'Donner l\'écriture scientifique'
 export const interactifReady = true
 export const interactifType = 'mathLive'

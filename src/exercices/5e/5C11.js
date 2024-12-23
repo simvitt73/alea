@@ -1,4 +1,4 @@
-import EcrireUneExpressionNumerique from './_Ecrire_une_expression_numerique.js'
+import EcrireUneExpressionNumerique from './_Ecrire_une_expression_numerique'
 export const titre = 'Traduire une phrase par une expression'
 export const dateDeModifImportante = '21/09/2023'
 export const interactifReady = true

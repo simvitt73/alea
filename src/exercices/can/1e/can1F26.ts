@@ -1,4 +1,4 @@
-import SimplifierExponentielles from '../../1e/1AN30-2.js'
+import SimplifierExponentielles from '../../1e/1AN30-2'
 export const titre = 'Simplifier des expressions exponentielles'
 export const interactifReady = true
 export const interactifType = 'mathLive'

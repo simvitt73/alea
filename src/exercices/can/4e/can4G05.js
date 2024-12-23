@@ -2,7 +2,7 @@ import Exercice from '../../Exercice'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
 import { texRacineCarree } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 
 export const titre = 'Calculer la diagonale d’un carré'
 export const interactifReady = true

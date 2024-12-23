@@ -1,26 +1,26 @@
 import Exercice from '../Exercice'
 import { max } from 'mathjs'
-import { arcPointPointAngle } from '../../lib/2d/cercle.js'
-import { texteSurArc, texteSurSegment } from '../../lib/2d/codages.js'
-import { point } from '../../lib/2d/points.js'
-import { segmentAvecExtremites } from '../../lib/2d/segmentsVecteurs.js'
+import { arcPointPointAngle } from '../../lib/2d/cercle'
+import { texteSurArc, texteSurSegment } from '../../lib/2d/codages'
+import { point } from '../../lib/2d/points'
+import { segmentAvecExtremites } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes.ts'
-import { homothetie, rotation } from '../../lib/2d/transformations.js'
+import { homothetie, rotation } from '../../lib/2d/transformations'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { texNombre } from '../../lib/outils/texNombre'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
 import {
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu,
   randint
-} from '../../modules/outils.js'
+} from '../../modules/outils'
 
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { arrondi } from '../../lib/outils/nombres'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 

@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureAlgebrique } from '../../../lib/outils/ecritures'
-import { sp } from '../../../lib/outils/outilString.js'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import { sp } from '../../../lib/outils/outilString'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Donner le résultat d’un programme Python'
 export const interactifReady = true
 export const interactifType = 'mathLive'

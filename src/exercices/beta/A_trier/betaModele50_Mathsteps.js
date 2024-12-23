@@ -1,9 +1,9 @@
 import { combinaisonListes } from '../../../lib/outils/arrayOutils'
 import Exercice from '../../Exercice'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 import { toTex, resoudre, calculer, aleaVariables } from '../../../modules/outilsMathjs.ts'
 import { simplify } from 'mathjs'
-import { context } from '../../../modules/context.js'
+import { context } from '../../../modules/context'
 export const titre = 'Nom de l\'exercice'
 
 // Les exports suivants sont optionnels mais au moins la date de publication semble essentielle

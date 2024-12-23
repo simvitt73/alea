@@ -1,16 +1,16 @@
-import { droiteGraduee } from '../../lib/2d/reperes.js'
+import { droiteGraduee } from '../../lib/2d/reperes'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { nombreDeChiffresDansLaPartieEntiere } from '../../lib/outils/nombres'
-import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
 import {
   calculANePlusJamaisUtiliser,
   listeQuestionsToContenu,
   randint
-} from '../../modules/outils.js'
-import { context } from '../../modules/context.js'
+} from '../../modules/outils'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import {
   handleAnswers

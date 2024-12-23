@@ -3,10 +3,10 @@ import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif, rienSi1 } from '../../lib/outils/ecritures'
 import { nombreDeChiffresDansLaPartieDecimale, nombreDeChiffresDansLaPartieEntiere } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import FractionEtendue from '../../modules/FractionEtendue'
 
@@ -38,33 +38,33 @@ export default function CalculsImagesFonctions () {
   this.nouvelleVersion = function () {
     const listeTypeDeQuestions = this.fonctions === 'affinesOuLineaires'
       ? gestionnaireFormulaireTexte({
-        saisie: this.sup,
-        min: 1,
-        max: 2,
-        defaut: 3,
-        melange: 3,
-        nbQuestions: this.nbQuestions,
-        listeOfCase: ['linéaire', 'affine']
-      })
-      : this.fonctions === 'polynomialesOuRationnelles'
-        ? gestionnaireFormulaireTexte({
           saisie: this.sup,
           min: 1,
           max: 2,
           defaut: 3,
           melange: 3,
           nbQuestions: this.nbQuestions,
-          listeOfCase: ['polynôme', 'fraction']
+          listeOfCase: ['linéaire', 'affine']
         })
+      : this.fonctions === 'polynomialesOuRationnelles'
+        ? gestionnaireFormulaireTexte({
+            saisie: this.sup,
+            min: 1,
+            max: 2,
+            defaut: 3,
+            melange: 3,
+            nbQuestions: this.nbQuestions,
+            listeOfCase: ['polynôme', 'fraction']
+          })
         : gestionnaireFormulaireTexte({
-          saisie: this.sup,
-          min: 1,
-          max: 4,
-          defaut: 5,
-          melange: 5,
-          nbQuestions: this.nbQuestions,
-          listeOfCase: ['linéaire', 'affine', 'polynôme', 'fraction']
-        })
+            saisie: this.sup,
+            min: 1,
+            max: 4,
+            defaut: 5,
+            melange: 5,
+            nbQuestions: this.nbQuestions,
+            listeOfCase: ['linéaire', 'affine', 'polynôme', 'fraction']
+          })
 
     let sousChoix
     if (this.sup2 === 1) { // Pour paramétrer plus finement le type de question pour les questions

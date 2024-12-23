@@ -1,9 +1,9 @@
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, rienSi1 } from '../../../lib/outils/ecritures'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 
 export const titre = 'Résoudre une inéquation du second degré (cas particuliers)'
 export const interactifReady = true

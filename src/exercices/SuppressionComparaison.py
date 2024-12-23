@@ -59,7 +59,7 @@ def modifier_fichier(file_path, compteur_modifications):
 def main():
     """Fonction principale pour parcourir et modifier les fichiers."""
     dossier_de_depart = './'  # Répertoire à analyser
-    extensions = ['.ts', '.js']  # Extensions ciblées
+    extensions = ['.ts', '']  # Extensions ciblées
 
     # Récupérer tous les fichiers
     fichiers = parcourir_repertoires(dossier_de_depart, extensions)

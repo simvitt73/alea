@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { ecritureNombreRelatif, ecritureNombreRelatifc, ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const interactifType = 'mathLive'
 export const interactifReady = true
 export const titre = 'Mutiplier des entiers relatifs'

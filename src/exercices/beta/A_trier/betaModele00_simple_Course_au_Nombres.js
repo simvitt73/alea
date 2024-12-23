@@ -1,5 +1,5 @@
 import Exercice from '../../Exercice'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { texNombre } from '../../../lib/outils/texNombre'
 export const titre = 'Somme de deux entiers'
 export const interactifReady = true

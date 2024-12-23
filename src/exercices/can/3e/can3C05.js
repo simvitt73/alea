@@ -1,7 +1,7 @@
 import { rienSi1 } from '../../../lib/outils/ecritures'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils'
 export const titre = 'Calculer avec une puissance de 10'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,4 +1,4 @@
-import listerDiviseursParDecompositionFacteursPremiers from '../3e/3A10-4.js'
+import listerDiviseursParDecompositionFacteursPremiers from '../3e/3A10-4'
 export const titre = 'Compter/lister les diviseurs d\'un entier à partir de sa décomposition en facteurs premiers'
 export const dateDeModifImportante = '02/06/2023'
 export const interactifReady = false

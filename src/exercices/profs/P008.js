@@ -1,6 +1,6 @@
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import Operation from '../../modules/operations.js'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import Operation from '../../modules/operations'
 export const titre = 'Opérations posées'
 
 export const refs = {

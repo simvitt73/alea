@@ -1,4 +1,4 @@
-import ImageFonctionsRefs from '../../2e/2F11-1.js'
+import ImageFonctionsRefs from '../../2e/2F11-1'
 export const titre = 'Déterminer l’image d’un nombre par une fonction de référence'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,6 +1,6 @@
-import { texFractionFromString } from '../../../lib/outils/deprecatedFractions.js'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { texFractionFromString } from '../../../lib/outils/deprecatedFractions'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Résoudre une équation du type $ax=b$'
 export const interactifReady = true
 export const interactifType = 'mathLive'

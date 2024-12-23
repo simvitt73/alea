@@ -1,6 +1,6 @@
-import Exercice from '../deprecatedExercice.js'
-import { contraindreValeur, listeQuestionsToContenu } from '../../modules/outils.js'
-import TrouverSolutionMathador from '../5e/_TrouverSolutionMathador.js'
+import Exercice from '../deprecatedExercice'
+import { contraindreValeur, listeQuestionsToContenu } from '../../modules/outils'
+import TrouverSolutionMathador from '../5e/_TrouverSolutionMathador'
 export const titre = 'Générateur de compte est bon version semi-aléatoire'
 
 /**

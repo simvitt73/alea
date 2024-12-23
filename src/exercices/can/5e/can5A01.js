@@ -1,11 +1,11 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { scratchblock } from '../../../modules/scratchblock.js'
+import { scratchblock } from '../../../modules/scratchblock'
 
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenuSansNumero, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
+import { calculANePlusJamaisUtiliser, listeQuestionsToContenuSansNumero, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 
 export const titre = 'Travailler les répétitions (Scratch)'

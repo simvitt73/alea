@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
-import { sp } from '../../../lib/outils/outilString.js'
-import { randint } from '../../../modules/outils.js'
-import { context } from '../../../modules/context.js'
+import Exercice from '../../deprecatedExercice'
+import { sp } from '../../../lib/outils/outilString'
+import { randint } from '../../../modules/outils'
+import { context } from '../../../modules/context'
 export const titre = 'Utiliser le vocabulaire image/antécédent'
 export const interactifReady = true
 export const interactifType = 'mathLive'

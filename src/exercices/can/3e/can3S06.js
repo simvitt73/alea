@@ -1,7 +1,7 @@
-import { texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
-import { sp } from '../../../lib/outils/outilString.js'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import { texFractionReduite } from '../../../lib/outils/deprecatedFractions'
+import { sp } from '../../../lib/outils/outilString'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Déterminer le rang d’une médiane'
 export const interactifReady = true
 export const interactifType = 'mathLive'

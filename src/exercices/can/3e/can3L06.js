@@ -1,8 +1,8 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { rienSi1 } from '../../../lib/outils/ecritures'
 import { arrondi } from '../../../lib/outils/nombres'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 
 import { fraction } from '../../../modules/fractions'
 export const titre = 'Réduire une expression avec une fraction'

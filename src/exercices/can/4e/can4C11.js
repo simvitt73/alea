@@ -1,4 +1,4 @@
-import Exercice from '../../4e/4C37.js'
+import Exercice from '../../4e/4C37'
 export const amcReady = true
 export const amcType = 'qcmMono'
 export const interactifReady = true

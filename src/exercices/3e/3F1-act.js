@@ -1,16 +1,16 @@
 import { combinaisonListesSansChangerOrdre } from '../../lib/outils/arrayOutils'
-import { infoMessage, lampeMessage } from '../../lib/format/message.js'
-import { numAlpha } from '../../lib/outils/outilString.js'
+import { infoMessage, lampeMessage } from '../../lib/format/message'
+import { numAlpha } from '../../lib/outils/outilString'
 import { listeDesDiviseurs } from '../../lib/outils/primalite'
 import { nombreAvecEspace, texNombre } from '../../lib/outils/texNombre'
-import { context } from '../../modules/context.js'
-import { machineMathsVideo, tikzMachineDiag, tikzMachineMaths } from '../../modules/machines.js'
-import { SvgMachineDiag3F12, SvgMachineDiag3F1ActMono } from '../../modules/macroSvgJs.js'
+import { context } from '../../modules/context'
+import { machineMathsVideo, tikzMachineDiag, tikzMachineMaths } from '../../modules/machines'
+import { SvgMachineDiag3F12, SvgMachineDiag3F1ActMono } from '../../modules/macroSvgJs'
 import {
   listeQuestionsToContenu,
   randint
-} from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+} from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 
 export const titre = 'Fonctions : Notion et vocabulaire'
 

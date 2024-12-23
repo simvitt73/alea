@@ -1,13 +1,13 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../modules/outils'
 
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../deprecatedExercice'
 
-import comprendreScriptMultiples from './3I12-2.js'
-import completerScriptDiviseurs from './3I12-3.js'
-import comprendreScriptListeMultiples from './3I12-4.js'
-import completerScriptMultiple from './3I12-1.js'
+import comprendreScriptMultiples from './3I12-2'
+import completerScriptDiviseurs from './3I12-3'
+import comprendreScriptListeMultiples from './3I12-4'
+import completerScriptMultiple from './3I12-1'
 export const titre = 'Différents exercices d\'algorithmique'
 export const uuid = 'f56d8'
 

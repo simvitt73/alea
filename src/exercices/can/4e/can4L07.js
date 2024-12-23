@@ -8,8 +8,8 @@ import {
 } from '../../../lib/outils/ecritures'
 import { signe } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { randint, printlatex } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint, printlatex } from '../../../modules/outils'
 
 export const titre = 'Réduire une expression littérale'
 export const interactifReady = true

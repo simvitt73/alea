@@ -1,6 +1,6 @@
 import Exercice from '../../Exercice'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { reduirePolynomeDegre3, ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
 export const titre = 'Calculer un discriminant'

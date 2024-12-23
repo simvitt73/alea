@@ -3,13 +3,13 @@ import { choice, combinaisonListesSansChangerOrdre, shuffle } from '../../lib/ou
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
 import { texNombre } from '../../lib/outils/texNombre'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 import FractionEtendue from '../../modules/FractionEtendue.ts'
 
 import { tableau } from '../../lib/2d/tableau'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 

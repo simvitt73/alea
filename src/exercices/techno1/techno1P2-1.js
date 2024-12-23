@@ -1,7 +1,7 @@
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
+import Exercice from '../deprecatedExercice'
 import Decimal from 'decimal.js'
-import { randint } from '../../modules/outils.js'
+import { randint } from '../../modules/outils'
 export const titre = 'Appliquer un pourcentage'
 export const interactifReady = true
 export const interactifType = 'mathLive'

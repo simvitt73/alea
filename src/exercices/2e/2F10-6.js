@@ -1,6 +1,6 @@
-import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction.js'
+import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { simplificationDeFractionAvecEtapes, texFractionReduite } from '../../lib/outils/deprecatedFractions.js'
+import { simplificationDeFractionAvecEtapes, texFractionReduite } from '../../lib/outils/deprecatedFractions'
 import {
   ecritureAlgebrique,
   ecritureAlgebriqueSauf1,
@@ -9,8 +9,8 @@ import {
   rienSi1
 } from '../../lib/outils/ecritures'
 import { abs } from '../../lib/outils/nombres'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 
 export const titre = 'Déterminer le sens de variation d\'une fonction affine'
 export const dateDeModifImportante = '18/05/2023'

@@ -1,4 +1,4 @@
-import ConstruireParSymetrie from '../6e/_Construire_par_symetrie.js'
+import ConstruireParSymetrie from '../6e/_Construire_par_symetrie'
 export const titre = 'Construire le symétrique de différents points par rapport à une droite'
 export const interactifReady = false
 export const amcReady = true

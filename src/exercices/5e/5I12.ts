@@ -6,7 +6,7 @@ import { tableauColonneLigne } from '../../lib/2d/tableau'
 import { shuffle } from '../../lib/outils/arrayOutils'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 
 export const titre = 'Calculer avec des priorités (Scratch)'
 export const interactifReady = true

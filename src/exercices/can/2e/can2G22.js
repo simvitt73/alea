@@ -1,9 +1,9 @@
 import { arrondi } from '../../../lib/outils/nombres'
-import { creerNomDePolygone } from '../../../lib/outils/outilString.js'
+import { creerNomDePolygone } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Trouver les coordonnées d\'un point avec un milieu'
 export const interactifReady = true
 export const interactifType = 'mathLive'

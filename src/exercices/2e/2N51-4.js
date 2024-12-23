@@ -1,4 +1,4 @@
-import ExerciceEquation1 from '../4e/4L20.js'
+import ExerciceEquation1 from '../4e/4L20'
 export const titre = 'Résoudre une équation du premier degré'
 export const interactifReady = true
 export const interactifType = 'mathLive'

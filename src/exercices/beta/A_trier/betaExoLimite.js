@@ -1,9 +1,9 @@
-import { courbe } from '../../../lib/2d/courbes.js'
-import { repere } from '../../../lib/2d/reperes.js'
+import { courbe } from '../../../lib/2d/courbes'
+import { repere } from '../../../lib/2d/reperes'
 import { choice, shuffle } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
-import { randint, listeQuestionsToContenu } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { mathalea2d } from '../../../modules/2dGeneralites'
+import { randint, listeQuestionsToContenu } from '../../../modules/outils'
 export const titre = 'Lecture graphique de limites'
 
 // Les exports suivants sont optionnels mais au moins la date de publication semble essentielle

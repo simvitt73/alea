@@ -4,9 +4,9 @@ import {
   ecritureNombreRelatifc,
   ecritureParentheseSiNegatif
 } from '../../lib/outils/ecritures'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 export const amcReady = true
 export const amcType = 'qcmMono'
 export const interactifReady = true

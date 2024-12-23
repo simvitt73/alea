@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { context } from '../../../modules/context.js'
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { context } from '../../../modules/context'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
+import { listeQuestionsToContenu } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
 export const titre = 'Comparer deux nombres sur une droite graduée (QCM)'
 export const interactifReady = true

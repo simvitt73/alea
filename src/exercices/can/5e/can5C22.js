@@ -1,6 +1,6 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils.js'
+import { randint } from '../../../modules/outils'
 import Decimal from 'decimal.js'
 import Exercice from '../../Exercice'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'

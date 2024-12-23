@@ -1,7 +1,7 @@
-import { codageAngleDroit } from '../../lib/2d/angles.js'
-import { cercle, traceCompas } from '../../lib/2d/cercle.js'
-import { afficheLongueurSegment, codageSegments, texteSurSegment } from '../../lib/2d/codages.js'
-import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites.js'
+import { codageAngleDroit } from '../../lib/2d/angles'
+import { cercle, traceCompas } from '../../lib/2d/cercle'
+import { afficheLongueurSegment, codageSegments, texteSurSegment } from '../../lib/2d/codages'
+import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
 import {
   milieu,
   point,
@@ -9,19 +9,19 @@ import {
   pointIntersectionCC,
   pointIntersectionLC,
   tracePoint
-} from '../../lib/2d/points.js'
-import { polygoneAvecNom } from '../../lib/2d/polygones.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+} from '../../lib/2d/points'
+import { polygoneAvecNom } from '../../lib/2d/polygones'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes.ts'
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { texteEnCouleur } from '../../lib/outils/embellissements'
-import { creerNomDePolygone } from '../../lib/outils/outilString.js'
+import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { stringNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils.js'
-import Alea2iep from '../../modules/Alea2iep.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
+import Alea2iep from '../../modules/Alea2iep'
 
 export const titre = 'Construire un triangle avec les instruments'
 

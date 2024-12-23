@@ -1,12 +1,12 @@
 import { combinaisonListesSansChangerOrdre } from '../../../lib/outils/arrayOutils'
 import { range1 } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import {
   calculANePlusJamaisUtiliser,
   listeQuestionsToContenu,
   randint
-} from '../../../modules/outils.js'
+} from '../../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 

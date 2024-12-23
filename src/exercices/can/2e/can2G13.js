@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur, miseEnEvidence } from '../../../lib/outils/embellissements'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
-import { lettreMinusculeDepuisChiffre } from '../../../lib/outils/outilString.js'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import { lettreMinusculeDepuisChiffre } from '../../../lib/outils/outilString'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Calculer la norme d’un vecteur'
 export const interactifReady = true
 export const interactifType = 'mathLive'

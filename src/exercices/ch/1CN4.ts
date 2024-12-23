@@ -1,5 +1,5 @@
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import NombrePeriodique from '../../modules/NombrePeriodique'
 import { ceil, round } from 'mathjs'
 

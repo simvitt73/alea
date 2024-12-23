@@ -1,4 +1,4 @@
-import SommeOuProduitFractions from '../4e/4C23.js'
+import SommeOuProduitFractions from '../4e/4C23'
 export const titre = 'Effectuer somme, différence ou produit de fractions'
 
 export const dateDeModifImportante = '07/05/2024'

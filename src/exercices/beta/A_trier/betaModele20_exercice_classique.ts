@@ -1,6 +1,6 @@
 import { combinaisonListes } from '../../../lib/outils/arrayOutils'
 import Exercice from '../../Exercice'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 
 export const titre = 'Titre de l\'exercice'
 export const dateDePublication = '14/12/2023'

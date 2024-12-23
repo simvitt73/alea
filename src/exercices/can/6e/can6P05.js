@@ -1,4 +1,4 @@
-import AppliquerUnPourcentage from './can6P04.js'
+import AppliquerUnPourcentage from './can6P04'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true

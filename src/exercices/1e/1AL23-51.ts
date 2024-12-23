@@ -1,6 +1,6 @@
-import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction.js'
-import { numAlpha } from '../../lib/outils/outilString.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
+import { numAlpha } from '../../lib/outils/outilString'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Trinome from '../../modules/Trinome'
 import Exercice from '../Exercice'
 

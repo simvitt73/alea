@@ -1,10 +1,10 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { listeNombresPremiersStrictJusqua, premiersEntreBornes } from '../../lib/outils/primalite'
 import { egalOuApprox, lister } from '../../lib/outils/ecritures'
 import { texNombre } from '../../lib/outils/texNombre'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = true

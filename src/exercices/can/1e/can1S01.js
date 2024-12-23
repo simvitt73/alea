@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionReduite } from '../../../lib/outils/deprecatedFractions'
 import { ecritureAlgebrique } from '../../../lib/outils/ecritures'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint, calculANePlusJamaisUtiliser } from '../../../modules/outils'
 export const titre = 'Calculer un terme d’une suite explicite'
 export const interactifReady = true
 export const interactifType = 'mathLive'

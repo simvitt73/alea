@@ -1,12 +1,12 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { texFractionFromString } from '../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString } from '../../lib/outils/deprecatedFractions'
 import { arrondi } from '../../lib/outils/nombres'
-import { numAlpha, premiereLettreEnMajuscule, sp } from '../../lib/outils/outilString.js'
+import { numAlpha, premiereLettreEnMajuscule, sp } from '../../lib/outils/outilString'
 import { personne, personnes } from '../../lib/outils/Personne'
 import { texNombre2 } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint, ppcm, calculANePlusJamaisUtiliser } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint, ppcm, calculANePlusJamaisUtiliser } from '../../modules/outils'
 
 export const titre = 'Problèmes de ratio'
 

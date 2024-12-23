@@ -1,6 +1,6 @@
-import { xcas, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
+import { xcas, listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
 export const dateDePublication = '30/10/2021'
 export const titre = 'Division de polynômes'
 

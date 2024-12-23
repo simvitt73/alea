@@ -2,8 +2,8 @@ import { bleuMathalea } from '../../../lib/colors'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Multiplier un nombre pair par 5'
 export const interactifReady = true
 export const interactifType = 'mathLive'

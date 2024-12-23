@@ -1,4 +1,4 @@
-import DistributiviteSimpleDoubleReduction from '../3e/3L11-3.js'
+import DistributiviteSimpleDoubleReduction from '../3e/3L11-3'
 export const titre = 'Utiliser la distributivité (simple ou double) et réduire'
 export const interactifReady = true
 export const interactifType = 'mathLive'

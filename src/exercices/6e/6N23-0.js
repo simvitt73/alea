@@ -1,9 +1,9 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texNombre } from '../../lib/outils/texNombre'
-import { nombreEnLettres } from '../../modules/nombreEnLettres.js'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { nombreEnLettres } from '../../modules/nombreEnLettres'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive, ajouteChampTexte } from '../../lib/interactif/questionMathLive'
 import { setReponse, handleAnswers } from '../../lib/interactif/gestionInteractif'
 

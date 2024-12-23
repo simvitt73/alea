@@ -1,6 +1,6 @@
-import { sp } from '../../lib/outils/outilString.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { sp } from '../../lib/outils/outilString'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 export const titre = 'Simulateur de Dés'
 
 export const refs = {

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { combinaisonListes } from '../../../lib/outils/arrayOutils'
-import { texFractionFromString } from '../../../lib/outils/deprecatedFractions.js'
-import { xcas, listeQuestionsToContenu } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
-import { context } from '../../../modules/context.js'
+import { texFractionFromString } from '../../../lib/outils/deprecatedFractions'
+import { xcas, listeQuestionsToContenu } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
+import { context } from '../../../modules/context'
 export const titre = 'Asymptote oblique'
 
 /**

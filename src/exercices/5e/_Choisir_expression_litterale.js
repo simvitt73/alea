@@ -1,8 +1,8 @@
-import { texFractionFromString, simplificationDeFractionAvecEtapes } from '../../lib/outils/deprecatedFractions.js'
+import { texFractionFromString, simplificationDeFractionAvecEtapes } from '../../lib/outils/deprecatedFractions'
 import { rienSi1 } from '../../lib/outils/ecritures'
 import { arrondi } from '../../lib/outils/nombres'
 import { nombreAvecEspace, texNombre } from '../../lib/outils/texNombre'
-import { estentier, randint, calculANePlusJamaisUtiliser } from '../../modules/outils.js'
+import { estentier, randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
 /**
  * Fork de la fonction de JC avec ajout de la dernière opération dans le tableau de sortie
  * @param {number} nbOperations

@@ -1,7 +1,7 @@
-import { codageAngleDroit } from '../../lib/2d/angles.js'
-import { cercle } from '../../lib/2d/cercle.js'
-import { afficheLongueurSegment, texteSurSegment } from '../../lib/2d/codages.js'
-import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites.js'
+import { codageAngleDroit } from '../../lib/2d/angles'
+import { cercle } from '../../lib/2d/cercle'
+import { afficheLongueurSegment, texteSurSegment } from '../../lib/2d/codages'
+import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
 import {
   milieu,
   point,
@@ -9,17 +9,17 @@ import {
   pointIntersectionCC,
   pointIntersectionLC,
   tracePoint
-} from '../../lib/2d/points.js'
-import { polygone, polygoneRegulier } from '../../lib/2d/polygones.js'
-import { segment } from '../../lib/2d/segmentsVecteurs.js'
+} from '../../lib/2d/points'
+import { polygone, polygoneRegulier } from '../../lib/2d/polygones'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes.ts'
 import { texteEnCouleur } from '../../lib/outils/embellissements'
-import { creerNomDePolygone } from '../../lib/outils/outilString.js'
+import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { stringNombre, texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
-import { mathalea2d, vide2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils.js'
-import Alea2iep from '../../modules/Alea2iep.js'
+import { mathalea2d, vide2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils'
+import Alea2iep from '../../modules/Alea2iep'
 export const titre = 'Tracer des carrés et des rectangles de longueurs données'
 
 export const dateDePublication = '10/09/2022'

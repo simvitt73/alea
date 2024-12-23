@@ -1,8 +1,8 @@
 import { pgcd } from '../../../lib/outils/primalite'
-import { context } from '../../../modules/context.js'
+import { context } from '../../../modules/context'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { miseEnEvidence } from '../../../lib/outils/embellissements'

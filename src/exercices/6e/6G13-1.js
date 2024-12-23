@@ -1,4 +1,4 @@
-import TracerQuadrilatèresParticuliers from './6G13.js'
+import TracerQuadrilatèresParticuliers from './6G13'
 
 export const titre = 'Tracer des carrés et rectangles et auto-vérification'
 export const dateDePublication = '19/12/2022'

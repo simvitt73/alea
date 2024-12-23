@@ -1,4 +1,4 @@
-import CalculDAngle from '../3e/3G31.js'
+import CalculDAngle from '../3e/3G31'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true

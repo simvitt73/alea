@@ -2,13 +2,13 @@ import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { rangeMinMax } from '../../../lib/outils/nombres'
 import { prenomF, prenomM } from '../../../lib/outils/Personne'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
-import { context } from '../../../modules/context.js'//
+import { mathalea2d } from '../../../modules/2dGeneralites'
+import { context } from '../../../modules/context'//
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-import { fractionCliquable } from '../../../modules/2dinteractif.js'
+import { fractionCliquable } from '../../../modules/2dinteractif'
 export const titre = 'Résoudre un problème de reste en fraction'
 export const interactifReady = true
 export const interactifType = 'mathLive'

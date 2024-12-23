@@ -1,10 +1,10 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { scientifiqueToDecimal, stringNombre, texNombre } from '../../lib/outils/texNombre'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import Exercice from '../deprecatedExercice.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../deprecatedExercice'
 import Decimal from 'decimal.js'
-import { context } from '../../modules/context.js'
+import { context } from '../../modules/context'
 
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif'
@@ -108,7 +108,7 @@ export default function NotationScientifique () {
       if (this.questionJamaisPosee(i, mantisse, exp)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (this.sup === 1) {
           if (context.isAmc) {
             setReponse(this, i, reponse.replace(/\\thickspace /g, '').replace(/ /g, ''), {

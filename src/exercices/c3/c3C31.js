@@ -1,4 +1,4 @@
-import ProblemeCourse from '../6e/6C32.js'
+import ProblemeCourse from '../6e/6C32'
 export const titre = 'Problème - Les courses'
 export const interactifReady = true
 export const interactifType = 'mathLive'

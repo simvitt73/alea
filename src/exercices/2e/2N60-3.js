@@ -7,10 +7,10 @@ import {
 } from '../../lib/outils/ecritures'
 import { texteGras } from '../../lib/format/style'
 import { abs } from '../../lib/outils/nombres'
-import { sp } from '../../lib/outils/outilString.js'
+import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 export const titre = 'Utiliser les propriétés de conservation du sens d\'une inégalité'
 export const dateDePublication = '14/02/2023'
 /**

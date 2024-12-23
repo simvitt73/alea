@@ -1,9 +1,9 @@
 import { texteEnCouleur, miseEnEvidence } from '../../../lib/outils/embellissements'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif, reduireAxPlusB } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import {
   randint
-} from '../../../modules/outils.js'
+} from '../../../modules/outils'
 import FractionEtendue from '../../../modules/FractionEtendue'
 export const titre = 'Calculer une image avec un quotient'
 export const interactifReady = true

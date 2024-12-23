@@ -1,5 +1,5 @@
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../../modules/outils'
 export const titre = 'Parenthèses manquantes'
 
 /**

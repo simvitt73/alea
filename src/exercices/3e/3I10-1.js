@@ -1,13 +1,13 @@
-import { point } from '../../lib/2d/points.js'
+import { point } from '../../lib/2d/points'
 import { choice } from '../../lib/outils/arrayOutils'
-import { lampeMessage } from '../../lib/format/message.js'
-import { deuxColonnes } from '../../lib/format/miseEnPage.js'
+import { lampeMessage } from '../../lib/format/message'
+import { deuxColonnes } from '../../lib/format/miseEnPage'
 import { texteGras } from '../../lib/format/style'
-import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString.js'
-import Exercice from '../deprecatedExercice.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur.js'
-import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
+import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString'
+import Exercice from '../deprecatedExercice'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur'
+import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import {
   ajouterAx,
   ajouterAy,
@@ -18,10 +18,10 @@ import {
   creerLutin,
   leveCrayon,
   orienter
-} from '../../modules/2dLutin.js'
-import { context } from '../../modules/context.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
-import { scratchblock } from '../../modules/scratchblock.js'
+} from '../../modules/2dLutin'
+import { context } from '../../modules/context'
+import { propositionsQcm } from '../../lib/interactif/qcm'
+import { scratchblock } from '../../modules/scratchblock'
 
 export const titre = 'Analyser des scripts Scratch'
 export const interactifReady = true

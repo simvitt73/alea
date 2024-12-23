@@ -1,16 +1,16 @@
 import { simplify } from 'mathjs'
-import { matrice } from '../../../lib/mathFonctions/Matrice.js'
+import { matrice } from '../../../lib/mathFonctions/Matrice'
 import {
   ecritureAlgebrique,
   ecritureAlgebriqueSauf1,
   ecritureParentheseSiNegatif,
   rienSi1
-} from '../../../lib/outils/ecritures.js'
+} from '../../../lib/outils/ecritures'
 import { abs } from '../../../lib/outils/nombres'
 
-import { context } from '../../../modules/context.js'
-import { listeQuestionsToContenu, ppcm, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { context } from '../../../modules/context'
+import { listeQuestionsToContenu, ppcm, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 
 export const titre = '2G35-3'
 

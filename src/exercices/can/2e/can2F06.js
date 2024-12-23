@@ -1,10 +1,10 @@
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
-import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction.js'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
+import { tableauDeVariation } from '../../../lib/mathFonctions/etudeFonction'
 import { choice } from '../../../lib/outils/arrayOutils'
-import { texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionReduite } from '../../../lib/outils/deprecatedFractions'
 import { reduireAxPlusB } from '../../../lib/outils/ecritures'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 
 export const titre = 'Dresser le tableau de signes d’une fonction affine'
 export const interactifReady = true

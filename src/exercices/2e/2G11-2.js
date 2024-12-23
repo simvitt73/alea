@@ -1,4 +1,4 @@
-import ProblemesThales from '../3e/3G20-1.js'
+import ProblemesThales from '../3e/3G20-1'
 export const titre = 'Résoudre des problèmes utilisant le théorème de Thalès'
 export const interactifReady = false
 

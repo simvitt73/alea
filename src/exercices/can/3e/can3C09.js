@@ -1,6 +1,6 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Calculer avec une racine carrée'
 export const interactifReady = true
 export const interactifType = 'mathLive'

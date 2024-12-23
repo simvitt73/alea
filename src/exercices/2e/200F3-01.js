@@ -1,8 +1,8 @@
-import { droite } from '../../lib/2d/droites.js'
+import { droite } from '../../lib/2d/droites'
 import RepereBuilder from '../../lib/2d/RepereBuilder'
-import { tableauSignesFonction, trouveFonctionAffine } from '../../lib/mathFonctions/etudeFonction.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { tableauSignesFonction, trouveFonctionAffine } from '../../lib/mathFonctions/etudeFonction'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 
 export const titre = 'Lecture graphique du signe d\'une fonction affine'

@@ -1,8 +1,8 @@
-import { diagrammeCirculaire } from '../../../lib/2d/diagrammes.js'
-import Exercice from '../../Exercice.js'
-import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
-import FractionEtendue from '../../../modules/FractionEtendue.js'
+import { diagrammeCirculaire } from '../../../lib/2d/diagrammes'
+import Exercice from '../../Exercice'
+import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
+import { listeQuestionsToContenu } from '../../../modules/outils'
+import FractionEtendue from '../../../modules/FractionEtendue'
 
 export const titre = 'Exo zéro Mathalea2d'
 

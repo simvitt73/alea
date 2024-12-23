@@ -1,10 +1,10 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { context } from '../../../modules/context.js'
+import { context } from '../../../modules/context'
 
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 
 export const titre = 'Calculer avec des puissances'

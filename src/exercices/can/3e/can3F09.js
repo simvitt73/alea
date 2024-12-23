@@ -1,10 +1,10 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import FractionEtendue from '../../../modules/FractionEtendue.ts'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif, rienSi1 } from '../../../lib/outils/ecritures'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { pgcd } from '../../../lib/outils/primalite'
-import Exercice from '../../deprecatedExercice.js'
-import { listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 
 import { setReponse } from '../../../lib/interactif/gestionInteractif'

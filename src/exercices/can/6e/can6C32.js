@@ -1,9 +1,9 @@
 import { texteParPosition } from '../../../lib/2d/textes.ts'
-import Pyramide from '../../../modules/pyramide.js'
-import Exercice from '../../deprecatedExercice.js'
+import Pyramide from '../../../modules/pyramide'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
+import { mathalea2d } from '../../../modules/2dGeneralites'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 export const titre = 'Calculer dans une pyramide additive'
 export const interactifReady = true

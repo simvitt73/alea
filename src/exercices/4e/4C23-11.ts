@@ -231,7 +231,7 @@ export default class FractionEtPriorites extends Exercice {
       if (this.questionJamaisPosee(i, a.texFraction, b.texFraction, c.texFraction)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (this.interactif) handleAnswers(this, i, { reponse: { value: reponse.texFractionSimplifiee, options: { fractionIrreductible: true } } })
         i++
       }

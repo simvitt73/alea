@@ -1,7 +1,7 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { numTrie } from '../../../lib/outils/nombres'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Trouver le plus grand nombre entier'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,19 +1,19 @@
-import { arc, cercleCentrePoint } from '../../lib/2d/cercle.js'
-import { point, tracePoint } from '../../lib/2d/points.js'
-import { carre, motifs } from '../../lib/2d/polygones.js'
-import { repere } from '../../lib/2d/reperes.js'
-import { traceBarre, traceGraphiqueCartesien } from '../../lib/2d/diagrammes.js'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs.js'
+import { arc, cercleCentrePoint } from '../../lib/2d/cercle'
+import { point, tracePoint } from '../../lib/2d/points'
+import { carre, motifs } from '../../lib/2d/polygones'
+import { repere } from '../../lib/2d/reperes'
+import { traceBarre, traceGraphiqueCartesien } from '../../lib/2d/diagrammes'
+import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../../lib/2d/textes.ts'
-import { rotation, translation } from '../../lib/2d/transformations.js'
+import { rotation, translation } from '../../lib/2d/transformations'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texcolors } from '../../lib/format/style'
-import { numAlpha } from '../../lib/outils/outilString.js'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d, colorToLatexOrHTML, fixeBordures } from '../../modules/2dGeneralites.js'
-import { randint, listeQuestionsToContenu } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
-import { context } from '../../modules/context.js'
+import { numAlpha } from '../../lib/outils/outilString'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d, colorToLatexOrHTML, fixeBordures } from '../../modules/2dGeneralites'
+import { randint, listeQuestionsToContenu } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
+import { context } from '../../modules/context'
 
 export const titre = 'Représenter des données par un diagramme'
 export const interactifReady = true
@@ -335,7 +335,7 @@ export default function LireUnDiagramme () {
       if (this.questionJamaisPosee(q, effectiftotal)) {
         this.listeQuestions[q] = texte
         this.listeCorrections[q] = texteCorr
-   
+
         q++
       }
     }

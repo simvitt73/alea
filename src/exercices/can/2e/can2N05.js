@@ -1,11 +1,11 @@
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
 import { choice } from '../../../lib/outils/arrayOutils'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { texteEnCouleurEtGras, texteGras } from '../../../lib/outils/embellissements'
 import { listeDesDiviseurs, premiersEntreBornes } from '../../../lib/outils/primalite'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
+import { listeQuestionsToContenu } from '../../../modules/outils'
 
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 
 export const titre = 'Reconnaître un nombre premier'
 export const interactifReady = true

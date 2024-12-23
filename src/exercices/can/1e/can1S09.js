@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { texFractionFromString } from '../../../lib/outils/deprecatedFractions.js'
-import { sp } from '../../../lib/outils/outilString.js'
+import { texFractionFromString } from '../../../lib/outils/deprecatedFractions'
+import { sp } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../../modules/outils'
 
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'

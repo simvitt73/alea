@@ -1,4 +1,4 @@
-import EcrireUneExpressionNumerique from './_Ecrire_une_expression_numerique.js'
+import EcrireUneExpressionNumerique from './_Ecrire_une_expression_numerique'
 export const titre = 'Calculer une expression littérale pour les valeurs données en détaillant les calculs'
 export const interactifReady = true
 export const interactifType = 'mathLive'

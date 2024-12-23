@@ -1,10 +1,10 @@
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { texFractionFromString, texFractionReduite } from '../../lib/outils/deprecatedFractions.js'
-import Exercice from '../deprecatedExercice.js'
-import { context } from '../../modules/context.js'
-import { fraction } from '../../modules/fractions.js'
-import { contraindreValeur, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { texFractionFromString, texFractionReduite } from '../../lib/outils/deprecatedFractions'
+import Exercice from '../deprecatedExercice'
+import { context } from '../../modules/context'
+import { fraction } from '../../modules/fractions'
+import { contraindreValeur, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import FractionEtendue from '../../modules/FractionEtendue.ts'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
@@ -269,7 +269,7 @@ export default function ResoudreUneEquationProduitNul () {
       if (this.questionJamaisPosee(i, a, b, c, d)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         if (context.isAmc) {
           this.autoCorrection[i] = {
             enonce: 'Résoudre l\'équation : ' + texte + '\\\\\nSi il n\'y a qu\'une solution double, il faut la coder dans solution1 et solution2.\\\\\nLes fractions doivent être simplifiées au maximum.',

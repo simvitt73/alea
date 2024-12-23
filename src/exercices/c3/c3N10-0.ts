@@ -1,6 +1,6 @@
 import { shuffle2tableaux } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { contraindreValeur, gestionnaireFormulaireTexte, randint } from '../../modules/outils.js'
+import { contraindreValeur, gestionnaireFormulaireTexte, randint } from '../../modules/outils'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import Decimal from 'decimal.js'
 import { stringNombre, texNombre } from '../../lib/outils/texNombre'

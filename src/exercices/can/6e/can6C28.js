@@ -1,9 +1,9 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-import { calculANePlusJamaisUtiliser } from '../../../modules/outils.js'
+import { calculANePlusJamaisUtiliser } from '../../../modules/outils'
 import FractionEtendue from '../../../modules/FractionEtendue'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 export const titre = 'Résoudre un problème de fraction'

@@ -1,11 +1,11 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
-import { sp } from '../../../lib/outils/outilString.js'
+import { texFractionReduite } from '../../../lib/outils/deprecatedFractions'
+import { sp } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
 
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { listeQuestionsToContenu } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 
 export const titre = 'Convertir des fractions d’heures en minutes et inversement'

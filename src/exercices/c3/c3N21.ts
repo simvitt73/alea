@@ -36,7 +36,7 @@ export default class LireUneFraction extends Exercice {
       if (this.questionJamaisPosee(i, numerateur, denominateur)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         handleAnswers(this, i, { reponse: { value, options: { texteSansCasse: true } } })
         i++
       }

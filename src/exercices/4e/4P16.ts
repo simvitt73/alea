@@ -1,9 +1,9 @@
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Decimal from 'decimal.js'
-import { fraction } from '../../modules/fractions.js'
-import { context } from '../../modules/context.js'
+import { fraction } from '../../modules/fractions'
+import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 
 import { setReponse } from '../../lib/interactif/gestionInteractif'

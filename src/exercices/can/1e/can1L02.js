@@ -6,9 +6,9 @@ import {
   reduireAxPlusB,
   reduirePolynomeDegre3
 } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
-import { fraction } from '../../../modules/fractions.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { fraction } from '../../../modules/fractions'
+import { randint } from '../../../modules/outils'
 export const titre = 'Déterminer le nombre de solutions d’une équation du second degré'
 export const interactifReady = true
 export const interactifType = 'mathLive'

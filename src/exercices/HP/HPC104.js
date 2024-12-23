@@ -1,8 +1,8 @@
-import { Matrice } from '../../lib/mathFonctions/Matrice.js'
+import { Matrice } from '../../lib/mathFonctions/Matrice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
-import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString.js'
-import { listeQuestionsToContenu } from '../../modules/outils.js'
+import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import Exercice from '../Exercice'
 
 export const titre = 'Calcul de déterminant'

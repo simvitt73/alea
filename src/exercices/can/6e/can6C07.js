@@ -1,7 +1,7 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Trouver le reste d’une division par 3'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,8 +1,8 @@
 import Figure from 'apigeom'
-import { spline } from '../../../lib/mathFonctions/Spline.js'
-import PointOnSpline from '../../../lib/mathFonctions/SplineApiGeom.js'
-import { listeQuestionsToContenu } from '../../../modules/outils.js'
-import Exercice from '../../Exercice.js'
+import { spline } from '../../../lib/mathFonctions/Spline'
+import PointOnSpline from '../../../lib/mathFonctions/SplineApiGeom'
+import { listeQuestionsToContenu } from '../../../modules/outils'
+import Exercice from '../../Exercice'
 
 export const titre = 'Géométrie dynamique'
 export const uuid = 'betaGeom'

@@ -1,8 +1,8 @@
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer une moyenne avec des décimaux'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -1,12 +1,12 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import Exercice from '../deprecatedExercice.js'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
-import { cube } from '../../modules/3d.js'
+import { cube } from '../../modules/3d'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
-import { deuxColonnes } from '../../lib/format/miseEnPage.js'
+import { deuxColonnes } from '../../lib/format/miseEnPage'
 
 export const dateDePublication = '03/03/2021'
 export const titre = 'Compter les cubes manquants ou pas'

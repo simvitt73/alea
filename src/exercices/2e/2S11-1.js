@@ -1,4 +1,4 @@
-import CoefficientEvolution from '../3e/3P10-1.js'
+import CoefficientEvolution from '../3e/3P10-1'
 export const titre = 'Calculer un CM à partir d\'un taux d\'évolution et inversement'
 export const interactifReady = true
 export const interactifType = 'mathLive'

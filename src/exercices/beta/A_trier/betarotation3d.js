@@ -1,8 +1,8 @@
 import { texcolors } from '../../../lib/format/style'
-import Exercice from '../../deprecatedExercice.js'
-import { mathalea2d } from '../../../modules/2dGeneralites.js'
+import Exercice from '../../deprecatedExercice'
+import { mathalea2d } from '../../../modules/2dGeneralites'
 
-import { point3d, polygone3d, rotation3d, droite3d } from '../../../modules/3d.js'
+import { point3d, polygone3d, rotation3d, droite3d } from '../../../modules/3d'
 
 export const titre = 'Rotation 3d de polygones'
 /**

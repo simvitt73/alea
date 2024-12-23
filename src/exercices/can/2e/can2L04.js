@@ -1,7 +1,7 @@
-import { texFractionReduite } from '../../../lib/outils/deprecatedFractions.js'
+import { texFractionReduite } from '../../../lib/outils/deprecatedFractions'
 import { rienSi1 } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 export const titre = 'Calculer les coordonnées du point d’intersection entre l’axe des ordonnées et une droite'
 export const interactifReady = true
 export const interactifType = 'mathLive'

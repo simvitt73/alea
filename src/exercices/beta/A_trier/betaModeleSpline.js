@@ -1,11 +1,11 @@
-import { repere } from '../../../lib/2d/reperes.js'
-import { inferieurSuperieur } from '../../../lib/mathFonctions/etudeFonction.js'
-import { spline } from '../../../lib/mathFonctions/Spline.js'
+import { repere } from '../../../lib/2d/reperes'
+import { inferieurSuperieur } from '../../../lib/mathFonctions/etudeFonction'
+import { spline } from '../../../lib/mathFonctions/Spline'
 import { choice } from '../../../lib/outils/arrayOutils'
-import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites.js'
-import FractionEtendue from '../../../modules/FractionEtendue.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../../modules/outils.js'
-import Exercice from '../../Exercice.js'
+import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
+import FractionEtendue from '../../../modules/FractionEtendue'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../../modules/outils'
+import Exercice from '../../Exercice'
 
 export const titre = 'Recherche d\'antécédents'
 export const interactifReady = true

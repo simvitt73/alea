@@ -5,8 +5,8 @@ import {
   reduireAxPlusB,
   reduirePolynomeDegre3
 } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 import { functionCompare } from '../../../lib/interactif/comparisonFunctions'
 export const titre = 'Déterminer la fonction dérivée d’une fonction $a/u(x)$'
 export const interactifReady = true

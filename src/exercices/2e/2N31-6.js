@@ -1,4 +1,4 @@
-import CalculsAvecPuissancesDeDix from '../4e/4C32-1.js'
+import CalculsAvecPuissancesDeDix from '../4e/4C32-1'
 export const titre = 'Donner le résultat de nombres écrits avec des puissances de 10 en notation scientifique'
 export const amcReady = true
 export const amcType = 'qcmMono'

@@ -1,4 +1,4 @@
-import CalculDeLongueur from '../3e/3G30.js'
+import CalculDeLongueur from '../3e/3G30'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true

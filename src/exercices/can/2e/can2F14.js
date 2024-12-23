@@ -6,10 +6,10 @@ import {
   reduirePolynomeDegre3
 } from '../../../lib/outils/ecritures'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
+import Exercice from '../../deprecatedExercice'
 import {
   randint
-} from '../../../modules/outils.js'
+} from '../../../modules/outils'
 export const titre = 'Calculer une ordonnée à partir de l’abscisse d’un point'
 export const interactifReady = true
 export const interactifType = 'mathLive'

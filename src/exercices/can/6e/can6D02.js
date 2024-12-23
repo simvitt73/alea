@@ -1,5 +1,5 @@
-import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { calculANePlusJamaisUtiliser, randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Chercher un reste en minutes'
 export const interactifReady = true
 export const interactifType = 'mathLive'

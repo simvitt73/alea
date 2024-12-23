@@ -1,4 +1,4 @@
-import ConstructibiliteDesTriangles from './_Constructibilite_des_triangles.js'
+import ConstructibiliteDesTriangles from './_Constructibilite_des_triangles'
 
 export const interactifReady = true
 export const interactifType = 'qcm'

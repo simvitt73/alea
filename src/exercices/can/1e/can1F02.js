@@ -5,11 +5,11 @@ import {
   reduireAxPlusB,
   reduirePolynomeDegre3
 } from '../../../lib/outils/ecritures'
-import { sp } from '../../../lib/outils/outilString.js'
-import Exercice from '../../deprecatedExercice.js'
-import { fraction } from '../../../modules/fractions.js'
-import { randint, listeQuestionsToContenu } from '../../../modules/outils.js'
-import { propositionsQcm } from '../../../lib/interactif/qcm.js'
+import { sp } from '../../../lib/outils/outilString'
+import Exercice from '../../deprecatedExercice'
+import { fraction } from '../../../modules/fractions'
+import { randint, listeQuestionsToContenu } from '../../../modules/outils'
+import { propositionsQcm } from '../../../lib/interactif/qcm'
 export const titre = 'Déterminer le sens de variation d’un pôlynome du second degré'
 export const interactifReady = true
 export const interactifType = 'qcm'

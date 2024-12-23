@@ -1,8 +1,8 @@
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 
 export const titre = 'Déterminer les coordonnées d’un vecteur'
 export const interactifReady = true

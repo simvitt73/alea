@@ -1,4 +1,4 @@
-import LectureExpressionFonctionsAffines from './3F21-1.js'
+import LectureExpressionFonctionsAffines from './3F21-1'
 export const titre = 'Déterminer une fonction linéaire'
 export const amcReady = true
 export const amcType = 'AMCHybride'

@@ -1,15 +1,15 @@
-import { droiteParPointEtPente } from '../../lib/2d/droites.js'
-import { point, tracePoint } from '../../lib/2d/points.js'
-import { repere } from '../../lib/2d/reperes.js'
+import { droiteParPointEtPente } from '../../lib/2d/droites'
+import { point, tracePoint } from '../../lib/2d/points'
+import { repere } from '../../lib/2d/reperes'
 import { labelPoint, texteParPosition } from '../../lib/2d/textes.ts'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { reduireAxPlusB, reduirePolynomeDegre3 } from '../../lib/outils/ecritures'
-import { sp } from '../../lib/outils/outilString.js'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils.js'
-import { propositionsQcm } from '../../lib/interactif/qcm.js'
-import { context } from '../../modules/context.js'
+import { sp } from '../../lib/outils/outilString'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { propositionsQcm } from '../../lib/interactif/qcm'
+import { context } from '../../modules/context'
 import { range } from '../../lib/outils/nombres'
 
 export const interactifReady = true
@@ -534,7 +534,7 @@ export default function VocabulaireNotationsFonctions2 () {
       if (this.questionJamaisPosee(i, x, y)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
-   
+
         indice[typeDeQuestions[i] - 1]++
         i++
       }

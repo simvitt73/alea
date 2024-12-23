@@ -1,6 +1,6 @@
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1, reduireAxPlusB } from '../../../lib/outils/ecritures'
-import Exercice from '../../deprecatedExercice.js'
-import { randint } from '../../../modules/outils.js'
+import Exercice from '../../deprecatedExercice'
+import { randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 export const titre = 'Déterminer une forme canonique'
 export const interactifReady = true

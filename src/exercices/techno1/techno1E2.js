@@ -1,4 +1,4 @@
-import AssocierCoefficient from '../3e/3P10-1.js'
+import AssocierCoefficient from '../3e/3P10-1'
 export const titre = 'Associer évolution en pourcentage et coefficient'
 export const dateDePublication = '19/06/2022'
 export const interactifReady = true

@@ -1,8 +1,8 @@
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
-import { sp } from '../../../lib/outils/outilString.js'
+import { sp } from '../../../lib/outils/outilString'
 import { prenomM } from '../../../lib/outils/Personne'
-import { randint } from '../../../modules/outils.js'
-import Exercice from '../../deprecatedExercice.js'
+import { randint } from '../../../modules/outils'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer une durée en minutes'
 export const interactifReady = true
 export const interactifType = 'mathLive'

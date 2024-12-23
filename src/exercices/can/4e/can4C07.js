@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { simplificationDeFractionAvecEtapes } from '../../../lib/outils/deprecatedFractions.js'
-import { fraction, obtenirListeFractionsIrreductibles } from '../../../modules/fractions.js'
-import Exercice from '../../deprecatedExercice.js'
+import { simplificationDeFractionAvecEtapes } from '../../../lib/outils/deprecatedFractions'
+import { fraction, obtenirListeFractionsIrreductibles } from '../../../modules/fractions'
+import Exercice from '../../deprecatedExercice'
 export const titre = 'Calculer la différence de fractions à dénominateurs compatibles'
 export const interactifReady = true
 export const interactifType = 'mathLive'

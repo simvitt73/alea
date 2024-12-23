@@ -1,4 +1,4 @@
-import TableauxEtPourcentages from './_Tableaux_et_pourcentages.js'
+import TableauxEtPourcentages from './_Tableaux_et_pourcentages'
 
 export const titre = 'Tableaux et pourcentages - pourcentage constant'
 export const interactifReady = false

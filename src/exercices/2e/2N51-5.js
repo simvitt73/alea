@@ -1,4 +1,4 @@
-import ExerciceEquation1Tiret2 from '../3e/3L13-1.js'
+import ExerciceEquation1Tiret2 from '../3e/3L13-1'
 export const titre = 'Résoudre une équation du premier degré (utilisant la distributivité)'
 export const interactifReady = true
 export const interactifType = 'mathLive'

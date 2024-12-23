@@ -1,6 +1,6 @@
 import Exercice from '../Exercice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Decimal from 'decimal.js'
 import { texNombre } from '../../lib/outils/texNombre'
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'

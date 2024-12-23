@@ -1,4 +1,4 @@
-import RangerOrdreCroissantDecroissant from './6N11-4.js'
+import RangerOrdreCroissantDecroissant from './6N11-4'
 
 export const titre =
   "Ranger des nombres décimaux dans l'ordre croissant ou décroissant"

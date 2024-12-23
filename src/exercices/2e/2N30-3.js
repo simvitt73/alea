@@ -1,4 +1,4 @@
-import ExerciceMultiplierFractions from '../4e/4C22.js'
+import ExerciceMultiplierFractions from '../4e/4C22'
 export const titre = 'Multiplier ou/et diviser des fractions'
 export const amcReady = true
 export const amcType = 'AMCNum'

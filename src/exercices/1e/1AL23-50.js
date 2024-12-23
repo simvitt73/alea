@@ -1,11 +1,11 @@
-import { courbe } from '../../lib/2d/courbes.js'
-import { repere } from '../../lib/2d/reperes.js'
+import { courbe } from '../../lib/2d/courbes'
+import { repere } from '../../lib/2d/reperes'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString.js'
+import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString'
 import { premierMultipleInferieur, premierMultipleSuperieur } from '../../lib/outils/primalite'
-import Exercice from '../deprecatedExercice.js'
-import { mathalea2d } from '../../modules/2dGeneralites.js'
-import { listeQuestionsToContenu, randint } from '../../modules/outils.js'
+import Exercice from '../deprecatedExercice'
+import { mathalea2d } from '../../modules/2dGeneralites'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
 export const titre = 'Représentation graphique d\'un polynôme du second degré'
 

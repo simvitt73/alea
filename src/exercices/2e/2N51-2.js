@@ -1,4 +1,4 @@
-import TrouverErreurResolEqDeg1 from '../4e/4L15-0.js'
+import TrouverErreurResolEqDeg1 from '../4e/4L15-0'
 export const titre = 'Trouver l\'erreur dans une résolution d\'équation du premier degré'
 export const interactifReady = false
 
