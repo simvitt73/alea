@@ -177,8 +177,9 @@ export function signeMoinsEnEvidence (r: number, precision = 0) {
  * @Example
  * // 3 ou (-3)
  * @author Rémi Angot
+ * @return {string}
  */
-export function ecritureParentheseSiNegatif (a: Decimal | number | FractionEtendue) {
+export function ecritureParentheseSiNegatif (a: Decimal | number | FractionEtendue): string {
   let result = ''
   if (a instanceof Decimal) {
     if (a.gte(0)) return texNombre(a, 8) // On met 8 décimales, mais cette fonctions s'utilise presque exclusivement avec des entiers donc ça ne sert à rien
@@ -194,6 +195,7 @@ export function ecritureParentheseSiNegatif (a: Decimal | number | FractionEtend
     return a.ecritureParentheseSiNegatif
   } else {
     window.notify('ecritureParentheseSiNegatif() appelée avec autre chose qu\'un nombre', { argument: a })
+    return 'undefined'
   }
 }
 
