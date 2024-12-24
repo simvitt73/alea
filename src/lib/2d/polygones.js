@@ -41,6 +41,7 @@ export function barycentre (p, nom = '', positionLabel = 'above') {
  */
 export function Polyline (...points) {
   ObjetMathalea2D.call(this, {})
+  this.epaisseur = 1
   if (Array.isArray(points[0])) {
     // Si le premier argument est un tableau
     this.listePoints = points[0]
@@ -524,6 +525,7 @@ export function renommePolygone (p, noms) {
  * @param {Point} B
  * @param {integer} n Nombre de côtés
  * @param {string} [color = 'black'] Couleur de l'arc ou 'none' : du type 'blue' ou du type '#f15929'
+ * @return {Polygone}
  * @author Rémi Angot
  **/
 export function polygoneRegulier (A, B, n, color = 'black') {
@@ -549,10 +551,11 @@ export function polygoneRegulier (A, B, n, color = 'black') {
  *  // Trace le carré noir de sommets consécutifs M et N dans le sens indirect
  * @example carre(M,N,'blue')
  *  // Trace le carré bleu de sommets consécutifs M et N dans le sens direct
- * @return {polygoneRegulier}
+ * @return {polygone}
  * @author Rémi Angot
+ * JSDOC Validee par EE Juin 2022
+ *
  */
-// JSDOC Validee par EE Juin 2022
 export function carre (A, B, color = 'black') {
   return polygoneRegulier(A, B, 4, color)
 }

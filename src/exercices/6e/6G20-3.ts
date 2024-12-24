@@ -37,7 +37,11 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
   }
 
   nouvelleVersion () {
-    const propositionsAMC = []
+    const propositionsAMC:{
+      type: string,
+      enonce: string,
+      propositions: any
+    }[] = []
     const typeQuestionsDisponibles = ['nom', 'sommet', 'cote', 'diagonale']
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
     const objets2d = []
@@ -46,7 +50,7 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
 
     const nbSommets = randint(4, 6)
     // On commence par créer les angles à partir desquels les points seront créés
-    const anglesPoints = []
+    const anglesPoints: number[] = []
     for (let i = 0; i < nbSommets; i++) {
       anglesPoints.push(randint(1, 12, anglesPoints))
     }
@@ -55,7 +59,7 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
     }
     anglesPoints.sort((a, b) => a - b)
     // On crée leurs noms
-    const numerosNomsPoints = []
+    const numerosNomsPoints: number[] = []
     for (let i = 0; i < nbSommets; i++) {
       numerosNomsPoints.push(randint(1, 26, [22, ...numerosNomsPoints])) // Il y a un espace bizarre après les V en LateX, alors on les zappe
     }
@@ -97,7 +101,7 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
       }
       nomDirectCorrect += '$'
       const nomIndirectCorrect = nomDirectCorrect.split('').reverse().join('')
-      const inverse2lettres = (str) => {
+      const inverse2lettres = (str: string) => {
         const arr = str.split('')
         const temp = arr[1]
         arr[1] = arr[2]
@@ -139,6 +143,7 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
 
           break
         case 'diagonale':
+        default:
           questionReponse =
           {
             question: `$[${C}${A}]$ est :`,
@@ -150,7 +155,11 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
           break
       }
       if (this.sup !== '' && this.sup !== undefined && this.sup !== 'NaN' && listeTypeQuestions[i] !== 'nom') questionReponse.propositions.push(this.sup)
-      const propositions = []
+      const propositions:{
+        texte: string,
+        statut: boolean,
+        feedback: string
+      }[] = []
       for (const proposition of questionReponse.propositions) {
         let statut = false
         for (const reponse of questionReponse.reponses) {
@@ -192,6 +201,7 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
             enonceAvant: true, // EE : ce champ est facultatif et permet (si false) de supprimer l'énoncé ci-dessus avant la numérotation de chaque question.
             enonceCentre: true, // EE : ce champ est facultatif et permet (si true) de centrer le champ 'enonce' ci-dessus.
             // options: { ordered: false },
+            // @ts-expect-error
             propositions: propositionsAMC
           }
         }

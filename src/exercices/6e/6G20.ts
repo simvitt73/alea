@@ -1,12 +1,12 @@
 import { codageAngle, codageAngleDroit } from '../../lib/2d/angles'
 import { codageSegments } from '../../lib/2d/codages'
-import { point } from '../../lib/2d/points'
-import { barycentre, carre, nommePolygone, polygone } from '../../lib/2d/polygones'
+import { Point, point } from '../../lib/2d/points'
+import { barycentre, carre, nommePolygone, Polygone, polygone } from '../../lib/2d/polygones'
 import { grille, seyes } from '../../lib/2d/reperes'
-import { vecteur } from '../../lib/2d/segmentsVecteurs'
+import { Vecteur, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { homothetie, rotation, similitude, translation } from '../../lib/2d/transformations'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { mathalea2d, vide2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
@@ -23,15 +23,36 @@ export const refs = {
   'fr-fr': ['6G20'],
   'fr-ch': ['9ES2-5']
 }
-export default function NommerEtCoderDesPolygones () {
-  Exercice.call(this)
-  this.nbQuestions = 4
-  this.nbCols = 2
-  this.nbColsCorr = 2
-  this.sup = 3
-  this.sup2 = 9
+export default class NommerEtCoderDesPolygones extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = [
+      'Type de cahier',
+      3,
+      ' 1 : Cahier à petits carreaux\n 2 : Cahier à gros carreaux (Seyes)\n 3 : Feuille blanche'
+    ]
+    this.besoinFormulaire2Texte = [
+      'Type de questions', [
+        'Nombres séparés par des tirets',
+        '1 : Triangle isocèle',
+        '2 : Triangle équilatéral',
+        '3 : Triangle rectangle',
+        '4 : Triangle rectangle isocèle',
+        '5 : Carré',
+        '6 : Rectangle',
+        '7 : Losange',
+        '8 : Trapèze rectangle',
+        '9 : Mélange'
+      ].join('\n')
+    ]
+    this.nbQuestions = 4
+    this.nbCols = 2
+    this.nbColsCorr = 2
+    this.sup = 3
+    this.sup2 = 9
+  }
 
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     this.consigne = this.nbQuestions === 1 ? 'Nommer la figure' : 'Nommer les figures'
     this.consigne += " en fonction de l'énoncé puis ajouter le codage."
     let Xmin, Xmax, Ymin, Ymax, sc, g, carreaux
@@ -52,9 +73,9 @@ export default function NommerEtCoderDesPolygones () {
       melange: 9,
       defaut: 9,
       nbQuestions: this.nbQuestions
-    })
+    }).map(Number)
 
-    let listeDeNomsDePolygones
+    let listeDeNomsDePolygones: string[] = []
     for (
       let i = 0, texte, texteCorr, cpt = 0;
       i < this.nbQuestions && cpt < 50;
@@ -64,15 +85,20 @@ export default function NommerEtCoderDesPolygones () {
       // context.pixelsParCm = 40
       context.pixelsParCm = 20
       let pol, polcode, polsom
-      const choisirPolygone = (n) => { // n compris entre 1 et 8 (1 à 4 pour un triangle, 5 à 8 pour une quadrilatère)
+      const choisirPolygone = (n: number) => { // n compris entre 1 et 8 (1 à 4 pour un triangle, 5 à 8 pour une quadrilatère)
         let A, B, C, D
-        const nom = creerNomDePolygone(4, listeDeNomsDePolygones); let pnom; let q; let p; let pcode; let enonce
+        const nom = creerNomDePolygone(4, listeDeNomsDePolygones)
+        let pnom
+        let q: Polygone
+        let p
+        let pcode
+        let enonce
         switch (n) {
           case 1: // triangle isocèle
             A = point(3, randint(0, 20) / 10, nom[0])
             B = point(randint(7, 8), randint(0, 10) / 10, nom[1])
             C = rotation(B, A, randint(25, 80), nom[2])
-            q = polygone(A, B, C)
+            q = polygone(A, B, C) as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -85,7 +111,7 @@ export default function NommerEtCoderDesPolygones () {
             A = point(3, randint(0, 20) / 10, nom[0])
             B = point(randint(7, 8), randint(0, 10) / 10, nom[1])
             C = rotation(B, A, 60, nom[2])
-            q = polygone(A, B, C)
+            q = polygone(A, B, C) as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -98,7 +124,7 @@ export default function NommerEtCoderDesPolygones () {
             A = point(3, randint(0, 20) / 10, nom[0])
             B = point(randint(7, 8), randint(0, 10) / 10, nom[1])
             C = similitude(B, A, 90, randint(30, 100) / 100, nom[2])
-            q = polygone(A, B, C)
+            q = polygone(A, B, C) as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -111,7 +137,7 @@ export default function NommerEtCoderDesPolygones () {
             A = point(3, randint(0, 20) / 10, nom[0])
             B = point(randint(7, 8), randint(0, 10) / 10, nom[1])
             C = rotation(B, A, 90, nom[2])
-            q = polygone(A, B, C)
+            q = polygone(A, B, C) as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -124,7 +150,7 @@ export default function NommerEtCoderDesPolygones () {
           case 5: // carré
             A = point(3, randint(0, 20) / 10, nom[0])
             B = point(randint(7, 8), randint(10, 30) / 10, nom[1])
-            q = carre(A, B)
+            q = carre(A, B) as unknown as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -139,7 +165,7 @@ export default function NommerEtCoderDesPolygones () {
             B = point(randint(7, 8), randint(10, 30) / 10, nom[1])
             C = similitude(A, B, -90, randint(30, 80) / 100, nom[2])
             D = translation(C, vecteur(B, A), nom[3])
-            q = polygone(A, B, C, D)
+            q = polygone(A, B, C, D) as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -154,7 +180,7 @@ export default function NommerEtCoderDesPolygones () {
             B = point(randint(7, 8), randint(10, 30) / 10, nom[1])
             C = rotation(A, B, randint(100, 150), nom[2])
             D = translation(C, vecteur(B, A), nom[3])
-            q = polygone(A, B, C, D)
+            q = polygone(A, B, C, D) as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -165,11 +191,12 @@ export default function NommerEtCoderDesPolygones () {
             enonce = `Le quadrilatère $${nom[0] + nom[1] + nom[2] + nom[3]}$ est un losange et [$${nom[0] + nom[2]}$] est sa plus grande diagonale.`
             break
           case 8: // trapèze rectangle
+          default:
             A = point(3, randint(0, 20) / 10, nom[0])
             B = point(randint(7, 8), randint(10, 30) / 10, nom[1])
             D = similitude(B, A, 90, randint(30, 80) / 100, nom[3])
-            C = translation(D, homothetie(vecteur(A, B), A, randint(30, 80) / 100), nom[2])
-            q = polygone(A, B, C, D)
+            C = translation(D, homothetie(vecteur(A, B), A, randint(30, 80) / 100) as Vecteur, nom[2]) as Point
+            q = polygone(A, B, C, D) as Polygone
             p = rotation(q, barycentre(q), randint(0, 360))
             A = p.listePoints[0]
             B = p.listePoints[1]
@@ -223,23 +250,4 @@ export default function NommerEtCoderDesPolygones () {
     listeQuestionsToContenu(this)
     context.pixelsParCm = 20
   }
-  this.besoinFormulaireNumerique = [
-    'Type de cahier',
-    3,
-    ' 1 : Cahier à petits carreaux\n 2 : Cahier à gros carreaux (Seyes)\n 3 : Feuille blanche'
-  ]
-  this.besoinFormulaire2Texte = [
-    'Type de questions', [
-      'Nombres séparés par des tirets',
-      '1 : Triangle isocèle',
-      '2 : Triangle équilatéral',
-      '3 : Triangle rectangle',
-      '4 : Triangle rectangle isocèle',
-      '5 : Carré',
-      '6 : Rectangle',
-      '7 : Losange',
-      '8 : Trapèze rectangle',
-      '9 : Mélange'
-    ].join('\n')
-  ]
 }

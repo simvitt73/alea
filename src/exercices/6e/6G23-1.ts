@@ -1,11 +1,11 @@
 import { afficheMesureAngle } from '../../lib/2d/codages'
-import { point, pointSurSegment } from '../../lib/2d/points'
+import { Point, point, pointSurSegment } from '../../lib/2d/points'
 import { demiDroite } from '../../lib/2d/segmentsVecteurs'
-import { texteParPoint } from '../../lib/2d/textes.ts'
+import { texteParPoint } from '../../lib/2d/textes'
 import { homothetie, rotation, similitude } from '../../lib/2d/transformations'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
@@ -28,18 +28,22 @@ export const refs = {
   'fr-fr': ['6G23-1'],
   'fr-ch': ['9ES5-4']
 }
-export default function MesurerUnAngle () {
-  Exercice.call(this)
+export default class MesurerUnAngle extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = ['Précision de l\'angle', 4, '1 : Angle à 10°\n2 : Angle à 5°\n3 : Angle à 1°\n 4 : mélange']
+    this.besoinFormulaire2CaseACocher = ['Utilisation du rapporteur', false]
+    this.nbQuestions = 2
 
-  this.nbQuestions = 2
+    this.sup = 1
+    this.sup2 = false
+    this.video = 'TEzu9uky56M'
+  }
 
-  this.sup = 1
-  this.sup2 = false
-  this.video = 'TEzu9uky56M'
-
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     let delta, arrondiA10Pres
-    let angle; let anglerot; let Apos; let Bpos; let Cpos; let p; let texte; let texteCorr; let A; let B; let C; let s2; let s1; let bis; const signes = []
+    let angle: number
+    let anglerot; let Apos; let Bpos; let Cpos; let p; let texte; let texteCorr; let A; let B; let C; let s2; let s1; let bis; const signes = []
     let xMin, xMax, yMin, yMax, objetsEnonce, secteur0
     let typeDeQuestions
     if (this.sup < 4) typeDeQuestions = [this.sup]
@@ -55,7 +59,9 @@ export default function MesurerUnAngle () {
             break
           case 2 : angle = randint(1, 8) * 10 + randint(0, 1) * 90 + 5
             break
-          case 3 : angle = randint(1, 16) * 10 + randint(1, 9)
+          case 3 :
+          default:
+            angle = randint(1, 16) * 10 + randint(1, 9)
             break
         }
         arrondiA10Pres = Math.round(angle / 10) * 10
@@ -74,12 +80,12 @@ export default function MesurerUnAngle () {
       B = point(6, 0)
       B = rotation(B, A, anglerot)
 
-      Bpos = texteParPoint(p[0], similitude(A, homothetie(B, A, 0.95), signes[i] * 90, 0.1), 0, 'black', 1.5, 'milieu', true)
+      Bpos = texteParPoint(p[0], similitude(A, homothetie(B, A, 0.95) as Point, signes[i] * 90, 0.1), 0, 'black', 1.5, 'milieu', true)
       s1 = demiDroite(A, B)
       C = rotation(B, A, angle)
       bis = rotation(B, A, angle / 2)
       Apos = texteParPoint(p[1], pointSurSegment(A, bis, -0.5), 0, 'black', 1.5, 'milieu', true)
-      Cpos = texteParPoint(p[2], similitude(A, homothetie(C, A, 0.95), -signes[i] * 90, 0.1), 0, 'black', 1.5, 'milieu', true)
+      Cpos = texteParPoint(p[2], similitude(A, homothetie(C, A, 0.95) as Point, -signes[i] * 90, 0.1), 0, 'black', 1.5, 'milieu', true)
       s2 = demiDroite(A, C)
       // labels = labelPoint(A, B, C)
       secteur0 = afficheMesureAngle(B, A, C, 'black', 1.5, ' ')
@@ -166,6 +172,4 @@ export default function MesurerUnAngle () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireNumerique = ['Précision de l\'angle', 4, '1 : Angle à 10°\n2 : Angle à 5°\n3 : Angle à 1°\n 4 : mélange']
-  this.besoinFormulaire2CaseACocher = ['Utilisation du rapporteur', false]
 }

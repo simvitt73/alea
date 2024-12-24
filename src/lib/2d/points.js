@@ -1,4 +1,5 @@
 import { colorToLatexOrHTML, ObjetMathalea2D } from '../../modules/2dGeneralites.js'
+
 import { context } from '../../modules/context.js'
 import { egal, inferieurouegal, randint, superieurouegal } from '../../modules/outils.js'
 import { radians } from '../mathFonctions/trigo.js'
@@ -422,7 +423,7 @@ export function TracePoint (...points) {
 }
 
 /**
- * @param  {(Point | string)[]} args Points précédemment créés. Si le dernier argument est une chaîne de caractère, définit la couleur des points tracés.
+ * @param  {(Point |PointCliquable| string)[]} args Points précédemment créés. Si le dernier argument est une chaîne de caractère, définit la couleur des points tracés.
  * @return  {TracePoint}
  * @example tracePoint(A,B,C,'red) // Trace les points A,B,C précédemment créés en rouge
  * @example tracePoint(A).style = '|' // Le style du point A sera '|' et non 'x' par défaut.

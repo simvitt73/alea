@@ -9,7 +9,7 @@ import { context } from './context.js'
  * @param {number} y ordonnée du point
  * @param {object} options over, out et click sont des objets pour le style css des évènements de la souris, radius, width, color, opacite, size, style sont les paramètres possibles pour la trace du point
  */
-function PointCliquable (x, y, options) {
+export function PointCliquable (x, y, options) {
   ObjetMathalea2D.call(this, { })
   const A = point(x, y)
   this.point = A

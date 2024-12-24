@@ -74,6 +74,7 @@ export function troncature (nombre: number, precision: number) {
 /**
  * Renvoie la valeur absolue
  * @author Rémi Angot + ajout du support des décimaux par Jean-Claude Lhote
+ * @returns {number|Decimal}
  */
 export function abs (a: number | Decimal) {
   if (a instanceof Decimal) return a.abs()

@@ -1,13 +1,13 @@
 import { cibleCouronne } from '../../lib/2d/cibles'
 import { afficheMesureAngle } from '../../lib/2d/codages'
-import { point } from '../../lib/2d/points'
+import { Point, point } from '../../lib/2d/points'
 import { segment } from '../../lib/2d/segmentsVecteurs'
-import { texteParPoint } from '../../lib/2d/textes.ts'
+import { texteParPoint } from '../../lib/2d/textes'
 import { homothetie, rotation, sensDeRotation, similitude } from '../../lib/2d/transformations'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
@@ -26,19 +26,23 @@ export const refs = {
   'fr-fr': ['6G23'],
   'fr-ch': ['9ES5-3']
 }
-export default function ConstruireUnAngle () {
-  Exercice.call(this)
-  this.nbQuestions = 2
+export default class ConstruireUnAngle extends Exercice {
+  constructor () {
+    super()
+    this.nbQuestions = 2
+    this.besoinFormulaireNumerique = ['Précision de l\'angle', 4, '1 : Angle à 10°\n2 : Angle à 5°\n3 : Angle à 1°\n4 : Mélange']
 
-  this.sup = 1
-  this.video = 'cU80v1p6mMI'
+    this.sup = 1
+    this.video = 'cU80v1p6mMI'
+  }
 
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     let typeDeQuestions
     if (this.sup < 4) typeDeQuestions = [this.sup]
     else typeDeQuestions = [1, 2, 3]
     const listeTypeDeQuestion = combinaisonListes(typeDeQuestions, this.nbQuestions)
-    let angle; let anglerot; let Apos; let Bpos; let Cpos; let fleche; const signe = []; let p; let texte; let texteCorr; let A; let B; let s; let C; let s2
+    let angle = 0
+    let anglerot; let Apos; let Bpos; let Cpos; let fleche; const signe = []; let p; let texte; let texteCorr; let A; let B; let s; let C; let s2
     let secteur, cible, xMin, xMax, yMin, yMax, objetsEnonce, objetsCorrection
     signe[0] = randint(-1, 1, 0)
     for (let i = 1; i < this.nbQuestions; i++) {
@@ -66,14 +70,14 @@ export default function ConstruireUnAngle () {
       B = point(5, 0)
       B = rotation(B, A, anglerot)
       Apos = texteParPoint(p[1], similitude(B, A, -90, 0.1), 0, 'black', 1, 'milieu', true)
-      Bpos = texteParPoint(p[0], similitude(A, homothetie(B, A, 0.9), signe[i] * 90, 0.1), 0, 'black', 1, 'milieu', true)
+      Bpos = texteParPoint(p[0], similitude(A, homothetie(B, A, 0.9) as Point, signe[i] * 90, 0.1), 0, 'black', 1, 'milieu', true)
 
       s = segment(A, B)
       s.styleExtremites = '|-'
       s.epaisseur = 2
       s.tailleExtremites = 1.5
       C = rotation(B, A, angle)
-      Cpos = texteParPoint(p[2], similitude(A, homothetie(C, A, 0.9), -signe[i] * 90, 0.1), 0, 'black', 1, 'milieu', true)
+      Cpos = texteParPoint(p[2], similitude(A, homothetie(C, A, 0.9) as Point, -signe[i] * 90, 0.1), 0, 'black', 1, 'milieu', true)
       fleche = sensDeRotation(B, A, signe[i])
       s2 = segment(A, C)
       s2.styleExtremites = '|-'
@@ -114,5 +118,4 @@ export default function ConstruireUnAngle () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireNumerique = ['Précision de l\'angle', 4, '1 : Angle à 10°\n2 : Angle à 5°\n3 : Angle à 1°\n4 : Mélange']
 }

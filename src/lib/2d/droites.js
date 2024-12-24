@@ -22,6 +22,8 @@ import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } fr
 export function droiteAvecNomLatex (d, nom, color = 'black') { // nom est un latexParCoordonnees
   d.color = colorToLatexOrHTML(color ?? 'black')
   let absNom, ordNom
+  this.epaisseur = 1
+  this.opacite = 1
   if (egal(d.b, 0, 0.05)) { // ax+c=0 x=-c/a est l'équation de la droite
     absNom = -d.c / d.a + 0.8 // l'abscisse du label est décalé de 0.8
     ordNom = context.fenetreMathalea2d[1] + 1 // l'ordonnée du label est ymin +1
@@ -112,6 +114,7 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
     this.a = this.y1 - this.y2
     this.b = this.x2 - this.x1
     this.c = (this.x1 - this.x2) * this.y1 + (this.y2 - this.y1) * this.x1
+    this.pente = NaN
   } else if (arguments.length === 3) {
     if (typeof arg1 === 'number') {
       if (isNaN(arg1) || isNaN(arg2) || isNaN(arg3)) {
@@ -245,6 +248,7 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
     }
   }
   if (this.b !== 0) this.pente = -this.a / this.b
+  else this.pente = NaN
   let xsav, ysav
   if (this.x1 > this.x2) {
     xsav = this.x1
@@ -463,8 +467,12 @@ export function dessousDessus (d, A, tolerance = 0.0001) {
 
 /**
  *
- * @param {droite} d
- * @param {number} param1 les bordures de la fenêtre
+ * @param {Droite} d
+ * @param {object} param1 les bordures de la fenêtre
+ * @param {number} param1.xmin
+ * @param {number} param1.xmax
+ * @param {number} param1.ymin
+ * @param {number} param1.ymax
  * @return {Point} le point qui servira à placer le label.
  */
 export function positionLabelDroite (d, { xmin = 0, ymin = 0, xmax = 10, ymax = 10 }) {
@@ -904,11 +912,11 @@ export function bissectrice (A, O, B, couleurBissectrice = 'red', color = 'blue'
 }
 
 /**  Donne la distance entre le point A et la droite d
- * @param {point} A
- * @param {droite} d
+ * @param {Point} A
+ * @param {Droite} d
  * @example distancePointDroite (M, d1) // Retourne la distance entre le point M et la droite d1
  * @author Jean-Claude Lhote
- * @return {longueur}
+ * @return {number}
  */
 // JSDOC Validee par EE Aout 2022
 export function distancePointDroite (A, d) {

@@ -133,12 +133,17 @@ export function Rapporteur ({
 
 /**
  * place un rapporteur centré en (x,y) avec le zéro orienté à depart degrés.
- * @param {boolean} semi si semi === false alors les graduations vont de 0 à 180° sinon de 0 à 360°
- * @param {string} avecNombre === "", il n'y a pas de graduations, si avecNombre === "deuxSens" il est gradué dans les deux directions
+ * @param {object} parametres
+ * @param {number} [parametres.x] abscisse du centre du rapporteur
+ * @param {number} [parametres.y] ordonnée du centre du rapporteur
+ * @param {number} [parametres.taille] taille du rapporteur
+ * @param {number} [parametres.depart] orientation du zéro du rapporteur en degrés
+ * @param {boolean} [parametres.semi] si semi === false alors les graduations vont de 0 à 180° sinon de 0 à 360°
+ * @param {string} [parametres.avecNombre] === "", il n'y a pas de graduations, si avecNombre === "deuxSens" il est gradué dans les deux directions
  * si avecNombre === "unSens" il est gradué dans le sens trigo.
- * @param {number} precisionAuDegre === 10 alors il n'y aura pas de graduations entre les multiples de 10°, les autres valeurs sont 5 et 1.
- * @param {number} stepGraduation est un multiple de 10 qui divise 180 (c'est mieux) donc 10 (par défaut), ou 20, ou 30, ou 60 ou 90.
- * @param {boolean} rayonsVisibles = false permet de supprimer les rayons et le cercle central
+ * @param {number}[parametres. precisionAuDegre] === 10 alors il n'y aura pas de graduations entre les multiples de 10°, les autres valeurs sont 5 et 1.
+ * @param {number} [parametres.stepGraduation] est un multiple de 10 qui divise 180 (c'est mieux) donc 10 (par défaut), ou 20, ou 30, ou 60 ou 90.
+ * @param {boolean} [parametres.rayonsVisibles] = false permet de supprimer les rayons et le cercle central
  * @param {object} param0 = {x: 'number', y: 'number', taille: 'number', semi: boolean, avecNombre: string}
  * @return {Rapporteur} // crée un instance de l'objet 2d Rapporteur
  */

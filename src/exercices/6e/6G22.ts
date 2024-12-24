@@ -1,15 +1,15 @@
 import { angleOriente, codageAngle } from '../../lib/2d/angles'
 import { droite } from '../../lib/2d/droites'
-import { point, pointIntersectionDD, pointSurSegment } from '../../lib/2d/points'
+import { Point, point, pointIntersectionDD, pointSurSegment } from '../../lib/2d/points'
 import { polygoneAvecNom, polyline } from '../../lib/2d/polygones'
 import { segment } from '../../lib/2d/segmentsVecteurs'
-import { labelPoint } from '../../lib/2d/textes.ts'
+import { labelPoint } from '../../lib/2d/textes'
 import { choice, combinaisonListes, enleveElement } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { couleurTab } from '../../lib/format/style'
 import { rangeMinMax } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre, numAlpha, sp } from '../../lib/outils/outilString'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { max, min } from 'mathjs'
@@ -38,18 +38,25 @@ export const refs = {
   'fr-fr': ['6G22'],
   'fr-ch': ['9ES5-1']
 }
-export default function NommerUnAngle () {
-  Exercice.call(this)
+export default class NommerUnAngle extends Exercice {
+  constructor () {
+    super()
+    this.besoinFormulaireNumerique = ['Nombre d\'angles à trouver (entre 1 et 3) :', 3]
+    if (context.isHtml) this.besoinFormulaire2Numerique = ['Exercice interactif', 2, '1 : QCM\n2 : Texte']
+    this.besoinFormulaire3CaseACocher = ['Figure en noir et blanc']
+    this.nbQuestions = 2
+    this.sup = 2
+    this.sup2 = 1
+    this.sup3 = false
+  }
 
-  this.nbQuestions = 2
-  this.sup = 2
-  this.sup2 = 1
-  this.sup3 = false
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     this.interactifType = this.sup2 === 2 ? 'mathLive' : 'qcm'
     let propositionsDuQcm = []
-    for (let i = 0, texteAMC, troisBonnesReponses, listePt1, listePt3, resultatOK1, resultatOK2, resultat3, resultatPasOK1, resultatPasOK2, choixAngle, pt1, pt2, pt3, tailleAngle, aleaChoixCouleurRemplissage, couleurRemplissageAngle, couleurAngle, segmentsCorrection, resultat; i < this.nbQuestions; i++) {
+    for (let i = 0, texteAMC, troisBonnesReponses, resultatOK1, resultatOK2, resultat3, resultatPasOK1, resultatPasOK2, choixAngle, pt1, pt2, pt3, tailleAngle, aleaChoixCouleurRemplissage, couleurRemplissageAngle, couleurAngle, segmentsCorrection, resultat; i < this.nbQuestions; i++) {
       const propositionsAMC = []
+      let listePt1: Point[] = []
+      let listePt3: Point[] = []
       // let figureExo
       // On prépare la figure...
       const marquageAngle = this.sup3 ? combinaisonListes(['X', 'OO', '|||'], 3) : ['', '', '']
@@ -93,7 +100,7 @@ export default function NommerUnAngle () {
       const listePoints = [numA, numB, numC, numM, numN, numI]
       const objetsEnonce = []
       const objetsCorrection = []
-      const sommetsDejaTrouves = []
+      const sommetsDejaTrouves: number[] = []
       const choixCouleurRemplissage = rangeMinMax(0, 7)
       //  couleurRemplissageAngle = ['none'] // Correction J-C : on définira ces couleurs en testant this.sup3
       // couleurAngle = 'black'
@@ -106,7 +113,7 @@ export default function NommerUnAngle () {
 
       for (let jj = 0, marquageAngleConsigne; jj < this.sup; jj++) {
         marquageAngleConsigne = []
-        const choixSommet = choice(listePoints, sommetsDejaTrouves)
+        const choixSommet: number = choice(listePoints, sommetsDejaTrouves)
         if (!this.sup3) {
           aleaChoixCouleurRemplissage = choice(choixCouleurRemplissage)
           couleurRemplissageAngle = couleurTab(aleaChoixCouleurRemplissage)
@@ -176,6 +183,7 @@ export default function NommerUnAngle () {
             listePt3 = [randint(1, 2) === 1 ? C : B]
             break
           case numI:
+          default:
             pt2 = I
             choixAngle = randint(1, 4)
             switch (choixAngle) {
@@ -193,6 +201,7 @@ export default function NommerUnAngle () {
                 listePt3 = [C]
                 break
               case 4:
+              default:
                 listePt1 = [N]
                 listePt3 = [M]
                 positionIbis = ChoixHorizontal === -1 ? 'left' : 'right'
@@ -334,7 +343,9 @@ export default function NommerUnAngle () {
           enonceAvant: true, // EE : ce champ est facultatif et permet (si false) de supprimer l'énoncé ci-dessus avant la numérotation de chaque question.
           enonceCentre: true, // EE : ce champ est facultatif et permet (si true) de centrer le champ 'enonce' ci-dessus.
           melange: true, // EE : ce champ est facultatif et permet (si false) de ne pas provoquer le mélange des questions.
+          // @ts-expect-error
           options: { avecSymboleMult: true }, // facultatif. Par défaut, multicols est à false. Ce paramètre provoque un multicolonnage (sur 2 colonnes par défaut) des propositions : pratique quand on met plusieurs AMCNum. !!! Attention, cela ne fonctionne pas, nativement, pour AMCOpen. !!!
+          // @ts-expect-error
           propositions: propositionsAMC
         }
       }
@@ -343,7 +354,4 @@ export default function NommerUnAngle () {
       listeQuestionsToContenu(this)
     }
   }
-  this.besoinFormulaireNumerique = ['Nombre d\'angles à trouver (entre 1 et 3) :', 3]
-  if (context.isHtml) this.besoinFormulaire2Numerique = ['Exercice interactif', 2, '1 : QCM\n2 : Texte']
-  this.besoinFormulaire3CaseACocher = ['Figure en noir et blanc']
 }

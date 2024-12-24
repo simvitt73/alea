@@ -1,7 +1,7 @@
 import { codageAngle } from '../../lib/2d/angles'
 import { point, pointAdistance, tracePoint } from '../../lib/2d/points'
 import { demiDroite } from '../../lib/2d/segmentsVecteurs'
-import { texteParPoint } from '../../lib/2d/textes.ts'
+import { texteParPoint } from '../../lib/2d/textes'
 import { rotation } from '../../lib/2d/transformations'
 import { triangle2points1angle1longueur } from '../../lib/2d/triangle'
 import { propositionsQcm } from '../../lib/interactif/qcm'
@@ -75,6 +75,7 @@ export default class ReconnaitreUnAngleParticulier extends Exercice {
           explications = 'Un angle nul est un angle dont la mesure est égale à 0°.'
           break
         case 'plat':
+        default:
           B = point(A.x + distanceAB * degCos(randint(-30, 30)), A.y + distanceAB * degSin(randint(-30, 30)), lettreDepuisChiffre(indiceNomB))
           triangle = triangle2points1angle1longueur(B, A, 179.99, distanceCB, -1)
           explications = 'Un angle aigu est un angle dont la mesure est comprise entre 0° et 90°.'
