@@ -535,7 +535,7 @@ class resolutionEquationInequationGraphique extends Exercice {
     for (let n = 0; n < racinesArrondies.length; n++) {
       const image = fonction1.func(racinesArrondies[n])
       const isInside = racinesArrondies[n] <= xMax + 1.5 && racinesArrondies[n] >= xMin
-      const isInside2 = image > yMin && image < yMin + 12
+      const isInside2 = image >= yMin && image <= yMin + 12.6
       if (isInside && isInside2) {
         soluces.push(racinesArrondies[n])
       }
