@@ -4,7 +4,7 @@ import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
 import { rotation } from '../../lib/2d/transformations'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
 import Alea2iep from '../../modules/Alea2iep'
 
@@ -20,15 +20,16 @@ export const refs = {
   'fr-fr': ['6G23-2'],
   'fr-ch': ['9ES4-11', '9ES5-5']
 }
-export default function TracerTriangle2Angles () {
-  Exercice.call(this)
+export default class TracerTriangle2Angles extends Exercice {
+  constructor () {
+    super()
+    this.nbQuestions = 3
+    this.besoinFormulaireCaseACocher = ["Longueurs données qu'à la fin de l'animation"]
+    this.sup = false
+  }
 
-  this.nbQuestions = 3
-
-  this.sup = false
-
-  this.nouvelleVersion = function () {
-    let listeDeNomsDePolygones
+  nouvelleVersion () {
+    let listeDeNomsDePolygones: string[] = []
     for (
       let i = 0, texte, texteCorr, cpt = 0;
       i < this.nbQuestions && cpt < 50;
@@ -71,9 +72,7 @@ export default function TracerTriangle2Angles () {
       // const t3 = afficheMesureAngle(A2, B2, C3)
       // const s5 = segment(B2, C3)
       const d1 = droite(A2, C2)
-      d1.isVisible = false
       const d2 = droite(B2, C3)
-      d2.isVisible = false
       const C = pointIntersectionDD(d1, d2, p[2])
       // const l = labelPoint(A0, B0, A1, B1, A2, B2, C)
 
@@ -103,5 +102,4 @@ export default function TracerTriangle2Angles () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireCaseACocher = ["Longueurs données qu'à la fin de l'animation"]
 }

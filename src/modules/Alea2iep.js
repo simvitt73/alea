@@ -162,11 +162,11 @@ export default class Alea2iep {
 
   /**
    *
-   * @param {number} id1 NumeroExercice - Numéro de l'exercice
-   * @param {number} id2 Numéro de la question
+   * @param {number} [id1] NumeroExercice - Numéro de l'exercice
+   * @param {number} [id2] Numéro de la question
    * @return Code HTML avec le bouton qui affiche ou masque un div avec l'animation
    */
-  htmlBouton (id1, id2 = 0) {
+  htmlBouton (id1 = 0, id2 = 0) {
     if (context.isHtml) {
       const id = `IEP_${id1}_${id2}`
       StoreIep.saveXml(id, this.script())

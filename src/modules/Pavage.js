@@ -22,6 +22,7 @@ export function Pavage () {
   this.Ny = 1
   this.echelle = 20
   this.fenetre = {}
+  this.nb_polygones = 0
 
   this.construit = function (type = 1, Nx = 1, Ny = 1, taille = 3) {
     const nettoieObjets = function (objets) {

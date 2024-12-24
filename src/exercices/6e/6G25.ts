@@ -2,13 +2,13 @@ import { cercle } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { codageMediatrice } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPerpendiculaire, positionLabelDroite } from '../../lib/2d/droites'
-import { point, pointAdistance, pointIntersectionLC, tracePoint } from '../../lib/2d/points'
-import { norme, segmentAvecExtremites, vecteur } from '../../lib/2d/segmentsVecteurs'
-import { labelPoint, texteParPoint } from '../../lib/2d/textes.ts'
+import { Point, point, pointAdistance, pointIntersectionLC, tracePoint } from '../../lib/2d/points'
+import { norme, segmentAvecExtremites, Vecteur, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { labelPoint, texteParPoint } from '../../lib/2d/textes'
 import { homothetie, similitude, symetrieAxiale, translation } from '../../lib/2d/transformations'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { mathalea2d, colorToLatexOrHTML, fixeBordures } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
 
@@ -27,17 +27,20 @@ export const refs = {
   'fr-fr': ['6G25'],
   'fr-ch': ['9ES3-5']
 }
-export default function ConstruireMediatrices6e () {
-  Exercice.call(this)
-  this.nbQuestions = 1
 
-  const celluleAlea = function (rang) {
-    const lettre = lettreDepuisChiffre(randint(1, rang))
-    const chiffre = Number(randint(1, rang)).toString()
-    return lettre + chiffre
+const celluleAlea = function (rang: number) {
+  const lettre = lettreDepuisChiffre(randint(1, rang))
+  const chiffre = Number(randint(1, rang)).toString()
+  return lettre + chiffre
+}
+
+export default class ConstruireMediatrices6e extends Exercice {
+  constructor () {
+    super()
+    this.nbQuestions = 1
   }
 
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     for (let ee = 0, cpt = 0; ee < this.nbQuestions && cpt < 50;) {
       let result = [0, 0]
       let texteCorr = ''
@@ -60,10 +63,10 @@ export default function ConstruireMediatrices6e () {
       medB.color = colorToLatexOrHTML('green')
       const cA = cercle(A, calculANePlusJamaisUtiliser(randint(25, 40) / 20))
       const cB = cercle(B, calculANePlusJamaisUtiliser(randint(45, 60) / 20))
-      const A1 = pointIntersectionLC(dA, cA, noms[0], 1)
-      const A2 = symetrieAxiale(A1, medA, noms[1])
-      const B1 = pointIntersectionLC(dB, cB, noms[2], 1)
-      const B2 = symetrieAxiale(B1, medB, noms[3])
+      const A1 = pointIntersectionLC(dA, cA, noms[0], 1) as Point
+      const A2 = symetrieAxiale(A1, medA, noms[1]) as Point
+      const B1 = pointIntersectionLC(dB, cB, noms[2], 1) as Point
+      const B2 = symetrieAxiale(B1, medB, noms[3]) as Point
       const sA = segmentAvecExtremites(A1, A2)
       const sB = segmentAvecExtremites(B1, B2)
       sA.color = colorToLatexOrHTML('black')
@@ -71,13 +74,13 @@ export default function ConstruireMediatrices6e () {
 
       const objetsEnonce = []
       const objetsCorrection = []
-      const nomA1 = texteParPoint(noms[0], translation(A1, homothetie(vecteur(A2, A1), A, 0.5 / norme(vecteur(A2, A1)))), 0, 'black', 1, 'milieu', true)
-      const nomA2 = texteParPoint(noms[1], translation(A2, homothetie(vecteur(A1, A2), A, 0.5 / norme(vecteur(A2, A1)))), 0, 'black', 1, 'milieu', true)
-      const nomB1 = texteParPoint(noms[2], translation(B1, homothetie(vecteur(B2, B1), A, 0.5 / norme(vecteur(B2, B1)))), 0, 'black', 1, 'milieu', true)
-      const nomB2 = texteParPoint(noms[3], translation(B2, homothetie(vecteur(B1, B2), A, 0.5 / norme(vecteur(B2, B1)))), 0, 'black', 1, 'milieu', true)
+      const nomA1 = texteParPoint(noms[0], translation(A1, homothetie(vecteur(A2, A1), A, 0.5 / norme(vecteur(A2, A1))) as Vecteur), 0, 'black', 1, 'milieu', true)
+      const nomA2 = texteParPoint(noms[1], translation(A2, homothetie(vecteur(A1, A2), A, 0.5 / norme(vecteur(A2, A1))) as Vecteur), 0, 'black', 1, 'milieu', true)
+      const nomB1 = texteParPoint(noms[2], translation(B1, homothetie(vecteur(B2, B1), A, 0.5 / norme(vecteur(B2, B1))) as Vecteur), 0, 'black', 1, 'milieu', true)
+      const nomB2 = texteParPoint(noms[3], translation(B2, homothetie(vecteur(B1, B2), A, 0.5 / norme(vecteur(B2, B1))) as Vecteur), 0, 'black', 1, 'milieu', true)
 
       const cellule = celluleAlea(6)
-      result = dansLaCibleCarree(I.x, I.y, 6, 0.6, cellule)
+      result = dansLaCibleCarree(I.x, I.y, 6, 0.6, cellule) as number[]
       const cible = cibleCarree({ x: result[0], y: result[1], rang: 6, taille: 0.6, color: '#f15929' })
       cible.opacite = 0.7
 
@@ -91,10 +94,10 @@ export default function ConstruireMediatrices6e () {
       // Ici, la cible était un objet centré sur (cible.x, cible.y) et de taille 4, on crée deux points en diagonale
       // afin qu'elle soit prise en compte dans son intégralité avec les entêtes de lignes et de colonnes.
       const params = fixeBordures([nomA1, nomA2, nomB1, nomB2, point(cible.x - 2.5, cible.y - 2.5), point(cible.x + 2.5, cible.y + 2.5)])
-      params.pixelsParCm = 20
-      params.scale = 0.7
-      objetsCorrection.push(texteParPoint('(d)', positionLabelDroite(medA, params), 0, 'black', 1, 'milieu', true))
-      objetsCorrection.push(texteParPoint('(d\')', positionLabelDroite(medB, params), 0, 'black', 1, 'milieu', true))
+      const { xmin, xmax, ymin, ymax } = params
+      objetsCorrection.push(texteParPoint('(d)', positionLabelDroite(medA, { xmin, ymin, xmax, ymax }), 0, 'black', 1, 'milieu', true))
+      objetsCorrection.push(texteParPoint('(d\')', positionLabelDroite(medB, { xmin, ymin, xmax, ymax }), 0, 'black', 1, 'milieu', true))
+      Object.assign(params, { pixelsParCm: 20, scale: 0.7 })
 
       this.autoCorrection[ee] =
         {
@@ -104,6 +107,7 @@ export default function ConstruireMediatrices6e () {
               texte: texteCorr + mathalea2d(params, objetsCorrection),
               statut: 3, // (ici c'est le nombre de lignes du cadre pour la réponse de l'élève sur AMC)
               feedback: '',
+              // @ts-expect-error
               enonce: 'Texte écrit au dessus ou avant les cases à cocher', // EE : ce champ est facultatif et fonctionnel qu'en mode hybride (en mode normal, il n'y a pas d'intérêt)
               sanscadre: true // EE : ce champ est facultatif et permet (si true) de cacher le cadre et les lignes acceptant la réponse de l'élève
 

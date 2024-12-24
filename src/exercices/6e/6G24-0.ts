@@ -207,7 +207,7 @@ class ConstrctionsSymetriquesPoints extends Exercice {
       enonce += `${this.nbPoints > 1 ? ' des' : ' du'} point${this.nbPoints > 1 ? 's' : ''} $${this.nbPoints > 1 ? this.labels[i].slice(0, this.nbPoints - 1).join(',') : (this.labels[i][0]) + '$ par rapport à la droite $(d).'}$` + (this.nbPoints > 1 ? ` et $${this.labels[i][this.nbPoints - 1]}$ par rapport à la droite $(d)$.<br>` : '<br>')
       const guidesArc = []
       for (let k = 0; k < this.nbPoints; k++) {
-        symetriques[k] = symetrieAxiale(antecedents[k] as Point, d[i])
+        symetriques[k] = symetrieAxiale(antecedents[k] as Point, d[i]) as Point
         middle[k] = projectionOrtho(antecedents[k], d[i]) as Point
         /*  const angleOffset = choice([-12, -10, -8, 8, 10, 12])
           const ext1 = rotation(symetriques[k], middle[k], 3 * angleOffset)
@@ -230,7 +230,7 @@ class ConstrctionsSymetriquesPoints extends Exercice {
       objets.push(d[i], labelD)
       for (let k = 0; k < this.nbPoints; k++) {
         objets.push(new TracePoint(antecedents[k]))
-        const sym = symetrieAxiale(antecedents[k] as Point, d[i], (antecedents[k] as Point).nom + '\'')
+        const sym = symetrieAxiale(antecedents[k] as Point, d[i], (antecedents[k] as Point).nom + '\'') as Point
         sym.positionLabel = positionneLabel(sym, antecedents[k])
         antecedents[k].positionLabel = positionneLabel(antecedents[k], sym)
         const egalite = codageMilieu(antecedents[k], sym, colors[k], marks[k])

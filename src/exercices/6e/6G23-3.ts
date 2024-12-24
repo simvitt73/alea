@@ -5,9 +5,9 @@ import { afficheLongueurSegment, afficheMesureAngle } from '../../lib/2d/codages
 import { rotation } from '../../lib/2d/transformations'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '../../modules/outils'
-import { labelPoint } from '../../lib/2d/textes.ts'
+import { labelPoint } from '../../lib/2d/textes'
 import { arrondi } from '../../lib/outils/nombres'
 import Alea2iep from '../../modules/Alea2iep'
 import { mathalea2d } from '../../modules/2dGeneralites'
@@ -28,16 +28,27 @@ export const refs = {
   'fr-fr': ['6G23-3'],
   'fr-ch': ['9ES5-6']
 }
-export default function TracerTriangle2Angles () {
-  Exercice.call(this)
-  this.nbQuestions = 3
+export default class TracerTriangle2Angles extends Exercice {
+  constructor () {
+    super()
+    this.nbQuestions = 3
+    this.besoinFormulaireCaseACocher = ['Longueurs données qu\'à la fin de l\'animation']
+    this.besoinFormulaire2CaseACocher = ['Différentes figures de la construction']
+    this.besoinFormulaire3Texte = [
+      'Type de questions', [
+        'Nombres séparés par des tirets',
+        '1 : deux angles aigus',
+        '2 : un angle obtus et un angle aigu',
+        '3 : Mélange'
+      ].join('\n')
+    ]
+    this.sup = false
+    this.sup2 = false
+    this.sup3 = '3' // Type de questions
+  }
 
-  this.sup = false
-  this.sup2 = false
-  this.sup3 = '3' // Type de questions
-
-  this.nouvelleVersion = function () {
-    let listeDeNomsDePolygones
+  nouvelleVersion () {
+    let listeDeNomsDePolygones: string[] = []
 
     const listeTypesDeQuestions = gestionnaireFormulaireTexte({
       min: 1,
@@ -119,9 +130,7 @@ export default function TracerTriangle2Angles () {
       const t3g = afficheMesureAngle(B3, A3, C3g)
       const t3d = afficheMesureAngle(A3, B3, C3d)
       const d1 = droite(A3, C3g)
-      d1.isVisible = false
       const d2 = droite(B3, C3d)
-      d2.isVisible = false
       const C = pointIntersectionDD(d1, d2, p[2])
       const l = labelPoint(A0, B0, A1, B1, A2, B2, C, A3, B3, C)
 
@@ -151,14 +160,4 @@ export default function TracerTriangle2Angles () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireCaseACocher = ['Longueurs données qu\'à la fin de l\'animation']
-  this.besoinFormulaire2CaseACocher = ['Différentes figures de la construction']
-  this.besoinFormulaire3Texte = [
-    'Type de questions', [
-      'Nombres séparés par des tirets',
-      '1 : deux angles aigus',
-      '2 : un angle obtus et un angle aigu',
-      '3 : Mélange'
-    ].join('\n')
-  ]
 }

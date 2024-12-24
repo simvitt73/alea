@@ -1,4 +1,4 @@
-import ConstruireUnTriangle from '../6e/6G21'
+import ConstruireUnTriangle from './6G21'
 
 export const titre = 'Construire un triangle quelconque avec les instruments et auto-vérification'
 export const interactifReady = false

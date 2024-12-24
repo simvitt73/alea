@@ -1,7 +1,7 @@
 import { angle, codageAngle } from '../../lib/2d/angles'
-import { point, tracePoint } from '../../lib/2d/points'
+import { Point, point, tracePoint } from '../../lib/2d/points'
 import { demiDroite, longueur } from '../../lib/2d/segmentsVecteurs'
-import { texteParPoint } from '../../lib/2d/textes.ts'
+import { texteParPoint } from '../../lib/2d/textes'
 import { homothetie, rotation } from '../../lib/2d/transformations'
 import { choice } from '../../lib/outils/arrayOutils'
 import { lettreDepuisChiffre, numAlpha } from '../../lib/outils/outilString'
@@ -77,7 +77,7 @@ export default class VocabulaireDeBaseDesAngles extends Exercice {
       const angleABC = codageAngle(A, B, C, 2)
       const demiDroiteBA = demiDroite(B, A)
       const demiDroiteCA = demiDroite(B, C)
-      objets2d.push(tracePoint(...points), texteParPoint(A.nom, rotation(A, B, -10)), texteParPoint(C.nom, rotation(C, B, 10)), texteParPoint(B.nom, homothetie(B, A, 1.2)), angleABC, demiDroiteBA, demiDroiteCA)
+      objets2d.push(tracePoint(...points), texteParPoint(A.nom, rotation(A, B, -10)), texteParPoint(C.nom, rotation(C, B, 10)), texteParPoint(B.nom, homothetie(B, A, 1.2) as Point), angleABC, demiDroiteBA, demiDroiteCA)
       // On affiche le cadre mathalea2d
       const pointsX = []
       const pointsY = []
@@ -90,7 +90,7 @@ export default class VocabulaireDeBaseDesAngles extends Exercice {
       const ymin = Math.min(...pointsY) - 2
       const ymax = Math.max(...pointsY) + 2
       const parametres2d = { xmin, ymin, xmax, ymax, pixelsParCm: 20, scale: 0.6 }
-      const texteFigure = `À propos de l'angle ci-dessous, compléter ${this.listeTypeQuestions === 1 ? 'la' : 'chaque'} phrase par la case adéquate.<br>` + mathalea2d(parametres2d, objets2d)
+      const texteFigure = `À propos de l'angle ci-dessous, compléter ${listeTypeQuestions.length === 1 ? 'la' : 'chaque'} phrase par la case adéquate.<br>` + mathalea2d(parametres2d, objets2d)
 
       for (let ee = 0, texteQuestion, texteCorrQuestion; ee < listeTypeQuestions.length;) {
         texteQuestion = ''
@@ -131,7 +131,8 @@ export default class VocabulaireDeBaseDesAngles extends Exercice {
           }
 
             break
-          case 'autre': {
+          case 'autre':
+          default: {
             let question = ''
             let explications = ''
             switch (choice(['sommet', 'cote', 'nom'])) {
@@ -204,7 +205,9 @@ export default class VocabulaireDeBaseDesAngles extends Exercice {
           enonceAvant: true, // EE : ce champ est facultatif et permet (si false) de supprimer l'énoncé ci-dessus avant la numérotation de chaque question.
           enonceCentre: true, // EE : ce champ est facultatif et permet (si true) de centrer le champ 'enonce' ci-dessus.
           melange: true, // EE : ce champ est facultatif et permet (si false) de ne pas provoquer le mélange des questions.
+          // @ts-expect-error
           options: { avecSymboleMult: true }, // facultatif. Par défaut, multicols est à false. Ce paramètre provoque un multicolonnage (sur 2 colonnes par défaut) des propositions : pratique quand on met plusieurs AMCNum. !!! Attention, cela ne fonctionne pas, nativement, pour AMCOpen. !!!
+          // @ts-expect-error
           propositions: propositionsAMC
         }
       }

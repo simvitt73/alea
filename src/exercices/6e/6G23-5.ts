@@ -2,17 +2,16 @@ import { angleModulo, codageAngle, codageAngleDroit } from '../../lib/2d/angles'
 import { afficheMesureAngle } from '../../lib/2d/codages'
 import { point, pointSurSegment, tracePoint } from '../../lib/2d/points'
 import { segment } from '../../lib/2d/segmentsVecteurs'
-import { labelPoint } from '../../lib/2d/textes.ts'
+import { labelPoint } from '../../lib/2d/textes'
 import { rotation } from '../../lib/2d/transformations'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { abs, arrondi } from '../../lib/outils/nombres'
+import { arrondi } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre, sp } from '../../lib/outils/outilString'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { max, min } from 'mathjs'
 import { context } from '../../modules/context'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 
@@ -37,11 +36,33 @@ export const refs = {
   'fr-fr': ['6G23-5'],
   'fr-ch': ['9ES5-8']
 }
-export default function CalculerUnAngle () {
-  Exercice.call(this)
-  this.nbQuestions = 5
-  this.sup = 15
-  this.nouvelleVersion = function () {
+export default class CalculerUnAngle extends Exercice {
+  constructor () {
+    super()
+    this.nbQuestions = 5
+    this.sup = 15
+    this.besoinFormulaireTexte = [
+      'Type de questions',
+      `Nombres séparés par des tirets :
+  1 : Complément d'un angle droit
+  2 : Complément d'un angle plat avec affichage angle plat
+  3 : Complément d'un angle plat avec précision des points alignés
+  4 : Complément d'un angle aigu
+  5 : Complément d'un angle obtus
+  6 : Diviseur d'un angle droit
+  7 : Multiple (inférieur à 90) d'un diviseur d'angle droit
+  8 : Multiple (supérieur à 90) d'un diviseur d'angle droit
+  9 : Diviseur d'un angle plat
+  10 : Multiple d'un diviseur d'angle plat
+  11 : Somme d'angles aigus (2 ou 3 selon le hasard)
+  12 : Somme d'un angle droit et d'un angle aigu
+  13 : Angle issu d'une division puis d'une différence
+  14 : Angle issu d'une différence puis d'une multiplication
+  15 : Mélange `
+    ]
+  }
+
+  nouvelleVersion () {
     this.consigne = (this.nbQuestions === 1 ? 'L\' angle attendu est un angle saillant' : 'Les angles attendus sont des angles saillants') + ' (dont la mesure est comprise entre $0^\\circ$ et $180^\\circ$).'
     const QuestionsDisponibles = gestionnaireFormulaireTexte({
       max: 14,
@@ -50,9 +71,9 @@ export default function CalculerUnAngle () {
       melange: 15,
       // shuffle: false, // A GARDER POUR LE DEBUGGAGE
       saisie: this.sup
-    })
+    }).map(Number)
     const partagesPossiblesAngle90 = combinaisonListes([2, 3, 5, 6, 9, 10], this.nbQuestions)
-    for (let i = 0, QCas6 = 0, somAngle, choixAngD, choixAngC, numA, numB, numC, numD, numE, texte, texteCorr, tabAngle, partageAngle, pointsPartage, choixPartage, reponse, A, B, B1, C, C1, D, D1, E, AB, AC, AD, sensRot, posA, posB, posC, posD, angB, angC, angD, paramsEnonce; i < this.nbQuestions; i++) {
+    for (let i = 0, QCas6 = 0, numA, numB, numC, numD, numE, texte, texteCorr, pointsPartage, choixPartage, reponse, A, B, B1, C, C1, D, D1, E, AB, AC, AD, sensRot, posA, posB, posC, posD, angB, angC, paramsEnonce; i < this.nbQuestions; i++) {
       texte = ''
       texteCorr = ''
       // On prépare la figure...
@@ -73,10 +94,14 @@ export default function CalculerUnAngle () {
       numD = randint(1, 26, [4, 5, 15, 23, 24, 25, numA, numB, numC])
       sensRot = choice([-1, 1]) // Ce sens de rotation indique si on tourne dans le sens trigo ou pas.
       angB = randint(0, 360) - 180 // Compris entre -180 et 180. Pour éviter d'avoir un segment forcément horizontal ou vertical.
-
+      let tabAngle: number[] = []
+      let choixAngC = 0
       // Mise en place des angles BAC et BAD selon les cas
       choixPartage = 0
-
+      let somAngle = 0
+      let partageAngle = 1
+      let choixAngD = 0
+      let angD = 0
       switch (QuestionsDisponibles[i]) {
         case 1:
           angC = sensRot * 90
@@ -143,7 +168,7 @@ export default function CalculerUnAngle () {
           }
           // C est la rotation de D de la somme des 2 ou 3 angles suivants dans la tableau.
           angC = angD
-          choixAngC = min(choixAngD + randint(2, 3), 4) // Si angD est la somme des 3 premiers, alors angC est forcément la somme des deux suivants.
+          choixAngC = Math.min(choixAngD + randint(2, 3), 4) // Si angD est la somme des 3 premiers, alors angC est forcément la somme des deux suivants.
           for (let ee = choixAngD + 1; ee <= choixAngC; ee++) {
             angC += tabAngle[ee]
           }
@@ -163,6 +188,7 @@ export default function CalculerUnAngle () {
           numE = randint(1, 26, [4, 5, 15, 23, 24, 25, numA, numB, numC, numD])
           break
         case 14:
+        default:
           partageAngle = randint(2, 5)
           choixAngD = randint(25, 36)
           angD = sensRot * (90 - choixAngD)
@@ -170,7 +196,7 @@ export default function CalculerUnAngle () {
           numE = randint(1, 26, [4, 5, 15, 23, 24, 25, numA, numB, numC, numD])
           break
       }
-      if (QuestionsDisponibles[i] < 6) angD = sensRot * randint(25, abs(angC) - 25, [90])
+      if (QuestionsDisponibles[i] < 6) angD = sensRot * randint(25, Math.abs(angC) - 25, [90])
 
       /* Ne pas effacer ! Pratique à décommenter pour débugguer
                   numA = 1
@@ -206,10 +232,10 @@ export default function CalculerUnAngle () {
       // Création dans les cas 6 à 10, des différents angles diviseurs de l'angle droit ou plat et les segments associés.
       if ([6, 7, 8, 9, 10].indexOf(QuestionsDisponibles[i]) !== -1) {
         pointsPartage = [B1]
-        for (let ee = 1; ee <= max(partageAngle, choixPartage); ee++) {
-          pointsPartage[ee] = rotation(B1, A, sensRot * ee * arrondi(abs(angC) / partageAngle))
-          objetsEnonce.push(codageAngle(pointsPartage[ee - 1], A, sensRot * arrondi(abs(angC) / partageAngle), 3, 'X'))
-          objetsCorrection.push(codageAngle(pointsPartage[ee - 1], A, sensRot * arrondi(abs(angC) / partageAngle), 3, 'X'))
+        for (let ee = 1; ee <= Math.max(partageAngle, choixPartage); ee++) {
+          pointsPartage[ee] = rotation(B1, A, sensRot * ee * arrondi(Math.abs(angC) / partageAngle))
+          objetsEnonce.push(codageAngle(pointsPartage[ee - 1], A, sensRot * arrondi(Math.abs(angC) / partageAngle), 3, 'X'))
+          objetsCorrection.push(codageAngle(pointsPartage[ee - 1], A, sensRot * arrondi(Math.abs(angC) / partageAngle), 3, 'X'))
           if (ee !== partageAngle - choixPartage || ee !== partageAngle) { // On ne crée pas les angles pour C et D (car créé dans la partie commune)
             objetsEnonce.push(segment(A, pointsPartage[ee]))
             objetsCorrection.push(segment(A, pointsPartage[ee]))
@@ -222,7 +248,7 @@ export default function CalculerUnAngle () {
           pointsPartage[ee] = rotation(pointsPartage[ee - 1], A, sensRot * tabAngle[ee - 1])
           objetsEnonce.push(afficheMesureAngle(pointsPartage[ee - 1], A, pointsPartage[ee]))
           objetsCorrection.push(afficheMesureAngle(pointsPartage[ee - 1], A, pointsPartage[ee]))
-          if (ee !== choixAngD + 1 & ee !== choixAngC + 1) { // On ne crée pas les angles pour D (car créé dans la partie commune)
+          if (ee !== choixAngD + 1 && ee !== choixAngC + 1) { // On ne crée pas les angles pour D (car créé dans la partie commune)
             objetsEnonce.push(segment(A, pointsPartage[ee]))
             objetsCorrection.push(segment(A, pointsPartage[ee]))
           }
@@ -289,7 +315,7 @@ export default function CalculerUnAngle () {
         objetsCorrection.push(afficheMesureAngle(B, A, D, 'black', 1.5, '', { ecart: 0.75 }))
       }
 
-      reponse = QuestionsDisponibles[i] === 14 ? choixAngD * partageAngle : [8, 13].indexOf(QuestionsDisponibles[i]) !== -1 ? -abs(angD) : QuestionsDisponibles[i] === 12 ? abs(abs(angC) + abs(angD)) : abs(abs(angC) - abs(angD)) // Correction issue du 6
+      reponse = QuestionsDisponibles[i] === 14 ? choixAngD * partageAngle : [8, 13].indexOf(QuestionsDisponibles[i]) !== -1 ? -Math.abs(angD) : QuestionsDisponibles[i] === 12 ? Math.abs(Math.abs(angC) + Math.abs(angD)) : Math.abs(Math.abs(angC) - Math.abs(angD)) // Correction issue du 6
 
       // Création de l'angle "multiple" dans les cas 6, 7, 9 et 10
       if ([6, 7, 9, 10].indexOf(QuestionsDisponibles[i]) !== -1) {
@@ -320,26 +346,26 @@ export default function CalculerUnAngle () {
       // Début de la consigne selon les cas
       if ([1, 2, 11, 12].indexOf(QuestionsDisponibles[i]) !== -1) texte += 'Quelle'
       else if (QuestionsDisponibles[i] === 3) texte += `Sachant que les points $${lettreDepuisChiffre(numC)}$, $${lettreDepuisChiffre(numA)}$ et $${lettreDepuisChiffre(numB)}$ sont alignés, quelle`
-      else if ([4, 5].indexOf(QuestionsDisponibles[i]) !== -1) texte += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${abs(angC)}°$, quelle`
+      else if ([4, 5].indexOf(QuestionsDisponibles[i]) !== -1) texte += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${Math.abs(angC)}°$, quelle`
       else if ([6, 7, 8, 9, 10].indexOf(QuestionsDisponibles[i]) !== -1) texte += `Sachant que l'angle ${QuestionsDisponibles[i] < 9 ? 'droit' : 'plat'} $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ est partagé en ${partageAngle} angles égaux, quelle`
-      else if (QuestionsDisponibles[i] === 13) texte += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numE) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numD)}}$ mesure $${abs(choixAngD * partageAngle)}°$ et est partagé en ${partageAngle} angles égaux, quelle`
+      else if (QuestionsDisponibles[i] === 13) texte += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numE) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numD)}}$ mesure $${Math.abs(choixAngD * partageAngle)}°$ et est partagé en ${partageAngle} angles égaux, quelle`
       else if (QuestionsDisponibles[i] === 14) texte += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numE) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numD)}}$ est partagé en ${partageAngle} angles égaux, quelle`
 
       if (QuestionsDisponibles[i] !== 14) texte += ` est la mesure, en degrés, de l'angle $\\widehat{${lettreDepuisChiffre([8, 13].indexOf(QuestionsDisponibles[i]) !== -1 ? numB : numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numD)}}$ ?`
       else texte += ` est la mesure, en degrés, de l'angle $\\widehat{${lettreDepuisChiffre(numE) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numD)}}$ ?`
 
       texte += ajouteChampTexteMathLive(this, i, '', { texteApres: ' °' })
-      setReponse(this, i, abs(reponse), { digits: 3, decimals: 0, signe: false }) // abs indispensable à cause du cas 8
+      setReponse(this, i, Math.abs(reponse), { digits: 3, decimals: 0, signe: false }) // abs indispensable à cause du cas 8
 
       // Correction selon les cas
       // Les espaces (sp) sont nécessaires pour contrecarrer l'espace créé par les °.
-      if (QuestionsDisponibles[i] < 6) texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${abs(angC)}°$, alors l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $${abs(angC)}^\\circ-${sp()}${abs(angD)}°=${sp()}${miseEnEvidence(reponse + '°')}$.<br>`
+      if (QuestionsDisponibles[i] < 6) texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${Math.abs(angC)}°$, alors l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $${Math.abs(angC)}^\\circ-${sp()}${Math.abs(angD)}°=${sp()}${miseEnEvidence(reponse + '°')}$.<br>`
       else if ([6, 7, 8, 9, 10].indexOf(QuestionsDisponibles[i]) !== -1) {
-        texteCorr += `Sachant que l'angle ${QuestionsDisponibles[i] < 9 ? 'droit' : 'plat'} $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ est partagé en ${partageAngle} angles égaux, alors chacun de ces angles égaux mesure $${arrondi(abs(angC) / partageAngle)}°$ (car $${abs(angC)}°\\div${sp()}${partageAngle}=${sp()}${arrondi(abs(angC) / partageAngle)}°$).<br>`
+        texteCorr += `Sachant que l'angle ${QuestionsDisponibles[i] < 9 ? 'droit' : 'plat'} $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ est partagé en ${partageAngle} angles égaux, alors chacun de ces angles égaux mesure $${arrondi(Math.abs(angC) / partageAngle)}°$ (car $${Math.abs(angC)}°\\div${sp()}${partageAngle}=${sp()}${arrondi(Math.abs(angC) / partageAngle)}°$).<br>`
         if ([6, 9].indexOf(QuestionsDisponibles[i]) !== -1) {
           texteCorr += `L'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $${miseEnEvidence(reponse + '°')}$.<br>`
         } else if ([7, 8, 10].indexOf(QuestionsDisponibles[i]) !== -1) {
-          texteCorr += `L'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(QuestionsDisponibles[i] === 8 ? numB : numC)}}$ est composé de ${choixPartage} angles égaux de $${arrondi(abs(angC) / partageAngle)}°$ chacun et donc mesure : $${choixPartage}\\times${arrondi(abs(angC) / partageAngle)}°=${sp()}${miseEnEvidence(abs(reponse) + '°')}$.<br>`
+          texteCorr += `L'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(QuestionsDisponibles[i] === 8 ? numB : numC)}}$ est composé de ${choixPartage} angles égaux de $${arrondi(Math.abs(angC) / partageAngle)}°$ chacun et donc mesure : $${choixPartage}\\times${arrondi(Math.abs(angC) / partageAngle)}°=${sp()}${miseEnEvidence(Math.abs(reponse) + '°')}$.<br>`
         }
       } else if (QuestionsDisponibles[i] === 11) {
         texteCorr += `L'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $`
@@ -347,15 +373,15 @@ export default function CalculerUnAngle () {
           texteCorr += `${tabAngle[ee]}°+${sp()}`
         }
         texteCorr += `${tabAngle[choixAngC]}°`
-        texteCorr += `=${sp()}${miseEnEvidence(abs(reponse) + '°')}$.<br>`
+        texteCorr += `=${sp()}${miseEnEvidence(Math.abs(reponse) + '°')}$.<br>`
       } else if (QuestionsDisponibles[i] === 12) {
-        texteCorr += `L'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $90°+${sp()}${abs(angD)}°=${sp()}${miseEnEvidence(abs(reponse) + '°')}$.<br>`
+        texteCorr += `L'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $90°+${sp()}${Math.abs(angD)}°=${sp()}${miseEnEvidence(Math.abs(reponse) + '°')}$.<br>`
       } else if (QuestionsDisponibles[i] === 13) {
         texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numE)}}$ est partagé en ${partageAngle} angles égaux, alors chacun de ces angles égaux mesure $${choixAngD}°$ (car $${arrondi(choixAngD * partageAngle)}°\\div${sp()}${partageAngle}=${sp()}${choixAngD}°$).<br>`
-        texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${abs(angC)}°$, alors l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $${abs(angC)}°-${sp()}${abs(choixAngD)}°=${sp()}${miseEnEvidence(abs(reponse) + '°')}$.<br>`
+        texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${Math.abs(angC)}°$, alors l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $${Math.abs(angC)}°-${sp()}${Math.abs(choixAngD)}°=${sp()}${miseEnEvidence(Math.abs(reponse) + '°')}$.<br>`
       } else if (QuestionsDisponibles[i] === 14) {
-        texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${abs(angC)}°$, alors l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $${abs(angC)}°-${sp()}${abs(angD)}°=${sp()}${choixAngD}°$.<br>`
-        texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numE)}}$ est partagé en ${partageAngle} angles égaux de $${choixAngD}°$ et donc mesure : $${partageAngle}\\times${sp()}${abs(choixAngD)}°=${sp()}${miseEnEvidence(abs(reponse) + '°')}$.<br>`
+        texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numC) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numB)}}$ mesure $${Math.abs(angC)}°$, alors l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numC)}}$ mesure : $${Math.abs(angC)}°-${sp()}${Math.abs(angD)}°=${sp()}${choixAngD}°$.<br>`
+        texteCorr += `Sachant que l'angle $\\widehat{${lettreDepuisChiffre(numD) + lettreDepuisChiffre(numA) + lettreDepuisChiffre(numE)}}$ est partagé en ${partageAngle} angles égaux de $${choixAngD}°$ et donc mesure : $${partageAngle}\\times${sp()}${Math.abs(choixAngD)}°=${sp()}${miseEnEvidence(Math.abs(reponse) + '°')}$.<br>`
       }
 
       // paramètres de la fenêtre Mathalea2d pour l'énoncé
@@ -374,23 +400,4 @@ export default function CalculerUnAngle () {
       listeQuestionsToContenu(this)
     }
   }
-  this.besoinFormulaireTexte = [
-    'Type de questions',
-        `Nombres séparés par des tirets :
-    1 : Complément d'un angle droit
-    2 : Complément d'un angle plat avec affichage angle plat
-    3 : Complément d'un angle plat avec précision des points alignés
-    4 : Complément d'un angle aigu
-    5 : Complément d'un angle obtus
-    6 : Diviseur d'un angle droit
-    7 : Multiple (inférieur à 90) d'un diviseur d'angle droit
-    8 : Multiple (supérieur à 90) d'un diviseur d'angle droit
-    9 : Diviseur d'un angle plat
-    10 : Multiple d'un diviseur d'angle plat
-    11 : Somme d'angles aigus (2 ou 3 selon le hasard)
-    12 : Somme d'un angle droit et d'un angle aigu
-    13 : Angle issu d'une division puis d'une différence
-    14 : Angle issu d'une différence puis d'une multiplication
-    15 : Mélange `
-  ]
 }

@@ -1,14 +1,14 @@
 import { droite } from '../../lib/2d/droites'
-import { point, tracePoint } from '../../lib/2d/points'
+import { Point, point, TracePoint, tracePoint } from '../../lib/2d/points'
 import { papierPointe } from '../../lib/2d/reperes'
 import { longueur } from '../../lib/2d/segmentsVecteurs'
 import { symetrieAxiale } from '../../lib/2d/transformations'
 import { choice, shuffle } from '../../lib/outils/arrayOutils'
-import Exercice from '../deprecatedExercice'
+import Exercice from '../Exercice'
 import { mathalea2d, colorToLatexOrHTML } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { context } from '../../modules/context'
-import { pointCliquable } from '../../modules/2dinteractif'
+import { PointCliquable, pointCliquable } from '../../modules/2dinteractif'
 export const titre = 'Compléter un nuage de points symétriques'
 export const dateDePublication = '18/12/2021'
 export const interactifReady = false
@@ -29,22 +29,31 @@ export const refs = {
   'fr-fr': ['6G24-4'],
   'fr-ch': ['9ES6-15']
 }
-export default function CompleterParSymetrie6e () {
-  Exercice.call(this)
+export default class CompleterParSymetrie6e extends Exercice {
+  pointsNonSolution: PointCliquable[][]
+  pointsSolution: PointCliquable[][]
+  pointsCliquables: PointCliquable[][]
+  pointsCliques: TracePoint[][] | undefined
+  constructor () {
+    super()
+    this.nbQuestions = 1
+    this.besoinFormulaireNumerique = ['Type d\'axes', 5, '1 : Axe vertical\n2 : Axe horizontal\n3 : Axe oblique /\n4 : Axe oblique \\\n5 : Mélange']
+    this.besoinFormulaire2Numerique = ['Type de papier pointé', 4, '1 : Carrés\n2 : Hexagones\n3 : Triangles équilatéraux\n4 : Mélange']
+    this.besoinFormulaire3CaseACocher = ['Axe centré', true]
+    this.sup = 1
+    this.sup2 = 1
+    this.sup3 = true
+    this.pointsNonSolution = []
+    this.pointsSolution = []
+    this.pointsCliquables = []
+    this.pointsCliques = []
+  }
 
-  this.nbQuestions = 1
-
-  this.sup = 1
-  this.sup2 = 1
-  this.sup3 = true
-  this.pointsNonSolution = []
-  this.pointsSolution = []
-  this.pointsCliquables = []
-  this.nouvelleVersion = function () {
+  nouvelleVersion () {
     const couples = []
     let pointsPossibles
-    const objetsEnonce = []
-    const objetsCorrection = []
+    const objetsEnonce: any[][] = []
+    const objetsCorrection: any[][] = []
     const pointsChoisis = []
     const pointsAffiches = []
     const pointsEnPlusCorr = []
@@ -95,6 +104,7 @@ export default function CompleterParSymetrie6e () {
           }
           break
         case 4:
+        default:
           if (typeDePapier[(this.sup2 === 4 ? 0 : this.sup2)] === 'quad') {
             d = droite(point(0, 10 - changeAxe[i]), point(10 - changeAxe[i], 0))
           } else {
@@ -114,7 +124,7 @@ export default function CompleterParSymetrie6e () {
         }
       }
       while (pointsPossibles.length > 1) { // si il n'en reste qu'un, on ne peut pas trouver de symétrique
-        image = symetrieAxiale(point(pointsPossibles[0][0], pointsPossibles[0][1]), d)
+        image = symetrieAxiale(point(pointsPossibles[0][0], pointsPossibles[0][1]), d) as Point
         j = 1
         trouve = false
         while (j < pointsPossibles.length && !trouve) {
@@ -188,6 +198,7 @@ export default function CompleterParSymetrie6e () {
             propositions: [
               {
                 type: 'AMCOpen',
+                // @ts-expect-error
                 propositions: [{
                   enonce: texte,
                   texte: texteCorr,
@@ -197,6 +208,7 @@ export default function CompleterParSymetrie6e () {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [{
                   texte: '',
                   statut: '',
@@ -222,12 +234,12 @@ export default function CompleterParSymetrie6e () {
     }
     listeQuestionsToContenu(this)
   }
-  this.besoinFormulaireNumerique = ['Type d\'axes', 5, '1 : Axe vertical\n2 : Axe horizontal\n3 : Axe oblique /\n4 : Axe oblique \\\n5 : Mélange']
-  this.besoinFormulaire2Numerique = ['Type de papier pointé', 4, '1 : Carrés\n2 : Hexagones\n3 : Triangles équilatéraux\n4 : Mélange']
-  this.besoinFormulaire3CaseACocher = ['Axe centré', true]
-  this.correctionInteractive = (i) => {
-    let resultat
+
+  correctionInteractive = (i:number) => {
+    let resultat = 'Ok'
     let aucunMauvaisPointsCliques = true
+    if (this.pointsCliques == null) this.pointsCliques = []
+    if (this.pointsCliques[i] == null) this.pointsCliques[i] = []
     for (const monPoint of this.pointsNonSolution[i]) {
       if (monPoint.etat) {
         aucunMauvaisPointsCliques = false
@@ -246,14 +258,18 @@ export default function CompleterParSymetrie6e () {
     }
     let etat = true
     for (let k = 0; k < this.pointsSolution[i].length; k++) {
-      etat = etat && this.pointsSolution[i][k]
+      etat = etat && this.pointsSolution[i][k].etat
     }
     if (aucunMauvaisPointsCliques && etat) {
-      spanResultat.innerHTML = '😎'
-      resultat = 'OK'
+      if (spanResultat != null) {
+        spanResultat.innerHTML = '😎'
+        resultat = 'OK'
+      }
     } else {
-      spanResultat.innerHTML = '☹️'
-      resultat = 'KO'
+      if (spanResultat != null) {
+        spanResultat.innerHTML = '☹️'
+        resultat = 'KO'
+      }
     }
     // this.listeCorrections[i] = mathalea2d({ xmin: -1, ymin: -1, xmax: 11, ymax: 11, scale: 0.7, style: 'inline' }, ...objetsEnonce[i], ...pointsCliques[i]) + mathalea2d({ xmin: -1, ymin: -1, xmax: 11, ymax: 11, scale: 0.5, style: 'inline' }, ...objetsEnonce, ...objetsCorrection[i])
     // le contenu est déjà prêt. Il faudra modifier les <svg> à postéreiori...
