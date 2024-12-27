@@ -5,6 +5,14 @@
   export let exercice: TypeExercice
   export let exerciceIndex: number
   export let isVisible: boolean = true
+
+  const dispatch = createEventDispatcher()
+
+  type FormNumerique = {
+    titre: string
+    champs: string[] | number
+  }
+
   let nbQuestions: number
   let duration: number
   let sup: boolean
@@ -14,13 +22,9 @@
   let sup5: boolean
   let alea: string
   let correctionDetaillee: boolean
+
   let isCommentDisplayed: boolean = false
 
-  // pour récupérer les tooltips de l'exercice
-  type FormNumerique = {
-    titre: string
-    champs: string[] | number
-  }
   let formNum1: FormNumerique
   let formNum2: FormNumerique
   let formNum3: FormNumerique
@@ -30,34 +34,31 @@
   onMount(() => {
     nbQuestions = exercice.nbQuestions
     duration = exercice.duration || 10
-    if (exercice.sup === 'false') {
-      sup = false
-    } else {
-      sup = exercice.sup
-    }
-    sup2 = exercice.sup2
-    sup3 = exercice.sup3
-    sup4 = exercice.sup4
-    sup5 = exercice.sup5
+    sup = exercice.sup === 'false' ? false : exercice.sup
+    sup2 = exercice.sup2 === 'false' ? false : exercice.sup2
+    sup3 = exercice.sup3 === 'false' ? false : exercice.sup3
+    sup4 = exercice.sup4 === 'false' ? false : exercice.sup4
+    sup5 = exercice.sup5 === 'false' ? false : exercice.sup5
     alea = exercice.seed ?? ''
     correctionDetaillee = exercice.correctionDetaillee
+
+    if (typeof exercice.besoinFormulaireNumerique !== 'boolean') {
+      formNum1 = parseFormNumerique(exercice.besoinFormulaireNumerique)
+    }
+    if (typeof exercice.besoinFormulaire2Numerique !== 'boolean') {
+      formNum2 = parseFormNumerique(exercice.besoinFormulaire2Numerique)
+    }
+    if (typeof exercice.besoinFormulaire3Numerique !== 'boolean') {
+      formNum3 = parseFormNumerique(exercice.besoinFormulaire3Numerique)
+    }
+    if (typeof exercice.besoinFormulaire4Numerique !== 'boolean') {
+      formNum4 = parseFormNumerique(exercice.besoinFormulaire4Numerique)
+    }
+    if (typeof exercice.besoinFormulaire5Numerique !== 'boolean') {
+      formNum5 = parseFormNumerique(exercice.besoinFormulaire5Numerique)
+    }
   })
 
-  const dispatch = createEventDispatcher()
-
-  function dispatchNewSettings () {
-    dispatch('settings', {
-      nbQuestions,
-      duration,
-      sup,
-      sup2,
-      sup3,
-      sup4,
-      sup5,
-      alea,
-      correctionDetaillee
-    })
-  }
   /**
    * Transforme le tableau des tooltips d'un paramètre type numérique en un objet
    * constitué d'un titre (celui du paramètre) et soit d'un tableau
@@ -103,21 +104,19 @@
       return { titre, champs }
     }
   }
-  // fabrication des objets correspondant aux paramètres numériques.
-  if (typeof exercice.besoinFormulaireNumerique !== 'boolean') {
-    formNum1 = parseFormNumerique(exercice.besoinFormulaireNumerique)
-  }
-  if (typeof exercice.besoinFormulaire2Numerique !== 'boolean') {
-    formNum2 = parseFormNumerique(exercice.besoinFormulaire2Numerique)
-  }
-  if (typeof exercice.besoinFormulaire3Numerique !== 'boolean') {
-    formNum3 = parseFormNumerique(exercice.besoinFormulaire3Numerique)
-  }
-  if (typeof exercice.besoinFormulaire4Numerique !== 'boolean') {
-    formNum4 = parseFormNumerique(exercice.besoinFormulaire4Numerique)
-  }
-  if (typeof exercice.besoinFormulaire5Numerique !== 'boolean') {
-    formNum5 = parseFormNumerique(exercice.besoinFormulaire5Numerique)
+
+  function dispatchNewSettings () {
+    dispatch('settings', {
+      nbQuestions,
+      duration,
+      sup,
+      sup2,
+      sup3,
+      sup4,
+      sup5,
+      alea,
+      correctionDetaillee
+    })
   }
 </script>
 
