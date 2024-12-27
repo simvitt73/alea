@@ -19,6 +19,7 @@ vitetest.config.ts
 _private/
 tests/e2e/logs
 updatefile
+.madgerc
 # Dictionnaires générés
 src/json/referentielStaticFR.json
 src/json/referentielStaticCH.json
