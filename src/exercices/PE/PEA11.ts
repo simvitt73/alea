@@ -36,15 +36,23 @@ export default class PasserDUneBaseA1Autre extends Exercice {
       typesDeQuestionsDisponibles = ['vers_base_10', 'vers_base_n_3_chiffres', 'vers_base_n_4_chiffres', 'plus_grand_4_chiffres', 'plus_grand_3_chiffres', 'plus_petit_4_chiffres', 'plus_petit_3_chiffres']
     }
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
-    for (let i = 0, texte, texteCorr, b, n, m, chiffre1, chiffre2, chiffre3, chiffre4, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      b = randint(2, 7)
+    for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      let texte = ''
+      let texteCorr = ''
+      let n = NaN
+      let m = NaN
+      let chiffre1: number
+      let chiffre2: number
+      let chiffre3: number
+      let chiffre4: number
+      const b = randint(2, 7)
       switch (listeTypeDeQuestions[i]) {
         case 'vers_base_10':
           n = randint(1, b - 1) * 10 + randint(0, b - 1)
           m = randint(1, b - 1) * 1000 + randint(0, b - 1) * 100 + randint(0, b - 1) * 10 + randint(0, b - 1)
           texte = `Les nombres $(${n})_${b}$ et $(${m})_${b}$ sont écrits en base ${b}. Exprimer leur écriture en base dix.`
-          texteCorr = `$(${n})_${b}=${n.toString()[0]}\\times${b}+${n.toString()[1]}=${parseInt(n, b)}$`
-          texteCorr += `<br>$(${m})_${b}=${m.toString()[0]}\\times${b}^3+${m.toString()[1]}\\times${b}^2+${m.toString()[2]}\\times${b}+${m.toString()[3]}=${parseInt(m, b)}$`
+          texteCorr = `$(${n})_${b}=${n.toString()[0]}\\times${b}+${n.toString()[1]}=${parseInt(n.toString(), b)}$`
+          texteCorr += `<br>$(${m})_${b}=${m.toString()[0]}\\times${b}^3+${m.toString()[1]}\\times${b}^2+${m.toString()[2]}\\times${b}+${m.toString()[3]}=${parseInt(m.toString(), b)}$`
           break
         case 'vers_base_n_3_chiffres':
           chiffre1 = randint(1, b - 1)
@@ -109,7 +117,7 @@ export default class PasserDUneBaseA1Autre extends Exercice {
           texteCorr += `<br> $(100)_${b}=1\\times${b}^2=${texNombre(b ** 2)}$ donc $(${b - 1}${b - 1})_${b}=${b ** 2}-1=${texNombre(b ** 2 - 1)}$.`
           break
       }
-      if (this.listeQuestions.indexOf(texte) === -1) { // Si la question n'a jamais été posée, on en créé une autre
+      if (this.questionJamaisPosee(i, n, m, listeTypeDeQuestions[i])) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++

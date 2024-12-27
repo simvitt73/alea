@@ -31,7 +31,7 @@ export const refs = {
  *
  * @author Rémi Angot
  */
-export function valeurBase (n) {
+export function valeurBase (n: string) {
   switch (n) {
     case 'A':
       return 10
@@ -50,7 +50,7 @@ export function valeurBase (n) {
   }
 }
 
-export function baseValeur (n) {
+export function baseValeur (n: number) {
   switch (n) {
     case 10:
       return 'A'
@@ -92,12 +92,15 @@ export default class PasserDeLaBase12Ou16ALaBase10 extends Exercice {
       this.introduction = 'Les symboles que l\'on utilise en base 16 sont les dix chiffres habituels, la lettre A pour désigner 10 unités, B pour 11 unités, C pour 12 unités, D pour 13 unités, '
       this.introduction += 'E pour 14 unités et F pour 15 unités.'
     }
-    for (let i = 0, texte, texteCorr, n, m, chiffre1, chiffre2, chiffre3, chiffre4, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      let texte = ''
+      let texteCorr = ''
+      let [n, m, chiffre1, chiffre2, chiffre3, chiffre4] = ['', '', '', '', '', '']
       switch (listeTypeDeQuestions[i]) {
         case 'vers_base_10':
           if (b === 12) {
             n = choice([choice(['A', 'B']) + randint(0, 9), randint(1, 9) + choice(['A', 'B']), choice(['A', 'B']) + choice(['A', 'B'])])
-            m = choice(['A', 'B', randint(1, 9)]) + choice(['A', 'B', randint(0, 9)]) + choice(['A', 'B', randint(0, 9)]) + choice(['A', 'B', randint(0, 9)])
+            m = choice(['A', 'B', randint(1, 9).toString()]) + choice(['A', 'B', randint(0, 9).toString()]) + choice(['A', 'B', randint(0, 9).toString()]) + choice(['A', 'B', randint(0, 9).toString()])
           }
           if (b === 16) {
             n = choice(['A', 'B', 'C', 'D', 'E', 'F', randint(1, 9).toString()]) + choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
@@ -112,39 +115,43 @@ export default class PasserDeLaBase12Ou16ALaBase10 extends Exercice {
           }
           break
         case 'vers_base_n_3_chiffres':
-          if (b === 12) {
-            chiffre1 = choice(['A', 'B', randint(1, 9).toString()])
-            chiffre2 = choice(['A', 'B', randint(0, 9).toString()])
-            chiffre3 = choice(['A', 'B', randint(1, 9).toString()])
-          } else {
-            chiffre1 = choice(['A', 'B', 'C', 'D', 'E', 'F', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
-            chiffre2 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
-            chiffre3 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+          {
+            if (b === 12) {
+              chiffre1 = choice(['A', 'B', randint(1, 9).toString()])
+              chiffre2 = choice(['A', 'B', randint(0, 9).toString()])
+              chiffre3 = choice(['A', 'B', randint(1, 9).toString()])
+            } else {
+              chiffre1 = choice(['A', 'B', 'C', 'D', 'E', 'F', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+              chiffre2 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+              chiffre3 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+            }
+            const nDecimal = valeurBase(chiffre1) * b ** 2 + valeurBase(chiffre2) * b + valeurBase(chiffre3)
+            texte = `Écrire en base ${b} le nombre ${nombreAvecEspace(nDecimal)}.`
+            texteCorr = `$${texNombre(nDecimal)}=${b}\\times${Math.floor(nDecimal / b)}+${miseEnEvidence(nDecimal % b)}$`
+            texteCorr += `<br>$${Math.floor(nDecimal / b)}=${b}\\times${miseEnEvidence(valeurBase(chiffre1))}+${miseEnEvidence(valeurBase(chiffre2))}$`
+            texteCorr += `<br> Finalement $${texNombre(nDecimal)}=(${chiffre1}${chiffre2}${chiffre3})_{${b}}$`
           }
-          n = valeurBase(chiffre1) * b ** 2 + valeurBase(chiffre2) * b + valeurBase(chiffre3)
-          texte = `Écrire en base ${b} le nombre ${nombreAvecEspace(n)}.`
-          texteCorr = `$${texNombre(n)}=${b}\\times${Math.floor(n / b)}+${miseEnEvidence(n % b)}$`
-          texteCorr += `<br>$${Math.floor(n / b)}=${b}\\times${miseEnEvidence(valeurBase(chiffre1))}+${miseEnEvidence(valeurBase(chiffre2))}$`
-          texteCorr += `<br> Finalement $${texNombre(n)}=(${chiffre1}${chiffre2}${chiffre3})_{${b}}$`
           break
         case 'vers_base_n_4_chiffres':
-          if (b === 12) {
-            chiffre1 = choice(['A', 'B', randint(1, 9).toString()])
-            chiffre2 = choice(['A', 'B', randint(0, 9).toString()])
-            chiffre3 = choice(['A', 'B', randint(1, 9).toString()])
-            chiffre4 = choice(['A', 'B', randint(1, 9).toString()])
-          } else {
-            chiffre1 = choice(['A', 'B', 'C', 'D', 'E', 'F', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
-            chiffre2 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
-            chiffre3 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
-            chiffre4 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+          {
+            if (b === 12) {
+              chiffre1 = choice(['A', 'B', randint(1, 9).toString()])
+              chiffre2 = choice(['A', 'B', randint(0, 9).toString()])
+              chiffre3 = choice(['A', 'B', randint(1, 9).toString()])
+              chiffre4 = choice(['A', 'B', randint(1, 9).toString()])
+            } else {
+              chiffre1 = choice(['A', 'B', 'C', 'D', 'E', 'F', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+              chiffre2 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+              chiffre3 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+              chiffre4 = choice(['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+            }
+            const nDecimal = valeurBase(chiffre1) * b ** 3 + valeurBase(chiffre2) * b ** 2 + valeurBase(chiffre3) * b + valeurBase(chiffre4)
+            texte = `Écrire en base ${b} le nombre ${nombreAvecEspace(nDecimal)}.`
+            texteCorr = `$${texNombre(nDecimal)}=${b}\\times${Math.floor(nDecimal / b)}+${miseEnEvidence(nDecimal % b)}$`
+            texteCorr += `<br>$${texNombre(Math.floor(nDecimal / b))}=${b}\\times${Math.floor(Math.floor(nDecimal / b) / b)}+${miseEnEvidence(Math.floor(nDecimal / b) % b)}$`
+            texteCorr += `<br>$${texNombre(Math.floor(Math.floor(nDecimal / b) / b))}=${b}\\times${miseEnEvidence(valeurBase(chiffre1))}+${miseEnEvidence(valeurBase(chiffre2))}$`
+            texteCorr += `<br> Finalement $${texNombre(nDecimal)}=(${chiffre1}${chiffre2}${chiffre3}${chiffre4})_{${b}}$`
           }
-          n = valeurBase(chiffre1) * b ** 3 + valeurBase(chiffre2) * b ** 2 + valeurBase(chiffre3) * b + valeurBase(chiffre4)
-          texte = `Écrire en base ${b} le nombre ${nombreAvecEspace(n)}.`
-          texteCorr = `$${texNombre(n)}=${b}\\times${Math.floor(n / b)}+${miseEnEvidence(n % b)}$`
-          texteCorr += `<br>$${texNombre(Math.floor(n / b))}=${b}\\times${Math.floor(Math.floor(n / b) / b)}+${miseEnEvidence(Math.floor(n / b) % b)}$`
-          texteCorr += `<br>$${texNombre(Math.floor(Math.floor(n / b) / b))}=${b}\\times${miseEnEvidence(valeurBase(chiffre1))}+${miseEnEvidence(valeurBase(chiffre2))}$`
-          texteCorr += `<br> Finalement $${texNombre(n)}=(${chiffre1}${chiffre2}${chiffre3}${chiffre4})_{${b}}$`
           break
         case 'plus_grand_4_chiffres':
           texte = `Quel est le plus grand nombre à 4 chiffres que l'on peut écrire en base ${b}.`
