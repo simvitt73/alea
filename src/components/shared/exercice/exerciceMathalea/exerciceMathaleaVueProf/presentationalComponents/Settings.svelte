@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate, createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import type TypeExercice from '../../../../../../exercices/Exercice'
 
   export let exercice: TypeExercice
@@ -14,7 +14,6 @@
   let sup5: boolean
   let alea: string
   let correctionDetaillee: boolean
-  let premierUpdate: boolean = true
   let isCommentDisplayed: boolean = false
 
   // pour récupérer les tooltips de l'exercice
@@ -28,30 +27,20 @@
   let formNum4: FormNumerique
   let formNum5: FormNumerique
 
-  afterUpdate(async () => {
-    if (exercice.seed !== undefined) {
-      alea = exercice.seed
+  onMount(() => {
+    nbQuestions = exercice.nbQuestions
+    duration = exercice.duration || 10
+    if (exercice.sup === 'false') {
+      sup = false
+    } else {
+      sup = exercice.sup
     }
-    // On ne remplit les champs que la première fois
-    if (exercice && premierUpdate) {
-      premierUpdate = false
-      nbQuestions = exercice.nbQuestions
-      duration = exercice.duration || 10
-      if (exercice.sup === 'false') {
-        sup = false
-      } else {
-        sup = exercice.sup
-      }
-      sup2 = exercice.sup2
-      sup3 = exercice.sup3
-      sup4 = exercice.sup4
-      sup5 = exercice.sup5
-      const seed = exercice.seed
-      if (seed !== undefined) {
-        alea = seed
-      }
-      correctionDetaillee = exercice.correctionDetaillee
-    }
+    sup2 = exercice.sup2
+    sup3 = exercice.sup3
+    sup4 = exercice.sup4
+    sup5 = exercice.sup5
+    alea = exercice.seed ?? ''
+    correctionDetaillee = exercice.correctionDetaillee
   })
 
   const dispatch = createEventDispatcher()
@@ -167,7 +156,6 @@
           max="100"
           bind:value={nbQuestions}
           on:change={dispatchNewSettings}
-          on:input={dispatchNewSettings}
           class="w-full text-coopmaths-corpus-lightest dark:text-coopmathsdark-corpus-dark border-1 border-coopmaths-action dark:border-coopmathsdark-action focus:border-coopmaths-action dark:focus:border-coopmathsdark-action-lightest focus:outline-0 focus:ring-0 focus:border-1 bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark"
         />
       </div>
@@ -693,7 +681,7 @@
         id="settings-formAlea-{exerciceIndex}"
         type="text"
         bind:value={alea}
-        on:input={dispatchNewSettings}
+        on:change={dispatchNewSettings}
       />
     </form>
     {#if exercice.comment !== undefined}
