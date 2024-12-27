@@ -42,19 +42,19 @@
     alea = exercice.seed ?? ''
     correctionDetaillee = exercice.correctionDetaillee
 
-    if (typeof exercice.besoinFormulaireNumerique !== 'boolean') {
+    if (Array.isArray(exercice.besoinFormulaireNumerique) && exercice.besoinFormulaireNumerique.length > 0) {
       formNum1 = parseFormNumerique(exercice.besoinFormulaireNumerique)
     }
-    if (typeof exercice.besoinFormulaire2Numerique !== 'boolean') {
+    if (Array.isArray(exercice.besoinFormulaire2Numerique) && exercice.besoinFormulaire2Numerique.length > 0) {
       formNum2 = parseFormNumerique(exercice.besoinFormulaire2Numerique)
     }
-    if (typeof exercice.besoinFormulaire3Numerique !== 'boolean') {
+    if (Array.isArray(exercice.besoinFormulaire3Numerique) && exercice.besoinFormulaire3Numerique.length > 0) {
       formNum3 = parseFormNumerique(exercice.besoinFormulaire3Numerique)
     }
-    if (typeof exercice.besoinFormulaire4Numerique !== 'boolean') {
+    if (Array.isArray(exercice.besoinFormulaire4Numerique) && exercice.besoinFormulaire4Numerique.length > 0) {
       formNum4 = parseFormNumerique(exercice.besoinFormulaire4Numerique)
     }
-    if (typeof exercice.besoinFormulaire5Numerique !== 'boolean') {
+    if (Array.isArray(exercice.besoinFormulaire5Numerique) && exercice.besoinFormulaire5Numerique.length > 0) {
       formNum5 = parseFormNumerique(exercice.besoinFormulaire5Numerique)
     }
   })
