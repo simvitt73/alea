@@ -332,7 +332,7 @@ export function verifDragAndDrop (
   }
   const leDragAndDrop = exoDragAndDrops[question]
   for (const [element, type, listener] of leDragAndDrop.listeners) {
-    element.removeEventListener(type, listener)
+    element.removeEventListener(type, listener as EventListener)
   }
   // fin de suppression des listeners
   const numeroExercice = exercice.numeroExercice

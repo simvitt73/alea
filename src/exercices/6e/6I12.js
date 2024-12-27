@@ -22,7 +22,7 @@ import {
   tournerG
 } from '../../modules/2dLutin'
 import { scratchblock } from '../../modules/scratchblock'
-import { afficheScore } from '../../lib/interactif/gestionInteractif'
+import { afficheScore } from '../../lib/interactif/afficheScore'
 
 export const interactifReady = true
 // il y avait un fonctionnement avec amcType cf commit 3ae7c43

@@ -242,7 +242,7 @@ export default class ExerciceEquations extends Exercice {
           break
       }
 
-      if (this.lquestionJamaisPosee(i, a, b)) {
+      if (this.questionJamaisPosee(i, a, b)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr

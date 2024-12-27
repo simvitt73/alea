@@ -28,6 +28,7 @@ import { context } from '../../modules/context.js'
 import type Exercice from '../../exercices/Exercice'
 import { verifDragAndDrop } from './DragAndDrop'
 import type Figure from 'apigeom/src/Figure'
+import { afficheScore, type ResultOfExerciceInteractif } from './afficheScore'
 export interface ReponseParams {
   digits?: number
   decimals?: number
@@ -61,10 +62,7 @@ export type AnswerType = {
   options?: OptionsComparaisonType
 }
 
-type ResultOfExerciceInteractif = {
-  numberOfPoints: number
-  numberOfQuestions: number
-}
+
 
 export interface Valeur {
   bareme?: (listePoints: number[]) => [number, number]
@@ -429,33 +427,6 @@ function mouseSvgClick (event: MouseEvent) {
     elt.removeEventListener('mouseout', mouseOutSvgEffect)
     elt.style.border = '3px solid #f15929'
     elt.etat = true
-  }
-}
-
-export function afficheScore (
-  exercice: Exercice,
-  nbBonnesReponses: number,
-  nbMauvaisesReponses: number,
-  divScore: HTMLDivElement,
-  divButton: HTMLButtonElement
-): ResultOfExerciceInteractif {
-  if (divButton != null) {
-    divButton.classList.add(
-      'cursor-not-allowed',
-      'opacity-50',
-      'pointer-events-none'
-    )
-  }
-  if (divScore != null) {
-    divScore.innerHTML = `${nbBonnesReponses} / ${nbBonnesReponses + nbMauvaisesReponses}`
-    divScore.style.color = '#f15929'
-    divScore.style.fontWeight = 'bold'
-    divScore.style.fontSize = 'x-large'
-    divScore.style.display = 'inline'
-  }
-  return {
-    numberOfPoints: nbBonnesReponses,
-    numberOfQuestions: nbBonnesReponses + nbMauvaisesReponses
   }
 }
 

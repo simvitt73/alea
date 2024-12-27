@@ -15,7 +15,7 @@
   import { verifQuestionMathLive } from '../../../lib/interactif/mathLive'
   import { verifQuestionQcm } from '../../../lib/interactif/qcm'
   import { verifQuestionListeDeroulante } from '../../../lib/interactif/questionListeDeroulante'
-  import { verifQuestionCliqueFigure } from '../../../lib/interactif/cliqueFigure'
+  import { indexQuestionCliqueFigure, verifQuestionCliqueFigure } from '../../../lib/interactif/cliqueFigure'
   import {
     darkMode,
     exercicesParams,
@@ -96,8 +96,7 @@
         // récupération de la réponse
         const propositions = exercice.autoCorrection[indiceQuestionInExercice[i]].propositions
         const qcmAnswers: string[] = []
-        // @ts-expect-error typage pour les QCM
-        propositions.forEach((proposition, indice: number) => {
+        propositions!.forEach((proposition, indice: number) => {
           if (
             exercice.answers![
               `Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}R${indice}`
@@ -117,6 +116,7 @@
         resultsByQuestion[i] =
           verifQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]) ===
           'OK'
+        answers.push(indexQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]))
       } else if (type === 'custom') {
         // si le typ est `custom` on est sûr que `correctionInteractive` existe
         // d'où le ! après `correctionInteractive`

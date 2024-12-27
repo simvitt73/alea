@@ -5,7 +5,7 @@ import Exercice from '../../Exercice'
 import { mathalea2d } from '../../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import { fractionCliquable, rectangleCliquable } from '../../../modules/2dinteractif'
-import { afficheScore } from '../../../lib/interactif/gestionInteractif'
+import { afficheScore } from 'src/lib/interactif/afficheScore'
 import { context } from '../../../modules/context'
 
 export const titre = 'Fractions interactives'
