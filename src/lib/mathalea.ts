@@ -224,6 +224,7 @@ export async function mathaleaGetExercicesFromParams (params: InterfaceParams[])
             param.uuid.substring(0, 4) === 'dnb_' ||
             param.uuid.substring(0, 4) === 'e3c_' ||
             param.uuid.substring(0, 4) === 'bac_' ||
+            param.uuid.startsWith('sti2d_') ||
             param.uuid.substring(0, 7) === 'evacom_' ||
             param.uuid.startsWith('2nd_')
     ) {
@@ -283,6 +284,7 @@ export async function mathaleaGetExercicesFromParams (params: InterfaceParams[])
       if (param.uuid.substring(0, 4) === 'dnb_') examen = 'DNB'
       if (param.uuid.substring(0, 4) === 'e3c_') examen = 'E3C'
       if (param.uuid.substring(0, 4) === 'bac_') examen = 'BAC'
+      if (param.uuid.startsWith('sti2d_')) examen = 'STI2D'
       if (param.uuid.substring(0, 7) === 'evacom_') examen = 'EVACOM'
       exercices.push({ typeExercice: 'statique', uuid: param.uuid, content, contentCorr, annee, lieu, mois, numeroInitial, examen })
     } else {

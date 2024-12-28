@@ -8,6 +8,7 @@ import fs from 'fs'
 import { dictionnaireCrpeCoop } from '../src/json/dictionnaireCrpeCoop.js'
 import { dictionnaireDNB } from '../src/json/dictionnaireDNB.js'
 import { dictionnaireBAC } from '../src/json/dictionnaireBAC.js'
+import { dictionnaireSTI2D } from '../src/json/dictionnaireSTI2D.js'
 import { dictionnaireE3C } from '../src/json/dictionnaireE3C.js'
 import { dictionnaireEVACOM } from '../src/json/dictionnaireEVACOM.js'
 
@@ -44,9 +45,11 @@ for (const tag of tagsDNB) {
   }
 }
 
-// Gestion du BAC
+// Gestion du BAC et des STI2D
 referentielFR.BAC = {}
+referentielFR.STI2D = {}
 const setThemesBAC = new Set()
+const setThemeSTI2D = new Set()
 
 for (const ex in dictionnaireBAC) {
   dictionnaireBAC[ex].tags.forEach(e => {
@@ -54,7 +57,13 @@ for (const ex in dictionnaireBAC) {
   })
 }
 
-for (const annee of ['2021', '2022', '2023', '2024', '2025', '2026']) {
+for (const ex in dictionnaireSTI2D) {
+  dictionnaireSTI2D[ex].tags.forEach(e => {
+    setThemeSTI2D.add(e)
+  })
+}
+
+for (const annee of ['2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029']) {
   referentielFR.BAC[annee] = {}
   for (const ex in dictionnaireBAC) {
     if (dictionnaireBAC[ex].annee === annee) {
@@ -63,8 +72,20 @@ for (const annee of ['2021', '2022', '2023', '2024', '2025', '2026']) {
   }
 }
 
+for (const annee of ['2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029']) {
+  referentielFR.STI2D[annee] = {}
+  for (const ex in dictionnaireSTI2D) {
+    if (dictionnaireSTI2D[ex].annee === annee) {
+      referentielFR.STI2D[annee][ex] = { uuid: ex, ...dictionnaireSTI2D[ex] }
+    }
+  }
+}
+
 const tagsBAC = [...setThemesBAC].sort((a, b) => { return a.localeCompare(b) })
 referentielFR.BACTags = {}
+
+const tagsSTI2D = [...setThemeSTI2D].sort((a, b) => { return a.localeCompare(b) })
+referentielFR.STI2DTags = {}
 
 for (const tag of tagsBAC) {
   referentielFR.BACTags[tag] = {}
@@ -75,7 +96,16 @@ for (const tag of tagsBAC) {
   }
 }
 
-// Gestion du BAC
+for (const tag of tagsSTI2D) {
+  referentielFR.STI2DTags[tag] = {}
+  for (const ex in dictionnaireSTI2D) {
+    if (dictionnaireSTI2D[ex].tags.includes(tag)) {
+      referentielFR.STI2DTags[tag][ex] = { uuid: ex, ...dictionnaireSTI2D[ex] }
+    }
+  }
+}
+
+// Gestion des E3C
 referentielFR.E3C = {}
 const setThemesE3C = new Set()
 
