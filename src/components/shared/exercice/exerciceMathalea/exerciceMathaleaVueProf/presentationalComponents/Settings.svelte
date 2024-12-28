@@ -32,8 +32,8 @@
   let formNum5: FormNumerique
 
   let previousSeed: string | undefined
-  $: {
-    if (previousSeed !== exercice.seed) {
+  $: { // Pour que la série dans le formulaire se mette à jour lorsqu'on clique sur "Nouvel énoncé"
+    if (previousSeed !== exercice.seed) { // Sans ça, on ne peut pas modifier la série dans le formulaire
       previousSeed = exercice.seed
       alea = exercice.seed ?? ''
     }
