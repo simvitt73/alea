@@ -123,7 +123,8 @@ export default class DeriveePoly extends Exercice {
       for (let p = 1; p < poly.monomes.length; p++) {
         if (poly.monomes[deg + 1 - p] !== 0) {
           termes.push(`${ecritureAlgebriqueSauf1(poly.monomes[deg + 1 - p])}${deg + 1 - p > 1 ? 'x^' + String(deg + 1 - p) : deg + 1 - p === 1 ? 'x' : ''}`)
-          termesD.push(`${ecritureAlgebriqueSauf1(poly.derivee().monomes[deg - p])}${deg - p > 1 ? 'x^' + String(deg - p) : deg - p === 1 ? 'x' : ''}`)
+          const monomeD = poly.derivee().monomes[deg - p]
+          termesD.push(`${deg - p > 1 ? ecritureAlgebriqueSauf1(monomeD) : ecritureAlgebrique(monomeD)}${deg - p > 1 ? 'x^' + String(deg - p) : deg - p === 1 ? 'x' : ''}`)
         }
       }
       if (poly.monomes[0] !== 0) {
