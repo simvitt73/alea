@@ -8,7 +8,7 @@ import { abs, signe } from '../../lib/outils/nombres'
 
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { sp } from '../../lib/outils/outilString'
 
@@ -309,7 +309,7 @@ export default class ExerciceEquation1 extends Exercice {
       }
       texteCorr += `<br> La solution de l'équation ${texte} est $${miseEnEvidence(reponse.texFSD)}$.`
       texte += ajouteChampTexteMathLive(this, i, '  clavierDeBaseAvecFraction', { texteAvant: `<br>$ ${inconnue} = $ ` })
-      setReponse(this, i, reponse, { formatInteractif: 'fractionEgale' })
+      handleAnswers(this, i, { reponse: { value: reponse.texFSD } })
 
       if (this.questionJamaisPosee(i, a, b, c, listeTypeDeQuestions[i])) {
         // Si la question n'a jamais été posée, on en créé une autre
