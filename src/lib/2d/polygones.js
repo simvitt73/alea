@@ -281,39 +281,40 @@ export class Polygone extends ObjetMathalea2D {
     }
     this._triangulation = null
     this._flat = null
-    Object.defineProperty(this, 'flat', {
-      get: () => {
-        if (this._flat === null) this._flat = polygoneToFlatArray(this)
-        return this._flat
-      }
-    })
-    Object.defineProperty(this, 'triangulation', {
-      get: () => { // retourne une liste de triangles pavant le polygone
-        if (this._triangulation === null) {
-          const trianglesIndices = earcut(this.flat)
-          this._triangulation = []
-          for (let i = 0; i < trianglesIndices.length; i += 3) {
-            this._triangulation.push([point(this.flat[trianglesIndices[i] * 2], this.flat[trianglesIndices[i] * 2 + 1]), point(this.flat[trianglesIndices[i + 1] * 2], this.flat[trianglesIndices[i + 1] * 2 + 1]), point(this.flat[trianglesIndices[i + 2] * 2], this.flat[trianglesIndices[i + 2] * 2 + 1])])
-          }
-        }
-        return this._triangulation
-      }
-    })
-
     this._aire = null
+  }
 
-    Object.defineProperty(this, 'aire', {
-      get: () => {
-        if (this._aire === null) {
-          const triangles = this.triangulation
-          this._aire = 0
-          for (let i = 0; i < triangles.length; i++) {
-            this._aire += aireTriangle(triangles[i])
-          }
-        }
-        return this._aire
+  get flat () {
+    if (this._flat === null) {
+      this._flat = polygoneToFlatArray(this)
+    }
+    return this._flat
+  }
+
+  get triangulation () {
+    if (this._triangulation === null) {
+      const trianglesIndices = earcut(this.flat)
+      this._triangulation = []
+      for (let i = 0; i < trianglesIndices.length; i += 3) {
+        this._triangulation.push([
+          point(this.flat[trianglesIndices[i] * 2], this.flat[trianglesIndices[i] * 2 + 1]),
+          point(this.flat[trianglesIndices[i + 1] * 2], this.flat[trianglesIndices[i + 1] * 2 + 1]),
+          point(this.flat[trianglesIndices[i + 2] * 2], this.flat[trianglesIndices[i + 2] * 2 + 1])
+        ])
       }
-    })
+    }
+    return this._triangulation
+  }
+
+  get aire () {
+    if (this._aire === null) {
+      const triangles = this.triangulation
+      this._aire = 0
+      for (let i = 0; i < triangles.length; i++) {
+        this._aire += aireTriangle(triangles[i])
+      }
+    }
+    return this._aire
   }
 
   svg (coeff) {
@@ -560,7 +561,7 @@ export function polygoneRegulier (A, B, n, color = 'black') {
  *  // Trace le carré noir de sommets consécutifs M et N dans le sens indirect
  * @example carre(M,N,'blue')
  *  // Trace le carré bleu de sommets consécutifs M et N dans le sens direct
- * @return {polygone}
+ * @return {Polygone}
  * @author Rémi Angot
  * JSDOC Validee par EE Juin 2022
  *
@@ -571,7 +572,7 @@ export function carre (A, B, color = 'black') {
 
 /**
  * polygoneRegulierParCentreEtRayon(O,r,n) //Trace le polygone régulier à n côtés et de rayon r
- *
+ * @returns {Polygone} Objet Mathalea2d
  * @author Rémi Angot
  */
 export function polygoneRegulierParCentreEtRayon (O, r, n, color = 'black') {

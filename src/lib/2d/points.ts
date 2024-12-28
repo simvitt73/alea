@@ -1,4 +1,5 @@
 import { colorToLatexOrHTML, ObjetMathalea2D } from '../../modules/2dGeneralites'
+import type { Point3d } from '../../modules/3d'
 
 import { context } from '../../modules/context'
 import { egal, inferieurouegal, randint, superieurouegal } from '../../modules/outils'
@@ -6,7 +7,7 @@ import { radians } from '../mathFonctions/trigo'
 import { arrondi } from '../outils/nombres'
 import { Cercle, cercle } from './cercle'
 import { droite, Droite, droiteParPointEtPerpendiculaire } from './droites'
-import { carre, polygone } from './polygones'
+import { carre, Polygone, polygone } from './polygones'
 import { DemiDroite, longueur, Segment, segment, vecteur } from './segmentsVecteurs'
 import { homothetie, rotation, similitude } from './transformations'
 
@@ -18,36 +19,46 @@ import { homothetie, rotation, similitude } from './transformations'
  * @author Rémi Angot
  * @class
  */
-export function Point (arg1, arg2, arg3, positionLabel = 'above') {
-  this.typeObjet = 'point'
-  ObjetMathalea2D.call(this, { classe: false })
-  this.nom = ' ' // Le nom d'un point est par défaut un espace. On pourra chercher tous les objets qui ont ce nom pour les nommer automatiquement
-  if (arguments.length === 1) {
-    this.nom = arg1
-  } else if (arguments.length === 2) {
-    if (isNaN(arg1) || isNaN(arg2)) window.notify('Point : les coordonnées ne sont pas valides', { arg1, arg2 })
-    else {
-      this.x = arg1
-      this.y = arg2
-    }
-  } else {
-    if (isNaN(arg1) || isNaN(arg2)) window.notify('Point : les coordonnées ne sont pas valides', { arg1, arg2 })
-    else {
-      this.x = arg1
-      this.y = arg2
-    }
-    this.nom = arg3
-  }
-  // On n'a pas besoin de davantage de décimales pour les graphiques !
-  this.x = arrondi(this.x, 2)
-  this.y = arrondi(this.y, 2)
+export class Point extends ObjetMathalea2D {
+  nom: string
+  x: number
+  y: number
 
-  this.positionLabel = positionLabel
-  this.bordures = [this.x, this.y, this.x, this.y]
-  this.xSVG = function (coeff) {
+  constructor (arg1:string | number, arg2: number, arg3: number | string, positionLabel = 'above') {
+    super()
+    this.typeObjet = 'point'
+    this.x = 0
+    this.y = 0
+    this.nom = ' ' // Le nom d'un point est par défaut un espace. On pourra chercher tous les objets qui ont ce nom pour les nommer automatiquement
+    if (arguments.length === 1) {
+      this.nom = String(arg1)
+    } else if (arguments.length === 2) {
+      if (Number.isNaN(arg1) || isNaN(arg2)) window.notify('Point : les coordonnées ne sont pas valides', { arg1, arg2 })
+      else {
+        this.x = Number(arg1)
+        this.y = arg2
+      }
+    } else {
+      if (Number.isNaN(arg1) || isNaN(arg2)) window.notify('Point : les coordonnées ne sont pas valides', { arg1, arg2 })
+      else {
+        this.x = Number(arg1)
+        this.y = arg2
+      }
+      this.nom = String(arg3)
+    }
+    // On n'a pas besoin de davantage de décimales pour les graphiques !
+    this.x = arrondi(this.x, 2)
+    this.y = arrondi(this.y, 2)
+
+    this.positionLabel = positionLabel
+    this.bordures = [this.x, this.y, this.x, this.y]
+  }
+
+  xSVG (coeff: number) {
     return arrondi(this.x * coeff, 1)
   }
-  this.ySVG = function (coeff) {
+
+  ySVG (coeff: number) {
     return arrondi(-this.y * coeff, 1)
   }
 
@@ -60,9 +71,9 @@ export function Point (arg1, arg2, arg3, positionLabel = 'above') {
      * @return {boolean}
      */
   // JSDOC Validee par EE Aout 2022
-  this.estDansPolygone = function (p) {
+  estDansPolygone (p: Polygone): boolean {
     for (const triangle of p.triangulation) {
-      if (this.estDansTriangle(...triangle)) return true
+      if (this.estDansTriangle(...triangle as [Point, Point, Point])) return true
     }
     return false
   }
@@ -78,7 +89,7 @@ export function Point (arg1, arg2, arg3, positionLabel = 'above') {
      * @return {boolean}
      */
   // JSDOC Validee par EE Aout 2022
-  this.estDansTriangle = function (A, B, C) {
+  estDansTriangle (A: Point, B: Point, C: Point): boolean {
     const vMA = vecteur(this, A)
     const vMB = vecteur(this, B)
     const vMC = vecteur(this, C)
@@ -97,10 +108,10 @@ export function Point (arg1, arg2, arg3, positionLabel = 'above') {
      * @return {boolean}
      */
   // JSDOC Validee par EE Aout 2022
-  this.estDansPolygoneConvexe = function (p) {
+  estDansPolygoneConvexe (p: Polygone): boolean {
     const l = p.listePoints.length
     if (l === 3) {
-      return this.estDansTriangle(...p.listePoints)
+      return this.estDansTriangle(...p.listePoints as [Point, Point, Point])
     } else {
       const A = p.listePoints[0]
       const B = p.listePoints[1]
@@ -123,7 +134,7 @@ export function Point (arg1, arg2, arg3, positionLabel = 'above') {
      * @return {boolean}
      */
   // JSDOC Validee par EE Aout 2022
-  this.estDansQuadrilatere = function (A, B, C, D) {
+  estDansQuadrilatere (A: Point, B: Point, C: Point, D: Point) {
     return this.estDansTriangle(A, B, C) || this.estDansTriangle(A, C, D)
   }
 
@@ -135,7 +146,7 @@ export function Point (arg1, arg2, arg3, positionLabel = 'above') {
      * @return {boolean}
      */
   // JSDOC Validee par EE Aout 2022
-  this.estSur = function (objet) {
+  estSur (objet: Droite | Segment | DemiDroite | Cercle) {
     if (objet instanceof Droite) return (egal(objet.a * this.x + objet.b * this.y + objet.c, 0, 0.01))
     if (objet instanceof Segment) {
       const prodvect = (objet.extremite2.x - objet.extremite1.x) * (this.y - objet.extremite1.y) - (this.x - objet.extremite1.x) * (objet.extremite2.y - objet.extremite1.y)
@@ -162,7 +173,7 @@ export function Point (arg1, arg2, arg3, positionLabel = 'above') {
  * @param {string} [positionLabel] Les possibilités sont : 'left', 'right', 'below', 'above', 'above right', 'above left', 'below right', 'below left'. Si on se trompe dans l'orthographe, ce sera 'above left' et si on ne précise rien, pour un point ce sera 'above'.
  * @return {Point}
  */
-export function point (x, y, A = '', positionLabel = 'above') {
+export function point (x: number, y: number, A = '', positionLabel = 'above') {
   return new Point(x, y, A, positionLabel)
 }
 
@@ -172,31 +183,40 @@ export function point (x, y, A = '', positionLabel = 'above') {
  * @param {number} y ordonnée
  * @param {object} param2 permet de définir le rayon du 'plot', sa couleur, sa couleur de remplissage
  */
-export function Plot (x, y, {
-  rayon = 0.05,
-  couleur = 'black',
-  couleurDeRemplissage = 'black',
-  opacite = 1,
-  opaciteDeRemplissage = 1
-} = {}) {
-  ObjetMathalea2D.call(this, {})
-  if (isNaN(x) || isNaN(y)) window.notify('Plot : les coordonnées ne sont pas valides', { x, y })
-  this.color = colorToLatexOrHTML(couleur) // EE : 08/05/2022
-  this.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
-  this.rayon = rayon
-  this.x = x
-  this.y = y
-  this.bordures = [x - rayon, y - rayon, x + rayon, y + rayon]
-  this.opacite = opacite
-  this.opaciteDeRemplissage = opaciteDeRemplissage
-  this.svg = function (coeff) {
+export class Plot extends ObjetMathalea2D {
+  couleurDeRemplissage: string[]
+  rayon: number
+  x: number
+  y: number
+  opaciteDeRemplissage: number
+  constructor (x: number, y: number, {
+    rayon = 0.05,
+    couleur = 'black',
+    couleurDeRemplissage = 'black',
+    opacite = 1,
+    opaciteDeRemplissage = 1
+  } = {}) {
+    super()
+    if (isNaN(x) || isNaN(y)) window.notify('Plot : les coordonnées ne sont pas valides', { x, y })
+    this.color = colorToLatexOrHTML(couleur) // EE : 08/05/2022
+    this.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
+    this.rayon = rayon
+    this.x = x
+    this.y = y
+    this.bordures = [x - rayon, y - rayon, x + rayon, y + rayon]
+    this.opacite = opacite
+    this.opaciteDeRemplissage = opaciteDeRemplissage
+  }
+
+  svg (coeff: number) {
     if (this.couleurDeRemplissage[0] === '') {
       return `\n\t <circle cx="${this.x * coeff}" cy="${-this.y * coeff}" r="${this.rayon * coeff}" stroke="${this.color[0]}" stroke-opacity="${this.opacite || 1}"/>`
     } else {
       return `\n\t <circle cx="${this.x * coeff}" cy="${-this.y * coeff}" r="${this.rayon * coeff}" stroke="${this.color[0]}" fill="${this.couleurDeRemplissage[0]}" stroke-opacity="${this.opacite || 1}" fill-opacity="${this.opaciteDeRemplissage || 1}"/>`
     }
   }
-  this.tikz = function () {
+
+  tikz () {
     const tableauOptions = []
     if (this.color[1].length > 1 && this.color[1] !== 'black') {
       tableauOptions.push(`color=${this.color[1]}`)
@@ -210,10 +230,10 @@ export function Plot (x, y, {
     if (this.opaciteDeRemplissage !== 1) {
       tableauOptions.push(`fill opacity=${this.opaciteDeRemplissage}`)
     }
-    if (this.couleurDeRemplissage !== '' && this.couleurDeRemplissage[1] !== 'none' && this.couleurDeRemplissage[1] !== '') {
+    if (this.couleurDeRemplissage[1] !== '' && this.couleurDeRemplissage[1] !== 'none' && this.couleurDeRemplissage[1] !== '') {
       tableauOptions.push(`fill=${this.couleurDeRemplissage[1]}`)
     }
-    let optionsDraw = []
+    let optionsDraw = ''
     if (tableauOptions.length > 0) {
       optionsDraw = '[' + tableauOptions.join(',') + ']'
     }
@@ -221,7 +241,7 @@ export function Plot (x, y, {
   }
 }
 
-export function plot (x, y, {
+export function plot (x: number, y: number, {
   rayon = 0.05,
   couleur = 'black',
   couleurDeRemplissage = 'black',
@@ -243,41 +263,49 @@ export function plot (x, y, {
  * @property {string} color
  * @author Rémi Angot et Jean-Claude Lhote
  */
-export function TracePoint (...points) {
-  ObjetMathalea2D.call(this, {})
-  this.taille = 3
-  this.tailleTikz = this.taille / 15
-  this.epaisseur = 1
-  this.opacite = 0.8
-  this.style = 'x'
-  let xmin = 1000
-  let xmax = -1000
-  let ymin = 1000
-  let ymax = -1000
-  let lePoint
-  if (typeof points[points.length - 1] === 'string') {
-    this.color = colorToLatexOrHTML(points[points.length - 1])
-    points.length--
-  } else this.color = colorToLatexOrHTML('black')
-  for (const unPoint of points) {
-    if (unPoint.typeObjet !== 'point3d' && unPoint.typeObjet !== 'point') window.notify('TracePoint : argument invalide', { ...points })
-    lePoint = unPoint.typeObjet === 'point' ? unPoint : unPoint.c2d
-    xmin = Math.min(xmin, lePoint.x - this.taille / context.pixelsParCm)
-    xmax = Math.max(xmax, lePoint.x + this.taille / context.pixelsParCm)
-    ymin = Math.min(ymin, lePoint.y - this.taille / context.pixelsParCm)
-    ymax = Math.max(ymax, lePoint.y + this.taille / context.pixelsParCm)
+export class TracePoint extends ObjetMathalea2D {
+  taille: number
+  tailleTikz: number
+  points: (Point | Point3d)[]
+  constructor (...points: (Point | Point3d | string)[]) {
+    super()
+    this.taille = 3
+    this.tailleTikz = this.taille / 15
+    this.epaisseur = 1
+    this.opacite = 0.8
+    this.style = 'x'
+    let xmin = 1000
+    let xmax = -1000
+    let ymin = 1000
+    let ymax = -1000
+    let lePoint
+    if (typeof points[points.length - 1] === 'string') {
+      this.color = colorToLatexOrHTML(String(points[points.length - 1]))
+      points.pop()
+    } else this.color = colorToLatexOrHTML('black')
+    this.points = points as (Point | Point3d)[]
+    for (const unPoint of this.points) {
+      const point = unPoint as Point | Point3d
+      if (point.typeObjet !== 'point3d' && point.typeObjet !== 'point') window.notify('TracePoint : argument invalide', { ...points })
+      lePoint = point.typeObjet === 'point' ? point : (point as Point3d).c2d
+      xmin = Math.min(xmin, lePoint.x - this.taille / context.pixelsParCm)
+      xmax = Math.max(xmax, lePoint.x + this.taille / context.pixelsParCm)
+      ymin = Math.min(ymin, lePoint.y - this.taille / context.pixelsParCm)
+      ymax = Math.max(ymax, lePoint.y + this.taille / context.pixelsParCm)
+    }
+    this.bordures = [xmin, ymin, xmax, ymax]
   }
-  this.bordures = [xmin, ymin, xmax, ymax]
-  this.svg = function (coeff) {
+
+  svg (coeff:number) {
     const objetssvg = []
     let s1
     let s2
     let p1
     let p2
     let c, A
-    for (const unPoint of points) {
+    for (const unPoint of this.points) {
       if (unPoint.typeObjet === 'point3d') {
-        A = unPoint.c2d
+        A = (unPoint as Point3d).c2d
       } else {
         A = unPoint
       }
@@ -292,25 +320,21 @@ export function TracePoint (...points) {
           s1.opacite = this.opacite
           s2.opacite = this.opacite
           objetssvg.push(s1, s2)
-          s1.isVisible = false
-          s2.isVisible = false
         } else if (this.style === 'o') {
           p1 = point(A.x, A.y)
           c = cercle(p1, this.taille / coeff, this.color[0])
-          c.isVisible = false
           c.epaisseur = this.epaisseur
           c.opacite = this.opacite
-          c.couleurDeRemplissage = this.color[0]
+          c.couleurDeRemplissage = this.color
           c.opaciteDeRemplissage = this.opacite / 2
           objetssvg.push(c)
         } else if (this.style === '#') {
           p1 = point(A.x - this.taille / coeff, A.y - this.taille / coeff)
           p2 = point(A.x + this.taille / coeff, A.y - this.taille / coeff)
-          c = carre(p1, p2, this.color[0])
-          c.isVisible = false
+          c = carre(p1, p2, this.color[0]) as unknown as Polygone
           c.epaisseur = this.epaisseur
           c.opacite = this.opacite
-          c.couleurDeRemplissage = this.color[0]
+          c.couleurDeRemplissage = [this.color[0] ?? 'black', this.color[1] ?? 'black']
           c.opaciteDeRemplissage = this.opacite / 2
           objetssvg.push(c)
         } else if (this.style === '+') {
@@ -346,16 +370,17 @@ export function TracePoint (...points) {
     code = `<g id="${this.id}">` + code + '</g>'
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     const objetstikz = []
     let s1
     let s2
     let p1
     let p2
     let c, A
-    for (const unPoint of points) {
+    for (const unPoint of this.points) {
       if (unPoint.typeObjet === 'point3d') {
-        A = unPoint.c2d
+        A = (unPoint as Point3d).c2d
       } else {
         A = unPoint
       }
@@ -382,10 +407,10 @@ export function TracePoint (...points) {
         } else if (this.style === '#') {
           p1 = point(A.x - this.tailleTikz, A.y - this.tailleTikz)
           p2 = point(A.x + this.tailleTikz, A.y - this.tailleTikz)
-          c = carre(p2, p1, this.color[1])
+          c = carre(p2, p1, this.color[1]) as unknown as Polygone
           c.epaisseur = this.epaisseur
           c.opacite = this.opacite
-          c.couleurDeRemplissage = this.color
+          c.couleurDeRemplissage = [this.color[0] ?? 'black', this.color[1] ?? 'black']
           c.opaciteDeRemplissage = this.opacite / 2
           objetstikz.push(c)
         } else if (this.style === '+') {
@@ -430,7 +455,7 @@ export function TracePoint (...points) {
  * @example tracePoint(A).epaisseur = 5 // L'épaisseur du style du point sera 5 et non 1 par défaut.
  * @example tracePoint(A).opacite = 0.4 // L'opacité du style du point sera 40% et non 80%(0.8) par défaut.
  */
-export function tracePoint (...args) {
+export function tracePoint (...args: (Point | Point3d | string)[]) {
   return new TracePoint(...args)
 }
 
@@ -440,51 +465,60 @@ export function tracePoint (...args) {
  *
  * @author Rémi Angot et Jean-Claude Lhote
  */
-export function TracePointSurDroite (A, O, color = 'black') {
-  ObjetMathalea2D.call(this, {})
-  this.color = color
-  this.lieu = A
-  this.taille = 0.2
-  this.x = A.x
-  this.y = A.y
-  let M, d
-  this.bordures = [A.x - 0.2, A.y - 0.2, A.x + 0.2, A.x + 0.2]
+export class TracePointSurDroite extends ObjetMathalea2D {
+  lieu: Point
+  taille: number
+  x: number
+  y: number
+  direction: Point
+  stringColor: string
 
-  if (O.constructor === Point) {
-    if (longueur(this.lieu, O) < 0.001) {
-      window.notify('TracePointSurDroite : points trop rapprochés pour définir une droite', {
-        A,
-        O
-      })
+  constructor (A: Point, O: Point | Droite, color = 'black') {
+    super()
+    this.stringColor = color
+    this.lieu = A
+    this.taille = 0.2
+    this.x = A.x
+    this.y = A.y
+    let M, d
+    this.bordures = [A.x - 0.2, A.y - 0.2, A.x + 0.2, A.x + 0.2]
+
+    if (O.constructor === Point) {
+      if (longueur(this.lieu, O) < 0.001) {
+        window.notify('TracePointSurDroite : points trop rapprochés pour définir une droite', {
+          A,
+          O
+        })
+      }
+      M = pointSurSegment(this.lieu, O, 1)
+      this.direction = rotation(M, this.lieu, 90)
+    } else {
+      d = droiteParPointEtPerpendiculaire(this.lieu, O as Droite)
+      this.direction = pointSurSegment(point(d.x1, d.y1), point(d.x2, d.y2), 1)
     }
-    M = pointSurSegment(this.lieu, O, 1)
-    this.direction = rotation(M, this.lieu, 90)
   }
-  if (O.constructor === Droite) {
-    d = droiteParPointEtPerpendiculaire(this.lieu, O)
-    d.isVisible = false
-    this.direction = pointSurSegment(point(d.x1, d.y1), point(d.x2, d.y2), 1)
-  }
-  this.svg = function (coeff) {
+
+  svg (coeff: number) {
     const A1 = pointSurSegment(this.lieu, this.direction, this.taille * 20 / coeff)
     const A2 = pointSurSegment(this.lieu, this.direction, -this.taille * 20 / coeff)
-    const s = segment(A1, A2, this.color)
+    const s = segment(A1, A2, this.stringColor)
     this.id = s.id
     return s.svg(coeff)
   }
-  this.tikz = function () {
+
+  tikz () {
     const A1 = pointSurSegment(this.lieu, this.direction, this.taille / context.scale)
     const A2 = pointSurSegment(this.lieu, this.direction, -this.taille / context.scale)
-    const s = segment(A1, A2, this.color)
+    const s = segment(A1, A2, this.stringColor)
     return s.tikz()
   }
 }
 
-export function tracePointSurDroite (A, O, color = 'black') {
+export function tracePointSurDroite (A: Point, O: Point | Droite, color = 'black') {
   return new TracePointSurDroite(A, O, color)
 }
 
-export function traceMilieuSegment (A, B) {
+export function traceMilieuSegment (A: Point, B: Point) {
   return new TracePointSurDroite(milieu(A, B), droite(A, B))
 }
 
@@ -492,10 +526,10 @@ export function traceMilieuSegment (A, B) {
  * M = milieu(A,B) //M est le milieu de [AB]
  * M = milieu(A,B,'M') //M est le milieu [AB] et se nomme M
  * M = milieu(A,B,'M','below') //M est le milieu [AB], se nomme M et le nom est en dessous du point
- *
+ * @returns {Point} Milieu du segment [AB]
  * @author Rémi Angot
  */
-export function milieu (A, B, nom = '', positionLabel = 'above') {
+export function milieu (A: Point, B: Point, nom = '', positionLabel = 'above'): Point {
   if (isNaN(longueur(A, B))) window.notify('milieu : Quelque chose ne va pas avec les points', { A, B })
   const x = (A.x + B.x) / 2
   const y = (A.y + B.y) / 2
@@ -512,13 +546,13 @@ export function milieu (A, B, nom = '', positionLabel = 'above') {
  * Sécurité ajoutée par Jean-Claude Lhote : si AB=0, alors on retourne A
  * @author Rémi Angot
  */
-export function pointSurSegment (A, B, l, nom = '', positionLabel = 'above') {
+export function pointSurSegment (A: Point, B: Point, l: number, nom = '', positionLabel = 'above'): Point {
   if (isNaN(longueur(A, B))) window.notify('pointSurSegment : Quelque chose ne va pas avec les points', { A, B })
   if (longueur(A, B) === 0) return A
   if (l === undefined || typeof l === 'string') {
     l = (longueur(A, B) * randint(15, 85)) / 100
   }
-  return homothetie(B, A, l / longueur(A, B), nom, positionLabel)
+  return homothetie(B, A, l / longueur(A, B), nom, positionLabel) as Point
 }
 
 /**
@@ -532,7 +566,7 @@ export function pointSurSegment (A, B, l, nom = '', positionLabel = 'above') {
  * P = pointSurCercle(c,-90) // P est le point du cercle c situé à l'opposé du point N précédent.
  * @author Jean-Claude Lhote
  */
-export function pointSurCercle (c, angle, nom, positionLabel = 'above') {
+export function pointSurCercle (c: Cercle, angle: number, nom: string, positionLabel = 'above'): Point {
   if (typeof angle !== 'number') angle = randint(-180, 180)
   const x = c.centre.x + c.rayon * Math.cos(radians(angle))
   const y = c.centre.y + c.rayon * Math.sin(radians(angle))
@@ -548,7 +582,7 @@ export function pointSurCercle (c, angle, nom, positionLabel = 'above') {
  * @return {Point} Point de la droite d dont l'abscisse est x
  * @author Jean-Claude Lhote
  */
-export function pointSurDroite (d, x, nom, positionLabel = 'above') {
+export function pointSurDroite (d: Droite, x: number, nom:string, positionLabel = 'above'): Point {
   // si d est parallèle à l'axe des ordonnées, le paramètre x servira pour y.
   if (d.b === 0) return point(-d.c / d.a, x, nom, positionLabel)
   else if (d.a === 0) return point(x, -d.c / d.b, nom, positionLabel)
@@ -561,10 +595,10 @@ export function pointSurDroite (d, x, nom, positionLabel = 'above') {
  * @param {Droite} f
  * @param {string} nom  le nom du point d'intersection. Facultatif, vide par défaut.
  * @param {string} [positionLabel='above'] Facultatif, 'above' par défaut.
- * @return {Point} Point 'M' d'intersection de d1 et de d2
+ * @return {Point|boolean} Point 'M' d'intersection de d1 et de d2
  * @author Jean-Claude Lhote
  */
-export function pointIntersectionDD (d, f, nom = '', positionLabel = 'above') {
+export function pointIntersectionDD (d: Droite, f: Droite, nom = '', positionLabel = 'above'): Point | boolean {
   let x, y
   if (egal(f.a * d.b - f.b * d.a, 0, 0.000001)) {
     // Les droites sont parallèles ou confondues, pas de point d'intersection ou une infinité
@@ -585,31 +619,19 @@ export function pointIntersectionDD (d, f, nom = '', positionLabel = 'above') {
  * @example p=pointAdistance(A,5,'M') // Place un point aléatoirement à 5 unités de A et lui donne le nom de 'M'.
  * @author Jean-Claude Lhote
  */
-export function pointAdistance (...args) {
-  const l = args.length
-  const angle = randint(1, 360)
-  const A = args[0]
+export function pointAdistance (A: Point, d: number = 1, angle: number, nom = '', positionLabel = 'above'): Point {
+  // const angle = randint(1, 360)
   const B = point(A.x + 1, A.y)
-  const d = args[1]
-  if (l < 2) {
-    return false
-  }
-  if (l === 2) {
-    return similitude(B, A, angle, d)
-  } else if (l === 3) {
-    if (typeof (args[2]) === 'number') {
-      return similitude(B, A, args[2], d)
-    } else {
-      return similitude(B, A, angle, d, args[2])
-    }
-  } else if (l === 4) {
-    if (typeof (args[2]) === 'number') {
-      return similitude(B, A, args[2], d, args[3])
-    } else {
-      return similitude(B, A, angle, d, args[2], args[3])
-    }
+  if (angle === undefined) {
+    angle = randint(1, 360)
+    return similitude(B, A, angle, d, nom, positionLabel)
   } else {
-    return similitude(B, A, args[2], d, args[3], args[4])
+    if (typeof angle === 'number') {
+      return similitude(B, A, angle, d, nom, positionLabel)
+    } else {
+      angle = randint(1, 360)
+      return similitude(B, A, angle, d, nom, positionLabel)
+    }
   }
 }
 
@@ -621,7 +643,7 @@ export function pointAdistance (...args) {
  * @example I = pointItersectionLC(d,c,'I',1) // I est le premier point d'intersection si il existe de la droite (d) et du cercle (c)
  * @author Jean-Claude Lhote
  */
-export function pointIntersectionLC (d, C, nom = '', n = 1) {
+export function pointIntersectionLC (d: Droite, C: Cercle, nom = '', n = 1): Point | boolean {
   const O = C.centre
   const r = C.rayon
   const a = d.a
@@ -702,7 +724,7 @@ export function pointIntersectionLC (d, C, nom = '', n = 1) {
  * @author Rémi Angot
  * @see https://stackoverflow.com/questions/12219802/a-javascript-function-that-returns-the-x-y-points-of-intersection-between-two-ci
  */
-export function pointIntersectionCC (c1, c2, nom = '', n = 1) {
+export function pointIntersectionCC (c1: Cercle, c2: Cercle, nom = '', n = 1): Point | boolean {
   const O1 = c1.centre
   const O2 = c2.centre
   const r0 = c1.rayon
