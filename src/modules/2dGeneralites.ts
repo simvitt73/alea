@@ -1,6 +1,7 @@
 import { context } from './context.js'
 import katex from 'katex'
 import { arrondi } from '../lib/outils/nombres.js'
+import type { Latex2d } from '../lib/2d/textes'
 export type ObjetDivLatex = {
   x: number
   y: number
@@ -209,7 +210,8 @@ export class ObjetMathalea2D { // à typer quand on passera à TypeScript
   id: number
   pointilles: number
   bordures: [number, number, number, number]
-  objets?: ObjetMathalea2D[]
+  objets?: (ObjetMathalea2D | Latex2d)[]
+  typeObjet?: string
 
   constructor () {
     this.positionLabel = 'above'
@@ -223,19 +225,19 @@ export class ObjetMathalea2D { // à typer quand on passera à TypeScript
     numId++
   }
 
-  svg (coeff: number) {
+  svg (coeff: number): string | ObjetDivLatex {
     return ''
   }
 
-  tikz () {
+  tikz (): string | ObjetDivLatex {
     return ''
   }
 
-  svgml? (coeff: number, amplitude: number) {
+  svgml? (coeff: number, amplitude: number): string | ObjetDivLatex {
     return ''
   }
 
-  tikzml? (amplitude: number) {
+  tikzml? (amplitude: number): string | ObjetDivLatex {
     return ''
   }
 }

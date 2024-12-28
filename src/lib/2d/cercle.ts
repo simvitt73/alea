@@ -324,7 +324,7 @@ export function cercleCentrePoint (
 ) {
   return new Cercle(
     O,
-    longueur(O, M),
+    longueur(O, M, 2),
     color,
     couleurDeRemplissage,
     couleurDesHachures,
@@ -411,7 +411,7 @@ export class Arc extends ObjetMathalea2D {
       medX.push(rotation(M, omega, (ee * this.angle) / 10).x)
       medY.push(rotation(M, omega, (ee * this.angle) / 10).y)
     }
-    this.rayon = longueur(omega, M)
+    this.rayon = longueur(omega, M, 2)
     const A = point(omega.x + 1, omega.y)
     this.azimut = angleOriente(A, omega, M)
     this.angleFin = this.azimut + this.angle
@@ -588,12 +588,12 @@ export class Arc extends ObjetMathalea2D {
     if (tableauOptions.length > 0) {
       optionsDraw = '[' + tableauOptions.join(',') + ']'
     }
-    const lng = longueur(this.centre, this.pointDepart)
+    const lng = longueur(this.centre, this.pointDepart, 2)
     if (this.rayons) { return `\\draw  ${optionsDraw} (${this.pointFinal.x},${this.pointFinal.y}) -- (${this.centre.x},${this.centre.y}) -- (${this.pointDepart.x},${this.pointDepart.y}) arc (${this.azimut}:${this.angleFin}:${lng}) ;` } else { return `\\draw${optionsDraw} (${this.pointDepart.x},${this.pointDepart.y}) arc (${this.azimut}:${this.angleFin}:${lng}) ;` }
   }
 
   svgml (coeff: number) {
-    const width = longueur(this.pointDepart, this.centre) * coeff * 2
+    const width = longueur(this.pointDepart, this.centre, 2) * coeff * 2
     const height = width
     const closed = this.rayons
     const A = point(this.centre.x + 1, this.centre.y)
@@ -633,7 +633,7 @@ export class Arc extends ObjetMathalea2D {
 
     optionsDraw = '[' + tableauOptions.join(',') + ']'
 
-    return `\\draw${optionsDraw} (${this.pointDepart.x},${this.pointDepart.y}) arc (${this.azimut}:${this.angleFin}:${arrondi(longueur(this.centre, this.pointDepart), 2)}) ;`
+    return `\\draw${optionsDraw} (${this.pointDepart.x},${this.pointDepart.y}) arc (${this.azimut}:${this.angleFin}:${arrondi(longueur(this.centre, this.pointDepart, 2), 2)}) ;`
   }
 }
 

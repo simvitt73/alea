@@ -1,4 +1,4 @@
-import { colorToLatexOrHTML, ObjetMathalea2D, Vide2d } from '../../modules/2dGeneralites.js'
+import { colorToLatexOrHTML, ObjetMathalea2D, Vide2d, type ObjetDivLatex } from '../../modules/2dGeneralites.js'
 import { context } from '../../modules/context.js'
 import { arrondi } from '../outils/nombres'
 import { stringNombre } from '../outils/texNombre'
@@ -390,7 +390,7 @@ export class TexteParPointEchelle extends ObjetMathalea2D {
 
   svg (coeff: number) {
     if (this.texte.charAt(0) === '$') {
-      return latexParPoint(this.texte.substring(1, this.texte.length - 2), this.point, this.color[0], this.texte.length * 8, 10, '', this.taille * 0.8).svg()
+      return latexParPoint(this.texte.substring(1, this.texte.length - 2), this.point, this.color[0], this.texte.length * 8, 10, '', this.taille * 0.8).svg(coeff)
     } else {
       let style = ''
       if (this.mathOn) style = ' font-family= "Book Antiqua"; font-style= "italic" '
@@ -717,7 +717,6 @@ export function latexParCoordonneesBox (texte: string, x:number, y:number, color
 }
 
 type LetterSizeType = 'tiny' | 'small' | 'scriptsize' | 'footnotesize' | 'large' | 'Large' | 'LARGE' | 'huge' | 'normalsize'
-type DivLatex = { x: number, y: number, orientation: number, color: string, backgroundColor: string, latex: string, letterSize: string, opacity: number }
 
 /**
  * crée un obiet mathalea2D qui affiche du latex et qui peut tourner contrairement à latexParCoordonnees qui est horizontal
@@ -786,7 +785,7 @@ export class Latex2d extends ObjetMathalea2D {
     ]
   }
 
-  svg (): DivLatex {
+  svg (): ObjetDivLatex {
     // On prend la couleur Latex, parce que c'est pour Katex !
     return { latex: this.latex, x: this.x, y: this.y, opacity: this.opacity, orientation: this.orientation, letterSize: this.letterSize, color: this.col.replace('#', ''), backgroundColor: this.backgroundCol.replace('#', '') }
   }

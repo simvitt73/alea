@@ -219,100 +219,104 @@ export function polyline (...args) {
  * @author Rémi Angot*
  * @class
  */
-export function Polygone (...points) {
-  ObjetMathalea2D.call(this, {})
-  this.epaisseurDesHachures = 1
-  this.distanceDesHachures = 10
-  this.couleurDeRemplissage = ''
-  this.opaciteDeRemplissage = 0.5
-  this.epaisseur = 1
-  if (Array.isArray(points[0])) {
+export class Polygone extends ObjetMathalea2D {
+  constructor (...points) {
+    super()
+    this.epaisseurDesHachures = 1
+    this.distanceDesHachures = 10
+    this.couleurDeRemplissage = ''
+    this.opaciteDeRemplissage = 0.5
+    this.epaisseur = 1
+    this.opacite = 1
+    this.pointilles = 0
+    if (Array.isArray(points[0])) {
     // Si le premier argument est un tableau
-    this.listePoints = points[0]
-    if (points[1]) {
-      this.color = colorToLatexOrHTML(points[1])
-    }
-    if (points[2]) {
-      this.couleurDeRemplissage = colorToLatexOrHTML(points[2])
+      this.listePoints = points[0]
+      if (points[1]) {
+        this.color = colorToLatexOrHTML(points[1])
+      }
+      if (points[2]) {
+        this.couleurDeRemplissage = colorToLatexOrHTML(points[2])
+      } else {
+        this.couleurDeRemplissage = colorToLatexOrHTML('none')
+      }
+      if (points[3]) {
+        this.couleurDesHachures = colorToLatexOrHTML(points[3])
+        this.hachures = true
+      } else {
+        this.couleurDesHachures = colorToLatexOrHTML('black')
+        this.hachures = false
+      }
+      this.nom = this.listePoints.map(el => el.nom).join('')
     } else {
+      if (typeof points[points.length - 1] === 'string') {
+        this.color = points[points.length - 1]
+        points.splice(points.length - 1, 1)
+      }
+      this.listePoints = points
+      this.nom = this.listePoints.map(el => el.nom).join('')
       this.couleurDeRemplissage = colorToLatexOrHTML('none')
-    }
-    if (points[3]) {
-      this.couleurDesHachures = colorToLatexOrHTML(points[3])
-      this.hachures = true
-    } else {
-      this.couleurDesHachures = colorToLatexOrHTML('black')
+      this.couleurDesHachures = colorToLatexOrHTML('none') // Rajout EE du 22/02/2024 pour 6N22 cas 3
       this.hachures = false
     }
-    this.nom = this.listePoints.map(el => el.nom).join('')
-  } else {
-    if (typeof points[points.length - 1] === 'string') {
-      this.color = points[points.length - 1]
-      points.splice(points.length - 1, 1)
+    let xmin = 1000
+    let xmax = -1000
+    let ymin = 1000
+    let ymax = -1000
+    for (const unPoint of this.listePoints) {
+      if (unPoint.typeObjet !== 'point') window.notify('Polygone : argument invalide', { ...points })
+      xmin = Math.min(xmin, unPoint.x)
+      xmax = Math.max(xmax, unPoint.x)
+      ymin = Math.min(ymin, unPoint.y)
+      ymax = Math.max(ymax, unPoint.y)
     }
-    this.listePoints = points
-    this.nom = this.listePoints.map(el => el.nom).join('')
-    this.couleurDeRemplissage = colorToLatexOrHTML('none')
-    this.couleurDesHachures = colorToLatexOrHTML('none') // Rajout EE du 22/02/2024 pour 6N22 cas 3
-    this.hachures = false
-  }
-  let xmin = 1000
-  let xmax = -1000
-  let ymin = 1000
-  let ymax = -1000
-  for (const unPoint of this.listePoints) {
-    if (unPoint.typeObjet !== 'point') window.notify('Polygone : argument invalide', { ...points })
-    xmin = Math.min(xmin, unPoint.x)
-    xmax = Math.max(xmax, unPoint.x)
-    ymin = Math.min(ymin, unPoint.y)
-    ymax = Math.max(ymax, unPoint.y)
-  }
-  this.bordures = [xmin, ymin, xmax, ymax]
+    this.bordures = [xmin, ymin, xmax, ymax]
 
-  this.binomesXY = function (coeff) {
-    let liste = ''
-    for (const point of this.listePoints) {
-      liste += `${point.xSVG(coeff)},${point.ySVG(coeff)} `
-    }
-    return liste
-  }
-  this._triangulation = null
-  this._flat = null
-  Object.defineProperty(this, 'flat', {
-    get: () => {
-      if (this._flat === null) this._flat = polygoneToFlatArray(this)
-      return this._flat
-    }
-  })
-  Object.defineProperty(this, 'triangulation', {
-    get: () => { // retourne une liste de triangles pavant le polygone
-      if (this._triangulation === null) {
-        const trianglesIndices = earcut(this.flat)
-        this._triangulation = []
-        for (let i = 0; i < trianglesIndices.length; i += 3) {
-          this._triangulation.push([point(this.flat[trianglesIndices[i] * 2], this.flat[trianglesIndices[i] * 2 + 1]), point(this.flat[trianglesIndices[i + 1] * 2], this.flat[trianglesIndices[i + 1] * 2 + 1]), point(this.flat[trianglesIndices[i + 2] * 2], this.flat[trianglesIndices[i + 2] * 2 + 1])])
-        }
+    this.binomesXY = function (coeff) {
+      let liste = ''
+      for (const point of this.listePoints) {
+        liste += `${point.xSVG(coeff)},${point.ySVG(coeff)} `
       }
-      return this._triangulation
+      return liste
     }
-  })
-
-  this._aire = null
-
-  Object.defineProperty(this, 'aire', {
-    get: () => {
-      if (this._aire === null) {
-        const triangles = this.triangulation
-        this._aire = 0
-        for (let i = 0; i < triangles.length; i++) {
-          this._aire += aireTriangle(triangles[i])
-        }
+    this._triangulation = null
+    this._flat = null
+    Object.defineProperty(this, 'flat', {
+      get: () => {
+        if (this._flat === null) this._flat = polygoneToFlatArray(this)
+        return this._flat
       }
-      return this._aire
-    }
-  })
+    })
+    Object.defineProperty(this, 'triangulation', {
+      get: () => { // retourne une liste de triangles pavant le polygone
+        if (this._triangulation === null) {
+          const trianglesIndices = earcut(this.flat)
+          this._triangulation = []
+          for (let i = 0; i < trianglesIndices.length; i += 3) {
+            this._triangulation.push([point(this.flat[trianglesIndices[i] * 2], this.flat[trianglesIndices[i] * 2 + 1]), point(this.flat[trianglesIndices[i + 1] * 2], this.flat[trianglesIndices[i + 1] * 2 + 1]), point(this.flat[trianglesIndices[i + 2] * 2], this.flat[trianglesIndices[i + 2] * 2 + 1])])
+          }
+        }
+        return this._triangulation
+      }
+    })
 
-  this.svg = function (coeff) {
+    this._aire = null
+
+    Object.defineProperty(this, 'aire', {
+      get: () => {
+        if (this._aire === null) {
+          const triangles = this.triangulation
+          this._aire = 0
+          for (let i = 0; i < triangles.length; i++) {
+            this._aire += aireTriangle(triangles[i])
+          }
+        }
+        return this._aire
+      }
+    })
+  }
+
+  svg (coeff) {
     if (this.epaisseur !== 1) {
       this.style += ` stroke-width="${this.epaisseur}" `
     }
@@ -360,7 +364,8 @@ export function Polygone (...points) {
       return `<polygon points="${this.binomesXY(coeff)}" stroke="${this.color[0]}" ${this.style} id="${this.id}" />`
     }
   }
-  this.tikz = function () {
+
+  tikz () {
     const tableauOptions = []
     if (this.color[1].length > 1 && this.color[1] !== 'black') {
       tableauOptions.push(`color=${this.color[1]}`)
@@ -418,7 +423,8 @@ export function Polygone (...points) {
     //  return `\\filldraw ${optionsDraw} ${binomeXY}cycle;`
     // }
   }
-  this.svgml = function (coeff, amp) {
+
+  svgml (coeff, amp) {
     let code = ''
     let segmentCourant
     let A, B
@@ -432,7 +438,8 @@ export function Polygone (...points) {
     }
     return code
   }
-  this.tikzml = function (amp) {
+
+  tikzml (amp) {
     let code = ''
     let segmentCourant
     let A, B

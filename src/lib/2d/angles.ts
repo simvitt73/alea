@@ -1,130 +1,139 @@
 import { colorToLatexOrHTML, fixeBordures, mathalea2d, ObjetMathalea2D, vide2d } from '../../modules/2dGeneralites.js'
 import { context } from '../../modules/context.js'
 import { egal } from '../../modules/outils.js'
-import { arrondi, unSiPositifMoinsUnSinon } from '../outils/nombres'
+import type { Angle } from '../mathFonctions/trigo'
+import { arrondi, unSiPositifMoinsUnSinon } from '../outils/nombres.js'
 import { arc, cercle, cercleCentrePoint } from './cercle.js'
 import { CodageAngle } from './codages.js'
-import { point, pointSurCercle, pointSurSegment } from './points.js'
+import { Point, point, pointSurCercle, pointSurSegment } from './points.js'
 import { polygone, polyline } from './polygones.js'
 import { longueur, segment, vecteur } from './segmentsVecteurs.js'
-import { latexParPoint, texteParPoint, texteParPosition } from './textes.ts'
+import { latexParPoint, texteParPoint, texteParPosition } from './textes.js'
 import { homothetie, rotation } from './transformations.js'
 
-export function Rapporteur ({
-  x = 0,
-  y = 0,
-  taille = 7,
-  depart = 0,
-  semi = false,
-  avecNombre = 'deuxSens',
-  precisionAuDegre = 1,
-  stepGraduation = 10,
-  rayonsVisibles = true,
-  color = 'gray'
-}) {
-  ObjetMathalea2D.call(this, {})
-  this.x = x
-  this.y = y
-  this.taille = taille
-  this.opacite = 0.7
-  this.color = color
-  const objets = []
-  let numero
-  let azimut
-  let rayon
-  let nbDivisions
-  let arcPlein
-  if (semi) {
-    arcPlein = 180
-    nbDivisions = 18
-  } else {
-    arcPlein = 360
-    nbDivisions = 36
-  }
+export class Rapporteur extends ObjetMathalea2D {
+  x: number
+  y: number
+  taille: number
 
-  const centre = point(this.x, this.y)
-  azimut = rotation(point(this.x + 1, this.y), centre, depart)
-  let azimut2 = pointSurSegment(centre, azimut, this.taille)
-  const arc1 = arc(azimut, centre, arcPlein - 0.1, false, 'none', this.color)
-  const arc2 = arc(azimut2, centre, arcPlein - 0.1, false, 'none', this.color)
-  // objets.push(segment(centre, azimut2, this.color))
-  objets.push(segment(azimut2, rotation(azimut2, centre, 180), this.color))
-  rayon = segment(azimut, azimut2, this.color)
-  if (rayonsVisibles) objets.push(arc1)
-  // objets.push(arc2, rayon)
-  objets.push(arc2)
-  for (let i = 0; i < nbDivisions; i++) {
-    if (avecNombre !== '') {
-      if (avecNombre === 'deuxSens') {
+  constructor ({
+    x = 0,
+    y = 0,
+    taille = 7,
+    depart = 0,
+    semi = false,
+    avecNombre = 'deuxSens',
+    precisionAuDegre = 1,
+    stepGraduation = 10,
+    rayonsVisibles = true,
+    color = 'gray'
+  }) {
+    super()
+    this.x = x
+    this.y = y
+    this.taille = taille
+    this.opacite = 0.7
+    this.color = colorToLatexOrHTML(color)
+    this.objets = []
+    let numero
+    let azimut
+    let rayon
+    let nbDivisions
+    let arcPlein
+    if (semi) {
+      arcPlein = 180
+      nbDivisions = 18
+    } else {
+      arcPlein = 360
+      nbDivisions = 36
+    }
+
+    const centre = point(this.x, this.y)
+    azimut = rotation(point(this.x + 1, this.y), centre, depart)
+    let azimut2 = pointSurSegment(centre, azimut, this.taille)
+    const arc1 = arc(azimut, centre, arcPlein - 0.1, false, 'none', color)
+    const arc2 = arc(azimut2, centre, arcPlein - 0.1, false, 'none', color)
+    this.objets.push(segment(azimut2, rotation(azimut2, centre, 180), color))
+    rayon = segment(azimut, azimut2, color)
+    if (rayonsVisibles) this.objets.push(arc1)
+    // this.objets.push(arc2, rayon)
+    this.objets.push(arc2)
+    for (let i = 0; i < nbDivisions; i++) {
+      if (avecNombre !== '') {
+        if (avecNombre === 'deuxSens') {
+          if (i === 0) {
+            numero = texteParPoint(String(arcPlein), rotation(homothetie(azimut2, centre, 0.8) as Point, centre, 2), -depart, color)
+            numero.contour = true
+            this.objets.push(numero)
+          }
+          if (i === nbDivisions - 1) {
+            numero = texteParPoint(String(arcPlein - (1 + i) * 10), rotation(homothetie(azimut2, centre, 0.8) as Point, centre, arcPlein / nbDivisions - 2), -depart, color)
+            numero.contour = true
+            this.objets.push(numero)
+          } else if ((arcPlein - (1 + i) * 10) % stepGraduation === 0) {
+            numero = texteParPoint(String(arcPlein - (1 + i) * 10), rotation(homothetie(azimut2, centre, 0.8) as Point, centre, arcPlein / nbDivisions), 90 - (1 + i) * 10 - depart, color)
+            numero.contour = true
+            this.objets.push(numero)
+          }
+        }
         if (i === 0) {
-          numero = texteParPoint(arcPlein, rotation(homothetie(azimut2, centre, 0.8), centre, 2), -depart, this.color)
+          numero = texteParPoint('0', rotation(homothetie(azimut2, centre, 0.9) as Point, centre, 2), -depart, color)
           numero.contour = true
-          objets.push(numero)
+          this.objets.push(numero)
         }
         if (i === nbDivisions - 1) {
-          numero = texteParPoint(arcPlein - (1 + i) * 10, rotation(homothetie(azimut2, centre, 0.8), centre, arcPlein / nbDivisions - 2), -depart, this.color)
+          numero = texteParPoint(String((1 + i) * 10), rotation(homothetie(azimut2, centre, 0.9) as Point, centre, arcPlein / nbDivisions - 2), -depart, color)
           numero.contour = true
-          objets.push(numero)
-        } else if ((arcPlein - (1 + i) * 10) % stepGraduation === 0) {
-          numero = texteParPoint(arcPlein - (1 + i) * 10, rotation(homothetie(azimut2, centre, 0.8), centre, arcPlein / nbDivisions), 90 - (1 + i) * 10 - depart, this.color)
+          this.objets.push(numero)
+        } else if ((i + 1) * 10 % stepGraduation === 0) {
+          numero = texteParPoint(String((1 + i) * 10), rotation(homothetie(azimut2, centre, 0.9) as Point, centre, arcPlein / nbDivisions), 90 - (1 + i) * 10 - depart, color)
           numero.contour = true
-          objets.push(numero)
+          this.objets.push(numero)
         }
       }
-      if (i === 0) {
-        numero = texteParPoint('0', rotation(homothetie(azimut2, centre, 0.9), centre, 2), -depart, this.color)
-        numero.contour = true
-        objets.push(numero)
+      for (let s = 1, r; s < 10; s++) {
+        if (s === 5 && precisionAuDegre < 10) {
+          r = segment(homothetie(rotation(azimut2, centre, s), centre, 0.92) as Point, homothetie(rotation(azimut2, centre, s), centre, 0.99) as Point, color)
+          r.opacite = 0.6
+          this.objets.push(r)
+        } else if (precisionAuDegre === 1) {
+          r = segment(homothetie(rotation(azimut2, centre, s), centre, 0.96) as Point, homothetie(rotation(azimut2, centre, s), centre, 0.99) as Point, color)
+          r.opacite = 0.6
+          this.objets.push(r)
+        }
       }
-      if (i === nbDivisions - 1) {
-        numero = texteParPoint((1 + i) * 10, rotation(homothetie(azimut2, centre, 0.9), centre, arcPlein / nbDivisions - 2), -depart, this.color)
-        numero.contour = true
-        objets.push(numero)
-      } else if ((i + 1) * 10 % stepGraduation === 0) {
-        numero = texteParPoint((1 + i) * 10, rotation(homothetie(azimut2, centre, 0.9), centre, arcPlein / nbDivisions), 90 - (1 + i) * 10 - depart, this.color)
-        numero.contour = true
-        objets.push(numero)
-      }
+      if ((i !== 0) && (i !== 36) && (i !== 18)) this.objets.push(rayon)
+      azimut = rotation(azimut, centre, arcPlein / nbDivisions)
+      azimut2 = rotation(azimut2, centre, arcPlein / nbDivisions)
+      if (rayonsVisibles) rayon = segment(azimut, azimut2, color)
+      else rayon = segment(homothetie(azimut2, centre, 0.9) as Point, azimut2, color)
+      rayon.opacite = this.opacite
     }
-    for (let s = 1, r; s < 10; s++) {
-      if (s === 5 && precisionAuDegre < 10) {
-        r = segment(homothetie(rotation(azimut2, centre, s), centre, 0.92), homothetie(rotation(azimut2, centre, s), centre, 0.99), this.color)
-        r.opacite = 0.6
-        objets.push(r)
-      } else if (precisionAuDegre === 1) {
-        r = segment(homothetie(rotation(azimut2, centre, s), centre, 0.96), homothetie(rotation(azimut2, centre, s), centre, 0.99), this.color)
-        r.opacite = 0.6
-        objets.push(r)
-      }
+    if (!semi) {
+      rayon = segment(homothetie(rotation(azimut, centre, -90), centre, -0.2) as Point, homothetie(rotation(azimut, centre, -90), centre, 0.2) as Point, color)
+      this.objets.push(rayon)
+      rayon = segment(homothetie(azimut, centre, -0.2) as Point, homothetie(azimut, centre, 0.2) as Point, color)
+    } else {
+      rayon = segment(centre, homothetie(rotation(azimut, centre, -90), centre, 0.2) as Point, color)
     }
-    if ((i !== 0) && (i !== 36) && (i !== 18)) objets.push(rayon)
-    azimut = rotation(azimut, centre, arcPlein / nbDivisions)
-    azimut2 = rotation(azimut2, centre, arcPlein / nbDivisions)
-    if (rayonsVisibles) rayon = segment(azimut, azimut2, this.color)
-    else rayon = segment(homothetie(azimut2, centre, 0.9), azimut2, this.color)
-    rayon.opacite = this.opacite
+    this.objets.push(rayon)
+    const bordures = fixeBordures(this.objets)
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
   }
-  if (!semi) {
-    rayon = segment(homothetie(rotation(azimut, centre, -90), centre, -0.2), homothetie(rotation(azimut, centre, -90), centre, 0.2), this.color)
-    objets.push(rayon)
-    rayon = segment(homothetie(azimut, centre, -0.2), homothetie(azimut, centre, 0.2), this.color)
-  } else {
-    rayon = segment(centre, homothetie(rotation(azimut, centre, -90), centre, 0.2), this.color)
-  }
-  objets.push(rayon)
-  const bordures = fixeBordures(objets)
-  this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
 
-  this.svg = function (coeff) {
+  svg (coeff: number) {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.svg(coeff)
     }
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.tikz()
     }
     return code
@@ -187,7 +196,7 @@ export function rapporteur ({
  * @author Rémi Angot
  */
 // JSDOC Validee par EE Juin 2022
-export function angle (A, O, B, precision = 2) {
+export function angle (A: Point, O: Point, B: Point, precision = 2) {
   const OA = longueur(O, A, precision)
   const OB = longueur(O, B, precision)
   const AB = longueur(A, B, precision)
@@ -228,7 +237,7 @@ export function angle (A, O, B, precision = 2) {
  * @return {number}
  */
 // JSDOC Validee par EE Juin 2022
-export function angleModulo (a) {
+export function angleModulo (a: number) {
   while (a <= -180) a = a + 360
   while (a > 180) a = a - 360
   return a
@@ -248,9 +257,9 @@ export function angleModulo (a) {
  * @author Jean-Claude Lhote
  */
 // JSDOC Validee par EE Juin 2022
-export function angleOriente (A, O, B, precision = 2) {
-  const OA = longueur(O, A)
-  const OB = longueur(O, B)
+export function angleOriente (A: Point, O: Point, B: Point, precision = 2) {
+  const OA = longueur(O, A, precision)
+  const OB = longueur(O, B, precision)
   if (OA < 1e-12 || OB < 1e-12) { // On considère qu'un côté de l'angle a une longueur nulle, et ce n'est pas normal !
     // window.notify('angleOriente() a reçu des points confondus pour déterminer l\'angle !', { OA, OB })
     return 0
@@ -276,10 +285,10 @@ export function angleOriente (A, O, B, precision = 2) {
  * @author Rémi Angot
  */
 // JSDOC Validee par EE Juin 2022
-export function angleradian (A, O, B, precision = 2) {
-  const OA = longueur(O, A)
-  const OB = longueur(O, B)
-  const AB = longueur(A, B)
+export function angleradian (A: Point, O: Point, B: Point, precision = 2) {
+  const OA = longueur(O, A, precision)
+  const OB = longueur(O, B, precision)
+  const AB = longueur(A, B, precision)
   return arrondi(Math.acos((AB ** 2 - OA ** 2 - OB ** 2) / (-2 * OA * OB)), precision)
 }
 
@@ -308,90 +317,99 @@ export function angleradian (A, O, B, precision = 2) {
  * @class
  */
 // JSDOC Validee par EE Juin 2022
-export function CodageAngleDroit (A, O, B, color = 'black', d = 0.4, epaisseur = 0.5, opacite = 1, couleurDeRemplissage = 'none', opaciteDeRemplissage = 1) {
-  ObjetMathalea2D.call(this, {})
-  this.sommet = O
-  this.depart = A
-  this.arrivee = B
-  this.taille = d
-  this.color = color
-  this.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
-  this.opaciteDeRemplissage = opaciteDeRemplissage
-  const a = pointSurSegment(this.sommet, this.depart, this.taille * 20 / context.pixelsParCm)
-  const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / context.pixelsParCm)
-  let o
-  if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
-    o = rotation(this.sommet, a, -90)
-  } else {
-    o = rotation(this.sommet, a, 90)
-  }
-  const bordures = fixeBordures(a, b, o)
-  this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
+export class CodageAngleDroit extends ObjetMathalea2D {
+  sommet: Point
+  depart: Point
+  arrivee: Point
+  taille: number
+  color: string[]
+  couleurDeRemplissage: string[]
+  opaciteDeRemplissage: number
 
-  this.svg = function (coeff) {
-    const a = pointSurSegment(this.sommet, this.depart, this.taille * 20 / coeff)
-    const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / coeff)
-    let o = {}
-    let result = {}
+  constructor (A: Point, O: Point, B: Point, color = 'black', d = 0.4, epaisseur = 0.5, opacite = 1, couleurDeRemplissage = 'none', opaciteDeRemplissage = 1) {
+    super()
+    this.sommet = O
+    this.depart = A
+    this.arrivee = B
+    this.taille = d
+    this.color = colorToLatexOrHTML(color)
+    this.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
+    this.opaciteDeRemplissage = opaciteDeRemplissage
+    const a = pointSurSegment(this.sommet, this.depart, this.taille * 20 / context.pixelsParCm)
+    const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / context.pixelsParCm)
+    let o
     if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
       o = rotation(this.sommet, a, -90)
     } else {
       o = rotation(this.sommet, a, 90)
     }
-    if (this.couleurDeRemplissage[0] === 'none') result = polyline([a, o, b], this.color)
-    else {
-      result = polygone([this.sommet, a, o, b], this.color)
+    const bordures = fixeBordures([a, b, o])
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
+    this.epaisseur = epaisseur
+    this.opacite = opacite
+  }
+
+  svg (coeff: number) {
+    const a = pointSurSegment(this.sommet, this.depart, this.taille * 20 / coeff)
+    const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / coeff)
+    let o = {}
+    if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
+      o = rotation(this.sommet, a, -90)
+    } else {
+      o = rotation(this.sommet, a, 90)
+    }
+    const result = polygone([this.sommet, a, o, b], this.color[0])
+    if (this.couleurDeRemplissage[0] !== 'none') {
       result.couleurDeRemplissage = [this.couleurDeRemplissage[0], this.couleurDeRemplissage[1]]
       result.opaciteDeRemplissage = this.opaciteDeRemplissage
     }
-    result.isVisible = false
-    result.epaisseur = epaisseur
-    result.opacite = opacite
+    result.epaisseur = this.epaisseur
+    result.opacite = this.opacite
     this.id = result.id
     return result.svg(coeff)
   }
-  this.tikz = function () {
+
+  tikz () {
     const a = pointSurSegment(this.sommet, this.depart, this.taille / context.scale)
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille / context.scale)
     let o = {}
-    let result = {}
     if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
       o = rotation(this.sommet, a, -90)
     } else {
       o = rotation(this.sommet, a, 90)
     }
-    if (this.couleurDeRemplissage[1] === '') return polyline([a, o, b], this.color).tikz()
-    else {
-      result = polygone([this.sommet, a, o, b], this.color)
+    const result = polygone([this.sommet, a, o, b], this.color[1])
+    if (this.couleurDeRemplissage[1] === '') {
       result.couleurDeRemplissage = [this.couleurDeRemplissage[0], this.couleurDeRemplissage[1]]
       result.opaciteDeRemplissage = this.opaciteDeRemplissage
-      result.isVisible = false
-      result.epaisseur = epaisseur
-      result.opacite = opacite
-      return result.tikz()
+      result.epaisseur = this.epaisseur
+      result.opacite = this.opacite
     }
+    return result.tikz()
   }
-  this.svgml = function (coeff, amp) {
+
+  svgml (coeff: number, amp: number) {
     const a = pointSurSegment(this.sommet, this.depart, this.taille * 20 / coeff)
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / coeff)
     let o = {}
-    if (angleOriente(A, this.sommet, B) > 0) {
+    if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
       o = rotation(this.sommet, a, -90)
     } else {
       o = rotation(this.sommet, a, 90)
     }
-    return polyline([a, o, b], this.color).svgml(coeff, amp)
+    return polyline([a, o, b], this.color[0]).svgml(coeff, amp)
   }
-  this.tikzml = function (amp) {
+
+  tikzml (amp: number) {
     const a = pointSurSegment(this.sommet, this.depart, this.taille / context.scale)
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille / context.scale)
     let o = {}
-    if (angleOriente(A, this.sommet, B) > 0) {
+    if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
       o = rotation(this.sommet, a, -90)
     } else {
       o = rotation(this.sommet, a, 90)
     }
-    return polyline([a, o, b], this.color).tikzml(amp)
+    return polyline([a, o, b], this.color[1]).tikzml(amp)
   }
 }
 
@@ -414,7 +432,7 @@ export function CodageAngleDroit (A, O, B, color = 'black', d = 0.4, epaisseur =
  * @author Rémi Angot
  */
 // JSDOC Validee par EE Juin 2022
-export function codageAngleDroit (A, O, B, color = 'black', d = 0.4, epaisseur = 0.5, opacite = 1, couleurDeRemplissage = 'none', opaciteDeRemplissage = 1) {
+export function codageAngleDroit (A: Point, O:Point, B:Point, color = 'black', d = 0.4, epaisseur = 0.5, opacite = 1, couleurDeRemplissage = 'none', opaciteDeRemplissage = 1) {
   return new CodageAngleDroit(A, O, B, color, d, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage)
 }
 
@@ -452,43 +470,54 @@ export function codageAngleDroit (A, O, B, color = 'black', d = 0.4, epaisseur =
  * @return {CodageAngle|CodageAngleDroit}
  */
 // JSDOC Validee par EE Juin 2022
-export function codageAngle (A, O, angle, taille = 0.8, mark = '', color = 'black', epaisseur = 1, opacite = 1, couleurDeRemplissage = 'none', opaciteDeRemplissage = 0.2, mesureOn = false, noAngleDroit = false, texteACote = '', tailleTexte = 1, { echelleMark = 1, angleArrondi = 0 } = {}) {
+export function codageAngle (A:Point, O:Point, angle: Point | number, taille = 0.8, mark = '', color = 'black', epaisseur = 1, opacite = 1, couleurDeRemplissage = 'none', opaciteDeRemplissage = 0.2, mesureOn = false, noAngleDroit = false, texteACote = '', tailleTexte = 1, { echelleMark = 1, angleArrondi = 0 } = {}) {
+  let angleNumerique: number
   if (typeof (angle) !== 'number') {
-    angle = angleOriente(A, O, angle)
+    angleNumerique = angleOriente(A, O, angle)
+  } else {
+    angleNumerique = angle
   }
-  if ((angle === 90 || angle === -90) && !noAngleDroit) {
-    return new CodageAngleDroit(A, O, rotation(A, O, angle), color, taille, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage)
-  } else return new CodageAngle(A, O, angle, taille, mark, color, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage, mesureOn, texteACote, tailleTexte, { echelleMark, angleArrondi })
+  if ((angleNumerique === 90 || angleNumerique === -90) && !noAngleDroit) {
+    return new CodageAngleDroit(A, O, rotation(A, O, angleNumerique), color, taille, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage)
+  } else return new CodageAngle(A, O, angleNumerique, taille, mark, color, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage, mesureOn, texteACote, tailleTexte, { echelleMark, angleArrondi })
 }
 
-export function NomAngleParPosition (nom, x, y, color, s) {
-  ObjetMathalea2D.call(this, {})
-  const objets = []
-  objets.push(texteParPosition(nom, x, y, 0, color, 1, 'milieu', true))
-  const s1 = segment(x - 0.6, y + 0.4 - s / 10, x + 0.1, y + 0.4 + s / 10, color)
-  const s2 = segment(x + 0.1, y + 0.4 + s / 10, x + 0.8, y + 0.4 - s / 10, color)
-  objets.push(s1, s2)
-  this.svg = function (coeff) {
-    let code = ''
-    for (const objet of objets) {
-      code += '\n\t' + objet.svg(coeff)
-    }
-    return code
+export class NomAngleParPosition extends ObjetMathalea2D {
+  constructor (nom: string, x: number, y: number, color:string, s: number) {
+    super()
+    this.objets = []
+    this.objets.push(texteParPosition(nom, x, y, 0, color, 1, 'milieu', true))
+    const s1 = segment(x - 0.6, y + 0.4 - s / 10, x + 0.1, y + 0.4 + s / 10, color)
+    const s2 = segment(x + 0.1, y + 0.4 + s / 10, x + 0.8, y + 0.4 - s / 10, color)
+    this.objets.push(s1, s2)
   }
-  this.tikz = function () {
+
+  svg (coeff: number) {
     let code = ''
-    for (const objet of objets) {
-      code += '\n\t' + objet.tikz()
-    }
-    return code
+    if (this.objets != null) {
+      for (const objet of this.objets) {
+        code += '\n\t' + (objet as ObjetMathalea2D).svg(coeff)
+      }
+      return code
+    } else return ''
+  }
+
+  tikz () {
+    let code = ''
+    if (this.objets != null) {
+      for (const objet of this.objets) {
+        code += '\n\t' + objet.tikz()
+      }
+      return code
+    } else return ''
   }
 }
 
-export function nomAngleSaillantParPosition (nom, x, y, color) {
+export function nomAngleSaillantParPosition (nom: string, x: number, y: number, color: string) {
   return new NomAngleParPosition(nom, x, y, color, 1)
 }
 
-export function nomAngleRentrantParPosition (nom, x, y, color) {
+export function nomAngleRentrantParPosition (nom:string, x:number, y:number, color:string) {
   return new NomAngleParPosition(nom, x, y, color, -1)
 }
 
@@ -498,8 +527,8 @@ export function nomAngleRentrantParPosition (nom, x, y, color) {
  * @param {string} cosOrSin
  * @returns string
  */
-export function cercleTrigo (angle, cosOrSin = 'cos') {
-  const monAngle = parseInt(angle.degres)
+export function cercleTrigo (angle: Angle, cosOrSin = 'cos') {
+  const monAngle = parseInt(angle.degres ?? '0')
   const r = 5
   const tAngle = angle.radians
   const tCos = (Array.isArray(angle.cos)) ? angle.cos[0] : angle.cos
@@ -513,9 +542,8 @@ export function cercleTrigo (angle, cosOrSin = 'cos') {
   const s2 = segment(J, J2)
   const c = cercleCentrePoint(O, I)
   const c2 = cercle(O, 5.7)
-  c2.isVisible = false
-  const M = pointSurCercle(c, monAngle)
-  const M2 = pointSurCercle(c2, monAngle)
+  const M = pointSurCercle(c, monAngle, '')
+  const M2 = pointSurCercle(c2, monAngle, '')
   const sOM = segment(O, M, 'blue')
   const sOI = segment(O, I, 'blue')
   sOM.epaisseur = 3
@@ -526,11 +554,11 @@ export function cercleTrigo (angle, cosOrSin = 'cos') {
   sMx.pointilles = 5
   const sMy = !egal(M.x, 0) ? segment(M, y) : vide2d()
   sMy.pointilles = 5
-  const texteAngle = latexParPoint(tAngle, M2)
+  const texteAngle = latexParPoint(tAngle ?? '0', M2)
   const Rx = point(M.x, (M.y < 0) ? 1.5 : -1.5)
   const Ry = point((M.x < 0) ? 0.75 : -1.5, M.y)
-  const texteCosinus = latexParPoint(tCos, Rx)
-  const texteSinus = latexParPoint(tSin, Ry)
+  const texteCosinus = latexParPoint(tCos ?? '0', Rx)
+  const texteSinus = latexParPoint(tSin ?? '0', Ry)
   const sCos = segment(O, point(M.x, 0))
   const sSin = segment(O, point(0, M.y))
   sCos.epaisseur = 3
