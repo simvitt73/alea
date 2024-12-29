@@ -33,8 +33,8 @@ export default class Exercice {
   introduction: string
   listeQuestions: string[] = []
   listeCorrections: string[] = []
-  listeCanReponsesACompleter?: string[] = []
-  listeCanEnonces?: string[] = []
+  listeCanReponsesACompleter: string[] = []
+  listeCanEnonces: string[] = []
   question?: string // Seulement pour les exercices de type simple
   reponse?: string | number | object// Seulement pour les exercices de type simple
   correction?: string // Seulement pour les exercices de type simple
