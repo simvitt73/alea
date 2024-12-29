@@ -25,7 +25,7 @@ export default class ProbaEvenementContraire extends Exercice {
     this.nbQuestions = 1
 
     this.formatInteractif = 'fractionEgale'
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

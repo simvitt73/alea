@@ -32,7 +32,7 @@ export default class CoeffDirDroite extends Exercice {
     super()
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ' '
+    
     this.formatInteractif = 'fractionEgale'
     this.nbQuestions = 1
 

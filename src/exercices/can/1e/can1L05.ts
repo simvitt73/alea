@@ -33,7 +33,7 @@ export default class ResoudreEquationSecondDegre2 extends Exercice {
     super()
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

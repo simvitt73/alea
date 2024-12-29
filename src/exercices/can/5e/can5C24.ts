@@ -30,7 +30,7 @@ export default class FractionVersDecimal extends Exercice {
   nouvelleVersion () {
     let a, b, c, maFraction
     let resultat
-    this.formatChampTexte = ''
+    
 
     switch (choice([1, 2, 3])) {
       case 1:// conversion fraction <->décimale cinquième

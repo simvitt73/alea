@@ -30,7 +30,7 @@ export default class OrdonneeAbscisseFonctionLineaire extends Exercice {
     super()
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
     this.nbQuestions = 1
 
 

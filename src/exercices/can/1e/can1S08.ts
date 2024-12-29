@@ -28,7 +28,7 @@ export default class CalculRaison2 extends Exercice {
 
     this.typeExercice = 'simple'
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

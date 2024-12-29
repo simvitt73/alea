@@ -33,7 +33,7 @@ export default class EncadrerTableau extends Exercice {
     super()
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

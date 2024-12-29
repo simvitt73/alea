@@ -27,7 +27,7 @@ super()
 
 
     
-  this.formatChampTexte = ''
+  
   
 }
  nouvelleVersion () {

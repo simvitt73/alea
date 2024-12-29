@@ -33,7 +33,7 @@ super()
     const n = randint(-5, 5, 0)
     const c = n * b
 
-    this.formatChampTexte = ''
+    
 
     this.formatInteractif = 'texte'
     this.reponse = `0;${-c / b}`

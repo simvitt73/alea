@@ -25,7 +25,7 @@ export default class PerimetreCarreRectangle extends Exercice {
     this.nbQuestions = 1
 
     this.optionsChampTexte = { texteApres: ' cm' }
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

@@ -28,7 +28,7 @@ export default class VecteurNormEqCart extends Exercice {
     super()
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

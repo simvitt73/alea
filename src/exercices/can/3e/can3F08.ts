@@ -34,9 +34,9 @@ export default class LectureGraphiqueFonctionAffine2 extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
 
-    this.formatChampTexte = ' '
+    
   }
 
   nouvelleVersion () {

@@ -28,7 +28,7 @@ class ConstructionParallelogramme extends Exercice {
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
     this.reponse = ''
-    this.formatChampTexte = 'none'
+    
     this.exoCustomResultat = true
   }
 

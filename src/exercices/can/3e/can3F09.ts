@@ -31,7 +31,7 @@ export default class ReconnaitreFonctionAffine extends Exercice {
   constructor () {
     super()
 
-    this.formatChampTexte = ''
+    
 
     this.nbQuestions = 1
 

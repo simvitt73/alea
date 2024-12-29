@@ -23,7 +23,7 @@ export default class ProblemesDeVitesse extends Exercice {
   constructor () {
     super()
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
     this.nbQuestions = 1
 
   }

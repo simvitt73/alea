@@ -29,7 +29,7 @@ export default class AngleTriangleIsocele extends Exercice {
   constructor () {
     super()
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
     this.nbQuestions = 1
 
   }

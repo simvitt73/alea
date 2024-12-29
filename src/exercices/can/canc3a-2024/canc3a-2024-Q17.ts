@@ -20,7 +20,7 @@ export default class BillesMultipliees extends Exercice {
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
     this.nbQuestions = 1
 
-    this.formatChampTexte = ''
+    
 
     this.canOfficielle = false
   }

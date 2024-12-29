@@ -28,7 +28,7 @@ export default class NormeVecteur extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

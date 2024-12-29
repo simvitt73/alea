@@ -45,7 +45,7 @@ class LireImageParApiGeom extends Exercice {
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
     // Pour un exercice de type simple qui n'utilise pas le champ de réponse
-    this.formatChampTexte = ''
+
     this.besoinFormulaireNumerique = ['Nombre d\'images à trouver (de 1 à 5)', 5]
     this.besoinFormulaire2CaseACocher = ['Utiliser des valeurs entières', false]
     this.sup = 3

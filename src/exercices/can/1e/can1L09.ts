@@ -30,7 +30,7 @@ export default class EquationSecondDegreParticuliere extends Exercice {
     super()
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

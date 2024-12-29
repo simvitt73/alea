@@ -26,7 +26,7 @@ export default class EquationAXPlusBEgalZero extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

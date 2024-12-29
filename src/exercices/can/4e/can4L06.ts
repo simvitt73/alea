@@ -25,7 +25,7 @@ export default class CalculSubstitution extends Exercice {
   }
 
   nouvelleVersion () {
-    this.formatChampTexte = ''
+    
     let a, b, d
     switch (randint(1, 4)) {
       case 1:

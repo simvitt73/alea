@@ -25,7 +25,7 @@ export default class CombienDeFois extends Exercice {
 
     this.typeExercice = 'simple'
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

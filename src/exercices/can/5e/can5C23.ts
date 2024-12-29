@@ -26,7 +26,7 @@ export default class MultiplierPar extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
     this.typeExercice = 'simple'
 
   }

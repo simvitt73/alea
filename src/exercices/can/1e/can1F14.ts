@@ -32,7 +32,7 @@ export default class NombreDerivee extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

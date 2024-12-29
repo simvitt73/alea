@@ -54,7 +54,7 @@ export default class Convertir extends Exercice {
         if (!this.interactif) {
           this.question += ' .... m$^3$ '
         }
-        this.formatChampTexte = ''
+        
         this.optionsChampTexte = { texteApres: ' m$^3$' }
         this.canEnonce = 'Compléter.'
         this.canReponseACompleter = `$${texNombre(a)}$ L $ = \\dots$ m$^3$`

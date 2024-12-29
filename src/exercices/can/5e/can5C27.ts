@@ -27,7 +27,7 @@ export default class AdditionRelatifATrou extends Exercice {
   }
 
   nouvelleVersion () {
-    this.formatChampTexte = ''
+    
 
     let a = randint(1, this.sup)
     let b = randint(1, this.sup)

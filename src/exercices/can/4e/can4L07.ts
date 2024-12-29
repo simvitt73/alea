@@ -39,7 +39,7 @@ export default class ReduireExp extends Exercice {
   }
 
   nouvelleVersion () {
-    this.formatChampTexte = ''
+    
     let a, b, c, choix, d, e
     let reponse
     switch (randint(1, 3)) {
