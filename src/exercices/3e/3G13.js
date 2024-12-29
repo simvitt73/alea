@@ -54,7 +54,6 @@ export default class CalculsHomothetie extends Exercice {
     this.nbCols = 0 // Uniquement pour la sortie LaTeX
     this.nbColsCorr = 0 // Uniquement pour la sortie LaTeX
 
-
     this.correctionDetailleeDisponible = true
     this.correctionDetaillee = true
     context.isHtml ? (this.spacing = 1.5) : (this.spacing = 0)
