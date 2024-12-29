@@ -29,17 +29,18 @@ export default class DevelopperIdentitesRemarquables4 extends Exercice {
     this.besoinFormulaireNumerique = ['Niveau de difficulté', 5, '1 : Coefficient de x égal à 1\n 2 : Coefficient de x supérieur à 1\n 3 : Coefficient de x négatif\n 4 : Coefficient de x rationnel\n 5 : Mélange des cas précédents']
 
     this.correctionDetailleeDisponible = true
-    context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
+    this.spacingCorr = context.isHtml ? 3 : 2
     if (!context.isHtml) {
       this.correctionDetaillee = false
     }
-    this.consigne = 'Développer puis réduire les expressions suivantes.'
-
     this.nbQuestions = 4
     this.sup = 5
   }
 
   nouvelleVersion () {
+    this.consigne = this.nbQuestions === 1
+      ? 'Développer puis réduire l\'expression suivante.'
+      : 'Développer puis réduire les expressions suivantes.'
     const listeFractions = [
       [1, 2],
       [1, 3],
