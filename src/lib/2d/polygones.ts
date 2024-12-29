@@ -560,7 +560,7 @@ export function renommePolygone (p: Polygone, noms: string | string[]) {
  * Pour tracer le polygone régulier indirect de côté [AB], on iversera A et B
  * @param {Point} A
  * @param {Point} B
- * @param {integer} n Nombre de côtés
+ * @param {number} n Nombre de côtés
  * @param {string} [color = 'black'] Couleur de l'arc ou 'none' : du type 'blue' ou du type '#f15929'
  * @return {Polygone}
  * @author Rémi Angot

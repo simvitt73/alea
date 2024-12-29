@@ -645,7 +645,7 @@ export function demiDroite (A: Point, B: Point, color = 'black', extremites = fa
  * Renvoie la distance de A à B
  * @param {Point} A
  * @param {Point} B
- * @param {integer} [precision] Nombre de chiffres après la virgule.
+ * @param {number} [precision] Nombre de chiffres après la virgule.
  * (ne sert à rien car si le number correspondant à l'arrondi ne tombe pas sur un flottant convertible en bianire sans erreur, il y aura 18 chiffres significatifs dans le number retourné
  * C'est à la fonction d'affichage de limiter le nombre de chiffres
  * @author Rémi Angot

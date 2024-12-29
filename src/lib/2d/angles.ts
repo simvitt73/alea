@@ -187,7 +187,7 @@ export function rapporteur ({
  * @param {Point} A Point sur un côté de l'angle
  * @param {Point} O Sommet de l'angle
  * @param {Point} B Point sur l'autre côté de l'angle
- * @param {integer} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle
+ * @param {number} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle
  * @example x = angle(H,E,T)
  * // x contient la mesure en degré de l'angle HET, arrondi au centième
  * @example x = angle(H,E,T,0)
@@ -248,7 +248,7 @@ export function angleModulo (a: number) {
  * @param {Point} A Point sur un côté de l'angle
  * @param {Point} O Sommet de l'angle
  * @param {Point} B Point sur l'autre côté de l'angle
- * @param {integer} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle orienté
+ * @param {number} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle orienté
  * @example x = angleOriente(H,E,T)
  * // x contient la valeur de la mesure de l'angle orienté HET, arrondie au centième
  * @example x = angleOriente(H,E,T,0)
@@ -276,7 +276,7 @@ export function angleOriente (A: Point, O: Point, B: Point, precision = 2) {
  * @param {Point} A Point sur un côté de l'angle
  * @param {Point} O Sommet de l'angle
  * @param {Point} B Point sur l'autre côté de l'angle
- * @param {integer} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle orienté
+ * @param {number} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle orienté
  * @example x = angleradian(H,E,T)
  * // x contient la valeur de la mesure de l'angle HET en radians, arrondie au centième
  * @example x = angleradian(H,E,T,0)
