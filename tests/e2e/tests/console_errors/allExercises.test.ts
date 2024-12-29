@@ -162,7 +162,7 @@ if (process.env.CI && process.env.NIV !== null && process.env.NIV !== undefined)
   log(filter)
   testRunAllLots(filter)
 } else {
-  // testRunAllLots('can')
+  testRunAllLots('can')
   // testRunAllLots('6e')
   // testRunAllLots('5e')
   // testRunAllLots('4e')

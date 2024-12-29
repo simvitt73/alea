@@ -30,7 +30,7 @@ export default class PoucentageP2 extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
 
-    this.formatChampTexte = ''
+    
     this.besoinFormulaireNumerique = ['Déterminer ou Calculer', 3, '1 : Déterminer\n2 : Calculer\n3 : Mélange']
     this.sup = 3
   }

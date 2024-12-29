@@ -27,7 +27,7 @@ export default class VocabulaireImageAntecedent extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

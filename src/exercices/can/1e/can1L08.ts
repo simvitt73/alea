@@ -30,7 +30,7 @@ export default class DeveloppementCoeff2 extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

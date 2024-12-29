@@ -23,7 +23,7 @@ export default class ResteEnMinutes extends Exercice {
     this.nbQuestions = 1
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

@@ -35,7 +35,7 @@ export default class LectureGraphiqueVecteurRepere extends Exercice {
     super()
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

@@ -27,7 +27,7 @@ export default class SommeDifferenceFractionsEgyptiennes extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
 
-    this.formatChampTexte = ''
+    
     this.optionsDeComparaison = { fractionIrreductible: true }
   }
 

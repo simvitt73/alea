@@ -25,7 +25,7 @@ export default class PuissancesDe2345 extends Exercice {
     this.typeExercice = 'simple'
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

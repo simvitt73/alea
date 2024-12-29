@@ -24,7 +24,7 @@ export default class Pyramide3EtagesAdditionFractions extends Exercice {
     super()
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
     this.typeExercice = 'simple'
 
   }

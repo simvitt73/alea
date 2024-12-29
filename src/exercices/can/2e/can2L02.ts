@@ -30,7 +30,7 @@ export default class CoordonneesPointDroite extends Exercice {
     const b = randint(-10, 10, 0)
     const c = randint(-10, 10, 0)
 
-    this.formatChampTexte = ''
+    
 
     this.formatInteractif = 'texte'
     this.reponse = `${c};${a * c + b}`

@@ -29,7 +29,7 @@ export default class EncadrerDizaine extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

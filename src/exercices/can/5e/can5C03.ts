@@ -24,7 +24,7 @@ export default class DifferenceEntiers5e extends Exercice {
     this.nbQuestions = 1
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

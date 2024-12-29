@@ -31,7 +31,7 @@ export default class DeriveePoly2 extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

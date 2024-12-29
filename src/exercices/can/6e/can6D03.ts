@@ -26,7 +26,7 @@ export default class CalculDureeMinutes extends Exercice {
     this.nbQuestions = 1
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
     this.optionsChampTexte = { texteApres: ' minutes' }
   }
 

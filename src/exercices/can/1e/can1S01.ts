@@ -29,7 +29,7 @@ export default class CalculTermeSuiteExp extends Exercice {
 
     this.typeExercice = 'simple'
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

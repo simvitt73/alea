@@ -31,7 +31,7 @@ export default class LectureGraphiqueParaboleA extends Exercice {
     super()
 
     this.nbQuestions = 1
-    this.formatChampTexte = ''
+    
 
   }
 

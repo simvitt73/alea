@@ -29,7 +29,7 @@ export default class CalculPrix extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
 
-    this.formatChampTexte = ''
+    
     this.optionsChampTexte = { texteApres: ' €' }
   }
 

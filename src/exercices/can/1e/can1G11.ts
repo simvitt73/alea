@@ -22,7 +22,7 @@ export default class mesureAngleCosSin extends Exercice {
     super()
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
     this.nbQuestions = 1
 
 

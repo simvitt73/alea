@@ -29,7 +29,7 @@ export default class VecteursColineaires extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

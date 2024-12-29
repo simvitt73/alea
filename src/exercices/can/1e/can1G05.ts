@@ -23,7 +23,7 @@ export default class ProduitScalaireCoordonnees extends Exercice {
     super()
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
     this.nbQuestions = 1
 
   }

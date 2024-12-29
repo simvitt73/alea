@@ -26,7 +26,7 @@ export default class EncadrementAvecPuissancesDe10 extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

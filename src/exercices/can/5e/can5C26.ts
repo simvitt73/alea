@@ -28,7 +28,7 @@ export default class AdditionRelatifBisCAN extends Exercice {
   }
 
   nouvelleVersion () {
-    this.formatChampTexte = ''
+    
 
     let a = randint(1, this.sup)
     let b = randint(1, this.sup)

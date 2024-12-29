@@ -24,7 +24,7 @@ export default class DifferenceNegative extends Exercice {
     this.nbQuestions = 1
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

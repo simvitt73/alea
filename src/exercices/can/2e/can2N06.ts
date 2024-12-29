@@ -28,7 +28,7 @@ export default class DecimalForme extends Exercice {
   }
 
   nouvelleVersion () {
-    this.formatChampTexte = ''
+    
 
     const puissance = randint(1, 5)
     const puissance10 = 10 ** puissance

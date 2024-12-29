@@ -26,7 +26,7 @@ export default class calcAvecDecimaux extends Exercice {
     this.nbQuestions = 1
 
     this.optionsChampTexte = { texteAvant: ' $=$' }
-    this.formatChampTexte = ''
+    
     this.formatChampTexte = KeyboardType.clavierDeBase
     this.optionsDeComparaison = { nombreDecimalSeulement: true }
   }

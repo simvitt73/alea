@@ -33,7 +33,7 @@ export const refs = {
 export default class QuestionsAiresEtPerimetres extends Exercice {
   constructor () {
     super()
-    this.formatChampTexte = ''
+    
     this.nbQuestions = 1
 
   }

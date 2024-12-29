@@ -25,7 +25,7 @@ export default class TripleEtMoitie extends Exercice {
     this.nbQuestions = 1
 
     this.typeExercice = 'simple'
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

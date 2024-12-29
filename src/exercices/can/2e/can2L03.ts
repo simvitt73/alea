@@ -32,7 +32,7 @@ export default class CoordonneesPointIntersectionAxeAbscissesDroite extends Exer
     const n = randint(-5, 5, 0)
     const b = n * a
 
-    this.formatChampTexte = ''
+    
 
     this.formatInteractif = 'texte'
     this.reponse = `${-b / a};0`

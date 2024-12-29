@@ -29,7 +29,7 @@ export default class EntierPlusFractionVersDecimal extends Exercice {
   nouvelleVersion () {
     let a, b, c, maFraction, maFraction2
     let resultat
-    this.formatChampTexte = ''
+    
 
     switch (choice([1, 2, 3, 4])) {
       case 1:// fraction addition avec un entier

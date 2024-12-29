@@ -27,7 +27,7 @@ export default class VolumePaveCubes extends Exercice {
     this.nbQuestions = 1
     this.sup = 1
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

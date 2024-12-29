@@ -27,7 +27,7 @@ export default class ProportionnaliteExpressionAlgebrique extends Exercice {
     this.nbQuestions = 1
 
 
-    this.formatChampTexte = ''
+    
   }
 
   nouvelleVersion () {

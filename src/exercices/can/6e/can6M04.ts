@@ -26,7 +26,6 @@ export default class ConversionEnTousSens extends Exercice {
     super()
     this.typeExercice = 'simple'
     this.nbQuestions = 1
-
   }
 
   nouvelleVersion () {
@@ -40,7 +39,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += ' .... kg'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: ' kg' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ g  $=\\dots$ kg`
@@ -56,7 +55,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += ' ..... g'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: ' g' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ kg $= \\dots$ g`
@@ -74,7 +73,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += ' ..... cm'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: ' cm' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ m $=$ $\\dots$ cm`
@@ -89,7 +88,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += '..... m'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: ' m' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ cm $= \\dots$ m`
@@ -108,7 +107,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += ' .... mL'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: ' mL' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ cL $= \\dots$ mL`
@@ -123,7 +122,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += ' .... cL'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: '  cL' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ mL $= \\dots$ cL`
@@ -142,7 +141,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += ' .... km'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: ' km' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ m $= \\dots$ km`
@@ -158,7 +157,7 @@ export default class ConversionEnTousSens extends Exercice {
           if (!this.interactif) {
             this.question += ' .... m'
           }
-          this.formatChampTexte = ''
+
           this.optionsChampTexte = { texteApres: ' m' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}$ km $= \\dots$ m`

@@ -27,7 +27,7 @@ export default class DeveloppementNiveau1 extends Exercice {
   }
 
   nouvelleVersion () {
-    this.formatChampTexte = ''
+    
     let a, b, k, inconnue
     switch (randint(1, 2)) {
       case 1:// developpement k*(a+b)

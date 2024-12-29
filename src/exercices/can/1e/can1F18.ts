@@ -33,7 +33,7 @@ export default class CalculFonctionDeriveeAsurU extends Exercice {
 
     this.typeExercice = 'simple'
     this.nbQuestions = 1
-    this.formatChampTexte = ' '
+    
 
     this.compare = functionCompare
   }

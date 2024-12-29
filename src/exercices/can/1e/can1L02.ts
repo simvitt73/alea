@@ -35,7 +35,7 @@ super()
   this.nbQuestions = 1
 
     
-  this.formatChampTexte = ''
+  
   
 }
  nouvelleVersion () {

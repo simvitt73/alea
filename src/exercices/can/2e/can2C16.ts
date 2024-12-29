@@ -26,7 +26,7 @@ super()
   this.typeExercice = 'simple'
   this.nbQuestions = 1
 
-  this.formatChampTexte = ''
+  
 
   // ${texNombre(ecritureParenthesesSiNegatif(a / 5 - e))}^2=${texNombre((a / 5 - e) * (a / 5 - e))}$
   
