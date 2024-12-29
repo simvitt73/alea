@@ -1,7 +1,9 @@
 import neostandard from 'neostandard'
+import eslintPluginSvelte from 'eslint-plugin-svelte'
 
 export default [
   ...neostandard({ ts: true }),
+  ...eslintPluginSvelte.configs.recommended,
   {
     rules: {
       'no-multiple-empty-lines': ['error', { 
