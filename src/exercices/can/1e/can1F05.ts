@@ -33,20 +33,22 @@ export default class LectureGraphiqueParabolebEtc extends Exercice {
 
     this.nbQuestions = 1
     this.formatChampTexte = ''
-
   }
 
   nouvelleVersion () {
-    let texte, texteCorr, alpha, beta, r, o, f, a, A, traceA
+    let texte, texteCorr, r, o, f, A, traceA
+    let alpha:number
+    let beta:number
+    let a:number
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       alpha = randint(-3, 3)
       beta = randint(-2, 2)
       a = choice([-1, 1])
-      o = texteParPosition('O', -0.3, -0.3, 'milieu', 'black', 1)
+      o = texteParPosition('O', -0.3, -0.3, 0, 'black', 1, 'milieu')
       A = point(alpha, beta)
 
       traceA = tracePoint(A, 'blue') // Variable qui trace les points avec une croix
-      f = x => a * (x - alpha) ** 2 + beta
+      f = (x: number): number => a * (x - alpha) ** 2 + beta
       r = repere({
         yUnite: 1,
         xMin: -5,
