@@ -76,7 +76,7 @@
     for (let i = 0; i < questions.length; i++) {
       const exercice = exercises[indiceExercice[i]]
       const type = exercice.autoCorrection?.[indiceQuestionInExercice[i]]?.reponse?.param?.formatInteractif
-      if (type === 'mathlive') {
+      if (type === 'mathlive' || type === 'fillInTheBlank') {
         resultsByQuestion[i] =
           verifQuestionMathLive(exercice, indiceQuestionInExercice[i])
             ?.isOk
