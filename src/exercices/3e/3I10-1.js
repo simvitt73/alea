@@ -6,7 +6,7 @@ import { texteGras } from '../../lib/format/style'
 import { lettreMinusculeDepuisChiffre } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
-import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur'
+import { noteLaCouleur, plateau2dNLC, testInstruction } from '../../modules/noteLaCouleur'
 import { colorToLatexOrHTML, fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import {
   ajouterAx,
