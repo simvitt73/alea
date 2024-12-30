@@ -1,15 +1,15 @@
 /* eslint-disable camelcase */
 import { point } from '../../lib/2d/points'
-import { texteParPositionEchelle } from '../../lib/2d/textes.ts'
+import { texteParPositionEchelle } from '../../lib/2d/textes'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { createLink } from '../../lib/outils/modales'
 import { stringNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
-import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites'
+import { colorToLatexOrHTML, mathalea2d, ObjetMathalea2D } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { allerA, angleScratchTo2d, attendre, baisseCrayon, clone, creerLutin, orienter } from '../../modules/2dLutin'
-import { noteLaCouleur, plateau2dNLC } from '../../modules/noteLaCouleur'
+import { allerA, angleScratchTo2d, attendre, baisseCrayon, clone, creerLutin, ObjetLutin, orienter } from '../../modules/2dLutin'
+import { noteLaCouleur, plateau2dNLC, testBoucle, testInstruction, testSequence, thePlateau, traducNum } from '../../modules/noteLaCouleur'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { scratchblock } from '../../modules/scratchblock'
 import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
@@ -35,6 +35,7 @@ export const refs = {
   'fr-ch': []
 }
 export default class NoteLaCouleur6e extends Exercice {
+  relatif: boolean
   constructor () {
     super()
     this.besoinFormulaireNumerique = ['Type de plateau', 4, '1 : Plateau couleur sans numéro\n2 : Plateau couleur avec numéros\n3 : Plateau noir et blanc avec nom des couleurs\n4 : Plateau noir et blanc avec numéros']
@@ -74,7 +75,7 @@ export default class NoteLaCouleur6e extends Exercice {
     const echelleDessin = 0.5
 
     let j, test
-    let objetsEnonce = []
+    let objetsEnonce: ObjetMathalea2D[] = []
     let objetsCorrection = []
     const paramsCorrection = this.relatif
       ? { xmin: -13, ymin: -10, xmax: 13, ymax: 10, pixelsParCm: 20, scale: echelleDessin }
@@ -88,7 +89,8 @@ export default class NoteLaCouleur6e extends Exercice {
     let couleurs
     let liste_instructions
 
-    let lutin, lutindepart
+    let lutin = creerLutin()
+    let lutindepart
     let angledepart
     let xdepart
     let ydepart
@@ -105,12 +107,15 @@ export default class NoteLaCouleur6e extends Exercice {
       ny: 12,
       pas: 30,
       plateau: damier
-    })
+
+    }
+    )
     for (let q = 0; q < this.nbQuestions;) {
       objetsCorrection = []
       objetsEnonce = []
-      objetsEnonce.push(lePlateau.plateau2d)
-      objetsCorrection.push(lePlateau.plateau2d)
+      const objets = lePlateau.objets ?? []
+      objetsEnonce.push(...objets)
+      objetsCorrection.push(lePlateau.objets)
       let reponseCouleur = []
       let texte = ''
       let texteCorr = ''
@@ -143,7 +148,7 @@ export default class NoteLaCouleur6e extends Exercice {
               x: xdepart,
               y: ydepart,
               orientation: angledepart,
-              plateau: lePlateau.plateauNLC,
+              plateau: thePlateau,
               relatif: this.relatif
             })
             lutin.color = context.isHtml ? colorToLatexOrHTML('green') : colorToLatexOrHTML('black')
@@ -151,7 +156,7 @@ export default class NoteLaCouleur6e extends Exercice {
             lutin.pointilles = 2
             allerA(xdepart, ydepart, lutin)
             orienter(angleScratchTo2d(angledepart), lutin)
-            lutindepart = clone(lutin)
+            lutindepart = clone(lutin) as ObjetLutin
             baisseCrayon(lutindepart)
             allerA(xdepart, ydepart, lutindepart)
             objetsEnonce.push(lutindepart)
@@ -167,17 +172,17 @@ export default class NoteLaCouleur6e extends Exercice {
             while (nb_couleurs > j && compteur_essais_sequence < 10) {
               compteur_essais_sequence = 0
               sequence = choice(sequences_disponibles)
-              test = pion.testSequence(sequence)
+              test = testSequence(sequence, pion)
               while (!test[0] && compteur_essais_sequence < 10) {
                 compteur_essais_sequence++
                 sequence = choice(sequences_disponibles)
-                test = pion.testSequence(sequence)
+                test = testSequence(sequence, pion)
               }
               if (compteur_essais_sequence < 10) {
                 retour_a_la_case_depart = false
                 for (let i = 0; i < sequence.length; i++) {
                   instruction = sequence[i]
-                  result = pion.testInstruction(instruction, lutin)
+                  result = testInstruction(instruction, lutin, pion)
                   if (instruction === 'NLC') {
                     liste_instructions.push(instruction)
                     couleurs.push(pion.nlc())
@@ -246,7 +251,7 @@ export default class NoteLaCouleur6e extends Exercice {
             allerA(xdepart, ydepart, lutin)
             orienter(angleScratchTo2d(angledepart), lutin)
             lutindepart = clone(lutin)
-            objetsEnonce.push(lutindepart)
+            objetsEnonce.push(lutindepart as ObjetMathalea2D)
             baisseCrayon(lutin)
             compteur++
             if (compteur > 5) break // 5 tentatives infructueuses -> On sort de la boucle.
@@ -256,11 +261,11 @@ export default class NoteLaCouleur6e extends Exercice {
             pion.currentIndex += pion.codeScratch.length
             // On choisit le code à l'intérieur de la boucle
             sequence = choice(sequences_disponibles)
-            test = pion.testBoucle(repetitions, sequence)
+            test = testBoucle(repetitions, sequence, pion) as unknown as [boolean, number, number, number, string, ObjetLutin]
             while (!test[0] && compteur_essais_boucle < 5) { // On tente 5 boucles à cette position, après on change de position.
               compteur_essais_boucle++
               sequence = choice(sequences_disponibles)
-              test = pion.testBoucle(repetitions, sequence)
+              test = testBoucle(repetitions, sequence, pion) as unknown as [boolean, number, number, number, string, ObjetLutin]
             }
             if (compteur_essais_boucle < 5) {
               retour_a_la_case_depart = false
@@ -268,8 +273,8 @@ export default class NoteLaCouleur6e extends Exercice {
               liste_instructions.push('début de boucle')
               for (let i = 0; i < sequence.length; i++) {
                 instruction = sequence[i]
-                result = pion.testInstruction(instruction, lutin)
-                if (instruction === 'NLC') {
+                result = testInstruction(instruction, lutin, pion)
+                if (instruction === 'NLC' && result != null) {
                   liste_instructions.push(instruction)
                   couleurs.push(pion.nlc())
                   pion.codeScratch += result[4] + '\n'
@@ -292,7 +297,7 @@ export default class NoteLaCouleur6e extends Exercice {
               for (let j = 1; j < repetitions; j++) {
                 for (let i = 0; i < sequence.length; i++) {
                   instruction = sequence[i]
-                  result = pion.testInstruction(instruction, lutin)
+                  result = testInstruction(instruction, lutin, pion)
                   if (instruction === 'NLC') {
                     couleurs.push(pion.nlc())
                     lutin = result[5]
@@ -306,14 +311,14 @@ export default class NoteLaCouleur6e extends Exercice {
                 }
               }
               sequence = choice(sequences_disponibles)
-              test = pion.testSequence(sequence)
+              test = testSequence(sequence, pion)
               while (!test[0]) {
                 sequence = choice(sequences_disponibles)
-                test = pion.testSequence(sequence)
+                test = testSequence(sequence, pion)
               }
               for (let i = 0; i < sequence.length; i++) {
                 instruction = sequence[i]
-                result = pion.testInstruction(instruction, lutin)
+                result = testInstruction(instruction, lutin, pion)
                 if (instruction === 'NLC') {
                   liste_instructions.push(instruction)
 
@@ -341,7 +346,10 @@ export default class NoteLaCouleur6e extends Exercice {
           break
         }
       }
-
+      if (pion == null) {
+        window.notify('pion est null', { pion })
+        return
+      }
       pion.codeScratch += '\\end{scratch}'
       if (context.isHtml) {
         texte = `Cet exercice est tiré de l'excellente activité débranchée ${createLink({ url: 'https://www.monclasseurdemaths.fr/profs/algorithmique-scratch/note-la-couleur/', text: 'Note la couleur' })} de Jean-Yves Labouche.<br>`
@@ -358,25 +366,25 @@ export default class NoteLaCouleur6e extends Exercice {
                     '</td><td>' + `${this.sup % 2 === 0
                         ? 'Correspondance chiffre-couleur : <br>0=Blanc ; 1=Noir ; 2=Rouge ; 3=Bleu ; 4=Orange ; 5=Rose ; 6=Jaune ; 7=Vert ; 8=Gris<br>'
                         : ''}` +
-                    mathalea2d(paramsCorrection, objetsEnonce) +
+                    mathalea2d(paramsCorrection, ...objetsEnonce) +
                     '</td></tr></table>'
       } else {
         texte += `\\begin{minipage}{.3 \\linewidth} \n\t ${scratchblock(pion.codeScratch)} \n \\end{minipage}
       \\begin{minipage}{.7 \\linewidth} \n\t ${this.sup % 2 === 0
                     ? 'Correspondance chiffre-couleur : \\\\\n0=Blanc, 1=Noir, 2=Rouge, 3=Bleu, 4=Orange, 5=Rose, 6=Jaune, 7=Vert, 8=Gris\\\\\n'
-                    : ''} ${mathalea2d(paramsCorrection, objetsEnonce)} \n\\end{minipage}`
+                    : ''} ${mathalea2d(paramsCorrection, ...objetsEnonce)} \n\\end{minipage}`
         if (q < this.nbQuestions - 1 && !context.isHtml) {
           texte += '\n\\newpage'
         }
       }
       reponseCouleur = couleurs
-      if (this.sup % 2 === 0) reponseCouleur[0] = '(' + lePlateau.traducNum(couleurs[0]) + ') ' + couleurs[0]
+      if (this.sup % 2 === 0) reponseCouleur[0] = '(' + traducNum(couleurs[0] as unknown as 'Blanc' | 'Bleu' | 'Noir' | 'Rouge' | 'Jaune' | 'Rose' | 'Vert' | 'Orange' | 'Gris') + ') ' + couleurs[0]
       texteCorr = 'On obtient la série de couleurs suivante :<br> '
       texteCorr += `${texteEnCouleurEtGras(reponseCouleur[0])} `
       texte += !this.interactif ? '' : 'Couleur n°1 : ' + choixDeroulant(this, q * couleurs.length, choixListeDeroulante[(this.sup - 1) % 2], 'une couleur') + '<br>'
       handleAnswers(this, q * couleurs.length, { reponse: { value: couleurs[0] } }, { formatInteractif: 'listeDeroulante' })
       for (let i = 1; i < couleurs.length; i++) {
-        if (this.sup % 2 === 0) reponseCouleur[i] = '(' + lePlateau.traducNum(couleurs[i]) + ') ' + couleurs[i]
+        if (this.sup % 2 === 0) reponseCouleur[i] = '(' + traducNum(couleurs[i] as unknown as 'Blanc' | 'Bleu' | 'Noir' | 'Rouge' | 'Jaune' | 'Rose' | 'Vert' | 'Orange' | 'Gris') + ') ' + couleurs[i]
         texteCorr += `${texteEnCouleurEtGras(reponseCouleur[i])} `
         texte += !this.interactif ? '' : 'Couleur n°' + (i + 1) + ' : ' + choixDeroulant(this, q * couleurs.length + i, choixListeDeroulante[(this.sup - 1) % 2], 'une couleur') + '<br>'
         handleAnswers(this, q * couleurs.length + i, { reponse: { value: couleurs[i] } }, { formatInteractif: 'listeDeroulante' })
@@ -398,31 +406,32 @@ export default class NoteLaCouleur6e extends Exercice {
         for (let i = 1; i < 16; i++) {
           if (this.relatif) {
             if (i < 7 || i > 9) {
-              objetsCorrection.push(texteParPositionEchelle(stringNombre(-240 + 30 * i), -12.1 + 1.5 * i, -0.3, 'milieu', 'black', 1.2, 'middle', true, echelleDessin))
+              objetsCorrection.push(texteParPositionEchelle(stringNombre(-240 + 30 * i), -12.1 + 1.5 * i, -0.3, 0, 'black', 1.2, 'milieu', true, echelleDessin))
             }
           } else {
             if (i !== 1) {
-              objetsCorrection.push(texteParPositionEchelle(stringNombre(30 * i), 1.5 * i, -0.3, 'milieu', 'black', 1.2, 'middle', true, echelleDessin))
+              objetsCorrection.push(texteParPositionEchelle(stringNombre(30 * i), 1.5 * i, -0.3, 0, 'black', 1.2, 'milieu', true, echelleDessin))
             }
           }
         }
         for (let i = 1; i < 12; i++) {
           if (this.relatif) {
             if (i < 5 || i > 7) {
-              objetsCorrection.push(texteParPositionEchelle(stringNombre(-180 + 30 * i), -0.5, -9 + 1.5 * i, 'milieu', 'black', 1.2, 'middle', true, echelleDessin))
+              objetsCorrection.push(texteParPositionEchelle(stringNombre(-180 + 30 * i), -0.5, -9 + 1.5 * i, 0, 'black', 1.2, 'milieu', true, echelleDessin))
             }
           } else {
             if (i !== 1) {
-              objetsCorrection.push(texteParPositionEchelle(stringNombre(30 * i), -0.5, 1.5 * i, 'milieu', 'black', 1.2, 'middle', true, echelleDessin))
+              objetsCorrection.push(texteParPositionEchelle(stringNombre(30 * i), -0.5, 1.5 * i, 0, 'black', 1.2, 'milieu', true, echelleDessin))
             }
           }
         }
       }
-      texteCorr += '<br><br>' + mathalea2d(paramsCorrection, objetsCorrection, lutin)
+      const objetsCorr = objetsCorrection.filter(obj => obj != null).flat()
+      texteCorr += '<br><br>' + mathalea2d(paramsCorrection, ...objetsCorr, lutin)
       if (q < this.nbQuestions - 1 && !context.isHtml) {
         texteCorr += '\n\\newpage'
       }
-      if (this.questionJamaisPosee(q, xdepart, ydepart, angledepart)) {
+      if (this.questionJamaisPosee(q, String(xdepart), String(ydepart), String(angledepart))) {
         this.listeQuestions[q] = texte
         this.listeCorrections[q] = texteCorr
 

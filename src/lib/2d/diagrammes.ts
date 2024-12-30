@@ -1,15 +1,15 @@
 import { fraction, max } from 'mathjs'
-import { colorToLatexOrHTML, ObjetMathalea2D, vide2d } from '../../modules/2dGeneralites.js'
-import { arc, cercle } from './cercle.js'
-import { point, tracePoint } from './points.js'
-import { carre, motifs, polygone, polyline } from './polygones.js'
-import { axeY, labelY, pointDansRepere } from './reperes.js'
+import { colorToLatexOrHTML, ObjetMathalea2D, Vide2d, vide2d } from '../../modules/2dGeneralites'
+import { arc, cercle } from './cercle'
+import { Point, point, tracePoint } from './points'
+import { carre, motifs, Polygone, polygone, polyline } from './polygones'
+import { axeY, labelY, pointDansRepere, Repere } from './reperes'
 import { texcolors } from '../format/style'
 import { combinaisonListes } from '../outils/arrayOutils'
 import { numberFormat, texNombre } from '../outils/texNombre'
-import { segment, vecteur } from './segmentsVecteurs.js'
-import { latexParPoint, texteParPoint, texteParPosition } from './textes.ts'
-import { rotation, similitude, translation } from './transformations.js'
+import { segment, vecteur } from './segmentsVecteurs'
+import { latexParPoint, TexteParPoint, texteParPoint, texteParPosition } from './textes'
+import { rotation, similitude, translation } from './transformations'
 
 /**
  * Trace un graphique cartésien dans un repère
@@ -19,63 +19,79 @@ import { rotation, similitude, translation } from './transformations.js'
  * @param {object} repere
  * @author Rémi Angot
  */
-export function TraceGraphiqueCartesien (data, repere = {}, {
-  couleurDesPoints = 'red',
-  couleurDuTrait = 'blue',
-  styleDuTrait = '', // plein par défaut
-  epaisseurDuTrait = 2,
-  styleDesPoints = 'x', // croix par défaut
-  tailleDesPoints = 3
+export class TraceGraphiqueCartesien extends ObjetMathalea2D {
+  constructor (data:number[][],
+    repere: Repere,
+    {
+      couleurDesPoints = 'red',
+      couleurDuTrait = 'blue',
+      styleDuTrait = '', // plein par défaut
+      epaisseurDuTrait = 2,
+      styleDesPoints = 'x', // croix par défaut
+      tailleDesPoints = 3
 
-} = {}) {
-  ObjetMathalea2D.call(this, {})
-  const objets = []
-  const listePoints = []
-  for (const [x, y] of data) {
-    const M = pointDansRepere(x, y, repere)
-    listePoints.push(M)
-    const t = tracePoint(M, couleurDesPoints)
-    t.style = styleDesPoints
-    t.taille = tailleDesPoints
-    t.isVisible = false
-    M.isVisible = false
-    objets.push(t)
+    }:{
+      couleurDesPoints?: string,
+      couleurDuTrait?: string,
+      styleDuTrait?: string,
+      epaisseurDuTrait?: number,
+      styleDesPoints?: string,
+      tailleDesPoints?: number
+    }) {
+    super()
+    this.objets = []
+    const listePoints = []
+    for (const [x, y] of data) {
+      const M = pointDansRepere(x, y, repere)
+      listePoints.push(M)
+      const t = tracePoint(M, couleurDesPoints)
+      t.style = styleDesPoints
+      t.taille = tailleDesPoints
+      this.objets.push(t)
+    }
+    const l = polyline(listePoints as Point[])
+    l.epaisseur = epaisseurDuTrait
+    l.color = colorToLatexOrHTML(couleurDuTrait)
+    if (styleDuTrait === 'pointilles') {
+      l.pointilles = 5
+    }
+    this.objets.push(l)
+    this.bordures = repere.bordures as unknown as [number, number, number, number]
   }
-  const l = polyline(...listePoints)
-  l.isVisible = false
-  l.epaisseur = epaisseurDuTrait
-  l.color = colorToLatexOrHTML(couleurDuTrait)
-  if (styleDuTrait === 'pointilles') {
-    l.pointilles = 5
-  }
-  objets.push(l)
-  this.bordures = repere.bordures
+
   // LES SORTIES TiKZ et SVG
-  this.svg = function (coeff) {
+  svg (coeff: number) {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.svg(coeff)
     }
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.tikz()
     }
     return code
   }
-  this.svgml = function (coeff, amp) {
+
+  svgml (coeff: number, amp: number) {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       if (typeof (objet.svgml) === 'undefined') code += '\n\t' + objet.svg(coeff)
       else code += '\n\t' + objet.svgml(coeff, amp)
     }
     return code
   }
-  this.tikzml = function (amp) {
+
+  tikzml (amp: number) {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       if (typeof (objet.tikzml) === 'undefined') code += '\n\t' + objet.tikz()
       else code += '\n\t' + objet.tikzml(amp)
     }
@@ -83,23 +99,83 @@ export function TraceGraphiqueCartesien (data, repere = {}, {
   }
 }
 
-export function traceGraphiqueCartesien (...args) {
-  return new TraceGraphiqueCartesien(...args)
+export function traceGraphiqueCartesien (data:number[][],
+  repere: Repere,
+  {
+    couleurDesPoints = 'red',
+    couleurDuTrait = 'blue',
+    styleDuTrait = '', // plein par défaut
+    epaisseurDuTrait = 2,
+    styleDesPoints = 'x', // croix par défaut
+    tailleDesPoints = 3
+
+  }:{
+    couleurDesPoints?: string,
+    couleurDuTrait?: string,
+    styleDuTrait?: string,
+    epaisseurDuTrait?: number,
+    styleDesPoints?: string,
+    tailleDesPoints?: number
+  }) {
+  return new TraceGraphiqueCartesien(data, repere, { couleurDesPoints, couleurDuTrait, styleDuTrait, epaisseurDuTrait, styleDesPoints, tailleDesPoints })
 }
 
 /**
  * Trace une barre pour un histogramme
  *
- * @param {integer} x
- * @param {integer} hauteur
+ * @param {number} x
+ * @param {number} hauteur
  * @param {string} legende
- * @param {integer} epaisseur
+ * @param {number} epaisseur
  * @param {string} couleur
- * @param {integer} opaciteDeRemplissage
- * @param {integer} angle
+ * @param {number} opaciteDeRemplissage
+ * @param {number} angle
  * @author Rémi Angot
  */
-export function TraceBarre (x, hauteur, legende = '', {
+export class TraceBarre extends ObjetMathalea2D {
+  p: Polygone | Vide2d
+  texte: TexteParPoint
+  constructor (x:number, hauteur: number, legende = '', {
+    epaisseur = 0.6,
+    couleurDeRemplissage = 'blue',
+    color = 'black',
+    opaciteDeRemplissage = 0.3,
+    angle = 66,
+    unite = 1,
+    hachures = false
+  }:{
+    epaisseur?: number,
+    couleurDeRemplissage?: string,
+    color?: string,
+    opaciteDeRemplissage?: number,
+    angle?: number,
+    unite?: number,
+    hachures?: boolean
+  }) {
+    super()
+    this.p = hauteur === 0 ? vide2d(x, 0) : polygone([point(x - epaisseur / 2, 0), point(x - epaisseur / 2, hauteur * unite), point(x + epaisseur / 2, hauteur * unite), point(x + epaisseur / 2, 0)])
+    if (this.p instanceof Polygone) {
+      this.p.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
+      this.p.opaciteDeRemplissage = opaciteDeRemplissage
+      this.p.color = colorToLatexOrHTML(color)
+      if (hachures) {
+        this.p.hachures = hachures
+      }
+    }
+    this.texte = texteParPosition(legende, x, -0.2, angle, 'black', 1, 'gauche') as TexteParPoint
+    this.bordures = [Math.min(this.p.bordures[0], this.texte.bordures[0]), Math.min(this.p.bordures[1], this.texte.bordures[1]), Math.max(this.p.bordures[2], this.texte.bordures[2]), Math.max(this.p.bordures[3], this.texte.bordures[3])]
+  }
+
+  tikz () {
+    return this.p.tikz() + '\n' + this.texte.tikz()
+  }
+
+  svg (coeff: number) {
+    return this.p.svg(coeff) + '\n' + this.texte.svg(coeff)
+  }
+}
+
+export function traceBarre (x:number, hauteur: number, legende = '', {
   epaisseur = 0.6,
   couleurDeRemplissage = 'blue',
   color = 'black',
@@ -107,70 +183,90 @@ export function TraceBarre (x, hauteur, legende = '', {
   angle = 66,
   unite = 1,
   hachures = false
-} = {}) {
-  ObjetMathalea2D.call(this, {})
-  const p = hauteur === 0 ? vide2d(x, 0) : polygone([point(x - epaisseur / 2, 0), point(x - epaisseur / 2, hauteur * unite), point(x + epaisseur / 2, hauteur * unite), point(x + epaisseur / 2, 0)])
-  p.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
-  p.opaciteDeRemplissage = opaciteDeRemplissage
-  p.color = colorToLatexOrHTML(color)
-  if (hachures) {
-    p.hachures = hachures
-  }
-  const texte = texteParPosition(legende, x, -0.2, angle, 'black', 1, 'gauche')
-  this.bordures = [Math.min(p.bordures[0], texte.bordures[0]), Math.min(p.bordures[1], texte.bordures[1]), Math.max(p.bordures[2], texte.bordures[2]), Math.max(p.bordures[3], texte.bordures[3])]
-  this.tikz = function () {
-    return p.tikz() + '\n' + texte.tikz()
-  }
-  this.svg = function (coeff) {
-    return p.svg(coeff) + '\n' + texte.svg(coeff)
-  }
-}
-
-export function traceBarre (...args) {
-  return new TraceBarre(...args)
+}:{
+  epaisseur?: number,
+  couleurDeRemplissage?: string,
+  color?: string,
+  opaciteDeRemplissage?: number,
+  angle?: number,
+  unite?: number,
+  hachures?: boolean
+}) {
+  return new TraceBarre(x, hauteur, legende, { epaisseur, couleurDeRemplissage, color, opaciteDeRemplissage, angle, unite, hachures })
 }
 
 /**
  * Trace une barre horizontale pour un histogramme
  *
- * @param {integer} longueur
- * @param {integer} y
+ * @param {number} longueur
+ * @param {number} y
  * @param {string} legende
- * @param {integer} epaisseur
+ * @param {number} epaisseur
  * @param {string} couleur
- * @param {integer} opaciteDeRemplissage
- * @param {integer} angle
+ * @param {number} opaciteDeRemplissage
+ * @param {number} angle
  * @author Rémi Angot
  */
-export function TraceBarreHorizontale (longueur, y, legende = '', {
+export class TraceBarreHorizontale extends ObjetMathalea2D {
+  p: Polygone | Vide2d
+  texte: TexteParPoint
+  constructor (longueur: number, y: number, legende = '', {
+    epaisseur = 0.6,
+    couleurDeRemplissage = 'blue',
+    color = 'black',
+    opaciteDeRemplissage = 0.3,
+    unite = 1,
+    angle = 0,
+    hachures = false
+  }:{
+    epaisseur?: number,
+    couleurDeRemplissage?: string,
+    color?: string,
+    opaciteDeRemplissage?: number,
+    unite?: number,
+    angle?: number,
+    hachures?: boolean
+  }) {
+    super()
+    this.p = longueur === 0 ? vide2d(0, y) : polygone([point(0, y - epaisseur / 2), point(0, y + epaisseur / 2), point(unite * longueur, y + epaisseur / 2), point(unite * longueur, y - epaisseur / 2)])
+    if (this.p instanceof Polygone) {
+      this.p.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
+      this.p.opaciteDeRemplissage = opaciteDeRemplissage
+      this.p.color = colorToLatexOrHTML(color)
+      if (hachures) {
+        this.p.hachures = hachures
+      }
+    }
+    this.texte = texteParPosition(legende, -0.2, y, angle, 'black', 1, 'gauche') as TexteParPoint
+  }
+
+  tikz () {
+    return this.p.tikz() + '\n' + this.texte.tikz()
+  }
+
+  svg (coeff: number) {
+    return this.p.svg(coeff) + '\n' + this.texte.svg(coeff)
+  }
+}
+
+export function traceBarreHorizontale (longueur: number, y: number, legende = '', {
   epaisseur = 0.6,
   couleurDeRemplissage = 'blue',
   color = 'black',
   opaciteDeRemplissage = 0.3,
   unite = 1,
-  angle = 'gauche',
+  angle = 0,
   hachures = false
-} = {}) {
-  ObjetMathalea2D.call(this, {})
-  const p = longueur === 0 ? vide2d(0, y) : polygone([point(0, y - epaisseur / 2), point(0, y + epaisseur / 2), point(unite * longueur, y + epaisseur / 2), point(unite * longueur, y - epaisseur / 2)])
-  p.couleurDeRemplissage = colorToLatexOrHTML(couleurDeRemplissage)
-  p.opaciteDeRemplissage = opaciteDeRemplissage
-  p.color = colorToLatexOrHTML(color)
-  if (hachures) {
-    p.hachures = hachures
-  }
-  const texte = texteParPosition(legende, -0.2, y, angle, 'black', 1, 'gauche')
-
-  this.tikz = function () {
-    return p.tikz() + '\n' + texte.tikz()
-  }
-  this.svg = function (coeff) {
-    return p.svg(coeff) + '\n' + texte.svg(coeff)
-  }
-}
-
-export function traceBarreHorizontale (...args) {
-  return new TraceBarreHorizontale(...args)
+}:{
+  epaisseur?: number,
+  couleurDeRemplissage?: string,
+  color?: string,
+  opaciteDeRemplissage?: number,
+  unite?: number,
+  angle?: number,
+  hachures?: boolean
+}) {
+  return new TraceBarreHorizontale(longueur, y, legende, { epaisseur, couleurDeRemplissage, color, opaciteDeRemplissage, unite, angle, hachures })
 }
 
 /** Trace un diagramme en barres
@@ -191,72 +287,88 @@ export function traceBarreHorizontale (...args) {
  * @property {number[]} bordures Coordonnées de la fenêtre d'affichage du genre [-2,-2,5,5]
  * @class
  */
-export function DiagrammeBarres (hauteursBarres, etiquettes, {
-  reperageTraitPointille = false,
-  couleurDeRemplissage = 'blue',
-  titreAxeVertical = '',
-  titre = '',
-  hauteurDiagramme = 5,
-  coeff = 2,
-  axeVertical = false,
-  etiquetteValeur = true,
-  labelAxeVert = false
-} = {}) {
-  ObjetMathalea2D.call(this, {})
-  const diagramme = []
-  for (let j = 0; j < hauteursBarres.length; j++) {
-    const abscisseBarre = j * coeff
-    const hauteurBarre = hauteursBarres[j] * hauteurDiagramme / max(hauteursBarres)
-    diagramme.push(traceBarre(abscisseBarre, hauteurBarre, etiquettes[j], { couleurDeRemplissage }))
-    if (reperageTraitPointille) {
-      const ligne = segment(-1, hauteurBarre, abscisseBarre, hauteurBarre)
-      ligne.pointilles = 5
-      ligne.epaisseur = 0.2
-      diagramme.push(ligne)
+export class DiagrammeBarres extends ObjetMathalea2D {
+  constructor (hauteursBarres: number[], etiquettes: string[], {
+    reperageTraitPointille = false,
+    couleurDeRemplissage = 'blue',
+    titreAxeVertical = '',
+    titre = '',
+    hauteurDiagramme = 5,
+    coeff = 2,
+    axeVertical = false,
+    etiquetteValeur = true,
+    labelAxeVert = false
+  }:{
+    reperageTraitPointille?: boolean,
+    couleurDeRemplissage?: string,
+    titreAxeVertical?: string,
+    titre?: string,
+    hauteurDiagramme?: number,
+    coeff?: number,
+    axeVertical?: boolean,
+    etiquetteValeur?: boolean,
+    labelAxeVert?: boolean
+  }) {
+    super()
+    this.objets = []
+    for (let j = 0; j < hauteursBarres.length; j++) {
+      const abscisseBarre = j * coeff
+      const hauteurBarre = hauteursBarres[j] * hauteurDiagramme / max(hauteursBarres)
+      this.objets.push(traceBarre(abscisseBarre, hauteurBarre, etiquettes[j], { couleurDeRemplissage }))
+      if (reperageTraitPointille) {
+        const ligne = segment(-1, hauteurBarre, abscisseBarre, hauteurBarre)
+        ligne.pointilles = 5
+        ligne.epaisseur = 0.2
+        this.objets.push(ligne)
+      }
+      if (etiquetteValeur) {
+        if (hauteursBarres[j] !== 0) {
+          this.objets.push(texteParPoint(numberFormat(hauteursBarres[j]), point(abscisseBarre, hauteurBarre + 0.5))) // On écrit la valeur au dessus de la barre sauf pour une hauteur de 0
+        }
+      }
+      // Calculs permettant de graduer l'axe vertical et de placer des valeurs
+      const steps = [1, 2, 5, 10, 20]
+      const yticks = [1, 2, 5, 5, 5]
+      let istep = 1
+      let step = 1
+      let ytick = 1
+      while (max(hauteursBarres) / step > 5 && istep < 5) {
+        istep += 1
+        step = steps[istep - 1]
+        ytick = yticks[istep - 1]
+      }
+      if (istep === 5) istep = 2
+      while (max(hauteursBarres) / step > 5) {
+        istep = istep + 1
+        step = istep * 10
+        ytick = 5
+      }
+
+      if (labelAxeVert) this.objets.push(labelY(0, max(hauteursBarres), step * hauteurDiagramme / Math.max(...hauteursBarres), 'black', -3, Math.max(...hauteursBarres) / hauteurDiagramme))
+      if (axeVertical) this.objets.push(axeY(0, hauteurDiagramme + 1, 0.2, step * hauteurDiagramme / Math.max(...hauteursBarres), 0.2, 'black', ytick, titreAxeVertical))
     }
-    if (etiquetteValeur) {
-      if (hauteursBarres[j] !== 0) {
-        diagramme.push(texteParPoint(numberFormat(hauteursBarres[j]), point(abscisseBarre, hauteurBarre + 0.5))) // On écrit la valeur au dessus de la barre sauf pour une hauteur de 0
+    if (titre !== '') this.objets.push(texteParPoint(titre, point(-3, hauteurDiagramme + 1), 0, 'black', 1, 'droite', false, 1))
+    this.bordures = [1000, 1000, -1000, -1000]
+    for (const objet of this.objets) {
+      if (objet.bordures !== undefined) {
+        this.bordures = [Math.min(this.bordures[0], objet.bordures[0]), Math.min(this.bordures[1], objet.bordures[1]), Math.max(this.bordures[2], objet.bordures[2]), Math.max(this.bordures[3], objet.bordures[3])]
       }
     }
-    // Calculs permettant de graduer l'axe vertical et de placer des valeurs
-    const steps = [1, 2, 5, 10, 20]
-    const yticks = [1, 2, 5, 5, 5]
-    let istep = 1
-    let step = 1
-    let ytick = 1
-    while (max(hauteursBarres) / step > 5 && istep < 5) {
-      istep += 1
-      step = steps[istep - 1]
-      ytick = yticks[istep - 1]
-    }
-    if (istep === 5) istep = 2
-    while (max(hauteursBarres) / step > 5) {
-      istep = istep + 1
-      step = istep * 10
-      ytick = 5
-    }
+  }
 
-    if (labelAxeVert) diagramme.push(labelY(0, max(hauteursBarres), (fraction(hauteurDiagramme, max(hauteursBarres))).mul(step), 'black', -3, max(hauteursBarres) / hauteurDiagramme))
-    if (axeVertical) diagramme.push(axeY(0, hauteurDiagramme + 1, 0.2, (fraction(hauteurDiagramme, max(hauteursBarres))).mul(step), 0.2, 'black', ytick, titreAxeVertical))
-  }
-  if (titre !== '') diagramme.push(texteParPoint(titre, point(-3, hauteurDiagramme + 1), 0, 'black', 1, 'droite', false, 1))
-  this.bordures = [1000, 1000, -1000, -1000]
-  for (const objet of diagramme) {
-    if (objet.bordures !== undefined) {
-      this.bordures = [Math.min(this.bordures[0], objet.bordures[0]), Math.min(this.bordures[1], objet.bordures[1]), Math.max(this.bordures[2], objet.bordures[2]), Math.max(this.bordures[3], objet.bordures[3])]
-    }
-  }
-  this.svg = function (coeff) {
+  svg (coeff: number) {
     let code = ''
-    for (const objet of diagramme) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.svg(coeff)
     }
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     let code = ''
-    for (const objet of diagramme) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.tikz()
     }
     return code

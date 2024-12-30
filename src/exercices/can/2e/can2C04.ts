@@ -10,7 +10,8 @@ export const refs = {
 export default class IdentitesCalculs2e extends identitesCalculs {
   constructor () {
     super()
-    
+    this.typeExercice = 'simple'
+    this.formatChampTexte = ''
     this.can = true
     this.canVersion = 'v1'
     this.consigne = 'Effectuer le calcul suivant sans calculatrice.<br>Utiliser la double distributivité ou les identités remarquables.'

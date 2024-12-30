@@ -1,10 +1,165 @@
-import { context } from './context.js'
+import { context } from './context'
 import katex from 'katex'
 import { arrondi } from '../lib/outils/nombres'
-
+import type { Latex2d } from '../lib/2d/textes'
+export type ObjetDivLatex = {
+  x: number
+  y: number
+  orientation: number
+  opacity: number
+  backgroundColor: string
+  color: string
+  latex: string
+  letterSize: string
+}
+export const colours = {
+  aliceblue: '#f0f8ff',
+  antiquewhite: '#faebd7',
+  aqua: '#00ffff',
+  aquamarine: '#7fffd4',
+  azure: '#f0ffff',
+  beige: '#f5f5dc',
+  bisque: '#ffe4c4',
+  black: '#000000',
+  blanchedalmond: '#ffebcd',
+  blue: '#0000ff',
+  blueviolet: '#8a2be2',
+  brown: '#a52a2a',
+  burlywood: '#deb887',
+  cadetblue: '#5f9ea0',
+  chartreuse: '#7fff00',
+  chocolate: '#d2691e',
+  coral: '#ff7f50',
+  cornflowerblue: '#6495ed',
+  cornsilk: '#fff8dc',
+  crimson: '#dc143c',
+  cyan: '#00ffff',
+  darkblue: '#00008b',
+  darkcyan: '#008b8b',
+  darkgoldenrod: '#b8860b',
+  darkgray: '#a9a9a9',
+  darkgreen: '#006400',
+  darkkhaki: '#bdb76b',
+  darkmagenta: '#8b008b',
+  darkolivegreen: '#556b2f',
+  darkorange: '#ff8c00',
+  darkorchid: '#9932cc',
+  darkred: '#8b0000',
+  darksalmon: '#e9967a',
+  darkseagreen: '#8fbc8f',
+  darkslateblue: '#483d8b',
+  darkslategray: '#2f4f4f',
+  darkturquoise: '#00ced1',
+  darkviolet: '#9400d3',
+  deeppink: '#ff1493',
+  deepskyblue: '#00bfff',
+  dimgray: '#696969',
+  dodgerblue: '#1e90ff',
+  firebrick: '#b22222',
+  floralwhite: '#fffaf0',
+  forestgreen: '#228b22',
+  fuchsia: '#ff00ff',
+  gainsboro: '#dcdcdc',
+  ghostwhite: '#f8f8ff',
+  gold: '#ffd700',
+  goldenrod: '#daa520',
+  gray: '#808080',
+  green: '#008000',
+  greenyellow: '#adff2f',
+  honeydew: '#f0fff0',
+  hotpink: '#ff69b4',
+  'indianred ': '#cd5c5c',
+  indigo: '#4b0082',
+  ivory: '#fffff0',
+  khaki: '#f0e68c',
+  lavender: '#e6e6fa',
+  lavenderblush: '#fff0f5',
+  lawngreen: '#7cfc00',
+  lemonchiffon: '#fffacd',
+  lightblue: '#add8e6',
+  lightcoral: '#f08080',
+  lightcyan: '#e0ffff',
+  lightgoldenrodyellow: '#fafad2',
+  lightgray: '#d3d3d3',
+  lightgrey: '#d3d3d3',
+  lightgreen: '#90ee90',
+  lightpink: '#ffb6c1',
+  lightsalmon: '#ffa07a',
+  lightseagreen: '#20b2aa',
+  lightskyblue: '#87cefa',
+  lightslategray: '#778899',
+  lightsteelblue: '#b0c4de',
+  lightyellow: '#ffffe0',
+  lime: '#00ff00',
+  limegreen: '#32cd32',
+  linen: '#faf0e6',
+  magenta: '#ff00ff',
+  maroon: '#800000',
+  mediumaquamarine: '#66cdaa',
+  mediumblue: '#0000cd',
+  mediumorchid: '#ba55d3',
+  mediumpurple: '#9370d8',
+  mediumseagreen: '#3cb371',
+  mediumslateblue: '#7b68ee',
+  mediumspringgreen: '#00fa9a',
+  mediumturquoise: '#48d1cc',
+  mediumvioletred: '#c71585',
+  midnightblue: '#191970',
+  mintcream: '#f5fffa',
+  mistyrose: '#ffe4e1',
+  moccasin: '#ffe4b5',
+  navajowhite: '#ffdead',
+  navy: '#000080',
+  oldlace: '#fdf5e6',
+  olive: '#808000',
+  olivedrab: '#6b8e23',
+  orange: '#ffa500',
+  orangered: '#ff4500',
+  orchid: '#da70d6',
+  palegoldenrod: '#eee8aa',
+  palegreen: '#98fb98',
+  paleturquoise: '#afeeee',
+  palevioletred: '#d87093',
+  papayawhip: '#ffefd5',
+  peachpuff: '#ffdab9',
+  peru: '#cd853f',
+  pink: '#ffc0cb',
+  plum: '#dda0dd',
+  powderblue: '#b0e0e6',
+  purple: '#800080',
+  rebeccapurple: '#663399',
+  red: '#ff0000',
+  rosybrown: '#bc8f8f',
+  royalblue: '#4169e1',
+  saddlebrown: '#8b4513',
+  salmon: '#fa8072',
+  sandybrown: '#f4a460',
+  seagreen: '#2e8b57',
+  seashell: '#fff5ee',
+  sienna: '#a0522d',
+  silver: '#c0c0c0',
+  skyblue: '#87ceeb',
+  slateblue: '#6a5acd',
+  slategray: '#708090',
+  snow: '#fffafa',
+  springgreen: '#00ff7f',
+  steelblue: '#4682b4',
+  tan: '#d2b48c',
+  teal: '#008080',
+  thistle: '#d8bfd8',
+  tomato: '#ff6347',
+  turquoise: '#40e0d0',
+  violet: '#ee82ee',
+  wheat: '#f5deb3',
+  white: '#ffffff',
+  whitesmoke: '#f5f5f5',
+  yellow: '#ffff00',
+  yellowgreen: '#9acd32'
+}
+export type ColourNames = keyof typeof colours
 /*
   MathALEA2D
- @name      mathalea2d.js
+ @name      mathalea2d
  @author    Rémi Angot et Jean-Claude Lhote
  @license   MIT License - CC-BY-SA
  @homepage  https://coopmaths.fr/mathalea2d.html
@@ -23,7 +178,7 @@ let numId = 0 // Créer un identifiant numérique unique par objet SVG
  *
  * @author Rémi Angot
  */
-export function ObjetMathalea2D ({ classe = true } = {}) {
+/* export function ObjetMathalea2D ({ classe = true } = {}) {
   this.positionLabel = 'above'
   // @deprecated cette propriété servait dans l'éditeur Mathalea2d en ligne pour dire qu'on ne voulait pas représenter des objets créés juste comme constructeurs
   // this.isVisible = true // Si on veut qu'un objet soit visible, on le passe dans la liste d'objets à mathalea2d(), si on n'en veut pas, on ne l'y met pas.
@@ -39,6 +194,53 @@ export function ObjetMathalea2D ({ classe = true } = {}) {
   numId++
   if (classe && context.isInEditor) context.objets2D.push(this)
 }
+  */
+
+/*
+ * Classe parente de tous les objets de MathALEA2D
+ *
+ * @author Rémi Angot
+ */
+export class ObjetMathalea2D { // à typer quand on passera à TypeScript
+  positionLabel: string
+  color: string[]
+  style: string
+  epaisseur: number
+  opacite: number
+  id: number
+  pointilles: number
+  bordures: [number, number, number, number]
+  objets?: (ObjetMathalea2D | Latex2d)[]
+  typeObjet?: string
+
+  constructor () {
+    this.positionLabel = 'above'
+    this.color = colorToLatexOrHTML('black')
+    this.style = ''
+    this.epaisseur = 1
+    this.opacite = 1
+    this.pointilles = 0
+    this.id = numId
+    this.bordures = new Array(4).fill(0) as [number, number, number, number]
+    numId++
+  }
+
+  svg (coeff: number): string | ObjetDivLatex {
+    return ''
+  }
+
+  tikz (): string | ObjetDivLatex {
+    return ''
+  }
+
+  svgml? (coeff: number, amplitude: number): string | ObjetDivLatex {
+    return ''
+  }
+
+  tikzml? (amplitude: number): string | ObjetDivLatex {
+    return ''
+  }
+}
 
 /**
  * Une fonction pour convertir des abscisses en unité Mathalé en abscisses svg
@@ -46,14 +248,14 @@ export function ObjetMathalea2D ({ classe = true } = {}) {
  * @param coeff
  * @return {number}
  */
-export const xSVG = (x, coeff) => arrondi(x * coeff, 1)
+export const xSVG = (x: number, coeff: number) => arrondi(x * coeff, 1) as number
 /**
  * Une fonction pour convertir des ordonnées en unité Mathalé en ordonnées svg
  * @param y
  * @param coeff
  * @return {number}
  */
-export const ySVG = (y, coeff) => arrondi(-y * coeff, 1)
+export const ySVG = (y: number, coeff: number) => arrondi(-y * coeff, 1) as number
 /**
  * mathalea2d(xmin,xmax,ymin,ymax,objets)
  *
@@ -73,11 +275,12 @@ export const ySVG = (y, coeff) => arrondi(-y * coeff, 1)
  *  @param {number?} [options.pixelsParCm]
  *  @param {number?} [options.scale = 1]
  *  @param {number?} [options.zoom = 1]
- *  @param {string[]?} [options.optionsTikz]
+ *  @param {string[]?} [options.optionsTikz = []]
  *  @param {boolean?} [options.mainlevee]
  *  @param {number?} [options.amplitude]
  *  @param {string?} [options.style = '']
  *  @param {string?} [options.id = '']
+ * @param {ObjetMathalea2D[]} objets
  */
 export function mathalea2d (
   {
@@ -88,45 +291,49 @@ export function mathalea2d (
     pixelsParCm = 20,
     scale = 1,
     zoom = 1,
-    optionsTikz,
+    optionsTikz = [],
     mainlevee = false,
     amplitude = 1,
     style = 'display: block',
     id = '' // L'id peut-être utile pour des animations, c'est celui du svg. Le div englobant aura un id en M2D + id
   } = {},
-  ...objets
+  ...objets: ObjetMathalea2D[]
 ) {
-  const ajouteCodeHtml = (mainlevee, objets, divsLatex, xmin, ymax) => {
+  const ajouteCodeHtml = (mainlevee: boolean, objets: ObjetMathalea2D | ObjetMathalea2D[], divsLatex: string[], xmin:number, ymax:number) => {
     let codeSvg = ''
     // Dans le cas d'objets composites avec des objets Mathalea2d et des divLatex, il faut que ces objets exposent une propriété objets qui contient la liste des objets qui les composent.
     // Cette list est substituée à l'objet ici
-    if (typeof objets === 'object' && objets.objets != null) { objets = objets.objets } // c'est un objet composé d'objets. Exemple : Repere
+    if (objets instanceof ObjetMathalea2D) {
+      if (objets.objets != null) { objets = objets.objets as ObjetMathalea2D[] }
+    } // c'est un objet composé d'objets. Exemple : Repere
     if (!Array.isArray(objets) && objets != null) {
       try {
-        if (!mainlevee || typeof objets?.svgml === 'undefined') {
-          if (objets?.svg) {
-            const code = objets.svg(pixelsParCm)
+        const objet = objets as ObjetMathalea2D
+        if (!mainlevee || typeof objet?.svgml === 'undefined') {
+          if (objet?.svg) {
+            const code = objet.svg(pixelsParCm)
             if (typeof code === 'string') {
-              codeSvg = '\t' + objets.svg(pixelsParCm) + '\n'
+              codeSvg = '\t' + objet.svg(pixelsParCm) + '\n'
             } else {
+              const codeLatex = code as ObjetDivLatex
               // on a à faire à un divLatex.
-              if (typeof code !== 'object') {
+              if (typeof codeLatex !== 'object') {
                 window.notify(
                   "Dans mathalea2d, la méthode svg() de l'objet a renvoyé quelque chose d'inconnu",
-                  { code }
+                  { codeLatex }
                 )
                 return codeSvg
               }
-              const xSvg = (code.x - xmin) * pixelsParCm * zoom
-              const ySvg = -(code.y - ymax) * pixelsParCm * zoom
+              const xSvg = (codeLatex.x - xmin) * pixelsParCm * zoom
+              const ySvg = -(codeLatex.y - ymax) * pixelsParCm * zoom
 
-              code.backgroundColor = code.backgroundColor.replace('{', '').replace('}', '')
-              code.color = code.color.replace('{', '').replace('}', '')
+              codeLatex.backgroundColor = codeLatex.backgroundColor.replace('{', '').replace('}', '')
+              codeLatex.color = codeLatex.color.replace('{', '').replace('}', '')
 
               const divOuterHtml =
-                code.backgroundColor !== '' && code.backgroundColor !== 'none'
-                  ? `<div class="divLatex" style="background-color: ${code.backgroundColor}; position: absolute; top: ${ySvg}px; left: ${xSvg}px; transform: translate(-50%,-50%) rotate(${-code.orientation}deg); opacity: ${code.opacity};" data-top=${ySvg} data-left=${xSvg}>${katex.renderToString('\\' + code.letterSize + ' {\\color{' + code.color + '}{' + code.latex + '}}')}</div>`
-                  : `<div class="divLatex" style="position: absolute; top: ${ySvg}px; left: ${xSvg}px; transform: translate(-50%,-50%) rotate(${-code.orientation}deg); opacity: ${code.opacity};" data-top=${ySvg} data-left=${xSvg}>${katex.renderToString('{\\color{' + code.color + '} \\' + code.letterSize + '{' + code.latex + '}}')}</div>`
+                codeLatex.backgroundColor !== '' && codeLatex.backgroundColor !== 'none'
+                  ? `<div class="divLatex" style="background-color: ${codeLatex.backgroundColor}; position: absolute; top: ${ySvg}px; left: ${xSvg}px; transform: translate(-50%,-50%) rotate(${-codeLatex.orientation}deg); opacity: ${codeLatex.opacity};" data-top=${ySvg} data-left=${xSvg}>${katex.renderToString('\\' + codeLatex.letterSize + ' {\\color{' + codeLatex.color + '}{' + codeLatex.latex + '}}')}</div>`
+                  : `<div class="divLatex" style="position: absolute; top: ${ySvg}px; left: ${xSvg}px; transform: translate(-50%,-50%) rotate(${-codeLatex.orientation}deg); opacity: ${codeLatex.opacity};" data-top=${ySvg} data-left=${xSvg}>${katex.renderToString('{\\color{' + codeLatex.color + '} \\' + codeLatex.letterSize + '{' + codeLatex.latex + '}}')}</div>`
               divsLatex.push(divOuterHtml)
             }
           } else {
@@ -136,10 +343,10 @@ export function mathalea2d (
             )
           }
         } else {
-          if (objets?.svgml) { codeSvg = '\t' + objets.svgml(pixelsParCm, amplitude) + '\n' }
+          if (objet?.svgml) { codeSvg = '\t' + objet.svgml(pixelsParCm, amplitude) + '\n' }
         }
-      } catch (error) {
-        window.notify(error.message, { objet: JSON.stringify(objets) })
+      } catch (error: unknown) {
+        window.notify(error instanceof Error ? (error as Error).message : String(error), { objet: JSON.stringify(objets) })
       }
     } else {
       if (objets != null && Array.isArray(objets)) {
@@ -155,17 +362,20 @@ export function mathalea2d (
     }
     return codeSvg
   }
-  const ajouteCodeTikz = (mainlevee, objets) => {
+  const ajouteCodeTikz = (mainlevee: boolean, objets: ObjetMathalea2D | ObjetMathalea2D[]) => {
     let codeTikz = ''
+    if (objets instanceof ObjetMathalea2D) {
+      if (objets.objets != null) { objets = objets.objets as ObjetMathalea2D[] }
+    } // c'est un objet composé d'objets. Exemple : Repere
     if (!Array.isArray(objets)) {
       try {
         if (!mainlevee || typeof objets.tikzml === 'undefined') {
-          if (typeof objets.tikz === 'function') { codeTikz = '\t' + objets.tikz(scale) + '\n' }
+          if (typeof objets.tikz === 'function') { codeTikz = '\t' + objets.tikz() + '\n' }
         } else {
-          if (typeof objets.tikzml === 'function') { codeTikz = '\t' + objets.tikzml(amplitude, scale) + '\n' }
+          if (typeof objets.tikzml === 'function') { codeTikz = '\t' + objets.tikzml(amplitude) + '\n' }
         }
-      } catch (error) {
-        console.log(error.message)
+      } catch (error: unknown) {
+        console.log(error instanceof Error ? error.message : String(error))
       }
     } else {
       for (const objet of objets) {
@@ -175,7 +385,7 @@ export function mathalea2d (
     return codeTikz
   }
   // On prépare le code HTML
-  const divsLatex = []
+  const divsLatex:string [] = []
   let codeSvg = `<svg class="mathalea2d" ${style} ${id !== '' ? `id="${id}"` : ''}" width="${(xmax - xmin) * pixelsParCm * zoom}" height="${
     (ymax - ymin) * pixelsParCm * zoom
   }" viewBox="${xmin * pixelsParCm} ${-ymax * pixelsParCm} ${
@@ -196,7 +406,7 @@ export function mathalea2d (
   // de cette manière d'autres options Tikz pourront aussi être ajoutées
   // si il n'y a qu'une optionsTikz on peut passer un string
   let codeTikz
-  const listeOptionsTikz = []
+  const listeOptionsTikz:string[] = []
   if (optionsTikz !== undefined) {
     if (typeof optionsTikz === 'string') {
       listeOptionsTikz.push(optionsTikz)
@@ -240,8 +450,11 @@ export function mathalea2d (
   else return codeTikz
 }
 
-export class Vide2d {
-  constructor (x, y) {
+export class Vide2d extends ObjetMathalea2D {
+  x: number
+  y: number
+  constructor (x: number, y: number) {
+    super()
     this.x = x
     this.y = y
     this.bordures = [x, y, x, y]
@@ -296,13 +509,20 @@ export function fondEcran (url, x = 0, y = 0, largeur = context.fenetreMathalea2
 // JSDOC Validee par EE Juin 2022
 function convertHexToRGB (couleur = '000000') {
   const hexDecoupe = couleur.match(/.{1,2}/g)
-  return [
-    Number.parseInt(hexDecoupe[0], 16),
-    Number.parseInt(hexDecoupe[1], 16),
-    Number.parseInt(hexDecoupe[2], 16)
-  ]
+  if (hexDecoupe !== null && hexDecoupe.length === 3) {
+    return [
+      Number.parseInt(hexDecoupe[0], 16),
+      Number.parseInt(hexDecoupe[1], 16),
+      Number.parseInt(hexDecoupe[2], 16)
+    ]
+  } else {
+    window.notify(
+      'Une couleur est mal formée. Veuillez le signaler aux développeurs de MathALEA.',
+      { couleur }
+    )
+    return [0, 0, 0]
+  }
 }
-
 /**
  * colorToLatexOrHTML prend en paramètre une couleur sous forme prédéfinie ('red','yellow',...) ou sous forme HTML en hexadécimal (avec #, genre '#f15929')
  * La sortie de cette fonction est un tableau où :
@@ -317,12 +537,19 @@ function convertHexToRGB (couleur = '000000') {
  * @return {[string,string]}
  */
 // JSDOC Validee par EE Juin 2022
-export function colorToLatexOrHTML (couleur) {
-  const tabCouleur = []
+export function colorToLatexOrHTML (couleur : string):[string, string] {
   let rgb = []
-  if (Array.isArray(couleur)) {
+  if (Array.isArray(couleur) && couleur.length === 2) {
     if (couleur[1] === 'none') couleur[1] = '' // pas de 'none' comme couleur en latex !
-    return couleur
+    if (couleur.length === 2) {
+      return [String(couleur[0]), String(couleur[1])]
+    } else {
+      window.notify(
+        'Une couleur est mal formée. Veuillez le signaler aux développeurs de MathALEA.',
+        { couleur }
+      )
+      return ['', '']
+    }
     // Si jamais une fonction rappelle une couleur qui aurait déjà été transformée par cette même fonction
     // else if (couleur === undefined || couleur === '') return '' // EE : 01/10/2023 : Code commenté au profit de celui de dessus pour vérifier si une couleur nulle se ballade dans le projet.
   } else if (couleur === undefined || couleur === '') {
@@ -330,10 +557,11 @@ export function colorToLatexOrHTML (couleur) {
       'Une couleur est undefined ou bien une chaine vide. Veuillez le signaler aux développeurs de MathALEA.',
       { couleur }
     )
-    return ''
+    return ['', '']
   } else if (couleur === 'none') {
     return ['none', ''] // 'none' n'est pas une couleur valide en latex ! Modifié par Jean-Claude Lhote le 19:&é:éàé"
   } else {
+    const tabCouleur: string[] = []
     tabCouleur[0] = couleur
     if (couleur[0] === '#') {
       rgb = convertHexToRGB(couleur.replace('#', ''))
@@ -342,7 +570,7 @@ export function colorToLatexOrHTML (couleur) {
     } else {
       tabCouleur[1] = `{${couleur}}`
     }
-    return tabCouleur
+    return tabCouleur.slice(0, 2) as [string, string]
   }
 }
 
@@ -354,155 +582,12 @@ export function colorToLatexOrHTML (couleur) {
  * @return {boolean||string} Retourne false si le code couleur ne peut pas être converti car non trouvé dans la liste
  */
 // JSDOC Validee par EE Novembre 2022
-export function convertCodeCouleurToHex (color) {
-  const colours = {
-    aliceblue: '#f0f8ff',
-    antiquewhite: '#faebd7',
-    aqua: '#00ffff',
-    aquamarine: '#7fffd4',
-    azure: '#f0ffff',
-    beige: '#f5f5dc',
-    bisque: '#ffe4c4',
-    black: '#000000',
-    blanchedalmond: '#ffebcd',
-    blue: '#0000ff',
-    blueviolet: '#8a2be2',
-    brown: '#a52a2a',
-    burlywood: '#deb887',
-    cadetblue: '#5f9ea0',
-    chartreuse: '#7fff00',
-    chocolate: '#d2691e',
-    coral: '#ff7f50',
-    cornflowerblue: '#6495ed',
-    cornsilk: '#fff8dc',
-    crimson: '#dc143c',
-    cyan: '#00ffff',
-    darkblue: '#00008b',
-    darkcyan: '#008b8b',
-    darkgoldenrod: '#b8860b',
-    darkgray: '#a9a9a9',
-    darkgreen: '#006400',
-    darkkhaki: '#bdb76b',
-    darkmagenta: '#8b008b',
-    darkolivegreen: '#556b2f',
-    darkorange: '#ff8c00',
-    darkorchid: '#9932cc',
-    darkred: '#8b0000',
-    darksalmon: '#e9967a',
-    darkseagreen: '#8fbc8f',
-    darkslateblue: '#483d8b',
-    darkslategray: '#2f4f4f',
-    darkturquoise: '#00ced1',
-    darkviolet: '#9400d3',
-    deeppink: '#ff1493',
-    deepskyblue: '#00bfff',
-    dimgray: '#696969',
-    dodgerblue: '#1e90ff',
-    firebrick: '#b22222',
-    floralwhite: '#fffaf0',
-    forestgreen: '#228b22',
-    fuchsia: '#ff00ff',
-    gainsboro: '#dcdcdc',
-    ghostwhite: '#f8f8ff',
-    gold: '#ffd700',
-    goldenrod: '#daa520',
-    gray: '#808080',
-    green: '#008000',
-    greenyellow: '#adff2f',
-    honeydew: '#f0fff0',
-    hotpink: '#ff69b4',
-    'indianred ': '#cd5c5c',
-    indigo: '#4b0082',
-    ivory: '#fffff0',
-    khaki: '#f0e68c',
-    lavender: '#e6e6fa',
-    lavenderblush: '#fff0f5',
-    lawngreen: '#7cfc00',
-    lemonchiffon: '#fffacd',
-    lightblue: '#add8e6',
-    lightcoral: '#f08080',
-    lightcyan: '#e0ffff',
-    lightgoldenrodyellow: '#fafad2',
-    lightgray: '#d3d3d3',
-    lightgrey: '#d3d3d3',
-    lightgreen: '#90ee90',
-    lightpink: '#ffb6c1',
-    lightsalmon: '#ffa07a',
-    lightseagreen: '#20b2aa',
-    lightskyblue: '#87cefa',
-    lightslategray: '#778899',
-    lightsteelblue: '#b0c4de',
-    lightyellow: '#ffffe0',
-    lime: '#00ff00',
-    limegreen: '#32cd32',
-    linen: '#faf0e6',
-    magenta: '#ff00ff',
-    maroon: '#800000',
-    mediumaquamarine: '#66cdaa',
-    mediumblue: '#0000cd',
-    mediumorchid: '#ba55d3',
-    mediumpurple: '#9370d8',
-    mediumseagreen: '#3cb371',
-    mediumslateblue: '#7b68ee',
-    mediumspringgreen: '#00fa9a',
-    mediumturquoise: '#48d1cc',
-    mediumvioletred: '#c71585',
-    midnightblue: '#191970',
-    mintcream: '#f5fffa',
-    mistyrose: '#ffe4e1',
-    moccasin: '#ffe4b5',
-    navajowhite: '#ffdead',
-    navy: '#000080',
-    oldlace: '#fdf5e6',
-    olive: '#808000',
-    olivedrab: '#6b8e23',
-    orange: '#ffa500',
-    orangered: '#ff4500',
-    orchid: '#da70d6',
-    palegoldenrod: '#eee8aa',
-    palegreen: '#98fb98',
-    paleturquoise: '#afeeee',
-    palevioletred: '#d87093',
-    papayawhip: '#ffefd5',
-    peachpuff: '#ffdab9',
-    peru: '#cd853f',
-    pink: '#ffc0cb',
-    plum: '#dda0dd',
-    powderblue: '#b0e0e6',
-    purple: '#800080',
-    rebeccapurple: '#663399',
-    red: '#ff0000',
-    rosybrown: '#bc8f8f',
-    royalblue: '#4169e1',
-    saddlebrown: '#8b4513',
-    salmon: '#fa8072',
-    sandybrown: '#f4a460',
-    seagreen: '#2e8b57',
-    seashell: '#fff5ee',
-    sienna: '#a0522d',
-    silver: '#c0c0c0',
-    skyblue: '#87ceeb',
-    slateblue: '#6a5acd',
-    slategray: '#708090',
-    snow: '#fffafa',
-    springgreen: '#00ff7f',
-    steelblue: '#4682b4',
-    tan: '#d2b48c',
-    teal: '#008080',
-    thistle: '#d8bfd8',
-    tomato: '#ff6347',
-    turquoise: '#40e0d0',
-    violet: '#ee82ee',
-    wheat: '#f5deb3',
-    white: '#ffffff',
-    whitesmoke: '#f5f5f5',
-    yellow: '#ffff00',
-    yellowgreen: '#9acd32'
+export function convertCodeCouleurToHex (color: ColourNames) {
+  if (typeof colours[color] !== 'undefined') {
+    return colours[color]
   }
-  if (typeof colours[color.toLowerCase()] !== 'undefined') {
-    return colours[color.toLowerCase()]
-  }
-  return false
+  window.notify('La couleur ' + color + ' n\'a pas été trouvée dans la liste des couleurs prédéfinies.', { color })
+  return '#ffffff'
 }
 
 /**
@@ -515,12 +600,11 @@ export function convertCodeCouleurToHex (color) {
  * @return {string} Retourne le code hexadecimal de la nouvelle couleur
  */
 // JSDOC Validee par EE Novembre 2022
-export function assombrirOuEclaircir (couleur, coefficient) {
-  const convertCodeCouleur = convertCodeCouleurToHex(couleur)
-  if (convertCodeCouleur !== false) couleur = convertCodeCouleur
-  couleur = couleur.replace('#', '')
-  if (couleur.length === 6) {
-    const decimalColor = Number.parseInt(couleur, 16)
+export function assombrirOuEclaircir (couleur: ColourNames, coefficient: number) {
+  let convertCodeCouleur = convertCodeCouleurToHex(couleur) ?? couleur
+  convertCodeCouleur = convertCodeCouleur.replace('#', '')
+  if (convertCodeCouleur.length === 6) {
+    const decimalColor = Number.parseInt(convertCodeCouleur, 16)
     let r = (decimalColor >> 16) + coefficient
     r > 255 && (r = 255)
     r < 0 && (r = 0)
@@ -532,7 +616,7 @@ export function assombrirOuEclaircir (couleur, coefficient) {
     b < 0 && (b = 0)
     return `#${(g | (b << 8) | (r << 16)).toString(16)}`
   } else {
-    return couleur
+    return convertCodeCouleur
   }
 }
 
@@ -549,6 +633,8 @@ export function assombrirOuEclaircir (couleur, coefficient) {
  * @private
  */
 // JSDOC Validee par EE Juin 2022
+/* Ce code n'est plus utilisé : il l'était dans l'éditeur 2d
+
 export function codeSvg (fenetreMathalea2d, pixelsParCm, mainlevee, ...objets) {
   let code
   const fenetrexmin = fenetreMathalea2d[0]
@@ -578,6 +664,7 @@ export function codeSvg (fenetreMathalea2d, pixelsParCm, mainlevee, ...objets) {
   code += '</svg>'
   return code
 }
+*/
 
 /**
  * codeTikz(segment(A,B),polygone(D,E,F),labelPoints(A,B))
@@ -585,6 +672,7 @@ export function codeSvg (fenetreMathalea2d, pixelsParCm, mainlevee, ...objets) {
  * @author Rémi Angot
  * @private
  */
+/* Ce code n'est plus utilisé : il l'était dans l'éditeur 2d
 // JSDOC Validee par EE Juin 2022
 export function codeTikz (fenetreMathalea2d, scale, mainlevee, ...objets) {
   let code = ''
@@ -635,14 +723,15 @@ export function codeTikz (fenetreMathalea2d, scale, mainlevee, ...objets) {
   context.isHtml = sortie
   return code
 }
+*/
 
 /**
- * @param {object} objet
- * @param {number} objet.rxmin marge à gauche 0.5 par défaut (peut être fixée à 0 si on veut)
- * @param {number} objet.rxmax marge à droite 0.5 par défaut
- * @param {number} objet.rymin marge en bas 0.5 par défaut (peut être fixée à 0 si on veut)
- * @param {number} objet.rymax marge en haut 0.5 par défaut
- * @param {number} objet.rzoom facteur multiplicatif des marges... implémenté en cas de problème avec le zoom ?
+ * @param {object} options
+ * @param {number} [options.rxmin] marge à gauche 0.5 par défaut (peut être fixée à 0 si on veut)
+ * @param {number} [options.rxmax] marge à droite 0.5 par défaut
+ * @param {number} [options.rymin] marge en bas 0.5 par défaut (peut être fixée à 0 si on veut)
+ * @param {number} [options.rymax] marge en haut 0.5 par défaut
+ * @param {number} [options.rzoom] facteur multiplicatif des marges... implémenté en cas de problème avec le zoom ?
  * @param {object} objets // tableau contenant les objets à afficher
  * Les objets affichables doivent avoir un attribut this.bordures = [xmin, ymin, xmax, ymax] 4 nombres dans cet ordre.
  * Si this.bordures n'est pas défini ou n'est pas un tableau de 4 éléments, l'objet est ignoré
@@ -650,14 +739,14 @@ export function codeTikz (fenetreMathalea2d, scale, mainlevee, ...objets) {
  * @return {{xmin: number, ymin:number, xmax:number, ymax:number}}
  */
 export function fixeBordures (
-  objets,
+  objets: ObjetMathalea2D | ObjetMathalea2D[],
   {
-    rxmin = undefined,
-    rymin = undefined,
-    rxmax = undefined,
-    rymax = undefined,
+    rxmin = -0.5,
+    rymin = -0.5,
+    rxmax = 0.5,
+    rymax = 0.5,
     rzoom = 1
-  } = {}
+  } = { }
 ) {
   /**
    *
@@ -669,22 +758,23 @@ export function fixeBordures (
    * @param bordures
    * @returns {[number,number,number,number,boolean]}
    */
-  const majBordures = (xmin, ymin, xmax, ymax, objets, borduresTrouvees) => {
+  const majBordures: (xmin: number, ymin: number, xmax: number, ymax:number, objets: ObjetMathalea2D | ObjetMathalea2D[], borduresTrouvees: boolean)=>[number, number, number, number, boolean] =
+  (xmin: number, ymin: number, xmax: number, ymax: number, objets: ObjetMathalea2D | ObjetMathalea2D[], borduresTrouvees: boolean) => {
     if (objets == null) return [xmin, ymin, xmax, ymax, borduresTrouvees]
     if (!Array.isArray(objets)) {
       const bordures = objets.bordures ?? null
       if (bordures == null) {
         window.notify(
           `Ìl y a un problème avec les bordures de ${objets.constructor.name}... elles ne sont pas définies !`
-        )
+          , { ...objets })
       } else if (!Array.isArray(bordures)) {
         window.notify(
           `Les bordures de ${objets.constructor.name} ne sont pas un array : ${JSON.stringify(bordures)}`
-        )
+          , { ...objets })
       } else if (bordures.filter((el) => isNaN(el)).length > 0) {
         window.notify(
           `Les bordures de ${objets.constructor.name} sont bien un array mais contiennent autre chose que des nombres : ${bordures}`
-        )
+          , { ...objets })
       } else {
         xmin = Math.min(xmin, objets.bordures[0])
         xmax = Math.max(xmax, objets.bordures[2])
@@ -711,10 +801,6 @@ export function fixeBordures (
   let xmax = -1000
   let ymax = -1000
   let borduresTrouvees = false
-  rxmin = rxmin !== undefined ? rxmin : -0.5
-  rymin = rymin !== undefined ? rymin : -0.5
-  rxmax = rxmax !== undefined ? rxmax : 0.5
-  rymax = rymax !== undefined ? rymax : 0.5
   ;[xmin, ymin, xmax, ymax, borduresTrouvees] = majBordures(
     xmin,
     ymin,
