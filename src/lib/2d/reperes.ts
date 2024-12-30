@@ -57,12 +57,10 @@ import {
  * @return {array} Liste d'objets MathAlea2D
  */
 // JSDOC Validee par EE Aout 2022
-export class DroiteGraduee {
+export class DroiteGraduee extends ObjetMathalea2D {
   Unite: number
   Min: number
   Max: number
-  objets: ObjetMathalea2D[]
-
   constructor ({
     Unite = 10,
     Min = 0,
@@ -140,9 +138,10 @@ export class DroiteGraduee {
     Legende?: string,
     LegendePosition?: number
   }) {
-  // ObjetMathalea2D.call(this, {}) on ne fait plus un ObjetMathalea2d, mais une liste d'objets à cause des latexParCoordonnees()
-  // correctif Jean-Claude Lhote 15/08/2023
-  // Les propriétés exportables
+    super()
+    // ObjetMathalea2D.call(this, {}) on ne fait plus un ObjetMathalea2d, mais une liste d'objets à cause des latexParCoordonnees()
+    // correctif Jean-Claude Lhote 15/08/2023
+    // Les propriétés exportables
     this.Unite = Unite
     this.Min = Min
     this.Max = Max

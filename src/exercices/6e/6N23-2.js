@@ -11,7 +11,7 @@ import { stringNombre, texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { calculANePlusJamaisUtiliser, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
@@ -75,7 +75,7 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
           thickOff = 0
         } else {
           xmin = randint(1, 15)
-          thickOff = calculANePlusJamaisUtiliser(2 / (10 ** (this.sup)))
+          thickOff = 2 / (10 ** (this.sup))
         }
         if (xmin === 0) extremite = '|->'
         else extremite = '->'
@@ -119,11 +119,11 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
           thickOff = 0
         } else {
           xmin = randint(1, 15) - 0.1
-          thickOff = calculANePlusJamaisUtiliser(2 / (10 ** (this.sup)))
+          thickOff = 2 / (10 ** (this.sup))
         }
         if (xmin === 0) extremite = '|->'
         else extremite = '->'
-        xmax = calculANePlusJamaisUtiliser(xmin + 1.5)
+        xmax = xmin + 1.5
         x1 = 10 + xmin * 100 + randint(1, 3) * 10 + randint(2, 8)
         x2 = 10 + xmin * 100 + randint(4, 6) * 10 + randint(2, 8)
         x3 = 10 + xmin * 100 + randint(7, 9) * 10 + randint(2, 8)
@@ -162,12 +162,12 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
           xmin = 0
           thickOff = 0
         } else {
-          xmin = calculANePlusJamaisUtiliser(randint(0, 15) + randint(0, 9) * 0.1)
-          thickOff = calculANePlusJamaisUtiliser(2 / (10 ** (this.sup)))
+          xmin = randint(0, 15) + randint(0, 9) * 0.1
+          thickOff = 2 / (10 ** (this.sup))
         }
         if (xmin === 0) extremite = '|->'
         else extremite = '->'
-        xmax = calculANePlusJamaisUtiliser(xmin + 0.15)
+        xmax = xmin + 0.15
 
         x1 = xmin * 1000 + randint(1, 5) * 10 + randint(2, 8)
         x2 = xmin * 1000 + randint(6, 9) * 10 + randint(2, 8)
