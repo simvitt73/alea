@@ -402,10 +402,13 @@ export function scratchblock (stringLatex) {
  * @author Jean-Claude Lhote, Sylvain Chambon, Sébastien Lozano
  * @return {RoseDesVents}
  */
-export function RoseDesVents () {
-  ObjetMathalea2D.call(this)
-  this.bordures = [-6, -6, 6, 6]
-  this.svg = function (coeff) {
+export class RoseDesVents extends ObjetMathalea2D {
+  constructor () {
+    super()
+    this.bordures = [-6, -6, 6, 6]
+  }
+
+  svg (coeff) {
     function cadran () {
       let group = '<g>\n'
       for (let alpha = 0; alpha < 360; alpha += 15) {
@@ -466,7 +469,8 @@ ${cadran()}
 `
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     const code = `\\node (centre) {
     \\begin{tikzpicture}[baseline, scale=0.5]
               \\definecolor{scratchBlue}{RGB}{76, 151, 255}
