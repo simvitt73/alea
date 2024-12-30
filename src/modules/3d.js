@@ -511,7 +511,6 @@ export class Sphere3d extends ObjetMathalea2D {
       paralleles.listePoints3d.push(unDesParalleles[1])
       for (let ee = 0; ee < paralleles.listePoints3d[0].length; ee++) {
         paralleles.listePoints3d[j][ee].isVisible = !(paralleles.listePoints3d[j][ee].c2d.estDansPolygone(poly))
-        console.log(paralleles.listePoints3d[j][ee].isVisible)
       }
       paralleles.ptCachePremier.push('')
       paralleles.indicePtCachePremier.push('')
