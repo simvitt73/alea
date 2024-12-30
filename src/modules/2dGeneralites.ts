@@ -473,32 +473,6 @@ export function vide2d (x = 0, y = 0) {
   return new Vide2d(x, y)
 }
 
-// NON UTILISEE - A SUPPRIMER ?
-/*
- *
- * @param {url} url de l'image
- * @param {number} x tous ces nombres sont en pixels
- * @param {number} y Attention à l'orientation de l'axe SVG
- * @param {number} largeur
- * @param {number} hauteur
- *
-
-function FondEcran (url, x, y, largeur, hauteur) {
-  ObjetMathalea2D.call(this, { })
-  this.svg = function (coeff) {
-    return `<image xlink:href="${url}" x="${x}" y="${y}" height="${hauteur}" width="${largeur}" />`
-  }
-  this.tikz = function () {
-    return `\\node[inner sep=0pt] at (${x},${y})
-    {\\includegraphics[width= 15 cm]{${url}};`
-  }
-}
-
-export function fondEcran (url, x = 0, y = 0, largeur = context.fenetreMathalea2d.xMax - context.fenetreMathalea2d.xMin, hauteur = context.fenetreMathalea2d.yMax - context.fenetreMathalea2d.yMin) {
-  return new FondEcran(url, x, y, largeur, hauteur)
-}
-*/
-
 /**
  * convertHexToRGB convertit une couleur en hexadécimal (sans le #) en un tableau RVB avec des valeurs entre 0 et 255.
  * @param {string} [couleur='000000'] Code couleur HTML sans le #

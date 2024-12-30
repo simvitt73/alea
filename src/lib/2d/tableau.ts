@@ -108,7 +108,6 @@ export class Tableau extends ObjetMathalea2D {
     flecheGaucheSens = 'haut'
   }: TableauParams) {
     super()
-    // ObjetMathalea2D.call(this, {}) rectification due aux latexParCoordonnees() qui ne sont plus des ObjetsMathalea2d comme les autres
     // Jean-Claude Lhote 15/08/2023
     if (ligne1 && ligne2 && Array.isArray(ligne1) && Array.isArray(ligne2)) {
       nbColonnes = Math.max(ligne1.length, ligne2.length, nbColonnes)

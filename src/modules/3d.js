@@ -411,7 +411,7 @@ export class Sphere3d extends ObjetMathalea2D {
     super()
     this.centre = centre
     this.rayon = rayon
-    this.objets =[]
+    this.objets = []
     this.colorEquateur = colorEquateur
     this.colorEnveloppe = colorEnveloppe
     this.nbParalleles = nbParalleles
@@ -810,78 +810,6 @@ export function sphere3d(centre, rayon, colorEquateur = 'red', colorEnveloppe = 
 }
 
 /**
- * LE CONE (jamais utilisé)
- *
- * @author Jean-Claude Lhote
- *
- * centrebase est le centre du disque de base
- * sommet est le sommet du cône
- * normal est un vecteur 3d normal au plan du disque (il détermine avec rayon de quel côté se trouve la partie visible)
- *
- */
-
-/*
-function Cone3d (centrebase, sommet, rayon, generatrices = 18) {
-  ObjetMathalea2D.call(this, { })
-  this.sommet = sommet
-  this.centrebase = centrebase
-  this.normal = vecteur3d(centrebase, sommet)
-  if (typeof (rayon) === 'number') {
-    this.rayon = vecteur3d(rayon, 0, 0)
-  } else {
-    this.rayon = rayon
-  }
-  this.c2d = []
-  let s, color1, color2
-  const prodvec = vecteur3d(math.cross(this.normal.matrice, this.rayon.matrice))
-  const prodscal = math.dot(prodvec.matrice, vecteur3d(0, 1, 0).matrice)
-  let cote1, cote2
-  if (prodscal > 0) {
-    cote1 = 'caché'
-    color1 = 'gray'
-    cote2 = 'visible'
-    color2 = 'black'
-  } else {
-    cote2 = 'caché'
-    cote1 = 'visible'
-    color1 = 'black'
-    color2 = 'gray'
-  }
-  const c1 = demicercle3d(this.centrebase, this.normal, this.rayon, cote1, color1)
-  const c2 = demicercle3d(this.centrebase, this.normal, this.rayon, cote2, color2)
-
-  for (let i = 0; i < c1.listePoints.length; i++) {
-    if (i % generatrices === 0) {
-      s = segment(this.sommet.c2d, c1.listePoints[i])
-      if (cote1 === 'caché') {
-        s.pointilles = 2
-        s.color = colorToLatexOrHTML('gray')
-      } else {
-        s.color = colorToLatexOrHTML('black')
-      }
-      this.c2d.push(s)
-    }
-  }
-  for (let i = 0; i < c2.listePoints.length; i++) {
-    if (i % generatrices === 0) {
-      s = segment(this.sommet.c2d, c2.listePoints[i])
-      if (cote2 === 'caché') {
-        s.pointilles = 2
-        s.color = colorToLatexOrHTML('gray')
-      } else {
-        s.color = colorToLatexOrHTML('black')
-      }
-      this.c2d.push(s)
-    }
-  }
-  this.c2d.push(c1, c2)
-}
-export function cone3d (centre, sommet, rayon, generatrices = 18) {
-  return new Cone3d(centre, sommet, rayon, generatrices)
-}
-*/
-
-/**
  * Classe du cône
  * @param {Point3d} centre Centre de la base du cône
  * @param {Point3d} sommet Sommet du cône
@@ -902,8 +830,9 @@ export function cone3d (centre, sommet, rayon, generatrices = 18) {
  * @author Eric Elter (d'après version précédente de Jean-Claude Lhote)
  * @class
  */
-function Cone3d(centre, sommet, rayon, color = 'black', affichageAxe = true, colorAxe = 'black', colorCone = 'gray', affichageCentre = true, affichageBase = true) {
-  ObjetMathalea2D.call(this, {})
+export class Cone3d extends ObjetMathalea2D{
+constructor(centre, sommet, rayon, color = 'black', affichageAxe = true, colorAxe = 'black', colorCone = 'gray', affichageCentre = true, affichageBase = true) {
+  super()
   this.centre = centre
   this.sommet = sommet
   this.rayon = rayon
@@ -920,6 +849,7 @@ function Cone3d(centre, sommet, rayon, color = 'black', affichageAxe = true, col
   const p = polygone3d(ptsBase, this.color)
   // this.c2d = pyramide3d(p, this.sommet, this.color, this.centre, affichageAxe, this.colorAxe, false, true, this.colorCone).c2d
   this.c2d = pyramide3d(p, this.sommet, this.color, affichageCentre ? this.centre : undefined, affichageAxe, this.colorAxe, false, true, this.colorCone, affichageBase).c2d
+}
 }
 
 /**
@@ -976,8 +906,9 @@ export function cone3d(centre, sommet, rayon, color = 'black', affichageAxe = fa
  * @author Jean-Claude Lhote (optimisé par Eric Elter)
  * @class
  */
-function Cylindre3d(centrebase1, centrebase2, rayon1, rayon2, color = 'black', affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
-  ObjetMathalea2D.call(this, {})
+export class Cylindre3d extends ObjetMathalea2D{
+  constructor(centrebase1, centrebase2, rayon1, rayon2, color = 'black', affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
+    super()
   this.centrebase1 = centrebase1
   this.centrebase2 = centrebase2
   this.rayon1 = rayon1
@@ -1098,7 +1029,7 @@ function Cylindre3d(centrebase1, centrebase2, rayon1, rayon2, color = 'black', a
     this.c2d.push(s)
   }
 }
-
+}
 /**
  * Crée un cylindre de révolution défini par les centres de ses 2 bases
  * Permet en faisant varier les rayons des deux bases de créer des troncs de cônes (A VERIFIER)
@@ -1127,40 +1058,6 @@ export function cylindre3d(centrebase1, centrebase2, rayon, rayon2, color = 'bla
 }
 
 /**
- * LE PRISME - ANCIENNE FONCTION
- *
- * @author Jean-Claude Lhote
- * Crée un prisme à partir du base Polygone3d et d'un vecteur3d d'extrusion (on peut faire des prismes droits ou non droits)
- */
-
-/* class Prisme3d {
-  constructor (base, vecteur, color) {
-    ObjetMathalea2D.call(this, { })
-
-    this.color = color
-    base.color = colorToLatexOrHTML(this.color)
-    this.base1 = base
-    this.base2 = translation3d(base, vecteur)
-    this.base2.color = this.base1.color
-    this.c2d = []; let s
-    for (let i = 0; i < this.base1.listePoints.length; i++) {
-      this.c2d.push(this.base1.c2d[i])
-    }
-    for (let i = 0; i < this.base2.listePoints.length; i++) {
-      this.c2d.push(this.base2.c2d[i])
-    }
-    for (let i = 0; i < this.base1.listePoints.length; i++) {
-      s = arete3d(this.base1.listePoints[i], this.base2.listePoints[i], this.color)
-      this.c2d.push(s.c2d)
-    }
-  }
-}
-
-export function prisme3d (base, vecteur, color = 'black') {
-  return new Prisme3d(base, vecteur, color)
-} */
-
-/**
  * Classe du prisme droit
  * Ce prisme droit est optimisé dans son tracé des arêtes cachées pour des bases dans le plan (xOy) et son vecteur normal selon (Oz)
  * Pour d'autres usages, il faut approfondir la fonction mais laissé en l'état car justement pas d'autre usage demandé.
@@ -1177,9 +1074,9 @@ export function prisme3d (base, vecteur, color = 'black') {
  * @author Eric Elter (d'après version précédente de Jean-Claude Lhote)
  * @class
  */
-class Prisme3d {
+export class Prisme3d extends ObjetMathalea2D{
   constructor(base, vecteur, color, affichageNom = false, nomBase2, positionLabels2) {
-    ObjetMathalea2D.call(this, {})
+    super()
     this.affichageNom = affichageNom
     this.color = color
     base.color = colorToLatexOrHTML(this.color)
@@ -1268,50 +1165,6 @@ export function prisme3d(base, vecteur, color = 'black', affichageNom = false, n
 }
 
 /**
- * La pyramide  - ANCIENNE FONCTION
- *
- * @author Jean-Claude Lhote
- * Crée une pyramide à partir d'une base Polygone3d et d'un sommet
- */
-
-/*
-class Pyramide3d {
-  constructor (base, sommet, color) {
-    ObjetMathalea2D.call(this, { })
-
-    this.color = color
-    base.color = colorToLatexOrHTML(color)
-    this.base = base
-    this.aretes = []
-    this.sommet = sommet
-    this.c2d = []; let s
-    for (let i = 0; i < this.base.listePoints.length; i++) {
-      s = this.base.c2d[i]
-      if (this.base.listePoints[i].visible) {
-        s.pointilles = false
-      } else {
-        s.pointilles = 2
-      }
-      this.c2d.push(s)
-    }
-    for (let i = 0; i < this.base.listePoints.length; i++) {
-      s = arete3d(this.base.listePoints[i], this.sommet, this.color, true)
-      if (this.base.listePoints[i].visible) {
-        s.c2d.pointilles = false
-      } else {
-        s.c2d.pointilles = 2
-      }
-      this.c2d.push(s.c2d)
-    }
-  }
-}
-
-export function pyramide3d (base, vecteur, color = 'black') {
-  return new Pyramide3d(base, vecteur, color)
-}
-*/
-
-/**
  * Classe de la pyramide
  * (optimisée au niveau des pointillés pour une base sur le plan xOy et un sommet plus haut ou plus bas que la base)
  * @param {Polygone3d} base Base de la pyramide
@@ -1337,10 +1190,9 @@ export function pyramide3d (base, vecteur, color = 'black') {
  * @author Eric Elter (d'après version précédente de Jean-Claude Lhote)
  * @class
  */
-class Pyramide3d {
+export class Pyramide3d extends ObjetMathalea2D{
   constructor(base, sommet, color, centre, affichageAxe = false, colorAxe = 'black', affichageNom = false, estCone = false, colorCone = 'gray', affichageBase = true) {
-    ObjetMathalea2D.call(this, {})
-
+    super()
     base.color = colorToLatexOrHTML(color)
     this.base = base
     this.sommet = sommet
@@ -1558,10 +1410,9 @@ export function pyramide3d(base, sommet, color = 'black', centre, affichageAxe =
  * Crée une pyramide à partir d'une base Polygone3d d'un sommet et d'un coefficient compris entre 0 et 1
  * un coefficient de 0.5 coupera la pyramide à mi-hauteur (valeur par défaut).
  */
-class PyramideTronquee3d {
+export class PyramideTronquee3d extends ObjetMathalea2D{
   constructor(base, sommet, coeff = 0.5, color = 'black') {
-    ObjetMathalea2D.call(this, {})
-
+    super()
     this.color = color
     base.color = colorToLatexOrHTML(color)
     this.base = base
@@ -1609,9 +1460,9 @@ export function pyramideTronquee3d(base, sommet, coeff = 0.5, color = 'black') {
  * @author Jean-Claude Lhote (Amendée par Eric Elter)
  * @class
  */
-class Cube3d {
+export class Cube3d extends ObjetMathalea2D{
   constructor(x, y, z, c, color = 'black', colorAV = 'lightgray', colorHautouBas = 'white', colorDr = 'darkgray', aretesCachee = true, affichageNom = false, nom = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) {
-    ObjetMathalea2D.call(this, {})
+super()
     this.affichageNom = affichageNom
     const A = point3d(x, y, z)
     A.c2d.nom = nom[0]
@@ -1704,9 +1555,9 @@ export function cube3d(x, y, z, c, color = 'black', colorAV = 'lightgray', color
  * Créer une barre de l cubes de c de côté à partir du point (x,y,z)
  * La barre est positionnée suivant l'axe x
  */
-class Barre3d {
+export class Barre3d extends ObjetMathalea2D {
   constructor(x, y, z, c, l, color = 'black') {
-    ObjetMathalea2D.call(this, {})
+super()
     let B, C, D, E, F, G, H, faceAv, faceTop
     this.c2d = []
     const vx = vecteur3d(c, 0, 0)
@@ -1743,9 +1594,9 @@ export function barre3d(x, y, z, c, l, color = 'black') {
  * @author Jean-Claude Lhote
  * Crée une plaque de cubes de côtés c de dimensions l suivant x et p suivant y
  */
-class Plaque3d {
+export class Plaque3d extends ObjetMathalea2D{
   constructor(x, y, z, c, l, p, color = 'black') {
-    ObjetMathalea2D.call(this, {})
+super()
     let A, B, C, D, F, G, H, faceAv, faceTop, faceD
     this.c2d = []
     const vx = vecteur3d(c, 0, 0)
@@ -1783,9 +1634,9 @@ export function plaque3d(x, y, z, c, l, p, color = 'black') {
   return new Plaque3d(x, y, z, c, l, p, color)
 }
 
-class PaveLPH3d {
+export class PaveLPH3d extends ObjetMathalea2D {
   constructor(x, y, z, c, l, p, h, color = 'black') {
-    ObjetMathalea2D.call(this, {})
+super()
     let A, B, C, D, F, G, H, faceAv, faceTop, faceD
     this.c2d = []
     const vx = vecteur3d(c, 0, 0)
@@ -1847,9 +1698,9 @@ export function paveLPH3d(x, y, z, c, l, p, h, color = 'black') {
  * Il ne s'agit pas à proprement parler d'un objet 3d, c'est un objet 2d avec sa méthode svg() et sa méthode tikz()
  * Utilisée par exemple dans 6G43
  */
-class Cube {
+export class Cube extends ObjetMathalea2D{
   constructor(x, y, z, alpha, beta, colorD, colorT, colorG) {
-    ObjetMathalea2D.call(this, {})
+super()
     this.x = x
     this.y = y
     this.z = z
@@ -1921,9 +1772,9 @@ export function cube(x = 0, y = 0, z = 0, alpha = 45, beta = -35, {
  * @author Jean-Claude Lhote (optimisé par Eric Elter)
  * @class
  */
-class Pave3d {
+export class Pave3d extends ObjetMathalea2D {
   constructor(A, B, D, E, color = 'black', affichageNom = false, nom = 'ABCDEFGH') {
-    ObjetMathalea2D.call(this, {})
+    super()
     this.affichageNom = affichageNom
     const v1 = vecteur3d(A, B)
     const v2 = vecteur3d(A, E)
@@ -2085,35 +1936,37 @@ export function rotation3d(point3D, droite3D, angle, color) {
  * l'angle définit l'arc formé par la flèche
  * son sens est définit par le vecteur directeur de l'axe (changer le signe de chaque composante de ce vecteur pour changer le sens de rotation)
  */
-function SensDeRotation3d(axe, rayon, angle, epaisseur, color) {
-  ObjetMathalea2D.call(this, {})
-  this.epaisseur = epaisseur
-  this.color = color
-  this.c2d = []
-  let M
-  let N
-  let s
-  M = translation3d(axe.origine, rayon)
-  for (let i = 0; i < angle; i += 5) {
+export class SensDeRotation3d extends ObjetMathalea2D {
+  constructor(axe, rayon, angle, epaisseur, color) {
+    super()
+    this.epaisseur = epaisseur
+    this.color = color
+    this.c2d = []
+    let M
+    let N
+    let s
+    M = translation3d(axe.origine, rayon)
+    for (let i = 0; i < angle; i += 5) {
+      N = rotation3d(M, axe, 5)
+      s = segment(M.c2d, N.c2d, this.color)
+      s.epaisseur = this.epaisseur
+      this.c2d.push(s)
+      M = N
+    }
     N = rotation3d(M, axe, 5)
     s = segment(M.c2d, N.c2d, this.color)
     s.epaisseur = this.epaisseur
     this.c2d.push(s)
-    M = N
+    const d = droite3d(N, axe.directeur)
+    const A = rotation3d(M, d, 30)
+    const B = rotation3d(M, d, -30)
+    s = segment(N.c2d, A.c2d, this.color)
+    s.epaisseur = this.epaisseur
+    this.c2d.push(s)
+    s = segment(N.c2d, B.c2d, this.color)
+    s.epaisseur = this.epaisseur
+    this.c2d.push(s)
   }
-  N = rotation3d(M, axe, 5)
-  s = segment(M.c2d, N.c2d, this.color)
-  s.epaisseur = this.epaisseur
-  this.c2d.push(s)
-  const d = droite3d(N, axe.directeur)
-  const A = rotation3d(M, d, 30)
-  const B = rotation3d(M, d, -30)
-  s = segment(N.c2d, A.c2d, this.color)
-  s.epaisseur = this.epaisseur
-  this.c2d.push(s)
-  s = segment(N.c2d, B.c2d, this.color)
-  s.epaisseur = this.epaisseur
-  this.c2d.push(s)
 }
 
 export function sensDeRotation3d(axe, rayon, angle, epaisseur, color) {

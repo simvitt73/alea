@@ -61,7 +61,6 @@ export function labelLatexPoint ({
   hauteur: 10,
   couleurDeRemplissage: ''
 }): object[] {
-  // ObjetMathalea2D.call(this, {}) rectification due aux latexParCoordonnees() qui ne sont plus des ObjetsMathalea2d comme les autres
   // Jean-Claude Lhote 15/08/2023
   const offset = 0.25 * Math.log10(taille) // context.pixelsParCm ne correspond pas forcément à la valeur utilisée par mathalea2d... cela peut entrainer un trés léger écart
   let x
@@ -126,7 +125,6 @@ export function labelLatexPoint ({
 export function labelPoint (...args: (Point | string)[]) {
   const taille = 1
   const points = [...args]
-  // ObjetMathalea2D.call(this, {})
   let color
   if (typeof points[points.length - 1] === 'string') {
     color = colorToLatexOrHTML(String(points[points.length - 1]))

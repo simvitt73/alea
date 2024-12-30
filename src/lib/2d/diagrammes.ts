@@ -396,7 +396,7 @@ export class DiagrammeBarres extends ObjetMathalea2D {
  * // Trace un diagramme en barres avec modification de quelques options par défaut
  * @return {DiagrammeBarres}
  */
-export function diagrammeBarres (hauteursBarres, etiquettes, {
+export function diagrammeBarres (hauteursBarres: number[], etiquettes:string[], {
   reperageTraitPointille = false,
   couleurDeRemplissage = 'blue',
   titreAxeVertical = '',
@@ -443,8 +443,12 @@ export function diagrammeBarres (hauteursBarres, etiquettes, {
  * @property {number[]} bordures Coordonnées de la fenêtre d'affichage du genre [-2,-2,5,5]
  * @class
  */
-export function DiagrammeCirculaire ({
-  effectifs,
+export class DiagrammeCirculaire extends ObjetMathalea2D{
+  x: number
+  y: number
+
+  constructor({
+  effectifs=[],
   x = 0,
   y = 0,
   rayon = 4,
@@ -458,9 +462,24 @@ export function DiagrammeCirculaire ({
   valeurs = [],
   hachures = [],
   remplissage = []
+}:{
+  effectifs?: number[],
+  x?: number,
+  y?: number,
+  rayon?: number,
+  labels?: string[],
+  semi?: boolean,
+  legendeAffichage?: boolean,
+  legendePosition?: string,
+  mesures?: boolean[],
+  visibles?: boolean[],
+  pourcents?: boolean[],
+  valeurs?: boolean[],
+  hachures?: boolean[],
+  remplissage?: boolean[]
 } = {}) {
-  ObjetMathalea2D.call(this, {})
-  const objets = []
+super() 
+ this.objets = []
   const listeHachuresDisponibles = [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
   const listeMotifs = combinaisonListes(listeHachuresDisponibles, effectifs.length)
   this.bordures = [1000, 1000, -1000, -1000]
@@ -475,15 +494,16 @@ export function DiagrammeCirculaire ({
       positionLegende = { x: this.x + 2 * rayon + 1, y: this.y }
       break
     case 'dessus':
-      positionLegende = { x: this.x, y: this.y + semi ? rayon + 1 : 2 * rayon + 1 }
+      positionLegende = { x: this.x, y: this.y + (semi ? rayon + 1 : 2 * rayon + 1) }
       break
     case 'dessous':
+      default:
       positionLegende = { x: this.x, y: this.y - 1.5 }
       break
   }
   let T = point(positionLegende.x, positionLegende.y)
   const angleTotal = semi ? 180 : 360
-  const effectifTotal = effectifs.reduce((somme, valeur) => somme + valeur)
+  const effectifTotal = effectifs.reduce((somme: number, valeur: number) => somme + valeur, 0)
   const secteurs = []
   const legendes = []
   const etiquettes = []
@@ -539,25 +559,28 @@ export function DiagrammeCirculaire ({
     legende.opaciteDeRemplissage = 0.7
     legendes.push(legende, textelegende)
   }
-  objets.push(contour)
-  objets.push(...secteurs)
-  if (legendeAffichage) objets.push(...legendes)
-  objets.push(...etiquettes, ...etiquettes2, ...etiquettes3)
+  this.objets.push(contour)
+  this.objets.push(...secteurs)
+  if (legendeAffichage) this.objets.push(...legendes)
+  this.objets.push(...etiquettes, ...etiquettes2, ...etiquettes3)
   // calcul des bordures
   this.bordures[0] = this.x - 0.5
   this.bordures[1] = this.y - 0.5 - (legendeAffichage ? (legendePosition === 'dessous' ? 2 : 0) : 0)
   this.bordures[2] = this.x + rayon * 2 + 1 + (legendeAffichage ? (legendePosition === 'droite' ? legendeMax : (Math.max(legendeMax, this.x + rayon * 2 + 1) - (this.x + rayon * 2 + 1))) : 0)
   this.bordures[3] = this.y + (semi ? rayon : rayon * 2) + (legendeAffichage ? (legendePosition === 'dessus' ? 2 : (legendePosition === 'droite' ? Math.max(this.y + (semi ? rayon : rayon * 2), effectifs.length * 1.5) - (this.y + (semi ? rayon : rayon * 2)) : 0)) : 0)
-  this.svg = function (coeff) {
+}
+svg (coeff: number) {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.svg(coeff)
     }
     return code
   }
-  this.tikz = function () {
+  ttikz () {
     let code = ''
-    for (const objet of objets) {
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
       code += '\n\t' + objet.tikz()
     }
     return code
@@ -607,6 +630,21 @@ export function diagrammeCirculaire ({
   valeurs = [],
   hachures = [],
   remplissage = []
+}:{
+  effectifs?: number[],
+  x?: number,
+  y?: number,
+  rayon?: number,
+  labels?: string[],
+  semi?: boolean,
+  legendeAffichage?: boolean,
+  legendePosition?: string,
+  mesures?: boolean[],
+  visibles?: boolean[],
+  pourcents?: boolean[],
+  valeurs?: boolean[],
+  hachures?: boolean[],
+  remplissage?: boolean[]
 } = {}) {
   return new DiagrammeCirculaire({
     effectifs,

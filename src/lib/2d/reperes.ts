@@ -139,7 +139,6 @@ export class DroiteGraduee extends ObjetMathalea2D {
     LegendePosition?: number
   }) {
     super()
-    // ObjetMathalea2D.call(this, {}) on ne fait plus un ObjetMathalea2d, mais une liste d'objets à cause des latexParCoordonnees()
     // correctif Jean-Claude Lhote 15/08/2023
     // Les propriétés exportables
     this.Unite = Unite

@@ -18,8 +18,9 @@ export const titre = 'Calculs algébriques'
 // Les exports suivants sont optionnels mais au moins la date de publication semble essentielle
 export const dateDePublication = '02/01/2021' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
-function TraceSchemaBarre (x, y, legende = '', { epaisseur = 0.6, couleurDeRemplissage = 'blue', color = 'black', opaciteDeRemplissage = 0.3, angle = 66, unite = 1, hachures = false } = {}) {
-  ObjetMathalea2D.call(this, { })
+export class TraceSchemaBarre extends ObjetMathalea2D{
+  constructor(x, y, legende = '', { epaisseur = 0.6, couleurDeRemplissage = 'blue', color = 'black', opaciteDeRemplissage = 0.3, angle = 66, unite = 1, hachures = false } = {}) {
+    super()
   this.bordures = [x, 0, x + epaisseur, y * unite]
   const p = polygone(
     point(x, 0),
@@ -41,6 +42,7 @@ function TraceSchemaBarre (x, y, legende = '', { epaisseur = 0.6, couleurDeRempl
   this.svg = function (coeff) {
     return p.svg(coeff) + '\n' + texte.svg(coeff)
   }
+}
 }
 
 function traceSchemaBarre (...args) {
