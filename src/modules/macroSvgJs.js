@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import katex from 'katex'
-import { SVG } from '@svgdotjs/svg'
+import { SVG } from '@svgdotjs/svg.js'
 // import { context } from './context'
 import { arrondi } from '../lib/outils/nombres'
 
