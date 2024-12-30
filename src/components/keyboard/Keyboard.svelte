@@ -92,6 +92,7 @@
     }
     // console.log('page à afficher n°' + currentPageIndex)
     // console.log(pages[currentPageIndex])
+    await tick()
     mathaleaRenderDiv(divKeyboard)
   }
 
@@ -103,6 +104,7 @@
     }
     // console.log('page à afficher n°' + currentPageIndex)
     // console.log(pages[currentPageIndex])
+    await tick()
     mathaleaRenderDiv(divKeyboard)
   }
 
@@ -214,11 +216,12 @@
       id="kb-nav-reduced"
       type="button"
       class="z-[10000] absolute right-0 top-0 h-5 w-5 rounded-sm bg-coopmaths-action hover:bg-coopmaths-action-lightest dark:bg-coopmathsdark-action-light dark:hover:bg-coopmathsdark-action-lightest text-coopmaths-canvas dark:text-coopmaths-canvas"
-      on:click={(e) => {
+      on:click={async (e) => {
         e.preventDefault()
         e.stopPropagation()
         computePages()
         $keyboardState.isInLine = !$keyboardState.isInLine
+        await tick()
         mathaleaRenderDiv(divKeyboard)
       }}
       on:mousedown={(e) => {
@@ -235,10 +238,11 @@
       class="z-[10000] {$keyboardState.blocks.includes('alphanumeric')
         ? 'flex justify-center items-center'
         : 'hidden'} absolute right-0 top-6 h-5 w-5 rounded-sm bg-coopmaths-action hover:bg-coopmaths-action-lightest dark:bg-coopmathsdark-action-light dark:hover:bg-coopmathsdark-action-lightest text-coopmaths-canvas dark:text-coopmaths-canvas"
-      on:click={(e) => {
+      on:click={async (e) => {
         e.preventDefault()
         e.stopPropagation()
         alphanumericDisplayed = !alphanumericDisplayed
+        await tick()
         mathaleaRenderDiv(divKeyboard)
       }}
       on:mousedown={(e) => {
