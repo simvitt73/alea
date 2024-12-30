@@ -71,7 +71,7 @@ export default class ScratchMultiScript extends Exercice {
           ' Cette brique donne la couleur de la case sur laquelle est positionné le lutin.',
       couleur: 'nombres'
     })
-    const lePlateau = plateau2dNLC(1, false, 0.5, true)
+    const lePlateau = plateau2dNLC({ type: 1, melange: false, scale: 0.5, relatif: true })
     const listeCouleurs = ['Blanc', 'Vert', 'Bleu', 'Rouge', 'Noir', 'Rose', 'Orange', 'Jaune', 'Gris']
     this.consigne = 'Donner la série de couleurs affichées par ce' + (this.nbQuestions > 1 ? 's' : '') + ' programme' + (this.nbQuestions > 1 ? 's.' : '.')
     const mesQcm = []
