@@ -1,9 +1,9 @@
-import { context } from '../../modules/context.js'
-import { quotientier, randint } from '../../modules/outils.js'
+import { context } from '../../modules/context'
+import { quotientier, randint } from '../../modules/outils'
 
 /**
  * Créé un string de nbsommets caractères dans l'ordre alphabétique et en majuscule qui ne soit pas dans la liste donnée en 2e argument
- * @param {integer} nbsommets
+ * @param {number} nbsommets
  * @param {string[]} listeAEviter
  * @author Rémi Angot
  * Ajout des while pour s'assurer de bien avoir des lettres majuscules le 08/05/2022 par Guillaume Valmont

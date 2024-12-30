@@ -21,9 +21,10 @@ import { context } from '../../modules/context'
 import { ajouteChampTexte } from '../../lib/interactif/questionMathLive'
 import { propositionsQcm } from '../../lib/interactif/qcm'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
-import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
+import { fixeBordures, mathalea2d, ObjetMathalea2D } from '../../modules/2dGeneralites'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import Exercice from '../Exercice'
+import type { Latex2d } from '../../lib/2d/textes'
 
 export const titre = 'Reconnaître des solides'
 export const dateDePublication = '24/09/2022'
@@ -85,7 +86,7 @@ export default class ReconnaitreDesSolides extends Exercice {
     for (let j = 0, k = 0; j < this.nbQuestions && k < 50; k++) {
       const choix = typeDeQuestion[k]
       context.anglePerspective = 30
-      const objets = []
+      const objets: (ObjetMathalea2D | Latex2d)[] = []
       let reponseQcm
 
       let axe = choix === 1 ? randint(1, 2) : (choix > 1 && choix <= 5) ? randint(1, 3) : 0
@@ -146,7 +147,8 @@ export default class ReconnaitreDesSolides extends Exercice {
               texteCorrection = `Prisme droit avec une base ayant $${prisme.base1.listePoints.length}$ sommets.`
             } else {
               pyra = pyramide3d(base, p3)
-              objets.push(...pyra.c2d)
+              const objs = pyra.c2d
+              objets.push(...(objs as (ObjetMathalea2D | Latex2d)[]))
               texteCorrection = `Pyramide avec une base ayant $${pyra.base.listePoints.length}$ sommets.`// et selon l'axe=$${axe}$`
             }
           }
@@ -160,15 +162,15 @@ export default class ReconnaitreDesSolides extends Exercice {
             /* for (let kk = 15; kk < 25; kk++) {
               cone.c2d[kk].isVisible = (kk % 2)
             } */
-            objets.push(...cone.c2d)
+            objets.push(...(cone.c2d as (ObjetMathalea2D | Latex2d)[]))
           } else if (axe === 2) {
             cone = cone3d(point3d(0, 0, 0), point3d(3, 0, 0), vecteur3d(0, Math.cos(60 * Math.PI / 180.0), Math.sin(60 * Math.PI / 180.0)), 'black', true, 'black', 'white')
             /* for (let kk = 3; kk < 3 + 17; kk++) {
               cone.c2d[kk].isVisible = (kk % 2)
             } */
-            objets.push(...cone.c2d)
+            objets.push(...(cone.c2d as (ObjetMathalea2D | Latex2d)[]))
           } else {
-            cone = cone2d({ centre: point(0, 0), Rx: randint(15, 30) / 10, hauteur: choice([3, 4, 5]) })
+            cone = cone2d({ centre: point(0, 0), rx: randint(15, 30) / 10, hauteur: choice([3, 4, 5]) })
             const t = tracePoint(cone.centre)
             const g = homothetie(segment(cone.centre, cone.sommet), milieu(cone.centre, cone.sommet), 1.5) as Segment
             g.pointilles = 2
@@ -300,7 +302,7 @@ export default class ReconnaitreDesSolides extends Exercice {
           break
         }
         case 'sphère': // sphère
-          sphere = sphere2d({ centre: point(0, 0), Rx: 2, color: 'black' })
+          sphere = sphere2d({ centre: point(0, 0), rx: 2, color: 'black' })
           objets.push(sphere)
           reponse = solide
           texteCorrection = premiereLettreEnMajuscule(solide) + '.'
@@ -314,7 +316,7 @@ export default class ReconnaitreDesSolides extends Exercice {
         this.question = mathalea2d(Object.assign({}, fixeBordures(objets), {
           scale: 0.5,
           style: 'margin: auto'
-        }), objets)
+        }), ...objets.flat())
 
         this.autoCorrection[j] = {}
         this.autoCorrection[j].options = {}

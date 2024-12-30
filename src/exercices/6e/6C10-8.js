@@ -10,7 +10,7 @@ export const refs = {
 }
 export default class MessageCodeAvecTables extends EncodeurTexte {
   constructor () {
-    super()
+    super('exo')
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
     this.besoinCorrection = true
