@@ -24,7 +24,7 @@ export class Point extends ObjetMathalea2D {
   x: number
   y: number
 
-  constructor (arg1:string | number, arg2: number, arg3: number | string, positionLabel = 'above') {
+  constructor (arg1:string | number, arg2: number, arg3?: number | string, positionLabel = 'above') {
     super()
     this.typeObjet = 'point'
     this.x = 0

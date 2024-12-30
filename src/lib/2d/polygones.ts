@@ -43,7 +43,7 @@ export class Polyline extends ObjetMathalea2D {
   listePoints: Point[]
   nom: string
   stringColor: string
-  constructor (...points: (Point[] | string)[]) {
+  constructor (...points: Point[] | (Point[] | string)[]) {
     super()
     this.epaisseur = 1
     this.pointilles = 0
@@ -199,7 +199,7 @@ export class Polyline extends ObjetMathalea2D {
  * @returns Polyline
  * @author Rémi Angot
  */
-export function polyline (...args: (Point[] | string)[]) {
+export function polyline (...args: Point[] | (Point[] | string)[]) {
   return new Polyline(...args)
 }
 
@@ -339,7 +339,7 @@ export class Polygone extends ObjetMathalea2D {
       const triangles = this.triangulation
       this._aire = 0
       for (let i = 0; i < triangles.length; i++) {
-        this._aire += Number(aireTriangle(triangles[i]))
+        this._aire += Number(aireTriangle(polygone(triangles[i])))
       }
     }
     return this._aire
