@@ -54,7 +54,7 @@
   }
 
   $: if ((isQuestionsVisible || isCorrectionVisible || correctionsSteps.length > 0) && currentSeriesIndex !== undefined) {
-    mathaleaRenderDiv(divExercice)
+    tick().then(() => mathaleaRenderDiv(divExercice))
   }
 
   function setCorrectionVisible (correctionVisibility: boolean) {
@@ -121,7 +121,7 @@
     const newZoom = Number((plusMinus === '+' ? oldZoom + 0.1 : oldZoom - 0.1).toFixed(1))
     $globalOptions.z = newZoom.toString()
     const main = document.querySelector('main')
-    mathaleaRenderDiv(main)
+    tick().then(() => mathaleaRenderDiv(main))
     mathaleaUpdateUrlFromExercicesParams()
   }
 </script>
