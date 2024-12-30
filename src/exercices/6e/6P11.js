@@ -890,52 +890,52 @@ export default class ProportionnaliteParLinearite extends Exercice {
         case 1:
           question = questionAchat(this, indiceQuestion)
           if (!context.isAmc) {
-            indiceQuestion += 2
+            indiceQuestion = 2
           } else {
-            indiceQuestion++
+            indiceQuestion = 1
           }
           break
         case 2:
           question = questionRecette(this, indiceQuestion)
           if (!context.isAmc) {
-            indiceQuestion += 2
+            indiceQuestion = 2
           } else {
-            indiceQuestion++
+            indiceQuestion = 1
           }
           break
         case 3:
           question = questionDillution(this, indiceQuestion)
-          indiceQuestion++
+          indiceQuestion = 1
           break
         case 4:
           question = questionDistance(this, indiceQuestion)
           if (versionSimplifiee) {
-            indiceQuestion++
+            indiceQuestion = 1
           } else {
             if (!context.isAmc) {
-              indiceQuestion += 2
+              indiceQuestion = 2
             } else {
-              indiceQuestion++
+              indiceQuestion = 1
             }
           }
           break
         case 5:
           question = questionEchelle(this, indiceQuestion)
           if (!context.isAmc) {
-            indiceQuestion += 2
+            indiceQuestion = 2
           } else {
-            indiceQuestion++
+            indiceQuestion = 1
           }
           break
         case 6:
           question = questionRecouvrirSurface(this, indiceQuestion)
           if (versionSimplifiee) {
-            indiceQuestion++
+            indiceQuestion = 1
           } else {
             if (!context.isAmc) {
-              indiceQuestion += 2
+              indiceQuestion = 2
             } else {
-              indiceQuestion++
+              indiceQuestion = 1
             }
           }
           break
@@ -943,7 +943,7 @@ export default class ProportionnaliteParLinearite extends Exercice {
       if (this.questionJamaisPosee(i, indexN, ...listeIndexSituations)) { // Si la question n'a jamais été posée, on la garde.
         this.listeQuestions[i] = question.qtexte
         this.listeCorrections[i] = question.qtexteCorr
-        i++
+        i += indiceQuestion
       }
       cpt++
     }
