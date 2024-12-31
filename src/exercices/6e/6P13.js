@@ -12,6 +12,7 @@ import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import { texNombre } from '../../lib/outils/texNombre'
 import { egalOuApprox } from '../../lib/outils/ecritures'
+import { arrondi } from '../../lib/outils/nombres'
 
 export const titre = 'Augmenter ou diminuer d\'un pourcentage'
 export const interactifReady = true
@@ -177,7 +178,7 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
           texte += ajouteChampTexteMathLive(this, 2 * i, ' ', { texteApres: ' €.' })
           texte += '<br>'
           if (!context.isAmc && this.interactif) {
-            handleAnswers(this, 2 * i, { reponse: { value: String(montantReduction) } })
+            handleAnswers(this, 2 * i, { reponse: { value: texPrix(montantReduction) } })
           } else {
             propositionsAMC = [
               {
@@ -187,7 +188,7 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
                     texte: texteCorr,
                     reponse: {
                       texte: enonceInit + '<br>' + enonceAMC,
-                      valeur: [montantReduction],
+                      valeur: [arrondi(montantReduction)],
                       param: {
                         digits: 5,
                         decimals: 2,
@@ -205,7 +206,7 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
           texte += enonceAMC
           texte += (this.interactif && context.isHtml) ? ajouteChampTexteMathLive(this, 2 * i + 1, ' ', { texteApres: ' €.' }) : ''
           if (!context.isAmc) {
-            handleAnswers(this, 2 * i + 1, { reponse: { value: String(prixFinal) } })
+            handleAnswers(this, 2 * i + 1, { reponse: { value: texPrix(prixFinal) } })
           } else {
             propositionsAMC.push(
               {
@@ -215,7 +216,7 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
                     texte: '',
                     reponse: {
                       texte: enonceAMC,
-                      valeur: [prixFinal],
+                      valeur: [arrondi(prixFinal)],
                       param: {
                         digits: 5,
                         decimals: 2,
@@ -230,9 +231,9 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
             )
           }
           texteCorr = `${numAlpha(0)} Le montant de la réduction est : $${prixIntial}${sp()}€ \\times ${pourcent} \\div 100${egalOuApprox(montantReduction, 2)}`
-          texteCorr += miseEnEvidence(`${texPrix(montantReduction)}${sp()}€`) + '$.<br>'
+          texteCorr += miseEnEvidence(`${texPrix(montantReduction)}${sp()}`) + '€$. <br>'
           texteCorr += `${numAlpha(1)} Finalement, ${prenom1} paiera ${situation.quoiReponse} : $${prixIntial}${sp()}€-${texPrix(montantReduction)}${sp()}€=`
-          texteCorr += miseEnEvidence(`${texPrix(prixFinal)}${sp()}€`) + '$.'
+          texteCorr += miseEnEvidence(`${texPrix(prixFinal)}${sp()}`) + '€$.'
         }
           break
         case 'augmentation': {
@@ -248,7 +249,7 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
           texte += ajouteChampTexteMathLive(this, 2 * i, ' ', { texteApres: ' €.' })
           texte += '<br>'
           if (!context.isAmc) {
-            handleAnswers(this, 2 * i, { reponse: { value: texNombre(montantAugmentation, 2) } })
+            handleAnswers(this, 2 * i, { reponse: { value: texPrix(montantAugmentation) } })
           } else {
             propositionsAMC = [
               {
@@ -276,7 +277,7 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
           texte += enonceAMC
           texte += (this.interactif && context.isHtml) ? ajouteChampTexteMathLive(this, 2 * i + 1, ' ', { texteApres: ' €.' }) : ''
           if (!context.isAmc) {
-            handleAnswers(this, 2 * i + 1, { reponse: { value: texNombre(prixFinal, 2) } })
+            handleAnswers(this, 2 * i + 1, { reponse: { value: texPrix(prixFinal) } })
           } else {
             propositionsAMC.push(
               {
@@ -286,7 +287,7 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
                     texte: texteCorr,
                     reponse: {
                       texte: enonceAMC,
-                      valeur: [prixFinal],
+                      valeur: [arrondi(prixFinal)],
                       param: {
                         digits: 5,
                         decimals: 2,
@@ -301,9 +302,9 @@ export default class AugmenterEtReduireDunPourcentage extends Exercice {
             )
           }
           texteCorr = `${numAlpha(0)} Le montant de l'augmentation est :     $${prixIntial}${sp()}€ \\times ${texNombre(pourcent, 1)} \\div 100${egalOuApprox(montantAugmentation, 2)}`
-          texteCorr += miseEnEvidence(`${texPrix(montantAugmentation)}${sp()}€`) + '$.<br>'
+          texteCorr += miseEnEvidence(`${texPrix(montantAugmentation)}${sp()}`) + '€$.<br>'
           texteCorr += `${numAlpha(1)} Finalement, ${prenom2} paiera ${situation.quoiReponse} : $${prixIntial}${sp()}€+${texPrix(montantAugmentation)}${sp()}€ =`
-          texteCorr += miseEnEvidence(`${texPrix(prixFinal)}${sp()}€`) + '$.'
+          texteCorr += miseEnEvidence(`${texPrix(prixFinal)}${sp()}`)+'€$.'
         }
           break
       }
