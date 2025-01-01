@@ -846,16 +846,22 @@ export class Grille extends ObjetMathalea2D {
     this.color = colorToLatexOrHTML(color)
     this.opacite = opacite
     this.objets = []
-    for (let i = xmin; i <= xmax; i = i + step) {
-      const s = segment(i, ymin, i, ymax, color)
+    let x = xmin
+    const nbStep = Math.round((xmax-xmin)/step)
+    for (let i = 0; i <= nbStep; i++) {
+      const s = segment(x, ymin, x, ymax, color)
+      x+=step
       s.opacite = this.opacite
       if (pointilles) {
         s.pointilles = 5
       }
       this.objets.push(s)
     }
-    for (let i = ymin; i <= ymax; i = i + step) {
-      const s = segment(xmin, i, xmax, i, color)
+    const nbStepY = Math.round((ymax-ymin)/step)
+    let y = ymin
+    for (let i = 0; i <= nbStep; i++) {
+      const s = segment(xmin, y, xmax, y, color)
+      y+=step
       s.opacite = this.opacite
       if (pointilles) {
         s.pointilles = 5
