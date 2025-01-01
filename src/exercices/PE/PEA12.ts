@@ -39,7 +39,7 @@ export default class AdditionSoustractionBaseN extends Exercice {
 
   nouvelleVersion () {
     let listeOperations = []
-    let listeBases = []
+    let listeBases: number[] = []
     if (this.sup === 1) {
       listeOperations = Array(this.nbQuestions).fill('+')
     }
@@ -75,7 +75,7 @@ export default class AdditionSoustractionBaseN extends Exercice {
         texteCorr = `En base ${base} :<br>` + Operation({ operande1: m, operande2: n, type: 'addition', base })
         const retenue = []
         for (let rang = 0; rang < Math.max(mb.length, nb.length); rang++) {
-          const somme = parseInt(mb[mb.length - 1 - rang] || 0, base) + parseInt(nb[nb.length - 1 - rang] || 0, base) + parseInt(retenue[rang - 1] || 0, base)
+          const somme: number = parseInt(mb[mb.length - 1 - rang] || 0, base) + parseInt(nb[nb.length - 1 - rang] || 0, base) + parseInt(retenue[rang - 1] || 0, base)
           texteCorr += `<br> Au rang des $${base}^${rang}$ :  $${mb[mb.length - 1 - rang] || 0} + ${nb[nb.length - 1 - rang] || 0} ${retenue[rang - 1] ? '+' + retenue[rang - 1] : ''}`
           if (parseInt(mb[mb.length - 1 - rang] || 0, base) > 9 || parseInt(nb[nb.length - 1 - rang] || 0, base) > 9) {
             // Si un chiffre est un lettre
@@ -100,7 +100,7 @@ export default class AdditionSoustractionBaseN extends Exercice {
         texteCorr = `En base ${base} :<br>` + Operation({ operande1: m, operande2: n, type: 'soustraction', base })
         const retenue = []
         for (let rang = 0; rang < Math.max(mb.length, nb.length); rang++) {
-          let difference = parseInt(mb[mb.length - 1 - rang] || 0, base) - (parseInt(nb[nb.length - 1 - rang] || 0, base) + parseInt(retenue[rang - 1] || 0, base))
+          let difference = parseInt(mb[mb.length - 1 - rang] || 0, base) - (parseInt(nb[nb.length - 1 - rang] || 0, base) + parseInt(String(retenue[rang - 1] || 0), base))
           if (difference < 0) difference += base
           if (retenue[rang - 1]) {
             texteCorr += `<br> Au rang des $${base}^${rang}$ :  $${mb[mb.length - 1 - rang] || 0} - (${nb[nb.length - 1 - rang] || 0} + 1)`
