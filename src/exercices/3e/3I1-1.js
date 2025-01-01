@@ -2,7 +2,7 @@ import { point } from '../../lib/2d/points'
 import { repere } from '../../lib/2d/reperes'
 import { traceGraphiqueCartesien } from '../../lib/2d/diagrammes'
 import { segment } from '../../lib/2d/segmentsVecteurs'
-import { texteParPosition } from '../../lib/2d/textes.ts'
+import { texteParPosition } from '../../lib/2d/textes'
 import { combinaisonListesSansChangerOrdre } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { lampeMessage } from '../../lib/format/message'
@@ -163,7 +163,7 @@ export default class ConjectureDeSyracuse extends Exercice {
       })
 
       // Le graphique cartésien
-      const g = traceGraphiqueCartesien(coordSyracuse, r2)
+      const g = traceGraphiqueCartesien(coordSyracuse, r2,{})
 
       // On pousse tout ça dans les objets, le repère aussi coño !!!
       objetsCorrection.push(r2, g)

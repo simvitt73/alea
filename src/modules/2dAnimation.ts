@@ -5,13 +5,18 @@
  * @author Rémi Angot
  */
 
-import { affiniteOrtho, homothetie, rotation, symetrieAxiale, translation } from '../lib/2d/transformations.js'
-import { fixeBordures, ObjetMathalea2D } from './2dGeneralites.js'
+import type { Droite } from '../lib/2d/droites'
+import type { Point } from '../lib/2d/points'
+import type { Polygone } from '../lib/2d/polygones'
+import type { Segment, Vecteur } from '../lib/2d/segmentsVecteurs'
+import { affiniteOrtho, homothetie, rotation, symetrieAxiale, translation } from '../lib/2d/transformations'
+import { fixeBordures, ObjetMathalea2D } from './2dGeneralites'
 
 // JSDOC Validee par EE Juin 2022
-export function montrerParDiv (id) {
-  if (document.getElementById(id)) {
-    document.getElementById(id).style.visibility = 'visible'
+export function montrerParDiv (id:number) {
+  const elt = document.getElementById(String(id))
+  if (elt != null) {
+    elt.style.visibility = 'visible'
   } else {
     console.log(id + ' n\'existe pas et ne peut pas être rendu visible.')
   }
@@ -24,9 +29,10 @@ export function montrerParDiv (id) {
    * @author Rémi Angot
    */
 // JSDOC Validee par EE Juin 2022
-export function cacherParDiv (id) {
-  if (document.getElementById(id)) {
-    document.getElementById(id).style.visibility = 'hidden'
+export function cacherParDiv (id: number) {
+  const elt = document.getElementById(String(id))
+  if (elt != null) {
+    elt.style.visibility = 'hidden'
   } else {
     console.log(id + ' n\'existe pas et ne peut pas être caché.')
   }
@@ -37,20 +43,20 @@ export function cacherParDiv (id) {
    * @param {ObjetMathalea2D} objet Objet MathALEA2d masqué puis affiché
    * @param {number} [t0=1] Temps en secondes avant l'apparition.
    * @param {number} [t=5] Temps à partir duquel l'animation recommence.
-   * @param {string} [r='Infinity'] Nombre de répétitions (infini si ce n'est pas un nombre).
+   * @param {string|number} [r='Infinity'] Nombre de répétitions (infini si ce n'est pas un nombre).
    * @example afficherTempo(ob1)
    * // Affiche ob1 au bout de 1 seconde, pendant 4 secondes puis le masque. Ce cycle est répété indéfiniment.
    * @example afficherTempo(ob1,2,9,10)
    * // Sur un cycle de 9 secondes, affiche ob1 au bout de 2 seconde puis le masque en fin de cycle. Ce cycle est répété 10 fois.
    */
 // JSDOC Validee par EE Juin 2022
-export function afficherTempo (objet, t0 = 1, t = 5, r = 'Infinity') {
+export function afficherTempo (objet: ObjetMathalea2D, t0 = 1, t = 5, r = 'Infinity') {
   let compteur = 1 // Nombre d'animations
   const checkExist = setInterval(function () {
-    if (document.getElementById(objet.id)) {
+    if (document.getElementById(String(objet.id))) {
       clearInterval(checkExist)
       cacherParDiv(objet.id)
-      if (r === 1) { // On le montre au bout de t0 et on ne le cache plus
+      if (Number(r) === 1) { // On le montre au bout de t0 et on ne le cache plus
         setTimeout(function () { montrerParDiv(objet.id) }, t0 * 1000)
       } else {
         const cacheRepete = setInterval(function () { cacherParDiv(objet.id) }, t * 1000) // On cache tous les t s
@@ -77,7 +83,7 @@ export function afficherTempo (objet, t0 = 1, t = 5, r = 'Infinity') {
    * @param {ObjetMathalea2D} objet Objet MathALEA2d affiché puis masqué
    * @param {number} [t0=1] Temps en secondes avant l'apparition
    * @param {number} [t=5] Temps à partir duquel l'animation recommence
-   * @param {string} [r='Infinity'] Nombre de répétitions (infini si ce n'est pas un nombre)
+   * @param {string|number} [r='Infinity'] Nombre de répétitions (infini si ce n'est pas un nombre)
    * @example cacherTempo(figure1)
    * // Affiche figure1 pendant 1 seconde, puis le cache pendant 4 secondes et recommence ce cycle indéfiniment.
    * @example cacherTempo(figure1,2,8,3)
@@ -85,13 +91,13 @@ export function afficherTempo (objet, t0 = 1, t = 5, r = 'Infinity') {
    * @author Eric Elter
    */
 // JSDOC Validee par EE Juin 2022
-export function cacherTempo (objet, t0 = 1, t = 5, r = 'Infinity') {
+export function cacherTempo (objet: ObjetMathalea2D, t0 = 1, t = 5, r = 'Infinity') {
   let compteur = 1 // Nombre d'animations
   const checkExist = setInterval(function () {
-    if (document.getElementById(objet.id)) {
+    if (document.getElementById(String(objet.id))) {
       clearInterval(checkExist)
       montrerParDiv(objet.id)
-      if (r === 1) { // On le cache au bout de t0 et on ne le montre plus
+      if (Number(r) === 1) { // On le cache au bout de t0 et on ne le montre plus
         setTimeout(function () { cacherParDiv(objet.id) }, t0 * 1000)
       } else {
         const montreRepete = setInterval(function () { montrerParDiv(objet.id) }, t * 1000) // On cache tous les t s
@@ -126,7 +132,7 @@ export function cacherTempo (objet, t0 = 1, t = 5, r = 'Infinity') {
    * @author Rémi Angot
    */
 // JSDOC Validee par EE Juin 2022
-export function afficherUnParUn (objets, t = 1, r = 'Infinity', tApresDernier = 5) {
+export function afficherUnParUn (objets: ObjetMathalea2D[], t = 1, r = 'Infinity', tApresDernier = 5) {
   let t0 = t
   const tf = objets.length * t + tApresDernier
   for (const objet of objets) {
@@ -150,30 +156,43 @@ export function afficherUnParUn (objets, t = 1, r = 'Infinity', tApresDernier = 
  * @author Rémi Angot
  */
 // JSDOC Non Validee EE Juin 2022 (non testée)
-function ApparitionAnimee (liste, dur = 2, pourcentage = 0.5, repeat = 'indefinite') {
-  ObjetMathalea2D.call(this, { })
-  this.svg = function (coeff) {
+export class ApparitionAnimee extends ObjetMathalea2D {
+  liste: ObjetMathalea2D | ObjetMathalea2D[]
+  dur: number
+  pourcentage: number
+  repeat: string
+
+  constructor (liste: ObjetMathalea2D | ObjetMathalea2D[], dur = 2, pourcentage = 0.5, repeat = 'indefinite') {
+    super()
+    this.liste = liste
+    this.dur = dur
+    this.pourcentage = pourcentage
+    this.repeat = repeat
+  }
+
+  svg (coeff: number) {
     let code = '<g> '
-    if (Array.isArray(liste)) {
-      for (const objet of liste) {
+    if (Array.isArray(this.liste)) {
+      for (const objet of this.liste) {
         code += '\n' + objet.svg(coeff)
       }
     } else {
       // si ce n'est pas une liste
-      code += '\n' + liste.svg(coeff)
+      code += '\n' + this.liste.svg(coeff)
     }
     code += `<animate attributeType="CSS"
     attributeName="visibility"
     from="hidden"
     to="hidden"
     values="hidden;visible;hidden"
-    keyTimes="0; ${pourcentage}; 1"
-    dur="${dur}"
-    repeatCount="${repeat}"/>`
+    keyTimes="0; ${this.pourcentage}; 1"
+    dur="${this.dur}"
+    repeatCount="${this.repeat}"/>`
     code += '</g>'
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     return ''
   }
 }
@@ -188,7 +207,7 @@ function ApparitionAnimee (liste, dur = 2, pourcentage = 0.5, repeat = 'indefini
  * @author Rémi Angot
  */
 // JSDOC Non Validee EE Juin 2022 (impossible à tester car non utilisée)
-export function apparitionAnimee (liste, dur = 2, pourcentage = 0.5, repeat = 'indefinite') {
+export function apparitionAnimee (liste: ObjetMathalea2D | ObjetMathalea2D[], dur = 2, pourcentage = 0.5, repeat = 'indefinite') {
   return new ApparitionAnimee(liste, dur, pourcentage, repeat)
 }
 /**
@@ -197,39 +216,55 @@ export function apparitionAnimee (liste, dur = 2, pourcentage = 0.5, repeat = 'i
  *
  * @author Rémi Angot
  */
-function TranslationAnimee (liste, v, animation = 'begin="0s" dur="2s" repeatCount="indefinite"') {
-  ObjetMathalea2D.call(this, { })
-  if (!Array.isArray(liste)) liste = [liste]
-  const bordures = fixeBordures([liste, liste.map(el => translation(el, v))])
-  this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
-  this.svg = function (coeff) {
+export class TranslationAnimee extends ObjetMathalea2D {
+  liste: ObjetMathalea2D[] | ObjetMathalea2D
+  v: Vecteur
+  animation: string
+  constructor (
+    liste: ObjetMathalea2D[] | ObjetMathalea2D,
+    v: Vecteur,
+    animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
+  ) {
+    super()
+    this.liste = liste
+    this.v = v
+    this.animation = animation
+    if (!Array.isArray(liste)) liste = [liste]
+    const bordures = fixeBordures(liste.concat(liste.map((el: Segment | Droite | Vecteur | Polygone) => translation(el, v))))
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
+  }
+
+  svg (coeff: number) {
     let code = '<g> '
-    if (Array.isArray(liste)) {
-      for (const objet of liste) {
+    if (Array.isArray(this.liste)) {
+      for (const objet of this.liste) {
         code += '\n' + objet.svg(coeff)
       }
     } else {
       // si ce n'est pas une liste
-      code += '\n' + liste.svg(coeff)
+      code += '\n' + this.liste.svg(coeff)
     }
-    if (Array.isArray(v)) {
+    if (Array.isArray(this.v)) {
       code += '<animateMotion path="M 0 0 l'
-      for (const vecteur of v) {
+      for (const vecteur of this.v) {
         code += ` ${vecteur.xSVG(coeff)} ${vecteur.ySVG(coeff)} `
       }
-      code += `${animation} />`
+      code += `${this.animation} />`
     } else {
-      code += `<animateMotion path="M 0 0 l ${v.xSVG(coeff)} ${v.ySVG(coeff)} " ${animation} />`
+      code += `<animateMotion path="M 0 0 l ${this.v.xSVG(coeff)} ${this.v.ySVG(coeff)} " ${this.animation} />`
     }
     code += '</g>'
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     return ''
   }
 }
-export function translationAnimee (...args) {
-  return new TranslationAnimee(...args)
+export function translationAnimee (liste: ObjetMathalea2D[] | ObjetMathalea2D,
+  v: Vecteur,
+  animation = 'begin="0s" dur="2s" repeatCount="indefinite"') {
+  return new TranslationAnimee(liste, v, animation)
 }
 
 /**
@@ -238,43 +273,52 @@ export function translationAnimee (...args) {
  *
  * @author Rémi Angot
  */
-function RotationAnimee (
-  liste,
-  O,
-  angle,
-  animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
-) {
-  ObjetMathalea2D.call(this, { })
-  if (!Array.isArray(liste)) liste = [liste]
-  const bordures = fixeBordures([liste, liste.map(el => rotation(el, O, angle))])
-  this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
-  this.svg = function (coeff) {
+export class RotationAnimee extends ObjetMathalea2D {
+  liste: ObjetMathalea2D[]
+  O: Point
+  angle: number
+  animation: string
+  constructor (
+    liste:ObjetMathalea2D[],
+    O: Point,
+    angle:number,
+    animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
+  ) {
+    super()
+    this.liste = Array.isArray(liste) ? liste : [liste]
+    this.O = O
+    this.angle = angle
+    this.animation = animation
+    const bordures = fixeBordures([...this.liste, this.liste.map(el => rotation(el, O, angle))])
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
+  }
+
+  svg (coeff:number) {
     let code = '<g> '
-    if (Array.isArray(liste)) {
-      for (const objet of liste) {
-        code += '\n' + objet.svg(coeff)
-      }
-    } else {
-      // si ce n'est pas une liste
-      code += '\n' + liste.svg(coeff)
+    for (const objet of this.liste) {
+      code += '\n' + objet.svg(coeff)
     }
 
     code += `<animateTransform
   attributeName="transform"
   type="rotate"
-  from="0 ${O.xSVG(coeff)} ${O.ySVG(coeff)}"
-  to="${-angle} ${O.xSVG(coeff)} ${O.ySVG(coeff)}"
-  ${animation}
+  from="0 ${this.O.xSVG(coeff)} ${this.O.ySVG(coeff)}"
+  to="${-this.angle} ${this.O.xSVG(coeff)} ${this.O.ySVG(coeff)}"
+  ${this.animation}
   />`
     code += '</g>'
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     return ''
   }
 }
-export function rotationAnimee (...args) {
-  return new RotationAnimee(...args)
+export function rotationAnimee (liste:ObjetMathalea2D[],
+  O: Point,
+  angle:number,
+  animation = 'begin="0s" dur="2s" repeatCount="indefinite"') {
+  return new RotationAnimee(liste, O, angle, animation)
 }
 /**
  * homothetieAnimee(s,O,k) //Animation de la homothetie de centre O et de rapport k pour s
@@ -282,40 +326,54 @@ export function rotationAnimee (...args) {
  *
  * @author Rémi Angot
  */
-function HomothetieAnimee (
-  p,
-  O,
-  k,
-  animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
-) {
-  ObjetMathalea2D.call(this, { })
-  const bordures = k > 1
-    ? fixeBordures([O, homothetie(p, O, k)])
-    : fixeBordures([O, p])
-  this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
-  if (k > 1) {
-    this.bordures = homothetie(p, O, k).bordures
+export class HomothetieAnimee extends ObjetMathalea2D {
+  p: Polygone
+  O: Point
+  k: number
+  animation: string
+  constructor (
+    p:Polygone,
+    O:Point,
+    k:number,
+    animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
+  ) {
+    super()
+    this.p = p
+    this.O = O
+    this.k = k
+    this.animation = animation
+    const bordures = this.k > 1
+      ? fixeBordures([this.O, homothetie(this.p, this.O, this.k)])
+      : fixeBordures([this.O, this.p])
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
+    if (this.k > 1) {
+      this.bordures = homothetie(this.p, this.O, this.k).bordures
+    }
+    this.bordures = homothetie(this.p, this.O, this.k).bordures
   }
-  this.bordures = homothetie(p, O, k).bordures
-  this.svg = function (coeff) {
-    const binomesXY1 = p.binomesXY(coeff)
-    const p2 = homothetie(p, O, k)
-    p2.isVisible = false
+
+  svg (coeff: number) {
+    const binomesXY1 = this.p.binomesXY(coeff)
+    const p2 = homothetie(this.p, this.O, this.k)
     const binomesXY2 = p2.binomesXY(coeff)
-    const code = `<polygon stroke="${p.color[0]}" stroke-width="${p.epaisseur}" fill="${p.couleurDeRemplissage[0]}" >
-  <animate attributeName="points" ${animation}
+    const code = `<polygon stroke="${this.p.color[0]}" stroke-width="${this.p.epaisseur}" fill="${this.p.couleurDeRemplissage[0]}" >
+  <animate attributeName="points" ${this.animation}
   from="${binomesXY1}"
   to="${binomesXY2}"
   />
   </polygon>`
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     return ''
   }
 }
-export function homothetieAnimee (...args) {
-  return new HomothetieAnimee(...args)
+export function homothetieAnimee (p:Polygone,
+  O:Point,
+  k:number,
+  animation = 'begin="0s" dur="2s" repeatCount="indefinite"') {
+  return new HomothetieAnimee(p, O, k, animation)
 }
 
 /**
@@ -324,61 +382,86 @@ export function homothetieAnimee (...args) {
  *
  * @author Rémi Angot
  */
-function SymetrieAnimee (
-  p,
-  d,
-  animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
-) {
-  ObjetMathalea2D.call(this, { })
-  const bordures = fixeBordures([p, symetrieAxiale(p, d)])
-  this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
-  this.svg = function (coeff) {
-    const binomesXY1 = p.binomesXY(coeff)
-    const p2 = symetrieAxiale(p, d)
-    p2.isVisible = false
+export class SymetrieAnimee extends ObjetMathalea2D {
+  p: Polygone
+  d: Droite
+  animation: string
+  constructor (
+    p:Polygone,
+    d: Droite,
+    animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
+  ) {
+    super()
+    this.p = p
+    this.d = d
+    this.animation = animation
+    const bordures = fixeBordures([p, symetrieAxiale(p, d)])
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
+  }
+
+  svg (coeff: number) {
+    const binomesXY1 = this.p.binomesXY(coeff)
+    const p2 = symetrieAxiale(this.p, this.d)
     const binomesXY2 = p2.binomesXY(coeff)
-    const code = `<polygon stroke="${p.color[0]}" stroke-width="${p.epaisseur}" fill="${p.couleurDeRemplissage[0]}" >
-    <animate attributeName="points" ${animation}
+    const code = `<polygon stroke="${this.p.color[0]}" stroke-width="${this.p.epaisseur}" fill="${this.p.couleurDeRemplissage[0]}" >
+    <animate attributeName="points" ${this.animation}
     from="${binomesXY1}"
     to="${binomesXY2}"
     />
     </polygon>`
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     return ''
   }
 }
-export function symetrieAnimee (...args) {
-  return new SymetrieAnimee(...args)
+export function symetrieAnimee (p:Polygone,
+  d: Droite,
+  animation = 'begin="0s" dur="2s" repeatCount="indefinite"') {
+  return new SymetrieAnimee(p, d, animation)
 }
 
-function AffiniteOrthoAnimee (
-  p,
-  d,
-  k,
-  animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
-) {
-  ObjetMathalea2D.call(this, { })
-  const bordures = fixeBordures([p, affiniteOrtho(p, d, k)])
-  this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
-  this.svg = function (coeff) {
-    const binomesXY1 = p.binomesXY(coeff)
-    const p2 = affiniteOrtho(p, d, k)
-    p2.isVisible = false
+export class AffiniteOrthoAnimee extends ObjetMathalea2D {
+  p: Polygone
+  d: Droite
+  k: number
+  animation: string
+  constructor (
+    p: Polygone,
+    d: Droite,
+    k:number,
+    animation = 'begin="0s" dur="2s" repeatCount="indefinite"'
+  ) {
+    super()
+    this.p = p
+    this.d = d
+    this.k = k
+    this.animation = animation
+    const bordures = fixeBordures([p, affiniteOrtho(p, d, k)])
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
+  }
+
+  svg (coeff:number) {
+    const binomesXY1 = this.p.binomesXY(coeff)
+    const p2 = affiniteOrtho(this.p, this.d, this.k)
     const binomesXY2 = p2.binomesXY(coeff)
-    const code = `<polygon stroke="${p.color[0]}" stroke-width="${p.epaisseur}" fill="${p.couleurDeRemplissage[0]}" >
-    <animate attributeName="points" ${animation}
+    const code = `<polygon stroke="${this.p.color[0]}" stroke-width="${this.p.epaisseur}" fill="${this.p.couleurDeRemplissage[0]}" >
+    <animate attributeName="points" ${this.animation}
     from="${binomesXY1}"
     to="${binomesXY2}"
     />
     </polygon>`
     return code
   }
-  this.tikz = function () {
+
+  tikz () {
     return ''
   }
 }
-export function affiniteOrthoAnimee (...args) {
-  return new AffiniteOrthoAnimee(...args)
+export function affiniteOrthoAnimee (p: Polygone,
+  d: Droite,
+  k:number,
+  animation = 'begin="0s" dur="2s" repeatCount="indefinite"') {
+  return new AffiniteOrthoAnimee(p, d, k, animation)
 }

@@ -3,7 +3,7 @@ import { milieu, point, tracePoint } from '../../lib/2d/points'
 import { polygone } from '../../lib/2d/polygones'
 import { grille } from '../../lib/2d/reperes'
 import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
-import { texteParPointEchelle } from '../../lib/2d/textes.ts'
+import { texteParPointEchelle } from '../../lib/2d/textes'
 import { homothetie, rotation, symetrieAxiale, translation } from '../../lib/2d/transformations'
 import { choice, compteOccurences, enleveElement } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
@@ -38,9 +38,6 @@ export const refs = {
   'fr-fr': ['4G12'],
   'fr-ch': ['9ES6-23', '10ES2-5']
 }
-
-const A = point(0, 0)
-let typeDeTransfos
 
 const motifs = [
   polygone([point(1, 1), point(2, 1), point(2, 4), point(6, 4), point(6, 5), point(3, 5), point(3, 6), point(1, 6)]),
@@ -190,9 +187,13 @@ export default class SerieDeTransformations extends Exercice {
     this.sup = 4
     this.sup2 = 6
     this.sup3 = false
+    this.version = 4
+    this.nbQuestions = 1
   }
 
   nouvelleVersion () {
+    const A = point(0, 0)
+    let typeDeTransfos
     if (this.version === 1) { // On bride this.sup à 1 pour les 6èmes
       this.sup = 1
     } else if (this.version === 2) {

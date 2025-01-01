@@ -3,7 +3,7 @@ import { milieu, point, tracePoint } from '../../lib/2d/points'
 import { cone, semiEllipse } from '../../lib/2d/projections3d'
 import { grille, seyes } from '../../lib/2d/reperes'
 import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
-import { labelPoint } from '../../lib/2d/textes.ts'
+import { labelPoint } from '../../lib/2d/textes'
 import { similitude, translation2Points } from '../../lib/2d/transformations'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
@@ -301,20 +301,20 @@ export default class RepresenterUnSolide4e extends Exercice {
         const rayon = segment(centre, milieuBF, 'red')
         rayon.pointilles = 5
         const angleDroit = codageAngleDroit(milieuBF, centre, sommet, 'red')
-        const Rx = longueur(centre, milieuBF)
-        const Ry = longueur(A, E) / 3
+        const rx = longueur(centre, milieuBF)
+        const ry = longueur(A, E) / 3
         objetsEnonce.push(tracePoint(sommet), g, carreaux)
-        objetsCorrection.push(tracePoint(sommet), cone({ centre, Rx, hauteur: 1.5 * Rx }), g, carreaux)
+        objetsCorrection.push(tracePoint(sommet), cone({ centre, rx, hauteur: 1.5 * rx }), g, carreaux)
         switch (choice(['hemisphere nord', 'hemisphere sud'])) {
           case 'hemisphere nord':
-            objetsEnonce.push(semiEllipse({ centre, Rx, Ry, hemisphere: 'nord', pointilles: 5 }))
+            objetsEnonce.push(semiEllipse({ centre, rx, ry, hemisphere: 'nord', pointilles: 5 }))
             break
           case 'hemisphere sud':
-            objetsEnonce.push(semiEllipse({ centre, Rx, Ry, hemisphere: 'sud' }))
+            objetsEnonce.push(semiEllipse({ centre, rx, ry, hemisphere: 'sud' }))
             break
         }
 
-        objetsCorrection.push(tracePoint(sommet), hauteur, rayon, angleDroit, cone({ centre, Rx, hauteur: 1.5 * Rx }),
+        objetsCorrection.push(tracePoint(sommet), hauteur, rayon, angleDroit, cone({ centre, rx, hauteur: 1.5 * rx }),
           g,
           carreaux
         )

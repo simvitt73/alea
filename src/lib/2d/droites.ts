@@ -1,14 +1,14 @@
-import { colorToLatexOrHTML, ObjetMathalea2D, vide2d } from '../../modules/2dGeneralites.js'
-import { context } from '../../modules/context.js'
-import { egal } from '../../modules/outils.js'
+import { colorToLatexOrHTML, ObjetMathalea2D, vide2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
+import { egal } from '../../modules/outils'
 import { arrondi } from '../outils/nombres'
-import { angleOriente } from './angles.js'
-import { traceCompas } from './cercle.js'
-import { codageBissectrice, codageMediatrice, codageSegments } from './codages.js'
-import { milieu, point, pointSurDroite, pointSurSegment } from './points.js'
-import { demiDroite, longueur, norme, segment, vecteur } from './segmentsVecteurs.js'
-import { latexParCoordonnees, texteParPosition } from './textes.ts'
-import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } from './transformations.js'
+import { angleOriente } from './angles'
+import { traceCompas } from './cercle'
+import { codageBissectrice, codageMediatrice, codageSegments } from './codages'
+import { milieu, Point, point, pointSurDroite, pointSurSegment } from './points'
+import { DemiDroite, demiDroite, longueur, norme, segment, Vecteur, vecteur } from './segmentsVecteurs'
+import { latex2d, TexteParPoint, texteParPosition } from './textes'
+import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } from './transformations'
 
 /**
  * Afin de régler le problème des noms de droites en latex qui ne peuvent se fondre dans le svg, cette fonction retourne un Array de deux objets :
@@ -19,9 +19,11 @@ import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } fr
  * @param {string} color
  * @returns {[Droite, LatexParCoordonnees|Vide2d]}
  */
-export function droiteAvecNomLatex (d, nom, color = 'black') { // nom est un latexParCoordonnees
+export function droiteAvecNomLatex (d: Droite, nom: string, color = 'black') { // nom est un latexParCoordonnees
   d.color = colorToLatexOrHTML(color ?? 'black')
   let absNom, ordNom
+  d.epaisseur = 1
+  d.opacite = 1
   if (egal(d.b, 0, 0.05)) { // ax+c=0 x=-c/a est l'équation de la droite
     absNom = -d.c / d.a + 0.8 // l'abscisse du label est décalé de 0.8
     ordNom = context.fenetreMathalea2d[1] + 1 // l'ordonnée du label est ymin +1
@@ -51,13 +53,13 @@ export function droiteAvecNomLatex (d, nom, color = 'black') { // nom est un lat
             ordNom = context.fenetreMathalea2d[3] + d.pente
           } else {
             absNom = (context.fenetreMathalea2d[0] + context.fenetreMathalea2d[2]) / 2
-            ordNom = pointSurDroite(d, absNom).y
+            ordNom = pointSurDroite(d, absNom, '').y
           }
         }
       }
     }
   }
-  const leNom = latexParCoordonnees(nom, absNom, ordNom, d.color, 0, 0, '', 8, d.angleAvecHorizontale)
+  const leNom = latex2d(nom, absNom, ordNom, { color, orientation: d.angleAvecHorizontale })
   return [d, leNom]
 }
 
@@ -90,82 +92,147 @@ export function droiteAvecNomLatex (d, nom, color = 'black') { // nom est un lat
  * @class
  */
 // JSDOC Validee par EE Aout 2022
-export function Droite (arg1, arg2, arg3, arg4, arg5) {
-  let a, b, c
+export class Droite extends ObjetMathalea2D {
+  x1: number
+  x2: number
+  y1: number
+  y2: number
+  a: number
+  b: number
+  c: number
+  pente: number
+  angleAvecHorizontale: number
+  nom: string
+  normal: Vecteur
+  directeur: Vecteur
+  stringColor: string
+  leNom?: TexteParPoint
+  constructor (arg1: number | Point, arg2: number | Point, arg3?: number | string, arg4?: number | string, arg5?: string) {
+    super()
+    let a, b, c
+    this.stringColor = 'black'
 
-  ObjetMathalea2D.call(this, {})
-  if (arguments.length === 2) {
-    if (isNaN(arg1.x) || isNaN(arg1.y) || isNaN(arg2.x) || isNaN(arg2.y)) {
-      window.notify('Droite : (attendus : A et B) les arguments de sont pas des points valides', {
-        arg1,
-        arg2
-      })
-    }
-    this.nom = ''
-    this.pointilles = 0
-    this.opacite = 1
-    this.epaisseur = 1
-    this.x1 = arg1.x
-    this.y1 = arg1.y
-    this.x2 = arg2.x
-    this.y2 = arg2.y
-    this.a = this.y1 - this.y2
-    this.b = this.x2 - this.x1
-    this.c = (this.x1 - this.x2) * this.y1 + (this.y2 - this.y1) * this.x1
-    this.pente = NaN
-  } else if (arguments.length === 3) {
-    if (typeof arg1 === 'number') {
-      if (isNaN(arg1) || isNaN(arg2) || isNaN(arg3)) {
-        window.notify('Droite : (attendus : a, b et c) les arguments de sont pas des nombres valides', {
-          arg1,
-          arg2,
-          arg3
-        })
-      }
-
-      // droite d'équation ax +by +c =0
-      this.nom = ''
-      this.a = Number(arg1)
-      this.b = Number(arg2)
-      this.c = Number(arg3)
-      a = Number(arg1)
-      b = Number(arg2)
-      c = Number(arg3)
-      if (egal(a, 0)) {
-        this.x1 = 0
-        this.x2 = 1
-        this.y1 = -c / b
-        this.y2 = -c / b
-      } else if (egal(b, 0)) {
-        this.y1 = 0
-        this.y2 = 1
-        this.x1 = -c / a
-        this.x2 = -c / a
-      } else {
-        this.x1 = 0
-        this.y1 = -c / b
-        this.x2 = 1
-        this.y2 = (-c - a) / b
-      }
-    } else {
-      if (isNaN(arg1.x) || isNaN(arg1.y) || isNaN(arg2.x) || isNaN(arg2.y)) {
-        window.notify('Droite : (attendus : A, B et "nom") les arguments de sont pas des points valides', {
+    if (arguments.length === 2) {
+      if (Number.isNaN((arg1 as Point).x) || Number.isNaN((arg1 as Point).y) || Number.isNaN((arg2 as Point).x) || Number.isNaN((arg2 as Point).y)) {
+        window.notify('Droite : (attendus : A et B) les arguments de sont pas des points valides', {
           arg1,
           arg2
         })
       }
-      this.x1 = arg1.x
-      this.y1 = arg1.y
-      this.x2 = arg2.x
-      this.y2 = arg2.y
+      this.nom = ''
+      this.pointilles = 0
+      this.opacite = 1
+      this.epaisseur = 1
+      this.x1 = (arg1 as Point).x
+      this.y1 = (arg1 as Point).y
+      this.x2 = (arg2 as Point).x
+      this.y2 = (arg2 as Point).y
       this.a = this.y1 - this.y2
       this.b = this.x2 - this.x1
       this.c = (this.x1 - this.x2) * this.y1 + (this.y2 - this.y1) * this.x1
-      this.nom = arg3
-    }
-  } else if (arguments.length === 4) {
-    if (typeof arg1 === 'number') {
-      if (isNaN(arg1) || isNaN(arg2) || isNaN(arg3)) {
+      this.pente = NaN
+    } else if (arguments.length === 3) {
+      if (typeof arg1 === 'number') {
+        if (isNaN(arg1) || Number.isNaN(arg2) || Number.isNaN(arg3)) {
+          window.notify('Droite : (attendus : a, b et c) les arguments de sont pas des nombres valides', {
+            arg1,
+            arg2,
+            arg3
+          })
+        }
+
+        // droite d'équation ax +by +c =0
+        this.nom = ''
+        this.a = Number(arg1)
+        this.b = Number(arg2)
+        this.c = Number(arg3)
+        a = Number(arg1)
+        b = Number(arg2)
+        c = Number(arg3)
+        if (egal(a, 0)) {
+          this.x1 = 0
+          this.x2 = 1
+          this.y1 = -c / b
+          this.y2 = -c / b
+        } else if (egal(b, 0)) {
+          this.y1 = 0
+          this.y2 = 1
+          this.x1 = -c / a
+          this.x2 = -c / a
+        } else {
+          this.x1 = 0
+          this.y1 = -c / b
+          this.x2 = 1
+          this.y2 = (-c - a) / b
+        }
+      } else {
+        if (isNaN(arg1.x) || isNaN(arg1.y) || isNaN((arg2 as Point).x) || isNaN((arg2 as Point).y)) {
+          window.notify('Droite : (attendus : A, B et "nom") les arguments de sont pas des points valides', {
+            arg1,
+            arg2
+          })
+        }
+        this.x1 = arg1.x
+        this.y1 = arg1.y
+        this.x2 = (arg2 as Point).x
+        this.y2 = (arg2 as Point).y
+        this.a = this.y1 - this.y2
+        this.b = this.x2 - this.x1
+        this.c = (this.x1 - this.x2) * this.y1 + (this.y2 - this.y1) * this.x1
+        this.nom = String(arg3)
+      }
+    } else if (arguments.length === 4) {
+      if (typeof arg1 === 'number') {
+        if (isNaN(arg1) || Number.isNaN(arg2) || Number.isNaN(arg3)) {
+          window.notify('Droite : (attendus : a, b, c et "nom") les arguments de sont pas des nombres valides', {
+            arg1,
+            arg2,
+            arg3
+          })
+        }
+        this.a = Number(arg1)
+        this.b = Number(arg2)
+        this.c = Number(arg3)
+        a = Number(arg1)
+        b = Number(arg2)
+        c = Number(arg3)
+        this.nom = String(arg4)
+        if (egal(a, 0)) {
+          this.x1 = 0
+          this.x2 = 1
+          this.y1 = -c / b
+          this.y2 = -c / b
+        } else if (egal(b, 0)) {
+          this.y1 = 0
+          this.y2 = 1
+          this.x1 = -c / a
+          this.x2 = -c / a
+        } else {
+          this.x1 = 0
+          this.y1 = -c / b
+          this.x2 = 1
+          this.y2 = (-c - a) / b
+        }
+      } else {
+        if (isNaN(arg1.x) || isNaN(arg1.y) || isNaN((arg2 as Point).x) || isNaN((arg2 as Point).y)) {
+          window.notify('Droite : (attendus : A, B, "nom" et "couleur") les arguments de sont pas des points valides', {
+            arg1,
+            arg2
+          })
+        }
+        this.x1 = arg1.x
+        this.y1 = arg1.y
+        this.x2 = (arg2 as Point).x
+        this.y2 = (arg2 as Point).y
+        this.a = this.y1 - this.y2
+        this.b = this.x2 - this.x1
+        this.c = (this.x1 - this.x2) * this.y1 + (this.y2 - this.y1) * this.x1
+        this.nom = String(arg3)
+        this.color = colorToLatexOrHTML(String(arg4))
+        this.stringColor = String(arg4)
+      }
+    } else { // arguments.length === 5
+      if (Number.isNaN(arg1) || Number.isNaN(arg2) || Number.isNaN(arg3)) {
         window.notify('Droite : (attendus : a, b, c et "nom") les arguments de sont pas des nombres valides', {
           arg1,
           arg2,
@@ -178,7 +245,9 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
       a = Number(arg1)
       b = Number(arg2)
       c = Number(arg3)
-      this.nom = arg4
+      this.nom = String(arg4)
+      this.color = colorToLatexOrHTML(String(arg5))
+      this.stringColor = String(arg5)
       if (egal(a, 0)) {
         this.x1 = 0
         this.x2 = 1
@@ -195,133 +264,87 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
         this.x2 = 1
         this.y2 = (-c - a) / b
       }
-    } else {
-      if (isNaN(arg1.x) || isNaN(arg1.y) || isNaN(arg2.x) || isNaN(arg2.y)) {
-        window.notify('Droite : (attendus : A, B, "nom" et "couleur") les arguments de sont pas des points valides', {
-          arg1,
-          arg2
-        })
-      }
-      this.x1 = arg1.x
-      this.y1 = arg1.y
-      this.x2 = arg2.x
-      this.y2 = arg2.y
-      this.a = this.y1 - this.y2
-      this.b = this.x2 - this.x1
-      this.c = (this.x1 - this.x2) * this.y1 + (this.y2 - this.y1) * this.x1
-      this.nom = arg3
-      this.color = colorToLatexOrHTML(arg4)
     }
-  } else { // arguments.length === 5
-    if (isNaN(arg1) || isNaN(arg2) || isNaN(arg3)) {
-      window.notify('Droite : (attendus : a, b, c et "nom") les arguments de sont pas des nombres valides', {
-        arg1,
-        arg2,
-        arg3
-      })
+    if (this.b !== 0) this.pente = -this.a / this.b
+    else this.pente = NaN
+    let xsav, ysav
+    if (this.x1 > this.x2) {
+      xsav = this.x1
+      ysav = this.y1
+      this.x1 = this.x2 + 0
+      this.y1 = this.y2 + 0
+      this.x2 = xsav
+      this.y2 = ysav
     }
-    this.a = Number(arg1)
-    this.b = Number(arg2)
-    this.c = Number(arg3)
-    a = Number(arg1)
-    b = Number(arg2)
-    c = Number(arg3)
-    this.nom = arg4
-    this.color = colorToLatexOrHTML(arg5)
-    if (egal(a, 0)) {
-      this.x1 = 0
-      this.x2 = 1
-      this.y1 = -c / b
-      this.y2 = -c / b
-    } else if (egal(b, 0)) {
-      this.y1 = 0
-      this.y2 = 1
-      this.x1 = -c / a
-      this.x2 = -c / a
-    } else {
-      this.x1 = 0
-      this.y1 = -c / b
-      this.x2 = 1
-      this.y2 = (-c - a) / b
-    }
-  }
-  if (this.b !== 0) this.pente = -this.a / this.b
-  else this.pente = NaN
-  let xsav, ysav
-  if (this.x1 > this.x2) {
-    xsav = this.x1
-    ysav = this.y1
-    this.x1 = this.x2 + 0
-    this.y1 = this.y2 + 0
-    this.x2 = xsav
-    this.y2 = ysav
-  }
-  // Limiter la taille des coordonnées à 2 décimales amplement suffisantes
-  this.x1 = arrondi(this.x1, 2)
-  this.y1 = arrondi(this.y1, 2)
-  this.x2 = arrondi(this.x2, 2)
-  this.y2 = arrondi(this.y2, 2)
+    // Limiter la taille des coordonnées à 2 décimales amplement suffisantes
+    this.x1 = arrondi(this.x1, 2)
+    this.y1 = arrondi(this.y1, 2)
+    this.x2 = arrondi(this.x2, 2)
+    this.y2 = arrondi(this.y2, 2)
 
-  this.normal = vecteur(this.a, this.b)
-  this.directeur = vecteur(this.b, -this.a)
-  this.angleAvecHorizontale = angleOriente(
-    point(1, 0),
-    point(0, 0),
-    point(this.directeur.x, this.directeur.y)
-  )
-  this.bordures = [Math.min(this.x1, this.x2), Math.min(this.y1, this.y2), Math.max(this.x1, this.x2), Math.max(this.y1, this.y2)]
-  let absNom, ordNom, leNom
-  if (this.nom !== '') {
-    if (egal(this.b, 0, 0.05)) { // ax+c=0 x=-c/a est l'équation de la droite
-      absNom = -this.c / this.a + 0.8 // l'abscisse du label est décalé de 0.8
-      ordNom = context.fenetreMathalea2d[1] + 1 // l'ordonnée du label est ymin +1
-    } else if (egal(this.a, 0, 0.05)) { // by+c=0 y=-c/b est l'équation de la droite
-      absNom = context.fenetreMathalea2d[0] + 0.8 // l'abscisse du label est xmin +1
-      ordNom = -this.c / this.b + 0.8 // l'ordonnée du label est décalée de 0.8
-    } else { // a et b sont différents de 0 ax+by+c=0 est l'équation
+    this.normal = vecteur(this.a, this.b)
+    this.directeur = vecteur(this.b, -this.a)
+    this.angleAvecHorizontale = angleOriente(
+      point(1, 0),
+      point(0, 0),
+      point(this.directeur.x, this.directeur.y)
+    )
+    this.bordures = [Math.min(this.x1, this.x2), Math.min(this.y1, this.y2), Math.max(this.x1, this.x2), Math.max(this.y1, this.y2)]
+    let absNom: number
+    let ordNom:number
+    if (this.nom !== '') {
+      if (egal(this.b, 0, 0.05)) { // ax+c=0 x=-c/a est l'équation de la droite
+        absNom = -this.c / this.a + 0.8 // l'abscisse du label est décalé de 0.8
+        ordNom = context.fenetreMathalea2d[1] + 1 // l'ordonnée du label est ymin +1
+      } else if (egal(this.a, 0, 0.05)) { // by+c=0 y=-c/b est l'équation de la droite
+        absNom = context.fenetreMathalea2d[0] + 0.8 // l'abscisse du label est xmin +1
+        ordNom = -this.c / this.b + 0.8 // l'ordonnée du label est décalée de 0.8
+      } else { // a et b sont différents de 0 ax+by+c=0 est l'équation
       // y=(-a.x-c)/b est l'aquation cartésienne et x=(-by-c)/a
-      const y0 = (-this.a * (context.fenetreMathalea2d[0] + 1) - this.c) / this.b
-      const y1 = (-this.a * (context.fenetreMathalea2d[2] - 1) - this.c) / this.b
-      const x0 = (-this.b * (context.fenetreMathalea2d[1] + 1) - this.c) / this.a
-      const x1 = (-this.b * (context.fenetreMathalea2d[3] - 1) - this.c) / this.a
-      if (y0 > context.fenetreMathalea2d[1] && y0 < context.fenetreMathalea2d[3]) {
-        absNom = context.fenetreMathalea2d[0] + 1
-        ordNom = y0 + this.pente
-      } else {
-        if (y1 > context.fenetreMathalea2d[1] && y1 < context.fenetreMathalea2d[3]) {
-          absNom = context.fenetreMathalea2d[2] - 1
-          ordNom = y1 - this.pente
+        const y0 = (-this.a * (context.fenetreMathalea2d[0] + 1) - this.c) / this.b
+        const y1 = (-this.a * (context.fenetreMathalea2d[2] - 1) - this.c) / this.b
+        const x0 = (-this.b * (context.fenetreMathalea2d[1] + 1) - this.c) / this.a
+        const x1 = (-this.b * (context.fenetreMathalea2d[3] - 1) - this.c) / this.a
+        if (y0 > context.fenetreMathalea2d[1] && y0 < context.fenetreMathalea2d[3]) {
+          absNom = context.fenetreMathalea2d[0] + 1
+          ordNom = y0 + this.pente
         } else {
-          if (x0 > context.fenetreMathalea2d[0] && x0 < context.fenetreMathalea2d[2]) {
-            absNom = x0
-            ordNom = context.fenetreMathalea2d[1] + Math.abs(this.pente)
+          if (y1 > context.fenetreMathalea2d[1] && y1 < context.fenetreMathalea2d[3]) {
+            absNom = context.fenetreMathalea2d[2] - 1
+            ordNom = y1 - this.pente
           } else {
-            if (x1 > context.fenetreMathalea2d[0] && x1 < context.fenetreMathalea2d[2]) {
-              absNom = x1
-              ordNom = context.fenetreMathalea2d[3] + this.pente
+            if (x0 > context.fenetreMathalea2d[0] && x0 < context.fenetreMathalea2d[2]) {
+              absNom = x0
+              ordNom = context.fenetreMathalea2d[1] + Math.abs(this.pente)
             } else {
-              absNom = (context.fenetreMathalea2d[0] + context.fenetreMathalea2d[2]) / 2
-              ordNom = pointSurDroite(this, absNom).y
+              if (x1 > context.fenetreMathalea2d[0] && x1 < context.fenetreMathalea2d[2]) {
+                absNom = x1
+                ordNom = context.fenetreMathalea2d[3] + this.pente
+              } else {
+                absNom = (context.fenetreMathalea2d[0] + context.fenetreMathalea2d[2]) / 2
+                ordNom = pointSurDroite(this, absNom, '').y
+              }
             }
           }
         }
       }
+      // if (this.nom.includes('$')) {
+      //   this.leNom = latex2d(this.nom.replaceAll('$', ''), absNom, ordNom, { color: this.stringColor })
+      // } else {
+      this.leNom = texteParPosition(this.nom, absNom, ordNom, 0, this.stringColor, 1, 'milieu', true) as TexteParPoint
+    //  }
     }
-    if (this.nom.includes('$')) {
-      leNom = latexParCoordonnees(this.nom, absNom, ordNom, this.color, 0, 0, '', 8)
-    } else {
-      leNom = texteParPosition(this.nom, absNom, ordNom, 0, this.color, 1, 'milieu', true)
+
+    if (this.nom.includes('$')) { // On a du Latex, donc on ne peut pas utiliser droite() tel quel.
+      window.notify('Droite() appelé avec un nom contenant du Latex... utiliser droiteAvecNom() à la place !\nOn va retourner un array contenant la droite et un latexParCoordonnees dans un proche avenir !\nIl faut donc adapter l\'exo qui a provoqué ça.\n Pour l\'instant on retourne une droite sans nom.', { nom: this.nom })
+      // On retourne une droite sans nom accompagnée de son nom Latex
+      // return droiteAvecNomLAtex(new Droite(point(this.x1, this.y1), point(this.x2, this.y2)), leNom)
+      // @fixme la ligne suivante sera à retirer lorsque les exos concernés auront été repérés. Et la précédente à utiliser.
+      return new Droite(point(this.x1, this.y1), point(this.x2, this.y2)) // On retourne une droite sans nom en attendant que quelqu'un adapte l'exo et utilise droiteAvecNom() à la place de droite.
     }
   }
 
-  if (this.nom.includes('$')) { // On a du Latex, donc on ne peut pas utiliser droite() tel quel.
-    window.notify('Droite() appelé avec un nom contenant du Latex... utiliser droiteAvecNom() à la place !\nOn va retourner un array contenant la droite et un latexParCoordonnees dans un proche avenir !\nIl faut donc adapter l\'exo qui a provoqué ça.\n Pour l\'instant on retourne une droite sans nom.', { nom: this.nom })
-    // On retourne une droite sans nom accompagnée de son nom Latex
-    // return droiteAvecNomLAtex(new Droite(point(this.x1, this.y1), point(this.x2, this.y2)), leNom)
-    // @fixme la ligne suivante sera à retirer lorsque les exos concernés auront été repérés. Et la précédente à utiliser.
-    return new Droite(point(this.x1, this.y1), point(this.x2, this.y2)) // On retourne une droite sans nom en attendant que quelqu'un adapte l'exo et utilise droiteAvecNom() à la place de droite.
-  }
-  this.svg = function (coeff) {
+  svg (coeff: number) {
     if (this.epaisseur !== 1) {
       this.style += ` stroke-width="${this.epaisseur}" `
     }
@@ -356,10 +379,13 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
     } else {
       return `<line x1="${A1.xSVG(coeff)}" y1="${A1.ySVG(coeff)}" x2="${B1.xSVG(
           coeff
-      )}" y2="${B1.ySVG(coeff)}" stroke="${this.color[0]}" ${this.style} id ="${this.id}" />` + leNom.svg(coeff)
+      )}" y2="${B1.ySVG(coeff)}" stroke="${this.color[0]}" ${this.style} id ="${this.id}" />` + (this.leNom != null
+        ? this.leNom?.svg(coeff) ?? ''
+        : '')
     }
   }
-  this.tikz = function () {
+
+  tikz () {
     const tableauOptions = []
     if (this.color[1].length > 1 && this.color[1] !== 'black') {
       tableauOptions.push(`color=${this.color[1]}`)
@@ -389,7 +415,7 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
       tableauOptions.push(`opacity = ${this.opacite}`)
     }
 
-    let optionsDraw = []
+    let optionsDraw = ''
     if (tableauOptions.length > 0) {
       optionsDraw = '[' + tableauOptions.join(',') + ']'
     }
@@ -399,27 +425,27 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
     const B1 = pointSurSegment(B, A, -50)
 
     if (this.nom !== '') {
-      return `\\draw${optionsDraw} (${A1.x},${A1.y})--(${B1.x},${B1.y});` + leNom.tikz()
+      return `\\draw${optionsDraw} (${A1.x},${A1.y})--(${B1.x},${B1.y});` + (this.leNom != null ? this.leNom?.tikz() ?? '' : '')
     } else {
       return `\\draw${optionsDraw} (${A1.x},${A1.y})--(${B1.x},${B1.y});`
     }
   }
-  this.svgml = function (coeff, amp) {
+
+  svgml (coeff: number, amp: number) {
     const A = point(this.x1, this.y1)
     const B = point(this.x2, this.y2)
     const A1 = pointSurSegment(A, B, -50)
     const B1 = pointSurSegment(B, A, -50)
     const s = segment(A1, B1, this.color[0])
-    s.isVisible = this.isVisible
     return s.svgml(coeff, amp)
   }
-  this.tikzml = function (amp) {
+
+  tikzml (amp: number) {
     const A = point(this.x1, this.y1)
     const B = point(this.x2, this.y2)
     const A1 = pointSurSegment(A, B, -50)
     const B1 = pointSurSegment(B, A, -50)
     const s = segment(A1, B1, this.color[1])
-    s.isVisible = this.isVisible
     return s.tikzml(amp)
   }
 }
@@ -438,8 +464,11 @@ export function Droite (arg1, arg2, arg3, arg4, arg5) {
  * @author Jean-Claude Lhote
  * @return {Droite}
  */
-export function droite (...args) {
-  return new Droite(...args)
+export function droite (arg1: number | Point, arg2: number | Point, arg3?: number | string, arg4?: number | string, arg5?: string) {
+  if (arguments.length === 2) return new Droite(arg1, arg2)
+  if (arguments.length === 3) return new Droite(arg1, arg2, arg3)
+  if (arguments.length === 4) return new Droite(arg1, arg2, arg3, arg4)
+  return new Droite(arg1, arg2, arg3, arg4, arg5)
 }
 
 /**  Donne la position du point A par rapport à la droite d
@@ -452,7 +481,7 @@ export function droite (...args) {
  */
 // JSDOC Validee par EE Aout 2022
 
-export function dessousDessus (d, A, tolerance = 0.0001) {
+export function dessousDessus (d: Droite, A: Point, tolerance = 0.0001) {
   if (egal(d.a * A.x + d.b * A.y + d.c, 0, tolerance)) return 'sur'
   if (egal(d.b, 0)) {
     if (A.x < -d.c / d.a) return 'gauche'
@@ -473,14 +502,14 @@ export function dessousDessus (d, A, tolerance = 0.0001) {
  * @param {number} param1.ymax
  * @return {Point} le point qui servira à placer le label.
  */
-export function positionLabelDroite (d, { xmin = 0, ymin = 0, xmax = 10, ymax = 10 }) {
+export function positionLabelDroite (d: Droite, { xmin = 0, ymin = 0, xmax = 10, ymax = 10 }) {
   let xLab, yLab
   let fXmax, fYmax, fXmin, fYmin
   if (d.b === 0) { // Si la droite est verticale son équation est x = -d.c/d.a on choisit un label au Nord.
     xLab = -d.b / d.c - 0.5
     yLab = ymax - 0.5
   } else { // la droite n'étant pas verticale, on peut chercher ses intersections avec les différents bords.
-    const f = x => (-d.c - d.a * x) / d.b
+    const f = (x: number) => (-d.c - d.a * x) / d.b
     fXmax = f(xmax)
     if (fXmax <= ymax && fXmax >= ymin) { // la droite coupe le bord Est entre ymin+1 et ymax-1
       xLab = xmax - 0.8
@@ -491,7 +520,7 @@ export function positionLabelDroite (d, { xmin = 0, ymin = 0, xmax = 10, ymax = 
         xLab = xmin + 0.8
         yLab = f(xLab)
       } else { // la droite ne coupe ni la bordue Est ni la bordure Ouest elle coupe donc les bordures Nord et Sud
-        const g = y => (-d.c - d.b * y) / d.a
+        const g = (y: number) => (-d.c - d.b * y) / d.a
         fYmax = g(ymax)
         if (fYmax <= xmax && fYmax >= xmin) {
           yLab = ymax - 0.8
@@ -508,7 +537,7 @@ export function positionLabelDroite (d, { xmin = 0, ymin = 0, xmax = 10, ymax = 
       }
     }
   }
-  const position = translation(point(xLab, yLab), homothetie(vecteur(d.a, d.b), point(0, 0), 0.5 / norme(vecteur(d.a, d.b))))
+  const position = translation(point(xLab, yLab), homothetie(vecteur(d.a, d.b), point(0, 0), 0.5 / norme(vecteur(d.a, d.b))) as Vecteur)
   return position
 }
 
@@ -523,7 +552,7 @@ export function positionLabelDroite (d, { xmin = 0, ymin = 0, xmax = 10, ymax = 
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtVecteur (A, v, nom = '', color = 'black') {
+export function droiteParPointEtVecteur (A: Point, v: Vecteur, nom = '', color = 'black') {
   const B = point(A.x + v.x, A.y + v.y)
   return new Droite(A, B, nom, color)
 }
@@ -539,7 +568,7 @@ export function droiteParPointEtVecteur (A, v, nom = '', color = 'black') {
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtParallele (A, d, nom = '', color = 'black') {
+export function droiteParPointEtParallele (A: Point, d: Droite, nom = '', color = 'black') {
   return droiteParPointEtVecteur(A, d.directeur, nom, color)
 }
 
@@ -554,7 +583,7 @@ export function droiteParPointEtParallele (A, d, nom = '', color = 'black') {
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtPerpendiculaire (A, d, nom = '', color = 'black') {
+export function droiteParPointEtPerpendiculaire (A: Point, d: Droite, nom = '', color = 'black') {
   return droiteParPointEtVecteur(A, d.normal, nom, color)
 }
 
@@ -568,7 +597,7 @@ export function droiteParPointEtPerpendiculaire (A, d, nom = '', color = 'black'
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteHorizontaleParPoint (A, nom = '', color = 'black') {
+export function droiteHorizontaleParPoint (A: Point, nom = '', color = 'black') {
   return droiteParPointEtPente(A, 0, nom, color)
 }
 
@@ -582,7 +611,7 @@ export function droiteHorizontaleParPoint (A, nom = '', color = 'black') {
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteVerticaleParPoint (A, nom = '', color = 'black') {
+export function droiteVerticaleParPoint (A: Point, nom = '', color = 'black') {
   return droiteParPointEtVecteur(A, vecteur(0, 1), nom, color)
 }
 
@@ -597,7 +626,7 @@ export function droiteVerticaleParPoint (A, nom = '', color = 'black') {
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtPente (A, k, nom = '', color = 'black') {
+export function droiteParPointEtPente (A:Point, k: number, nom = '', color = 'black') {
   const B = point(A.x + 1, A.y + k)
   return new Droite(A, B, nom, color)
 }
@@ -631,61 +660,67 @@ export function droiteParPointEtPente (A, k, nom = '', color = 'black') {
  * @class
  */
 // JSDOC Validee par EE Juin 2022
-export function Mediatrice (
-  A,
-  B,
-  nom = '',
-  couleurMediatrice = 'red',
-  color = 'blue',
-  couleurConstruction = 'black',
-  construction = false,
-  detail = false,
-  markmilieu = '×',
-  markrayons = '||',
-  epaisseurMediatrice = 1,
-  opaciteMediatrice = 1,
-  pointillesMediatrice = 0
-) {
-  if (longueur(A, B) < 0.1) {
-    window.notify('ConstructionMediatrice : Points trop rapprochés pour créer cet objet', {
-      A,
-      B
-    })
-  }
-  ObjetMathalea2D.call(this, {})
-  this.color = color
-  this.couleurMediatrice = couleurMediatrice
-  this.epaisseurMediatrice = epaisseurMediatrice
-  this.opaciteMediatrice = opaciteMediatrice
-  this.pointillesMediatrice = pointillesMediatrice
-  this.couleurConstruction = couleurConstruction
-  this.epaisseur = 1
-  const O = milieu(A, B)
-  const m = rotation(A, O, 90)
-  const n = rotation(A, O, -90)
-  const M = pointSurSegment(O, m, longueur(A, B) * 0.785)
-  const N = pointSurSegment(O, n, longueur(A, B) * 0.785)
-  const d = droite(M, N, nom, this.couleurMediatrice)
-  if (arguments.length < 5) {
-    return d
-  } else {
-    d.isVisible = false
+export class Mediatrice extends Droite {
+  couleurMediatrice?: string
+  epaisseurMediatrice?: number
+  opaciteMediatrice?: number
+  pointillesMediatrice?: number
+  couleurConstruction?: string
+
+  constructor (
+    A: Point,
+    B: Point,
+    nom = '',
+    couleurMediatrice = 'red',
+    color = 'blue',
+    couleurConstruction = 'black',
+    construction = false,
+    detail = false,
+    markmilieu = '×',
+    markrayons = '||',
+    epaisseurMediatrice = 1,
+    opaciteMediatrice = 1,
+    pointillesMediatrice = 0
+  ) {
+    const O = milieu(A, B)
+    const m = rotation(A, O, 90)
+    const n = rotation(A, O, -90)
+    const M = pointSurSegment(O, m, longueur(A, B) * 0.785)
+    const N = pointSurSegment(O, n, longueur(A, B) * 0.785)
+    super(M, N, nom, couleurMediatrice)
+    if (arguments.length < 5) { // Si on n'a que 2 arguments, on retourne juste une Droite
+      this.color = colorToLatexOrHTML(couleurMediatrice)
+      this.pointilles = pointillesMediatrice
+      this.opacite = opaciteMediatrice
+      this.epaisseur = epaisseurMediatrice
+      return
+    }
+    if (longueur(A, B) < 0.1) {
+      window.notify('ConstructionMediatrice : Points trop rapprochés pour créer cet objet', {
+        A,
+        B
+      })
+    }
+    this.color = colorToLatexOrHTML(color)
+    this.couleurMediatrice = couleurMediatrice
+    this.epaisseurMediatrice = epaisseurMediatrice
+    this.opaciteMediatrice = opaciteMediatrice
+    this.pointillesMediatrice = pointillesMediatrice
+    this.couleurConstruction = couleurConstruction
+    this.epaisseur = 1
+
+    const d = droite(M, N, nom, this.couleurMediatrice)
     d.epaisseur = this.epaisseurMediatrice
     d.opacite = this.opaciteMediatrice
     d.pointilles = this.pointillesMediatrice
-    const objets = [d]
+    this.objets = [d]
     if (construction) {
       const arcm1 = traceCompas(A, M, 20, this.couleurConstruction)
       const arcm2 = traceCompas(B, M, 20, this.couleurConstruction)
       const arcn1 = traceCompas(A, N, 20, this.couleurConstruction)
       const arcn2 = traceCompas(B, N, 20, this.couleurConstruction)
-      arcm1.isVisible = false
-      arcm2.isVisible = false
-      arcn1.isVisible = false
-      arcn2.isVisible = false
-      const codage = codageMediatrice(A, B, this.color, markmilieu)
-      codage.isVisible = false
-      objets.push(arcm1, arcm2, arcn1, arcn2, d, codage)
+      const codage = codageMediatrice(A, B, this.couleurMediatrice, markmilieu)
+      this.objets.push(arcm1, arcm2, arcn1, arcn2, d, codage)
     }
     if (detail) {
       const sAM = segment(A, M, this.couleurConstruction)
@@ -696,40 +731,48 @@ export function Mediatrice (
       sAN.pointilles = 5
       const sBN = segment(B, N, this.couleurConstruction)
       sBN.pointilles = 5
-      const codes = codageSegments(markrayons, this.color, A, M, B, M, A, N, B, N)
-      objets.push(sAM, sBM, sAN, sBN, codes)
+      const codes = codageSegments(markrayons, this.couleurConstruction, A, M, B, M, A, N, B, N)
+      this.objets.push(sAM, sBM, sAN, sBN, codes)
     }
-    this.svg = function (coeff) {
-      let code = ''
-      for (const objet of objets) {
-        code += '\n\t' + objet.svg(coeff)
-      }
-      code = `<g id="${this.id}">${code}</g>`
-      return code
+  }
+
+  svg (coeff: number) {
+    let code = ''
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
+      code += '\n\t' + objet.svg(coeff)
     }
-    this.tikz = function () {
-      let code = ''
-      for (const objet of objets) {
-        code += '\n\t' + objet.tikz()
-      }
-      return code
+    code = `<g id="${this.id}">${code}</g>`
+    return code
+  }
+
+  tikz () {
+    let code = ''
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
+      code += '\n\t' + objet.tikz()
     }
-    this.svgml = function (coeff, amp) {
-      let code = ''
-      for (const objet of objets) {
-        if (typeof (objet.svgml) === 'undefined') code += '\n\t' + objet.svg(coeff)
-        else code += '\n\t' + objet.svgml(coeff, amp)
-      }
-      return code
+    return code
+  }
+
+  svgml (coeff: number, amp: number) {
+    let code = ''
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
+      if (typeof (objet.svgml) === 'undefined') code += '\n\t' + objet.svg(coeff)
+      else code += '\n\t' + objet.svgml(coeff, amp)
     }
-    this.tikzml = function (amp) {
-      let code = ''
-      for (const objet of objets) {
-        if (typeof (objet.tikzml) === 'undefined') code += '\n\t' + objet.tikz()
-        else code += '\n\t' + objet.tikzml(amp)
-      }
-      return code
+    return code
+  }
+
+  tikzml (amp: number) {
+    let code = ''
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
+      if (typeof (objet.tikzml) === 'undefined') code += '\n\t' + objet.tikz()
+      else code += '\n\t' + objet.tikzml(amp)
     }
+    return code
   }
 }
 
@@ -759,7 +802,7 @@ export function Mediatrice (
  * @return {Mediatrice|Droite}
  */
 // JSDOC Validee par EE Juin 2022
-export function mediatrice (A, B, nom = '', couleurMediatrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, markmilieu = '×', markrayons = '||', epaisseurMediatrice = 1, opaciteMediatrice = 1, pointillesMediatrice = 0) {
+export function mediatrice (A: Point, B: Point, nom = '', couleurMediatrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, markmilieu = '×', markrayons = '||', epaisseurMediatrice = 1, opaciteMediatrice = 1, pointillesMediatrice = 0) {
   if (arguments.length < 5) return new Mediatrice(A, B, nom, couleurMediatrice)
   else return new Mediatrice(A, B, nom, couleurMediatrice, color, couleurConstruction, construction, detail, markmilieu, markrayons, epaisseurMediatrice, opaciteMediatrice, pointillesMediatrice)
 }
@@ -793,90 +836,97 @@ export function mediatrice (A, B, nom = '', couleurMediatrice = 'red', color = '
  * @class
  */
 // JSDOC Validee par EE Juin 2022
-export function Bissectrice (
-  A,
-  O,
-  B,
-  couleurBissectrice = 'red',
-  color = 'blue',
-  couleurConstruction = 'black',
-  construction = false,
-  detail = false,
-  mark = '×',
-  tailleLosange = 5,
-  epaisseurBissectrice = 1,
-  opaciteBissectrice = 1,
-  pointillesBissectrice = ''
-) {
-  ObjetMathalea2D.call(this, {})
-  this.color = color
-  this.tailleLosange = tailleLosange
-  this.mark = mark
-  this.couleurBissectrice = couleurBissectrice
-  this.epaisseurBissectrice = epaisseurBissectrice
-  this.couleurConstruction = couleurConstruction
-  this.opaciteBissectrice = opaciteBissectrice
-  this.pointillesBissectrice = pointillesBissectrice
-  if (longueur(A, O) < 0.001 || longueur(O, B) < 0.001) window.notify('Bissectrice : points confondus', { A, O, B })
-  // Construction de la bissectrice
-  const demiangle = angleOriente(A, O, B) / 2
-  const m = pointSurSegment(O, A, 3)
-  const X = rotation(m, O, demiangle)
-  const d = demiDroite(O, X, this.couleurBissectrice)
-  // Fin de construction de la bissectrice
-  if (arguments.length < 5) {
-    return d
-  } else {
-    d.epaisseur = this.epaisseurBissectrice
-    d.opacite = this.opaciteBissectrice
-    d.pointilles = this.pointillesBissectrice
-    const objets = [d]
+export class Bissectrice extends DemiDroite {
+  tailleLosange?: number
+  mark?: string
+  couleurBissectrice?: string
+  epaisseurBissectrice?: number
+  opaciteBissectrice?: number
+  pointillesBissectrice?: number
+  couleurConstruction?: string
+
+  constructor (
+    A: Point,
+    O: Point,
+    B: Point,
+    couleurBissectrice = 'red',
+    color = 'blue',
+    couleurConstruction = 'black',
+    construction = false,
+    detail = false,
+    mark = '×',
+    tailleLosange = 5,
+    epaisseurBissectrice = 1,
+    opaciteBissectrice = 1,
+    pointillesBissectrice = 0
+  ) {
+    const demiangle = angleOriente(A, O, B) / 2
+    const m = pointSurSegment(O, A, 3)
+    const X = rotation(m, O, demiangle)
+    super(O, X, couleurBissectrice)
+    this.color = colorToLatexOrHTML(color)
+    this.tailleLosange = tailleLosange
+    this.mark = mark
+    this.couleurBissectrice = couleurBissectrice
+    this.epaisseurBissectrice = epaisseurBissectrice
+    this.couleurConstruction = couleurConstruction
+    this.opaciteBissectrice = opaciteBissectrice
+    this.pointillesBissectrice = pointillesBissectrice
+    if (longueur(A, O) < 0.001 || longueur(O, B) < 0.001) window.notify('Bissectrice : points confondus', { A, O, B })
+    // Construction de la bissectrice
+    const d = demiDroite(O, X, couleurBissectrice)
+    d.epaisseur = epaisseurBissectrice
+    d.opacite = opaciteBissectrice
+    d.pointilles = pointillesBissectrice
+    this.objets = [d]
     const M = pointSurSegment(O, A, this.tailleLosange)
     const N = pointSurSegment(O, B, this.tailleLosange)
     const dMN = droite(M, N)
-    dMN.isVisible = false
-    const P = symetrieAxiale(O, dMN)
+    const P = symetrieAxiale(O, dMN) as Point
     if (construction || detail) {
       if (!M.estSur(segment(O, A))) {
         const sOM = segment(O, M, this.couleurConstruction)
-        objets.push(sOM)
+        this.objets.push(sOM)
       }
       if (!N.estSur(segment(O, B))) {
         const sON = segment(O, N, this.couleurConstruction)
-        objets.push(sON)
+        this.objets.push(sON)
       }
       if (construction) {
-        const codage = codageBissectrice(A, O, B, this.color, mark)
+        const codage = codageBissectrice(A, O, B, color, mark)
         const tNP = traceCompas(N, P, 20, this.couleurConstruction)
         const tMP = traceCompas(M, P, 20, this.couleurConstruction)
         const tOM = traceCompas(O, M, 20, this.couleurConstruction)
         const tON = traceCompas(O, N, 20, this.couleurConstruction)
-        objets.push(codage, tNP, tMP, tOM, tON)
+        this.objets.push(codage, tNP, tMP, tOM, tON)
       }
       if (detail) {
         const sMP = segment(M, P, this.couleurConstruction)
         const sNP = segment(N, P, this.couleurConstruction)
         sMP.pointilles = 5
         sNP.pointilles = 5
-        const codes = codageSegments(this.mark, this.color, O, M, M, P, O, N, N, P)
-        objets.push(sMP, sNP, codes)
+        const codes = codageSegments(this.mark, color, O, M, M, P, O, N, N, P)
+        this.objets.push(sMP, sNP, codes)
       }
     }
+  }
 
-    this.svg = function (coeff) {
-      let code = ''
-      for (const objet of objets) {
-        code += '\n\t' + objet.svg(coeff)
-      }
-      return code
+  svg (coeff: number) {
+    let code = ''
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
+      code += '\n\t' + objet.svg(coeff)
     }
-    this.tikz = function () {
-      let code = ''
-      for (const objet of objets) {
-        code += '\n\t' + objet.tikz()
-      }
-      return code
+    return code
+  }
+
+  tikz () {
+    let code = ''
+    if (this.objets == null) return code
+    for (const objet of this.objets) {
+      code += '\n\t' + objet.tikz()
     }
+    return code
   }
 }
 
@@ -905,7 +955,7 @@ export function Bissectrice (
  * @return {Bissectrice}
  */
 // JSDOC Validee par EE Juin 2022
-export function bissectrice (A, O, B, couleurBissectrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, mark = '×', tailleLosange = 5, epaisseurBissectrice = 1, opaciteBissectrice = 1, pointillesBissectrice = '') {
+export function bissectrice (A: Point, O: Point, B: Point, couleurBissectrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, mark = '×', tailleLosange = 5, epaisseurBissectrice = 1, opaciteBissectrice = 1, pointillesBissectrice = 0) {
   return new Bissectrice(A, O, B, couleurBissectrice, color, couleurConstruction, construction, detail, mark, tailleLosange, epaisseurBissectrice, opaciteBissectrice, pointillesBissectrice)
 }
 
@@ -917,7 +967,7 @@ export function bissectrice (A, O, B, couleurBissectrice = 'red', color = 'blue'
  * @return {number}
  */
 // JSDOC Validee par EE Aout 2022
-export function distancePointDroite (A, d) {
-  const M = projectionOrtho(A, d)
+export function distancePointDroite (A: Point, d: Droite) {
+  const M = projectionOrtho(A, d) as Point
   return longueur(A, M, 9)
 }

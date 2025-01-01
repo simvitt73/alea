@@ -14,8 +14,9 @@ import { context } from './context'
  * @class
  */
 // JSDOC Validee par EE Juin 2022
-function AfficherCrayon (A) {
-  ObjetMathalea2D.call(this, { })
+export class AfficherCrayon extends ObjetMathalea2D{
+  constructor(A) {
+    super()
   this.x = A.x
   this.y = A.y
   this.svg = function () {
@@ -27,6 +28,7 @@ function AfficherCrayon (A) {
     </g>`
     return code
   }
+}
 }
 
 /**
