@@ -17,5 +17,6 @@ export default class FonctionsVocabulaireProbabilite4e extends FonctionsProbabil
     super()
     this.niveau = 3
     this.spacingCorr = 2
+    this.interactifReady=false
   }
 }
