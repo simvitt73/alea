@@ -24,7 +24,7 @@ export default class NiemeDecimale extends Exercice {
 
   nouvelleVersion () {
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      const den = choice([7, 11])
+      const den = choice([7, 13])
       const num = randint(den + 1, 2 * den - 1)
       let n = randint(1, 9) * 100 + randint(1, 9) * 10 + randint(1, 9)
       if (choice([true, false])) n = new Date().getFullYear()
@@ -39,7 +39,7 @@ export default class NiemeDecimale extends Exercice {
       })
 
       texteCorr += '<br><br>'
-      texteCorr += `La division posée fait apparaitre un reste déjà obtenu, l'écriture décimale de $\\dfrac{${num}}{${den}}\\approx ${texNombre(Number(toFixedTruncate(num / den, periodLength)))}\\ldots$ a une période à ${periodLength} chiffres.`
+      texteCorr += `La division posée fait apparaitre un reste déjà obtenu, l'écriture décimale de $\\dfrac{${num}}{${den}}\\approx ${texNombreAvecZeroInutile(toFixedTruncate(num / den, periodLength))}\\ldots$ a une période à ${periodLength} chiffres.`
       texteCorr += '<br><br>'
       texteCorr += Operation({
         operande1: n,
@@ -69,13 +69,13 @@ export default class NiemeDecimale extends Exercice {
   }
 }
 
-function toFixedTruncate (num: number, digits: number): string {
+export function toFixedTruncate (num: number, digits: number): string {
   const re = new RegExp('^-?\\d+(?:\\.\\d{0,' + (digits || -1) + '})?')
   const match = num.toString().match(re)
   return match ? match[0] : '0'
 }
 
-function analyzeDecimal (numerator: number, denominator: number) {
+export function analyzeDecimal (numerator: number, denominator: number) {
   const f = new FractionEtendue(numerator, denominator)
   const n = f.numIrred
   const d = f.denIrred
@@ -100,5 +100,15 @@ function analyzeDecimal (numerator: number, denominator: number) {
     hasPeriod: true,
     periodLength: rang - 1,
     firstRepeat: rang
+  }
+}
+
+export function texNombreAvecZeroInutile (text: string) {
+  if (text.endsWith('0')) {
+    return texNombre(Number(text)) + '0'
+  } else if (text.endsWith('00')) {
+    return texNombre(Number(text)) + '00'
+  } else {
+    return texNombre(Number(text))
   }
 }
