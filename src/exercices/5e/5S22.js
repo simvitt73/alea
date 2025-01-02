@@ -5,7 +5,6 @@ export const dateDePublication = '03/04/2022'
 
 /**
  * @author Guillaume Valmont
- * reference 5S22
  */
 export const uuid = 'df72b'
 
@@ -18,5 +17,6 @@ export default class FonctionsVocabulaireProbabilite5e extends FonctionsProbabil
     super()
     this.niveau = 2
     this.spacingCorr = 2
+    this.interactifReady=false
   }
 }

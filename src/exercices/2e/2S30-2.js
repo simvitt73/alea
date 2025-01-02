@@ -12,4 +12,9 @@ export const refs = {
   'fr-ch': []
 }
 export default class FonctionsProbabilite12nde extends FonctionsProbabilite1 {
+  constructor () {
+    super()
+  this.styleCorrection='lycee'
+  }
 }
+
