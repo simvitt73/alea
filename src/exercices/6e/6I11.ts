@@ -36,7 +36,7 @@ export const refs = {
 }
 export default class NoteLaCouleur6e extends Exercice {
   relatif: boolean
-  constructor () {
+  constructor() {
     super()
     this.besoinFormulaireNumerique = ['Type de plateau', 4, '1 : Plateau couleur sans numéro\n2 : Plateau couleur avec numéros\n3 : Plateau noir et blanc avec nom des couleurs\n4 : Plateau noir et blanc avec numéros']
     this.besoinFormulaire2Numerique = ['Type de programme', 3, '1 : Avancer et tourner\n2 : Boucles\n3 : Mélange']
@@ -53,7 +53,7 @@ export default class NoteLaCouleur6e extends Exercice {
     this.correctionDetaillee = true
   }
 
-  nouvelleVersion () {
+  nouvelleVersion() {
     const damier = [
       ['Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc', 'Blanc'],
       ['Blanc', 'Noir', 'Jaune', 'Bleu', 'Vert', 'Orange', 'Rouge', 'Orange', 'Noir', 'Jaune', 'Gris', 'Vert', 'Rose', 'Noir', 'Jaune', 'Blanc'],
@@ -75,8 +75,8 @@ export default class NoteLaCouleur6e extends Exercice {
     const echelleDessin = 0.5
 
     let j, test
-    let objetsEnonce: ObjetMathalea2D[] = []
-    let objetsCorrection = []
+    let objetsEnonce: (ObjetMathalea2D[] | ObjetMathalea2D)[] = []
+    let objetsCorrection: (ObjetMathalea2D[] | ObjetMathalea2D)[] = []
     const paramsCorrection = this.relatif
       ? { xmin: -13, ymin: -10, xmax: 13, ymax: 10, pixelsParCm: 20, scale: echelleDessin }
       : { xmin: -1, ymin: -1, xmax: 25, ymax: 19, pixelsParCm: 20, scale: echelleDessin }
@@ -114,8 +114,8 @@ export default class NoteLaCouleur6e extends Exercice {
       objetsCorrection = []
       objetsEnonce = []
       const objets = lePlateau.objets ?? []
-      objetsEnonce.push(...objets)
-      objetsCorrection.push(lePlateau.objets)
+      objetsEnonce.push(objets)
+      objetsCorrection.push(objets)
       let reponseCouleur = []
       let texte = ''
       let texteCorr = ''
@@ -362,17 +362,17 @@ export default class NoteLaCouleur6e extends Exercice {
       texte += 'Exécuter le programme et trouver la succession de couleurs.<br><br>'
       if (context.isHtml) {
         texte += '<table><tr><td>' +
-                    scratchblock(pion.codeScratch) +
-                    '</td><td>' + `${this.sup % 2 === 0
-                        ? 'Correspondance chiffre-couleur : <br>0=Blanc ; 1=Noir ; 2=Rouge ; 3=Bleu ; 4=Orange ; 5=Rose ; 6=Jaune ; 7=Vert ; 8=Gris<br>'
-                        : ''}` +
-                    mathalea2d(paramsCorrection, ...objetsEnonce) +
-                    '</td></tr></table>'
+          scratchblock(pion.codeScratch) +
+          '</td><td>' + `${this.sup % 2 === 0
+            ? 'Correspondance chiffre-couleur : <br>0=Blanc ; 1=Noir ; 2=Rouge ; 3=Bleu ; 4=Orange ; 5=Rose ; 6=Jaune ; 7=Vert ; 8=Gris<br>'
+            : ''}` +
+          mathalea2d(paramsCorrection, ...objetsEnonce) +
+          '</td></tr></table>'
       } else {
         texte += `\\begin{minipage}{.3 \\linewidth} \n\t ${scratchblock(pion.codeScratch)} \n \\end{minipage}
       \\begin{minipage}{.7 \\linewidth} \n\t ${this.sup % 2 === 0
-                    ? 'Correspondance chiffre-couleur : \\\\\n0=Blanc, 1=Noir, 2=Rouge, 3=Bleu, 4=Orange, 5=Rose, 6=Jaune, 7=Vert, 8=Gris\\\\\n'
-                    : ''} ${mathalea2d(paramsCorrection, ...objetsEnonce)} \n\\end{minipage}`
+            ? 'Correspondance chiffre-couleur : \\\\\n0=Blanc, 1=Noir, 2=Rouge, 3=Bleu, 4=Orange, 5=Rose, 6=Jaune, 7=Vert, 8=Gris\\\\\n'
+            : ''} ${mathalea2d(paramsCorrection, ...objetsEnonce)} \n\\end{minipage}`
         if (q < this.nbQuestions - 1 && !context.isHtml) {
           texte += '\n\\newpage'
         }
