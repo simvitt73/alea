@@ -38,7 +38,7 @@ export const amcType = 'AMCHybride'
  */
 export default class Transformations extends Exercice {
   can: boolean
-  constructor () {
+  constructor() {
     super()
     this.can = false
     this.nbQuestions = 1
@@ -49,7 +49,7 @@ export default class Transformations extends Exercice {
     this.sup = 1
   }
 
-  nouvelleVersion () {
+  nouvelleVersion() {
     let nbImages
 
     const choixTransformation = gestionnaireFormulaireTexte({
@@ -150,14 +150,14 @@ export default class Transformations extends Exercice {
 
         // pour éviter les points en dehors des clous dans homothétie de rapport 1/k
         puntoReseau = egal(punto[j][0], Math.floor(punto[j][0]), 0.001) &&
-                    egal(punto[j][1], Math.floor(punto[j][1]), 0.001)
+          egal(punto[j][1], Math.floor(punto[j][1]), 0.001)
         // On vérifie que l'image est bien un point du réseau sinon, on change.
         mauvaisAntecedents = combinaisonListes(pointsDejaUtilises, 1)
         while (punto[j][0] < 0 ||
-                punto[j][0] > 9 ||
-                punto[j][1] < 0 ||
-                punto[j][1] > 9 ||
-                puntoReseau === false) {
+          punto[j][0] > 9 ||
+          punto[j][1] < 0 ||
+          punto[j][1] > 9 ||
+          puntoReseau === false) {
           mauvaisAntecedents.push(antecedents[j])
           antecedents[j] = randint(0, 99, mauvaisAntecedents)
           punto[j] = imagePointParTransformation(
@@ -181,7 +181,7 @@ export default class Transformations extends Exercice {
 
           // pour éviter les points en dehors des clous dans homothétie de rapport 1/k
           if (egal(punto[j][0], Math.floor(punto[j][0]), 0.001) &&
-                        egal(punto[j][1], Math.floor(punto[j][1]), 0.001)) {
+            egal(punto[j][1], Math.floor(punto[j][1]), 0.001)) {
             puntoReseau = true
           } else {
             puntoReseau = false
@@ -212,18 +212,18 @@ export default class Transformations extends Exercice {
         traceO = tracePoint(O)
         traceO.epaisseur = 2
         traceO.opacite = 1
-        labO = labelLatexPoint({ points: [O], color: 'red', taille: 10, couleurDeRemplissage: 'white' })
+        labO = labelLatexPoint({ points: [O], color: 'red', taille: 10, couleurDeRemplissage: 'none' })
         switch (choixTransformation[i]) {
           case 1:
             d1.color = colorToLatexOrHTML(context.isHtml ? couleurs[i] : 'black')
             questionsAMC[i] = numAlpha(i) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_1)$.`
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_1)$.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_1)', context.isHtml ? d1.color[0] : d1.color[1])}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_1)', context.isHtml ? d1.color[0] : d1.color[1])}$.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_1)', context.isHtml ? d1.color[0] : d1.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_1)', context.isHtml ? d1.color[0] : d1.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(d1, traceAnt, latexParCoordonnees('(d_1)', 4.8, 4.2, context.isHtml ? d1.color[0] : d1.color[1], 20, 10, '', 12))
 
             objetsCorrection.push(d1, traceAnt, traceIm, latexParCoordonnees('(d_1)', 4.8, 4.2, context.isHtml ? d1.color[0] : d1.color[1], 20, 10, '', 12),
@@ -236,13 +236,13 @@ export default class Transformations extends Exercice {
           case 2:
             d2.color = colorToLatexOrHTML(context.isHtml ? couleurs[i] : 'black')
             questionsAMC[i] = numAlpha(i) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_2)$.`
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_2)$.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_2)', context.isHtml ? d2.color[0] : d2.color[1])}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_2)', context.isHtml ? d2.color[0] : d2.color[1])}$.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_2)', context.isHtml ? d2.color[0] : d2.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_2)', context.isHtml ? d2.color[0] : d2.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(d2, traceAnt, latexParCoordonnees('(d_2)', 4.3, -3.7, context.isHtml ? d2.color[0] : d2.color[1], 20, 10, '', 12))
             objetsCorrection.push(d2, traceAnt, traceIm, latexParCoordonnees('(d_2)', 4.3, -3.7, context.isHtml ? d2.color[0] : d2.color[1], 15, 10, '', 12),
               segment(M[i], N[i], context.isHtml ? d2.color[0] : d2.color[1]), codageSegments('||', context.isHtml ? d2.color[0] : d2.color[1], M[i], milieu(M[i], N[i]), milieu(M[i], N[i]), N[i]),
@@ -254,13 +254,13 @@ export default class Transformations extends Exercice {
           case 3:
             d3.color = colorToLatexOrHTML(context.isHtml ? couleurs[i] : 'black')
             questionsAMC[i] = numAlpha(i) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_3)$.`
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_3)$.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_3)', context.isHtml ? d3.color[0] : d3.color[1])}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_3)', context.isHtml ? d3.color[0] : d3.color[1])}$.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_3)', context.isHtml ? d3.color[0] : d3.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_3)', context.isHtml ? d3.color[0] : d3.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(d3, traceAnt, latexParCoordonnees('(d_3)', -4.2, 0.3, context.isHtml ? d3.color[0] : d3.color[1], 20, 10, '', 12))
             objetsCorrection.push(d3, traceAnt, traceIm, latexParCoordonnees('(d_3)', -4.2, 0.3, context.isHtml ? d3.color[0] : d3.color[1], 15, 10, '', 12),
               segment(M[i], N[i], context.isHtml ? d3.color[0] : d3.color[1]), codageSegments('///', context.isHtml ? d3.color[0] : d3.color[1], M[i], milieu(M[i], N[i]), milieu(M[i], N[i]), N[i]),
@@ -272,13 +272,13 @@ export default class Transformations extends Exercice {
           case 4:
             d4.color = colorToLatexOrHTML(context.isHtml ? couleurs[i] : 'black')
             questionsAMC[i] = numAlpha(i) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_4)$.`
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $(d_4)$.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_4)', context.isHtml ? d4.color[0] : d4.color[1])}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro du symétrique du point $${antecedents[i]}$ par rapport à la droite $${miseEnCouleur('(d_4)', context.isHtml ? d4.color[0] : d4.color[1])}$.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_4)', context.isHtml ? d4.color[0] : d4.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Le symétrique du point $${antecedents[i]}$ par rapport à $${miseEnCouleur('(d_4)', context.isHtml ? d4.color[0] : d4.color[1])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(d4, traceAnt, latexParCoordonnees('(d_4)', 0.2, 4.5, context.isHtml ? d4.color[0] : d4.color[1], 15, 10, '', 12))
             objetsCorrection.push(d4, traceAnt, traceIm, latexParCoordonnees('(d_4)', 0.2, 4.5, context.isHtml ? d4.color[0] : d4.color[1], 20, 10, '', 12),
               segment(M[i], N[i], context.isHtml ? d4.color[0] : d4.color[1]), codageSegments('OO', context.isHtml ? d4.color[0] : d4.color[1], M[i], milieu(M[i], N[i]), milieu(M[i], N[i]), N[i]),
@@ -290,11 +290,11 @@ export default class Transformations extends Exercice {
           case 5:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens anti-horaire.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens anti-horaire.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens anti-horaire.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens anti-horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens anti-horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, couleurs[i]), segment(N[i], O, couleurs[i]), codageSegments('|||', couleurs[i], M[i], O, O, N[i]), afficheMesureAngle(M[i], O, N[i]),
               codageAngleDroit(M[i], O, N[i], couleurs[i], 0.4, 1))
@@ -305,11 +305,11 @@ export default class Transformations extends Exercice {
           case 6:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens horaire.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens horaire.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens horaire.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 90° dans le sens horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, couleurs[i]), segment(N[i], O, couleurs[i]), codageSegments('////', 'red', M[i], O, O, N[i]), afficheMesureAngle(M[i], O, N[i]),
               codageAngleDroit(M[i], O, N[i], couleurs[i], 0.8, 1))
@@ -320,11 +320,11 @@ export default class Transformations extends Exercice {
           case 7:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de l'image du point $${antecedents[i]}$ par la symétrie de centre O.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par la symétrie de centre O.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par la symétrie de centre O.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la symétrie de centre $O$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la symétrie de centre $O$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, couleurs[i]), segment(N[i], O, couleurs[i]), codageSegments('OOO', couleurs[i], M[i], O, O, N[i]))
             objetsCorrection.push(texteParPositionEchelle(Number(punto[i][0] + 10 * punto[i][1]).toString(), punto[i][0] - 4.2, punto[i][1] - 4.2, 0, '#f15929', 1, 'milieu', false, 0.8))
@@ -338,11 +338,11 @@ export default class Transformations extends Exercice {
             nomPointsTranslationDejaUtilises.push(numPointN)
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de l'image du point $${antecedents[i]}$ par la translation qui transforme ${lettreDepuisChiffre(pointMLettre)} en ${lettreDepuisChiffre(numPointN)}.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par la translation qui transforme ${lettreDepuisChiffre(pointMLettre)} en ${lettreDepuisChiffre(numPointN)}.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par la translation qui transforme ${lettreDepuisChiffre(pointMLettre)} en ${lettreDepuisChiffre(numPointN)}.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la translation qui transforme ${lettreDepuisChiffre(pointMLettre)} en ${lettreDepuisChiffre(numPointN)} est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la translation qui transforme ${lettreDepuisChiffre(pointMLettre)} en ${lettreDepuisChiffre(numPointN)} est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             aEviter = enleveElementBis(pointsDejaUtilises)
             longueurBoucle = pointsDejaUtilises.length
             for (let kk = 0; kk < longueurBoucle; kk++) {
@@ -357,8 +357,8 @@ export default class Transformations extends Exercice {
             traceN = tracePoint(pointN)
             traceM.epaisseur = 1
             traceN.epaisseur = 1
-            labM = labelLatexPoint({ points: [pointM], color: couleurs[i], taille: 8, couleurDeRemplissage: 'white' })
-            labN = labelLatexPoint({ points: [pointN], color: couleurs[i], taille: 8, couleurDeRemplissage: 'white' })
+            labM = labelLatexPoint({ points: [pointM], color: couleurs[i], taille: 8, couleurDeRemplissage: 'none' })
+            labN = labelLatexPoint({ points: [pointN], color: couleurs[i], taille: 8, couleurDeRemplissage: 'none' })
             pointsDejaUtilises.push(44 + pointM.x + 10 * pointM.y)
             pointsDejaUtilises.push(44 + pointN.x + 10 * pointN.y)
             objetsEnonce.push(traceAnt, traceM, traceN, labM, labN)
@@ -370,11 +370,11 @@ export default class Transformations extends Exercice {
           case 9:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de l'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texNombre(k[i])}$.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texNombre(k[i])}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texNombre(k[i])}$.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texNombre(k[i])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texNombre(k[i])}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, couleurs[i]), segment(N[i], O, couleurs[i]))
             objetsCorrection.push(texteParPositionEchelle(Number(punto[i][0] + 10 * punto[i][1]).toString(), punto[i][0] - 4.2, punto[i][1] - 4.2, 0, '#f15929', 1, 'milieu', false, 0.8))
@@ -383,22 +383,22 @@ export default class Transformations extends Exercice {
 
           case 10:
             questionsAMC[i] = numAlpha(i) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texFractionReduite(
-                                1,
-                                k[i]
-                            )}$.`
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texFractionReduite(
+                1,
+                k[i]
+              )}$.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texFractionReduite(
-                                1,
-                                k[i]
-                            )}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texFractionReduite(
+                1,
+                k[i]
+              )}$.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texFractionReduite(
-                                1,
-                                k[i]
-                            )}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par l'homothétie de centre $O$ et de rapport $${texFractionReduite(
+                1,
+                k[i]
+              )}$ est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, couleurs[i]), segment(N[i], O, couleurs[i]))
             objetsCorrection.push(texteParPositionEchelle(Number(punto[i][0] + 10 * punto[i][1]).toString(), punto[i][0] - 4.2, punto[i][1] - 4.2, 0, '#f15929', 1, 'milieu', false, 0.8))
@@ -408,11 +408,11 @@ export default class Transformations extends Exercice {
           case 11:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens anti-horaire.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens anti-horaire.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens anti-horaire.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens anti-horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens anti-horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, 'blue'), segment(N[i], O, 'blue'), codageSegments('||', 'red', M[i], O, O, N[i]), afficheMesureAngle(M[i], O, N[i]))
             break
@@ -420,11 +420,11 @@ export default class Transformations extends Exercice {
           case 12:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens horaire.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens horaire.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens horaire.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 60° dans le sens horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, 'blue'), segment(N[i], O, 'blue'), codageSegments('||', 'red', M[i], O, O, N[i]), afficheMesureAngle(M[i], O, N[i]))
             break
@@ -432,11 +432,11 @@ export default class Transformations extends Exercice {
           case 13:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens anti-horaire.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens anti-horaire.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens anti-horaire.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens anti-horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens anti-horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, 'blue'), segment(N[i], O, 'blue'), codageSegments('||', 'red', M[i], O, O, N[i]), afficheMesureAngle(M[i], O, N[i]))
             break
@@ -444,11 +444,11 @@ export default class Transformations extends Exercice {
           case 14:
             questionsAMC[i] = numAlpha(i) + ` Donner le numéro de  l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens horaire.`
             texte +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens horaire.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` Donner le numéro de l'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens horaire.<br>`
             texteCorr +=
-                            (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
-                            ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
+              (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
+              ` L'image du point $${antecedents[i]}$ par la rotation de centre $O$ et d'angle 120° dans le sens horaire est le point $${miseEnEvidence(String(images[i]))}$.<br>`
             objetsEnonce.push(traceAnt, traceO, labO)
             objetsCorrection.push(traceAnt, traceIm, traceO, labO, segment(M[i], O, 'blue'), segment(N[i], O, 'blue'), codageSegments('||', 'red', M[i], O, O, N[i]), afficheMesureAngle(M[i], O, N[i]))
             break
