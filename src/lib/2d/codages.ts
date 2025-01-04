@@ -968,7 +968,7 @@ export class CodageAngle extends ObjetMathalea2D {
 
 
 /**
- * affiche du Latex 'sous' un segment orienté
+ * affiche du Latex 'sur' un segment orienté
  * @param {Point} A Première extrémité du segment
  * @param {Point} B Seconde extrémité du segment
  * @param {number} [distance = 0.5] Couleur du codage : du type 'blue' ou du type '#f15929'.
