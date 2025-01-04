@@ -2,13 +2,254 @@ import { colorToLatexOrHTML, ObjetMathalea2D, vide2d } from '../../modules/2dGen
 import { context } from '../../modules/context'
 import { egal } from '../../modules/outils'
 import { arrondi } from '../outils/nombres'
+import type { CoopmathsColor } from '../types'
 import { angleOriente } from './angles'
 import { traceCompas } from './cercle'
 import { codageBissectrice, codageMediatrice, codageSegments } from './codages'
 import { milieu, Point, point, pointSurDroite, pointSurSegment } from './points'
 import { DemiDroite, demiDroite, longueur, norme, segment, Vecteur, vecteur } from './segmentsVecteurs'
-import { latex2d, TexteParPoint, texteParPosition } from './textes'
+import { Latex2d, latex2d, latexParCoordonneesBox, LatexParCoordonneesBox, TexteParPoint, texteParPosition, type LetterSizeType } from './textes'
 import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } from './transformations'
+
+
+/**
+ * Ajouter une étiquette sur une droite.
+ * @param {*} droite La droite où on va rajouter une étiquette
+ * @param {*} nom Le nom de la droite doit être en latex et sera rendu avec Latex2d (donc en mode math) : Ne pas mettre de $ $ !
+ * @param {*} options Les options permettant de personnaliser la position de l'étiquette et la mise en forme
+ *  options.preferedPosition La position à privilégier si possible sur le bord de l'image ('left', 'right', 'above', 'below')
+ *  options.usedPosition Un tableau des anciennes positions déjà allouées pour éviter les colisions avec des étiquettes d'autres droites
+ *  options.taille La taille de la police de l'étiquette par défaut 6
+ *  options.color La couleur de l'étiquette par défaut 'red'
+ * @returns {Latex2d} L'étiquette
+ *
+ * Exemple :
+ *   context.fenetreMathalea2d = [xmin + 0.2, ymin, xmax, ymax] // important pour la position des labels
+ *   const d3nom = labelOnLine(d3, '$' + noms[3] + '$', { color: 'blue', taille: 8, preferedPosition: 'left' })
+ *   const d0nom = labelOnLine(d0, '$' + noms[0] + '$', { color: 'red', taille: 8, usedPosition: [d3nom] })
+ *
+ * @author Mickael Guironnet
+ * Modifications par Jean-Claude Lhote : factorisation dans droites.ts, passage en typescript et utilisation de latex2d à la place de LAtexParCoordonneesBox
+ */
+export function labelOnLine(droite: Droite, nom: string, {
+  preferedPosition = 'auto',
+  usedPosition = [],
+  letterSize = 'footnotesize',
+  color = 'red',
+  backgroundColor = 'white'
+}: {
+  preferedPosition?: 'left' | 'right' | 'above' | 'below' | 'auto',
+  usedPosition?: Latex2d[],
+  letterSize?: LetterSizeType,
+  color?: string,
+  backgroundColor?: string
+}): Latex2d | ObjetMathalea2D {
+
+  const debug = false
+  const largeur = 30
+  const hauteur = 20
+  let absNom, ordNom, leNom, anchor
+  let oneUsedPosition
+  const positions: {
+    label: Latex2d,
+    position: string,
+    anch: string,
+    colision: [number, boolean][]
+  }[] = []
+  if (nom !== '') {
+    if (egal(droite.b, 0, 0.05)) { // ax+c=0 x=-c/a est l'équation de la droite
+      // droite quasi verticale
+      absNom = -droite.c / droite.a + largeur * 0.5 / context.pixelsParCm + 2 / context.pixelsParCm
+      ordNom = context.fenetreMathalea2d[1] + 1 // l'ordonnée du label est ymin +1
+      anchor = 'right'
+      oneUsedPosition = 'below'
+      leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+      positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+    } else if (egal(droite.a, 0, 0.05)) { // by+c=0 y=-c/b est l'équation de la droite
+      // droite quasi horizontale
+      absNom = context.fenetreMathalea2d[0] + 1 // l'abscisse du label est xmin +1
+      ordNom = -droite.c / droite.b + hauteur * 0.5 / context.pixelsParCm
+      anchor = 'above'
+      oneUsedPosition = 'left'
+      leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+      positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+    } else { // a et b sont différents de 0 ax+by+c=0 est l'équation
+      // y=(-a.x-c)/b est l'equation cartésienne et x=(-by-c)/a
+      const y0 = (-droite.a * (context.fenetreMathalea2d[0] + 1) - droite.c) / droite.b
+      const y1 = (-droite.a * (context.fenetreMathalea2d[2] - 1) - droite.c) / droite.b
+      const x0 = (-droite.b * (context.fenetreMathalea2d[1] + 1) - droite.c) / droite.a
+      const x1 = (-droite.b * (context.fenetreMathalea2d[3] - 1) - droite.c) / droite.a
+      if (y0 > context.fenetreMathalea2d[1] && y0 < context.fenetreMathalea2d[3]) {
+        // à gauche : soit en dessous ou en dessous
+        absNom = context.fenetreMathalea2d[0] + 1
+        ordNom = y0 - droite.pente * (largeur * 0.5 / context.pixelsParCm) + (droite.pente > 0 ? -1 : 1) * hauteur * 0.5 / context.pixelsParCm
+        anchor = (droite.pente > 0 ? 'below' : 'above')
+        oneUsedPosition = 'left'
+        if (ordNom < context.fenetreMathalea2d[1] + 1 || ordNom > context.fenetreMathalea2d[3] - 1) {
+          if (debug) console.info('probl:nom:' + nom + ':position:' + oneUsedPosition + (context.fenetreMathalea2d[1] + 1) + '<' + ordNom + '<' + (context.fenetreMathalea2d[3] - 1))
+        } else {
+          leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+          positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+        }
+        // à gauche : soit en dessous ou en dessous
+        absNom = context.fenetreMathalea2d[0] + 1
+        ordNom = y0 + droite.pente * (largeur * 0.5 / context.pixelsParCm) - (droite.pente > 0 ? -1 : 1) * hauteur * 0.5 / context.pixelsParCm
+        anchor = (droite.pente > 0 ? 'above' : 'below')
+        oneUsedPosition = 'left'
+        if (ordNom < context.fenetreMathalea2d[1] + 1 || ordNom > context.fenetreMathalea2d[3] - 1) {
+          if (debug) console.info('probl:nom:' + nom + ':position:' + oneUsedPosition + (context.fenetreMathalea2d[1] + 1) + '<' + ordNom + '<' + (context.fenetreMathalea2d[3] - 1))
+        } else {
+          leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+          positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+        }
+      }
+      if (y1 > context.fenetreMathalea2d[1] && y1 < context.fenetreMathalea2d[3]) {
+        // à droite
+        absNom = context.fenetreMathalea2d[2] - 1
+        ordNom = y1 - droite.pente * (largeur * 0.5 / context.pixelsParCm) + (droite.pente > 0 ? -1 : 1) * hauteur * 0.5 / context.pixelsParCm
+        anchor = (droite.pente > 0 ? 'below' : 'above')
+        oneUsedPosition = 'right'
+        if (ordNom < context.fenetreMathalea2d[1] + 1 || ordNom > context.fenetreMathalea2d[3] - 1) {
+          if (debug) console.info('probl:nom:' + nom + ':position:' + oneUsedPosition + (context.fenetreMathalea2d[1] + 1) + '<' + ordNom + '<' + (context.fenetreMathalea2d[3] - 1))
+        } else {
+          leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+          positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+        }
+      }
+      if (x0 > context.fenetreMathalea2d[0] && x0 < context.fenetreMathalea2d[2]) {
+        // en bas : soit à gauche ou à droite
+        absNom = x0 + (droite.pente > 0 ? -1 : 1) * largeur * 0.5 / context.pixelsParCm - (droite.pente > 0 ? 1 : 1) * (hauteur * 0.5 / context.pixelsParCm) / droite.pente - (droite.pente > 0 ? 1 : -1) * 2 / context.pixelsParCm
+        ordNom = context.fenetreMathalea2d[1] + 1
+        anchor = (droite.pente > 0 ? 'left' : 'right')
+        oneUsedPosition = 'below'
+        if (absNom < context.fenetreMathalea2d[0] + 1 || absNom > context.fenetreMathalea2d[2] - 1) {
+          if (debug) console.info('problème:nom:' + nom + ':position:' + oneUsedPosition + (context.fenetreMathalea2d[0] + 1) + '<' + absNom + '<' + (context.fenetreMathalea2d[2] - 1))
+        } else {
+          leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+          positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+        }
+        // en bas de l'autre côté
+        absNom = x0 - (droite.pente > 0 ? -1 : 1) * largeur * 0.5 / context.pixelsParCm + (droite.pente > 0 ? 1 : 1) * (hauteur * 0.5 / context.pixelsParCm) / droite.pente + (droite.pente > 0 ? 1 : -1) * 2 / context.pixelsParCm
+        ordNom = context.fenetreMathalea2d[1] + 1
+        anchor = (droite.pente > 0 ? 'right' : 'left')
+        oneUsedPosition = 'below'
+        if (absNom < context.fenetreMathalea2d[0] + 1 || absNom > context.fenetreMathalea2d[2] - 1) {
+          if (debug) console.info('problème:nom:' + nom + ':position:' + oneUsedPosition + (context.fenetreMathalea2d[0] + 1) + '<' + absNom + '<' + (context.fenetreMathalea2d[2] - 1))
+        } else {
+          leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+          positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+        }
+      }
+      if (x1 > context.fenetreMathalea2d[0] && x1 < context.fenetreMathalea2d[2]) {
+        // au haut : soit à gauche ou à droite
+        absNom = x1 + (droite.pente > 0 ? -1 : 1) * largeur * 0.5 / context.pixelsParCm - (droite.pente > 0 ? 1 : 1) * (hauteur * 0.5 / context.pixelsParCm) / droite.pente - (droite.pente > 0 ? 1 : -1) * 2 / context.pixelsParCm
+        ordNom = context.fenetreMathalea2d[3] - 1
+        anchor = (droite.pente > 0 ? 'left' : 'right')
+        oneUsedPosition = 'above'
+        if (absNom < context.fenetreMathalea2d[0] + 1 || absNom > context.fenetreMathalea2d[2] - 1) {
+          if (debug) console.info('problème:nom:' + nom + ':position:' + oneUsedPosition + (context.fenetreMathalea2d[0] + 1) + '<' + absNom + '<' + (context.fenetreMathalea2d[2] - 1))
+        } else {
+          leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+          positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+        }
+        // au haut de l'autre côté
+        absNom = x1 - (droite.pente > 0 ? -1 : 1) * largeur * 0.5 / context.pixelsParCm + (droite.pente > 0 ? 1 : 1) * (hauteur * 0.5 / context.pixelsParCm) / droite.pente + (droite.pente > 0 ? 1 : -1) * 2 / context.pixelsParCm
+        ordNom = context.fenetreMathalea2d[3] - 1
+        anchor = (droite.pente > 0 ? 'right' : 'left')
+        oneUsedPosition = 'above'
+        if (absNom < context.fenetreMathalea2d[0] + 1 || absNom > context.fenetreMathalea2d[2] - 1) {
+          if (debug) console.info('problème:nom:' + nom + ':position:' + oneUsedPosition + (context.fenetreMathalea2d[0] + 1) + '<' + absNom + '<' + (context.fenetreMathalea2d[2] - 1))
+        } else {
+          leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+          positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+        }
+      }
+      let xgauche, xdroite
+      if (y0 > context.fenetreMathalea2d[1] && y0 < context.fenetreMathalea2d[3]) {
+        xgauche = context.fenetreMathalea2d[0]
+      } else {
+        xgauche = Math.min(x0, x1)
+      }
+      if (y1 > context.fenetreMathalea2d[1] && y1 < context.fenetreMathalea2d[3]) {
+        xdroite = context.fenetreMathalea2d[2]
+      } else {
+        xdroite = Math.max(x0, x1)
+      }
+      // au milieu
+      absNom = (xgauche + xdroite) / 2
+      ordNom = pointSurDroite(droite, absNom, '').y
+      anchor = (droite.pente > 0 ? 'left' : 'right')
+      oneUsedPosition = 'middle'
+      leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+      positions.push({ label: leNom, position: oneUsedPosition, anch: anchor, colision: [] })
+    }
+    leNom = latex2d(nom, absNom, ordNom, { color: color, backgroundColor: 'white', letterSize: letterSize })
+
+    // vérifie s'il y a des colisions entre labels
+    for (let i = 0; i < positions.length; i++) {
+      if (positions[i].position === 'middle') continue
+      const coli: [number, boolean][] = []
+      for (let j = 0; j < usedPosition.length; j++) {
+        const label = usedPosition[j]
+        const dis = segment(point(label.x, label.y), point(positions[i].label.x, positions[i].label.y)).longueur * context.pixelsParCm
+        // colision deux rectangles
+        const XYlabel = [label.x * context.pixelsParCm - largeur / 2, label.x * context.pixelsParCm + largeur / 2, label.y * context.pixelsParCm - hauteur / 2, label.y * context.pixelsParCm + hauteur / 2]
+        const XYlabel2 = [positions[i].label.x * context.pixelsParCm - largeur / 2, positions[i].label.x * context.pixelsParCm + largeur / 2, positions[i].label.y * context.pixelsParCm - hauteur / 2, positions[i].label.y * context.pixelsParCm + hauteur / 2]
+        if (debug) console.info('coli:nom:' + nom + ':position:' + positions[i].position + ':i:' + i + ':j:' + j + ':dis:' + dis.toFixed(2) + ':texte:' + label.latex + ':XYlabel:' + XYlabel[0].toFixed(1) + ',' + XYlabel[1].toFixed(1) + ',' + XYlabel[2].toFixed(1) + ',' + XYlabel[3].toFixed(1) + ':XYlabel2:' + XYlabel2[0].toFixed(1) + ',' + XYlabel2[1].toFixed(1) + ',' + XYlabel2[2].toFixed(1) + ',' + XYlabel2[3].toFixed(1))
+        const colision = (XYlabel[0] < XYlabel2[1]) && (XYlabel[1] > XYlabel2[0]) && (XYlabel[2] < XYlabel2[3]) && (XYlabel[3] > XYlabel2[2])
+        // colision deux cercles
+        const r0 = Math.max(largeur / 2, hauteur / 2)
+        const r1 = Math.max(largeur / 2, hauteur / 2)
+        let colision2 = true
+        if (dis > r0 + r1 || dis < Math.abs(r0 - r1)) colision2 = false
+        coli[j] = [dis, colision]
+        if (debug) console.info('coli:nom:' + nom + ':position:' + positions[i].position + ':anchor:' + positions[i].anch + ':i:' + i + ':j:' + j + ':dis:' + dis.toFixed(2) + 'texte:' + label.latex + ':colision:' + (colision ? '1' : '0') + ':coli_cer:' + (colision2 ? '1' : '0'))
+      }
+      positions[i].colision = [...coli]
+    }
+    // 1ere stratégie : la préférence de l'utilisateur
+    // on vérifie seulement s'il y a une colision
+    const found: [boolean, number] = [false, 0]
+    for (let i = 0; i < positions.length && !found[0]; i++) {
+      if (positions[i].position === 'middle') continue
+      if (positions[i].position === preferedPosition) {
+        found[0] = true
+        for (let j = 0; j < usedPosition.length; j++) {
+          if (positions[i].colision[j][1]) found[0] = false
+          if (debug) console.info('1er:nom:' + nom + ':position:' + positions[i].position + ':i:' + i + ':j:' + j + ':colision:' + positions[i].colision[j][1] + ':preferedPosition:' + preferedPosition)
+        }
+        found[1] = i
+      }
+    }
+
+    // 2e stratégie : le plus loin en terme de distance!
+    let disMax = [0, 0, 0]
+    for (let i = 0; i < positions.length && !found[0] && usedPosition.length > 0; i++) {
+      if (positions[i].position === 'middle') continue
+      let dis = [1000, 0, 0]
+      for (let j = 0; j < usedPosition.length; j++) {
+        if (positions[i].colision[j][0] < dis[0]) {
+          dis = [positions[i].colision[j][0], i, j]
+          if (debug) console.info('2e:nom:' + nom + ':position:' + positions[i].position + ':anchor:' + positions[i].anch + ':i:' + i + ':j:' + j + 'dis:' + dis[0].toFixed(2) + ':colision:' + positions[i].colision[j][1])
+        }
+      }
+      if (dis[0] > disMax[0]) {
+        disMax = dis
+        if (debug) console.info('Max 2e:nom:' + nom + ':position:' + positions[i].position + ':anchor:' + positions[i].anch + ':i:' + i + 'dis:' + dis[0].toFixed(2))
+      }
+    }
+    let colision = false
+    if (disMax[0] > 0) {
+      colision = positions[disMax[1]].colision[disMax[2]][1]
+      if (debug) console.info('Max fin : 2e:nom:' + nom + ':position:' + positions[disMax[1]].position + ':anchor:' + positions[disMax[1]].anch + ':i:' + disMax[1] + ':j:' + disMax[2] + 'disMax:' + disMax[0] + ':colision:' + positions[disMax[1]].colision[disMax[2]][1])
+    }
+    // 1er : si préférence alors Ok sinon distance la plus loin sans chevauchement sinon la première solution si pas de comparaison sinon la dernière milieu
+    leNom = found[0] ? positions[found[1]].label : (disMax[0] > 0 && !colision ? positions[disMax[1]].label : positions[usedPosition.length === 0 ? 0 : positions.length - 1].label)
+  } else {
+    leNom = vide2d()
+  }
+  return leNom
+}
 
 /**
  * Afin de régler le problème des noms de droites en latex qui ne peuvent se fondre dans le svg, cette fonction retourne un Array de deux objets :
@@ -19,7 +260,7 @@ import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } fr
  * @param {string} color
  * @returns {[Droite, LatexParCoordonnees|Vide2d]}
  */
-export function droiteAvecNomLatex (d: Droite, nom: string, color = 'black') { // nom est un latexParCoordonnees
+export function droiteAvecNomLatex(d: Droite, nom: string, color = 'black') { // nom est un latexParCoordonnees
   d.color = colorToLatexOrHTML(color ?? 'black')
   let absNom, ordNom
   d.epaisseur = 1
@@ -107,7 +348,7 @@ export class Droite extends ObjetMathalea2D {
   directeur: Vecteur
   stringColor: string
   leNom?: TexteParPoint
-  constructor (arg1: number | Point, arg2: number | Point, arg3?: number | string, arg4?: number | string, arg5?: string) {
+  constructor(arg1: number | Point, arg2: number | Point, arg3?: number | string, arg4?: number | string, arg5?: string) {
     super()
     let a, b, c
     this.stringColor = 'black'
@@ -291,7 +532,7 @@ export class Droite extends ObjetMathalea2D {
     )
     this.bordures = [Math.min(this.x1, this.x2), Math.min(this.y1, this.y2), Math.max(this.x1, this.x2), Math.max(this.y1, this.y2)]
     let absNom: number
-    let ordNom:number
+    let ordNom: number
     if (this.nom !== '') {
       if (egal(this.b, 0, 0.05)) { // ax+c=0 x=-c/a est l'équation de la droite
         absNom = -this.c / this.a + 0.8 // l'abscisse du label est décalé de 0.8
@@ -300,7 +541,7 @@ export class Droite extends ObjetMathalea2D {
         absNom = context.fenetreMathalea2d[0] + 0.8 // l'abscisse du label est xmin +1
         ordNom = -this.c / this.b + 0.8 // l'ordonnée du label est décalée de 0.8
       } else { // a et b sont différents de 0 ax+by+c=0 est l'équation
-      // y=(-a.x-c)/b est l'aquation cartésienne et x=(-by-c)/a
+        // y=(-a.x-c)/b est l'aquation cartésienne et x=(-by-c)/a
         const y0 = (-this.a * (context.fenetreMathalea2d[0] + 1) - this.c) / this.b
         const y1 = (-this.a * (context.fenetreMathalea2d[2] - 1) - this.c) / this.b
         const x0 = (-this.b * (context.fenetreMathalea2d[1] + 1) - this.c) / this.a
@@ -332,7 +573,7 @@ export class Droite extends ObjetMathalea2D {
       //   this.leNom = latex2d(this.nom.replaceAll('$', ''), absNom, ordNom, { color: this.stringColor })
       // } else {
       this.leNom = texteParPosition(this.nom, absNom, ordNom, 0, this.stringColor, 1, 'milieu', true) as TexteParPoint
-    //  }
+      //  }
     }
 
     if (this.nom.includes('$')) { // On a du Latex, donc on ne peut pas utiliser droite() tel quel.
@@ -344,7 +585,7 @@ export class Droite extends ObjetMathalea2D {
     }
   }
 
-  svg (coeff: number) {
+  svg(coeff: number) {
     if (this.epaisseur !== 1) {
       this.style += ` stroke-width="${this.epaisseur}" `
     }
@@ -374,18 +615,18 @@ export class Droite extends ObjetMathalea2D {
     const B1 = pointSurSegment(B, A, -50)
     if (this.nom === '') {
       return `<line x1="${A1.xSVG(coeff)}" y1="${A1.ySVG(coeff)}" x2="${B1.xSVG(
-          coeff
+        coeff
       )}" y2="${B1.ySVG(coeff)}" stroke="${this.color[0]}" ${this.style} id ="${this.id}" />`
     } else {
       return `<line x1="${A1.xSVG(coeff)}" y1="${A1.ySVG(coeff)}" x2="${B1.xSVG(
-          coeff
+        coeff
       )}" y2="${B1.ySVG(coeff)}" stroke="${this.color[0]}" ${this.style} id ="${this.id}" />` + (this.leNom != null
         ? this.leNom?.svg(coeff) ?? ''
         : '')
     }
   }
 
-  tikz () {
+  tikz() {
     const tableauOptions = []
     if (this.color[1].length > 1 && this.color[1] !== 'black') {
       tableauOptions.push(`color=${this.color[1]}`)
@@ -431,7 +672,7 @@ export class Droite extends ObjetMathalea2D {
     }
   }
 
-  svgml (coeff: number, amp: number) {
+  svgml(coeff: number, amp: number) {
     const A = point(this.x1, this.y1)
     const B = point(this.x2, this.y2)
     const A1 = pointSurSegment(A, B, -50)
@@ -440,7 +681,7 @@ export class Droite extends ObjetMathalea2D {
     return s.svgml(coeff, amp)
   }
 
-  tikzml (amp: number) {
+  tikzml(amp: number) {
     const A = point(this.x1, this.y1)
     const B = point(this.x2, this.y2)
     const A1 = pointSurSegment(A, B, -50)
@@ -464,7 +705,7 @@ export class Droite extends ObjetMathalea2D {
  * @author Jean-Claude Lhote
  * @return {Droite}
  */
-export function droite (arg1: number | Point, arg2: number | Point, arg3?: number | string, arg4?: number | string, arg5?: string) {
+export function droite(arg1: number | Point, arg2: number | Point, arg3?: number | string, arg4?: number | string, arg5?: string) {
   if (arguments.length === 2) return new Droite(arg1, arg2)
   if (arguments.length === 3) return new Droite(arg1, arg2, arg3)
   if (arguments.length === 4) return new Droite(arg1, arg2, arg3, arg4)
@@ -481,7 +722,7 @@ export function droite (arg1: number | Point, arg2: number | Point, arg3?: numbe
  */
 // JSDOC Validee par EE Aout 2022
 
-export function dessousDessus (d: Droite, A: Point, tolerance = 0.0001) {
+export function dessousDessus(d: Droite, A: Point, tolerance = 0.0001) {
   if (egal(d.a * A.x + d.b * A.y + d.c, 0, tolerance)) return 'sur'
   if (egal(d.b, 0)) {
     if (A.x < -d.c / d.a) return 'gauche'
@@ -502,7 +743,7 @@ export function dessousDessus (d: Droite, A: Point, tolerance = 0.0001) {
  * @param {number} param1.ymax
  * @return {Point} le point qui servira à placer le label.
  */
-export function positionLabelDroite (d: Droite, { xmin = 0, ymin = 0, xmax = 10, ymax = 10 }) {
+export function positionLabelDroite(d: Droite, { xmin = 0, ymin = 0, xmax = 10, ymax = 10 }) {
   let xLab, yLab
   let fXmax, fYmax, fXmin, fYmin
   if (d.b === 0) { // Si la droite est verticale son équation est x = -d.c/d.a on choisit un label au Nord.
@@ -552,7 +793,7 @@ export function positionLabelDroite (d: Droite, { xmin = 0, ymin = 0, xmax = 10,
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtVecteur (A: Point, v: Vecteur, nom = '', color = 'black') {
+export function droiteParPointEtVecteur(A: Point, v: Vecteur, nom = '', color = 'black') {
   const B = point(A.x + v.x, A.y + v.y)
   return new Droite(A, B, nom, color)
 }
@@ -568,7 +809,7 @@ export function droiteParPointEtVecteur (A: Point, v: Vecteur, nom = '', color =
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtParallele (A: Point, d: Droite, nom = '', color = 'black') {
+export function droiteParPointEtParallele(A: Point, d: Droite, nom = '', color = 'black') {
   return droiteParPointEtVecteur(A, d.directeur, nom, color)
 }
 
@@ -583,7 +824,7 @@ export function droiteParPointEtParallele (A: Point, d: Droite, nom = '', color 
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtPerpendiculaire (A: Point, d: Droite, nom = '', color = 'black') {
+export function droiteParPointEtPerpendiculaire(A: Point, d: Droite, nom = '', color = 'black') {
   return droiteParPointEtVecteur(A, d.normal, nom, color)
 }
 
@@ -597,7 +838,7 @@ export function droiteParPointEtPerpendiculaire (A: Point, d: Droite, nom = '', 
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteHorizontaleParPoint (A: Point, nom = '', color = 'black') {
+export function droiteHorizontaleParPoint(A: Point, nom = '', color = 'black') {
   return droiteParPointEtPente(A, 0, nom, color)
 }
 
@@ -611,7 +852,7 @@ export function droiteHorizontaleParPoint (A: Point, nom = '', color = 'black') 
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteVerticaleParPoint (A: Point, nom = '', color = 'black') {
+export function droiteVerticaleParPoint(A: Point, nom = '', color = 'black') {
   return droiteParPointEtVecteur(A, vecteur(0, 1), nom, color)
 }
 
@@ -626,7 +867,7 @@ export function droiteVerticaleParPoint (A: Point, nom = '', color = 'black') {
  * @return {Droite}
  */
 // JSDOC Validee par EE Aout 2022
-export function droiteParPointEtPente (A:Point, k: number, nom = '', color = 'black') {
+export function droiteParPointEtPente(A: Point, k: number, nom = '', color = 'black') {
   const B = point(A.x + 1, A.y + k)
   return new Droite(A, B, nom, color)
 }
@@ -667,7 +908,7 @@ export class Mediatrice extends Droite {
   pointillesMediatrice?: number
   couleurConstruction?: string
 
-  constructor (
+  constructor(
     A: Point,
     B: Point,
     nom = '',
@@ -736,7 +977,7 @@ export class Mediatrice extends Droite {
     }
   }
 
-  svg (coeff: number) {
+  svg(coeff: number) {
     let code = ''
     if (this.objets == null) return code
     for (const objet of this.objets) {
@@ -746,7 +987,7 @@ export class Mediatrice extends Droite {
     return code
   }
 
-  tikz () {
+  tikz() {
     let code = ''
     if (this.objets == null) return code
     for (const objet of this.objets) {
@@ -755,7 +996,7 @@ export class Mediatrice extends Droite {
     return code
   }
 
-  svgml (coeff: number, amp: number) {
+  svgml(coeff: number, amp: number) {
     let code = ''
     if (this.objets == null) return code
     for (const objet of this.objets) {
@@ -765,7 +1006,7 @@ export class Mediatrice extends Droite {
     return code
   }
 
-  tikzml (amp: number) {
+  tikzml(amp: number) {
     let code = ''
     if (this.objets == null) return code
     for (const objet of this.objets) {
@@ -802,7 +1043,7 @@ export class Mediatrice extends Droite {
  * @return {Mediatrice|Droite}
  */
 // JSDOC Validee par EE Juin 2022
-export function mediatrice (A: Point, B: Point, nom = '', couleurMediatrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, markmilieu = '×', markrayons = '||', epaisseurMediatrice = 1, opaciteMediatrice = 1, pointillesMediatrice = 0) {
+export function mediatrice(A: Point, B: Point, nom = '', couleurMediatrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, markmilieu = '×', markrayons = '||', epaisseurMediatrice = 1, opaciteMediatrice = 1, pointillesMediatrice = 0) {
   if (arguments.length < 5) return new Mediatrice(A, B, nom, couleurMediatrice)
   else return new Mediatrice(A, B, nom, couleurMediatrice, color, couleurConstruction, construction, detail, markmilieu, markrayons, epaisseurMediatrice, opaciteMediatrice, pointillesMediatrice)
 }
@@ -845,7 +1086,7 @@ export class Bissectrice extends DemiDroite {
   pointillesBissectrice?: number
   couleurConstruction?: string
 
-  constructor (
+  constructor(
     A: Point,
     O: Point,
     B: Point,
@@ -911,7 +1152,7 @@ export class Bissectrice extends DemiDroite {
     }
   }
 
-  svg (coeff: number) {
+  svg(coeff: number) {
     let code = ''
     if (this.objets == null) return code
     for (const objet of this.objets) {
@@ -920,7 +1161,7 @@ export class Bissectrice extends DemiDroite {
     return code
   }
 
-  tikz () {
+  tikz() {
     let code = ''
     if (this.objets == null) return code
     for (const objet of this.objets) {
@@ -955,7 +1196,7 @@ export class Bissectrice extends DemiDroite {
  * @return {Bissectrice}
  */
 // JSDOC Validee par EE Juin 2022
-export function bissectrice (A: Point, O: Point, B: Point, couleurBissectrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, mark = '×', tailleLosange = 5, epaisseurBissectrice = 1, opaciteBissectrice = 1, pointillesBissectrice = 0) {
+export function bissectrice(A: Point, O: Point, B: Point, couleurBissectrice = 'red', color = 'blue', couleurConstruction = 'black', construction = false, detail = false, mark = '×', tailleLosange = 5, epaisseurBissectrice = 1, opaciteBissectrice = 1, pointillesBissectrice = 0) {
   return new Bissectrice(A, O, B, couleurBissectrice, color, couleurConstruction, construction, detail, mark, tailleLosange, epaisseurBissectrice, opaciteBissectrice, pointillesBissectrice)
 }
 
@@ -967,7 +1208,7 @@ export function bissectrice (A: Point, O: Point, B: Point, couleurBissectrice = 
  * @return {number}
  */
 // JSDOC Validee par EE Aout 2022
-export function distancePointDroite (A: Point, d: Droite) {
+export function distancePointDroite(A: Point, d: Droite) {
   const M = projectionOrtho(A, d) as Point
   return longueur(A, M, 9)
 }

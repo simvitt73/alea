@@ -1,5 +1,5 @@
 import { codageAngleDroit } from '../../lib/2d/angles'
-import { droite, droiteParPointEtPente, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
+import { droite, droiteParPointEtPente, droiteParPointEtPerpendiculaire, labelOnLine } from '../../lib/2d/droites'
 import { point, pointSurDroite } from '../../lib/2d/points'
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
@@ -7,7 +7,6 @@ import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { context } from '../../modules/context'
-import { labelOnLine } from './6G52-2'
 export const titre = 'Se servir des relations entre perpendicularité et parallélisme'
 
 export const dateDePublication = '11/09/2022'
@@ -33,7 +32,7 @@ export const refs = {
   'fr-ch': ['9ES3-6']
 }
 export default class TracerCarresRectangleslongueurDonnees extends Exercice {
-  constructor () {
+  constructor() {
     super()
 
     this.nbQuestions = 2
@@ -45,7 +44,7 @@ export default class TracerCarresRectangleslongueurDonnees extends Exercice {
     this.sup = 3
   }
 
-  nouvelleVersion () {
+  nouvelleVersion() {
     let typesDeQuestionsDisponibles = ['Parallèles', 'Perpendiculaires']
     if (this.sup === 1) typesDeQuestionsDisponibles = ['Parallèles']
     if (this.sup === 2) typesDeQuestionsDisponibles = ['Perpendiculaires']
@@ -94,13 +93,13 @@ export default class TracerCarresRectangleslongueurDonnees extends Exercice {
       const ymax = Math.max(P03.y, P13.y, P23.y, P43.y, P53.y, P63.y) + 4
 
       context.fenetreMathalea2d = [xmin, ymin, xmax, ymax] // important pour la position des labels
-      const d5nom = labelOnLine(d5, '$' + noms[5] + '$', { color: couleurs[5], taille: 8 })
-      const d6nom = labelOnLine(d6, '$' + noms[6] + '$', { color: couleurs[6], taille: 8, usedPosition: [d5nom] })
-      const d0nom = labelOnLine(d0, '$' + noms[0] + '$', { color: couleurs[0], taille: 8, usedPosition: [d5nom, d6nom] })
-      const d1nom = labelOnLine(d1, '$' + noms[1] + '$', { color: couleurs[1], taille: 8, usedPosition: [d5nom, d6nom, d0nom] })
-      const d2nom = labelOnLine(d2, '$' + noms[2] + '$', { color: couleurs[2], taille: 8, usedPosition: [d5nom, d6nom, d0nom, d1nom] })
-      const d4nom = labelOnLine(d4, '$' + noms[4] + '$', { color: couleurs[4], taille: 8, usedPosition: [d5nom, d6nom, d0nom, d1nom, d2nom] })
-      const d3nom = labelOnLine(d3, '$' + noms[3] + '$', { color: couleurs[3], taille: 8, usedPosition: [d5nom, d6nom, d0nom, d1nom, d2nom, d4nom] })
+      const d5nom = labelOnLine(d5, noms[5], { color: couleurs[5], letterSize: 'footnotesize' })
+      const d6nom = labelOnLine(d6, noms[6], { color: couleurs[6], letterSize: 'footnotesize', usedPosition: [d5nom] })
+      const d0nom = labelOnLine(d0, noms[0], { color: couleurs[0], letterSize: 'footnotesize', usedPosition: [d5nom, d6nom] })
+      const d1nom = labelOnLine(d1, noms[1], { color: couleurs[1], letterSize: 'footnotesize', usedPosition: [d5nom, d6nom, d0nom] })
+      const d2nom = labelOnLine(d2, noms[2], { color: couleurs[2], letterSize: 'footnotesize', usedPosition: [d5nom, d6nom, d0nom, d1nom] })
+      const d4nom = labelOnLine(d4, noms[4], { color: couleurs[4], letterSize: 'footnotesize', usedPosition: [d5nom, d6nom, d0nom, d1nom, d2nom] })
+      const d3nom = labelOnLine(d3, noms[3], { color: couleurs[3], letterSize: 'footnotesize', usedPosition: [d5nom, d6nom, d0nom, d1nom, d2nom, d4nom] })
 
       objetsEnonce.push(d0nom, d1nom, d2nom, d3nom, d4nom, d5nom, d6nom)
       // paramètres de la fenêtre Mathalea2d pour l'énoncé normal
