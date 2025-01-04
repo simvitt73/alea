@@ -28,8 +28,8 @@ export class Rose {
   values: ValueType[]
   rayonBoite?: number
 
-  constructor ({ values = [], nombreDeValeurs = 3, rayon = 2, operation = 'addition', type = 'résultats', typeDonnees = 'entiers', cellulesPreremplies = Array.from('abcdefghi'), valeurMax = 10, indexInconnue = 999 }:
-  { values?: ValueType[], nombreDeValeurs?: number, rayon?: number, operation?: string, type?: string, typeDonnees?: string, cellulesPreremplies?: string[], valeurMax?: number, indexInconnue?: number }) {
+  constructor({ values = [], nombreDeValeurs = 3, rayon = 2, operation = 'addition', type = 'résultats', typeDonnees = 'entiers', cellulesPreremplies = Array.from('abcdefghi'), valeurMax = 10, indexInconnue = 999 }:
+    { values?: ValueType[], nombreDeValeurs?: number, rayon?: number, operation?: string, type?: string, typeDonnees?: string, cellulesPreremplies?: string[], valeurMax?: number, indexInconnue?: number }) {
     this.type = type
     this.operation = operation
     this.typeDonnees = typeDonnees
@@ -48,15 +48,15 @@ export class Rose {
       const den = randint(2, this.valeurMax)
       for (let i = 0; i < this.nombreDeValeurs; i++) {
         switch (this.typeDonnees) {
-          case 'entiers' :
+          case 'entiers':
             values.push(randint(2, this.valeurMax, values.map(Number)))
             this.rayon = 2
             break
-          case 'entiers relatifs' :
+          case 'entiers relatifs':
             values.push(randint(-this.valeurMax, this.valeurMax, [0, 1, ...values.map(Number)]))
             this.rayon = 2
             break
-          case 'litteraux' : {
+          case 'litteraux': {
             const value = calculer(`${randint(1, this.valeurMax)}x + ${randint(1, this.valeurMax)}`, null).printResult
             values.push(value)
             this.rayon = 3
@@ -71,11 +71,11 @@ export class Rose {
             this.rayon = 2.5
             break
 
-          case 'fractions positives' :
+          case 'fractions positives':
             values.push(new FractionEtendue(randint(1, this.valeurMax), randint(2, this.valeurMax)).simplifie())
             this.rayon = 2.5
             break
-          case 'fractions relatives' :
+          case 'fractions relatives':
             values.push(new FractionEtendue(randint(-this.valeurMax, this.valeurMax, 0), randint(2, this.valeurMax)).simplifie())
             this.rayon = 2.5
             break
@@ -84,13 +84,13 @@ export class Rose {
     } else { // si elles sont définies, on complète éventuellement la grille aléatoirement.
       for (let i = values.length; i < this.nombreDeValeurs; i++) {
         switch (this.typeDonnees) {
-          case 'entiers' :
+          case 'entiers':
             values.push(randint(2, this.valeurMax, values.map(Number)))
             break
-          case 'entiers relatifs' :
+          case 'entiers relatifs':
             values.push(randint(-this.valeurMax, this.valeurMax, [0, 1, ...values.map(Number)]))
             break
-          case 'litteraux' : {
+          case 'litteraux': {
             const value = calculer(`${randint(1, this.valeurMax)}x + ${randint(1, this.valeurMax)}`, null).printResult
             values.push(value)
           }
@@ -101,10 +101,10 @@ export class Rose {
           case 'fractions positives dénominateurs premiers':
             values.push(new FractionEtendue(randint(1, this.valeurMax), choice([2, 3, 5, 7])).simplifie())
             break
-          case 'fractions positives' :
+          case 'fractions positives':
             values.push(new FractionEtendue(randint(1, this.valeurMax), randint(2, this.valeurMax)).simplifie())
             break
-          case 'fractions relatives' :
+          case 'fractions relatives':
             values.push(new FractionEtendue(randint(-this.valeurMax, this.valeurMax, 0), randint(2, this.valeurMax)).simplifie())
             break
         }
@@ -115,39 +115,91 @@ export class Rose {
   }
 
   // méthode qui calcule les résultats si on le veut (sinon on peut les renseigner dans this.resultats manuellement)
-  calculeResultats () {
+  calculeResultats() {
     for (let i = 0; i < this.nombreDeValeurs; i++) {
-      this.resultats[i] = this.operate(this.values[i], this.values[(i + 1) % this.nombreDeValeurs])
+      const valeur = this.values[i] instanceof FractionEtendue
+        ? (this.values[i] as FractionEtendue).texFraction.replace('dfrac', 'frac')
+        : typeof this.values[i] === 'number'
+          ? String(this.values[i])
+          : String(this.values[i])
+      const valeur2 = this.values[(i + 1) % this.nombreDeValeurs] instanceof FractionEtendue
+        ? (this.values[(i + 1) % this.nombreDeValeurs] as FractionEtendue).texFraction.replace('dfrac', 'frac')
+        : typeof this.values[(i + 1) % this.nombreDeValeurs] === 'number'
+          ? String(this.values[(i + 1) % this.nombreDeValeurs])
+          : String(this.values[(i + 1) % this.nombreDeValeurs])
+
+      this.resultats[i] = this.operate(valeur, valeur2)
     }
   }
 
-  // fonction utilisée par calculeResultats
-  operate (a:ValueType, b:ValueType) {
+  // fonction utilisée par calculeResultats On lui passe des strings pour unifier, elle retourne un string
+  operate(a: string, b: string): string {
     switch (this.operation) {
       case 'addition':
         if (this.typeDonnees !== 'litteraux') {
           if (this.typeDonnees.substring(0, 4) === 'frac') {
-            const aFrac = a as FractionEtendue
-            const bFrac = b as FractionEtendue
-            return aFrac.sommeFraction(bFrac) // math.fraction(math.add(a, b))
+            const numDenA = a.match(/\{(\d+)\}\{(\d+)\}/)
+            let numA: number
+            let denA: number
+            if (numDenA) {
+              numA = Number(numDenA[1])
+              denA = Number(numDenA[2])
+            } else {
+              numA = Number(a)
+              denA = 1
+            }
+            const numDenB = b.match(/\{(\d+)\}\{(\d+)\}/)
+            let numB: number
+            let denB: number
+            if (numDenB) {
+              numB = Number(numDenB[1])
+              denB = Number(numDenB[2])
+            } else {
+              numB = Number(b)
+              denB = 1
+            }
+            const aFrac = new FractionEtendue(numA, denA)
+            const bFrac = new FractionEtendue(numB, denB)
+            return aFrac.sommeFraction(bFrac).texFraction // math.fraction(math.add(a, b))
           } else {
-            const aNumber = a as number
-            const bNumber = b as number
-            return aNumber + bNumber
+            const aNumber = Number(a.replace(',', '.').replace('{.}', '.'))
+            const bNumber = Number(b.replace(',', '.').replace('{.}', '.'))
+            return String(aNumber + bNumber)
           }
         } else {
           return calculer(`${String(a).replace('\\times', '*')}+${String(b).replace('\\times', '*')}`, null).printResult
         }
       case 'multiplication':
+      default:
         if (this.typeDonnees !== 'litteraux') {
           if (this.typeDonnees.substring(0, 4) === 'frac') {
-            const aFrac = a as FractionEtendue
-            const bFrac = b as FractionEtendue
-            return aFrac.produitFraction(bFrac)
+            const numDenA = a.match(/\{(\d+)\}\{(\d+)\}/)
+            let numA: number
+            let denA: number
+            if (numDenA) {
+              numA = Number(numDenA[1])
+              denA = Number(numDenA[2])
+            } else {
+              numA = Number(a)
+              denA = 1
+            }
+            const numDenB = b.match(/\{(\d+)\}\{(\d+)\}/)
+            let numB: number
+            let denB: number
+            if (numDenB) {
+              numB = Number(numDenB[1])
+              denB = Number(numDenB[2])
+            } else {
+              numB = Number(b)
+              denB = 1
+            }
+            const aFrac = new FractionEtendue(numA, denA)
+            const bFrac = new FractionEtendue(numB, denB)
+            return aFrac.produitFraction(bFrac).texFraction
           } else {
-            const aNumber = a as number
-            const bNumber = b as number
-            return aNumber * bNumber
+            const aNumber = Number(a.replace(',', '.').replace('{.}', '.'))
+            const bNumber = Number(b.replace(',', '.').replace('{.}', '.'))
+            return String(aNumber * bNumber)
           }
         } else {
           return calculer(`(${String(a).replace('\\times', '*')}) * (${String(b).replace('\\times', '*')})`, null).printResult
@@ -155,7 +207,7 @@ export class Rose {
     }
   }
 
-  representation () {
+  representation() {
     if (this.type === 'résultats') {
       this.rayonBoite = 1
     } else {
@@ -183,11 +235,11 @@ export class Rose {
       const s1 = homothetie(segment(C, P), C, (longueur(C, P) - this.rayonBoite) / longueur(C, P)) as Segment
       s1.styleExtremites = '->'
       s1.tailleExtremites = 5
-      s1.pointilles = '2'
+      s1.pointilles = 2
       const s2 = homothetie(segment(N, P), N, (longueur(N, P) - this.rayonBoite) / longueur(N, P)) as Segment
       s2.styleExtremites = '->'
       s2.tailleExtremites = 5
-      s2.pointilles = '2'
+      s2.pointilles = 2
       if (this.type === 'can1') {
         bulle1 = vide2d() // rotation(boite({??????}), M, 180 / this.nombreDeValeurs - 90)
       } else {

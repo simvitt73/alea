@@ -25,7 +25,7 @@ export default class ExoRose extends Exercice {
   clavier?: string
   indexInconnue: number[]
 
-  constructor () {
+  constructor() {
     super()
     this.besoinFormulaireNumerique = ['Valeur maximale (entre 10 et 30) des facteurs', 30]
     this.besoinFormulaire2Numerique = ['Nombre de facteur entre 3 et 9 (limité à 5 pour les valeurs fractionnaires ou littérales)', 9]
@@ -48,7 +48,7 @@ export default class ExoRose extends Exercice {
     this.indexInconnue = []
   }
 
-  nouvelleVersion () {
+  nouvelleVersion() {
     this.valeurMax = contraindreValeur(10, 30, this.sup, 10)
     this.nombreDeValeurs = contraindreValeur(3, 9, this.sup2, 5)
     switch (this.sup3) {
@@ -203,7 +203,7 @@ export default class ExoRose extends Exercice {
     return resultat
   }
 
-  saisieCoherente (saisies: string[], taille: number, question: number) {
+  saisieCoherente(saisies: string[], taille: number, question: number) {
     let resultatOK = true
     let stringSaisie = saisies[0]
     let stringResultat
@@ -224,17 +224,17 @@ export default class ExoRose extends Exercice {
         stringSaisie = saisies[i]
         if (this.type === 'résultats') {
           stringResultat = this.roses[question].typeDonnees.substring(0, 4) === 'frac'
-            ? this.roses[question].resultats[i].toLatex().replace('dfrac', 'frac')
-            : this.roses[question].resultats[i].toString()
+            ? this.roses[question].resultats[i].replace('dfrac', 'frac')
+            : String(this.roses[question].resultats[i])
         } else {
           stringResultat = this.roses[question].typeDonnees.substring(0, 4) === 'frac'
-            ? this.roses[question].resultats[i].toLatex().replace('dfrac', 'frac')
+            ? this.roses[question].resultats[i].replace('dfrac', 'frac')
             : String(this.roses[question].resultats[i])
           stringSaisie = this.roses[question].typeDonnees.substring(0, 4) === 'frac'
             ? `${saisies[i]}${this.roses[question].operation === 'addition' ? '+' : '\\times '}${saisies[(i + 1) % this.nombreDeValeurs]}`
-            : String(this.roses[question].operate(saisies[i], saisies[(i + 1) % this.nombreDeValeurs]))
+            : this.roses[question].operate(saisies[i], saisies[(i + 1) % this.nombreDeValeurs])
         }
-        const saisieParsed = engine.parse(stringSaisie)
+        const saisieParsed = engine.parse(stringSaisie.replace('dfrac', 'frac'))
 
         resultatOK = Boolean(resultatOK && (saisieParsed == null ? false : saisieParsed.isEqual(engine.parse(stringResultat) ?? engine.parse('NaN'))))
       }
