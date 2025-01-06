@@ -115,7 +115,7 @@ def newEntry(file:str,dicoType:str)->list:
                 tags: ['']            
             }},\n'''
         
-        elif ((('sujet1' in filename) or ('sujet2' in filename))and('bac' in filename)): # EE : Ici, on considère que c'est le BAC ....
+        elif ((('sujet1' in filename) or ('sujet2' in filename)) and ('bac' in filename)): # EE : Ici, on considère que c'est le BAC ....
             isQCM = filename.startswith('qcm') # EE : Est-ce que c'est un QCM (FlashBac) ?
             if isQCM:
                 filename=filename[4:]  # EE : Enlève 'QCM_' (4 caractères)
@@ -154,9 +154,7 @@ def newEntry(file:str,dicoType:str)->list:
                     questionQCM: '{questionQCM}','''  # Assurez-vous que les guillemets sont corrects
 
 # Compléter la chaîne
-            newLines += f'''                
-                png: 'static/{dicoType}/{annee}/tex/png/{filename}.png',                
-                pngCor: 'static/{dicoType}/{annee}/tex/png/{filename}_cor.png',                
+            newLines += f'''                              
                 typeExercice: '{dicoType}',                               
                 tags: ['']            
             }},\n'''
@@ -178,8 +176,6 @@ def newEntry(file:str,dicoType:str)->list:
                 lieu: '{locationName(filename.split('_')[3])}',
                 mois: '{monthName(filename[9:11])}',
                 numeroInitial: '{numeroInitial}',
-                png: 'static/{dicoType}/{filename[4:8]}/tex/png/{filename}.png',
-                pngCor: 'static/{dicoType}/{filename[4:8]}/tex/png/{filename}_cor.png',
                 typeExercice: '{dicoType}',
                 tags: ['']
             }},\n'''    
