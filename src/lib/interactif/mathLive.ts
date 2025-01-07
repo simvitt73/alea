@@ -200,7 +200,7 @@ export function verifQuestionMathLive (exercice: Exercice, i: number, writeResul
       return { isOk: false, feedback: 'erreur dans le programme', score: { nbBonnesReponses: 0, nbReponses: 1 } }
     }
     const compareFunction = objetReponse.compare ?? fonctionComparaison
-    const options = objetReponse.options
+    const options = objetReponse.options ?? {}
     if (Array.isArray(objetReponse.value)) {
       while ((!isOk) && (ii < objetReponse.value.length)) {
         reponse = objetReponse.value[ii]

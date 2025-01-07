@@ -4,7 +4,7 @@ import type { AutoCorrection, clickFigures } from '../lib/interactif/gestionInte
 import type { OptionsComparaisonType } from '../lib/interactif/comparisonFunctions'
 import type DragAndDrop from '../lib/interactif/DragAndDrop'
 import type Figure from 'apigeom/src/Figure'
-import { KeyboardType, type KeyboardCategory, type PartialKbType } from '../lib/interactif/claviers/keyboard'
+import { KeyboardType, type PartialKbType } from '../lib/interactif/claviers/keyboard'
 
 /**
  *
