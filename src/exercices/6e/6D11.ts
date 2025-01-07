@@ -122,7 +122,7 @@ export default class SommeDeDurees extends Exercice {
 
       if (this.interactif) {
         texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierHms)
-        handleAnswers(this, i, { reponse: { value: t1.add(t2).toString(), options: { HMS: true } } })
+        handleAnswers(this, i, { reponse: { value: t1.add(t2), options: { HMS: true } } })
       }
 
       if (this.questionJamaisPosee(i, m1, s1, h1, m2, s2, h2, t2.toString())) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)

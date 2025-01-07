@@ -29,6 +29,7 @@ import type Exercice from '../../exercices/Exercice'
 import { verifDragAndDrop } from './DragAndDrop'
 import type Figure from 'apigeom/src/Figure'
 import { afficheScore, type ResultOfExerciceInteractif } from './afficheScore'
+import Hms from '../../modules/Hms'
 export interface ReponseParams {
   digits?: number
   decimals?: number
@@ -57,7 +58,13 @@ export interface ReponseParams {
 export type clickFigures = { id: string; solution: boolean }[]
 
 export type AnswerType = {
-  value: string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Grandeur[] | FractionEtendue[] | Decimal[]
+  value: string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Hms
+  compare?: CompareFunction
+  options?: OptionsComparaisonType
+}
+
+export type AnswerNormalizedType = {
+  value: string | string[]
   compare?: CompareFunction
   options?: OptionsComparaisonType
 }
@@ -98,6 +105,42 @@ export interface Valeur {
   }
 }
 
+export interface ValeurNormalized {
+  bareme?: (listePoints: number[]) => [number, number]
+  feedback?: (saisies: object) => string
+  reponse?: AnswerNormalizedType
+  champ1?: AnswerNormalizedType
+  champ2?: AnswerNormalizedType
+  champ3?: AnswerNormalizedType
+  champ4?: AnswerNormalizedType
+  champ5?: AnswerNormalizedType
+  champ6?: AnswerNormalizedType
+  rectangle1?: AnswerNormalizedType
+  rectangle2?: AnswerNormalizedType
+  rectangle3?: AnswerNormalizedType
+  rectangle4?: AnswerNormalizedType
+  rectangle5?: AnswerNormalizedType
+  rectangle6?: AnswerNormalizedType
+  rectangle7?: AnswerNormalizedType
+  rectangle8?: AnswerNormalizedType
+
+  // on va aller jusque 6 pour l'instant, si besoin on en ajoutera
+  L1C1?: AnswerNormalizedType
+  L1C2?: AnswerNormalizedType
+  L2C1?: AnswerNormalizedType
+  L2C2?: AnswerNormalizedType // idem on en ajoutera si besoin
+  callback?: (
+    exercice: Exercice,
+    question: number,
+    variables: [string, AnswerNormalizedType][],
+    bareme: (listePoints: number[]) => [number, number],
+  ) => {
+    isOk: boolean
+    feedback: string
+    score: { nbBonnesReponses: number, nbReponses: number }
+  }
+}
+
 export type LegacyReponse = string | FractionEtendue | Decimal | number
 export type LegacyReponses = LegacyReponse[] | LegacyReponse
 export interface AutoCorrection {
@@ -111,7 +154,7 @@ export interface AutoCorrection {
     feedback?: string
   }[]
   reponse?: {
-    valeur?: Valeur
+    valeur?: ValeurNormalized
     param?: ReponseParams
   }
   options?: {
@@ -243,22 +286,26 @@ export function exerciceInteractif (
       default:
         {
           const result = verifQuestionMathLive(exercice, i)
-          nbQuestionsValidees += result.score.nbBonnesReponses
-          nbQuestionsNonValidees +=
-            result.score.nbReponses - result.score.nbBonnesReponses
-          if (result.feedback && result.feedback !== '') {
-            const divFeedback = document.querySelector(
-              `#feedbackEx${exercice.numeroExercice}Q${i}`
-            )
-            if (divFeedback != null) {
-              divFeedback.innerHTML = `💡 ${result.feedback}`
-              divFeedback.classList.add(
-                'py-2',
-                'italic',
-                'text-coopmaths-warn-darkest',
-                'dark:text-coopmathsdark-warn-darkest'
-              );
-              (divFeedback as HTMLDivElement).style.display = 'block'
+          if (result == null) {
+            window.notify('erreur dans la correction de la question', { exercice, i })
+          } else {
+            nbQuestionsValidees += result.score.nbBonnesReponses
+            nbQuestionsNonValidees +=
+              result.score.nbReponses - result.score.nbBonnesReponses
+            if (result.feedback && result.feedback !== '') {
+              const divFeedback = document.querySelector(
+                `#feedbackEx${exercice.numeroExercice}Q${i}`
+              )
+              if (divFeedback != null) {
+                divFeedback.innerHTML = `💡 ${result.feedback}`
+                divFeedback.classList.add(
+                  'py-2',
+                  'italic',
+                  'text-coopmaths-warn-darkest',
+                  'dark:text-coopmathsdark-warn-darkest'
+                );
+                (divFeedback as HTMLDivElement).style.display = 'block'
+              }
             }
           }
         }
@@ -579,40 +626,12 @@ export function setReponse (
           )
         }
         break
-        /*
-      case 'fractionPlusSimple': // Avec handleAnswers(), ce case n'a plus lieu d'être !
-        if (!(reponse instanceof FractionEtendue)) {
-          window.notify(
-            'setReponse : type "fractionPlusSimple" une fraction est attendue !',
-            { reponses, exercice: exercice.uuid }
-          )
-        } else if (Number.isNaN(reponse.num) || Number.isNaN(reponse.den)) {
-          window.notify('setReponse : La fraction ne convient pas !', {
-            reponses,
-            exercice: exercice.uuid
-          })
-        }
-        break
-        */
+
       case 'fractionEgale':
         if (!(reponse instanceof FractionEtendue)) window.notify('setReponse : type "fractionEgale" une fraction est attendue !', { reponses, exercice: exercice.uuid })
         else if (isNaN(reponse.num) || isNaN(reponse.den)) window.notify('setReponse : La fraction ne convient pas !', { reponses, exercice: exercice.uuid })
         break
-      /*
-        case 'fraction': // Avec handleAnswers(), ce case n'a plus lieu d'être !
-        if (!(reponse instanceof FractionEtendue)) {
-          window.notify(
-            'setReponse : type "fraction" une fraction est attendue !',
-            { reponses, exercice: exercice.uuid }
-          )
-        } else if (Number.isNaN(reponse.num) || Number.isNaN(reponse.den)) {
-          window.notify('setReponse : La fraction ne convient pas !', {
-            reponses,
-            exercice: exercice.uuid
-          })
-        }
-        break
-        */
+
       case 'unites': // Pour les exercices où l'on attend une mesure avec une unité au choix
         if (!(reponse instanceof Grandeur)) {
           window.notify(
@@ -722,7 +741,9 @@ export function setReponse (
               .replaceAll('dfrac', 'frac')
               .replace(/\s/g, '')
               .replace(',', '.')
-          } else if (typeof laReponseDemandee === 'number') {
+          }
+          // Ceci n'est plus nécessaire avec le wrapper de hanfleAnswer
+          /* else if (typeof laReponseDemandee === 'number') {
             laReponseDemandee = String(laReponseDemandee)
           } else if (laReponseDemandee instanceof FractionEtendue) {
             laReponseDemandee = laReponseDemandee.texFraction.replaceAll(
@@ -731,7 +752,7 @@ export function setReponse (
             )
           } else if (laReponseDemandee instanceof Decimal) {
             laReponseDemandee = laReponseDemandee.toString()
-          }
+          } */
           return handleAnswers(
             exercice,
             i,
@@ -767,101 +788,7 @@ export function setReponse (
           params
         )
       }
-      // Avec handleAnswers(), ce case n'a plus lieu d'être !
-      /* case 'hms':
-        if (!(reponse instanceof Hms)) {
-          window.notify(
-            'setReponse : type "hms" la réponse n\'est pas une instance de Hms !',
-            { reponses, exercice: exercice.uuid }
-          )
-        }
-        return handleAnswers(
-          exercice,
-          i,
-          {
-            reponse: {
-              value: reponse.toString(),
-              compare: fonctionComparaison,
-              options: { HMS: true }
-            }
-          },
-          params
-        ) */
-      // Avec handleAnswers(), ce case n'a plus lieu d'être !
-      /* case 'nombreDecimal':
-        if (reponse instanceof Decimal) {
-          return handleAnswers(
-            exercice,
-            i,
-            {
-              reponse: {
-                value: reponse.toString(),
-                //  compare: decimalCompare
-                //  compare: numberCompare
-                compare: fonctionComparaison
-              }
-            },
-            params
-          )
-        }
-        if (Number.isNaN(reponse)) {
-          window.notify(
-            'setReponse : type "nombreDecimal" un nombre est attendu !',
-            { reponses, exercice: exercice.uuid }
-          )
-        }
 
-        return handleAnswers(
-          exercice,
-          i,
-          {
-            reponse: {
-              value: String(reponse).replace(',', '.'),
-              // compare: decimalCompare
-              // compare: numberCompare
-              compare: fonctionComparaison
-            }
-          },
-          params
-        ) */
-      // Avec handleAnswers(), ce case n'a plus lieu d'être !
-      /* case 'ecritureScientifique':
-        {
-          if (typeof reponse !== 'string') {
-            window.notify(
-              'setReponse : type "ecritureScientifique" la réponse n\'est pas un string !',
-              { reponses, exercice: exercice.uuid }
-            )
-          }
-          const [mantisseString, exposantString] = (reponse as string).split(
-            'e'
-          )
-          const mantisse = Number(mantisseString.replace(',', '.'))
-          const exposant = Number(exposantString)
-          if (
-            Number(mantisse) != null &&
-            Math.abs(mantisse) < 10 &&
-            Number.isFinite(exposant)
-          ) {
-            return handleAnswers(
-              exercice,
-              i,
-              {
-                reponse: {
-                  value: (reponse as string).replace(',', '.'),
-                  compare: fonctionComparaison,
-                  options: { ecritureScientifique: true }
-                }
-              },
-              params
-            )
-          }
-          window.notify(
-            'setReponse : type "ecritureScientifique" l\'écriture n\'est pas une écriture scientifique !',
-            { reponses, exercice: exercice.uuid }
-          )
-        }
-        break */
       case 'texte':
         if (typeof reponse !== 'string') {
           window.notify(
@@ -883,10 +810,7 @@ export function setReponse (
           },
           params
         )
-      /* case 'canonicalAdd':
-      if (typeof reponse !== 'string') window.notify('setReponse : type "canonicalAdd" la réponse n\'est pas un string !', { reponses, exercice: exercice.uuid })
-      return handleAnswers(exercice, i, { reponse: { value: reponses.map(String), compare: canonicalAddCompare } }, param)
-    */
+
       case 'ignorerCasse':
         if (typeof reponse !== 'string') {
           window.notify(
@@ -909,34 +833,7 @@ export function setReponse (
           },
           params
         )
-        /*
-      case 'fractionPlusSimple': // Avec handleAnswers(), ce case n'a plus lieu d'être !
-        if (!(reponse instanceof FractionEtendue)) {
-          window.notify(
-            'setReponse : type "fractionPlusSimple" une fraction est attendue !',
-            { reponses, exercice: exercice.uuid }
-          )
-        } else if (Number.isNaN(reponse.num) || Number.isNaN(reponse.den)) {
-          window.notify('setReponse : La fraction ne convient pas !', {
-            reponses,
-            exercice: exercice.uuid
-          })
-        }
-        if (reponse instanceof FractionEtendue) {
-          return handleAnswers(
-            exercice,
-            i,
-            {
-              reponse: {
-                value: reponse.texFraction.replace('dfrac', 'frac'),
-                compare: simplerFractionCompare
-              }
-            },
-            params
-          )
-        }
-        break
-        */
+
       case 'fractionEgale':
         if (!(reponse instanceof FractionEtendue)) {
           window.notify(
@@ -961,8 +858,7 @@ export function setReponse (
             i,
             {
               reponse: {
-                value: reponse.texFraction.replace('dfrac', 'frac'),
-                //  compare: equalFractionCompare
+                value: reponse, // reponse.texFraction.replace('dfrac', 'frac') plus nécessaire : le wrapper de handleAnswers s'en occupe
                 compare: fonctionComparaison
               }
             },
@@ -970,34 +866,7 @@ export function setReponse (
           )
         }
         break
-      /* case 'fraction': // Avec handleAnswers(), ce case n'a plus lieu d'être !
-        if (!(reponse instanceof FractionEtendue)) {
-          window.notify(
-            'setReponse : type "fraction" une fraction est attendue !',
-            { reponses, exercice: exercice.uuid }
-          )
-        } else if (Number.isNaN(reponse.num) || Number.isNaN(reponse.den)) {
-          window.notify('setReponse : La fraction ne convient pas !', {
-            reponses,
-            exercice: exercice.uuid
-          })
-        }
-        if (reponse instanceof FractionEtendue) {
-          return handleAnswers(
-            exercice,
-            i,
-            {
-              reponse: {
-                value: reponse.texFSD,
-                // compare: fractionCompare
-                compare: fonctionComparaison,
-                options: { fractionIrreductible: true } // EE : Tester si dans certains exos, faudrait pas mettre, fractionDecimale pour les exos utilisant setReponse
-              }
-            },
-            params
-          )
-        }
-        break */
+
       case 'unites': // Pour les exercices où l'on attend une mesure avec une unité au choix
         if (precision == null) precision = 0 // Des exercices utilisent le format 'unites' mais ne définissent pas la précision
         if (!(reponse instanceof Grandeur)) {
@@ -1012,9 +881,7 @@ export function setReponse (
             i,
             {
               reponse: {
-                value: reponse.toString().replace('\u202f', ''),
-                /* options: { precision: 10 ** precision * 10 ** (reponse.puissanceUnite * reponse.puissancePrefixe) },
-          compare: unitsCompare */
+                value: reponse, // .toString().replace('\u202f', '') plus nécessaire grâce au wrapper de handleAnswers
                 compare: fonctionComparaison,
                 options: {
                   unite: true,
@@ -1093,11 +960,6 @@ export function setReponse (
           },
           params
         )
-      /* EE : N'existe plus. Faudra choisir entre réduite ou non réduite avec les fonctions de comparaisons
-    case 'developpements' :
-      if (typeof reponse !== 'string') window.notify('setReponse : type "developpements" la réponse n\'est pas un string !', { reponses, exercice: exercice.uuid })
-      return handleAnswers(exercice, i, { reponse: { value: reponses.map(String), compare: developmentCompare } }, param)
-    */
     }
   }
 
@@ -1110,7 +972,7 @@ export function setReponse (
   const rep = exercice.autoCorrection[i].reponse
   if (rep != null) {
     rep.param = params
-    rep.valeur = reponses as Valeur
+    rep.valeur = reponses as ValeurNormalized
   }
 }
 
@@ -1160,6 +1022,30 @@ export function handleAnswers (
     rep.param = params ?? { formatInteractif }
     if (formatInteractif === undefined) formatInteractif = 'mathlive'
     rep.param.formatInteractif = formatInteractif
-    rep.valeur = reponses
+    rep.valeur = wrapperReponsesToString(reponses)
   }
+}
+
+function wrapperReponsesToString (reponses: Valeur): ValeurNormalized {
+  for (const [, val] of Object.entries(reponses)) {
+    if (Object.hasOwn(val, 'value')) {
+      const value = val.value
+      if (!Array.isArray(value)) {
+        if (typeof value === 'string') continue
+        if (value instanceof Decimal || value instanceof Grandeur || value instanceof Hms || typeof value === 'number') {
+          val.value = value.toString()
+        }
+        if (value instanceof FractionEtendue) val.value = value.texFraction
+      } else {
+        for (let i = 0; i < value.length; i++) {
+          if (typeof value[i] === 'string') continue
+          if (value[i] instanceof Decimal || value[i] instanceof Grandeur || value[i] instanceof Hms || typeof value[i] === 'number') {
+            value[i] = value[i].toString()
+          }
+          if (value[i] instanceof FractionEtendue) value[i] = value[i].texFraction
+        }
+      }
+    }
+  }
+  return reponses as ValeurNormalized
 }
