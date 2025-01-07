@@ -5,10 +5,12 @@ import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Operation from '../../modules/operations'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { mathalea2d } from '../../modules/2dGeneralites'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { mathalea2d, vide2d } from '../../modules/2dGeneralites'
+import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif'
 import Exercice from '../Exercice'
+import Decimal from 'decimal.js'
 
+export const dateDeModifImportante = '07/01/2025'
 export const amcReady = true
 export const amcType = 'AMCNum'
 export const interactifReady = true
@@ -49,7 +51,6 @@ export default class MultiplierDecimaux extends Exercice {
   }
 
   nouvelleVersion () {
-    this.sup2 = parseInt(this.sup2)
     const typesDeQuestionsDisponibles = [1, 2, 3, 4]
     const listeTypeDeQuestions = combinaisonListes(
       typesDeQuestionsDisponibles,
@@ -58,8 +59,8 @@ export default class MultiplierDecimaux extends Exercice {
 
     let grilletxt
     if (this.sup2 < 3) {
-      const g = (this.sup2 < 3 ? grille(0, 0, 5, 8, 'gray', 0.7) : '')
-      const carreaux = (this.sup2 === 2 ? seyes(0, 0, 5, 8) : '')
+      const g = (this.sup2 < 3 ? grille(0, 0, 5, 8, 'gray', 0.7) : vide2d())
+      const carreaux = (this.sup2 === 2 ? seyes(0, 0, 5, 8) : vide2d())
       const sc = (this.sup2 === 2 ? 0.8 : 0.5)
       const params = { xmin: 0, ymin: 0, xmax: 5, ymax: 8, pixelsParCm: 20, scale: sc }
       grilletxt = '<br>' + mathalea2d(params, g, carreaux)
@@ -68,36 +69,43 @@ export default class MultiplierDecimaux extends Exercice {
     }
 
     let typesDeQuestions, reponse
-    for (let i = 0, texte, texteCorr, cpt = 0, a, b; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, texte, texteCorr, cpt = 0, a, b, c; i < this.nbQuestions && cpt < 50;) {
       typesDeQuestions = listeTypeDeQuestions[i]
       switch (typesDeQuestions) {
         case 1: // xxx * xx,x chiffres inférieurs à 5
-          a = randint(2, 5) * 100 + randint(2, 5) * 10 + randint(2, 5)
-          b = randint(2, 5) * 10 + randint(2, 5) + randint(2, 5) / 10
+          a = new Decimal(randint(2, 5) * 100 + randint(2, 5) * 10 + randint(2, 5))
+          c = new Decimal(randint(2, 5)).div(10)
+          b = new Decimal(randint(2, 5)).add(c)
           break
         case 2: // xx,x * x,x
-          a = randint(2, 9) * 10 + randint(2, 9) + randint(2, 9) / 10
-          b = randint(6, 9) + randint(6, 9) / 10
+          c = new Decimal(randint(2, 9)).div(10)
+          a = new Decimal(randint(2, 9) * 10 + randint(2, 9)).add(c)
+          c = new Decimal(randint(6, 9)).div(10)
+          b = new Decimal(randint(6, 9)).add(c)
           break
         case 3: // x,xx * x0x
-          a = randint(2, 9) + randint(2, 9) / 10 + randint(2, 9) / 100
-          b = randint(2, 9) * 100 + randint(2, 9)
+          c = new Decimal(randint(2, 9)).div(10).add(new Decimal(randint(2, 9)).div(100))
+          a = new Decimal(randint(2, 9)).add(c).add(c)
+          b = new Decimal(randint(2, 9) * 100 + randint(2, 9))
           break
         case 4: // 0,xx * x,x
         default:
-          a = randint(2, 9) / 10 + randint(2, 9) / 100
-          b = randint(2, 9) + randint(2, 9) / 10
+          c = new Decimal(randint(2, 9)).div(10)
+          a = new Decimal(randint(2, 9)).div(100).add(c)
+          c = new Decimal(randint(2, 9)).div(10)
+          b = new Decimal(randint(2, 9)).add(c)
           break
       }
 
       texte = `$${texNombre(a)}\\times${texNombre(b)}$`
       texte += grilletxt
-      reponse = a * b
-      texteCorr = Operation({ operande1: a, operande2: b, type: 'multiplication', style: 'display: inline' })
+      reponse = new Decimal(a).mul(b)
+      texteCorr = Operation({ operande1: a.toNumber(), operande2: b.toNumber(), type: 'multiplication', style: 'display: inline' })
       texteCorr += context.isHtml ? '' : '\\hspace*{30mm}'
-      texteCorr += Operation({ operande1: b, operande2: a, type: 'multiplication', style: 'display: inline' })
-      if (context.isHtml && this.interactif) texte += '$~=$' + ajouteChampTexteMathLive(this, i, '')
-      setReponse(this, i, reponse)
+      texteCorr += Operation({ operande1: b.toNumber(), operande2: a.toNumber(), type: 'multiplication', style: 'display: inline' })
+      texte += ajouteChampTexteMathLive(this, i, '', { texteAvant: '$~=$' })
+      if (context.isAmc) setReponse(this, i, reponse)
+      else handleAnswers(this, i, { reponse: { value: reponse, options: { nombreDecimalSeulement: true } } })
       this.autoCorrection[i].options = {
         digits: 0,
         decimals: 0,
@@ -106,7 +114,7 @@ export default class MultiplierDecimaux extends Exercice {
         exposantSigne: false,
         approx: 0
       }
-
+      texte += '<br>' + reponse
       if (this.questionJamaisPosee(i, a, b)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
