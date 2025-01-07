@@ -25,7 +25,6 @@ export default class Alignementdetroispoints extends Exercice {
     this.nbCols = 2 // Uniquement pour la sortie LaTeX
     this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
     this.sup = 1 // Niveau de difficulté
-
   }
 
   nouvelleVersion () {
