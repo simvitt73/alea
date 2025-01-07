@@ -6,6 +6,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import FractionEtendue from '../../modules/FractionEtendue'
+import { getLang } from '../../lib/stores/languagesStore'
 
 export const titre = 'Déterminer une équation réduite de droite'
 export const dateDeModifImportante = '08/12/2024'
@@ -31,12 +32,20 @@ export default class EquationReduiteDeDroites extends Exercice {
     this.nbCols = 2 // Uniquement pour la sortie LaTeX
     this.nbColsCorr = 2 // Uniquement pour la sortie LaTeX
     this.sup = 1 // Niveau de difficulté
-
   }
 
   nouvelleVersion () {
-    if (this.sup === 1) this.consigne = 'Soit $\\big(O ; \\vec \\imath,\\vec \\jmath\\big)$ un repère orthogonal.<br>Déterminer une équation réduite de ' + (this.nbQuestions !== 1 ? 'chaque' : 'la') + ' droite $(AB)$ avec les points $A$ et $B$ de coordonnées suivantes.'
-    else this.consigne = 'Soit $\\big(O ; \\vec \\imath,\\vec \\jmath\\big)$ un repère orthogonal.<br>Déterminer une équation réduite de ' + (this.nbQuestions !== 1 ? 'chaque' : 'la') + ' droite $(d)$  passant par le point $A$  et ayant le vecteur $\\vec {u}$ comme vecteur directeur. $A$ et $\\vec {u}$ ont les coordonnées suivantes.'
+    const lang = getLang()
+    if (lang === 'fr-CH') {
+      if (this.sup === 1) {
+        this.consigne = 'Déterminer une équation réduite de ' + (this.nbQuestions !== 1 ? 'chaque' : 'la') + ' droite $(AB)$ avec les points $A$ et $B$ de coordonnées suivantes.'
+      } else {
+        this.consigne = 'Déterminer une équation réduite de ' + (this.nbQuestions !== 1 ? 'chaque' : 'la') + ' droite $(d)$  passant par le point $A$  et ayant comme pente $m$.'
+      }
+    } else {
+      if (this.sup === 1) this.consigne = 'Soit $\\big(O ; \\vec \\imath,\\vec \\jmath\\big)$ un repère orthogonal.<br>Déterminer une équation réduite de ' + (this.nbQuestions !== 1 ? 'chaque' : 'la') + ' droite $(AB)$ avec les points $A$ et $B$ de coordonnées suivantes.'
+      else this.consigne = 'Soit $\\big(O ; \\vec \\imath,\\vec \\jmath\\big)$ un repère orthogonal.<br>Déterminer une équation réduite de ' + (this.nbQuestions !== 1 ? 'chaque' : 'la') + ' droite $(d)$  passant par le point $A$  et ayant le vecteur $\\vec {u}$ comme vecteur directeur. $A$ et $\\vec {u}$ ont les coordonnées suivantes.'
+    }
 
     for (let i = 0, texte, xA, yA, xB, yB, n, d, texteCorr, xu, yu, reponse, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       if (this.sup === 1) { // case 'A et B':
@@ -71,15 +80,22 @@ export default class EquationReduiteDeDroites extends Exercice {
         yu = randint(-5, 5)
         n = yu
         d = xu
-
-        texte = `$A(${xA}\\,;\\,${yA})$ et $\\vec {u} \\begin{pmatrix}${xu}\\\\${yu}\\end{pmatrix}$`
-        texteCorr = 'On observe que $ \\vec u$ n\'est pas colinéaire au vecteur $\\vec \\jmath$, puisque son déplacement horizontal est non nul.'
-        texteCorr += '<br>La droite $(d)$ n\'est donc pas verticale. Elle admet donc une équation du type : $(d) :y=mx+p$.'
-        texteCorr += '<br>On commence par calculer le coefficient directeur $m$.'
-        texteCorr += '<br>On sait d\'après le cours que si $\\vec u \\begin{pmatrix}a\\\\b\\end{pmatrix}$, alors $m=\\dfrac{b}{a}$.'
-        texteCorr += '<br>On applique avec les données de l\'énoncé : $m'
+        if (lang === 'fr-CH') {
+          texte = `$A(${xA}\\,;\\,${yA})$ et $m`
+          texte += `=${new FractionEtendue(n, d).texFraction}`
+          if ((pgcd(n, d) !== 1 || d === 1 || d < 0 || n < 0) && n !== 0) {
+            texte += `=${new FractionEtendue(n, d).texFractionSimplifiee}`
+          }
+          texte += '$.'
+        } else {
+          texte = `$A(${xA}\\,;\\,${yA})$ et $\\vec {u} \\begin{pmatrix}${xu}\\\\${yu}\\end{pmatrix}$`
+          texteCorr = 'On observe que $ \\vec u$ n\'est pas colinéaire au vecteur $\\vec \\jmath$, puisque son déplacement horizontal est non nul.'
+          texteCorr += '<br>La droite $(d)$ n\'est donc pas verticale. Elle admet donc une équation du type : $(d) :y=mx+p$.'
+          texteCorr += '<br>On commence par calculer le coefficient directeur $m$.'
+          texteCorr += '<br>On sait d\'après le cours que si $\\vec u \\begin{pmatrix}a\\\\b\\end{pmatrix}$, alors $m=\\dfrac{b}{a}$.'
+          texteCorr += '<br>On applique avec les données de l\'énoncé : $m'
+        }
       }
-
       const nomDroite = this.sup === 1 ? 'AB' : 'd'
       if (this.sup === 1 && xA === xB) {
         texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: `<br>$(${nomDroite}) :$` })
@@ -89,15 +105,17 @@ export default class EquationReduiteDeDroites extends Exercice {
         reponse = reduireAxPlusB(new FractionEtendue(n, d).simplifie(), new FractionEtendue(d * yA - n * xA, d).simplifie())
       }
       handleAnswers(this, i, { reponse: { value: reponse } })
-
+      if (lang !== 'fr-CH' && this.sup !== 1) {
       // Correction commune aux deux this.sup
-      texteCorr += `=${new FractionEtendue(n, d).texFraction}`
-      if ((pgcd(n, d) !== 1 || d === 1 || d < 0 || n < 0) && n !== 0) {
-        texteCorr += `=${new FractionEtendue(n, d).texFractionSimplifiee}`
+        texteCorr += `=${new FractionEtendue(n, d).texFraction}`
+        if ((pgcd(n, d) !== 1 || d === 1 || d < 0 || n < 0) && n !== 0) {
+          texteCorr += `=${new FractionEtendue(n, d).texFractionSimplifiee}`
+        }
+        texteCorr += '$.<br><br>'
+      } else {
+        texteCorr = ''
       }
-      texteCorr += '$.'
-
-      texteCorr += `<br><br>L'équation de la droite $(${nomDroite})$ est donc de la forme : $y=`
+      texteCorr += `L'équation de la droite $(${nomDroite})$ est donc de la forme : $y=`
       texteCorr += `${new FractionEtendue(n, d).texFractionSimplifiee} \\times x+p$`
       texteCorr += `<br><br>Comme $A \\in (${nomDroite})$, les coordonnées du point $A$ vérifient l'équation, donc :`
       texteCorr += `<br>$${yA}=${new FractionEtendue(n, d).texFractionSimplifiee} \\times ${ecritureParentheseSiNegatif(xA)} +p$`

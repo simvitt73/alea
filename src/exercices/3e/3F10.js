@@ -5,6 +5,7 @@ import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { context } from '../../modules/context'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { getLang } from '../../lib/stores/languagesStore'
 
 export const titre = 'Lire images et antécédents depuis un tableau de valeurs'
 export const interactifReady = true
@@ -29,6 +30,7 @@ export default class ImageAntecedentDepuisTableauOuFleche extends Exercice {
   }
 
   nouvelleVersion () {
+    const lang = getLang()
     for (let i = 0, texte, texteCorr, texteAMC, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const a = randint(-20, 20)
       const b = randint(-20, 20, [a])
@@ -121,8 +123,8 @@ export default class ImageAntecedentDepuisTableauOuFleche extends Exercice {
         )
       }
 
-      let texte3 = `Déterminer l'antécédent ou les antécédents de $${a}$ par la fonction $f$.`
-      const texteCorr3 = `$${a}$ a un seul antécédent par la fonction $f$ qui est $${d}$, on note $f(${d})=${a}$.`
+      let texte3 = `Déterminer ${lang === 'fr-CH' ? 'la préimage' : 'l\'antécédent ou les antécédents'} de $${a}$ par la fonction $f$.`
+      const texteCorr3 = `$${a}$ a ${lang === 'fr-CH' ? 'un seul élément dans la préimage' : 'un seul antécédent'} par la fonction $f$ qui est $${d}$, on note $f(${d})=${a}$.`
       setReponse(this, i * 6 + 2, d)
       texte3 += ajouteChampTexteMathLive(this, i * 6 + 2)
       if (context.isAmc) {
@@ -150,7 +152,7 @@ export default class ImageAntecedentDepuisTableauOuFleche extends Exercice {
       }
 
       let texte4 = `Déterminer l'antécédent ou les antécédents de $${d}$ par la fonction $f$.`
-      const texteCorr4 = `$${d}$ a deux antécédents par la fonction $f$ qui sont $${c}$ et $${e}$, on note $f(${c})=f(${e})=${d}$.`
+      const texteCorr4 = `$${d}$ ${lang === 'fr-CH' ? 'deux éléments dans la préimage' : 'a deux antécédents'} par la fonction $f$ qui sont $${c}$ et $${e}$, on note $f(${c})=f(${e})=${d}$.`
       setReponse(this, i * 6 + 3, [`${c};${e}`, `${e};${c}`], { formatInteractif: 'texte' })
       texte4 += ajouteChampTexteMathLive(this, i * 6 + 3)
       if (context.isAmc) {
