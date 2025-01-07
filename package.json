@@ -72,6 +72,7 @@
   "dependencies": {
     "@bugsnag/js": "^7.25.0",
     "@cortex-js/compute-engine": "^0.27.0",
+    "@sveltejs/vite-plugin-svelte": "^3.1.2",
     "@mixer/postmessage-rpc": "^1.1.4",
     "@svgdotjs/svg.js": "^3.2.4",
     "@types/crypto-js": "^4.2.2",
