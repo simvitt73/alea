@@ -93,7 +93,7 @@ export default class Milieu extends Exercice {
       // s3 = codageSegments('X', 'red', s1, s2)
       T = tracePoint(A, B, M) // Repère les points avec une croix
       L = labelPoint(A, B, M)
-      corrD = `<br>On sait d'après le cours, que si $A(x_A\\,;\\,y_A)$ et $B(x_B\\,;\\,y_B)$ sont deux points d'un repère orthonormé,
+      corrD = `On sait d'après le cours, que si $A(x_A\\,;\\,y_A)$ et $B(x_B\\,;\\,y_B)$ sont deux points d'un repère orthonormé,
        alors $x_M$ l'abscisse du point $M$ est la ${texteGras('moyenne')} des abscisses des points $A$ et $B$, soit $x_M=\\dfrac{x_A+x_B}{2}$ et 
       $y_M$ l'ordonnée du point $M$ est la ${texteGras('moyenne')} des ordonnées des points $A$ et $B$, soit $y_M=\\dfrac{y_A+y_B}{2}$. <br>
       Ainsi,  les coordonnées du point $M$ milieu de $[AB]$ sont 
