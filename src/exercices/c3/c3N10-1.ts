@@ -13,6 +13,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { context } from '../../modules/context'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import type { MathfieldElement } from 'mathlive'
 
 export const titre = 'Recomposer un entier'
 export const interactifReady = true
@@ -47,6 +48,13 @@ export const refs = {
   'fr-ch': ['9NO1-8']
 }
 export default class RecomposerEntierC3 extends Exercice {
+  nombreDeChiffresMin!: number
+  nombreDeChiffresMax!: number
+  nombreDeChamps!: number[]
+  premierChamp!: number[]
+  morceaux!: string[][]
+  exposantMorceaux!: number[][]
+
   constructor () {
     super()
     this.besoinFormulaireCaseACocher = [
@@ -126,10 +134,10 @@ export default class RecomposerEntierC3 extends Exercice {
             nombreStr += randint(1, 9).toString()
           }
           if (presenceDeZeros > 1) {
-            const arrayFromNbr = Array.from(nombreStr)
+            const arrayFromNbr: string[] = Array.from(nombreStr)
             const indexOfZero = randint(1, arrayFromNbr.length - 2)
-            arrayFromNbr[indexOfZero] = 0
-            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = 0
+            arrayFromNbr[indexOfZero] = '0'
+            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = '0'
             nombreStr = arrayFromNbr.join('')
           }
           nombre = new Decimal(nombreStr)
@@ -149,19 +157,19 @@ export default class RecomposerEntierC3 extends Exercice {
             if (this.morceaux[i][k] !== '0') {
               if (this.interactif) {
                 texte += enLettre
-                  ? `${ajouteChampTexteMathLive(this, indexChamp, KeyboardType.clavierDeBase)}~${glossaire[this.exposantMorceaux[i][k]][this.morceaux[i][k] > 1 ? 1 : 0]}+`
+                  ? `${ajouteChampTexteMathLive(this, indexChamp, KeyboardType.clavierDeBase)}~${glossaire[this.exposantMorceaux[i][k]][Number(this.morceaux[i][k]) > 1 ? 1 : 0]}+`
                   : `($${ajouteChampTexteMathLive(this, indexChamp, KeyboardType.clavierDeBase)}$\\times${texNombre(10 ** this.exposantMorceaux[i][k], 0)})+`
                 setReponse(this, indexChamp, this.morceaux[i][k])
                 indexChamp++
               } else {
                 texte += `${
                   enLettre
-                    ? `\\ldots~\\text{${glossaire[this.exposantMorceaux[i][k]][this.morceaux[i][k] > 1 ? 1 : 0]}}+`
+                    ? `\\ldots~\\text{${glossaire[this.exposantMorceaux[i][k]][Number(this.morceaux[i][k]) > 1 ? 1 : 0]}}+`
                     : `(\\ldots\\times ${texNombre(10 ** this.exposantMorceaux[i][k], 0)})+`
                 }`
               }
               texteCorr += enLettre
-                ? `${this.morceaux[i][k]}~\\text{${glossaire[this.exposantMorceaux[i][k]][this.morceaux[i][k] > 1 ? 1 : 0]}}+`
+                ? `${this.morceaux[i][k]}~\\text{${glossaire[this.exposantMorceaux[i][k]][Number(this.morceaux[i][k]) > 1 ? 1 : 0]}}+`
                 : `(${this.morceaux[i][k]}\\times ${texNombre(10 ** this.exposantMorceaux[i][k], 0)})+`
             }
           }
@@ -172,13 +180,13 @@ export default class RecomposerEntierC3 extends Exercice {
           break
         case 2: // décomposer en complétant les puissances de 10
           for (let k = 0; k < nbChiffres; k++) {
-            nombreStr += randint(1, 9, nombreStr).toString()
+            nombreStr += randint(1, 9, Array.from(nombreStr).map(Number)).toString()
           }
           if (presenceDeZeros > 1) {
             const arrayFromNbr = Array.from(nombreStr)
             const indexOfZero = randint(1, arrayFromNbr.length - 2)
-            arrayFromNbr[indexOfZero] = 0
-            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = 0
+            arrayFromNbr[indexOfZero] = '0'
+            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = '0'
             nombreStr = arrayFromNbr.join('')
           }
           nombre = new Decimal(nombreStr)
@@ -204,7 +212,7 @@ export default class RecomposerEntierC3 extends Exercice {
                   indexChamp,
                   enLettre
                     ? glossaire[this.exposantMorceaux[i][k]][
-                      this.morceaux[i][k] > 1 ? 1 : 0
+                      Number(this.morceaux[i][k]) > 1 ? 1 : 0
                     ]
                     : 10 ** this.exposantMorceaux[i][k]
                 )
@@ -217,7 +225,7 @@ export default class RecomposerEntierC3 extends Exercice {
             }
             if (this.morceaux[i][k] !== '0') {
               texteCorr += enLettre
-                ? `${this.morceaux[i][k]}~\\text{${glossaire[this.exposantMorceaux[i][k]][this.morceaux[i][k] > 1 ? 1 : 0]}}+`
+                ? `${this.morceaux[i][k]}~\\text{${glossaire[this.exposantMorceaux[i][k]][Number(this.morceaux[i][k]) > 1 ? 1 : 0]}}+`
                 : `(${this.morceaux[i][k]}\\times ${texNombre(10 ** this.exposantMorceaux[i][k], 0)})+`
             }
           }
@@ -232,8 +240,8 @@ export default class RecomposerEntierC3 extends Exercice {
           if (presenceDeZeros > 1) {
             const arrayFromNbr = Array.from(nombreStr)
             const indexOfZero = randint(1, arrayFromNbr.length - 2)
-            arrayFromNbr[indexOfZero] = 0
-            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = 0
+            arrayFromNbr[indexOfZero] = '0'
+            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = '0'
             nombreStr = arrayFromNbr.join('')
           }
           nombre = new Decimal(nombreStr)
@@ -278,8 +286,8 @@ export default class RecomposerEntierC3 extends Exercice {
           if (presenceDeZeros > 1) {
             const arrayFromNbr = Array.from(nombreStr)
             const indexOfZero = randint(1, arrayFromNbr.length - 2)
-            arrayFromNbr[indexOfZero] = 0
-            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = 0
+            arrayFromNbr[indexOfZero] = '0'
+            if (presenceDeZeros === 3) arrayFromNbr[indexOfZero + 1] = '0'
             nombreStr = arrayFromNbr.join('')
           }
           nombre = new Decimal(nombreStr)
@@ -355,18 +363,18 @@ export default class RecomposerEntierC3 extends Exercice {
     listeQuestionsToContenu(this)
   }
 
-  correctionInteractive (i) {
+  correctionInteractive = (i:number) => {
     const champsTexte = []
     const saisies = []
     if (this.premierChamp[i] === undefined) return 'OK'
     const divFeedback = document.querySelector(
       `#divDuSmiley${this.numeroExercice}Q${i}`
-    )
+    ) as HTMLDivElement
     let resultatOK = true
     for (let k = 0; k < this.nombreDeChamps[i]; k++) {
       champsTexte[k] = document.getElementById(
         `champTexteEx${this.numeroExercice}Q${k + this.premierChamp[i]}`
-      )
+      ) as MathfieldElement
       saisies[k] = champsTexte[k].value
         .replace(',', '.')
         .replace(/\((\+?-?\d+)\)/, '$1')
@@ -374,8 +382,9 @@ export default class RecomposerEntierC3 extends Exercice {
         resultatOK &&
         Number.parseInt(saisies[k]) ===
           Number.parseInt(
+            // @ts-expect-error
             this.autoCorrection[this.premierChamp[i] + k].reponse.valeur.reponse
-              .value
+              .value as string
           )
     }
     if (resultatOK) {
