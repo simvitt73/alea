@@ -8,6 +8,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { checkLeCompteEstBon } from '../../lib/interactif/comparisonFunctions'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { sp } from '../../lib/outils/outilString'
+import type { MathfieldElement } from 'mathlive'
 export const amcReady = true
 export const amcType = 'AMCOpen'
 export const interactifReady = true
@@ -27,6 +28,8 @@ export const refs = {
   'fr-ch': ['9NO6-3']
 }
 export default class ÉcrireUneExpressionMathador extends Exercice {
+  tirage: number[][]
+  cible: number[]
   constructor () {
     super()
 
@@ -36,6 +39,8 @@ export default class ÉcrireUneExpressionMathador extends Exercice {
     this.besoinFormulaire2CaseACocher = ['4 opérations différentes obligatoires', false]
     this.sup = false
     this.sup2 = false
+    this.tirage = []
+    this.cible = []
   }
 
   nouvelleVersion () {
@@ -81,13 +86,14 @@ export default class ÉcrireUneExpressionMathador extends Exercice {
               texte: texteCorr,
               statut: 1, // OBLIGATOIRE (ici c'est le nombre de lignes du cadre pour la réponse de l'élève sur AMC)
               sanscadre: false, // EE : ce champ est facultatif et permet (si true) de cacher le cadre et les lignes acceptant la réponse de l'élève
+              // @ts-expect-error
               pointilles: false // EE : ce champ est facultatif et permet (si false) d'enlever les pointillés sur chaque ligne.
             }
           ]
         }
       }
 
-      if (this.questionJamaisPosee(i, solutionMathador, this.tirage[i], this.cible[i])) {
+      if (this.questionJamaisPosee(i, solutionMathador, this.tirage[i].join(';'), this.cible[i])) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++
@@ -98,9 +104,9 @@ export default class ÉcrireUneExpressionMathador extends Exercice {
   }
 
   // EE : Modele Correction Interactive
-  correctionInteractive (i) {
+  correctionInteractive = (i:number) => {
     // Champ réponse : Son nom est en dur, ne rien changer
-    const mf = document.querySelector(`math-field#champTexteEx${this.numeroExercice}Q${i}`)
+    const mf = document.querySelector(`math-field#champTexteEx${this.numeroExercice}Q${i}`) as MathfieldElement
 
     // Sauvegarde de la réponse pour Capytale
     if (this.answers == null) this.answers = {}
@@ -121,12 +127,12 @@ export default class ÉcrireUneExpressionMathador extends Exercice {
       reponse = 'KO'
     }
     // Affichage du smiley final
-    const spanResultat = document.querySelector(`span#resultatCheckEx${this.numeroExercice}Q${i}`)
+    const spanResultat = document.querySelector(`span#resultatCheckEx${this.numeroExercice}Q${i}`) as HTMLSpanElement
     spanResultat.innerHTML = smiley
 
     // Affichage du feedback final qu'il fait penser à créer avec ajouteFeedback dans l'exercice
-    const divFeedback = document.querySelector(`#feedbackEx${this.numeroExercice}Q${i}`)
-    divFeedback.innerHTML = feedback
+    const divFeedback = document.querySelector(`#feedbackEx${this.numeroExercice}Q${i}`) as HTMLDivElement
+    divFeedback.innerHTML = feedback ?? ''
 
     return reponse
   }

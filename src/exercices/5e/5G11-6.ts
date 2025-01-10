@@ -8,7 +8,7 @@ import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { context } from '../../modules/context'
-import { pointCliquable } from '../../modules/2dinteractif'
+import { PointCliquable, pointCliquable } from '../../modules/2dinteractif'
 export const titre = 'Compléter un nuage de points symétriques'
 export const dateDePublication = '18/12/2021'
 export const interactifReady = false
@@ -28,6 +28,8 @@ export const refs = {
   'fr-ch': ['9ES6-16']
 }
 export default class CompleterParSymetrie5e extends Exercice {
+  pointsNonSolution: PointCliquable[][]
+  pointsSolution: PointCliquable[][]
   constructor () {
     super()
     this.besoinFormulaire2Numerique = ['Type de papier pointé', 4, '1 : Carrés\n2 : Hexagones\n3 : Triangles équilatéraux\n4 : Mélange']
@@ -42,7 +44,7 @@ export default class CompleterParSymetrie5e extends Exercice {
   nouvelleVersion () {
     if (this.interactif) this.consigne = 'Placer les points en cliquant, puis vérifier la réponse.'
     const couples = []
-    const pointsCliquables = [[]]
+    const pointsCliquables: PointCliquable[][] = [[]]
     let pointsPossibles
     const pointsChoisis = []
     const pointsAffiches = []
@@ -157,6 +159,7 @@ export default class CompleterParSymetrie5e extends Exercice {
             propositions: [
               {
                 type: 'AMCOpen',
+                // @ts-expect-error
                 propositions: [{
                   enonce: texte,
                   texte: texteCorr,
@@ -166,6 +169,7 @@ export default class CompleterParSymetrie5e extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [{
                   texte: '',
                   statut: '',
@@ -192,7 +196,7 @@ export default class CompleterParSymetrie5e extends Exercice {
     listeQuestionsToContenu(this)
   }
 
-  correctionInteractive (i) {
+  correctionInteractive = (i:number) => {
     let resultat
     let aucunMauvaisPointsCliques = true
     for (const monPoint of this.pointsNonSolution[i]) {
@@ -203,13 +207,13 @@ export default class CompleterParSymetrie5e extends Exercice {
       if (!monPoint.etat) aucunMauvaisPointsCliques = false
       monPoint.stopCliquable()
     }
-    const spanFeedback = document.querySelector(`#resultatCheckEx${this.numeroExercice}Q${i}`)
+    const spanFeedback = document.querySelector(`#resultatCheckEx${this.numeroExercice}Q${i}`) as HTMLSpanElement
     for (let j = 0; j < this.pointsSolution[i].length; j++) {
       this.pointsSolution[i][j].stopCliquable()
     }
     let etat = true
     for (let k = 0; k < this.pointsSolution[i].length; k++) {
-      etat = etat && this.pointsSolution[i][k]
+      etat = etat && this.pointsSolution[i][k].etat
     }
     if (aucunMauvaisPointsCliques && etat) {
       spanFeedback.innerHTML = '😎'

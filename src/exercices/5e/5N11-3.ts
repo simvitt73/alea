@@ -6,6 +6,7 @@ import { ajouteChampTexteMathLive, remplisLesBlancs } from '../../lib/interactif
 import { context } from '../../modules/context'
 import { handleAnswers, setReponse } from '../../lib/interactif/gestionInteractif'
 import { ComputeEngine } from '@cortex-js/compute-engine'
+import type { MathfieldElement } from 'mathlive'
 
 export const titre = 'Écrire une fraction sur 100 puis sous la forme d\'un pourcentage'
 export const interactifReady = true
@@ -85,16 +86,17 @@ export default class FractionVersPourcentage extends Exercice {
     listeQuestionsToContenu(this)
   }
 
-  correctionInteractive (i) {
-    const reponseAttendue = this.autoCorrection[i].reponse.valeur.champ4.value
+  correctionInteractive = (i:number) => {
+    // @ts-expect-error
+    const reponseAttendue = String(this.autoCorrection[i].reponse.valeur.champ4.value)
     if (this.answers === undefined) this.answers = {}
     let result = 'KO'
-    const mf = document.querySelector(`math-field#champTexteEx${this.numeroExercice}Q${i}`)
+    const mf = document.querySelector(`math-field#champTexteEx${this.numeroExercice}Q${i}`) as MathfieldElement
     if (mf == null) {
-      window.notify(`La correction de 5N11-3 n'a pas trouvé de mathfield d'id champTexteEx${this.numeroExercice}Q${i}`)
+      window.notify(`La correction de 5N11-3 n'a pas trouvé de mathfield d'id champTexteEx${this.numeroExercice}Q${i}`, { exercice: this })
     } else {
       this.answers[`Ex${this.numeroExercice}Q${i}`] = mf.getValue()
-      const spanResultat = document.querySelector(`span#resultatCheckEx${this.numeroExercice}Q${i}`)
+      const spanResultat = document.querySelector(`span#resultatCheckEx${this.numeroExercice}Q${i}`) as HTMLSpanElement
       let num1 = mf.getPromptValue('champ1')
       num1 = num1.replace(',', '.')
       const den1 = mf.getPromptValue('champ2')
@@ -102,8 +104,8 @@ export default class FractionVersPourcentage extends Exercice {
       const champ4 = mf.getPromptValue('champ4')
       // const test1 = ce.parse(`\\frac{${num1.replace(',', '.')}}{${den1}}`, { canonical: true }).isEqual(ce.parse(`\\frac{${reponseAttendue}}{${100}}`))
       const test1 = num1.includes('\\times')
-        ? ce.parse(`\\frac{${num1.split('\\times')[0] * (num1.split('\\times')[1] ?? 1)}}{${den1.split('\\times')[0] * (den1.split('\\times')[1] ?? 1)}}`, { canonical: true }).isEqual(ce.parse(`\\frac{${reponseAttendue}}{100}`))
-        : ce.parse(`\\frac{${num1.split('\\div')[0] * (num1.split('\\div')[1] ?? 1)}}{${den1.split('\\div')[0] * (den1.split('\\div')[1] ?? 1)}}`, { canonical: true }).isEqual(ce.parse(`\\frac{${reponseAttendue}}{100}`))
+        ? ce.parse(`\\frac{${Number(num1.split('\\times')[0]) * (Number(num1.split('\\times')[1]) ?? 1)}}{${Number(den1.split('\\times')[0]) * (Number(den1.split('\\times')[1]) ?? 1)}}`, { canonical: true }).isEqual(ce.parse(`\\frac{${reponseAttendue}}{100}`))
+        : ce.parse(`\\frac{${Number(num1.split('\\div')[0]) * (Number(num1.split('\\div')[1]) ?? 1)}}{${Number(den1.split('\\div')[0]) * (Number(den1.split('\\div')[1]) ?? 1)}}`, { canonical: true }).isEqual(ce.parse(`\\frac{${reponseAttendue}}{100}`))
       const test1Bis = ce.parse(den1).isEqual(ce.parse('100'))
       const test1Ter = den1 === '' || num1 === ''
       const test2 = ce.parse(num2).isSame(ce.parse(reponseAttendue))
@@ -142,7 +144,7 @@ export default class FractionVersPourcentage extends Exercice {
         }
         feedback += ' et au moins un des résultats finaux est faux.'
       }
-      const divDuFeedback = document.querySelector(`div#feedbackEx${this.numeroExercice}Q${i}`)
+      const divDuFeedback = document.querySelector(`div#feedbackEx${this.numeroExercice}Q${i}`) as HTMLDivElement
       spanResultat.innerHTML = smiley
       if (divDuFeedback) {
         divDuFeedback.innerHTML = feedback

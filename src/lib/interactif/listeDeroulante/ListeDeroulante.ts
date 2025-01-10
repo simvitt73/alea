@@ -30,8 +30,8 @@ function empty (...elts: Element[]): void {
 //            {latex: '\\frac{\\sqrt{3}}{2}',value: 'sinusPiSur3'},
 //            {label: "n'est pas définie en zéro", value: 'noF0'}
 //            'Je ne sais pas']
-type AllChoiceType = (string | CHoiceValue)
-type AllChoicesType = AllChoiceType[]
+export type AllChoiceType = (string | CHoiceValue)
+export type AllChoicesType = AllChoiceType[]
 
 /**
  * Cette fonction est amenée à disparaître : elle palie à un bug du MathfieldElement qui intercepte les actions du pointer alors qu'il est readOnly.
@@ -357,6 +357,10 @@ class ListeDeroulante {
   isVisible () {
     if (this.ulContainer) return this.ulContainer.classList.contains('visible')
     else return false
+  }
+
+  getSelectedIndex () {
+    return this._kbIndex
   }
 
   /**
