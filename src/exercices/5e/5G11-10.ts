@@ -14,7 +14,6 @@ import figureApigeom from '../../lib/figureApigeom'
 import type PointApigeom from 'apigeom/src/elements/points/Point'
 import { codageMilieu } from '../../lib/2d/codages'
 import { demiDroite } from '../../lib/2d/segmentsVecteurs'
-import type SuperFigure from 'apigeom'
 import { rotationCoord } from 'apigeom/src/elements/calculus/Coords'
 
 export const titre = 'Construire des symétriques de points par rapport à un point'
@@ -65,7 +64,7 @@ class ConstrctionsSymetrieCentralePoints extends Exercice {
   centres!: Point[] | PointApigeom[]
   exoCustomResultat: boolean
   nbPoints!: number
-  figuresApiGeom!: SuperFigure[]
+  figuresApiGeom!: Figure[]
   constructor () {
     super()
     this.exoCustomResultat = true

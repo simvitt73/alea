@@ -14,7 +14,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import { wrapperApigeomToMathalea } from '../../lib/apigeom/apigeomZoom'
-import SuperFigure from 'apigeom'
+import Figure from 'apigeom'
 
 export const titre = 'Résoudre graphiquement une équation ou une inéquation'
 export const dateDePublication = '29/10/2023'
@@ -133,7 +133,7 @@ export function chercheIntervalles (fonc: Polynome, soluces: number[], inferieur
 
 class resolutionEquationInequationGraphique extends Exercice {
   // On déclare des propriétés supplémentaires pour cet exercice afin de pouvoir les réutiliser dans la correction
-  figureApiGeom!: SuperFigure
+  figureApiGeom!: Figure
 
   constructor () {
     super()
@@ -444,7 +444,7 @@ class resolutionEquationInequationGraphique extends Exercice {
     } while (integraleDiff < 0.2 && cpt < 50)
     const yMax = yMin + 12
     const polyDiff = fonction1.poly.add(fonction2.poly.multiply(-1))
-    this.figureApiGeom = new SuperFigure({ xMin: xMin - 0.5, yMin, width: 378, height: 378, isDynamic: true })
+    this.figureApiGeom = new Figure({ xMin: xMin - 0.5, yMin, width: 378, height: 378, isDynamic: true })
     this.figureApiGeom.options.automaticUserMessage = false
     this.figureApiGeom.userMessage = 'Cliquer sur le point $M$ pour le déplacer.'
     this.figureApiGeom.create('Grid')

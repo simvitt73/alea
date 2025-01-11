@@ -9,7 +9,6 @@ import { arrondi } from '../../lib/outils/nombres'
 import GraduatedLine from 'apigeom/src/elements/grid/GraduatedLine'
 import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
 import { fraction } from '../../modules/fractions'
-import type SuperFigure from 'apigeom'
 
 export const dateDePublication = '29/06/2021'
 export const dateDeModifImportante = '03/05/2024'
@@ -33,7 +32,7 @@ type goodAnswer = { label: string, x: number }[]
 
 class PlacerPointsAbscissesFractionnaires extends Exercice {
   goodAnswers!: goodAnswer[]
-  figuresApiGeom!: SuperFigure[]
+  figuresApiGeom!: Figure[]
   constructor () {
     super()
 
