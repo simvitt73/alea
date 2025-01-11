@@ -294,6 +294,7 @@ export class Polygone extends ObjetMathalea2D {
     let xmax = -1000
     let ymin = 1000
     let ymax = -1000
+    this.bordures = [xmin, ymin, xmax, ymax]
     for (const unPoint of this.listePoints) {
       if (unPoint.typeObjet !== 'point') window.notify('Polygone : argument invalide', { ...points })
       xmin = Math.min(xmin, unPoint.x)
@@ -888,7 +889,7 @@ export function parallelogramme2points1hauteur (nom:string, A: Point, B: Point, 
 export class NommePolygone extends ObjetMathalea2D {
   poly: Polygone
   dist: number
-  constructor (p: Polygone, nom = '', k = 0.5, color = 'black') {
+  constructor (p: Polygone, nom = '', k = 0.5, color = 'black', size = 1) {
     super()
     this.poly = p
     this.dist = k
@@ -905,7 +906,7 @@ export class NommePolygone extends ObjetMathalea2D {
     for (const pt of p.listePoints) {
       const P = pointSurSegment(G, pt, longueur(G, pt) + (context.isHtml ? k * 20 / context.pixelsParCm : k / context.scale))
       P.positionLabel = 'center'
-      this.objets.push(texteParPoint(pt.nom, P, 0, color, 1, 'milieu', true))
+      this.objets.push(texteParPoint(pt.nom, P, 0, color, size, 'milieu', true))
       xMin = Math.min(xMin, P.x - 0.5)
       xMax = Math.max(xMax, P.x + 0.5)
       yMin = Math.min(yMin, P.y - 0.5)
@@ -933,8 +934,8 @@ export class NommePolygone extends ObjetMathalea2D {
   }
 }
 
-export function nommePolygone (p: Polygone, nom = '', k = 0.5, color = 'black') {
-  return new NommePolygone(p, nom, k, color)
+export function nommePolygone (p: Polygone, nom = '', k = 0.5, color = 'black', size = 1) {
+  return new NommePolygone(p, nom, k, color, size)
 }
 
 /**

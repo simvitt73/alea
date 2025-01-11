@@ -732,7 +732,7 @@ export function afficheCoteSegment (s: Segment, Cote = '', positionCote = 0.5, c
  * @return {TexteParPoint}
  */
 // JSDOC Validee par EE Juin 2022
-export function codageSegment (A: Point, B: Point, mark = '||', color = 'black', echelle = 1) {
+export function codageSegment (A: Point, B: Point, mark = '||', color = 'black', echelle = 0.5) {
   const O = milieu(A, B)
   const s = segment(A, B)
   let angle

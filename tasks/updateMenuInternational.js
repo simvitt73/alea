@@ -59,7 +59,8 @@ async function readInfos (
           file !== 'ExerciceQcm.ts' &&
           file !== 'ExerciceQcmA.ts' &&
           file !== 'ExerciceBrevet.ts' &&
-          file !== 'ExerciceBrevetA.ts'
+          file !== 'ExerciceBrevetA.ts' &&
+          file !== 'ExerciceCan.ts'
 
         ) {
           const infos = {}

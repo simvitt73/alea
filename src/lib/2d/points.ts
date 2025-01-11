@@ -482,7 +482,7 @@ export class TracePointSurDroite extends ObjetMathalea2D {
     this.x = A.x
     this.y = A.y
     let M, d
-    this.bordures = [A.x - 0.2, A.y - 0.2, A.x + 0.2, A.x + 0.2]
+    this.bordures = [A.x - 0.2, A.y - 0.2, A.x + 0.2, A.y + 0.2]
 
     if (O.constructor === Point) {
       if (longueur(this.lieu, O) < 0.001) {

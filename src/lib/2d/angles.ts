@@ -493,7 +493,7 @@ export class CodageAngleDroit extends ObjetMathalea2D {
     } else {
       o = rotation(this.sommet, a, 90)
     }
-    const bordures = fixeBordures([a, b, o])
+    const bordures = fixeBordures([a, b, o], { rxmin: 0, rxmax: 0, rymin: 0, rymax: 0 })
     this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
     this.epaisseur = epaisseur
     this.opacite = opacite

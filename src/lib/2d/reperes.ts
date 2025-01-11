@@ -280,7 +280,7 @@ export class DroiteGraduee extends ObjetMathalea2D {
           p[1],
           x - labelCustomDistance * absord[1] + (p[0] - Min) * absord[0] * Unite,
           y - labelCustomDistance * absord[0] + (p[0] - Min) * absord[1] * Unite,
-          { letterSize: 'scriptsize', color: labelColor }
+          { letterSize: 'normalsize', color: labelColor }
         )
         this.objets.push(t)
       }
