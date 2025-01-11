@@ -5,8 +5,8 @@ export const interactifType = 'qcm'
 export const amcReady = true
 export const amcType = 'AMCHybride'
 
-export const titre = 'Justifier la construction des triangles via les longueurs'
-export const dateDeModifImportante = '07/01/2024'
+export const titre = 'Déterminer si un triangle est constructible à partir de ses 3 longueurs'
+export const dateDeModifImportante = '11/01/2025' // Rémi Angot : modification de la rédaction de l'inégalité triangulaire
 
 /**
  * Justifier la construction des triangles via les longueurs

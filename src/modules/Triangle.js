@@ -133,6 +133,14 @@ export class Triangle {
   }
 
   /**
+   * @return {string} Renvoie un string avec les noms des sommets du triangle de la forme : '$A$, $B$ et $C$'
+   */
+  get stringSommets () {
+    const [a, b, c] = this.getSommets()
+    return `${a}, ${b} et ${c}`
+  }
+
+  /**
    * @return {array} Renvoie le périmètre de l'instance de la classe Triangle() avec les valeurs des longueurs des côtés du triangle passées en paramètre à l'instance
    * @example let triangle = new Triangle();
    * * triangle.l1 = 2;
