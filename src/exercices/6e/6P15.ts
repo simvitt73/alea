@@ -142,10 +142,10 @@ export default class CalculerCoeffPropo extends Exercice {
       const coefficientTex = coefficientRationnel ? (coefficient as FractionEtendue).texFraction : texNombre(coefficient)
       // remplissage du tableau énoncé et correction.
       const ligne1 = [{ texte: 'Grandeur A' }].concat(premiereLigne.map(elt => {
-        return elt.visible ? { texte: texNombre(elt.nombre), math: true } : { texte: '...' }
+        return elt.visible ? { texte: `$${texNombre(elt.nombre)}$`, math: true } : { texte: '...' }
       }))
       const ligne2 = [{ texte: 'Grandeur B' }].concat(deuxiemeLigne.map(elt => {
-        return elt.visible ? { texte: texNombre(elt.nombre), math: true } : { texte: '...' }
+        return elt.visible ? { texte: `$${texNombre(elt.nombre)}$`, math: true } : { texte: '...' }
       }))
       const monTableau = context.isAmc // EE : En AMC, les flèches ne passent pas. Je les supprime en attendant de trouver une solution.
         ? (listeTypesDeCoefficient[i] === 'Fraction'
