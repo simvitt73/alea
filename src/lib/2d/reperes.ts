@@ -314,7 +314,7 @@ export class DroiteGraduee extends ObjetMathalea2D {
         this.objets.push(T, lab)
       }
     }
-    const bordures = fixeBordures(this.objets)
+    const bordures = fixeBordures(this.objets, { rxmin: 0, rxmax: 0, rymin: 0, rymax: 0 })
     this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
   }
 }
