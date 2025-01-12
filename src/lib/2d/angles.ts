@@ -126,7 +126,7 @@ export class MarqueAngle extends ObjetMathalea2D {
         this.objets.push(arc(a, sommet, angle, false, 'none', color))
         break
     }
-    const bordures = fixeBordures(this.objets)
+    const bordures = fixeBordures(this.objets, { rxmin: 0, rxmax: 0, rymin: 0, rymax: 0 })
     this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
   }
 
@@ -267,7 +267,7 @@ export class Rapporteur extends ObjetMathalea2D {
       rayon = segment(centre, homothetie(rotation(azimut, centre, -90), centre, 0.2) as Point, color)
     }
     this.objets.push(rayon)
-    const bordures = fixeBordures(this.objets)
+    const bordures = fixeBordures(this.objets, { rxmin: 0, rxmax: 0, rymin: 0, rymax: 0 })
     this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
   }
 
