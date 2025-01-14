@@ -21,6 +21,6 @@ export default class CourseAuxNombresSpeciale2024Terminale extends CourseAuxNomb
   constructor () {
     super()
     this.besoinFormulaireTexte = false
-    this.niveau = 0
+    this.sup = '0'
   }
 }

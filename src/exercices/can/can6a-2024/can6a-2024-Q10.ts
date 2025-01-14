@@ -27,7 +27,7 @@ export default class TrouverLongueur extends Exercice {
   nouvelleVersion () {
     const choix = this.canOfficielle ? [['une table', 80, 80, 'cm', 'dm', 'mm', 'm']] : [['une table', 75, 85, 'cm', 'dm', 'mm', 'm'], ['un immeuble', 20, 30, 'm', 'dm', 'mm', 'cm'], ['une falaise', 15, 25, 'm', 'dm', 'mm', 'cm'], ['une girafe', 40, 50, 'dm', 'cm', 'mm', 'm'], ['une échelle', 200, 300, 'cm', 'dm', 'mm', 'm'], ['une bouteille', 28, 35, 'cm', 'dm', 'mm', 'm'], ['une télévision', 50, 60, 'cm', 'dm', 'mm', 'm']]
     const a = this.canOfficielle ? 0 : randint(0, 6)
-    const b = this.canOffielle ? choix[a][1] : randint(choix[a][1], choix[a][2])
+    const b = this.canOfficielle ? choix[a][1] : randint(choix[a][1] as number, choix[a][2] as number)
     const propositions2 = shuffle([[`$${b}$ ${choix[a][3]}`], [`$${b}$ ${choix[a][4]}`], [`$${b}$ ${choix[a][5]}`], [`$${b}$ ${choix[a][6]}`]])
     const propositions = choice([[`$${b}$ ${choix[a][3]}`, `$${b}$ ${choix[a][4]}`, `$${b}$ ${choix[a][5]}`, `$${b}$ ${choix[a][6]}`]])
     this.reponse = propositions[0]
