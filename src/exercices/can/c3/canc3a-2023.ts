@@ -33,7 +33,7 @@ export const refs = {
 
  */
 
-function compareNombres (a, b) {
+function compareNombres (a:number, b:number) {
   return a - b
 }
 
@@ -153,7 +153,7 @@ export default class SujetCAN2023CM2 extends Exercice {
           texte = sommeDeDurees.texte
           texteCorr = sommeDeDurees.texteCorr
           texte += ajouteChampTexteMathLive(this, index, KeyboardType.clavierHms)
-          handleAnswers(this, index, { reponse: { value: new Hms({ hour: 1, minute: sommeDeDurees.reponse }).toString(), options: { HMS: true } } })
+          handleAnswers(this, index, { reponse: { value: new Hms({ hour: 1, minute: Number(sommeDeDurees.reponse) }).toString(), options: { HMS: true } } })
           nbChamps = 1
           this.listeCanEnonces.push(sommeDeDurees.canEnonce)
           this.listeCanReponsesACompleter.push(sommeDeDurees.canReponseACompleter)
@@ -178,7 +178,7 @@ export default class SujetCAN2023CM2 extends Exercice {
           const ordreDeGrandeur = myCan.ordreDeGrandeur()
           texte = ordreDeGrandeur.texte
           texteCorr = ordreDeGrandeur.texteCorr
-          setReponse(this, index, new Grandeur(ordreDeGrandeur.reponse, ordreDeGrandeur.reponseUnite), { formatInteractif: 'unites' })
+          handleAnswers(this, index, { reponse: { value: new Grandeur(Number(ordreDeGrandeur.reponse), ordreDeGrandeur.reponseUnite), options: { unite: true } } })
           if (this.interactif && !context.isAmc) {
             texte += ajouteChampTexteMathLive(this, index, ' unites[Longueurs]')
           }
@@ -255,7 +255,7 @@ export default class SujetCAN2023CM2 extends Exercice {
           const trouverUnTermeDecimalInconnu = myCan.trouverUnTermeDecimalInconnu()
           texte = trouverUnTermeDecimalInconnu.texte
           texteCorr = trouverUnTermeDecimalInconnu.texteCorr
-          setReponse(this, index, trouverUnTermeDecimalInconnu.reponse, { formatInteractif: 'calcul' })
+          handleAnswers(this, index, { reponse: { value: trouverUnTermeDecimalInconnu.reponse } })
           if (this.interactif && !context.isAmc) {
             texte += ajouteChampTexteMathLive(this, index, '')
           }
@@ -284,7 +284,7 @@ export default class SujetCAN2023CM2 extends Exercice {
           const determinerUneFractionAPartirDUneFigure = myCan.determinerUneFractionAPartirDUneFigure()
           texte = determinerUneFractionAPartirDUneFigure.texte
           texteCorr = determinerUneFractionAPartirDUneFigure.texteCorr
-          setReponse(this, index, determinerUneFractionAPartirDUneFigure.reponse, { formatInteractif: 'fractionEgale' })
+          handleAnswers(this, index, { reponse: { value: determinerUneFractionAPartirDUneFigure.reponse, options: { fractionEgale: true } } })
           if (this.interactif && !context.isAmc) {
             texte += ajouteChampTexteMathLive(this, index, '')
           }
@@ -333,7 +333,7 @@ export default class SujetCAN2023CM2 extends Exercice {
           const determinerUnNombreDUnitesDeLongueur = myCan.determinerUnNombreDUnitesDeLongueur()
           texte = determinerUnNombreDUnitesDeLongueur.texte
           texteCorr = determinerUnNombreDUnitesDeLongueur.texteCorr
-          setReponse(this, index, determinerUnNombreDUnitesDeLongueur.reponse, { formatInteractif: 'fractionEgale' })
+          handleAnswers(this, index, { reponse: { value: determinerUnNombreDUnitesDeLongueur.reponse, options: { fractionEgale: true } } })
           if (this.interactif && !context.isAmc) {
             texte += '<br>' + ajouteChampTexteMathLive(this, index, '') + 'ul'
           }
@@ -476,7 +476,7 @@ export default class SujetCAN2023CM2 extends Exercice {
           const ajouterDeuxDecimaux = myCan.ajouterDeuxDecimaux()
           texte = ajouterDeuxDecimaux.texte
           texteCorr = ajouterDeuxDecimaux.texteCorr
-          setReponse(this, index, ajouterDeuxDecimaux.reponse, { formatInteractif: 'calcul' })
+          handleAnswers(this, index, { reponse: { value: ajouterDeuxDecimaux.reponse } })
           if (this.interactif && !context.isAmc) {
             texte += ajouteChampTexteMathLive(this, index, ' ', { texteAvant: `${sp(2)} $=$` })
           }
@@ -486,7 +486,8 @@ export default class SujetCAN2023CM2 extends Exercice {
         }
           break
 
-        case 30: {
+        case 30:
+        default:{
           const nombreDeCombinaisons = choice([true, false]) === true ? myCan.nombreDeCombinaisons('entreePlatDessert') : myCan.nombreDeCombinaisons('platDessert')
           texte = nombreDeCombinaisons.texte
           texteCorr = nombreDeCombinaisons.texteCorr
@@ -501,7 +502,7 @@ export default class SujetCAN2023CM2 extends Exercice {
           break
       }
 
-      if (this.listeQuestions.indexOf(texte) === -1) { // Si la question n'a jamais été posée, on en créé une autre
+      if (this.questionJamaisPosee(i, texteCorr)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++
