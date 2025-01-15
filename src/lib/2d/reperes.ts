@@ -280,7 +280,7 @@ export class DroiteGraduee extends ObjetMathalea2D {
           p[1],
           x - labelCustomDistance * absord[1] + (p[0] - Min) * absord[0] * Unite,
           y - labelCustomDistance * absord[0] + (p[0] - Min) * absord[1] * Unite,
-          { letterSize: 'scriptsize', color: labelColor }
+          { letterSize: 'normalsize', color: labelColor }
         )
         this.objets.push(t)
       }
@@ -314,7 +314,7 @@ export class DroiteGraduee extends ObjetMathalea2D {
         this.objets.push(T, lab)
       }
     }
-    const bordures = fixeBordures(this.objets)
+    const bordures = fixeBordures(this.objets, { rxmin: 0, rxmax: 0, rymin: 0, rymax: 0 })
     this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
   }
 }
@@ -767,6 +767,8 @@ export class LabelY extends ObjetMathalea2D {
         )
       )
     }
+    const bordures = fixeBordures(this.objets, { rxmin: 0, rxmax: 0, rymin: 0, rymax: 0 })
+    this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
   }
 
   svg (coeff: number) {
@@ -849,7 +851,7 @@ export class Grille extends ObjetMathalea2D {
     this.opacite = opacite
     this.objets = []
     let x = xmin
-    const nbStep = Math.round((xmax - xmin) / step)
+    let nbStep = Math.round((xmax - xmin) / step)
     for (let i = 0; i <= nbStep; i++) {
       const s = segment(x, ymin, x, ymax, color)
       x += step
@@ -860,6 +862,7 @@ export class Grille extends ObjetMathalea2D {
       this.objets.push(s)
     }
     let y = ymin
+    nbStep = Math.round((ymax - ymin) / step)
     for (let i = 0; i <= nbStep; i++) {
       const s = segment(xmin, y, xmax, y, color)
       y += step

@@ -6,7 +6,7 @@ import { context } from '../../modules/context'
 import figureApigeom from '../../lib/figureApigeom'
 import { wrapperApigeomToMathalea } from '../../lib/apigeom/apigeomZoom'
 import type PointApigeom from 'apigeom/src/elements/points/Point'
-import SuperFigure from 'apigeom'
+import Figure from 'apigeom'
 import { rotationCoord } from 'apigeom/src/elements/calculus/Coords'
 import checkSegment from 'apigeom/src/check/checkSegment'
 import checkPolygon from 'apigeom/src/check/checkPolygon'
@@ -59,7 +59,7 @@ class ConstructionsSymetrieCentraleFigures extends Exercice {
   typesDeQuestions!: ('segment' | 'droite' | 'demidroite' | 'cercle' | 'triangle')[]
   nbPoints!: number[]
   exoCustomResultat: boolean
-  figuresApiGeom!: SuperFigure[]
+  figuresApiGeom!: Figure[]
   constructor () {
     super()
     this.exoCustomResultat = true
@@ -107,7 +107,7 @@ class ConstructionsSymetrieCentraleFigures extends Exercice {
       const options = {}
       if (this.sup === 1) Object.assign(options, { snapGrid: true, dx: 1, dy: 1 })
 
-      this.figuresApiGeom[i] = new SuperFigure(Object.assign(options, { xMin: -10, yMin: -10, width: 300, height: 300, scale: 0.5 }))
+      this.figuresApiGeom[i] = new Figure(Object.assign(options, { xMin: -10, yMin: -10, width: 300, height: 300, scale: 0.5 }))
       this.figuresApiGeom[i].options.latexHeight = 20
       this.figuresApiGeom[i].options.labelDxInPixels = 20
       this.figuresApiGeom[i].options.labelDyInPixels = 20
@@ -185,7 +185,7 @@ class ConstructionsSymetrieCentraleFigures extends Exercice {
         this.listeQuestions[i] = enonce + '<br><br>' + this.figuresApiGeom[i].tikz()
       }
       // On crée la figure pour la correction
-      const correctionFig = new SuperFigure(Object.assign(options, { xMin: -10, yMin: -10, width: 300, height: 300, scale: 0.5, isDynamic: false }))
+      const correctionFig = new Figure(Object.assign(options, { xMin: -10, yMin: -10, width: 300, height: 300, scale: 0.5, isDynamic: false }))
       correctionFig.setToolbar({ tools: ['UNDO'], position: 'top' })
       correctionFig.options.latexHeight = 20
       const sym: PointApigeom[] = []

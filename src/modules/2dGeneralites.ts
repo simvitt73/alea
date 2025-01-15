@@ -212,7 +212,7 @@ export class ObjetMathalea2D {
   opacite: number
   id: number
   pointilles: number
-  bordures?: [number, number, number, number] // Doit rester undefined pour identifier les objets qui ne définissent pas leurs bordures (un notify sera envoyé)
+  bordures: [number, number, number, number] // Doit rester undefined pour identifier les objets qui ne définissent pas leurs bordures (un notify sera envoyé)
   objets?: (ObjetMathalea2D | Latex2d)[]
   typeObjet?: string
 
@@ -224,6 +224,7 @@ export class ObjetMathalea2D {
     this.opacite = 1
     this.pointilles = 0
     this.id = numId
+    this.bordures = [NaN, NaN, NaN, NaN]
     numId++
   }
 
@@ -449,8 +450,8 @@ export function mathalea2d (
     `
   // code += codeTikz(...objets)
   codeTikz += ajouteCodeTikz(mainlevee, objets)
-  codeTikz += '\n\\end{tikzpicture}'
-  if (style === 'display: block') codeTikz += '\\\\'
+  codeTikz += '\n\\end{tikzpicture}\n'
+  // if (style === 'display: block') codeTikz += '\\\\' Modification faite le 11/01/2025 par JC-Lhote : un \\ après un \end{tikzpicture} n'est pas normal.
   if (context.isHtml) return codeHTML
   else return codeTikz
 }
@@ -742,7 +743,7 @@ export function fixeBordures (
       if (objets == null) return [xmin, ymin, xmax, ymax, borduresTrouvees]
       if (!Array.isArray(objets)) {
         const bordures = objets.bordures ?? null
-        if (bordures == null) {
+        if (bordures === null || isNaN(bordures[0])) {
           window.notify(
             `Ìl y a un problème avec les bordures de ${objets.constructor.name}... elles ne sont pas définies !`
             , { objets })
