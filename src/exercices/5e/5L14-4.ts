@@ -32,13 +32,14 @@ export default class DeterminerDerniereOperationExpressionLitterale extends Exer
       max: 5,
       defaut: randint(1, 5),
       nbQuestions: this.nbQuestions,
-      saisie: this.sup3
-    })
+      saisie: this.sup3,
+      melange: 0
+    }).map(Number)
 
     let expn; let expc; let decimal = 1; let nbOperations; let resultats; let lastOp; let structureExpression
     if (this.sup2) decimal = 10
     for (let i = 0, texte, texteCorr, val1, val2, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      nbOperations = parseInt(listeTypeDeQuestions[i])
+      nbOperations = listeTypeDeQuestions[i]
       val1 = randint(2, 5)
       val2 = randint(6, 9)
       // resultats=ChoisirUneExpressionLitteraleBis(nbOperations,decimal,val1,val2)

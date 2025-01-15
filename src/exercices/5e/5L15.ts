@@ -2,7 +2,7 @@ import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
 import { sp } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser } from '../../modules/outils'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
@@ -82,12 +82,12 @@ export default class TesterUneEgalite extends Exercice {
           if (this.sup === 1) {
             a = randint(1, 9)
             b = randint(0, 4) * 2 + a % 2
-            x1 = parseInt(calculANePlusJamaisUtiliser((a + b) / 2))
+            x1 = (a + b) / 2
             x2 = randint(1, 9, x1)
           } else {
             a = randint(-9, 9, [0])
             b = randint(-4, 4, [a, 0]) * 2 + a % 2
-            x1 = parseInt(calculANePlusJamaisUtiliser((a + b) / 2))
+            x1 = (a + b) / 2
             x2 = randint(-9, 9, [0, x1])
           }
           expression = `$${sp(2)}3x+${ecritureParentheseSiNegatif(a)}=5x-${ecritureParentheseSiNegatif(b)}${sp(1)}$`
@@ -106,12 +106,12 @@ export default class TesterUneEgalite extends Exercice {
           if (this.sup === 1) {
             a = randint(1, 3)
             b = randint(1, 3)
-            x2 = parseInt(calculANePlusJamaisUtiliser((10 * a + 4 * b) / 2))
+            x2 = (10 * a + 4 * b) / 2
             x1 = randint(1, 9, x2)
           } else {
             a = randint(-3, 3, [0])
             b = randint(-3, 3, [0])
-            x2 = parseInt(calculANePlusJamaisUtiliser((10 * a + 4 * b) / 2))
+            x2 = (10 * a + 4 * b) / 2
             x1 = randint(-9, 9, [0, x2])
           }
           expression = `$${sp(2)}10(x-${ecritureParentheseSiNegatif(a)})=4(2x+${ecritureParentheseSiNegatif(b)})${sp(1)}$`
@@ -207,6 +207,7 @@ export default class TesterUneEgalite extends Exercice {
           */
           break
         case 7: // adx-bd=acx²-bcx  --- (ax-b)(d-cx)=0 solutions b/a et d/c.
+        default:
           if (this.sup === 1) {
             c = randint(2, 5)
             a = randint(2, 5)
@@ -270,6 +271,7 @@ export default class TesterUneEgalite extends Exercice {
           propositions: [(
             {
               type: 'AMCOpen',
+              // @ts-expect-error
               propositions: [
                 {
                   texte: ' ',
@@ -285,6 +287,7 @@ export default class TesterUneEgalite extends Exercice {
           (
             {
               type: 'AMCOpen',
+              // @ts-expect-error
               propositions: [
                 {
                   texte: ' ',
@@ -308,6 +311,7 @@ export default class TesterUneEgalite extends Exercice {
             propositions: [
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [{
                   texte: '',
                   statut: '',
@@ -326,6 +330,7 @@ export default class TesterUneEgalite extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [{
                   texte: '',
                   statut: '',
@@ -344,6 +349,7 @@ export default class TesterUneEgalite extends Exercice {
               },
               {
                 type: 'qcmMono',
+                // @ts-expect-error
                 enonce: `Conclusion : l'égalité ${expression} est-elle vérifiée pour $x=${x1}$ ?`,
                 propositions: [
                   {
@@ -357,6 +363,7 @@ export default class TesterUneEgalite extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [{
                   texte: '',
                   statut: '',
@@ -375,6 +382,7 @@ export default class TesterUneEgalite extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [{
                   texte: '',
                   statut: '',
@@ -393,6 +401,7 @@ export default class TesterUneEgalite extends Exercice {
               },
               {
                 type: 'qcmMono',
+                // @ts-expect-error
                 enonce: `Conclusion : l'égalité ${expression} est-elle vérifiée pour $x=${x2}$ ?`,
                 propositions: [
                   {

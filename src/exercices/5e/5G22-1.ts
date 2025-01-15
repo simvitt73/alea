@@ -1,7 +1,7 @@
 import { codageAngleDroit } from '../../lib/2d/angles'
 import { cercle } from '../../lib/2d/cercle'
 import { afficheLongueurSegment, codageMilieu } from '../../lib/2d/codages'
-import { droite, mediatrice } from '../../lib/2d/droites'
+import { Droite, droite, mediatrice } from '../../lib/2d/droites'
 import {
   Point,
   point,
@@ -67,7 +67,7 @@ export default class ProprietesMediatrice extends Exercice {
       // Construction des objets
       objetsEnonce = []
       objetsCorrection = []
-      const nomDesPoints = shuffle(creerNomDePolygone(22, ['O', 'Q', 'W', 'X']))
+      const nomDesPoints = shuffle(Array.from(creerNomDePolygone(22, ['O', 'Q', 'W', 'X'])))
       do {
         A = point(0, 0, nomDesPoints[0], 'below')
         B = pointAdistance(A, randint(30, 60) / 10, randint(0, 45), nomDesPoints[1])
@@ -75,9 +75,9 @@ export default class ProprietesMediatrice extends Exercice {
         // Le point C est au dessus ou en dessous une fois sur deux
 
         if (randint(0, 99) > 50) {
-          C = pointIntersectionLC(mediatriceAB, cercle(A, randint(30, 60) / 10), nomDesPoints[2], 1)
+          C = pointIntersectionLC(mediatriceAB as Droite, cercle(A, randint(30, 60) / 10), nomDesPoints[2], 1) as Point
         } else {
-          C = pointIntersectionLC(mediatriceAB, cercle(A, randint(30, 60) / 10), nomDesPoints[2], 2)
+          C = pointIntersectionLC(mediatriceAB as Droite, cercle(A, randint(30, 60) / 10), nomDesPoints[2], 2) as Point
         }
         if (!listeSurLaMediatrice[i]) C = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, nomDesPoints[2], 'above') // s'il ne doit pas être sur la médiatrice, on l'en éloigne
       } while (C.constructor !== Point || A.constructor !== Point || B.constructor !== Point)
@@ -99,7 +99,7 @@ export default class ProprietesMediatrice extends Exercice {
         objetsEnonce.push(segmentAC, segmentBC, affLongueurAC, affLongueurBC) // On affiche les longueurs dans l'énoncé
         texte = `Le point $${nomDesPoints[2]}$ appartient-il à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$] ? Justifier.<br>`
         // On construit et code la médiatrice puis on la push dans la correction
-        D = pointIntersectionDD(mediatriceAB, droite(A, B))
+        D = pointIntersectionDD(mediatriceAB as Droite, droite(A, B)) as Point
         if (C.x > A.x) {
           objetsCorrection.push(codageAngleDroit(A, D, C, 'red', 0.4))
         } else {
@@ -115,11 +115,11 @@ export default class ProprietesMediatrice extends Exercice {
           texteCorr += `Comme tout point qui n'est pas équidistant de $${nomDesPoints[0]} et de $${nomDesPoints[1]} n'appartient pas à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$], `
           texteCorr += `alors le point $${nomDesPoints[2]}$ n'appartient pas à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$].`
         }
-      } else if (listeTypeDeQuestions[i] === 'equidistant') {
+      } else {
         objetsCorrection.push(segmentAC, segmentBC, affLongueurAC, affLongueurBC) // On affiche les longueurs dans la correction
         texte = `Le point $${nomDesPoints[2]}$ est-il équidistant de $${nomDesPoints[0]}$ et de $${nomDesPoints[1]}$ ? Justifier.<br>`
         // On construit et code la médiatrice puis on la push dans l'énoncé
-        D = pointIntersectionDD(mediatriceAB, droite(A, B))
+        D = pointIntersectionDD(mediatriceAB as Droite, droite(A, B)) as Point
         if (C.x > A.x) {
           objetsEnonce.push(codageAngleDroit(A, D, C, 'red', 0.4))
         } else {
@@ -153,7 +153,7 @@ export default class ProprietesMediatrice extends Exercice {
       texte += mathalea2d(paramsEnonce, objetsEnonce)
       // On ajoute au texte de la correction, la figure de la correction
       texteCorr += mathalea2d(paramsCorrection, objetsCorrection)
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, texteCorr)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++

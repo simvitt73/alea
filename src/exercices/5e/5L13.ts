@@ -54,13 +54,14 @@ export default class Reductionaxbx extends Exercice {
           reponse = reduireAxPlusB(a + b, 0, x)
           break
         case 'ax+x':
+        default:
           texte = `$${lettreDepuisChiffre(i + 1)}=${printlatex(`${a}*${x}+${x}`)}$`
           texteCorr = `$${lettreDepuisChiffre(i + 1)}=${printlatex(`${a}*${x}+${x}`)}=(${a}+1)\\times ${x}=${printlatex(`${a + 1}${x}`)}$`
           reponse = reduireAxPlusB(a + 1, 0, x)
           break
       }
 
-      handleAnswers(this, i, { reponse: { value: reponse, options: { strict: false } } })
+      handleAnswers(this, i, { reponse: { value: reponse } })
       texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: ' $=$' })
       if (this.questionJamaisPosee(i, x, a, b)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
@@ -75,6 +76,7 @@ export default class Reductionaxbx extends Exercice {
                 texte: texteCorr,
                 statut: 1, // OBLIGATOIRE (ici c'est le nombre de lignes du cadre pour la réponse de l'élève sur AMC)
                 sanscadre: false, // EE : ce champ est facultatif et permet (si true) de cacher le cadre et les lignes acceptant la réponse de l'élève
+                // @ts-expect-error
                 pointilles: false // EE : ce champ est facultatif et permet (si false) d'enlever les pointillés sur chaque ligne.
               }
             ]

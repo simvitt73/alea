@@ -1,7 +1,7 @@
 import { angle } from '../../lib/2d/angles'
 import { afficheLongueurSegment, afficheMesureAngle } from '../../lib/2d/codages'
-import { distancePointDroite, droite, droiteAvecNomLatex, droiteParPointEtParallele, positionLabelDroite } from '../../lib/2d/droites'
-import { point, pointAdistance, tracePoint } from '../../lib/2d/points'
+import { distancePointDroite, Droite, droite, droiteAvecNomLatex, droiteParPointEtParallele, positionLabelDroite } from '../../lib/2d/droites'
+import { Point, point, pointAdistance, tracePoint } from '../../lib/2d/points'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
 import { longueur, segment, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPoint } from '../../lib/2d/textes'
@@ -60,6 +60,7 @@ export default class ConservationTransformation extends Exercice {
         typesDeTransformationsDisponibles = ['symetrieAxiale', 'symetrieCentrale']
         break
       case 4:
+      default:
         typesDeTransformationsDisponibles = ['translation']
         break
     }
@@ -73,11 +74,12 @@ export default class ConservationTransformation extends Exercice {
         typesDeQuestionsDisponibles = ['longueurEtAngle']
         break
       case 3:
+      default:
         typesDeQuestionsDisponibles = ['parallelisme', 'longueurEtAngle']
         break
     }
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
-    let objetsEnonceEtCorr, objetsEnonceOnly, objetsCorrectionOnly, paramsEnonce
+    let objetsEnonceEtCorr, objetsEnonceOnly, objetsCorrectionOnly
     for (let i = 0, texte, texteCorr, figure, transformation, enonceTransformation, d, d1, A, B, C, D, E, imageA, imageB, imageC, figureRetournee, O, poly, imPoly, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       objetsEnonceOnly = []
       objetsCorrectionOnly = []
@@ -124,6 +126,7 @@ export default class ConservationTransformation extends Exercice {
           figureRetournee = true
           break
         case 'translation':
+        default:
           transformation = 'translation'
           D = point(B.x + 1, B.y + 8 + randint(-10, 10) / 10, lettres[3])
           E = point(B.x + 8, B.y + 8 + randint(-20, 20) / 10, lettres[4])
@@ -149,6 +152,7 @@ export default class ConservationTransformation extends Exercice {
           texteCorr += `Donc la droite $(d_1')$ est parallèle au segment [$${A.nom}'${B.nom}'$] et passe par le point $${C.nom}'$.<br>`
           break
         case 'longueurEtAngle':
+        default:
           objetsEnonceEtCorr.push(segment(A, C), segment(B, C))
           objetsEnonceEtCorr.push(afficheLongueurSegment(C, B))
           objetsEnonceEtCorr.push(afficheMesureAngle(A, B, C, 'black', 1, Math.round(angle(A, B, C)) + '^\\circ'))
@@ -195,10 +199,10 @@ export default class ConservationTransformation extends Exercice {
       const ymin = Math.min(A.y, B.y, C.y, D.x, E.x, imageA.y, imageB.y, imageC.y) - 2
       const ymax = Math.max(A.y, B.y, C.y, D.x, E.x, imageA.y, imageB.y, imageC.y) + 2
       // paramètres de la fenêtre Mathalea2d pour l'énoncé normal
-      paramsEnonce = { xmin, ymin, xmax, ymax, pixelsParCm: 20, scale: 1 }
+      const paramsEnonce = { xmin, ymin, xmax, ymax, pixelsParCm: 20, scale: 1 }
       // On ajoute les noms des droites si besoin
-      if (listeTypeDeTransformations[i] === 'symetrieAxiale') objetsEnonceEtCorr.push(texteParPoint('$(d)$', positionLabelDroite(d, paramsEnonce), 0, 'black', 1, 'milieu', true))
-      if (listeTypeDeQuestions[i] === 'parallelisme') objetsEnonceEtCorr.push(texteParPoint('$(d_1)$', positionLabelDroite(d1, paramsEnonce), 0, 'black', 1, 'milieu', true))
+      if (listeTypeDeTransformations[i] === 'symetrieAxiale') objetsEnonceEtCorr.push(texteParPoint('$(d)$', positionLabelDroite(d as Droite, paramsEnonce) as Point, 0, 'black', 1, 'milieu', true))
+      if (listeTypeDeQuestions[i] === 'parallelisme') objetsEnonceEtCorr.push(texteParPoint('$(d_1)$', positionLabelDroite(d1, paramsEnonce) as Point, 0, 'black', 1, 'milieu', true))
       // On ajoute au texte de l'énoncé, la figure à main levée et la figure de l'enoncé.
       texte += mathalea2d(Object.assign({}, fixeBordures([objetsEnonceOnly, objetsEnonceEtCorr])), objetsEnonceOnly, objetsEnonceEtCorr)
 

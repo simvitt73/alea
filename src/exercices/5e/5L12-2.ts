@@ -139,6 +139,7 @@ export default class ReduireUneExpressionLitterale extends Exercice {
           texteCorr = `$${lettreDepuisChiffre(i + 1)}=${texNombre(a, 1)}${inc}\\times${texNombre(b, 2)}`
           break
         case 9: // ax+bx
+        default:
           texte = `$${lettreDepuisChiffre(i + 1)}=${texNombre(a, 1)}${inc}+${texNombre(b, 2)}${inc}$`
           reponse = `${texNombre(a + b, 2)}${inc}`
           texteCorr = `$${lettreDepuisChiffre(i + 1)}=${texNombre(a, 1)}${inc}+${texNombre(b, 2)}${inc}`
@@ -164,6 +165,7 @@ export default class ReduireUneExpressionLitterale extends Exercice {
                 texte: texteCorr,
                 statut: 1, // OBLIGATOIRE (ici c'est le nombre de lignes du cadre pour la réponse de l'élève sur AMC)
                 sanscadre: false, // EE : ce champ est facultatif et permet (si true) de cacher le cadre et les lignes acceptant la réponse de l'élève
+                // @ts-expect-error
                 pointilles: false // EE : ce champ est facultatif et permet (si false) d'enlever les pointillés sur chaque ligne.
               }
             ]

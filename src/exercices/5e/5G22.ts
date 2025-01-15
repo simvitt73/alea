@@ -42,7 +42,7 @@ export default class DroiteRemarquableDuTriangle extends Exercice {
 
   nouvelleVersion () {
     const triangles = []
-    const sommets = [[]]
+    const sommets:string[][] = []
     const A = []
     const B = []
     const C = []
@@ -99,6 +99,7 @@ export default class DroiteRemarquableDuTriangle extends Exercice {
           // texteCorr += mathalea2d({ xmin: -3, ymin: -3, xmax: 8, ymax: 8, scale: 0.5, pixelsParCm: 20 }, ...objets[i])
           break
         case 4:
+        default:
           d[i] = bissectrice(A[i], B[i], C[i], 'blue')
           d[i].epaisseur = 1
           c[i] = codageBissectrice(A[i], B[i], C[i])

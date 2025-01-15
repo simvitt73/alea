@@ -56,7 +56,7 @@ export default class PasserEcritureDecimaleEcritureFractionnaireInversement exte
     }
     const listeTypeFractions = combinaisonListes(typesDeFractionsDisponibles, this.nbQuestions)
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      let numerateur, denominateur
+      let numerateur = 0; let denominateur = 1
       if (listeTypeFractions[i] === 'fractionsDecimales') {
         numerateur = 0
         while (numerateur % 2 === 0 || numerateur % 5 === 0) {
@@ -90,7 +90,7 @@ export default class PasserEcritureDecimaleEcritureFractionnaireInversement exte
           texteCorr = `$${texNombre(ecritureDecimale, 3)} = \\dfrac{${numerateur}}{${denominateur}}$`
           setReponse(this, i, new FractionEtendue(numerateur, denominateur), { formatInteractif: 'fractionEgale' })
         }
-      } else if (listeDesSensDemandes[i] === 'FractionnaireADecimale') {
+      } else {
         texte = `Donner l'écriture décimale de $\\dfrac{${numerateur}}{${denominateur}}$.`
         if (this.interactif) {
           texte += '<br>' + ajouteChampTexteMathLive(this, i, '', { texteAvant: `$\\dfrac{${numerateur}}{${denominateur}} = $` })

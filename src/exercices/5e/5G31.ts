@@ -56,7 +56,7 @@ export const refs = {
   'fr-fr': ['5G31'],
   'fr-ch': ['9ES2-9']
 }
-const troisiemeAngle = function (a1, a2) {
+const troisiemeAngle = function (a1: number, a2: number) {
   if (a1 + a2 <= 180) {
     return 180 - (a1 + a2)
   } else {
@@ -113,7 +113,7 @@ export default class ExerciceAnglesTriangles extends Exercice {
     for (let i = 0, texte, texteCorr, texteCorrFinal, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const objetsEnonce = []
       const objetsCorrection = []
-      let reponseInteractive = []
+      let reponseInteractive:number[] = []
       const nomAngles = []
       let choixAngle = shuffle([0, 1, 2]) // Cas général de devoir trouver trois angles
       lettre1 = randint(1, 26) // aleatoirisation du nom des points
@@ -482,6 +482,7 @@ export default class ExerciceAnglesTriangles extends Exercice {
           reponseInteractive = [67.5, 67.5, 45]
           break
         case 11: // cas non aléatoire triangle 72 , 72 , 36.
+        default:
           nomAngles.push(s1 + s3 + s2, s1 + s2 + s3, s2 + s1 + s3)
           texte = `$${s1 + s2 + s3}$ est un triangle isocèle en $${s1}$. L'angle $\\widehat{${s1 + s2 + s3}}$ mesure le double de l'angle $\\widehat{${s2 + s1 + s3}}$.<br>`
           texte += `Quelles sont les mesures respectives des angles $\\widehat{${nomAngles[choixAngle[0]]}}$, $\\widehat{${nomAngles[choixAngle[1]]}}$ et $\\widehat{${nomAngles[choixAngle[2]]}}$ ?`
@@ -580,6 +581,7 @@ export default class ExerciceAnglesTriangles extends Exercice {
           propositions: [
             {
               type: 'AMCNum',
+              // @ts-expect-error
               propositions: [{
                 texte: '',
                 // numQuestionVisible: false,
@@ -599,10 +601,13 @@ export default class ExerciceAnglesTriangles extends Exercice {
           ]
         }
         if (reponseInteractive.length > 1) {
+          // @ts-expect-error
           this.autoCorrection[i].propositions[0].propositions[0].multicolsBegin = true
+          // @ts-expect-error
           this.autoCorrection[i].propositions.push(
             {
               type: 'AMCNum',
+              // @ts-expect-error
               propositions: [{
                 texte: '',
                 multicolsEnd: true,
@@ -622,10 +627,11 @@ export default class ExerciceAnglesTriangles extends Exercice {
           )
         }
         if (reponseInteractive.length > 2) {
-          this.autoCorrection[i].propositions[1].propositions[0].multicolsEnd = false
+          // @ts-expect-error
           this.autoCorrection[i].propositions.push(
             {
               type: 'AMCNum',
+              // @ts-expect-error
               propositions: [{
                 texte: '',
                 multicolsEnd: true,

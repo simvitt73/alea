@@ -82,6 +82,7 @@ export default class ProprietesDesParallelogrammes extends Exercice {
           texteCorr = `Si un quadrilatère a deux côtés ${texteEnCouleurEtGras('opposés parallèles et de même longueur')}, alors c'est un parallélogramme.`
           break
         case 9:
+        default:
           texte = this.interactif || context.isAmc ? "Si un quadrilatère a …, alors c'est un parallélogramme." : "Si un quadrilatère a … angles …, alors c'est un parallélogramme."
           texteCorr = `Si un quadrilatère a ${texteEnCouleurEtGras('ses angles opposés égaux')}, alors c'est un parallélogramme.`
           break
@@ -141,7 +142,7 @@ export default class ProprietesDesParallelogrammes extends Exercice {
         texte += props.texte
       }
 
-      if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+      if (this.questionJamaisPosee(i, texteCorr)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++

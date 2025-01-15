@@ -119,6 +119,7 @@ export default class ExerciceSubstituer extends Exercice {
           reponse = k * x * x + y * y
           break
         case 10:
+        default:
           texte = `$${lettreDepuisChiffre(i + 1)}=${k}x^2+${ecritureParentheseSiNegatif(k2)}x+${ecritureParentheseSiNegatif(k3)}$`
           texteCorr = `$${lettreDepuisChiffre(i + 1)}=${k}x^2+${ecritureParentheseSiNegatif(k2)}x+${ecritureParentheseSiNegatif(k3)}=${k}\\times  ${x}^2+${ecritureParentheseSiNegatif(k2)}\\times  ${ecritureParentheseSiNegatif(x)}+${ecritureParentheseSiNegatif(k3)}=${k}\\times  ${x * x}+${ecritureParentheseSiNegatif(k2)}\\times  ${x}+${ecritureParentheseSiNegatif(k3)}=${miseEnEvidence(`${k * x * x + k2 * x + k3}`)}$`
           reponse = k * x * x + k2 * x + k3

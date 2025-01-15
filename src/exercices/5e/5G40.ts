@@ -2,7 +2,7 @@ import { cercle, cercleCentrePoint, traceCompas } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { codageSegments } from '../../lib/2d/codages'
 import { droite } from '../../lib/2d/droites'
-import { point, pointAdistance, pointIntersectionCC, tracePoint } from '../../lib/2d/points'
+import { Point, point, pointAdistance, pointIntersectionCC, tracePoint } from '../../lib/2d/points'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
 import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPoint } from '../../lib/2d/textes'
@@ -48,7 +48,7 @@ export default class ConstructionsParallelogrammes extends Exercice {
     this.correctionDetailleeDisponible = true
   }
 
-  nouvelleVersion (numeroExercice) {
+  nouvelleVersion (numeroExercice: number) {
     const tailleGrille = 0.2 + this.sup2 * 0.2
 
     // const typeQuestionsDisponibles = [1, 2, 3, 4]
@@ -63,10 +63,10 @@ export default class ConstructionsParallelogrammes extends Exercice {
       melange: 5,
       defaut: 5,
       nbQuestions: this.nbQuestions
-    })
+    }).map(Number)
 
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      const celluleAlea = function (rang) {
+      const celluleAlea = function (rang: number) {
         const lettre = lettreDepuisChiffre(randint(1, rang))
         const chiffre = Number(randint(1, rang)).toString()
         return lettre + chiffre
@@ -101,9 +101,9 @@ export default class ConstructionsParallelogrammes extends Exercice {
       const result2 = dansLaCibleCarree(D.x, D.y, 5, tailleGrille, cellule2)
       const result3 = dansLaCibleCarree(B.x, B.y, 5, tailleGrille, cellule3)
 
-      const cible = cibleCarree({ x: result[0], y: result[1], rang: 5, num: listeTypeQuestions[i] > 2 ? 1 : '', taille: tailleGrille, color: 'gray', opacite: 0.7 })
-      const cible2 = cibleCarree({ x: result2[0], y: result2[1], rang: 5, num: 2, taille: tailleGrille, color: 'gray', opacite: 0.7 })
-      const cible3 = cibleCarree({ x: result3[0], y: result3[1], rang: 5, num: 3, taille: tailleGrille, color: 'gray', opacite: 0.7 })
+      const cible = cibleCarree({ x: result[0] as number, y: result[1] as number, rang: 5, num: listeTypeQuestions[i] > 2 ? 1 : 0, taille: tailleGrille, color: 'gray', opacite: 0.7 })
+      const cible2 = cibleCarree({ x: result2[0] as number, y: result2[1] as number, rang: 5, num: 2, taille: tailleGrille, color: 'gray', opacite: 0.7 })
+      const cible3 = cibleCarree({ x: result3[0] as number, y: result3[1] as number, rang: 5, num: 3, taille: tailleGrille, color: 'gray', opacite: 0.7 })
       const xMin = Math.min(A.x, B.x, C.x, D.x) - 3
       const yMin = Math.min(A.y, B.y, C.y, D.y) - 4
       const xMax = Math.max(A.x, B.x, C.x, D.x) + 4
@@ -153,9 +153,9 @@ export default class ConstructionsParallelogrammes extends Exercice {
           }
           texteCorr += `Le point $${noms[2]}$ se trouve dans la case ${cellule} de la cible.<br>`
           P = polygoneAvecNom(D, A, B)
-          animIEP.pointCreer(D, D.nom, 0)
-          animIEP.pointCreer(A, A.nom, 0)
-          animIEP.pointCreer(B, B.nom, 0)
+          animIEP.pointCreer(D, D.nom)
+          animIEP.pointCreer(A, A.nom)
+          animIEP.pointCreer(B, B.nom)
           animIEP.regleSegment(D, A)
           animIEP.regleSegment(A, B)
           animIEP.regleMasquer(0)
@@ -182,6 +182,7 @@ export default class ConstructionsParallelogrammes extends Exercice {
 
           break
         case 4: // Un angle formé par deux demi-droites et le centre
+        default:
           texte = `Construire le parallélogramme $${nom}$ de centre ${noms[4]}`
           texte += ' et le coder afin de faire comprendre par quelle méthode ce parallélogramme a été construit.'
           texte += ` Le point $${noms[3]}$ est sur la demi-droite $[${noms[0]}x)$ et le point $${noms[1]}$ est sur la demi-droite $[${noms[0]}y)$.<br>`
@@ -197,7 +198,7 @@ export default class ConstructionsParallelogrammes extends Exercice {
           animIEP.regleZoom(200)
           animIEP.equerreZoom(200)
           animIEP.parallelogrammeAngleCentre(D, A, B, O)
-          objetsEnonce.push(dd1, dd2, tracePoint(O), labelPoint(O, A), texteParPoint('x', pointIntersectionCC(cercleCentrePoint(A, D), cercle(D, 0.5), 1)), texteParPoint('y', similitude(B, A, 4, 1.3)), cible, cible2, cible3)
+          objetsEnonce.push(dd1, dd2, tracePoint(O), labelPoint(O, A), texteParPoint('x', pointIntersectionCC(cercleCentrePoint(A, D), cercle(D, 0.5), '', 1) as Point), texteParPoint('y', similitude(B, A, 4, 1.3)), cible, cible2, cible3)
           objetsCorrection.push(dd1, dd2, dd3, dd4, p[0], p[1], tracePoint(O), labelPoint(O), cible, cible2, cible3, d1, d3, codageSegments('||', 'red', A, O, O, C))
 
           break
@@ -231,6 +232,7 @@ export default class ConstructionsParallelogrammes extends Exercice {
 
         this.autoCorrection[i] = {}
         this.autoCorrection[i].options = {
+          // @ts-expect-error
           ordered: true, barreseparation: true, multicolsAll: true
         }
         this.autoCorrection[i].enonce = ''// texte
@@ -238,6 +240,7 @@ export default class ConstructionsParallelogrammes extends Exercice {
          [
            {
              type: 'AMCOpen',
+             // @ts-expect-error
              propositions: [{
                texte: texteCorr,
                enonce: texteAMC + '<br>' + mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.5 }, objetsEnonce),
@@ -247,11 +250,13 @@ export default class ConstructionsParallelogrammes extends Exercice {
            },
            {
              type: 'qcmMono',
+             // @ts-expect-error
              propositions: propositionsQcm1,
              enonce: (listeTypeQuestions[i] > 2 ? numAlpha(0) + 'Pour la cible 1 : <br>' : '') + 'Lettre de la case du sommet construit, dans la cible' + (listeTypeQuestions[i] > 2 ? ' 1' : '')
            },
            {
              type: 'qcmMono',
+             // @ts-expect-error
              propositions: propositionsQcm2,
              enonce: 'Chiffre de la case du sommet construit, dans la cible' + (listeTypeQuestions[i] > 2 ? ' 1' : '')
            }]
@@ -272,10 +277,11 @@ export default class ConstructionsParallelogrammes extends Exercice {
               statut: cellule2[1] === reponseChiffres[ee]
             })
           }
-
+          // @ts-expect-error
           this.autoCorrection[i].propositions.push(
             {
               type: 'qcmMono',
+              // @ts-expect-error
               propositions: propositionsQcm3,
               enonce: '\\vspace{1cm}' + numAlpha(1) + 'Pour la cible 2 : <br>Lettre de la case du sommet construit, dans la cible 2'
             },
@@ -302,10 +308,11 @@ export default class ConstructionsParallelogrammes extends Exercice {
               statut: cellule3[1] === reponseChiffres[ee]
             })
           }
-
+          // @ts-expect-error
           this.autoCorrection[i].propositions.push(
             {
               type: 'qcmMono',
+              // @ts-expect-error
               propositions: propositionsQcm5,
               enonce: '\\vspace{1cm}' + numAlpha(2) + 'Pour la cible 3 : <br>Lettre de la case du sommet construit, dans la cible 3'
             },

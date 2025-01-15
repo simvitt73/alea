@@ -33,9 +33,10 @@ export const refs = {
   'fr-ch': ['10FA1-2', '11FA1-6']
 }
 export default class CalculerLaValeurDUneExpressionLitterale extends Exercice {
+  version: string
   constructor () {
     super()
-
+    this.version = '5L14'
     this.nbQuestions = 5
   }
 
@@ -140,6 +141,7 @@ export default class CalculerLaValeurDUneExpressionLitterale extends Exercice {
           setReponse(this, i, a * x * y + x + y)
           break
         case 10: // (ax+b)(cy-d)
+        default:
           a = randint(2, 10)
           x = randint(2, 10)
           b = randint(1, 10)
@@ -154,7 +156,7 @@ export default class CalculerLaValeurDUneExpressionLitterale extends Exercice {
       }
       texte += this.interactif ? (' : ' + ajouteChampTexteMathLive(this, i)) : '.'
 
-      if (this.questionJamaisPosee(i, texte)) { // Si la question n'a jamais été posée, on en créé une autre
+      if (this.questionJamaisPosee(i, texteCorr)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++

@@ -89,6 +89,7 @@ export default class AireDuParallelogramme extends Exercice {
           texteCorr += `<br>$\\mathcal{A}_{${nom.slice(i * 4, i * 4 + 4)}}=${c}~\\text{cm}\\times  ${h}~\\text{cm}=${c * h}~\\text{cm}^2$`
           break
         case 'type3':
+        default:
           c = randint(3, 10)
           h = randint(3, 5)
           A = point(0, 0)
@@ -120,7 +121,7 @@ export default class AireDuParallelogramme extends Exercice {
       // Fin de cette uniformisation
 
       // Si la question n'a jamais été posée, on l'enregistre
-      if (this.questionJamaisPosee(i, c, h, A, B, P, C, I, H, s)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+      if (this.questionJamaisPosee(i, c, h)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++

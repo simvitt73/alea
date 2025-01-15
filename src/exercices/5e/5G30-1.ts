@@ -1,6 +1,6 @@
 import { angle, codageAngle } from '../../lib/2d/angles'
 import { droite, droiteParPointEtParallele } from '../../lib/2d/droites'
-import { point, pointIntersectionDD, pointSurSegment } from '../../lib/2d/points'
+import { Point, point, pointIntersectionDD, pointSurSegment } from '../../lib/2d/points'
 import { longueur } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
 import { rotation, similitude } from '../../lib/2d/transformations'
@@ -9,7 +9,7 @@ import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { arrondi } from '../../lib/outils/nombres'
 import { numAlpha } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
-import { mathalea2d } from '../../modules/2dGeneralites'
+import { mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
@@ -47,7 +47,7 @@ export default class EgaliteDAngles extends Exercice {
       let figure = []
       const noms = choisitLettresDifferentes(5, 'Q', true)
       const A = point(0, 0, noms[0], 'above left')
-      const fig1 = function () {
+      const fig1 = function (): [objets:NestedObjetMathalea2dArray, params:{ xmin: number, xmax: number, ymin: number, ymax: number }, correction:string, enonceAMC: string[], reponseAMC: number[]] {
         const objets = []; const enonceAMC = []; let correction
         let gras
         context.isHtml ? gras = '#f15929' : gras = 'black'
@@ -64,7 +64,7 @@ export default class EgaliteDAngles extends Exercice {
         const B = pointSurSegment(A, C, randint(3, ac - 4), noms[1], 'above left')
         const BD = droiteParPointEtParallele(B, AE, '', '#f15929')
         // BD.epaisseur = 2
-        const D = pointIntersectionDD(BD, CE, noms[3], 'above right')
+        const D = pointIntersectionDD(BD, CE, noms[3], 'above right') as Point
         const m1 = codageAngle(E, A, C, 1, '', 'black', 2, 1, context.isAmc ? 'none' : 'black', 0.1, true)
         const m2 = codageAngle(A, C, E, 1, '', 'black', 2, 1, context.isAmc ? 'none' : 'black', 0.1, true)
         const l1 = labelPoint(A, B, C, D, E)
@@ -99,7 +99,7 @@ export default class EgaliteDAngles extends Exercice {
 
         return [objets, params, correction, enonceAMC, reponsesAMC]
       }
-      const fig2 = function () {
+      const fig2 = function (): [objets:NestedObjetMathalea2dArray, params:{ xmin: number, xmax: number, ymin: number, ymax: number }, correction:string, enonceAMC: string[], reponseAMC: number[]] {
         const objets = []; const enonceAMC = []; let correction; let d, CA, AB, CE, BE, B, C, D, E, ab, ac, a, cd, ad
         do {
           B = rotation(point(randint(8, 10), randint(1, 3)), A, randint(-40, 40), noms[1], 'right')
@@ -162,6 +162,7 @@ export default class EgaliteDAngles extends Exercice {
             propositions: [
               {
                 type: 'AMCOpen',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',
@@ -176,6 +177,7 @@ export default class EgaliteDAngles extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',
@@ -194,6 +196,7 @@ export default class EgaliteDAngles extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',
@@ -211,6 +214,7 @@ export default class EgaliteDAngles extends Exercice {
               },
               {
                 type: 'AMCOpen',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',
@@ -224,6 +228,7 @@ export default class EgaliteDAngles extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',
@@ -242,6 +247,7 @@ export default class EgaliteDAngles extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',
@@ -259,6 +265,7 @@ export default class EgaliteDAngles extends Exercice {
               },
               {
                 type: 'AMCOpen',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',
@@ -272,6 +279,7 @@ export default class EgaliteDAngles extends Exercice {
               },
               {
                 type: 'AMCNum',
+                // @ts-expect-error
                 propositions: [
                   {
                     texte: '',

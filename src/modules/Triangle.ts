@@ -17,18 +17,26 @@ export class Triangle {
    * @param {number} a2 un des angles du triangle
    * @param {number} a3  un des angles du triangle
    */
-  constructor (l1, l2, l3, a1, a2, a3) {
+  nom: string
+  l1: number
+  l2: number
+  l3: number
+  a1: number
+  a2: number
+  a3: number
+
+  constructor (l1?: number, l2?: number, l3?: number, a1?:number, a2?:number, a3?:number) {
     this.nom = choice(['AGE', 'AIL', 'AIR', 'ALU', 'AME', 'AMI', 'ANE', 'ARC', 'BAC', 'BAL', 'BAR',
       'BEC', 'BEL', 'BIO', 'BIP', 'BIS', 'BLE', 'BOA', 'BOF', 'BOG', 'BOL', 'BUT', 'BYE', 'COQ', 'CRI',
       'CRU', 'DUC', 'DUO', 'DUR', 'EAU', 'ECU', 'EGO', 'EPI', 'FER', 'FIL', 'FUN', 'GPS', 'ICE', 'JET',
       'KIF', 'KIR', 'MAC', 'NEM', 'PAS', 'PIC', 'PIF', 'PIN', 'POT', 'RAI', 'RAP', 'RAT', 'RIF', 'SEL',
       'TAF', 'TIC', 'TAC', 'TOC', 'TOP', 'UNI', 'WOK', 'YAK', 'YEN', 'ZEN', 'ZIG', 'ZAG'])
-    this.l1 = l1
-    this.l2 = l2
-    this.l3 = l3
-    this.a1 = a1
-    this.a2 = a2
-    this.a3 = a3
+    this.l1 = l1 ?? 0
+    this.l2 = l2 ?? 0
+    this.l3 = l3 ?? 0
+    this.a1 = a1 ?? 0
+    this.a2 = a2 ?? 0
+    this.a3 = a3 ?? 0
   }
 
   /**

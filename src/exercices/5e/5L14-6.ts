@@ -31,7 +31,7 @@ export default class DeterminerDerniereOperationExpNum extends Exercice {
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
     if (this.sup2) decimal = 10
     for (let i = 0, texte, texteCorr, val1, val2, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      nbOperations = parseInt(listeTypeDeQuestions[i])
+      nbOperations = listeTypeDeQuestions[i]
       val1 = randint(2, 5)
       val2 = randint(6, 9)
       resultats = ChoisirUneExpressionLitterale(nbOperations, decimal, val1, val2, this.sup)

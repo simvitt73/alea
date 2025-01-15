@@ -19,6 +19,7 @@ export const refs = {
   'fr-ch': ['9ES2-10']
 }
 export default class ConstructibiliteDesTrianglesLongueurs extends ConstructibiliteDesTriangles {
+  exo: string
   constructor () {
     super()
     this.exo = '5G31-1'

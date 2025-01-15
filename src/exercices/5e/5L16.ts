@@ -284,6 +284,7 @@ export default class SimplifierEcritureLitterale extends Exercice {
           resultat = `${b}+${a}x^3`
           break
         case 'abx³':
+        default:
           if (inverserParentheses) {
             if (inverserFacteurs) {
               donnee = `${b} \\times x \\times x \\times ${a} \\times x`
@@ -319,7 +320,7 @@ export default class SimplifierEcritureLitterale extends Exercice {
       if (!this.sup2) {
         handleAnswers(this, i, { reponse: { value: reponse } })
       } else {
-        handleAnswers(this, i, { reponse: { value: reponse }, compare: expressionDeveloppeeEtNonReduiteCompare })
+        handleAnswers(this, i, { reponse: { value: reponse, compare: expressionDeveloppeeEtNonReduiteCompare } })
       }
       if (this.questionJamaisPosee(i, texte)) {
         this.listeQuestions[i] = texte
@@ -337,15 +338,15 @@ export default class SimplifierEcritureLitterale extends Exercice {
  * @param expressionLaTeX
  * @returns {string}
  */
-function rangerFacteurs (expressionLaTeX) {
+function rangerFacteurs (expressionLaTeX: string) {
   const facteurs = expressionLaTeX.split(' \\times ')
-  const nombresConstants = []
+  const nombresConstants: number[] = []
   const variables = []
   for (const facteur of facteurs) {
-    if (isNaN(facteur)) {
+    if (Number.isNaN(facteur)) {
       variables.push(facteur)
     } else {
-      nombresConstants.push(facteur)
+      nombresConstants.push(Number(facteur))
     }
   }
   const facteursOrdonnes = []

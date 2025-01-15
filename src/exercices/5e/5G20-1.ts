@@ -4,7 +4,7 @@ import { texNombre } from '../../lib/outils/texNombre'
 import { Triangle } from '../../modules/Triangle'
 import Exercice from '../Exercice'
 import { context } from '../../modules/context'
-import { listeQuestionsToContenu, randint, calculANePlusJamaisUtiliser, texEnumerateSansNumero } from '../../modules/outils'
+import { listeQuestionsToContenu, randint, texEnumerateSansNumero } from '../../modules/outils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 export const dateDeModifImportante = '25/07/2023'
 export const titre = 'Utiliser le vocabulaire des triangles'
@@ -20,23 +20,15 @@ export const refs = {
   'fr-ch': ['9ES2-7']
 }
 export default class VocabulaireDesTriangles extends Exercice {
+  classe: number
   constructor () {
     super()
     this.besoinFormulaire2CaseACocher = ['Avec des décimaux', false]
     this.consigne = 'Donner la nature des triangles en justifiant.'
     this.sup = 1
     this.sup2 = false
-
-    if (this.classe === 6) {
-      if (this.sup === 1) {
-        this.nbQuestions = 4
-      } else {
-        this.nbQuestions = 5
-      }
-    } else if (this.classe === 5) {
-      this.nbQuestions = 5
-    }
     this.classe = 5
+    this.nbQuestions = 5
   }
 
   nouvelleVersion () {
@@ -95,11 +87,11 @@ export default class VocabulaireDesTriangles extends Exercice {
     if (this.classe === 6) {
       if (this.sup === 1) {
         typeDeQuestionsDisponibles = [1, 3, 5, 7] // 6e facile isocèle, équilatéral et rectangle.
-      } else if (this.sup === 2) {
+      } else {
         // typesDeQuestionsDisponibles = [1,3,4,5,6,7,8,9]; //6e tout sauf par les angles
         typeDeQuestionsDisponibles = [1, 4, 6, 8, 9] // 6e les autres cas sauf par les angles
       }
-    } else if (this.classe === 5) {
+    } else {
       // typesDeQuestionsDisponibles = [1,2,3,4,5,6,7,8,9,10,11]; // 5e : on ajoute la caractéisation par les angles
       typeDeQuestionsDisponibles = [
         choice([1, 2]),
@@ -124,16 +116,16 @@ export default class VocabulaireDesTriangles extends Exercice {
       const angleMax = 100
 
       // on crée les triangles
-      const triangleQuelconque = new Triangle()
+      const triangleQuelconque = new Triangle(0, 0, 0, 0, 0, 0) // Les arguments n'étant pas facultatifs, il faut passer quelque chose.
       const triangleIsocele = new Triangle()
       const triangleEquilateral = new Triangle()
       const triangleRectangle = new Triangle()
       const triangleIsoceleRectangle = new Triangle()
       let partieDecimale1, partieDecimale2, partieDecimale3
       if (this.sup2) {
-        partieDecimale1 = calculANePlusJamaisUtiliser(randint(1, 9) / 10 * randint(0, 1))
-        partieDecimale2 = calculANePlusJamaisUtiliser(randint(1, 9) / 10 * randint(0, 1))
-        partieDecimale3 = calculANePlusJamaisUtiliser(randint(1, 9) / 10 * randint(0, 1))
+        partieDecimale1 = randint(1, 9) / 10 * randint(0, 1)
+        partieDecimale2 = randint(1, 9) / 10 * randint(0, 1)
+        partieDecimale3 = randint(1, 9) / 10 * randint(0, 1)
       } else {
         partieDecimale1 = 0
         partieDecimale2 = 0
@@ -261,7 +253,8 @@ export default class VocabulaireDesTriangles extends Exercice {
           }
           break
         case 9: // triangle isocèle rectangle avec conversion
-          triangleIsoceleRectangle.l1 = randint(longueurMin, longueurMax) + partieDecimale1
+          l1 = randint(longueurMin, longueurMax) + partieDecimale1
+          triangleIsoceleRectangle.l1 = l1
           triangleIsoceleRectangle.l2 = triangleIsoceleRectangle.l1
           triangleIsoceleRectangle.a1 = 90
 
@@ -293,6 +286,7 @@ export default class VocabulaireDesTriangles extends Exercice {
           texteCorr = `Le triangle ${triangleIsocele.getNom()} a deux angles égaux, ${triangleIsocele.getAngles()[0]} = ${triangleIsocele.getAngles()[1]} $= ${triangleIsocele.a1}^\\circ$ donc ${triangleIsocele.getNom()} est un triangle ${texteEnCouleurEtGras('isocèle')} en ${triangleIsocele.getSommets()[0]}.`
           break
         case 11: // triangle équilatéral par les angles
+        default:
           triangleEquilateral.a1 = 60
           triangleEquilateral.a2 = 60
           triangleEquilateral.a3 = 60
@@ -302,7 +296,7 @@ export default class VocabulaireDesTriangles extends Exercice {
           texteCorr = `Le triangle ${triangleEquilateral.getNom()} a trois angles égaux, ${triangleEquilateral.getAngles()[0]} = ${triangleEquilateral.getAngles()[1]} = ${triangleEquilateral.getAngles()[2]} $= ${triangleEquilateral.a1}^\\circ$ donc ${triangleEquilateral.getNom()} est un triangle ${texteEnCouleurEtGras('équilatéral')}.`
           break
       }
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, texteCorr)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr

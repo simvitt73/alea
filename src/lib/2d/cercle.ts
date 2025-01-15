@@ -703,7 +703,7 @@ export function arcPointPointAngle (
   color = 'black',
   opaciteDeRemplissage = 0.2,
   couleurDesHachures = 'none'
-) {
+): Arc {
   let anglerot
   if (angle < 0) anglerot = (angle + 180) / 2
   else anglerot = (angle - 180) / 2
