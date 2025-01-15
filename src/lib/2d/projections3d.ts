@@ -235,7 +235,7 @@ export class Ellipse extends ObjetMathalea2D {
  * @param {number} ry Second rayon de l'ellipse
  * @param {string} [color = 'black'] Couleur de l'ellipse : du type 'blue' ou du type '#f15929'
  * @example ellipse(M, 1, 3) // Trace, en noir, l'ellipse de centre M et de rayons 1 et 3
- * @example ellipse(M, 1, 3, 'red') // Trace, en rouge, l'ellipse de centre M et de rayons 1 et 3
+ * @example M, 1, 3, 'red') // Trace, en rouge, l'ellipse de centre M et de rayons 1 et 3
  * @author Rémi Angot
  * @return {Ellipse}
  */
