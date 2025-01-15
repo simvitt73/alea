@@ -80,9 +80,9 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
 
     const paramsEnonce = { xmin: -1, ymin: -4, xmax: 7.5, ymax: 0.8, pixelsParCm: 20, scale: 0.5, mainlevee: false, amplitude: 0.5 }
 
-    let nomsDejaUtilises
+    let nomsDejaUtilises: string[]
     let nom
-    function gestionNom (i) {
+    function gestionNom (i: number) {
       if (i % 4 === 0) nomsDejaUtilises = ['OQD']
       nom = creerNomDePolygone(4, nomsDejaUtilises)
       nomsDejaUtilises.push(nom)
@@ -90,6 +90,7 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
       B.nom = nom[1]
       C.nom = nom[2]
       D.nom = nom[3]
+      return nom
     }
 
     const typeQuestionsDisponibles = ['cotesOpposesMemeLongueur', 'cotesConsecutifsMemeLongueur', 'diagonalesMemeLongueur', '2cotesOpposesMemeLongueur', '2cotesOpposesMemeLongueurv2', '2cotesOpposesMemeLongueurEtParallele', '2cotesOpposesMemeLongueurEtParallelev2', '2cotesOpposesEtParalleles', 'anglesOpposesEgaux'] // On créé 3 types de questions
@@ -104,14 +105,14 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
       estUnParallegramme ||= listeTypeQuestions[i] === 'anglesOpposesEgaux'
       switch (listeTypeQuestions[i]) { // Suivant le type de question, le contenu sera différent
         case 'cotesOpposesMemeLongueur':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, sABcodage, sBCcodage, sCDcodage, sADcodage, nommePolygone(p, nom)])
           texteCorr = `On sait que $${A.nom + B.nom} = ${C.nom + D.nom}$ et $${B.nom + C.nom} = ${D.nom + A.nom}$.`
           texteCorr += '<br>Or, « si un quadrilatère a ses côtés opposés de même longueur, alors c\'est un parallélogramme ».'
           texteCorr += `<br>Donc $${miseEnEvidence(nom)}$ ${texteEnCouleurEtGras('est un parallélogramme')}.`
           break
         case 'cotesConsecutifsMemeLongueur':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, codageSegment(A, B, 'X', 'blue'), codageSegment(B, C, 'X', 'blue'), codageSegment(C, D, '||', 'blue'), codageSegment(D, A, '||', 'blue'), nommePolygone(p, nom)])
           texteCorr = `Les côtés consécutifs de $${nom}$ sont de même longueur deux par deux, $${miseEnEvidence(nom)}$ ${texteEnCouleurEtGras('n\'est donc pas forcément un parallélogramme')} comme le montre le contre-exemple suivant (il s'agit d'un cerf-volant).`
           // Cerf-volant
@@ -127,14 +128,14 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
           texteCorr += '<br>' + mathalea2d({ xmin: -1.5, ymin: -6.5, xmax: 1.5, ymax: 0.5, pixelsParCm: 20, scale: 1 }, [nommePolygone(p1, nom), p1, s1, s2, s3, s4])
           break
         case 'diagonalesMemeLongueur':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, sAOcodage, sBOcodage, sCOcodage, sDOcodage, sAC, sBD, nommePolygone(p, nom), latexParPoint('O', O, 'black', 200, 12, '')])
           texteCorr = `On sait que $${A.nom + 'O'} = ${'O' + C.nom}$ et $${B.nom + 'O'} = ${'O' + D.nom}$.`
           texteCorr += '<br>Or, « si un quadrilatère a ses diagonales qui se coupent en leur milieu, alors c\'est un parallélogramme ».'
           texteCorr += `<br>Donc $${miseEnEvidence(nom)}$ ${texteEnCouleurEtGras('est un parallélogramme')}.`
           break
         case '2cotesOpposesMemeLongueur':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, sABcodage, sCDcodage, nommePolygone(p, nom)])
           // Contre-Exemple
           M1 = point(0, 0)
@@ -149,7 +150,7 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
           texteCorr += '<br>' + mathalea2d(Object.assign(fixeBordures([nommePolygone(p1, nom), p1, s1, s2])), [nommePolygone(p1, nom), p1, s1, s2])
           break
         case '2cotesOpposesMemeLongueurv2':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, sBCcodage, sADcodage, nommePolygone(p, nom)])
           // Contre-Exemple
           M1 = point(0, 0)
@@ -163,21 +164,21 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
           texteCorr += '<br>' + mathalea2d(Object.assign(fixeBordures([nommePolygone(p1, nom), p1, s1, s2])), [nommePolygone(p1, nom), p1, s1, s2])
           break
         case '2cotesOpposesMemeLongueurEtParallele':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, sAB, sCD, sABcodage, sCDcodage, nommePolygone(p, nom)]) + `$(${A.nom + B.nom}) // (${C.nom + D.nom})$`
           texteCorr = `On sait que $${A.nom + B.nom} = ${C.nom + D.nom}$ et $(${A.nom + B.nom}) // (${C.nom + D.nom})$.`
           texteCorr += '<br>Or, « si un quadrilatère a deux côtés opposés parallèles et de même longueur, alors c\'est un parallélogramme ».'
           texteCorr += `<br>Donc $${miseEnEvidence(nom)}$ ${texteEnCouleurEtGras('est un parallélogramme')}.`
           break
         case '2cotesOpposesMemeLongueurEtParallelev2':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, sBC, sAD, sBCcodage, sADcodage, nommePolygone(p, nom)]) + `$(${B.nom + C.nom}) // (${A.nom + D.nom})$`
           texteCorr = `On sait que $${B.nom + C.nom} = ${A.nom + D.nom}$ et $(${B.nom + C.nom}) // (${A.nom + D.nom})$.`
           texteCorr += '<br>Or, « si un quadrilatère a deux côtés opposés parallèles et de même longueur, alors c\'est un parallélogramme ».'
           texteCorr += `<br>Donc $${miseEnEvidence(nom)}$ ${texteEnCouleurEtGras('est un parallélogramme')}.`
           break
         case '2cotesOpposesEtParalleles':
-          gestionNom(i)
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, sAB, sCD, nommePolygone(p, nom)]) + `$(${A.nom + B.nom}) // (${C.nom + D.nom})$`
           // Contre-Exemple
           M1 = point(0, 0)
@@ -193,7 +194,8 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
           texteCorr += '<br>' + mathalea2d(Object.assign(fixeBordures([nommePolygone(p1, nom), p1, s1, s2])), [nommePolygone(p1, nom), p1, s1, s2])
           break
         case 'anglesOpposesEgaux':
-          gestionNom(i)
+        default:
+          nom = gestionNom(i)
           texte = mathalea2d(paramsEnonce, [p, nommePolygone(p, nom), aABCcodage, aBCDcodage, aCDAcodage, aDABcodage])
           texteCorr = `On sait que $\\widehat{${A.nom + B.nom + C.nom}} = \\widehat{${C.nom + D.nom + A.nom}}$ et $\\widehat{${B.nom + C.nom + D.nom}} = \\widehat{${D.nom + A.nom + B.nom}}$.`
           texteCorr += '<br>Or, « si un quadrilatère a ses angles opposés égaux, alors c\'est un parallélogramme ».'
@@ -217,7 +219,7 @@ export default class ParallelogrammeAPartirDUneFigure extends Exercice {
       if (this.interactif) {
         texte += props.texte
       }
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, texteCorr)) {
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr

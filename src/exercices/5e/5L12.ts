@@ -107,6 +107,7 @@ export default class ReduireUneExpressionLitterale extends Exercice {
           reponse = `${rienSi1(a - c)}${inc}+${texNombre(b, 1)}`
           break
         case 7: // ax-cx
+        default:
           if (c > a) {
             [a, c] = [c, a] // pour s'assurer que a-c est positif
           } else if (c === a) {
@@ -132,6 +133,7 @@ export default class ReduireUneExpressionLitterale extends Exercice {
                 texte: texteCorr,
                 statut: 1, // OBLIGATOIRE (ici c'est le nombre de lignes du cadre pour la réponse de l'élève sur AMC)
                 sanscadre: false, // EE : ce champ est facultatif et permet (si true) de cacher le cadre et les lignes acceptant la réponse de l'élève
+                // @ts-expect-error
                 pointilles: false // EE : ce champ est facultatif et permet (si false) d'enlever les pointillés sur chaque ligne.
               }
             ]

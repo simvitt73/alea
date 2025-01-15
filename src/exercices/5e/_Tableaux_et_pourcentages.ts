@@ -14,7 +14,7 @@ import { tableauColonneLigne } from '../../lib/2d/tableau'
  * @param {object} remise //remise effective deux propriétés nb sous forme numerique et str sous forme de codageHauteurTriangle
  * @param {number} prix
  */
-function justifCorrType (type, remiseInit, remise, prix) {
+function justifCorrType (type:string, remiseInit: { str: string, nb: number }, remise: { str: string, nb: number }, prix:number) {
   let sortie = ''
   switch (type) {
     case 'pourcentage':
@@ -58,8 +58,10 @@ $${miseEnEvidence(`${texPrix(prix)} \\times (100${sp(1)}\\% - ${remise.str}) = $
  * @author Sébastien Lozano
  */
 export default class TableauxEtPourcentages extends Exercice {
+  exo: string
   constructor () {
     super()
+    this.exo = '5N11-1'
     this.sup = 1 // nature du coefficient entre les pourcentages, entier/decimal
     this.sup2 = 1 // nombre de colonnes
     this.nbQuestions = 1
@@ -85,7 +87,7 @@ export default class TableauxEtPourcentages extends Exercice {
 
       if (this.exo === '5N11-1') { // prix constant
         prix = [choixPrix, choixPrix, choixPrix, choixPrix, choixPrix]
-      } else if (this.exo === '5N11-2') {
+      } else {
         prix1 = randint(150, 300)
         prix2 = randint(150, 300, [prix1])
         prix3 = randint(150, 300, [prix1, prix2])
@@ -108,7 +110,7 @@ export default class TableauxEtPourcentages extends Exercice {
             [{ str: `10${sp(1)}\\%`, nb: 10 }, { str: `30${sp(1)}\\%`, nb: 30 }, { str: `40${sp(1)}\\%`, nb: 40 }, { str: `50${sp(1)}\\%`, nb: 50 }, { str: `60${sp(1)}\\%`, nb: 60 }, { str: `70${sp(1)}\\%`, nb: 70 }],
             [{ str: `10${sp(1)}\\%`, nb: 10 }, { str: `40${sp(1)}\\%`, nb: 40 }, { str: `50${sp(1)}\\%`, nb: 50 }, { str: `60${sp(1)}\\%`, nb: 60 }, { str: `70${sp(1)}\\%`, nb: 70 }, { str: `80${sp(1)}\\%`, nb: 80 }]
           ])
-        } else if (this.exo === '5N11-2') { // pourcentage constant
+        } else { // pourcentage constant
           remises = choice([
             [{ str: `5${sp(1)}\\%`, nb: 5 }, { str: `5${sp(1)}\\%`, nb: 5 }, { str: `5${sp(1)}\\%`, nb: 5 }, { str: `5${sp(1)}\\%`, nb: 5 }, { str: `5${sp(1)}\\%`, nb: 5 }, { str: `5${sp(1)}\\%`, nb: 5 }],
             [{ str: `10${sp(1)}\\%`, nb: 10 }, { str: `10${sp(1)}\\%`, nb: 10 }, { str: `10${sp(1)}\\%`, nb: 10 }, { str: `10${sp(1)}\\%`, nb: 10 }, { str: `10${sp(1)}\\%`, nb: 10 }, { str: `10${sp(1)}\\%`, nb: 10 }],
@@ -128,7 +130,7 @@ export default class TableauxEtPourcentages extends Exercice {
             [{ str: `80${sp(1)}\\%`, nb: 80 }, { str: `80${sp(1)}\\%`, nb: 80 }, { str: `80${sp(1)}\\%`, nb: 80 }, { str: `80${sp(1)}\\%`, nb: 80 }, { str: `80${sp(1)}\\%`, nb: 80 }, { str: `80${sp(1)}\\%`, nb: 80 }]
           ])
         }
-      } else if (this.sup === 2) { // coeff décimal
+      } else { // coeff décimal
         if (this.exo === '5N11-1') { // prix constant
           remises = choice([
             [{ str: `10${sp(1)}\\%`, nb: 10 }, { str: `5${sp(1)}\\%`, nb: 5 }, { str: `15${sp(1)}\\%`, nb: 15 }, { str: `25${sp(1)}\\%`, nb: 25 }, { str: `35${sp(1)}\\%`, nb: 35 }, { str: `45${sp(1)}\\%`, nb: 45 }],
@@ -142,8 +144,10 @@ export default class TableauxEtPourcentages extends Exercice {
             [{ str: `40${sp(1)}\\%`, nb: 40 }, { str: `15${sp(1)}\\%`, nb: 15 }, { str: `5${sp(1)}\\%`, nb: 5 }, { str: `20${sp(1)}\\%`, nb: 20 }, { str: `30${sp(1)}\\%`, nb: 30 }, { str: `25${sp(1)}\\%`, nb: 25 }],
             [{ str: `80${sp(1)}\\%`, nb: 80 }, { str: `20${sp(1)}\\%`, nb: 20 }, { str: `55${sp(1)}\\%`, nb: 55 }, { str: `30${sp(1)}\\%`, nb: 30 }, { str: `40${sp(1)}\\%`, nb: 40 }, { str: `20${sp(1)}\\%`, nb: 20 }]
           ])
-        } else if (this.exo === '5N11-2') { // pourcentage constant
-          // remises = choice([
+        } else { // pourcentage constant
+          // c'est juste pour ne pas que typescript râle, c'est jamais utilisé.
+          remises = [{ str: `10${sp(1)}\\%`, nb: 10 }, { str: `5${sp(1)}\\%`, nb: 5 }, { str: `15${sp(1)}\\%`, nb: 15 }, { str: `25${sp(1)}\\%`, nb: 25 }, { str: `35${sp(1)}\\%`, nb: 35 }, { str: `45${sp(1)}\\%`, nb: 45 }]
+
           // [{str:`10${sp(1)}\\%`,nb:10},{str:`5${sp(1)}\\%`,nb:5},{str:`15${sp(1)}\\%`,nb:15},{str:`25${sp(1)}\\%`,nb:25},{str:`35${sp(1)}\\%`,nb:35},{str:`45${sp(1)}\\%`,nb:45}],
           // [{str:`50${sp(1)}\\%`,nb:50},{str:`30${sp(1)}\\%`,nb:30},{str:`10${sp(1)}\\%`,nb:10},{str:`20${sp(1)}\\%`,nb:20},{str:`40${sp(1)}\\%`,nb:40},{str:`60${sp(1)}\\%`,nb:60}],
           // [{str:`20${sp(1)}\\%`,nb:20},{str:`10${sp(1)}\\%`,nb:10},{str:`50${sp(1)}\\%`,nb:50},{str:`30${sp(1)}\\%`,nb:30},{str:`40${sp(1)}\\%`,nb:40},{str:`60${sp(1)}\\%`,nb:60}],
@@ -291,8 +295,7 @@ export default class TableauxEtPourcentages extends Exercice {
         let typeCorr
         if (this.exo === '5N11-1') {
           typeCorr = 'pourcentage'
-        }
-        if (this.exo === '5N11-2') {
+        } else {
           typeCorr = 'pourcentage_constant'
         }
         if (this.sup2 === 1 && this.correctionDetaillee) {

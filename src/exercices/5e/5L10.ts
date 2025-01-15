@@ -693,6 +693,7 @@ export default class ÉcrireUneExpressionLitterale extends Exercice {
           ]
           break
         case 18: // multiple de k
+        default:
           texte = `Écrire une expression littérale qui permet de représenter un multiple de ${k}.`
           texteCorr = `Un multiple de ${k} peut s'écrire sous la forme $${miseEnEvidence(`${k}n`)}$ avec $n$ un entier naturel.`
           this.autoCorrection[i].propositions = [
@@ -730,7 +731,7 @@ export default class ÉcrireUneExpressionLitterale extends Exercice {
           break
       }
       this.autoCorrection[i].enonce = `${texte}\n`
-      if (this.questionJamaisPosee(i, texte)) { // Si la question n'a jamais été posée, on en créé une autre
+      if (this.questionJamaisPosee(i, texteCorr)) { // Si la question n'a jamais été posée, on en créé une autre
         const props = propositionsQcm(this, i)
         if (this.interactif) {
           texte += props.texte

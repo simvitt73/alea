@@ -70,8 +70,7 @@ export default class ValeurApprocheeDePourcentages extends Exercice {
           champ1: { value: (num / den).toFixed(3), options: { tolerance: 0.01 }, compare: approximatelyCompare },
           champ2: { value: (100 * num / den).toFixed(0), options: { tolerance: 1 }, compare: approximatelyCompare }
         }, { formatInteractif: 'fillInTheBlank' })
-      }
-      if (this.sup === 2) {
+      } else {
         texteCorr = `$\\dfrac{${num}}{${den}}\\approx ${texNombre(num / den, 3)} $ soit environ $${miseEnEvidence(texNombre(num / den * 100, 1))}~\\%$ $\\left(\\text{car } ${texNombre(num / den, 3)}=\\dfrac{${arrondi(num / den * 100, 1)}}{100}\\right)$.`
         // setReponse(this, i, arrondi(num / den * 100, 0))
         handleAnswers(this, i, {
