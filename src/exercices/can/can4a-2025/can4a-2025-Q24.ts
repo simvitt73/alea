@@ -27,11 +27,12 @@ export default class Can2025N4Q24 extends ExerciceCan {
       c = parts * randint(2, 6)
     }
     const reste = parts - 1
-    this.question = `${a} utilise le ${b} d'un seau de ${c} litres de peinture. Quelle est la quantité de peinture restante ?`
+    this.question = `${a} utilise le ${b} d'un seau de ${c} litres de peinture.<br>
+     Quelle est la quantité de peinture restante ?`
     this.correction = `Elle utilise le ${b} de la quantité, donc il reste ${reste} ${b}${b === 'tiers' ? '' : 's'} de la quantité, donc :<br>
     $\\dfrac{${reste}}{${parts}}\\times ${c}=${miseEnEvidence(reste * c / parts)}$`
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots\\ldots\\text{ L}$'
+    this.canReponseACompleter = '$\\ldots\\text{ L}$'
     this.reponse = `${Math.round(reste * c / parts)}`
     this.optionsChampTexte = { texteApres: ' L' }
     this.question += this.interactif ? '<br>' : ''

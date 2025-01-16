@@ -2,6 +2,8 @@ import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import ExerciceCan from '../../ExerciceCan'
 import { randint } from '../../../modules/outils'
 import { texNombre } from '../../../lib/outils/texNombre'
+import { choice } from '../../../lib/outils/arrayOutils'
+import { arrondi } from '../../../lib/outils/nombres'
 
 export const titre = 'Arrondir un nombre décimal'
 export const interactifReady = true
@@ -17,13 +19,24 @@ export const refs = {
 
 */
 export default class Can2025N4Q15 extends ExerciceCan {
-  private enonce (a?: number) {
-    if (a == null) {
-      a = randint(1, 9) * 100 + randint(1, 9) * 10 + randint(1, 9) + randint(1, 9) / 10 + randint(1, 8) / 100 + randint(6, 8) / 1000
+  private enonce (a?: number, b?: number, c?: number, precision?: string) {
+    let val = 24.286
+    if (a == null || b == null || c == null || precision == null) {
+      a = randint(1, 9) * 10 + randint(1, 9) + randint(1, 8) / 10
+      b = randint(1, 9, 5)
+      c = randint(1, 9, 5)
+      val = a + b / 100 + c / 1000
+      precision = choice(['dixième', 'centième'])
     }
-    this.reponse = a.toFixed(2)
-    this.question = `Arrondi de $${texNombre(a, 3)}$ au centième près`
-    this.correction = `Le chiffre des millièmes est supérieur à 5, donc on arrondit au centième supérieur : $${texNombre(a, 3)}\\approx ${miseEnEvidence(texNombre(a, 2))}$`
+
+    this.question = `Arrondi de $${texNombre(val, 3)}$ au ${precision} près`
+    if (precision === 'dixième') {
+      this.correction = `Le chiffre des centièmes est ${b > 5 ? 'supérieur' : 'inférieur'} à $5$, donc l'arrondi au dixième est : $${texNombre(val, 3)}\\approx ${miseEnEvidence(texNombre(arrondi(val, 1), 1))}$`
+      this.reponse = val.toFixed(1)
+    } else {
+      this.correction = `Le chiffre des millièmes est ${c > 5 ? 'supérieur' : 'inférieur'} à $5$, donc  l'arrondi au centième est : $${texNombre(val, 3)}\\approx ${miseEnEvidence(texNombre(arrondi(val, 2), 2))}$`
+      this.reponse = val.toFixed(2)
+    }
     this.canEnonce = this.question
     this.canReponseACompleter = ''
     if (this.interactif) {
@@ -32,6 +45,6 @@ export default class Can2025N4Q15 extends ExerciceCan {
   }
 
   nouvelleVersion () {
-    this.canOfficielle ? this.enonce(24.286) : this.enonce()
+    this.canOfficielle ? this.enonce(24.2, 8, 6, 'centième') : this.enonce()
   }
 }

@@ -25,10 +25,10 @@ export default class Can2025N4Q26 extends ExerciceCan {
     this.question = `$${texNombre(a, 1)}\\text{ h}$`
     this.correction = `$${texNombre(a, 1)}\\text{ h}=${Math.floor(a)}\\times 60+${texNombre(dp, 1)}\\times 60 = ${Math.floor(a) * 60}+${texNombre(dp * 60, 0)}=${miseEnEvidence(texNombre(a * 60, 0))}$`
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots\\ldots\\text{ min}$'
+    this.canReponseACompleter = '$\\ldots\\text{ min}$'
     this.reponse = Math.round(a * 60)
     this.optionsChampTexte = { texteApres: ' min' }
-    this.question += this.interactif ? '$=$' : ''
+    this.question += this.interactif ? ' $=$' : ''
   }
 
   nouvelleVersion () {

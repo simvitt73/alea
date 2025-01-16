@@ -27,8 +27,8 @@ export default class Can2025N4Q19 extends ExerciceCan {
     const liste = createList({
       items: [
         'Choisir un nombre ;',
-        `Multiplier par ${a} ;`,
-        `Ajouter ${b}.`
+        `Multiplier par $${a}$ ;`,
+        `Ajouter $${b}$.`
       ],
       style: 'fleches'
     })

@@ -1,6 +1,7 @@
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import ExerciceCan from '../../ExerciceCan'
 import { randint } from '../../../modules/outils'
+import { toutPourUnPoint } from '../../../lib/interactif/mathLive'
 
 export const titre = 'Ratios'
 export const interactifReady = true
@@ -22,15 +23,18 @@ export default class Can2025N4Q28 extends ExerciceCan {
       b = randint(2, 6, a)
       c = (a + b) * randint(2, 6)
     }
+    this.formatInteractif = 'fillInTheBlank'
     const part = c / (a + b)
     const partA = part * a
     const partB = part * b
-    this.question = `Dans un club sportif de ${c} membres, il y a ${partA} minimes et ${partB} cadets.<br>Quel est le ratio entre le nombre de minimes et de cadets ?`
+    this.reponse = { bareme: toutPourUnPoint, champ1: { value: [`${a}`, `${partA}`] }, champ2: { value: [`${b}`, `${partB}`] } }
+    this.consigne = `Dans un club sportif de $${c}$ membres, il y a $${partA}$ minimes et $${partB}$ cadets.<br>
+    Quel est le ratio entre le nombre de minimes et de cadets ?`
+    if (this.interactif) { this.question = '%{champ1}:%{champ2}' }
     this.correction = `Le ratio entre le nombre de minimes et de cadets est de $${miseEnEvidence(`${partA}:${partB}`)}$ ou $${miseEnEvidence(`${a}:${b}`)}$`
-    this.canEnonce = this.question
-    this.formatChampTexte = 'fraction'
-    this.reponse = [`${a}:${b}`, `${partA}:${partB}`]
-    this.question += this.interactif ? '<br>' : ''
+    this.canEnonce = `Dans un club sportif de $${c}$ membres, il y a $${partA}$ minimes et $${partB}$ cadets.<br>
+    Quel est le ratio entre le nombre de minimes et de cadets ?`
+    this.canReponseACompleter = ''
   }
 
   nouvelleVersion () {
