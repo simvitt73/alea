@@ -28,13 +28,14 @@ export default class Can2025N4Q14 extends ExerciceCan {
     }
     const reponse = new FractionEtendue(b, a + b)
     this.reponse = reponse.texFraction
-    this.question = `Dans un sac opaque il y a ${a} billes ${couleur1} et ${b} billes ${couleur2}. Quelle est la probabilité de tirer une bille ${couleur2} ?`
-    this.correction = `Il y a ${b} billes ${couleur2} sur un total de ${a + b} billes, donc la probabilité de tirer une bille ${couleur2} est de $${miseEnEvidence(reponse.texFraction)}$.`
+    this.question = `Dans un sac opaque il y a $${a}$ billes ${couleur1} et $${b}$ billes ${couleur2}. <br>
+    Quelle est la probabilité de tirer une bille ${couleur2} ?`
+    this.correction = `Il y a $${b}$ billes ${couleur2} sur un total de $${a + b}$ billes, donc la probabilité de tirer une bille ${couleur2} est de $${miseEnEvidence(reponse.texFraction)}$.`
     this.canEnonce = this.question
     this.canReponseACompleter = ''
     this.formatChampTexte = 'fraction'
     if (this.interactif) {
-      this.question += '<br>'
+      this.question += '<br><br>'
     }
   }
 

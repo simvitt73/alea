@@ -27,7 +27,7 @@ export default class Can2025N4Q25 extends ExerciceCan {
     this.correction = `$${a} + ${b}=${Math.max(a, b)}+100-1=${miseEnEvidence(a + b)}$`
     this.canEnonce = this.question
     this.reponse = a + b
-    this.question += this.interactif ? '$=$' : ''
+    this.question += this.interactif ? ' $=$' : ''
   }
 
   nouvelleVersion () {
