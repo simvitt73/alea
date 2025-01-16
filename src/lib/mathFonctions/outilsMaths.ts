@@ -140,12 +140,12 @@ export function resolutionSystemeLineaire2x2 (x1, x2, fx1, fx2, c) {
  * sous forme de fraction irréductible. Si pas de solution (déterminant nul) alors retourne [[0,0],[0,0],[0,0]]
  * @author Jean-Claude Lhote
  */
-export function resolutionSystemeLineaire3x3 (x1, x2, x3, fx1, fx2, fx3, d) {
+export function resolutionSystemeLineaire3x3 (x1: number, x2: number, x3: number, fx1: number, fx2: number, fx3: number, d: number): [Number, Number, number] {
   const maMatrice = matrice([[x1 ** 3, x1 ** 2, x1], [x2 ** 3, x2 ** 2, x2], [x3 ** 3, x3 ** 2, x3]])
   const y1 = fx1 - d
   const y2 = fx2 - d
   const y3 = fx3 - d
-  if (maMatrice.determinant() === 0) {
+  if (maMatrice && maMatrice.determinant() === 0) {
     return [0, 0, 0]
   }
   const [a, b, c] = maMatrice.inverse().multiply([y1, y2, y3]).toArray()

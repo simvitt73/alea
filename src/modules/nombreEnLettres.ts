@@ -2,7 +2,7 @@ import Decimal from 'decimal.js'
 import { nombreDeChiffresDansLaPartieEntiere } from '../lib/outils/nombres'
 import { estentier } from './outils'
 
-export function nombreEnLettres (nb, type = 1) {
+export function nombreEnLettres (nb: number, type = 1) {
   let partieEntiere, partieDecimale, nbstring, nbDec, decstring
   if (estentier(nb)) return partieEntiereEnLettres(nb)
   else {
@@ -48,7 +48,7 @@ export function nombreEnLettres (nb, type = 1) {
 
  *
  */
-export function partieEntiereEnLettres (nb) {
+export function partieEntiereEnLettres (nb: number) {
   const dictionnaire = {
     0: 'zéro',
     '000': '',
@@ -1052,57 +1052,59 @@ export function partieEntiereEnLettres (nb) {
     998: 'neuf cent quatre-vingt-dix-huit',
     999: 'neuf cent quatre-vingt-dix-neuf'
   }
+type IndexNb = keyof typeof dictionnaire
 
-  const nbString = nb.toString()
-  let classeDesMilliards = ''
-  if (nbString.substring(nbString.length - 12, nbString.length - 9).length > 0) {
-    classeDesMilliards = dictionnaire[nbString.substring(nbString.length - 12, nbString.length - 9).replace(/^0{1,2}/, '')].replaceAll(' ', '-')
+const nbString = nb.toString()
+let classeDesMilliards = ''
+
+if (nbString.substring(nbString.length - 12, nbString.length - 9).length > 0) {
+  classeDesMilliards = dictionnaire[nbString.substring(nbString.length - 12, nbString.length - 9).replace(/^0{1,2}/, '') as IndexNb].replaceAll(' ', '-')
+}
+let classeDesMillions = ''
+if (nbString.substring(nbString.length - 9, nbString.length - 6).length > 0) {
+  classeDesMillions = dictionnaire[nbString.substring(nbString.length - 9, nbString.length - 6).replace(/^0{1,2}/, '') as IndexNb].replaceAll(' ', '-')
+}
+let classeDesMilliers = ''
+if (nbString.substring(nbString.length - 6, nbString.length - 3) === '080' || nbString.substring(nbString.length - 6, nbString.length - 3) === '80') {
+  classeDesMilliers = 'quatre-vingt'
+} else if (nbString.substring(nbString.length - 5, nbString.length - 3) === '00' && nbString.substring(nbString.length - 6, nbString.length - 5) !== '1') {
+  classeDesMilliers = dictionnaire[nbString.substring(nbString.length - 6, nbString.length - 3).replace(/^0{1,2}/, '') as IndexNb].replaceAll(' ', '-').replace('cents', 'cent')
+} else if (nbString.substring(nbString.length - 6, nbString.length - 3).length > 0) {
+  classeDesMilliers = dictionnaire[nbString.substring(nbString.length - 6, nbString.length - 3).replace(/^0{1,2}/, '') as IndexNb].replaceAll(' ', '-')
+}
+let classeDesUnites = ''
+if (nbString.substring(nbString.length - 3, nbString.length).length > 0) {
+  classeDesUnites = dictionnaire[nbString.substring(nbString.length - 3, nbString.length).replace(/^0{1,2}/, '') as IndexNb].replaceAll(' ', '-')
+}
+let result = ''
+if (classeDesMilliards.length > 1) {
+  classeDesMilliards === 'un' ? result += classeDesMilliards + '-milliard' : result += classeDesMilliards + '-milliards'
+  if (classeDesMillions !== 'zéro' || classeDesMilliers !== 'zéro' || classeDesUnites !== 'zéro') {
+    result += '-'
   }
-  let classeDesMillions = ''
-  if (nbString.substring(nbString.length - 9, nbString.length - 6).length > 0) {
-    classeDesMillions = dictionnaire[nbString.substring(nbString.length - 9, nbString.length - 6).replace(/^0{1,2}/, '')].replaceAll(' ', '-')
+}
+if (classeDesMillions.length > 1 && classeDesMillions !== 'zéro') {
+  classeDesMillions === 'un' ? result += classeDesMillions + '-million' : result += classeDesMillions + '-millions'
+  if (classeDesMilliers !== 'zéro' || classeDesUnites !== 'zéro') {
+    result += '-'
   }
-  let classeDesMilliers = ''
-  if (nbString.substring(nbString.length - 6, nbString.length - 3) === '080' || nbString.substring(nbString.length - 6, nbString.length - 3) === '80') {
-    classeDesMilliers = 'quatre-vingt'
-  } else if (nbString.substring(nbString.length - 5, nbString.length - 3) === '00' && nbString.substring(nbString.length - 6, nbString.length - 5) !== '1') {
-    classeDesMilliers = dictionnaire[nbString.substring(nbString.length - 6, nbString.length - 3).replace(/^0{1,2}/, '')].replaceAll(' ', '-').replace('cents', 'cent')
-  } else if (nbString.substring(nbString.length - 6, nbString.length - 3).length > 0) {
-    classeDesMilliers = dictionnaire[nbString.substring(nbString.length - 6, nbString.length - 3).replace(/^0{1,2}/, '')].replaceAll(' ', '-')
+}
+if (classeDesMilliers.length > 1 && classeDesMilliers !== 'zéro') {
+  classeDesMilliers === 'un' ? result += 'mille' : result += classeDesMilliers + '-mille'
+  if (classeDesUnites !== 'zéro') {
+    result += '-'
   }
-  let classeDesUnites = ''
-  if (nbString.substring(nbString.length - 3, nbString.length).length > 0) {
-    classeDesUnites = dictionnaire[nbString.substring(nbString.length - 3, nbString.length).replace(/^0{1,2}/, '')].replaceAll(' ', '-')
-  }
-  let result = ''
-  if (classeDesMilliards.length > 1) {
-    classeDesMilliards === 'un' ? result += classeDesMilliards + '-milliard' : result += classeDesMilliards + '-milliards'
-    if (classeDesMillions !== 'zéro' || classeDesMilliers !== 'zéro' || classeDesUnites !== 'zéro') {
-      result += '-'
-    }
-  }
-  if (classeDesMillions.length > 1 && classeDesMillions !== 'zéro') {
-    classeDesMillions === 'un' ? result += classeDesMillions + '-million' : result += classeDesMillions + '-millions'
-    if (classeDesMilliers !== 'zéro' || classeDesUnites !== 'zéro') {
-      result += '-'
-    }
-  }
-  if (classeDesMilliers.length > 1 && classeDesMilliers !== 'zéro') {
-    classeDesMilliers === 'un' ? result += 'mille' : result += classeDesMilliers + '-mille'
-    if (classeDesUnites !== 'zéro') {
-      result += '-'
-    }
-  }
-  if (classeDesUnites.length > 1 && classeDesUnites !== 'zéro') {
-    result += classeDesUnites
-  }
-  result = result.replace('deux-cents-mille', 'deux-cent-mille')
-  result = result.replace('trois-cents-mille', 'trois-cent-mille')
-  result = result.replace('quatre-cents-mille', 'quatre-cent-mille')
-  result = result.replace('cinq-cents-mille', 'cinq-cent-mille')
-  result = result.replace('six-cents-mille', 'six-cent-mille')
-  result = result.replace('sept-cents-mille', 'sept-cent-mille')
-  result = result.replace('huit-cents-mille', 'huit-cent-mille')
-  result = result.replace('neuf-cents-mille', 'neuf-cent-mille')
-  return result
+}
+if (classeDesUnites.length > 1 && classeDesUnites !== 'zéro') {
+  result += classeDesUnites
+}
+result = result.replace('deux-cents-mille', 'deux-cent-mille')
+result = result.replace('trois-cents-mille', 'trois-cent-mille')
+result = result.replace('quatre-cents-mille', 'quatre-cent-mille')
+result = result.replace('cinq-cents-mille', 'cinq-cent-mille')
+result = result.replace('six-cents-mille', 'six-cent-mille')
+result = result.replace('sept-cents-mille', 'sept-cent-mille')
+result = result.replace('huit-cents-mille', 'huit-cent-mille')
+result = result.replace('neuf-cents-mille', 'neuf-cent-mille')
+return result
 }
