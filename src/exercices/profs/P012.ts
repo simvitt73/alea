@@ -22,29 +22,30 @@ export const uuid = '62f5e'
 export default class Camemberts extends Exercice {
   constructor () {
     super()
-    this.besoinFormulaireTexte = ['Nombre de parts séparés par des tirets (de 2 à 12)']
-    this.besoinFormulaire2Texte = ['Nombre de disques par ligne séparés par des tirets (de 1 à 5)']
+    this.besoinFormulaireTexte = ['Nombre de parts séparés par des tirets (de 2 à 12)', '']
+    this.besoinFormulaire2Texte = ['Nombre de disques par ligne séparés par des tirets (de 1 à 5)', '']
 
-    this.nb_cols = 1
+    this.nbCols = 1
     this.nbQuestions = 3
-    this.nb_questions_modifiable = false
+    this.nbQuestionsModifiable = false
     this.sup = '2-3-4-5' // nombre de parts
     this.sup2 = '5' // nombre de disques par ligne
   }
 
   nouvelleVersion () {
+    this.contenu = ''
     if (this.sup === '') {
       this.sup = '2-3-4-5'
     }
-    const secteurs = gestionnaireFormulaireTexte({ saisie: this.sup, min: 2, max: 12, defaut: 6, nbQuestions: this.nbQuestions, shuffle: false })
-    const unites = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 5, defaut: 2, nbQuestions: this.nbQuestions, shuffle: false })
+    const secteurs = gestionnaireFormulaireTexte({ saisie: this.sup, min: 2, max: 12, defaut: 6, nbQuestions: this.nbQuestions, shuffle: false, melange: 0 }).map(Number)
+    const unites = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 5, defaut: 2, nbQuestions: this.nbQuestions, shuffle: false, melange: 0 }).map(Number)
 
     // const secteurs = combinaisonListesSansChangerOrdre(nbParts, this.nbQuestions)
     // const unites = combinaisonListesSansChangerOrdre(nbDisques, this.nbQuestions)
     let f
     const fenetre = { xmin: -2.5, xmax: 35, ymin: -2.5, ymax: 2.5, pixelsParCm: 20, scale: 0.5 }
     for (let i = 0; i < this.nbQuestions; i++) {
-      f = fraction(parseInt(secteurs[i]) * parseInt(unites[i]), parseInt(secteurs[i])).representation(0, 0, 2, 0, 'gateau', 'white')
+      f = fraction(secteurs[i] * unites[i], secteurs[i]).representation(0, 0, 2, 0, 'gateau', 'white')
       this.contenu += mathalea2d(fenetre, f)
       if (context.isHtml) {
         this.contenu += '<br>'

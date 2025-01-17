@@ -16,8 +16,8 @@ export default class Pyramides extends Exercice {
     this.nbQuestions = 1 // Ici le nombre de questions (une seule pour cet exercice non modifiable)
     this.nbQuestionsModifiable = false // désactive le formulaire nombre de questions
     this.besoinFormulaireNumerique = ['Type de pyramide', 2, '1 : Pyramide additive\n 2 : Pyramide multiplicative']
-    this.besoinFormulaire2Texte = ['Valeur minimale de base']
-    this.besoinFormulaire3Texte = ['Valeur maximale de base']
+    this.besoinFormulaire2Texte = ['Valeur minimale de base', '']
+    this.besoinFormulaire3Texte = ['Valeur maximale de base', '']
     this.besoinFormulaire4Numerique = ['Nombre d\'étages', 8]
     this.sup4 = 3
     this.sup3 = 10
@@ -26,20 +26,21 @@ export default class Pyramides extends Exercice {
   }
 
   nouvelleVersion () {
-    let operation
-    const taille = parseInt(this.sup4)
+    let operation: '*' | '+' = '+'
+    const taille = this.sup4
     let texte = '' // Nous utilisons souvent cette variable pour construire le texte de la question.
     let texteCorr = '' // Idem pour le texte de la correction.
-    switch (parseInt(this.sup)) {
+    switch (this.sup) {
       case 2:
         operation = '*'
         break
       case 1:
+      default:
         operation = '+'
         break
     }
 
-    const Pyr = new Pyramide({ operation, nombreEtages: taille, rangeData: [parseInt(this.sup2), parseInt(this.sup3)], exclusions: [0] })
+    const Pyr = new Pyramide({ operation, nombreEtages: taille, rangeData: [parseInt(this.sup2), parseInt(this.sup3)], exclusions: [0], fractionOn: false })
     Pyr.aleatoirise()
     const mesObjets = Pyr.representeMoi(0, 0)
     for (let y = taille; y > 0; y--) {

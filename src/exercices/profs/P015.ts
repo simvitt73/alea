@@ -45,7 +45,7 @@ export default class PuzzlesGeometriques extends Exercice {
     anim.vitesse = 50 // 1000
     anim.xMax = 20
     anim.yMax = 20
-    let texte
+    let texte: string
     texte = texteGras('PROGRAMME DE CONSTRUCTION')
     // On factorise
     /**
@@ -55,7 +55,7 @@ export default class PuzzlesGeometriques extends Exercice {
      * @param {number} nbFig numero de la sihlouette tiré au hasard
      * @returns un string
      */
-    const texteMessage = (nbPieces, type) => {
+    const texteMessage = (nbPieces: number, type: 'oiseau' | 'tangram' | 'samLoyd') => {
       let nbFig
       switch (type) {
         case 'oiseau':
@@ -63,6 +63,7 @@ export default class PuzzlesGeometriques extends Exercice {
           nbFig = randint(1, 12)
           break
         case 'samLoyd':
+        default:
           nbFig = randint(1, 5)
           break
       }
@@ -82,7 +83,7 @@ export default class PuzzlesGeometriques extends Exercice {
      *
      * @param {string} version v1 ou v2
      */
-    const samLoyd = (version) => {
+    const samLoyd = (version: 'v1' | 'v2') => {
       // Adaptation de la taille de la fenêtre
       anim.taille(600, 600)
       anim.image('assets/puzzlesGeom/img/samLoydQuadrillage.png', point(-4, 19))
@@ -101,6 +102,7 @@ export default class PuzzlesGeometriques extends Exercice {
           I = point(4.31, 10.7, 'I')
           break
         case 'v2':
+        default:
           // Les points aux intersections du quadrillage
           A = point(2.7, 17.35, 'A')
           B = point(6.01, 17.35, 'B')
@@ -212,7 +214,7 @@ export default class PuzzlesGeometriques extends Exercice {
         anim.crayonMasquer()
         anim.textePoint('$(\\Delta)$', C1)
         anim.pointCreer(O, { dx: 0.2, dy: -0.2 })
-        anim.equerreMontrer()
+        anim.equerreMontrer(O, {})
         anim.equerreDeplacer(O)
         anim.equerreRotation(180)
         anim.regleMontrer()
@@ -310,7 +312,7 @@ export default class PuzzlesGeometriques extends Exercice {
         anim.regleMasquer()
         anim.pointCreer(B)
         // [AD]
-        anim.equerreMontrer()
+        anim.equerreMontrer(A, {})
         anim.equerreDeplacer(A)
         anim.equerreRotation(270)
         anim.regleMontrer()
@@ -321,7 +323,7 @@ export default class PuzzlesGeometriques extends Exercice {
         anim.regleMasquer()
         anim.pointCreer(D, { dx: -0.8 })
         // [DC]
-        anim.equerreMontrer()
+        anim.equerreMontrer(D, {})
         anim.equerreDeplacer(D)
         anim.equerreRotation(0)
         anim.regleMontrer()

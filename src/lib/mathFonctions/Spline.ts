@@ -714,7 +714,7 @@ export function trieNoeuds (noeuds: NoeudSpline[]) {
  */
 export class Trace extends ObjetMathalea2D {
   /**
-     * @param {Spline | SplineCatmullRom}spline La splineCatmulRom ou Spline dont on veut la Trace
+     * @param {Spline}spline La splineCatmulRom ou Spline dont on veut la Trace
      * @param {Repere} repere le repère associé
      * @param {number} step le pas entre deux points
      * @param {string} color la couleur

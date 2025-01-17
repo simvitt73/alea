@@ -15,7 +15,7 @@ export const refs = {
 }
 export const uuid = '697a7'
 
-function aLeMinDArguments (params, nombre) {
+function aLeMinDArguments (params: any[], nombre: number) {
   if (params.length >= nombre) {
     return true
   } else {
@@ -67,12 +67,12 @@ export default class ConstruisMonTriangle extends Exercice {
           triang.l2 = params[1]
           triang.l3 = params[2]
           if (triang.isTrueTriangleLongueurs()) {
-            triangle = anim.triangle3longueurs(nom, params[0], params[1], params[2], true, true)
+            triangle = anim.triangle3longueurs(nom, params[0], params[1], params[2], true)
           } else {
-            triangle = anim.triangle3longueurs(nom, defaut[0], defaut[1], defaut[2], true, true)
+            triangle = anim.triangle3longueurs(nom, defaut[0], defaut[1], defaut[2], true)
           }
         } else {
-          triangle = anim.triangle3longueurs(nom, defaut[0], defaut[1], defaut[2], true, true)
+          triangle = anim.triangle3longueurs(nom, defaut[0], defaut[1], defaut[2], true)
         }
         objetsEnonceml.push(afficheLongueurSegment(triangle[1], triangle[0]), afficheLongueurSegment(triangle[2], triangle[1]), afficheLongueurSegment(triangle[0], triangle[2]))
         break
@@ -80,9 +80,9 @@ export default class ConstruisMonTriangle extends Exercice {
       case 2:
         defaut = [3, 40, 50]
         if (aLeMinDArguments(params, 3)) {
-          triangle = anim.triangle1longueur2angles(nom, params[0], params[1], params[2], true, true)
+          triangle = anim.triangle1longueur2angles(nom, params[0], params[1], params[2], true)
         } else {
-          triangle = anim.triangle1longueur2angles(nom, defaut[0], defaut[1], defaut[2], true, true)
+          triangle = anim.triangle1longueur2angles(nom, defaut[0], defaut[1], defaut[2], true)
         }
         objetsEnonceml.push(afficheLongueurSegment(triangle[1], triangle[0]), afficheMesureAngle(triangle[2], triangle[0], triangle[1]), afficheMesureAngle(triangle[0], triangle[1], triangle[2]))
         break
@@ -90,9 +90,9 @@ export default class ConstruisMonTriangle extends Exercice {
       case 3:
         defaut = [3, 4]
         if (aLeMinDArguments(params, 2)) {
-          triangle = anim.triangleRectangle2Cotes(nom, params[0], params[1], true, true)
+          triangle = anim.triangleRectangle2Cotes(nom, params[0], params[1], true)
         } else {
-          triangle = anim.triangleRectangle2Cotes(nom, defaut[0], defaut[1], true, true)
+          triangle = anim.triangleRectangle2Cotes(nom, defaut[0], defaut[1], true)
         }
         objetsEnonceml.push(afficheLongueurSegment(triangle[1], triangle[0]), afficheLongueurSegment(triangle[2], triangle[1]), codageAngleDroit(triangle[0], triangle[1], triangle[2]))
         break
@@ -102,9 +102,9 @@ export default class ConstruisMonTriangle extends Exercice {
         if (aLeMinDArguments(params, 2)) {
           const cote = Math.min(params[0], params[1])
           const hypothenuse = Math.max(params[0], params[1])
-          triangle = anim.triangleRectangleCoteHypotenuse(nom, cote, hypothenuse, true, true)
+          triangle = anim.triangleRectangleCoteHypotenuse(nom, cote, hypothenuse, true)
         } else {
-          triangle = anim.triangleRectangleCoteHypotenuse(nom, defaut[0], defaut[1], true, true)
+          triangle = anim.triangleRectangleCoteHypotenuse(nom, defaut[0], defaut[1], true)
         }
         objetsEnonceml.push(afficheLongueurSegment(triangle[1], triangle[0]), afficheLongueurSegment(triangle[0], triangle[2]), codageAngleDroit(triangle[0], triangle[1], triangle[2]))
         break
@@ -112,9 +112,9 @@ export default class ConstruisMonTriangle extends Exercice {
       case 5:
         defaut = [4]
         if (aLeMinDArguments(params, 1)) {
-          triangle = anim.triangleEquilateral(nom, params[0], true)
+          triangle = anim.triangleEquilateral(nom, params[0])
         } else {
-          triangle = anim.triangleEquilateral(nom, defaut[0], true)
+          triangle = anim.triangleEquilateral(nom, defaut[0])
         }
         objetsEnonceml.push(afficheLongueurSegment(triangle[1], triangle[0]), codageSegments('||', 'red', triangle[0], triangle[1], triangle[2], triangle[0], triangle[1], triangle[2]))
         break
@@ -122,9 +122,9 @@ export default class ConstruisMonTriangle extends Exercice {
       case 6:
         defaut = [3, 4, 70]
         if (aLeMinDArguments(params, 3)) {
-          triangle = anim.triangle2longueurs1angle(nom, params[0], params[1], params[2], true)
+          triangle = anim.triangle2longueurs1angle(nom, params[0], params[1], params[2])
         } else {
-          triangle = anim.triangle2longueurs1angle(nom, defaut[0], defaut[1], defaut[2], true)
+          triangle = anim.triangle2longueurs1angle(nom, defaut[0], defaut[1], defaut[2])
         }
         objetsEnonceml.push(afficheLongueurSegment(triangle[0], triangle[1]), afficheLongueurSegment(triangle[0], triangle[2]), afficheMesureAngle(triangle[1], triangle[0], triangle[2]))
         break

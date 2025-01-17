@@ -28,7 +28,7 @@ export default class OperationsPosees extends Exercice {
   constructor () {
     super()
     this.besoinFormulaireNumerique = ['Opération', 5, '1 : Addition\n2 : Soustraction\n3 : Multiplication\n4 : Division euclidienne\n5 : Division décimale']
-    this.besoinFormulaire2Texte = ['Deux nombres séparés par un tiret(séparateur décimal = le point)']
+    this.besoinFormulaire2Texte = ['Deux nombres séparés par un tiret(séparateur décimal = le point)', '']
     this.besoinFormulaire3Numerique = ['Nombre de chiffres après la virgule pour le quotient (5 maximum)', 5]
 
     this.spacing = 2
@@ -62,6 +62,7 @@ export default class OperationsPosees extends Exercice {
         this.contenu = Operation({ operande1: a, operande2: b, type: 'divisionE', precision: 0 })
         break
       case 5: // division
+      default:
         this.contenu = Operation({ operande1: a, operande2: b, type: 'division', precision: this.sup3 })
         break
     }

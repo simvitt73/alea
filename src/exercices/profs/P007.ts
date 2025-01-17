@@ -3,8 +3,8 @@ import { nombreAvecEspace } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
-import { pavage } from '../../modules/Pavage'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { Pavage } from '../../modules/Pavage'
 
 export const titre = 'Fabriquer des pavages pour travailler les transformations'
 
@@ -25,7 +25,7 @@ export default class PavagesMathalea2d extends Exercice {
     super()
 
     this.besoinFormulaireNumerique = ['Type de pavage', 7, '1 : Triangles équilatéraux\n2 : Carrés\n3 : Hexagones\n4 : Pavage 3².4.3.4\n5 : Pavage 8².4\n6 : Pavage hexagonal d\'écolier\n7 : Pavage 6.3.6.3\n8 : Mélange']
-    this.besoinFormulaire2Texte = ['Nombre de répétitions du motif (2 entiers séparés par un tiret)']
+    this.besoinFormulaire2Texte = ['Nombre de répétitions du motif (2 entiers séparés par un tiret)', '']
     this.besoinFormulaire3CaseACocher = ['Présence de numéros']
 
     this.nbQuestions = 1
@@ -46,20 +46,15 @@ export default class PavagesMathalea2d extends Exercice {
       // Si aucune grandeur n'est saisie
       [Nx, Ny] = [1, 1]
     } else {
-      if (!isNaN(this.sup2)) { // Si on ne met qu'un nombre alors on prend Nx=Ny
-        [Nx, Ny] = [parseInt(this.sup2), parseInt(this.sup2)]
-        this.nbQuestions = 1
-      } else { // On fixe Nx et Ny avec les valeurs saisies.
-        [Nx, Ny] = [parseInt(this.sup2.split('-')[0]), parseInt(this.sup2.split('-')[1])] // Sinon on créé un tableau à partir des valeurs séparées par des -
-      }
+      [Nx, Ny] = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 10, defaut: 1, melange: 1, nbQuestions: 2, shuffle: false }).map(Number)
     }
 
-    const monpavage = pavage() // On crée l'objet Pavage qui va s'appeler monpavage
+    const monpavage: Pavage = new Pavage() // On crée l'objet Pavage qui va s'appeler monpavage
     const typeDePavage = this.sup === 8 ? randint(1, 7) : this.sup
     monpavage.construit(typeDePavage, Nx, Ny, 3) // On initialise toutes les propriétés de l'objet.
     if (this.sup3) { // Doit-on afficher les Numéros ?
       for (let i = 0; i < monpavage.nb_polygones; i++) {
-        objets.push(texteParPosition(nombreAvecEspace(i + 1), monpavage.barycentres[i].x + 0.3, monpavage.barycentres[i].y, 'milieu', 'black', 0.04 * monpavage.echelle, 0, true))
+        objets.push(texteParPosition(nombreAvecEspace(i + 1), monpavage.barycentres[i].x + 0.3, monpavage.barycentres[i].y, 0, 'black', 0.04 * monpavage.echelle, 'milieu', true))
       }
     }
     if (this.correctionDetaillee) { // Doit-on montrer les centres des figures ?

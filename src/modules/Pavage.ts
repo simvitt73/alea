@@ -45,7 +45,7 @@ export class Pavage {
     this.nb_polygones = 0
   }
 
-  construit (type = 1, Nx = 1, Ny = 1, taille = 3) {
+  construit (type: 1 | 2 | 3 | 4 | 5 | 6 | 7 = 1, Nx: number = 1, Ny:number = 1, taille:number = 3): Pavage {
     const nettoieObjets = function (objets:Polygone[]) {
       let barywhite, baryblack // c'est drôle non ?
       for (let i = 0; i < objets.length; i++) {
@@ -484,6 +484,7 @@ export class Pavage {
         }
         break
       case 7:
+      default:
         v = vecteur(A, B)
         v = homothetie(v, A, 2)
         w = rotation(v, A, -60)
@@ -565,6 +566,7 @@ export class Pavage {
       this.coordonnees.push([this.barycentres[i].x, this.barycentres[i].y])
       this.numeros.push(texteParPosition(nombreAvecEspace(i + 1), this.barycentres[i].x + 0.5, this.barycentres[i].y, 0, 'black', 50 / this.echelle, 'milieu', true) as TexteParPoint)
     }
+    return this
   }
 }
 
