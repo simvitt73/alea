@@ -9,7 +9,7 @@ import { arrondi } from '../../lib/outils/nombres'
 import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
-import { mathalea2d, colorToLatexOrHTML } from '../../modules/2dGeneralites'
+import { mathalea2d, colorToLatexOrHTML, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu } from '../../modules/outils'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { context } from '../../modules/context'
@@ -43,7 +43,7 @@ export default class EncadrerAireDisque extends Exercice {
     let texte = ''
 
     this.listeCorrections = [''] // Liste de questions corrigées
-    let objets = []
+    let objets: NestedObjetMathalea2dArray = []
 
     const centre = point(0, 0)
     const rayon = this.sup2
@@ -75,7 +75,7 @@ export default class EncadrerAireDisque extends Exercice {
       longueurCoteCarreRef = new FractionEtendue(cote, Nmax)
       abscisse1 = new FractionEtendue(0, Nmax)
       abscisse2 = new FractionEtendue(cote, Nmax)
-      aireCarre = arrondi(abscisse2 * abscisse2, 4)
+      aireCarre = arrondi(abscisse2.toNumber() * abscisse2.toNumber(), 4)
       ordonnee1 = new FractionEtendue(0, Nmax)
       ordonnee2 = longueurCoteCarreRef
 

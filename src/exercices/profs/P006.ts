@@ -148,7 +148,7 @@ export default class NombreAPlacer extends Exercice {
     if (this.sup === 3) { objets.push(d1, d2, d3, sA, sB, sC, sD) } else if (this.sup === 2) { objets.push(d1, d2, sA, sB) } else { objets.push(d1) }
 
     texte = mathalea2d(fenetre, objets)
-    this.contenu += texte
+    this.contenu = texte
     if (context.isHtml) {
       this.contenu += '<br>'
     } else {

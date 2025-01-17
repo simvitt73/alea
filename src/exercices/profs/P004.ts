@@ -212,7 +212,7 @@ export default class FeuilleDeZooms extends Exercice {
       }
       texte = mathalea2d(fenetre, objets)
 
-      this.contenu += texte
+      this.contenu = texte
       this.contenu += '<br>'
       this.listeQuestions[0] = this.contenu
     }

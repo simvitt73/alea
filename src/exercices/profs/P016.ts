@@ -18,7 +18,7 @@ export const dateDePublication = '06/04/2022'
 export default class SimulateurDes extends Exercice {
   constructor () {
     super()
-    this.besoinFormulaireTexte = ['Liste des dés séparés par des tirets (de 4 à 20, par défaut 6)']
+    this.besoinFormulaireTexte = ['Liste des dés séparés par des tirets (de 4 à 20, par défaut 6)', '']
 
     this.nbQuestions = 1
 
@@ -27,7 +27,7 @@ export default class SimulateurDes extends Exercice {
 
   nouvelleVersion () {
     let texte
-    const liste = gestionnaireFormulaireTexte({ saisie: this.sup, min: 4, max: 100, defaut: 6, shuffle: false, nbQuestions: this.sup.split('-').length })
+    const liste = gestionnaireFormulaireTexte({ melange: 0, saisie: this.sup, min: 4, max: 100, defaut: 6, shuffle: false, nbQuestions: this.sup.split('-').length }).map(Number)
     texte = 'Vous jetez les dés et vous obtenez : <br><br>'
     for (let j = 0; j < this.nbQuestions; j++) {
       let somme = 0

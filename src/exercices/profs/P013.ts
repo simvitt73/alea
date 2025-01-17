@@ -2,7 +2,7 @@ import { courbeInterpolee } from '../../lib/2d/courbes'
 import { point, tracePoint } from '../../lib/2d/points'
 import { repere } from '../../lib/2d/reperes'
 import Exercice from '../Exercice'
-import { mathalea2d } from '../../modules/2dGeneralites'
+import { colorToLatexOrHTML, mathalea2d } from '../../modules/2dGeneralites'
 export const titre = 'Interpolation cosinusoïdale'
 
 export const refs = {
@@ -19,7 +19,7 @@ export const uuid = '5b767'
 export default class TraceCourbeInterpolee1 extends Exercice {
   constructor () {
     super()
-    this.besoinFormulaireTexte = ['Liste des points sous la forme: (x0;y0),(x1;y1);..']
+    this.besoinFormulaireTexte = ['Liste des points sous la forme: (x0;y0),(x1;y1);..', '']
     this.besoinFormulaire2CaseACocher = ['Afficher les points ', true]
     this.besoinFormulaire3Numerique = ['Modèles de couleur ', 3, '1 : Points rouges sur courbe noire\n2 : Points bleus sur courbe rouge\n3 : Points verts sur courbe bleue']
 
@@ -53,7 +53,7 @@ export default class TraceCourbeInterpolee1 extends Exercice {
       yMin = Math.min(yMin, points[i][1])
       yMax = Math.max(yMax, points[i][1])
     }
-    const r = repere({ xMin: xMin - 1, xMax: xMax + 1, yMin: yMin - 1, yax: yMax - 1 })
+    const r = repere({ xMin: xMin - 1, xMax: xMax + 1, yMin: yMin - 1, yMax: yMax - 1 })
     const c = courbeInterpolee(
       points,
       {
@@ -69,7 +69,7 @@ export default class TraceCourbeInterpolee1 extends Exercice {
         p = tracePoint(point(points[i][0], points[i][1]))
         p.style = '+'
         p.epaisseur = 2
-        p.color = couleurs[parseInt(this.sup3) - 1].colPoint
+        p.color = colorToLatexOrHTML(couleurs[parseInt(this.sup3) - 1].colPoint)
         objets.push(p)
       }
     }

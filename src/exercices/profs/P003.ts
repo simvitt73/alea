@@ -31,7 +31,7 @@ export default class FeuilleDAxesGradues extends Exercice {
   }
 
   nouvelleVersion () {
-    const pas = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 10, defaut: 10, melange: 11, nbQuestions: this.nbQuestions, shuffle: false })
+    const pas = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 10, defaut: 10, melange: 11, nbQuestions: this.nbQuestions, shuffle: false }).map(Number)
 
     for (let i = 0, texte; i < this.nbQuestions; i++) {
       texte = mathalea2d({ xmin: -0.5, ymin: -1, xmax: 20, ymax: 1 },

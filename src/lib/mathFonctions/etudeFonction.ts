@@ -16,8 +16,7 @@ import { arrondi } from '../outils/nombres'
 import { stringNombre } from '../outils/texNombre'
 import { matrice } from './Matrice'
 import engine from '../interactif/comparisonFunctions'
-import { round, type MathScalarType } from 'mathjs'
-import SubstituerDansUneExpressionLitterale from '../../exercices/2e/2N40-7'
+import { Matrix, round } from 'mathjs'
 
 /**
  * Classe TableauDeVariation Initiée par Sebastien Lozano, transformée par Jean-Claude Lhote
@@ -85,7 +84,7 @@ export function tableauDeVariation ({
      * @param {string } text
      * @returns {string}
      */
-    const latexContent = (text) => {
+    const latexContent = (text: string) => {
       let txt = text
       if (txt == null || typeof txt !== 'string') {
         return false // c'est sortieTexte() qui va faire le signalement.
@@ -93,11 +92,11 @@ export function tableauDeVariation ({
       if (txt[0] === '$') txt = txt.substring(1, txt.length - 1)
       return txt
     }
-    const sortieTexte = (texte, x, y) => {
+    const sortieTexte = (texte: string, x: number, y:number) => {
       let txt = texte
       if (typeof txt !== 'string') {
         window.notify(
-          `Dans TableauDeVariation(), sortieTexte() a reçu un drôle de texte : ${txt}, du coup je renvoie ''`
+          `Dans TableauDeVariation(), sortieTexte() a reçu un drôle de texte : ${txt}, du coup je renvoie ''`, {}
         )
         return { texte: '', x, y }
       }
@@ -2042,7 +2041,7 @@ export function racines ({
  * @param {number|FractionEtendue} xMax
  * @returns {{xG: number, xD: number, signe: string}[]}
  */
-export function signesFonction (fonction: (x:FractionEtendue | number)=>number, xMin: number | FractionEtendue, xMax: number | FractionEtendue) {
+export function signesFonction (fonction: (x: number)=>number, xMin: number | FractionEtendue, xMax: number | FractionEtendue) {
   const signes = []
   if (xMin instanceof FractionEtendue) {
     xMin = xMin.toNumber()
@@ -2097,7 +2096,7 @@ export function signesFonction (fonction: (x:FractionEtendue | number)=>number, 
  * @returns {null|*[]}
  */
 export function variationsFonction (
-  derivee: (x:FractionEtendue | number)=>number,
+  derivee: (x:number)=>number,
   xMin: number | FractionEtendue,
   xMax: number | FractionEtendue,
   step: number | FractionEtendue,
@@ -2139,7 +2138,7 @@ export function variationsFonction (
  * @param y2
  * @returns {[number,number]}
  */
-export function trouveFonctionAffine (x1, x2, y1, y2) {
+export function trouveFonctionAffine (x1: number, x2: number, y1: number, y2: number) {
   if (x1 === x2) {
     window.notify('trouveFonctionAffine() appelée avec x1=x2', { x1, x2 })
     return [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]
@@ -2152,7 +2151,15 @@ export function trouveFonctionAffine (x1, x2, y1, y2) {
     window.notify('trouveFonctionAffine() retourne un nombre', { matrice: maMatrice, y1, y2 })
     return [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]
   }
-  return maMatrice!.inverse()!.multiply([y1, y2]).toArray()
+  if (maMatrice) {
+    const inv = maMatrice.inverse()
+    if (inv) {
+      const coeffs = inv.multiply([y1, y2]) as unknown as Matrix
+      return (coeffs).toArray()
+    }
+  }
+  window.notify('Pas de solution au système', { x1, x2, y1, y2 })
+  return [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]
 }
 
 /**
@@ -2160,7 +2167,7 @@ export function trouveFonctionAffine (x1, x2, y1, y2) {
  * retourne [] si il n'y en a pas, sinon retourne [[x1,f(x1)],[x2,f(x2)] ne précise pas si il s'agit d'un minima ou d'un maxima.
  * @author Jean-Claude Lhote
  */
-export function chercheMinMaxFonction ([a, b, c, d]) {
+export function chercheMinMaxFonction ([a, b, c, d]: [number, number, number, number]) {
   const delta = 4 * b * b - 12 * a * c
   if (delta <= 0) {
     return [

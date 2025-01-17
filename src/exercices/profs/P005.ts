@@ -31,7 +31,8 @@ export default class FeuilleDeGrilles extends Exercice {
 
   nouvelleVersion () {
     const objets = []; let fleche; let A; let B; let C; let D; let texte = ''
-    if (parseInt(this.sup) === 1) { // On travaille au dixième
+    this.contenu = ''
+    if (this.sup === 1) { // On travaille au dixième
       for (let i = 0; i < 5; i++) {
         objets.length = 0
         // pixelsParCm=50
@@ -58,10 +59,10 @@ export default class FeuilleDeGrilles extends Exercice {
         objets.push(lignesVerticales(11, -0.5, 12, 0.5, 'gray', 0.8, 0.5))
 
         texte = mathalea2d({ xmin: -0.5, ymin: -2.2, xmax: 21, ymax: 3, pixelsParCm: 30, scale: 0.8 }, objets)
-        this.contenu += texte
+        this.contenu = texte
         this.contenu += '<br>'
       }
-    } else if (parseInt(this.sup) === 2) {
+    } else if (this.sup === 2) {
       for (let i = 0; i < 4; i++) {
         objets.length = 0
         // pixelsParCm=50
@@ -85,7 +86,7 @@ export default class FeuilleDeGrilles extends Exercice {
         objets.push(texteParPosition('x5', 13.5, -0.5))
         objets.push(fleche)
         texte = mathalea2d({ xmin: -0.5, ymin: -3, xmax: 26, ymax: 3, pixelsParCm: 30, scale: 0.8 }, objets)
-        this.contenu += texte
+        this.contenu = texte
         this.contenu += '<br>'
       }
     } else {
@@ -113,7 +114,7 @@ export default class FeuilleDeGrilles extends Exercice {
         objets.push(grille(15, -5, 25, 5, 'black', 1, 1))
         objets.push(grille(11, -0.5, 12, 0.5, 'black', 0.3, 0.1))
         texte = mathalea2d({ xmin: -0.1, ymin: -5.5, xmax: 26, ymax: 5.5, pixelsParCm: 25, scale: 0.7 }, objets)
-        this.contenu += texte
+        this.contenu = texte
         this.contenu += '<br>'
       }
     }

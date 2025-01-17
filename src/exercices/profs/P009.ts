@@ -194,7 +194,7 @@ export default class SimulateurAleatoire extends Exercice {
           const lstElementGraph = []
           for (let i = 0; i < nbFaces; i++) {
           //  lstElementGraph.push(traceBarre(((r.xMax - r.xMin) / nbFaces) * (i + 0.5), tabRes[i][1] * 10, i + 1), { unite: 1 / coef })
-            lstElementGraph.push(traceBarre(((r.xMax - r.xMin) / nbFaces) * (i + 0.5), tabRes[i][1] * 10, i + 1))
+            lstElementGraph.push(traceBarre(((r.xMax - r.xMin) / nbFaces) * (i + 0.5), tabRes[i][1] * 10, String(i + 1), {}))
           }
           texte += mathalea2d({ xmin: -1, xmax: 11, ymin: -4, ymax: 5.5, pixelsParCm: 30, scale: 1 }, r, lstElementGraph)
         }
@@ -234,7 +234,7 @@ export default class SimulateurAleatoire extends Exercice {
           const lstElementGraph = []
           for (let i = 0; i < nbFaces; i++) {
             // lstElementGraph.push(traceBarre(((r.xMax - r.xMin) / nbFaces) * (i + 0.5), tabRes[i][1] * 10, tabcoul[i]), { unite: 1 / coef })
-            lstElementGraph.push(traceBarre(((r.xMax - r.xMin) / nbFaces) * (i + 0.5), tabRes[i][1] * 10, tabcoul[i]))
+            lstElementGraph.push(traceBarre(((r.xMax - r.xMin) / nbFaces) * (i + 0.5), tabRes[i][1] * 10, tabcoul[i], {}))
           }
           texte += mathalea2d({ xmin: -1, xmax: 12, ymin: -4, ymax: 7, pixelsParCm: 30, scale: 1 }, r, lstElementGraph)
         }

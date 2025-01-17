@@ -1,5 +1,5 @@
 import { repere } from '../../lib/2d/reperes'
-import { spline } from '../../lib/mathFonctions/Spline'
+import { spline, type NoeudSpline } from '../../lib/mathFonctions/Spline'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import Exercice from '../Exercice'
 
@@ -19,9 +19,9 @@ export const uuid = '4c7ca'
 export default class TraceCourbeSpline extends Exercice {
   constructor () {
     super()
-    this.besoinFormulaireTexte = ['Liste des coordonnées sous la forme: (x0;y0)/(x1;y1)/...']
-    this.besoinFormulaire2Texte = ['Liste des nombres dérivés sous la forme (gauche0;droite0)/(gauche1;droite1)/...']
-    this.besoinFormulaire3Texte = ['Etat visible(1)/invisible(0) de chaque noeud sous la forme 0/1/...']
+    this.besoinFormulaireTexte = ['Liste des coordonnées sous la forme: (x0;y0)/(x1;y1)/...', '']
+    this.besoinFormulaire2Texte = ['Liste des nombres dérivés sous la forme (gauche0;droite0)/(gauche1;droite1)/...', '']
+    this.besoinFormulaire3Texte = ['Etat visible(1)/invisible(0) de chaque noeud sous la forme 0/1/...', '']
 
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
@@ -32,7 +32,7 @@ export default class TraceCourbeSpline extends Exercice {
   }
 
   nouvelleVersion () {
-    const noeuds = []
+    const noeuds: NoeudSpline[] = []
     const listeCoords = this.sup.split('/')
     const listePentes = this.sup2.split('/')
     const listeVisibles = this.sup3.split('/')
@@ -41,7 +41,7 @@ export default class TraceCourbeSpline extends Exercice {
       const coordonnees = listeCoords[i].slice(1, -1).split(';')
       const x = Number(coordonnees[0].replace(',', '.'))
       const y = Number(coordonnees[1].replace(',', '.'))
-      noeuds.push({ x, y })
+      noeuds.push({ x, y, deriveeGauche: 0, deriveeDroit: 0, isVisible: true })
     }
     for (let i = 0; i < noeuds.length; i++) {
       let pentes = listePentes[i].slice(1, -1).split(';')
