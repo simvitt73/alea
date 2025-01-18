@@ -42,8 +42,6 @@ export default function figureApigeom ({ exercice, figure, animation = false, i,
   const idApigeom = `apigeomEx${exercice.numeroExercice}F${i}${idAddendum}`
   figure.id = idApigeom
 
-  console.log('ok')
-
   // Pour revoir la copie de l'élève dans Capytale
   // Attention, la clé de answers[] doit contenir apigeom, c'est pourquoi l'id est généré par cette fonction
   function idApigeomFunct (event: Event) : void {
