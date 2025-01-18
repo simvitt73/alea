@@ -52,9 +52,9 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
       this.typesDeQuestionsDisponibles = gestionnaireFormulaireTexte({
         saisie: this.sup3,
         min: 1,
-        max: 10,
-        melange: 11,
-        defaut: 11,
+        max: 9,
+        melange: 10,
+        defaut: 10,
         nbQuestions: this.nbQuestions
       })
     }

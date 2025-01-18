@@ -15,7 +15,7 @@ export default class ConstruireUnTriangleAvecCible5e extends ConstruireUnTriangl
   constructor () {
     super()
     this.classe = 5
-    this.sup3 = 11
+    this.sup3 = 10
     this.besoinFormulaire3Texte = [
       'Type de questions', [
         'Nombres séparés par des tirets',
@@ -28,8 +28,7 @@ export default class ConstruireUnTriangleAvecCible5e extends ConstruireUnTriangl
         '7 : Triangle avec 1 longueur et 2 angles adjacents',
         '8 : Triangle rectangle avec 1 longueur et l\'hypoténuse',
         '9 : Triangle avec 1 longueur 1 angle adjacent et 1 angle opposé',
-        '10 : Budget d\'une association (forme explicite)',
-        '11 : Mélange'
+        '10 : Mélange'
       ].join('\n')
     ]
   }
