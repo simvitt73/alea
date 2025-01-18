@@ -53,7 +53,8 @@ export default class ProblemesAdditifsFractionsBis extends Exercice {
       [64, 8, 32, 16, 4],
       [54, 9, 6, 27, 18]
     ]
-    let denomsAmisToSelect = shuffle(Array.from({ length: denomsAmis.length }, (_, i) => i))
+    const arr = Array.from({ length: denomsAmis.length }, (_, i) => i)
+    let denomsAmisToSelect = shuffle(arr)
 
     let listefrac, listefrac2, denominateurCommun, fracMemeDenom, fracMemeDenomRangees, fracRangees
     // le tableau d'objets contenant tout le necesssaire, fractions, énoncé, question ... pour les problème avec 4 fractions
@@ -92,7 +93,8 @@ export default class ProblemesAdditifsFractionsBis extends Exercice {
           b++
 
           // sélectionne 2 dénominateurs différents et trie par ordre croissant
-          [d1, d2] = shuffle(denomsCool3).slice(0, 3).sort(function (a, b) { return a - b })
+          const dens = shuffle(denomsCool3).slice(0, 2) as [number, number];
+          [d1, d2] = dens.sort((a: number, b:number) => a - b)
 
           n1 = randint(Math.ceil(d1 / 4), Math.floor(d1 / 2)) // fraction comprise entre 1 quart et 1 demi
           n2 = randint(Math.ceil(d2 / 4), Math.floor(d2 / 2)) // fraction comprise entre 1 quart et 1 demi
@@ -283,7 +285,8 @@ export default class ProblemesAdditifsFractionsBis extends Exercice {
           b++
 
           // sélectionne 3 dénominateurs différents et trie par ordre croissant
-          [d1, d2, d3] = shuffle(denomsCool4).slice(0, 3).sort(function (a, b) { return a - b })
+          const dens = shuffle(denomsCool4).slice(0, 3);
+          [d1, d2, d3] = dens.sort((a: number, b: number) => a - b)
 
           n1 = d1 === 2 ? 1 : randint(Math.ceil(d1 / 6), Math.floor(d1 / 3)) // fraction entre 1/6 et 1/3
           n2 = randint(Math.ceil(d2 / 6), Math.floor(d2 / 3)) // fraction entre 1/6 et 1/3

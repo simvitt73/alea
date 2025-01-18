@@ -335,6 +335,7 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
           IEP.triangleRectangleCoteHypotenuse(nom, lAB, lAC, true)
           break
         case 9: // triangle ABC dont ont connait AB un angle adjacent et l'angle opposé
+        default:
           lAB = arrondi(randint(46, 60) / 10)
           B = pointAdistance(A, lAB, randint(-45, 45), sommets[1])
           B.positionLabel = 'right'

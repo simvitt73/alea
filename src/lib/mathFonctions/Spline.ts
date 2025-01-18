@@ -645,18 +645,16 @@ export class Spline {
      * @returns {Trace}
      */
   courbe ({
-    repere,
     color = 'black',
     epaisseur = 1,
     ajouteNoeuds = false,
     optionsNoeuds = {}
   }: {
-    repere: Repere,
     color?: string,
     epaisseur?: number,
     ajouteNoeuds?: boolean,
     optionsNoeuds?: Object
-  }) {
+  } = {}) {
     return new Trace(this, {
       color,
       epaisseur,
