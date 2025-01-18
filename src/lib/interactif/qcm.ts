@@ -123,7 +123,7 @@ export function verifQuestionQcm (exercice: Exercice, i: number) {
  * @param {{style: string, format: string}} [options]
  * @returns {{texte: string, texteCorr: string}} {texte, texteCorr} le texte à ajouter pour la question traitée
  */
-export function propositionsQcm (exercice: Exercice, i: number, options: { style: string, format: string }) {
+export function propositionsQcm (exercice: Exercice, i: number, options: { style: string, format: string } = { style: '', format: 'case' }) {
 /**
  * Mélange les éléments d'un tableau jusqu'à un certain index et laisse les suivants inchangés.
  * @param {Array} array - Le tableau à mélanger.
