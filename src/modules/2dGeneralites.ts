@@ -210,7 +210,7 @@ export class ObjetMathalea2D {
   style: string
   epaisseur: number
   opacite: number
-  id: number
+  id: number | string
   pointilles: number
   bordures: [number, number, number, number] // Doit rester undefined pour identifier les objets qui ne définissent pas leurs bordures (un notify sera envoyé)
   objets?: (ObjetMathalea2D | Latex2d)[]
