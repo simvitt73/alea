@@ -7,9 +7,10 @@ import Exercice from '../Exercice'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'
 import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { fraction } from '../../modules/fractions'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { texNombre } from '../../lib/outils/texNombre'
+import FractionEtendue from '../../modules/FractionEtendue'
+import { orangeMathalea } from '../../lib/colors'
 
 export const titre = 'Effectuer somme, différence, produit ou quotient de fractions'
 export const interactifType = 'mathLive'
@@ -35,8 +36,8 @@ export default class SommeOuProduitFractions extends Exercice {
       'Type de questions',
       'Nombres séparés par des tirets\n1 : Somme\n2 : Différence\n3 : Produit\n4 : Avec priorités opératoires\n5 : Mélange\n6 : Quotient\n7 : Mélange avec quotient'
     ]
-    this.spacing = context.isHtml ? 4 : 3
-    this.spacingCorr = context.isHtml ? 4 : 3
+    this.spacing = 3
+    this.spacingCorr = context.isHtml ? 3 : 3
     this.consigne = 'Effectuer les calculs suivants.'
     this.nbQuestions = 8 // Nombre de questions par défaut
     this.nbCols = 4 // Uniquement pour la sortie LaTeX
@@ -99,7 +100,7 @@ export default class SommeOuProduitFractions extends Exercice {
             texteCorr += `$${lettre} = ${texFractionFromString(num1, den1)}+${texFractionFromString(num2, kden1)}$<br>`
             if (k > 1) {
               if (this.correctionDetaillee) {
-                texteCorr += `$${lettre} = ${texFractionFromString(num1 + miseEnEvidence('\\times' + k), den1 + miseEnEvidence('\\times' + k))}+${texFractionFromString(num2, kden1)}$<br>`
+                texteCorr += `$${lettre} = ${texFractionFromString(num1 + miseEnEvidence('\\times' + k, 'blue'), den1 + miseEnEvidence('\\times' + k, 'blue'))}+${texFractionFromString(num2, kden1)}$<br>`
               }
               texteCorr += `$${lettre} = ${texFractionFromString(num1 * k, kden1)}+${texFractionFromString(num2, kden1)}$<br>`
             }
@@ -112,7 +113,7 @@ export default class SommeOuProduitFractions extends Exercice {
             texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}+${texFractionFromString(num2, den1)}$<br>`
             if (k > 1) {
               if (this.correctionDetaillee) {
-                texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}+${texFractionFromString(num2 + miseEnEvidence('\\times' + k), den1 + miseEnEvidence('\\times' + k))}$<br>`
+                texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}+${texFractionFromString(num2 + miseEnEvidence('\\times' + k, 'blue'), den1 + miseEnEvidence('\\times' + k, 'blue'))}$<br>`
               }
               texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}+${texFractionFromString(num2 * k, kden1)}$<br>`
             }
@@ -148,7 +149,7 @@ export default class SommeOuProduitFractions extends Exercice {
             texteCorr += `$${lettre} = ${texFractionFromString(num1, den1)}-${texFractionFromString(num2, kden1)}$<br>`
             if (k > 1) {
               if (this.correctionDetaillee) {
-                texteCorr += `$${lettre} = ${texFractionFromString(num1 + miseEnEvidence('\\times' + k), den1 + miseEnEvidence('\\times' + k))} - ${texFractionFromString(num2, kden1)}$<br>`
+                texteCorr += `$${lettre} = ${texFractionFromString(num1 + miseEnEvidence('\\times' + k, 'blue'), den1 + miseEnEvidence('\\times' + k, 'blue'))} - ${texFractionFromString(num2, kden1)}$<br>`
               }
               texteCorr += `$${lettre} = ${texFractionFromString(num1 * k, den1 * k)}-${texFractionFromString(num2, kden1)}$<br>`
             }
@@ -161,7 +162,7 @@ export default class SommeOuProduitFractions extends Exercice {
             texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}-${texFractionFromString(num2, den1)}$<br>`
             if (k > 1) {
               if (this.correctionDetaillee) {
-                texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}-${texFractionFromString(num2 + miseEnEvidence('\\times' + k), den1 + miseEnEvidence('\\times' + k))}$<br>`
+                texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}-${texFractionFromString(num2 + miseEnEvidence('\\times' + k, 'blue'), den1 + miseEnEvidence('\\times' + k, 'blue'))}$<br>`
               }
               texteCorr += `$${lettre} = ${texFractionFromString(num1, kden1)}-${texFractionFromString(num2 * k, kden1)}$<br>`
             }
@@ -289,16 +290,30 @@ export default class SommeOuProduitFractions extends Exercice {
           den = num2
           break
       }
-      if (pgcd(num, den) !== 1) {
-        texteCorr += `<br>$${lettre}  ${simplificationDeFractionAvecEtapes(num, den)}$`
+
+      if (pgcd(num, den) === 1) {
+      // Uniformisation : Mise en place de la réponse attendue en interactif en orange et gras
+
+        const textCorrSplit = texteCorr.split('=')
+        let aRemplacer = textCorrSplit[textCorrSplit.length - 1]
+        aRemplacer = aRemplacer.replace('$', '').replace('<br>', '')
+
+        texteCorr = ''
+        for (let ee = 0; ee < textCorrSplit.length - 1; ee++) {
+          texteCorr += textCorrSplit[ee] + '='
+        }
+        texteCorr += `$ $${miseEnEvidence(aRemplacer)}$`
+
+        // Fin de cette uniformisation
+      } else {
+        texteCorr += `<br>$${lettre}  ${simplificationDeFractionAvecEtapes(num, den, { couleur1: 'blue', couleur2: orangeMathalea })}$`
       }
-      texte += '<br>'
-      texteCorr += '\n'
+      texteCorr += '<br>'
+      texte += ajouteChampTexteMathLive(this, i, ' ', { texteAvant: `<br>$${lettre}=$` })
+      handleAnswers(this, i, { reponse: { value: new FractionEtendue(num, den).texFraction } })
 
       // Si la question n'a jamais été posée, on l'enregistre
-      if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
-        texte += ajouteChampTexteMathLive(this, i, '')
-        setReponse(this, i, fraction(num, den), { formatInteractif: 'fractionEgale' })
+      if (this.questionJamaisPosee(i, num, den)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++
