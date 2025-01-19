@@ -1,16 +1,16 @@
-import { point, tracePoint } from '../../lib/2d/points'
-import { polygoneAvecNom } from '../../lib/2d/polygones'
+import { point, TracePoint, tracePoint } from '../../lib/2d/points'
+import { NommePolygone, Polygone, polygoneAvecNom } from '../../lib/2d/polygones'
 import { texNombre, texRacineCarree } from '../../lib/outils/texNombre'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { repere } from '../../lib/2d/reperes'
 import { texteGras } from '../../lib/format/style'
-import { segment } from '../../lib/2d/segmentsVecteurs'
+import { Segment, segment } from '../../lib/2d/segmentsVecteurs'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { extraireRacineCarree } from '../../lib/outils/calculs'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
 import { texteParPosition } from '../../lib/2d/textes'
 import Exercice from '../Exercice'
-import { mathalea2d } from '../../modules/2dGeneralites'
+import { mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 export const titre = 'Déterminer la nature d\'un polygone avec les coordonnées'
 export const dateDeModifImportante = '30/11/2023'
@@ -35,109 +35,109 @@ export default class NaturePolygone extends Exercice {
   }
 
   nouvelleVersion () {
-    let objets
-    let A, B, C, D, P, XMIN, XMAX, YMIN, YMAX
+    let XMIN, XMAX, YMIN, YMAX
 
-    let typesDeQuestionsDisponibles = [1, 2, 3, 4, 5]; let typesDeQuestions
+    let typesDeQuestionsDisponibles = [1, 2, 3, 4, 5]
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = [1, 2]
-    }
-    if (this.sup === 2) {
+    } else if (this.sup === 2) {
       typesDeQuestionsDisponibles = [3, 4, 5]
-    }
-    if (this.sup === 3) {
+    } else {
       typesDeQuestionsDisponibles = [1, 2, 3, 4, 5]
     }
 
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
-    for (let i = 0, a, s1, s2, s3, s4, nom, I, J, o, T, ux, uy, xA, yA, xB, yB, xC, yC, xD, yD, abCarre, acCarre, bcCarre, xAbCarre, yAbCarre, xAcCarre, yAcCarre, xBcCarre, yBcCarre, xAdCarre, yAdCarre, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      objets = []
-      typesDeQuestions = listeTypeDeQuestions[i]
-      if (typesDeQuestions === 1) {
-        xA = randint(0, 6) * choice([-1, 1])
-        yA = randint(0, 6) * choice([-1, 1])
-        ux = randint(1, 5) * choice([-1, 1])
-        uy = randint(1, 5) * choice([-1, 1])
-        while (ux === uy || ux === -uy) { // ajout d'une condition pour éviter des points alignés (Jean-claude Lhote)
+    for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      const objets: NestedObjetMathalea2dArray = []
+      const typesDeQuestions = listeTypeDeQuestions[i]
+      let xA: number, yA: number, ux: number, uy: number, xB: number, yB: number, xC: number, yC: number, xD: number, yD: number, nom: string
+      switch (typesDeQuestions) {
+        case 1: // Triangle
+          xA = randint(0, 6) * choice([-1, 1])
+          yA = randint(0, 6) * choice([-1, 1])
+          ux = randint(1, 5) * choice([-1, 1])
           uy = randint(1, 5) * choice([-1, 1])
-        }// empêcher ux=uy pour éviter B=C
-        xB = xA + ux
-        yB = yA + uy
-        xC = xA + uy
-        yC = yA + ux
-        xD = 0 // pour ne pas bloquer le recadrage du repère
-        yD = 0
-        nom = creerNomDePolygone(3, ['OIJ'])
+          while (ux === uy || ux === -uy) { // ajout d'une condition pour éviter des points alignés (Jean-claude Lhote)
+            uy = randint(1, 5) * choice([-1, 1])
+          }// empêcher ux=uy pour éviter B=C
+          xB = xA + ux
+          yB = yA + uy
+          xC = xA + uy
+          yC = yA + ux
+          xD = 0 // pour ne pas bloquer le recadrage du repère
+          yD = 0
+          nom = creerNomDePolygone(3, ['OIJ'])
+          break
+        case 2:
+          xA = randint(0, 5) * choice([-1, 1])
+          yA = randint(0, 5) * choice([-1, 1])
+          ux = randint(1, 5) * choice([-1, 1])
+          uy = randint(1, 5) * choice([-1, 1])
+          xB = xA + ux
+          yB = yA + uy
+          xC = xA - uy
+          yC = yA + ux
+          xD = 0 // pour ne pas bloquer le recadrage du repère
+          yD = 0
+          nom = creerNomDePolygone(3, ['OIJ'])
+          break
+        case 3:
+          xA = randint(0, 5) * choice([-1, 1])
+          yA = randint(0, 5) * choice([-1, 1])
+          ux = randint(1, 5)
+          uy = randint(1, 5, ux) * choice([-1, 1])
+          ux *= choice([-1, 1])
+          xB = xA + ux
+          yB = yA + uy
+          xC = xB - uy
+          yC = yB - ux
+          xD = xC - ux
+          yD = yC - uy
+          nom = creerNomDePolygone(4, ['OIJMK'])
+          break
+        case 4:
+          xA = randint(0, 5) * choice([-1, 1])
+          yA = randint(0, 5) * choice([-1, 1])
+          ux = randint(1, 5) * choice([-1, 1])
+          uy = randint(1, 5) * choice([-1, 1])
+          xB = xA + ux * 2
+          yB = yA + uy * 2
+          xC = xA - uy
+          yC = yA + ux
+          xD = xC + ux * 2
+          yD = yC + uy * 2
+          nom = creerNomDePolygone(4, ['OIJMK'])
+          break
+        case 5:
+        default:
+          xA = randint(0, 5) * choice([-1, 1])
+          yA = randint(0, 5) * choice([-1, 1])
+          ux = randint(1, 5) * choice([-1, 1])
+          uy = randint(1, 5) * choice([-1, 1])
+          xB = xA + ux
+          yB = yA + uy
+          xC = xA - uy
+          yC = yA + ux
+          xD = xC + ux
+          yD = yC + uy
+          nom = creerNomDePolygone(4, ['OIJMK'])
+          break
       }
-      if (typesDeQuestions === 2) {
-        xA = randint(0, 5) * choice([-1, 1])
-        yA = randint(0, 5) * choice([-1, 1])
-        ux = randint(1, 5) * choice([-1, 1])
-        uy = randint(1, 5) * choice([-1, 1])
-        xB = xA + ux
-        yB = yA + uy
-        xC = xA - uy
-        yC = yA + ux
-        xD = 0 // pour ne pas bloquer le recadrage du repère
-        yD = 0
-        nom = creerNomDePolygone(3, ['OIJ'])
-      }
-      if (typesDeQuestions === 3) {
-        xA = randint(0, 5) * choice([-1, 1])
-        yA = randint(0, 5) * choice([-1, 1])
-        ux = randint(1, 5)
-        uy = randint(1, 5, ux) * choice([-1, 1])
-        ux *= choice([-1, 1])
-        xB = xA + ux
-        yB = yA + uy
-        xC = xB - uy
-        yC = yB - ux
-        xD = xC - ux
-        yD = yC - uy
-        nom = creerNomDePolygone(4, ['OIJMK'])
-      }
-      if (typesDeQuestions === 4) {
-        xA = randint(0, 5) * choice([-1, 1])
-        yA = randint(0, 5) * choice([-1, 1])
-        ux = randint(1, 5) * choice([-1, 1])
-        uy = randint(1, 5) * choice([-1, 1])
-        a = 2
-        xB = xA + ux * a
-        yB = yA + uy * a
-        xC = xA - uy
-        yC = yA + ux
-        xD = xC + ux * a
-        yD = yC + uy * a
-        nom = creerNomDePolygone(4, ['OIJMK'])
-      }
-      if (typesDeQuestions === 5) {
-        xA = randint(0, 5) * choice([-1, 1])
-        yA = randint(0, 5) * choice([-1, 1])
-        ux = randint(1, 5) * choice([-1, 1])
-        uy = randint(1, 5) * choice([-1, 1])
-        xB = xA + ux
-        yB = yA + uy
-        xC = xA - uy
-        yC = yA + ux
-        xD = xC + ux
-        yD = yC + uy
-        nom = creerNomDePolygone(4, ['OIJMK'])
-      }
-      xAbCarre = (xB - xA) * (xB - xA)
-      yAbCarre = (yB - yA) * (yB - yA)
-      abCarre = xAbCarre + yAbCarre
-      xAcCarre = (xC - xA) * (xC - xA)
-      yAcCarre = (yC - yA) * (yC - yA)
-      xBcCarre = (xC - xB) * (xC - xB)
-      yBcCarre = (yC - yB) * (yC - yB)
-      xAdCarre = (xD - xA) * (xD - xA)
-      yAdCarre = (yD - yA) * (yD - yA)
-      acCarre = xAcCarre + yAcCarre
-      bcCarre = xBcCarre + yBcCarre
-      A = point(xA, yA, 'A')
-      B = point(xB, yB, 'B')
-      C = point(xC, yC, 'C')
-      D = point(xD, yD, 'D')
+      const xAbCarre = (xB - xA) * (xB - xA)
+      const yAbCarre = (yB - yA) * (yB - yA)
+      const abCarre = xAbCarre + yAbCarre
+      const xAcCarre = (xC - xA) * (xC - xA)
+      const yAcCarre = (yC - yA) * (yC - yA)
+      const xBcCarre = (xC - xB) * (xC - xB)
+      const yBcCarre = (yC - yB) * (yC - yB)
+      const xAdCarre = (xD - xA) * (xD - xA)
+      const yAdCarre = (yD - yA) * (yD - yA)
+      const acCarre = xAcCarre + yAcCarre
+      const bcCarre = xBcCarre + yBcCarre
+      const A = point(xA, yA, 'A')
+      const B = point(xB, yB, 'B')
+      const C = point(xC, yC, 'C')
+      const D = point(xD, yD, 'D')
       A.nom = nom[0]
       B.nom = nom[1]
       C.nom = nom[2]
@@ -146,10 +146,12 @@ export default class NaturePolygone extends Exercice {
       YMIN = Math.min(yA, yB, yC, yD, -1) - 1
       XMAX = Math.max(xA, xB, xC, xD, 1) + 1
       YMAX = Math.max(yA, yB, yC, yD, 1) + 1
-      I = texteParPosition('I', 1, -0.5, 'milieu', 'black', 1)
-      J = texteParPosition('J', -0.5, 1, 'milieu', 'black', 1)
-      o = texteParPosition('O', -0.3, -0.3, 'milieu', 'black', 1)
-
+      const I = texteParPosition('I', 1, -0.5, 0, 'black', 1)
+      const J = texteParPosition('J', -0.5, 1, 0, 'black', 1)
+      const o = texteParPosition('O', -0.3, -0.3, 0, 'black', 1)
+      let s1: Segment, s2: Segment, s3: Segment, s4: Segment, T: TracePoint, P: [Polygone, NommePolygone]
+      let texte = ''
+      let texteCorr = ''
       switch (typesDeQuestions) {
         case 1: // Triangle isocèle ou équilatéral
           s1 = segment(A, B, 'blue')
@@ -392,7 +394,7 @@ export default class NaturePolygone extends Exercice {
           break
       }
 
-      if (this.questionJamaisPosee(i, xA, yA, xB, yB, typesDeQuestions)) { // Si la question n'a jamais été posée, on en créé une autre
+      if (this.questionJamaisPosee(i, [xA, yA, xB, yB, typesDeQuestions].map(String).join(''))) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++
