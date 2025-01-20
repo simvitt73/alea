@@ -27,9 +27,9 @@ export default class TauxGlobal extends Exercice {
 
   nouvelleVersion () {
     if (this.canOfficielle) {
-      this.question = 'Deux hausses successives de $100\\,\\%$ correspondent à une  hausse globale de :'
-      this.correction = `Augmenter de $100\\,%$ revient à multiplier par $2$. <br>
-      Ainsi, les duex haisses successives de $100\\,\\%$ correspondent à un coefficient multiplicateur global de $4$.<br>
+      this.question = 'Deux hausses successives de $100\\,\\%$ correspondent à une  hausse globale de : '
+      this.correction = `Augmenter de $100\\,\\%$ revient à multiplier par $2$. <br>
+      Ainsi, les deux hausses successives de $100\\,\\%$ correspondent à un coefficient multiplicateur global de $4$.<br>
       On en déduit que la hausse globale est de $${miseEnEvidence('300')}\\,\\%$. `
       this.reponse = 300
       this.optionsChampTexte = { texteApres: '$\\%$' }

@@ -100,9 +100,8 @@ export default class PythonCalcul extends Exercice {
       this.canEnonce += ` \\hspace*{7mm}${choix ? '\\texttt{b=b+a}' : '\\texttt{b=b*a}'}\\newline`
       this.canEnonce += ' \\hspace*{7mm}\\texttt{return b}'
       this.canEnonce += '}'
-      this.canEnonce += '}\\newline'
-      this.canEnonce += '\\medskip'
-      this.canReponseACompleter = `Que renvoie  $\\texttt{mystere(${a})}$ ?<br>\\\\`
+      this.canEnonce += '}'
+      this.canReponseACompleter = `Que renvoie  $\\texttt{mystere(${a})}$ ?\\\\`
       this.canReponseACompleter += '$\\ldots$'
     }
     if (this.interactif) { this.question += '<br>' }
