@@ -33,8 +33,9 @@ export default class SensVariationSuite extends Exercice {
   nouvelleVersion () {
     const nomSuite = ['u', 'v', 'w', 't']
     const s = choice(nomSuite)
-    const variables : number[] = []
+
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      const variables : number[] = []
       let monQcmTexte = ''
       let texte = ''
       let texteCorr = ''
@@ -827,7 +828,7 @@ export default class SensVariationSuite extends Exercice {
                 monQcmTexte = monQcm.texte
               }
               texteCorr = `On reconnaît la relation de récurrence d'une suite géométrique de raison $${q}$.<br>`
-              if (q > 0) { texteCorr += `Comme $${q}>0$ et que le premier terme est positif, alors la suite $(${s}_n)$ est croissante. ` } else { texteCorr += `Comme $${q}<0$, la suite $(${s}_n)$ est ni croissante, ni décroissante. ` }
+              if (q > 0) { texteCorr += `Comme $${q}>1$ et que le premier terme est positif, alors la suite $(${s}_n)$ est croissante. ` } else { texteCorr += `Comme $${q}<0$, la suite $(${s}_n)$ est ni croissante, ni décroissante. ` }
             } else if (choix === 5) { // suite recurrente u(n+1)=q*u(n) avec q>1 ou q<0 et a<0
               const a = randint(-10, -2)
               const q = randint(-10, 10, [0, 1, -1])
@@ -880,7 +881,7 @@ export default class SensVariationSuite extends Exercice {
                 monQcmTexte = monQcm.texte
               }
               texteCorr = `On reconnaît la relation de récurrence d'une suite géométrique de raison $${q}$.<br>`
-              if (q > 0) { texteCorr += `Comme $${q}>0$ et que le premier terme est négatif, alors la suite $(${s}_n)$ est décroissante. ` } else { texteCorr += `Comme $${q}<0$, la suite $(${s}_n)$ est ni croissante, ni décroissante. ` }
+              if (q > 0) { texteCorr += `Comme $${q}>1$ et que le premier terme est négatif, alors la suite $(${s}_n)$ est décroissante. ` } else { texteCorr += `Comme $${q}<0$, la suite $(${s}_n)$ est ni croissante, ni décroissante. ` }
             } else if (choix === 6) { // suite recurrente u(n+1)=q*u(n) avec 0<q<1
               const a = randint(-10, 10, [-1, 0, 1])
               const q = calculANePlusJamaisUtiliser(randint(1, 9) / 10)
