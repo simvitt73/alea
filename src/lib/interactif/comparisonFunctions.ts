@@ -80,6 +80,7 @@ type CleaningOperation =
   | 'foisUn'
   | 'unites'
   | 'doubleEspaces'
+  | 'espaceNormal'
   | 'mathrm'
 
 /**
@@ -145,6 +146,14 @@ function cleanDoubleSpaces (str: string): string {
   if (s[0] === ' ') s = s.substring(1, s.length)
   if (s[s.length - 1] === ' ') s = s.substring(0, s.length - 1)
   return s
+}
+
+/**
+ * Remplace les espaces Latex par des espaces normaux
+ * @param {string} str
+ */
+function cleanEspaceNormal (str: string): string {
+  return str.replaceAll(/\\,/g, ' ')
 }
 
 /**
@@ -239,6 +248,8 @@ export function generateCleaner (
         return cleanUnity
       case 'doubleEspaces':
         return cleanDoubleSpaces
+      case 'espaceNormal':
+        return cleanEspaceNormal
       default:
         throw new Error(`Unsupported cleaning operation: ${operation}`)
     }
@@ -1218,8 +1229,14 @@ function scientifiqueCompare (input: string, goodAnswer: string): ResultType {
  */
 function texteAvecCasseCompare (input: string, goodAnswer: string): ResultType {
   const cleaner = generateCleaner(['parentheses', 'mathrm', 'fractions'])
-  const localInput = cleaner(input)
+  let localInput = cleaner(input)
   const localGoodAnswer = cleaner(goodAnswer)
+  const clean = generateCleaner([
+    'espaceNormal',
+    'doubleEspaces'
+  ])
+  localInput = clean(localInput)
+
   const isOk = localGoodAnswer === localInput
   // Cette commande ci-dessous est mauvaise. Je la laisse pour expliquer pourquoi elle est mauvaise.
   // Autant, elle serait utile pour comparer 'aucun' et 'Aucun'
