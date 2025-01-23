@@ -42,7 +42,7 @@ export default class ImageFonctionAlgebrique extends Exercice {
   }
 
   nouvelleVersion () {
-    let typesDeQuestionsDisponibles = []
+    let typesDeQuestionsDisponibles: string[] = []
     if (this.sup === 1) {
       typesDeQuestionsDisponibles = ['ax+b', 'ax-b', '-ax+b', '-ax-b']
     }
@@ -61,6 +61,7 @@ export default class ImageFonctionAlgebrique extends Exercice {
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
     const signesDeX = combinaisonListes([true, false], this.nbQuestions)
     for (let i = 0, texte, texteCorr, a, b, c, d, expression, nomdef, x, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      texteCorr = ''
       x = randint(1, 12)
       if (signesDeX[i]) {
         x = -1 * x
