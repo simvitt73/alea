@@ -9,6 +9,12 @@ import ProblemesEnEquation from '../3e/3L13-3'
  * @description Exercices de mathématiques pour les 2e
  * @author Jean-claude Lhote
  */
+export const uuid = '622b9'
+
+export const refs = {
+  'fr-fr': ['2N50-1'],
+  'fr-ch': ['11FA6-7']
+}
 export default class ProblemesEnEquation2 extends ProblemesEnEquation {
   public constructor () {
     super()
