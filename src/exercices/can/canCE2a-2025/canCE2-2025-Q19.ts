@@ -43,12 +43,10 @@ export default class Can2025CE2Q19 extends ExerciceCan {
     }
     const monQcm = propositionsQcm(this, 0)
     this.formatInteractif = 'qcm'
-    this.reponse = `$${Math.round(a / 10) * 10 * b}$`
     this.question = `Quel est le nombre le plus proche de $${a}\\times ${b}$ ?`
     this.correction = `$${a}$ est proche de $${Math.round(a / 10) * 10}$, donc $${a}\\times ${b}$ est proche de $${Math.round(a / 10) * 10}\\times ${b}$ soit $${miseEnEvidence(texNombre(Math.round(a / 10) * 10 * b, 0))}$.`
     this.canEnonce = this.question
     this.question += `<br>\n${monQcm.texte}`
-    this.formatInteractif = 'qcm'
   }
 
   nouvelleVersion () {
