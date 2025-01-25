@@ -46,7 +46,6 @@ export default class Can2025CE2Q15 extends ExerciceCan {
     const monQcm = propositionsQcm(this, 0)
     this.formatInteractif = 'qcm'
     this.question = `Coche la bonne réponse pour $${a}\\div ${b}$.<br>`
-    this.reponse = `Il y a ${quotient} fois ${b} et il reste ${reste}`
     this.canEnonce = this.question
     this.question += `<br>\n${monQcm.texte}`
     this.correction = `On peut faire $${a} = ${quotient} \\times ${b} + ${reste}$.<br>

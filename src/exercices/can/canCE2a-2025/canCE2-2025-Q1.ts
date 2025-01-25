@@ -22,6 +22,8 @@ export default class Can2025CE2Q1 extends ExerciceCan {
       a = randint(2, 4) * 100 + randint(2, 6) * 10 + randint(1, 4)
       b = Math.round(Math.ceil(a / 10) * 10)
     }
+    this.formatInteractif = 'fillInTheBlank'
+
     this.reponse = { champ1: { value: b - a } }
     this.question = `$${a} + \\ldots = ${b}$`
     this.correction = `Pour trouver le nombre manquant, on peut calculer $${b}-${a}=${miseEnEvidence(texNombre(b - a, 0))}$.<br>
