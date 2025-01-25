@@ -1,0 +1,66 @@
+import Exercice from '../Exercice'
+import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { ecritureAlgebrique } from '../../lib/outils/ecritures'
+export const titre = 'Nom de l\'exercice'
+
+export const dateDePublication = '20/01/2025' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
+
+export const uuid = '55a4e' // Quand on exécute pnpm start la première fois, le terminal renvoie une référence d'uuid, à copier-coller ici
+export const refs = {
+  'fr-fr': [],
+  'fr-ch': []
+}
+
+/**
+ *
+ * @author
+
+*/
+export default class nomExercice extends Exercice {
+  constructor () {
+    super()
+    this.consigne = 'Consigne'
+  }
+
+  nouvelleVersion () {
+    const typeQuestionsDisponibles = ['type1', 'type2', 'type3'] // On créé 3 types de questions
+
+    const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
+    for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) { // Boucle principale où i+1 correspond au numéro de la question
+      const xA = randint(-6, 6, 0)
+      const yA = randint(-6, 6, [0, xA])
+      const zA = randint(-6, 6, 0)
+      const xB = randint(-6, 6, [0, xA])
+      const yB = randint(-6, 6, [0, yA, xB])
+      const zB = randint(-6, 6, [0, zA])
+      const a = randint(-6, 6, [0, xA])
+      const b = randint(-6, 6, [0, yB, yA])
+      const c = randint(-6, 6, [0, yB, zA])
+      switch (listeTypeQuestions[i]) { // Suivant le type de question, le contenu sera différent
+        case 'type1':
+          texte = 'Soit $\\(Delta)$ une droite de l\'espace dont on donne la représentation paramétrique :<br>' //
+          texte += `$\\(Delta)\\begin{cases}x=${xA}${ecritureAlgebrique(a)}t\\\\${yA}${ecritureAlgebrique(b)}t\\\\${zA}${ecritureAlgebrique(c)}t$ <br>` //
+          texte += `$\\(Delta)\\begin{cases}x=${xA}${ecritureAlgebrique(a)}t\\\\${yA}${ecritureAlgebrique(b)}t\\\\${zA}${ecritureAlgebrique(c)}t$ <br>` //
+          texteCorr = ' '
+          break
+        case 'type2':
+          texte = `Question ${i + 1} de type 2`
+          texteCorr = `Correction ${i + 1} de type 2`
+          break
+        case 'type3':
+          texte = `Question ${i + 1} de type 3`
+          texteCorr = `Correction ${i + 1} de type 3`
+          break
+      }
+      // Si la question n'a jamais été posée, on l'enregistre
+      if (this.questionJamaisPosee(i, texte)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+        this.listeQuestions[i] = texte
+        this.listeCorrections[i] = texteCorr
+        i++
+      }
+      cpt++
+    }
+    listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page
+  }
+}
