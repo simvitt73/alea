@@ -2,6 +2,7 @@ import Exercice from '../Exercice'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ecritureAlgebriqueSauf1, rienSi1 } from '../../lib/outils/ecritures'
+import { texNombre } from '../../lib/outils/texNombre'
 export const titre = 'Nom de l\'exercice'
 
 export const dateDePublication = '4/5/2024' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
@@ -35,6 +36,7 @@ export default class nomExercice extends Exercice {
       const b = randint(-10, 10, 0)
       const c = randint(-10, 10, 0)
       const t = randint(-4, 4, 0) // coeff de proportionnalité en cas d'appartennance
+      const alea = randint(1, 3)// aléatoirisation pour non appartenance, déterminer quelle cooronnée est modifiée pour planter
       let xM = 0
       let yM = 0
       let zM = 0
@@ -53,8 +55,23 @@ export default class nomExercice extends Exercice {
           break
         case 'type2':
         default :
-          texte = `Question ${i + 1} de type 2`
-          texteCorr = `Correction ${i + 1} de type 2`
+          xM = xA + t * a
+          yM = yA + t * b
+          zM = zA + t * c
+          if (alea === 1) { xM = xM + randint(-1, 1, 0) }
+          if (alea === 2) { yM = yM + randint(-1, 1, 0) }
+          if (alea === 3) { zM = zM + randint(-1, 1, 0) }
+
+          texteCorr = 'Il suffit de vérifier s\'il existe un réel $t$ qui valide le système pour les coordonnées du point $M$.<br>'
+          texteCorr += `Résolvons le système :<br>$ \\begin{cases}${xM}=${xA}${ecritureAlgebriqueSauf1(a)} t\\\\${yM}=${yA}${ecritureAlgebriqueSauf1(b)} t\\\\${zM}=${zA}${ecritureAlgebriqueSauf1(c)} t\\end{cases}$`
+          texteCorr += `$\\iff \\begin{cases}${rienSi1(a)} t=${xM}${ecritureAlgebriqueSauf1(-xA)}\\\\${rienSi1(b)} t=${yM}${ecritureAlgebriqueSauf1(-yA)}\\\\${rienSi1(c)} t=${zM}${ecritureAlgebriqueSauf1(-zA)}\\end{cases}$`
+          texteCorr += `$\\iff \\begin{cases}${rienSi1(a)} t=${xM - xA}\\\\${rienSi1(b)} t=${yM - yA}\\\\${rienSi1(c)} t=${zM - zA}\\end{cases}$`
+          if (alea === 1) { texteCorr += `$\\iff \\begin{cases} t=\\dfrac{${texNombre(xM - xA)}}{${texNombre(a)}}\\\\ t=${t}\\\\t=${t}\\end{cases}$` }
+          if (alea === 2) { texteCorr += `$\\iff \\begin{cases} t=\\dfrac{${texNombre(yM - yA)}}{${texNombre(b)}}\\\\ t=${t}\\\\t=${t}\\end{cases}$` }
+          if (alea === 3) { texteCorr += `$\\iff \\begin{cases} t=\\dfrac{${texNombre(zM - zA)}}{${texNombre(c)}}\\\\ t=${t}\\\\t=${t}\\end{cases}$` }
+
+          texteCorr += '<br>Pour la valeur $t=2$, on vérifie donc que les coordonnées du point $M$ vérifient la représentation paramétrique de $(\\Delta)$.'
+          texteCorr += '<br>On peut donc conclure : $M\\in(\\Delta)$'
           break
       }
       texte = `Déterminer si le point $M(${xM};${yM};${zM})$ appartient à la droite $(\\Delta)$ dont on donne la représentation paramétrique ci-dessous :<br>`
