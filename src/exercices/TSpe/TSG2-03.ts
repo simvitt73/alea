@@ -46,32 +46,31 @@ export default class nomExercice extends Exercice {
           yM = yA + t * b
           zM = zA + t * c
           texteCorr = 'Il suffit de vérifier s\'il existe un réel $t$ qui valide le système pour les coordonnées du point $M$.<br>'
-          texteCorr += `Résolvons le système :<br>$ \\begin{cases}${xM}=${xA}${ecritureAlgebriqueSauf1(a)} t\\\\${yM}=${yA}${ecritureAlgebriqueSauf1(b)} t\\\\${zM}=${zA}${ecritureAlgebriqueSauf1(c)} t\\end{cases}$`
-          texteCorr += `$\\iff \\begin{cases}${rienSi1(a)} t=${xM}${ecritureAlgebriqueSauf1(-xA)}\\\\${rienSi1(b)} t=${yM}${ecritureAlgebriqueSauf1(-yA)}\\\\${rienSi1(c)} t=${zM}${ecritureAlgebriqueSauf1(-zA)}\\end{cases}$`
-          texteCorr += `$\\iff \\begin{cases}${rienSi1(a)} t=${xM - xA}\\\\${rienSi1(b)} t=${yM - yA}\\\\${rienSi1(c)} t=${zM - zA}\\end{cases}$`
-          texteCorr += `$\\iff \\begin{cases} t=${t}\\\\ t=${t}\\\\t=${t}\\end{cases}$`
-          texteCorr += '<br>Pour la valeur $t=2$, on vérifie donc que les coordonnées du point $M$ vérifient la représentation paramétrique de $(\\Delta)$.'
-          texteCorr += '<br>On peut donc conclure : $M\\in(\\Delta)$'
+          texteCorr += `Résolvons le système :<br><br>$ \\phantom{\\iff }\\begin{cases}${xM}=${xA}${ecritureAlgebriqueSauf1(a)} t\\\\${yM}=${yA}${ecritureAlgebriqueSauf1(b)} t\\\\${zM}=${zA}${ecritureAlgebriqueSauf1(c)} t\\end{cases}$<br>`
+          texteCorr += `<br>$\\iff \\begin{cases}${rienSi1(a)} t=${xM}${ecritureAlgebriqueSauf1(-xA)}\\\\${rienSi1(b)} t=${yM}${ecritureAlgebriqueSauf1(-yA)}\\\\${rienSi1(c)} t=${zM}${ecritureAlgebriqueSauf1(-zA)}\\end{cases}$<br>`
+          texteCorr += `<br>$\\iff \\begin{cases}${rienSi1(a)} t=${xM - xA}\\\\${rienSi1(b)} t=${yM - yA}\\\\${rienSi1(c)} t=${zM - zA}\\end{cases}$<br>`
+          texteCorr += `<br>$\\iff \\begin{cases} t=${t}\\\\ t=${t}\\\\t=${t}\\end{cases}$`
+          texteCorr += `<br>Le système a pour solution $t=${t}$ donc le point M appartient à la droite  $(\\Delta)$.`
           break
-        case 'type2':
+        case 'type2'://défavorable
         default :
           xM = xA + t * a
           yM = yA + t * b
           zM = zA + t * c
-          if (alea === 1) { xM = xM + randint(-1, 1, 0) }
+          if (alea === 1) { xM = xM + randint(-1, 1, 0) }// on détermine quelle coordonnée est affectée d'un +/- 1
           if (alea === 2) { yM = yM + randint(-1, 1, 0) }
           if (alea === 3) { zM = zM + randint(-1, 1, 0) }
 
           texteCorr = 'Il suffit de vérifier s\'il existe un réel $t$ qui valide le système pour les coordonnées du point $M$.<br>'
-          texteCorr += `Résolvons le système :<br>$ \\begin{cases}${xM}=${xA}${ecritureAlgebriqueSauf1(a)} t\\\\${yM}=${yA}${ecritureAlgebriqueSauf1(b)} t\\\\${zM}=${zA}${ecritureAlgebriqueSauf1(c)} t\\end{cases}$`
-          texteCorr += `$\\iff \\begin{cases}${rienSi1(a)} t=${xM}${ecritureAlgebriqueSauf1(-xA)}\\\\${rienSi1(b)} t=${yM}${ecritureAlgebriqueSauf1(-yA)}\\\\${rienSi1(c)} t=${zM}${ecritureAlgebriqueSauf1(-zA)}\\end{cases}$`
-          texteCorr += `$\\iff \\begin{cases}${rienSi1(a)} t=${xM - xA}\\\\${rienSi1(b)} t=${yM - yA}\\\\${rienSi1(c)} t=${zM - zA}\\end{cases}$`
-          if (alea === 1) { texteCorr += `$\\iff \\begin{cases} t=\\dfrac{${texNombre(xM - xA)}}{${texNombre(a)}}\\\\ t=${t}\\\\t=${t}\\end{cases}$` }
-          if (alea === 2) { texteCorr += `$\\iff \\begin{cases} t=\\dfrac{${texNombre(yM - yA)}}{${texNombre(b)}}\\\\ t=${t}\\\\t=${t}\\end{cases}$` }
-          if (alea === 3) { texteCorr += `$\\iff \\begin{cases} t=\\dfrac{${texNombre(zM - zA)}}{${texNombre(c)}}\\\\ t=${t}\\\\t=${t}\\end{cases}$` }
+          texteCorr += `Résolvons le système :<br><br>$ \\phantom{\\iff } \\begin{cases}${xM}=${xA}${ecritureAlgebriqueSauf1(a)} t\\\\${yM}=${yA}${ecritureAlgebriqueSauf1(b)} t\\\\${zM}=${zA}${ecritureAlgebriqueSauf1(c)} t\\end{cases}$<br>`
+          texteCorr += `<br>$\\iff \\begin{cases}${rienSi1(a)} t=${xM}${ecritureAlgebriqueSauf1(-xA)}\\\\${rienSi1(b)} t=${yM}${ecritureAlgebriqueSauf1(-yA)}\\\\${rienSi1(c)} t=${zM}${ecritureAlgebriqueSauf1(-zA)}\\end{cases}$<br>`
+          texteCorr += `<br>$\\iff \\begin{cases}${rienSi1(a)} t=${xM - xA}\\\\${rienSi1(b)} t=${yM - yA}\\\\${rienSi1(c)} t=${zM - zA}\\end{cases}$<br><br>`
+          if (alea === 1) { texteCorr += `$\\iff \\begin{cases} t=\\dfrac{${texNombre(xM - xA)}}{${texNombre(a)}}\\\\ t=${t}\\\\t=${t}\\end{cases}$<br>` }
+          if (alea === 2) { texteCorr += `$\\iff \\begin{cases} t=${t}\\\\t=\\dfrac{${texNombre(yM - yA)}}{${texNombre(b)}}\\\\ t=${t}\\end{cases}$<br>` }
+          if (alea === 3) { texteCorr += `$\\iff \\begin{cases} t=${t}\\\\t=${t}\\\\t=\\dfrac{${texNombre(zM - zA)}}{${texNombre(c)}}\\end{cases}$<br>` }
 
-          texteCorr += '<br>Pour la valeur $t=2$, on vérifie donc que les coordonnées du point $M$ vérifient la représentation paramétrique de $(\\Delta)$.'
-          texteCorr += '<br>On peut donc conclure : $M\\in(\\Delta)$'
+          texteCorr += '<br>Le système n\'admet pas de solution.  Le point M n\'appartient pas à la droite  $(\\Delta)$.'
+
           break
       }
       texte = `Déterminer si le point $M(${xM};${yM};${zM})$ appartient à la droite $(\\Delta)$ dont on donne la représentation paramétrique ci-dessous :<br>`
