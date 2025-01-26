@@ -3,13 +3,13 @@ import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ecritureAlgebriqueSauf1, rienSi1 } from '../../lib/outils/ecritures'
 import { texNombre } from '../../lib/outils/texNombre'
-export const titre = 'Nom de l\'exercice'
+export const titre = 'Déterminer si un point appartient à une droite de l\'espace'
 
-export const dateDePublication = '4/5/2024' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
+export const dateDePublication = '26/01/2025' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 
 export const uuid = 'f0619'
 export const refs = {
-  'fr-fr': [],
+  'fr-fr': ['TSG2-03'],
   'fr-ch': []
 }
 
@@ -52,7 +52,7 @@ export default class nomExercice extends Exercice {
           texteCorr += `<br>$\\iff \\begin{cases} t=${t}\\\\ t=${t}\\\\t=${t}\\end{cases}$`
           texteCorr += `<br>Le système a pour solution $t=${t}$ donc le point M appartient à la droite  $(\\Delta)$.`
           break
-        case 'type2'://défavorable
+        case 'type2':// défavorable
         default :
           xM = xA + t * a
           yM = yA + t * b
