@@ -57,7 +57,6 @@ function remarquesPuissances (base: number, baseUtile:number | string, exposant:
  * @param e exposant
  * @param couleur1
  * @param couleur2
- * @author Sébastien Lozano
  */
 export function reorganiseProduitPuissance (b1:number | string, b2:number | string, e: number, couleur1: string, couleur2: string) {
   let str
