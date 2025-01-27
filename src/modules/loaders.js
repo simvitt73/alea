@@ -141,9 +141,12 @@ export async function loadMathLive (divExercice) {
         if (mf.getAttribute('data-space') === 'true') {
           mf.mathModeSpace = '\\,'
         }
-        if (typeof mf.getValue === 'function') {
+
+        if (mf.isConnected) {
+          // mf is already in the DOM. You can check if it's ready by accessing a property.
           setMathfield(mf)
         } else {
+          // Add a listener for the `mount` event in case it's not mounted yet.
           mf.addEventListener('mount', setMathfield, { once: true })
         }
       }
@@ -207,4 +210,5 @@ function setMathfield (mf) {
   if ('mathVirtualKeyboardPolicy' in mf) mf.mathVirtualKeyboardPolicy = 'manual'
   if ('menuItems' in mf) mf.menuItems = []
   if ('virtualKeyboardMode' in mf) mf.virtualKeyboardMode = 'manual'
+  mf.removeEventListener('mount', setMathfield)
 }
