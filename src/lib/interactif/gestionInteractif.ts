@@ -1075,7 +1075,8 @@ export function handleAnswers (
 
 function wrapperReponsesToString (reponses: Valeur): ValeurNormalized {
   for (const [, val] of Object.entries(reponses)) {
-    if (Object.hasOwn(val, 'value')) {
+    // On ne prend que les objets qui ont une propriété value, les autres sont soit bareme, soit callback...
+    if (val.value !== undefined) { // JE vire Object.hasOwn (méthode expérimentale non supportée par de vieux navigateurs)
       const value = val.value
       if (!Array.isArray(value)) {
         if (typeof value === 'string') continue
