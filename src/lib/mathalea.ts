@@ -387,18 +387,7 @@ function renderKatex (element: HTMLElement) {
   document.dispatchEvent(new window.Event('katexRendered'))
 }
 
-/**
- * Modifie l'url courante avec le store exercicesParams ou un tableau similaire
- * sauf si le store freezeUrl est à true (utile sur un site externe)
- */
-export function mathaleaUpdateUrlFromExercicesParams (params?: InterfaceParams[]) {
-  if (get(globalOptions).recorder === 'capytale') {
-    sendToCapytaleMathaleaHasChanged()
-  }
-  if (get(freezeUrl) === true) return
-  if (params === undefined) {
-    params = get(exercicesParams)
-  }
+export function createURL (params: InterfaceParams[]) {
   const url = new URL(window.location.protocol + '//' + window.location.host + window.location.pathname)
   for (const ex of params) {
     url.searchParams.append('uuid', ex.uuid)
@@ -415,6 +404,21 @@ export function mathaleaUpdateUrlFromExercicesParams (params?: InterfaceParams[]
     if (ex.cols != null) url.searchParams.append('cols', ex.cols.toString())
     if (ex.alea != null) url.searchParams.append('alea', ex.alea)
   }
+  return url
+}
+/**
+ * Modifie l'url courante avec le store exercicesParams ou un tableau similaire
+ * sauf si le store freezeUrl est à true (utile sur un site externe)
+ */
+export function mathaleaUpdateUrlFromExercicesParams (params?: InterfaceParams[]) {
+  if (get(globalOptions).recorder === 'capytale') {
+    sendToCapytaleMathaleaHasChanged()
+  }
+  if (get(freezeUrl) === true) return
+  if (params === undefined) {
+    params = get(exercicesParams)
+  }
+  const url = createURL(params)
   updateURLFromReferentielLocale(url)
   updateGlobalOptionsInURL(url)
 }
