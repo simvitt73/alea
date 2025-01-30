@@ -487,10 +487,10 @@ class resolutionEquationInequationGraphique extends Exercice {
     if (this.interactif) {
       M!.createSegmentToAxeX()
       M!.createSegmentToAxeY()
-      const textX = this.figureApiGeom.create('DynamicX', { point: M! })
-      const textY = this.figureApiGeom.create('DynamicY', { point: M! })
-      textX.dynamicText.maximumFractionDigits = 1
-      textY.dynamicText.maximumFractionDigits = 1
+      // const textX = this.figureApiGeom.create('DynamicX', { point: M! })
+      // const textY = this.figureApiGeom.create('DynamicY', { point: M! })
+      //   textX.dynamicText.maximumFractionDigits = 1
+    //  textY.dynamicText.maximumFractionDigits = 1
     }
     if (f2Type === 'affine') {
       const a = fonction2.poly.monomes[1] as number
