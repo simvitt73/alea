@@ -1,5 +1,5 @@
 import Exercice from '../Exercice'
-import { choice, combinaisonListes, shuffle2tableaux, shuffle3tableaux } from '../../lib/outils/arrayOutils'
+import { choice, combinaisonListes, shuffle3tableaux } from '../../lib/outils/arrayOutils'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1, ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
 export const titre = 'Déterminer deux droites sont orthogonales.'
