@@ -68,7 +68,8 @@ export default class nomExercice extends Exercice {
       if (produitScalaire === 3) { c = c + 1 }
       // Modifier a, b ou c pour que le produit scalaire soit non nul (et donc que les droites ne soient pas orthogonales)
       // On doit trouver un vecteur directeur de la droite (AB) qui soit non orthogonal à (Delta)
-
+      const ortho = choice([true, false])
+      const { xA, yA, xB, yB, zA, zB, xAB, yAB, zAB, a, b, c, x, y, z, t } = situationAleatoire(ortho)
       // Il n'y a pas besoin de switch... on peut directement écrire le texte
 
       texte = 'Dans un repère orthonormé de l\'espace, on donne les coordonénes des points $A$ et $B$ et la représentation paramétrique d\'une droite $(\\Delta)$ :<br>'
