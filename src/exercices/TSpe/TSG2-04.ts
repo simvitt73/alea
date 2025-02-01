@@ -47,7 +47,7 @@ export default class nomExercice extends Exercice {
       switch (listeTypeQuestions[i]) { // Suivant le type de question, le contenu sera différent
         case 'type1':// orthogonal
           zB = a * xA + b * yA + c * zA - b * yB - a * xA
-          zB=
+          
           break
         case 'type2':// défavorable
         default :
