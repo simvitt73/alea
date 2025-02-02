@@ -4,7 +4,7 @@ import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 export const titre = 'Résoudre |z-z\'|=r'
-export const interactifReady =  true
+export const interactifReady = true
 export const interactifType = 'mathLive'
 
 export const dateDePublication = '4/5/2024'
