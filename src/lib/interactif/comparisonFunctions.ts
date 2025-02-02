@@ -60,7 +60,9 @@ export type OptionsComparaisonType = {
   multi?: boolean, // options pour le drag and drop
   ordered?: boolean // options pour le drag and drop
   tolerance?: number,
-  variable?: string
+  variable?: string,
+  entier?: boolean
+  domaine?: [number, number]
 }
 export type CompareFunction = (
   input: string,
@@ -611,7 +613,9 @@ export function fonctionComparaison (
     nombreAvecEspace,
     egaliteExpression,
     nonReponseAcceptee,
-    variable
+    variable,
+    entier,
+    domaine
   }: OptionsComparaisonType = {
     expressionsForcementReduites: true,
     avecSigneMultiplier: true,
@@ -653,7 +657,9 @@ export function fonctionComparaison (
     nombreAvecEspace: false,
     egaliteExpression: false,
     nonReponseAcceptee: false,
-    variable: 'x'
+    variable: 'x',
+    entier: false,
+    domaine: [-100, 100]
   }
 ): ResultType {
   // nonReponseAcceptee = true permet d'avoir des champs vides (on pense aux fillInTheBlank qui peuvent être facultatifs, comme par exemple un facteur 1)
@@ -666,7 +672,7 @@ export function fonctionComparaison (
   // ici, on met tous les tests particuliers (HMS, intervalle)
   // if (HMS) return comparaisonExpressions(input, goodAnswer)
   if (HMS) return hmsCompare(input, goodAnswer)
-  if (fonction) return functionCompare(input, goodAnswer, { variable: variable ?? 'x' })
+  if (fonction) return functionCompare(input, goodAnswer, { variable: variable ?? 'x', domaine: domaine ?? [-100, 100], entier: entier ?? false })
   if (intervalle) return intervalsCompare(input, goodAnswer)
   if (estDansIntervalle) return intervalCompare(input, goodAnswer)
   if (ecritureScientifique) return scientifiqueCompare(input, goodAnswer)
@@ -1861,7 +1867,11 @@ export function approximatelyCompare (
 export function functionCompare (
   input: string,
   goodAnswer: string,
-  { variable = 'x', domaine = [-100, 100] } = {}
+  {
+    variable = 'x',
+    domaine = [-100, 100],
+    entier = false
+  } = {}
 ): ResultType {
   const clean = generateCleaner([
     'virgules',
@@ -1889,16 +1899,22 @@ export function functionCompare (
   let variablea: Record<string, number>
   let variableb: Record<string, number>
   let variablec: Record<string, number>
+  let cpt = 0
   do {
-    [a, b, c] = [valAlea(), valAlea(), valAlea()]
+    [a, b, c] = entier ? [valAlea(), valAlea(), valAlea()].map(Math.round) : [valAlea(), valAlea(), valAlea()]
     variablea = Object.fromEntries([[variable ?? 'x', a]])
     variableb = Object.fromEntries([[variable ?? 'x', b]])
     variablec = Object.fromEntries([[variable ?? 'x', c]])
-  } while (
+    cpt++
+  } while (cpt < 1000 && (
     Number.isNaN(goodAnswerFn(variablea) as number) ||
     Number.isNaN(goodAnswerFn(variableb) as number) ||
-    Number.isNaN(goodAnswerFn(variablec) as number)
+    Number.isNaN(goodAnswerFn(variablec) as number))
   )
+  if (cpt === 1000) {
+    window.notify('functionCompare n\'a pas réussi à trouver 3 valeurs dans le domaine qui donnent une image par la fonction goodAnswer !', { fonction: goodAnswer, domaine })
+    return { isOk: false, feedback: 'erreur dans le programme' }
+  }
   let isOk = true
   for (const x of [a, b, c]) {
     const vars = Object.fromEntries([[variable ?? 'x', x]])
