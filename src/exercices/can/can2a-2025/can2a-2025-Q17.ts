@@ -38,7 +38,7 @@ export default class CoeffDirecteur extends Exercice {
     const d = xL - xK
 
     this.reponse = new FractionEtendue(n, d).simplifie().texFraction
-    this.question = `Déterminer le coefficient directeur de la droite $(KL)$ avec $K(${xK}\\,;\\,${yK})$ et $L(${xL}\\,;\\,${yL})$. `
+    this.question = `Coefficient directeur de la droite $(KL)$ avec $K(${xK}\\,;\\,${yK})$ et $L(${xL}\\,;\\,${yL})$. `
     if (this.canOfficielle || yK === yL) {
       this.correction = `On remarque que les points $K$ et $L$ ont les mêmes ordonnées. <br>
     On en déduit que la droite $(KL)$ est horizotale et donc que son coefficient directeur est égal à $${miseEnEvidence('0')}$.`
