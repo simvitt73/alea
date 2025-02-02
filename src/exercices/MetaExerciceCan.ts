@@ -95,8 +95,6 @@ export default class MetaExercice extends Exercice {
         if (Question.listeQuestions.length === 0) { // On est en présence d'un exo simple
           const consigne = Question.consigne === '' ? '' : `${Question.consigne}<br>`
           this.listeCorrections[indexQuestion] = (Question.correction)
-          this.listeCanEnonces[indexQuestion] = (Question.canEnonce)
-          this.listeCanReponsesACompleter[indexQuestion] = (Question.canReponseACompleter)
           const formatChampTexte = Question.formatChampTexte ?? ''
           const optionsChampTexte = Question.optionsChampTexte ?? {}
           if (Question.formatInteractif === 'fillInTheBlank' || (typeof Question.reponse === 'object' && 'champ1' in Question.reponse)) {
@@ -173,6 +171,10 @@ export default class MetaExercice extends Exercice {
           this.listeQuestions[indexQuestion] = Question.listeQuestions[0]
           this.listeCorrections[indexQuestion] = (Question.listeCorrections[0])
           this.autoCorrection[indexQuestion] = Question.autoCorrection[0]
+          if (Question.canEnonce != null) this.listeCanEnonces[indexQuestion] = (Question.canEnonce)
+          // à priori, canReponseACompleter est à '' dans le constructeur d'Exercice, donc le test est superflu, mais on ne sait jamais.
+          if (Question.canReponseACompleter != null) this.listeCanReponsesACompleter[indexQuestion] = (Question.canReponseACompleter)
+
           this.listeQuestions[indexQuestion] = this.listeQuestions[indexQuestion].replaceAll('champTexteEx0Q0', `champTexteEx0Q${indexQuestion}`)
           this.listeQuestions[indexQuestion] = this.listeQuestions[indexQuestion].replaceAll('resultatCheckEx0Q0', `resultatCheckEx0Q${indexQuestion}`)
 
