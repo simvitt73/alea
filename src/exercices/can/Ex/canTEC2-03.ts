@@ -9,7 +9,7 @@ export const interactifType = 'mathLive'
 
 export const dateDePublication = '4/5/2024'
 
-export const uuid = '16c5e' // Quand on exécute pnpm start la première fois, le terminal renvoie une référence d'uuid, à copier-coller ici
+export const uuid = '16c5e'
 export const refs = {
   'fr-fr': ['canTEC2-03'],
   'fr-ch': []
