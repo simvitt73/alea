@@ -466,3 +466,20 @@ export function lister (array: unknown[]): string {
   str += array[array.length - 1]
   return str
 }
+
+/**
+ * Retourne le double développement de (ax+b)(cx+d) sous forme d'un tableau
+ * La premier élément est le développement terme par terme.
+ * Le second élément est ce développement réduit terme par terme.
+ * @author Eric Elter
+ */
+export function doubleDeveloppement (a: number, b: number, c: number, d: number, x = 'x') {
+  return [`${rienSi1(a)}${x}\\times ${ecritureParentheseSiMoins(rienSi1(c) + x)} + 
+  ${ecritureParentheseSiMoins(rienSi1(a) + x)}\\times ${ecritureParentheseSiNegatif(d)} +
+  ${ecritureParentheseSiNegatif(b)} \\times ${ecritureParentheseSiMoins(rienSi1(c) + x)}  +
+  ${ecritureParentheseSiNegatif(b)} \\times ${ecritureParentheseSiNegatif(d)}`,
+   `${rienSi1(a * c)}${x}^2 + 
+  ${ecritureParentheseSiMoins(rienSi1(a * d) + x)} +
+  ${ecritureParentheseSiMoins(rienSi1(b * c) + x)} +
+  ${ecritureParentheseSiNegatif(b * d)}`]
+}
