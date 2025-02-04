@@ -171,9 +171,9 @@ export async function sendToCapytaleMathaleaHasChanged () {
 
 export function sendToCapytaleSaveStudentAssignment ({ indiceExercice, assignmentData }: { indiceExercice?: number | 'all', assignmentData?: AssignmentData }) {
   if (indiceExercice === undefined) return
-  const results = get(resultsByExercice)
+  const results = get(resultsByExercice) || []
   // On récupère les résultats précédents de l'élève en provenance de Capytale
-  let newStudentAssignement = get(capytaleStudentAssignment)
+  let newStudentAssignement = get(capytaleStudentAssignment) || []
   let evaluation = 0
   for (const resultExercice of results) {
     if (Number.isFinite(resultExercice?.numberOfPoints)) {
