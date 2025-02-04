@@ -190,7 +190,7 @@ export default class MetaExercice extends Exercice {
         // qcm
           const monQcm = propositionsQcm(this, indexQuestion) // update les références HTML
           this.listeCanReponsesACompleter[indexQuestion] = monQcm.texte
-          const consigne = (this.consigne === null || this.consigne === '') ? '' : `${this.consigne}<br>`
+          const consigne = (Question.consigne === null || Question.consigne === '') ? '' : `${Question.consigne}<br>`
           const objetReponse = this.autoCorrection[indexQuestion]
           const enonce = 'enonce' in objetReponse ? objetReponse.enonce : ''
           this.listeQuestions[indexQuestion] = consigne + enonce + monQcm.texte

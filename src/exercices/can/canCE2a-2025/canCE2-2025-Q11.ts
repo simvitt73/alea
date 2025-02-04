@@ -229,7 +229,7 @@ export default class Visualisation3d extends ExerciceCan {
     const figures = shuffle(figuresCorrectes).slice(0, 3).concat(figureBis)
     shuffle2tableaux(figures, statuts)
 
-    this.question = 'quelle pièce est différents des trois autres ?<br>'
+    this.consigne = 'quelle pièce est différents des trois autres ?'
     this.formatInteractif = 'qcm'
     this.autoCorrection[0] = {
       propositions: [
@@ -259,8 +259,6 @@ export default class Visualisation3d extends ExerciceCan {
   }
 
   nouvelleVersion () {
-    this.canOfficielle = this.sup
-
     this.canOfficielle
       ? this.enonce([
         [

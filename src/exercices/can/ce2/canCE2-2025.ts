@@ -66,5 +66,6 @@ const questions = exercices as Exercice[]
 export default class Can5a2025 extends MetaExercice {
   constructor () {
     super(questions)
+    this.canOfficielle = true
   }
 }
