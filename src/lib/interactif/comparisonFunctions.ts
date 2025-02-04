@@ -119,13 +119,36 @@ function cleanFractionsMemesNegatives (str: string): string { // EE :
 function cleanDivisions (str: string): string {
   return str.replaceAll(/\\div/g, '/')
 }
+
 /**
+ * Remplace les virgules non échappées par des points.
+ * @param {string} str
+ * @returns {string}
+ */
+function replaceUnescapedCommas (str: string): string {
+  return str.replace(/,/g, (match, offset, string) => {
+    // Vérifie si la virgule est précédée d'un antislash
+    if (offset > 0 && string[offset - 1] === '\\') {
+      return match // Ne remplace pas la virgule échappée
+    }
+    return '.'
+  })
+}/**
+ * Remplace les espaces fins `\,` par une chaîne vide.
+ * @param {string} str
+ * @returns {string}
+ */
+function replaceThinSpaces (str: string): string {
+  return str.replaceAll(/\\,/g, '')
+}
+/**
+ *
  * Nettoie la saisie des virgules décimales en les remplaçant par des points.
  * @warning Attention ne fonctionne avec Safari que depuis 2023
  * @param {string} str
  */
 function cleanComas (str: string): string {
-  return str.replaceAll(/\{,}/g, '.').replaceAll(/(?<!\\),/g, '.')
+  return replaceThinSpaces(replaceUnescapedCommas(str.replaceAll(/\{,}/g, '.')))
 }
 
 /**
@@ -162,7 +185,7 @@ function cleanEspaceNormal (str: string): string {
  * Nettoie les parenthèses en remplaçant par celles supportées par le ComputeEngine
  * @param {string} str
  */
-function cleanParenthses (str: string): string {
+function cleanParentheses (str: string): string {
   return str
     .replaceAll(/\\lparen(\+?-?\d+,?\.?\d*)\\rparen/g, '($1)')
     .replaceAll(/\\left\((\+?-?\d+)\\right\)/g, '($1)')
@@ -177,9 +200,18 @@ function cleanParenthses (str: string): string {
     .replaceAll('\\right]', ']')
     .replaceAll('\\right[', '[')
     .replaceAll('\\left]', ']')
-    .replace(/^(?!\{\}$)(?<!\^)\{\}/g, '') // Cela permet de supprimer les doubles accolades vierges sauf :
-    // quand elles sont précédées de ^ (cette gestion est propre aux puissances)
-    // et que la chaine ne contient que {} (qui serait le cas d'un ensemble vide)
+    .replace(/\{\}/g, (match, offset, string) => {
+      // Vérifie si les accolades sont précédées de ^ ou si elles sont seules dans la chaîne
+      if (offset > 0 && string[offset - 1] === '^') {
+        return match // Conserve les ^{}
+      }
+      if (string === '{}') {
+        return match // Conserve les chaînes uniquement contenant {}
+      }
+      return '' // Remplace les autres occurrences de {}
+    }) // Cela permet de supprimer les doubles accolades vierges sauf :
+  // quand elles sont précédées de ^ (cette gestion est propre aux puissances)
+  // et que la chaine ne contient que {} (qui serait le cas d'un ensemble vide)
 }
 
 function cleanMathRm (str: string): string {
@@ -235,7 +267,7 @@ export function generateCleaner (
       case 'espaces':
         return cleanSpaces
       case 'parentheses':
-        return cleanParenthses
+        return cleanParentheses
       case 'puissances':
         return cleanPower
       case 'mathrm':
@@ -1766,9 +1798,9 @@ export function consecutiveCompare (
   const [entierInf, valeurInter, entierSup] = input.includes('<')
     ? input.split('<').map((el) => Number(engine.parse(el).numericValue))
     : input
-        .split('>')
-        .map((el) => Number(engine.parse(el).numericValue))
-        .sort((a: number, b: number) => a - b)
+      .split('>')
+      .map((el) => Number(engine.parse(el).numericValue))
+      .sort((a: number, b: number) => a - b)
   if (
     !(
       Number.isInteger(Number(entierSup)) && Number.isInteger(Number(entierInf))
@@ -1780,9 +1812,9 @@ export function consecutiveCompare (
   const [goodAnswerEntierInf, , goodAnswerEntierSup] = goodAnswer.includes('<')
     ? goodAnswer.split('<').map((el) => Number(engine.parse(el).numericValue))
     : goodAnswer
-        .split('>')
-        .map((el) => Number(engine.parse(el).numericValue))
-        .sort((a: number, b: number) => a - b)
+      .split('>')
+      .map((el) => Number(engine.parse(el).numericValue))
+      .sort((a: number, b: number) => a - b)
   const diff = Number(
     engine.box(['Subtract', String(entierSup), String(entierInf)]).N()
       .numericValue
