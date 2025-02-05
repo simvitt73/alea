@@ -33,7 +33,7 @@ export default class ProblemesAvecSuitesE3C extends Exercice {
     this.spacingCorr = 1.5
     this.besoinFormulaireTexte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : Création d\'entreprises',
         '2 : Prix d\'un téléphone',
         '3 : Population d\'une commune',

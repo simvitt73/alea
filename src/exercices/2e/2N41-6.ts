@@ -31,7 +31,7 @@ export default class DevelopperIdentitesRemarquables2 extends Exercice {
 
     this.besoinFormulaire2Texte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : (a+b)²',
         '2 : (a-b)²',
         '3 : (a+b)(a-b)',

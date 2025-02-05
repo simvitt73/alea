@@ -35,7 +35,7 @@ export default class TermeDUneSuiteDefinieParRecurrence extends Exercice {
     this.spacingCorr = 1.5
     this.besoinFormulaireTexte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : Suite arithmétique',
         '2 : Suite géométrique',
         '3 : Suite arithmético-géométrique',

@@ -34,7 +34,7 @@ export default class ÉcrireUneExpressionLitterale extends Exercice {
   constructor () {
     super()
     this.besoinFormulaire2Texte = ['Type de questions', [
-      'Nombres séparés par des tirets',
+      'Nombres séparés par des tirets  :',
       ' 1 : Double',
       ' 2 : Triple',
       ' 3 : Moitié',

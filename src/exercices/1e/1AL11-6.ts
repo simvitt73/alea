@@ -37,7 +37,7 @@ export default class SuitesExplicites extends Exercice {
     this.correctionDetailleeDisponible = true
     this.besoinFormulaireTexte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : Suite arithmétique définie directement',
         '2 : Suite arithmétique définie par une relation de récurrence',
         '3 : Suite géométrique définie directement',

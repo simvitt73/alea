@@ -36,7 +36,7 @@ export default class VocabulaireNotationsFonctions2 extends Exercice {
     super()
     this.besoinFormulaireTexte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : Traduire une égalité par une phrase',
         '2 : Traduire une phrase par une égalité',
         '3 : Interprétation graphique',

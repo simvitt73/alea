@@ -22,7 +22,7 @@ export default class DefinitionProprietesTriangles extends Exercice {
     this.sup = 8
     this.besoinFormulaireTexte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : Définition hauteur',
         '2 : Définition médiatrice',
         '3 : Propriété point de la médiatrice',

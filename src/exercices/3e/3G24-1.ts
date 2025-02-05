@@ -49,7 +49,7 @@ export default class TrianglesSemblables extends Exercice {
     this.nbQuestions = 1
     if (context.isHtml) this.spacing = 3
     this.sup = 1
-    this.besoinFormulaireTexte = ['Types de questions (nombre séparés par des tirets)', '1 : Trouver angles et côtés homologues\n2 : Démontrer semblables avec les angles\n3 : Démontrer semblables avec les longueurs\n4 : Démontrer semblables avec des triangles rectangles imbriqués\n5 : Démontrer semblables avec des configurations type Thalès']
+    this.besoinFormulaireTexte = ['Types de questions ', 'Nombres séparés par des tirets\n1 : Trouver angles et côtés homologues\n2 : Démontrer semblables avec les angles\n3 : Démontrer semblables avec les longueurs\n4 : Démontrer semblables avec des triangles rectangles imbriqués\n5 : Démontrer semblables avec des configurations type Thalès']
   }
 
   nouvelleVersion () {

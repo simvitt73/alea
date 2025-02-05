@@ -38,7 +38,7 @@ export default class CosEtsin extends Exercice {
     this.sup2 = '-1,1'
     this.besoinFormulaireTexte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : Quart de cercle trigo',
         '2 : Avec les angles associés',
         '3 : Avec en plus des angles modulo k × 360',

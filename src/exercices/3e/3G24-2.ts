@@ -42,7 +42,7 @@ export default class nomExercice extends Exercice {
     this.nbQuestions = 1
     this.sup = 3
     this.consigne = 'Dans cet exercice, les marques identiques désignent des angles égaux.'
-    this.besoinFormulaireTexte = ['Types de questions (nombre séparés par des tirets)', '1: Valeurs entières coefficient entier ou égal à 0,5\n2: Valeurs décimales coefficient entier\n3: Valeurs décimales coefficient décimal']
+    this.besoinFormulaireTexte = ['Types de questions ', 'Nombres séparés par des tirets\n1: Valeurs entières coefficient entier ou égal à 0,5\n2: Valeurs décimales coefficient entier\n3: Valeurs décimales coefficient décimal']
     //    this.besoinFormulaire2CaseACocher = ['Pour les tests,décoréler completement les deux triangles']
     //    this.sup2 = false
   }
