@@ -31,7 +31,7 @@ export const refs = {
 export default class SimpleDistributivite extends Exercice {
   constructor () {
     super()
-    this.besoinFormulaireTexte = ['Type d\'expressions', 'Nombre séparés par des tirets\n1 : c(ax+b)\n2 : (ax+b)*c\n3 : cx(ax+b) \n4 : (ax+b)*cx\n5 : Mélange']
+    this.besoinFormulaireTexte = ['Type d\'expressions', 'Nombres séparés par des tirets\n1 : c(ax+b)\n2 : (ax+b)*c\n3 : cx(ax+b) \n4 : (ax+b)*cx\n5 : Mélange']
     this.besoinFormulaire2Numerique = ['Signe de $a$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']
     this.besoinFormulaire3Numerique = ['Signe de $b$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']
     this.besoinFormulaire4Numerique = ['Signe de $c$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']

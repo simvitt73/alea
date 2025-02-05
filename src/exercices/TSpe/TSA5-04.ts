@@ -32,7 +32,7 @@ export default class EquationsLog extends Exercice {
     this.spacing = 1.5
     this.spacingCorr = 3
     this.sup = '1'
-    this.besoinFormulaireTexte = ['Type de question (nombre séparés par des tirets', '1 : log(ax+b)=n\n2 : log(ax+b)=log(cx+d)\n3 : Mélange']
+    this.besoinFormulaireTexte = ['Type de question ', 'Nombres séparés par des tirets  :\n : log(ax+b)=n\n2 : log(ax+b)=log(cx+d)\n3 : Mélange']
     this.besoinFormulaire2CaseACocher = ['Type de logarithme', false]
     this.comment = 'Exercice de résolution d\'équations avec logarithme'
   }

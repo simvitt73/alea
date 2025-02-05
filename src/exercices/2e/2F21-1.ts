@@ -40,7 +40,7 @@ export default class EtudeFctPoly3 extends Exercice {
     this.correctionDetailleeDisponible = true
     this.besoinFormulaireTexte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : La salle de sport',
         '2 : Location de voitures',
         '3 : Distance de freinage',

@@ -32,7 +32,7 @@ export default class ReductionSiPossible extends Exercice {
     this.besoinFormulaire2CaseACocher = ['Présentation des corrections en colonnes', false]
     this.besoinFormulaire3Texte = [
       'Type de questions', [
-        'Nombres séparés par des tirets',
+        'Nombres séparés par des tirets  :',
         '1 : ax+b',
         '2 : ax+bx',
         '3 : ax+bx²',

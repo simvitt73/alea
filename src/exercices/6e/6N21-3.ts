@@ -34,7 +34,7 @@ export default class LireAbscissesFractionnairesComplexes extends Exercice {
     this.sup2 = false
     this.sup3 = true // avec des fractions simplifiées
     this.sup4 = false // valeurs positives si false sinon valeurs positives et négatives
-    this.besoinFormulaireTexte = ['Types de questions (nombre séparés par des tirets)', '1 : mélange\n2 : demi\n3 : tiers\n4 : quart\n5 : cinquièmes\n6 : sixièmes\n7 : septièmes\n8 : huitièmes\n9 : neuvièmes\n10: dixièmes\n11: onzièmes\n12 : douzièmes']
+    this.besoinFormulaireTexte = ['Types de questions ', 'Nombres séparés par des tirets\n1 : mélange\n2 : demi\n3 : tiers\n4 : quart\n5 : cinquièmes\n6 : sixièmes\n7 : septièmes\n8 : huitièmes\n9 : neuvièmes\n10: dixièmes\n11: onzièmes\n12 : douzièmes']
     //   this.besoinFormulaire2CaseACocher = ['Eviter les nombres décimaux (si possible)', false]
     this.besoinFormulaire3CaseACocher = ['Avec des fractions simplifiées (le cas écéhant)', true]
     this.besoinFormulaire4CaseACocher = ['Avec des valeurs négatives', false]

@@ -33,7 +33,7 @@ export default class Reperage2e extends Exercice {
     super()
     this.nbQuestions = 1
     this.besoinFormulaireTexte = ['Type de repère', [
-      'Nombres séparés par des tirets',
+      'Nombres séparés par des tirets  :',
       '1 : Orthogonal',
       '2 : Normé',
       '3 : Quelconque',
