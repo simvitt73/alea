@@ -45,9 +45,10 @@ export default class DivisionEuclidienneMultiplesDiviseursCriteres extends Exerc
     const typesDeQuestionsDisponibles = [1, 2, 3, 4, 5]
     const listeTypeDeQuestions = combinaisonListesSansChangerOrdre(typesDeQuestionsDisponibles, this.nbQuestions)
 
-    for (let i = 0, M, listeDiviseursM, nbDiviseursM, n1, n2, p1, p2, rgDiviseur, typeDeQuestion, multiplicateurs, multiples, textes, textesCorr, candidatsDiviseurs, dividende, diviseur, quotient, reste, diviseurs, quotients, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, M, listeDiviseursM, nbDiviseursM, n1, n2, p1, p2, rgDiviseur, typeDeQuestion, multiples, textes, textesCorr, candidatsDiviseurs, dividende, diviseur, quotient, reste, quotients, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       typeDeQuestion = listeTypeDeQuestions[i]
-
+      texte = ''
+      texteCorr = ''
       switch (typeDeQuestion) {
         case 1: { // plus grand reste dans une division euclidienne
           diviseur = randint(2, 99)
@@ -133,45 +134,55 @@ export default class DivisionEuclidienneMultiplesDiviseursCriteres extends Exerc
           }
           texteCorr += '<br>'
           break
+
         case 4: // vocabulaire diviseurs et multiples
-          // on déclare des tableaux utiles
-          diviseurs = []
-          multiplicateurs = []
-          multiples = []
-          quotients = []
-          textes = []
+        // on déclare des tableaux utiles
+
+        { textes = []
           textesCorr = []
           // on tire au hasard 4 diviseurs différents entre 2 et 999 et 4 multiplicateurs différents entre 2 et 9
+          let diviseurs :number[] = []
+          let multiplicateurs :number[] = []
           diviseurs = [randint(2, 999), randint(2, 999, [diviseurs[0]]), randint(2, 999, [diviseurs[0], diviseurs[1]]), randint(2, 999, [diviseurs[0], diviseurs[1], diviseurs[2]])]
           multiplicateurs = [randint(2, 9), randint(2, 9, [multiplicateurs[0]]), randint(2, 9, [multiplicateurs[0], multiplicateurs[1]]), randint(2, 9, [multiplicateurs[0], multiplicateurs[1], multiplicateurs[2]])]
           // on calcule les multiples
+          const texteDiviseurs:string[] = []
+          const texteMultiples:string[] = []
+          const texteQuotients:string[] = []
+          multiples = []
+          quotients = []
           for (let j = 0; j < 4; j++) {
             multiples[j] = diviseurs[j] * multiplicateurs[j]
             quotients[j] = multiples[j] / diviseurs[j]
-            diviseurs[j] = nombreAvecEspace(diviseurs[j])
-            multiples[j] = nombreAvecEspace(multiples[j])
-            quotients[j] = nombreAvecEspace(quotients[j])
+            texteDiviseurs[j] = nombreAvecEspace(diviseurs[j])
+            texteMultiples[j] = nombreAvecEspace(multiples[j])
+            texteQuotients[j] = nombreAvecEspace(quotients[j])
           }
           // on crée les phrases
-          textes[0] = `${diviseurs[0]} $\\ldots\\ldots\\ldots\\ldots$ ${multiples[0]}`
-          textesCorr[0] = `${diviseurs[0]} est un diviseur de ${multiples[0]} car ${multiples[0]}=${diviseurs[0]}$\\times$${quotients[0]}.`
-          textes[1] = `${diviseurs[1]} $\\ldots\\ldots\\ldots\\ldots$ ${multiples[1]}`
-          textesCorr[1] = `${diviseurs[1]} est un diviseur de ${multiples[1]} car ${multiples[1]}=${diviseurs[1]}$\\times$${quotients[1]}.`
-          textes[2] = `${multiples[2]} $\\ldots\\ldots\\ldots\\ldots$ ${diviseurs[2]}`
-          textesCorr[2] = `${multiples[2]} est un multiple de ${diviseurs[2]} car ${multiples[2]}=${diviseurs[2]}$\\times$${quotients[2]}.`
-          textes[3] = `${multiples[3]} $\\ldots\\ldots\\ldots\\ldots$ ${diviseurs[3]}`
-          textesCorr[3] = `${multiples[3]} est un multiple de ${diviseurs[3]} car ${multiples[3]}=${diviseurs[3]}$\\times$${quotients[3]}.`
+          textes[0] = `${texteDiviseurs[0]} $\\ldots\\ldots\\ldots\\ldots$ ${texteMultiples[0]}`
+          textesCorr[0] = `${texteDiviseurs[0]} est un diviseur de ${texteMultiples[0]} car ${texteMultiples[0]}=${diviseurs[0]}$\\times$${texteQuotients[0]}.`
+          textes[1] = `${texteDiviseurs[1]} $\\ldots\\ldots\\ldots\\ldots$ ${texteMultiples[1]}`
+          textesCorr[1] = `${texteDiviseurs[1]} est un diviseur de ${texteMultiples[1]} car ${texteMultiples[1]}=${diviseurs[1]}$\\times$${texteQuotients[1]}.`
+          textes[2] = `${texteMultiples[2]} $\\ldots\\ldots\\ldots\\ldots$ ${texteDiviseurs[2]}`
+          textesCorr[2] = `${texteMultiples[2]} est un multiple de ${texteDiviseurs[2]} car ${texteMultiples[2]}=${diviseurs[2]}$\\times$${texteQuotients[2]}.`
+          textes[3] = `${texteMultiples[3]} $\\ldots\\ldots\\ldots\\ldots$ ${texteDiviseurs[3]}`
+          textesCorr[3] = `${texteMultiples[3]} est un multiple de ${texteDiviseurs[3]} car ${texteMultiples[3]}=${diviseurs[3]}$\\times$${texteQuotients[3]}.`
           // on ajoute deux cas ni multiple ni diviseur
           // on choisit deux nombres
-          n1 = nombreAvecEspace(randint(2, 999, [diviseurs[0], diviseurs[1], diviseurs[2], diviseurs[3]]))
-          p1 = nombreAvecEspace(randint(2, 999, [diviseurs[0], diviseurs[1], diviseurs[2], diviseurs[3], n1]))
+          n1 = randint(2, 999, [diviseurs[0], diviseurs[1], diviseurs[2], diviseurs[3]])
+          const texteN1 = nombreAvecEspace(n1)
+          p1 = randint(2, 999, [diviseurs[0], diviseurs[1], diviseurs[2], diviseurs[3], n1])
+          const texteP1 = nombreAvecEspace(p1)
           // on choisit un autre qui n'est pas dans la liste des diviseurs de n1
-          n2 = nombreAvecEspace(randint(2, 999, listeDesDiviseurs(n1)))
-          p2 = nombreAvecEspace(randint(2, 999, listeDesDiviseurs(p1)))
-          textes[4] = `${n1} $\\ldots\\ldots\\ldots\\ldots$ ${n2}`
-          textesCorr[4] = `${n1} n'est ni un multiple, ni un diviseur de ${n2} car ${n1}=${n2}$\\times$${Math.trunc(n1 / n2)}+${texteEnCouleur(n1 % n2)} et ${n2}=${n1}$\\times$${Math.trunc(n2 / n1)}+${texteEnCouleur(n2 % n1)}.`
-          textes[5] = `${p2} $\\ldots\\ldots\\ldots\\ldots$ ${p1}`
-          textesCorr[5] = `${p2} n'est ni un multiple, ni un diviseur de ${p1} car ${p1}=${p2}$\\times$${Math.trunc(p1 / p2)}+${texteEnCouleur(p1 % p2)} et ${p2}=${p1}$\\times$${Math.trunc(p2 / p1)}+${texteEnCouleur(p2 % p1)}.`
+          n2 = randint(2, 999, listeDesDiviseurs(n1))
+          const texteN2 = nombreAvecEspace(n2)
+          p2 = randint(2, 999, listeDesDiviseurs(p1))
+          const texteP2 = nombreAvecEspace(p2)
+
+          textes[4] = `${texteN1} $\\ldots\\ldots\\ldots\\ldots$ ${texteN2}`
+          textesCorr[4] = `${texteN1} n'est ni un multiple, ni un diviseur de ${texteN2} car ${texteN1}=${texteN2}$\\times$${Math.trunc(n1 / n2)}+${texteEnCouleur(n1 % n2)} et ${texteN2}=${texteN1}$\\times$${Math.trunc(n2 / n1)}+${texteEnCouleur(n2 % n1)}.`
+          textes[5] = `${texteP2} $\\ldots\\ldots\\ldots\\ldots$ ${texteP1}`
+          textesCorr[5] = `${texteP2} n'est ni un multiple, ni un diviseur de ${texteP1} car ${texteP1}=${texteP2}$\\times$${Math.trunc(p1 / p2)}+${texteEnCouleur(p1 % p2)} et ${texteP2}=${texteP1}$\\times$${Math.trunc(p2 / p1)}+${texteEnCouleur(p2 % p1)}.`
           // on mélange pour que l'ordre change!
           shuffle2tableaux(textes, textesCorr)
           texte = 'Après avoir testé avec la calculatrice, compléter chaque phrase avec "est un diviseur de" ou "est un multiple de" ou "n\'est ni un diviseur, ni un multiple de".'
@@ -187,8 +198,9 @@ export default class DivisionEuclidienneMultiplesDiviseursCriteres extends Exerc
           // texte +=`<br>`;
           texteCorr += textesCorr[5]
           texteCorr += '<br>'
-          break
+          break }
         case 5:
+        default :
           if (nbDiviseursMax > 10) { // les nombres de 2 chiffres ayant plus de 10 diviseurs étant peu nombreux, on force au moins 3 chiffres.
             nbChiffresMax = Math.max(nbChiffresMax, 3)
           }
