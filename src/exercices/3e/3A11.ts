@@ -41,7 +41,8 @@ export default class FractionsIrreductibles extends Exercice {
 
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       typesDeQuestions = listeTypeDeQuestions[i]
-
+      texte = ''
+      texteCorr = ''
       let nb1 // nbre 1
       let nb2 // nbre 2
 
@@ -54,7 +55,7 @@ export default class FractionsIrreductibles extends Exercice {
       // on initialise le tableau des rangs
       const r = [] // tableau pour le choix des rangs des diviseurs premiers communs
       // on initialise le tableau des rangs déjà choisis
-      const rExclus = [] // tableau pour la boucle de creation de r
+      const rExclus : number[] = []// tableau pour la boucle de creation de r
       // on complète le tableau des rangs des rangs des diviseurs premiers choisis
       for (let k = 0; k < nbDivPremCommuns; k++) {
         for (let m = 0; m < k; m++) {
@@ -144,10 +145,10 @@ export default class FractionsIrreductibles extends Exercice {
       }
       // on range selon prem croissant
       tabPremMultNb1.sort(function (a, b) {
-        return a.prem > b.prem
+        return a.prem - b.prem
       })
       tabPremMultNb2.sort(function (a, b) {
-        return a.prem > b.prem
+        return a.prem - b.prem
       })
       // on initialise nb1 et nb2 et on les calcule à partir des tableaux
       nb1 = 1
@@ -261,7 +262,7 @@ export default class FractionsIrreductibles extends Exercice {
           break
       }
 
-      if (this.listeQuestions.indexOf(texte) === -1) { // Si la question n'a jamais été posée, on en créé une autre
+      if (this.questionJamaisPosee(i, typesDeQuestions, nb1, nb2)) { // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++
