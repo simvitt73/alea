@@ -30,11 +30,11 @@ export const refs = {
 export default class LireAbscissesFractionnairesComplexes extends Exercice {
   constructor () {
     super()
-    this.sup = 1 // 3
+    this.sup = 13 // 3
     this.sup2 = false
     this.sup3 = true // avec des fractions simplifiées
     this.sup4 = false // valeurs positives si false sinon valeurs positives et négatives
-    this.besoinFormulaireTexte = ['Types de questions ', 'Nombres séparés par des tirets\n1 : mélange\n2 : demi\n3 : tiers\n4 : quart\n5 : cinquièmes\n6 : sixièmes\n7 : septièmes\n8 : huitièmes\n9 : neuvièmes\n10: dixièmes\n11: onzièmes\n12 : douzièmes']
+    this.besoinFormulaireTexte = ['Types de questions (nombres séparés par des tirets)', '2 : demi\n3 : tiers\n4 : quart\n5 : cinquièmes\n6 : sixièmes\n7 : septièmes\n8 : huitièmes\n9 : neuvièmes\n10: dixièmes\n11: onzièmes\n12 : douzièmes\n13 : mélange']
     //   this.besoinFormulaire2CaseACocher = ['Eviter les nombres décimaux (si possible)', false]
     this.besoinFormulaire3CaseACocher = ['Avec des fractions simplifiées (le cas écéhant)', true]
     this.besoinFormulaire4CaseACocher = ['Avec des valeurs négatives', false]
@@ -43,7 +43,7 @@ export default class LireAbscissesFractionnairesComplexes extends Exercice {
 
   nouvelleVersion () {
     //    let typeDeQuestions: number[]
-    const typeDeQuestions = gestionnaireFormulaireTexte({ saisie: this.sup, min: 2, max: 12, defaut: 2, melange: 1, nbQuestions: this.nbQuestions })
+    const typeDeQuestions = gestionnaireFormulaireTexte({ saisie: this.sup, min: 2, max: 12, defaut: 13, melange: 13, nbQuestions: this.nbQuestions })
     const data: Record<number, { id: number, den: number[], max: number, min: number }> = {
       2: { id: 2, den: [2], max: !this.sup4 ? 8 : 4, min: !this.sup4 ? 0 : -4 },
       3: { id: 3, den: [3], max: !this.sup4 ? 8 : 4, min: !this.sup4 ? 0 : -4 },
