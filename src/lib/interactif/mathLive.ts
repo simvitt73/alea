@@ -19,6 +19,7 @@ export function toutAUnPoint (listePoints: number[]) {
  * @returns {{feedback: string, score: {nbBonnesReponses: (number|number), nbReponses: (number|number)}, isOk: string}|{feedback: string, score: {nbBonnesReponses: number, nbReponses: number}, resultat: string}|{feedback: string, score: {nbBonnesReponses: number, nbReponses: number}, isOk: string}|*|{feedback: string, score: {nbBonnesReponses: (number), nbReponses: number}, resultat: string}}
  */
 export function verifQuestionMathLive (exercice: Exercice, i: number, writeResult = true) {
+  const getCustomFeedback = exercice.autoCorrection[i]?.reponse?.valeur?.feedback
   if (exercice.autoCorrection[i]?.reponse == null) {
     throw Error(`verifQuestionMathlive appelé sur une question sans réponse: ${JSON.stringify({
             exercice,
@@ -189,6 +190,10 @@ export function verifQuestionMathLive (exercice: Exercice, i: number, writeResul
       exercice.answers[`Ex${exercice.numeroExercice}Q${i}`] = champTexte.value
     }
     const saisie = champTexte.value
+    let customFeedback = ''
+    if (getCustomFeedback != null) {
+      customFeedback = getCustomFeedback({ saisie })
+    }
     if (saisie == null || saisie === '') return { isOk: false, feedback: 'Vous devez saisir une réponse.', score: { nbBonnesReponses: 0, nbReponses: 1 } }
     let isOk = false
     let ii = 0
@@ -227,6 +232,9 @@ export function verifQuestionMathLive (exercice: Exercice, i: number, writeResul
     }
     if (spanReponseLigne != null) {
       spanReponseLigne.innerHTML = ''
+      if (customFeedback.length > 0) {
+        feedback = `${feedback} ${feedback.length > 0 ? '<br>' : ''} ${customFeedback}`
+      }
       if (isOk) {
         spanReponseLigne.innerHTML = '😎'
         spanReponseLigne.style.fontSize = 'large'

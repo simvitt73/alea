@@ -1798,9 +1798,9 @@ export function consecutiveCompare (
   const [entierInf, valeurInter, entierSup] = input.includes('<')
     ? input.split('<').map((el) => Number(engine.parse(el).numericValue))
     : input
-      .split('>')
-      .map((el) => Number(engine.parse(el).numericValue))
-      .sort((a: number, b: number) => a - b)
+        .split('>')
+        .map((el) => Number(engine.parse(el).numericValue))
+        .sort((a: number, b: number) => a - b)
   if (
     !(
       Number.isInteger(Number(entierSup)) && Number.isInteger(Number(entierInf))
@@ -1812,9 +1812,9 @@ export function consecutiveCompare (
   const [goodAnswerEntierInf, , goodAnswerEntierSup] = goodAnswer.includes('<')
     ? goodAnswer.split('<').map((el) => Number(engine.parse(el).numericValue))
     : goodAnswer
-      .split('>')
-      .map((el) => Number(engine.parse(el).numericValue))
-      .sort((a: number, b: number) => a - b)
+        .split('>')
+        .map((el) => Number(engine.parse(el).numericValue))
+        .sort((a: number, b: number) => a - b)
   const diff = Number(
     engine.box(['Subtract', String(entierSup), String(entierInf)]).N()
       .numericValue
