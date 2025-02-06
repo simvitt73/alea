@@ -79,7 +79,7 @@ export default class ExerciceInformationsProblemes extends Exercice {
           nb4 = randint(3, 10)
           nb5 = 10 * randint(20, 60)
           texte += `Dans une classe de $${nb1}$ élèves âgés de $${nb2}$  à ${nb2 + 2}  ans,`
-          texte += ` un professeur distribue à chaque enfant $${nb4}$ livres pesant en moyenne $${nb5}$ g chacun.<br>`
+          texte += ` un professeur distribue à chaque enfant $${nb4}$ livres pesant $${nb5}$ g chacun.<br>`
           switch (choixVersion) {
             case 1:
               texte += 'Quel est le nombre total de livres distribués ?'
@@ -95,10 +95,10 @@ export default class ExerciceInformationsProblemes extends Exercice {
               break
             case 2:
             default:
-              texte += 'Quelle est la masse moyenne des livres distribués à chaque enfant ?'
+              texte += 'Quelle est la masse totale des livres distribués à chaque enfant ?'
               reponse = nb5 * nb4
               texteCorr += `$${miseEnEvidence(nb5, 'blue')}$` + texteEnCouleurEtGras(' g', 'blue') + `$${sp()}\\times${sp()}${miseEnEvidence(nb4, 'blue')}=${miseEnEvidence(texNombre(reponse), 'blue')}$` + texteEnCouleurEtGras(' g', 'blue') + '<br>'
-              texteCorr += `La masse moyenne des livres distribués à chaque enfant est de $${miseEnEvidence(texNombre(reponse))}$ g.`
+              texteCorr += `La masse totale des livres distribués à chaque enfant est de $${miseEnEvidence(texNombre(reponse))}$ g.`
               if (this.interactif) {
                 texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBase, {
                   texteApres: sp(3) + 'g'

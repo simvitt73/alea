@@ -36,7 +36,7 @@ export default class SimpleDistributivite extends Exercice {
     this.besoinFormulaire3Numerique = ['Signe de $b$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']
     this.besoinFormulaire4Numerique = ['Signe de $c$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']
     this.besoinFormulaire5CaseACocher = ['Uniquement avec la variable $x$', false]
-    this.sup = '5'
+    this.sup = 5
     this.sup2 = 3
     this.sup3 = 3
     this.sup4 = 3
