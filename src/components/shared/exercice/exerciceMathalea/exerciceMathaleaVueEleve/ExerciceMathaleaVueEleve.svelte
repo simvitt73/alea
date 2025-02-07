@@ -481,7 +481,7 @@
                 isCorrectionVisible={isCorrectVisible}
               />
             {/each}
-            <div bind:this={divScore} />
+            <div bind:this={divScore} id="divScoreEx{exerciseIndex}" />
           </ul>
         </div>
       </article>

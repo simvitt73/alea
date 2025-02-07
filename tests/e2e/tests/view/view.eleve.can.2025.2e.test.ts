@@ -1,0 +1,64 @@
+import { getDefaultPage } from '../../helpers/browser'
+import { runTest } from '../../helpers/run'
+import { expect } from '@playwright/test'
+
+async function testEleveView () {
+  const goodAnswers = [
+    '5,6',
+    '-46',
+    'x^2+x-6',
+    '20',
+    '9',
+    '\\dfrac{-3}{7}',
+    '',
+    '\\dfrac{2^{5}}{2^{7}}=2^{\\placeholder[champ1]{-2}}',
+    '(x-5)(x+5)',
+    '\\dfrac{2}{5}',
+    '(\\placeholder[champ1]{-1};\\placeholder[champ2]{5})',
+    '205',
+    '-1',
+    ']-1;1[',
+    '-1;2',
+    '',
+    '0',
+    '20',
+    '300',
+    '6',
+    '15',
+    '\\dfrac{5}{8}',
+    '\\overrightarrow{AB}=\\overrightarrow{B{\\placeholder[champ1]{G}}}', // 'F'
+    '\\overrightarrow{DE}={\\placeholder[champ1]{-2}}\\overrightarrow{AB}',
+    '30',
+    '\\dfrac{4}{3}',
+    '1',
+    '\\emptyset',
+    '4-12x+9x^2',
+    '5'
+
+  ]
+  const page = await getDefaultPage()
+  const urlExercice = 'http://localhost:5173/alea/?uuid=4581b&n=30&d=10&s=true&s2=1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30&s3=false&i=1&cd=1&alea=lyjz&v=eleve&es=0211001'
+  await page.goto(urlExercice)
+
+  for (let i = 0; i < 30; i++) {
+    const mathField = page.locator(`#champTexteEx0Q${i}`)
+    if (goodAnswers[i].length > 0) {
+      await mathField.evaluate((mf, answer) => {
+        (mf as any).setValue(answer)
+      }, goodAnswers[i])
+    }
+  }
+
+  const check1 = page.locator('#checkEx0Q15R1')
+  const check2 = page.locator('#checkEx0Q6R1')
+  await check1.click()
+  await check2.click()
+
+  const button = page.locator('#buttonScoreEx0')
+  await button.click()
+  const divScore = page.locator('#divScoreEx0')
+  await expect(divScore).toContainText('30 / 30')
+  return true
+}
+
+runTest(testEleveView, import.meta.url, { pauseOnError: true })
