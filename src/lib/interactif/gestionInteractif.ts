@@ -1037,7 +1037,8 @@ function isValidNumber (value: any): boolean {
     .replace(/{,}/g, '')  // Enlève les caractères '{,}' (séparateurs de milliers comme dans "1{,}5")
     .replace(',', '.')   // Remplace la virgule par un point pour les décimales
   // Vérifier que la chaîne ne contient que des chiffres et un seul séparateur décimal (point ou virgule)
-  const validNumberPattern = /^[+-]?(\d+(\.\d+)?([eE][+-]?\d+)?|0[xX][0-9a-fA-F]+|0[bB][01]+)$/
+  // Ou un nombre javascript écrit dans tous les formats supportés
+  const validNumberPattern = /^[+-]?(\d*(\.\d*)?([eE][+-]?\d*)?|0[xX][0-9a-fA-F]*|0[bB][01]*)$/
 
   // Vérifier si la chaîne nettoyée correspond à un nombre valide
   return validNumberPattern.test(cleanedValue)
