@@ -33,7 +33,7 @@ export default class Can2025N6Q2 extends ExerciceCan {
     }
     this.correction = `$${a} \\times ${c} =${texNombre(a * c, 0)}= ${a * 10} \\times ${b}$<br>
     Il y a $${miseEnEvidence(a * 10)}$ ${premierMot} dans $${a}$ ${deuxiemeMot}.`
-    this.canEnonce = ''
+    this.canEnonce = this.question
     this.canReponseACompleter = ''
   }
 
