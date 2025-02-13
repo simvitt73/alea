@@ -3,10 +3,11 @@ import { texNombre } from '../../../lib/outils/texNombre'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-export const titre = 'Calculer le produit d\'un entier avec un décimal'
+
+export const titre = 'Effetuer une multiplication avec $25$'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const uuid = '8c554'
+export const uuid = 'cc23e'
 export const refs = {
   'fr-fr': [],
   'fr-ch': []
@@ -15,7 +16,7 @@ export const refs = {
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Gilles Mora
 */
-export default class Can2025N6Q28 extends Exercice {
+export default class Can2025CM2Q22 extends Exercice {
   constructor () {
     super()
 
@@ -26,12 +27,16 @@ export default class Can2025N6Q28 extends Exercice {
   }
 
   nouvelleVersion () {
-    const a = this.canOfficielle ? 3 : randint(3, 9)
-    const b = this.canOfficielle ? 0.8 : randint(6, 9) / 10
-    this.reponse = texNombre(a * b, 1)
-    this.question = `$${a}\\times ${texNombre(b, 1)}$ `
+    const a = this.canOfficielle ? 16 : randint(2, 7) * 4
+    this.reponse = a * 25
+    this.question = `$${a}\\times 25$ `
 
-    this.correction = ` $${a}\\times ${texNombre(b, 1)}=${miseEnEvidence(texNombre(a * b, 1))}$`
+    this.correction = `On décompose $${a}$ en $${texNombre(a / 4, 0)}\\times 4$.<br>
+    $\\begin{aligned}
+    ${a}\\times 25 &= ${texNombre(a / 4, 0)}\\times 4\\times 25\\\\
+    &=${texNombre(a / 4, 0)}\\times 100\\\\
+    &=${miseEnEvidence(a * 25)}
+    \\end{aligned}$`
 
     this.canEnonce = this.question
     this.canReponseACompleter = ''

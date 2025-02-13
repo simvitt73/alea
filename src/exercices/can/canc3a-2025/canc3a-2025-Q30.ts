@@ -1,12 +1,11 @@
 import Exercice from '../../Exercice'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-export const titre = 'Calculer le produit d\'un entier avec un décimal'
+export const titre = 'Calculer le résultat d\'une division par 5'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const uuid = '8c554'
+export const uuid = '845a2'
 export const refs = {
   'fr-fr': [],
   'fr-ch': []
@@ -15,7 +14,7 @@ export const refs = {
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Gilles Mora
 */
-export default class Can2025N6Q28 extends Exercice {
+export default class Can2025CM2Q30 extends Exercice {
   constructor () {
     super()
 
@@ -26,13 +25,12 @@ export default class Can2025N6Q28 extends Exercice {
   }
 
   nouvelleVersion () {
-    const a = this.canOfficielle ? 3 : randint(3, 9)
-    const b = this.canOfficielle ? 0.8 : randint(6, 9) / 10
-    this.reponse = texNombre(a * b, 1)
-    this.question = `$${a}\\times ${texNombre(b, 1)}$ `
+    const b = this.canOfficielle ? 12 : randint(13, 19)
 
-    this.correction = ` $${a}\\times ${texNombre(b, 1)}=${miseEnEvidence(texNombre(a * b, 1))}$`
+    this.question = ` $${b * 5} \\div 5$`
+    this.correction = `$${b * 5} \\div 5 =${miseEnEvidence(b)}$.`
 
+    this.reponse = b
     this.canEnonce = this.question
     this.canReponseACompleter = ''
   }
