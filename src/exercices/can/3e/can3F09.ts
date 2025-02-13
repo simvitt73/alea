@@ -40,7 +40,7 @@ export default class ReconnaitreFonctionAffine extends Exercice {
       switch (choice([1, 2, 3, 4])) { //, 2, 3
         case 1 :// ax+b
           a = randint(-7, 7)
-          b = randint(-9, 9, a)
+          b = randint(-9, 9, [a, 0])
           texte = `Soit $f(x)=${reduireAxPlusB(a, b)}$.<br>
             $f$ est une fonction affine de la forme $f(x)=ax+b$.<br>
             On a `
@@ -61,7 +61,7 @@ export default class ReconnaitreFonctionAffine extends Exercice {
 
         case 2 :// b+ax
           a = randint(1, 5)
-          b = randint(-9, 9, a)
+          b = randint(-9, 9, [a, 0])
           texte = `Soit $f(x)=${b}${ecritureAlgebriqueSauf1(a)}x$.<br>
             $f$ est une fonction affine de la forme $f(x)=ax+b$.<br>
             On a `
