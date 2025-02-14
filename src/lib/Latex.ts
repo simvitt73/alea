@@ -84,15 +84,42 @@ class Latex {
       contentCorr += '\n\\begin{enumerate}'
       for (const exercice of this.exercices) {
         if (exercice != null) {
+          // Initalisation de questionLiee à rien pour toutes les questions
+          const questionLiee: { compteurQuestionsLiees: number, dejaLiee: boolean }[] = Array.from({ length: exercice.listeQuestions.length }, () => ({ compteurQuestionsLiees: 0, dejaLiee: false }))
+
           for (let i = 0; i < exercice.listeQuestions.length; i++) {
-            if (exercice.listeCanEnonces != null && exercice.listeCanEnonces[i] !== undefined && exercice.listeCanReponsesACompleter != null && exercice.listeCanReponsesACompleter[i] !== undefined) {
-              content += `\\thenbEx  \\addtocounter{nbEx}{1}& ${format(exercice.listeCanEnonces[i])} &  ${format(
-                  exercice.listeCanReponsesACompleter[i]
-              )} &\\tabularnewline \\hline\n`
-            } else {
-              content += `\\thenbEx  \\addtocounter{nbEx}{1}& ${format(exercice.listeQuestions[i])} &&\\tabularnewline \\hline\n`
+            // Enoncé de la question
+            const enonce = (exercice.listeCanEnonces != null && exercice.listeCanEnonces[i] !== undefined)
+              ? exercice.listeCanEnonces[i]
+              : exercice.listeQuestions[i]
+
+            // Ne fonctionne que pour les CAN
+            if (exercice.listeCanLiees != null && exercice.listeCanLiees.length !== 0) {
+              // Recherche si la question est liée à la suivante et aux prochaines
+              if (exercice.listeCanLiees != null && exercice.listeCanLiees[i].length !== 0 && !(questionLiee[i].dejaLiee)) { // Recherche d'une question liée à d'autres
+                let j = i + 1
+                let questionSuivante = j < exercice.listeQuestions.length
+                while (questionSuivante) { // Recherche des questions liées à la précédente
+                  questionLiee[j].dejaLiee = exercice.listeCanLiees[j].includes(exercice.listeCanNumerosLies[i])
+                  if (questionLiee[j].dejaLiee) questionLiee[i].compteurQuestionsLiees++
+                  questionSuivante = questionLiee[j] && j < exercice.listeQuestions.length - 1
+                  j++
+                }
+              }
             }
-            content += '&\\\\ \n'
+
+            // L'énoncé des CAN est dépendant des questions liées ou pas
+            content += '\\CompteurTC  &'
+            if (questionLiee[i].compteurQuestionsLiees !== 0) content += `\\SetCell[r=${questionLiee[i].compteurQuestionsLiees + 1}]{c}`
+            content += !questionLiee[i].dejaLiee ? ` { ${format(enonce)} }&` : '&'
+
+            // La réponse à compléter des CAN est indépendante des questions liées
+            if (exercice.listeCanReponsesACompleter != null && exercice.listeCanReponsesACompleter[i] !== undefined) {
+              content += `{${format(
+             exercice.listeCanReponsesACompleter[i]
+              )} }`
+            }
+            content += '&\\stepcounter{nbEx}\\\\ \n'
           }
           for (const correction of exercice.listeCorrections) {
             contentCorr += `\n\\item ${format(correction)}`
