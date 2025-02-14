@@ -234,7 +234,7 @@ On peut dire que lorsque le prix payé pour la location est $${texNombre(prix, 2
         `   On cherche $v$ tel que $d(v)=${b}$.<br>
                     $\\begin{aligned}
 \\dfrac{v^2}{${texNombre(a, 1)}}&=${b}\\\\
-v^2&=${b} \\times ${texNombre(a, 2)} ${sp(8)} \\text{(On mutiplie par ${texNombre(a, 1)} chaque membre)} \\\\
+v^2&=${b} \\times ${texNombre(a, 2)} ${sp(8)} \\text{(On multiplie par ${texNombre(a, 1)} chaque membre)} \\\\
 v^2&= ${texNombre(new Decimal(b).mul(a), 2)}\\\\
 v&= -\\sqrt{${texNombre(new Decimal(b).mul(a), 2)}} ${sp(8)} \\text{ou} ${sp(8)} v= \\sqrt{${texNombre(new Decimal(b).mul(a), 2)}}${sp(8)}\\text{(deux nombres ont pour carré } ${texNombre(new Decimal(b).mul(a), 2)} \\text{)}
 \\end{aligned}$<br>
