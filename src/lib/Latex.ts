@@ -1,11 +1,11 @@
 import genericPreamble from '../lib/latex/preambule.tex?raw'
 import { loadFonts, loadPackagesFromContent, loadPreambule, loadProfCollegeIfNeed, logPDF } from '../lib/latex/preambuleTex'
 import TypeExercice from '../exercices/Exercice'
-import { mathaleaHandleExerciceSimple } from './mathalea'
+import { mathaleaHandleExerciceSimple } from './mathalea.js'
 import seedrandom from 'seedrandom'
 import { getLang } from './stores/languagesStore'
 // printPrettier pose problème avec begin{aligned}[t] en ajoutant un saut de ligne problématique
-// import { printPrettier } from 'prettier-plugin-latex/standalone'
+// import { printPrettier } from 'prettier-plugin-latex/standalone.js'
 
 export interface Exo {
   content?: string
@@ -28,12 +28,8 @@ export type LatexFileInfos = {
   style: 'Coopmaths' | 'Classique' | 'ProfMaquette' | 'ProfMaquetteQrcode' | 'Can'
   nbVersions: number
   fontOption: 'StandardFont' | 'DysFont'
-  tailleFontOption: number,
-  dysTailleFontOption: number,
   correctionOption: 'AvecCorrection' | 'SansCorrection'
   qrcodeOption: 'AvecQrcode' | 'SansQrcode'
-  titleOption: 'AvecTitre' | 'SansTitre'
-  durationCanOption: string
   signal?: AbortSignal | undefined
 }
 
@@ -78,7 +74,7 @@ class Latex {
     latexFileInfos: LatexFileInfos,
     indiceVersion: number = 1
   ): { content: string; contentCorr: string } {
-    if (latexFileInfos.style === 'ProfMaquette') return { content: this.getContentForAVersionProfMaquette(1, latexFileInfos.qrcodeOption === 'AvecQrcode', latexFileInfos.titleOption === 'AvecTitre'), contentCorr: '' }
+    if (latexFileInfos.style === 'ProfMaquette') return { content: this.getContentForAVersionProfMaquette(1, latexFileInfos.qrcodeOption === 'AvecQrcode'), contentCorr: '' }
     if (latexFileInfos.style === 'ProfMaquetteQrcode') return { content: this.getContentForAVersionProfMaquette(1, true), contentCorr: '' }
     let content = ''
     let contentCorr = ''
@@ -88,42 +84,15 @@ class Latex {
       contentCorr += '\n\\begin{enumerate}'
       for (const exercice of this.exercices) {
         if (exercice != null) {
-          // Initalisation de questionLiee à rien pour toutes les questions
-          const questionLiee: { compteurQuestionsLiees: number, dejaLiee: boolean }[] = Array.from({ length: exercice.listeQuestions.length }, () => ({ compteurQuestionsLiees: 0, dejaLiee: false }))
-
           for (let i = 0; i < exercice.listeQuestions.length; i++) {
-            // Enoncé de la question
-            const enonce = (exercice.listeCanEnonces != null && exercice.listeCanEnonces[i] !== undefined)
-              ? exercice.listeCanEnonces[i]
-              : exercice.listeQuestions[i]
-
-            // Ne fonctionne que pour les CAN
-            if (exercice.listeCanLiees != null && exercice.listeCanLiees.length !== 0) {
-            // Recherche si la question est liée à la suivante et aux prochaines
-              if (exercice.listeCanLiees != null && exercice.listeCanLiees[i].length !== 0 && !(questionLiee[i].dejaLiee)) { // Recherche d'une question liée à d'autres
-                let j = i + 1
-                let questionSuivante = j < exercice.listeQuestions.length
-                while (questionSuivante) { // Recherche des questions liées à la précédente
-                  questionLiee[j].dejaLiee = exercice.listeCanLiees[j].includes(exercice.listeCanNumerosLies[i])
-                  if (questionLiee[j].dejaLiee) questionLiee[i].compteurQuestionsLiees++
-                  questionSuivante = questionLiee[j] && j < exercice.listeQuestions.length - 1
-                  j++
-                }
-              }
+            if (exercice.listeCanEnonces != null && exercice.listeCanEnonces[i] !== undefined && exercice.listeCanReponsesACompleter != null && exercice.listeCanReponsesACompleter[i] !== undefined) {
+              content += `\\thenbEx  \\addtocounter{nbEx}{1}& ${format(exercice.listeCanEnonces[i])} &  ${format(
+                  exercice.listeCanReponsesACompleter[i]
+              )} &\\tabularnewline \\hline\n`
+            } else {
+              content += `\\thenbEx  \\addtocounter{nbEx}{1}& ${format(exercice.listeQuestions[i])} &&\\tabularnewline \\hline\n`
             }
-
-            // L'énoncé des CAN est dépendant des questions liées ou pas
-            content += '\\CompteurTC  &'
-            if (questionLiee[i].compteurQuestionsLiees !== 0) content += `\\SetCell[r=${questionLiee[i].compteurQuestionsLiees + 1}]{c}`
-            content += !questionLiee[i].dejaLiee ? ` { ${format(enonce)} }&` : '&'
-
-            // La réponse à compléter des CAN est indépendante des questions liées
-            if (exercice.listeCanReponsesACompleter != null && exercice.listeCanReponsesACompleter[i] !== undefined) {
-              content += `{${format(
-                exercice.listeCanReponsesACompleter[i]
-            )} }`
-            }
-            content += '&\\stepcounter{nbEx}\\\\'
+            content += '&\\\\ \n'
           }
           for (const correction of exercice.listeCorrections) {
             contentCorr += `\n\\item ${format(correction)}`
@@ -161,7 +130,7 @@ class Latex {
           }
           if (Number(exercice.nbQuestions) > 1) {
             if (Number(exercice.spacingCorr) > 0) {
-              contentCorr += `\n\\begin{enumerate}[itemsep=${exercice.spacingCorr}em, label=\\arabic*)]`
+              contentCorr += `\n\\begin{enumerate}[itemsep=${exercice.spacingCorr}em]`
             } else {
               contentCorr += '\n\\begin{enumerate}'
             }
@@ -179,7 +148,7 @@ class Latex {
           }
           contentCorr += '\n\\end{EXO}\n'
           content += `\n% @see : ${getUrlFromExercice(exercice)}`
-          content += `\n\\begin{EXO}{}{${String(exercice.id).replace('.js', '')}}\n${format(exercice.consigne)}\n`
+          content += `\n\\begin{EXO}{${format(exercice.consigne)}}{${String(exercice.id).replace('.js', '')}}\n`
           content += writeIntroduction(exercice.introduction)
           content += writeInCols(writeQuestions(exercice.listeQuestions, exercice.spacing, Boolean(exercice.listeAvecNumerotation), Number(exercice.nbCols)), Number(exercice.nbCols))
           content += '\n\\end{EXO}\n'
@@ -200,7 +169,7 @@ class Latex {
         continue
       }
       if (!Object.prototype.hasOwnProperty.call(exercice, 'listeQuestions')) continue
-      const seed = indiceVersion > 1 ? exercice.seed?.slice(0, 4) + indiceVersion.toString() : exercice.seed?.slice(0, 4)
+      const seed = indiceVersion > 1 ? exercice.seed + indiceVersion.toString() : exercice.seed
       exercice.seed = seed
       if (exercice.typeExercice === 'simple') {
         mathaleaHandleExerciceSimple(exercice, false)
@@ -211,7 +180,7 @@ class Latex {
     }
   }
 
-  getContentForAVersionProfMaquette (indiceVersion: number = 1, withQrcode = false, withTitle = false): string {
+  getContentForAVersionProfMaquette (indiceVersion: number = 1, withQrcode = false): string {
     this.loadExercicesWithVersion(indiceVersion)
     let content = ''
     for (const exercice of this.exercices) {
@@ -221,7 +190,7 @@ class Latex {
           content += '% Cet exercice n\'est pas disponible au format LaTeX'
         } else {
           content += '\n\\needspace{10\\baselineskip}'
-          content += `\n\\begin{exercice}${withTitle ? '[Titre={' + exercice.titre + '}]' : ''}\n`
+          content += '\n\\begin{exercice}\n'
           if (withQrcode) {
             content += `\\begin{wrapfigure}{r}{2cm}
 \\centering
@@ -239,7 +208,7 @@ Correction
         }
       } else {
         content += '\n\\needspace{10\\baselineskip}'
-        content += `\n\\begin{exercice}${withTitle ? '[Titre={' + exercice.titre + '}]' : ''}\n`
+        content += '\n\\begin{exercice}\n'
         if (withQrcode) {
           content += `\\begin{wrapfigure}{r}{2cm}
 \\centering
@@ -258,7 +227,7 @@ Correction
         content += '\n\\end{Solution}\n'
       }
     }
-    return content.replaceAll('\n\\\\', '\\\\')
+    return content
   }
 
   async getContents (latexFileInfos : LatexFileInfos): Promise<contentsType> {
@@ -267,7 +236,7 @@ Correction
       if (latexFileInfos.style === 'ProfMaquette') {
         for (let i = 1; i < latexFileInfos.nbVersions + 1; i++) {
           if (latexFileInfos.signal?.aborted) { throw new DOMException('Aborted in getContents of Latex.ts', 'AbortError') }
-          const contentVersion = this.getContentForAVersionProfMaquette(i, latexFileInfos.qrcodeOption === 'AvecQrcode', latexFileInfos.titleOption === 'AvecTitre')
+          const contentVersion = this.getContentForAVersionProfMaquette(i, latexFileInfos.qrcodeOption === 'AvecQrcode')
           contents.content += `\n\\begin{Maquette}[Fiche]{Niveau=${latexFileInfos.subtitle || ' '},Classe=${latexFileInfos.reference || ' '},Date= ${latexFileInfos.nbVersions > 1 ? 'v' + i : ' '} ,Theme=${latexFileInfos.title || 'Exercices'}}\n`
           contents.content += contentVersion
           contents.content += '\n\\end{Maquette}'
@@ -312,9 +281,7 @@ Correction
       if (latexFileInfos.signal?.aborted) { throw new DOMException('Aborted in getContents of Latex.ts', 'AbortError') }
       if (latexFileInfos.style === 'Can') {
         contents.preamble += `\\documentclass[a4paper,11pt,fleqn]{article}\n\n${addPackages(latexFileInfos, contents)}\n\n`
-        contents.preamble += '\n\\newbool{correctionDisplay}'
-        contents.preamble += `\n\\setbool{correctionDisplay}{${latexFileInfos.correctionOption === 'AvecCorrection' ? 'true' : 'false'}}`
-        contents.preamble += `\n\\Theme[CAN]{${latexFileInfos.title === '' ? 'Course aux nombres' : latexFileInfos.title}}{}{${latexFileInfos.durationCanOption}}{}`
+        contents.preamble += '\n\\Theme[CAN]{}{}{}{}'
         contents.intro += '\n\\begin{document}'
         contents.intro += '\n\\setcounter{nbEx}{1}'
         contents.intro += '\n\\pageDeGardeCan{nbEx}'
@@ -332,7 +299,6 @@ Correction
     contents.preamble = `% @see : ${window.location.href}`
     contents.preamble += '\n\\documentclass[a4paper,11pt,fleqn]{article}'
     loadProfCollegeIfNeed(contents) // avant profmaquette sinon ça plante
-    contents.preamble += '\n\\usepackage{xcolor}'
     contents.preamble += '\n\\usepackage{ProfMaquette}'
     contents.preamble += `\n\\setKVdefault[Boulot]{CorrigeFin=${latexFileInfos.correctionOption === 'AvecCorrection' ? 'true' : 'false'}}`
     contents.preamble += loadFonts(latexFileInfos)
@@ -419,14 +385,11 @@ ${latexFileInfos.qrcodeOption === 'AvecQrcode' ? '\n\\tcbset{\n  tikzfiche/.appe
     latexWithoutPreamble += content
     if (latexFileInfos.style === 'ProfMaquette' || latexFileInfos.style === 'ProfMaquetteQrcode') {
       latexWithoutPreamble += '\n\\end{document}'
-    } else if (latexFileInfos.style === 'Can') {
-      latexWithoutPreamble += '\n\n\\clearpage\n\n\\ifbool{correctionDisplay}{\\begin{Correction}' + contentCorr + '\n\\clearpage\n\\end{Correction}}{}\n\\end{document}'
-      latexWithoutPreamble += '\n\n% Local Variables:\n% TeX-engine: luatex\n% End:'
     } else {
       latexWithoutPreamble += '\n\n\\clearpage\n\n\\begin{Correction}' + contentCorr + '\n\\clearpage\n\\end{Correction}\n\\end{document}'
       latexWithoutPreamble += '\n\n% Local Variables:\n% TeX-engine: luatex\n% End:'
     }
-    const latexWithPreamble = (preamble + latexWithoutPreamble).replaceAll('\n\\\\', '\\\\')
+    const latexWithPreamble = preamble + latexWithoutPreamble
     return { contents, latexWithoutPreamble, latexWithPreamble }
   }
 
@@ -455,7 +418,7 @@ function writeIntroduction (introduction = ''): string {
   if (introduction.length > 0) {
     content += '\n' + format(introduction)
   }
-  return content.replaceAll('\n\\\\', '\\\\')
+  return content
 }
 
 function writeQuestions (questions: string[], spacing = 1, numbersNeeded: boolean, nbCols: number = 1): string {
@@ -468,11 +431,9 @@ function writeQuestions (questions: string[], spacing = 1, numbersNeeded: boolea
     }
     if (!numbersNeeded) {
       specs.push('label={}')
-    } else {
-      specs.push('label=\\arabic*)')
     }
     if (specs.length !== 0) {
-      content += '[' + specs.join(', ') + ']'
+      content += '[' + specs.join(',') + ']'
     }
     for (const question of questions) {
       if (nbCols > 1) {
@@ -642,12 +603,12 @@ export function format (text: string): string {
     .replace(/\\\\\s*\n\n/gm, '\\\\')
     .replace('«', '\\og{}')
     .replace('»', '\\fg{}')
-    .replaceAll('\n\\\\', '\\\\')
 
   // Check if the language is 'fr-CH' and replace \times with \cdot if true
   if (lang === 'fr-CH') {
     formattedText = formattedText.replace(/\\times/g, '\\cdot')
   }
+
   return formattedText
 }
 
