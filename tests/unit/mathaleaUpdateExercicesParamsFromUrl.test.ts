@@ -23,7 +23,7 @@ describe('mathaleaUpdateExercicesParamsFromUrl', () => {
       cd: '1'
     }]
 
-    console.log(result)
+    // console.log(result)
     expect(get(exercicesParams)).toEqual(expectedParams)
     expect(get(freezeUrl)).toBe(false)
     expect(result).toMatchObject({
@@ -79,7 +79,7 @@ describe('mathaleaUpdateExercicesParamsFromUrl', () => {
       },
       {
         uuid: 'b87a5',
-        id: undefined,
+        id: '4L10b',
         interactif: '0',
         nbQuestions: 2,
         duration: 10,
@@ -107,7 +107,7 @@ describe('mathaleaUpdateExercicesParamsFromUrl', () => {
       }
     ]
 
-    console.log(get(exercicesParams))
+    // console.log(get(exercicesParams))
     expect(get(exercicesParams)).toEqual(expectedParams)
     expect(get(freezeUrl)).toBe(false)
     expect(result).toMatchObject({
