@@ -175,7 +175,7 @@ class Latex {
           }
           contentCorr += '\n\\end{EXO}\n'
           content += `\n% @see : ${getUrlFromExercice(exercice)}`
-          content += `\n\\begin{EXO}{${format(exercice.consigne)}}{${String(exercice.id).replace('.js', '')}}\n`
+          content += `\n\\begin{EXO}{${format(exercice.consigne, false)}}{${String(exercice.id).replace('.js', '')}}\n`
           content += writeIntroduction(exercice.introduction)
           content += writeInCols(writeQuestions(exercice.listeQuestions, exercice.spacing, Boolean(exercice.listeAvecNumerotation), Number(exercice.nbCols)), Number(exercice.nbCols))
           content += '\n\\end{EXO}\n'
@@ -616,14 +616,17 @@ export function makeImageFilesUrls (exercices: TypeExercice[]) {
 /**
  * Pour les exercices Mathalea on a des conventions pour les sauts de ligne qui fonctionnent en HTML comme en LaTeX
  * * `<br>` est remplacé par un saut de paragraphe
- * * `<br><br>` est remplacé par un saut de paragraphe et un medskip
+ * * `<br><br>` est remplacé par un saut de paragraphe et un medskip (si AvecLesDoublesEspaces est vrai). Dans this.consigne, il ne faut pas sinon cela fait planter la sortie LaTeX.
  *  Le \\euro mange l'espace qui vient après lui, d'où la nécessité d'insérer un espace insécable s'il y en avait un avant le replacement.
  */
-export function format (text: string): string {
+export function format (text: string, AvecLesDoublesEspaces:boolean = true): string {
   if (text === undefined) return ''
   const lang = getLang()
-  let formattedText = text
-    .replace(/(<br *\/?>[\n\t ]*)+<br *\/?>/gim, '\n\n\\medskip\n')
+  let formattedText = AvecLesDoublesEspaces
+    ? text.replace(/(<br *\/?>[\n\t ]*)+<br *\/?>/gim, '\n\n\\medskip\n')
+    : text
+
+  formattedText = formattedText
     .replace(/(\d+)\s*°/g, '\\ang{$1}')
     .replace(/<br>/g, '\\\\')
     .replace(/( )?€( )/g, '\\,\\euro{}~')
