@@ -94,7 +94,7 @@ class Latex {
               : exercice.listeQuestions[i]
 
             // Ne fonctionne que pour les CAN
-            if (exercice.listeCanLiees != null && exercice.listeCanLiees.length !== 0) {
+            if (exercice.listeCanLiees != null && !exercice.listeCanLiees.every(subTab => subTab.length === 0)) {
               // Recherche si la question est liée à la suivante et aux prochaines
               if (exercice.listeCanLiees != null && exercice.listeCanLiees[i].length !== 0 && !(questionLiee[i].dejaLiee)) { // Recherche d'une question liée à d'autres
                 let j = i + 1
