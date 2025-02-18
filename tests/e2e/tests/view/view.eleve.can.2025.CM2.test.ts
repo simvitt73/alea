@@ -5,45 +5,45 @@ import prefs from '../../helpers/prefs.js'
 
 async function testEleveView () {
   const goodAnswers = [
-    '5,6',
-    '-46',
-    'x^2+x-6',
-    '20',
-    '9',
-    '\\dfrac{-3}{7}',
+    '25',
+    '-8\\times \\placeholder[champ1]{4}=32',
+    '50',
+    '1024',
+    '531',
+    '5{\\:\\text{h}\\:}25{\\:\\text{min}\\:}',
+    '32',
+    '40',
+    '1+\\dfrac{3}{10}=\\dfrac{{\\placeholder[champ1]{13}}}{10}',
     '',
-    '\\dfrac{2^{5}}{2^{7}}=2^{\\placeholder[champ1]{-2}}',
-    '(x-5)(x+5)',
-    '\\dfrac{2}{5}',
-    '(\\placeholder[champ1]{-1};\\placeholder[champ2]{5})',
-    '205',
-    '-1',
-    ']-1;1[',
-    '-1;2',
-    '',
-    '0',
-    '20',
-    '300',
+    '123,4',
+    '54',
+    '12',
+    '172',
+    'B',
+    'A',
+    '8',
+    '5',
+    '\\dfrac{38}{100}+\\dfrac{\\placeholder[champ1]{2}}{100}=\\dfrac{4}{10}',
     '6',
-    '15',
-    '\\dfrac{1}{7}',
-    '\\overrightarrow{AB}=\\overrightarrow{B{\\placeholder[champ1]{G}}}', // 'F'
-    '\\overrightarrow{DE}={\\placeholder[champ1]{-2}}\\overrightarrow{AB}',
-    '30',
-    '\\dfrac{4}{3}',
-    '1',
-    '\\emptyset',
-    '4-12x+9x^2',
-    '5'
+    '100',
+    '400',
+    '0,75',
+    '3,2',
+    '',
+    '1,5',
+    '4{\\:\\text{h}\\:}10{\\:\\text{min}\\:}',
+    '2,4',
+    '540',
+    '12',
   ]
 
   const checkBoxesIds = [
-    'checkEx0Q15R1',
-    'checkEx0Q6R0'
+    'checkEx0Q9R1',
+    'checkEx0Q24R0'
   ]
   const page = await getDefaultPage()
   const hostname = `http://localhost:${process.env.CI ? '80' : '5173'}/alea/`
-  const urlExercice = hostname + '?uuid=4581b&n=30&d=10&s=true&s2=1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30&s3=false&i=1&cd=1&alea=lyjz&v=eleve&es=0211001'
+  const urlExercice = hostname + '?uuid=a7c5c&n=30&d=10&s=true&s2=1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30&s3=false&i=1&cd=1&alea=XlH4&v=eleve&es=0111001'
   await page.goto(urlExercice)
 
   for (let i = 0; i < goodAnswers.length; i++) {
@@ -57,7 +57,7 @@ async function testEleveView () {
 
   for (const checkBoxId of checkBoxesIds) {
     const checkBox = page.locator(`#${checkBoxId}`)
-    await checkBox.click()
+    await checkBox?.click()
   }
 
   const button = page.locator('#buttonScoreEx0')
