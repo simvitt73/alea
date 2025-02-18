@@ -9,6 +9,7 @@ import FractionEtendue from '../modules/FractionEtendue'
 import { gestionnaireFormulaireTexte } from '../modules/outils'
 import { combinaisonListes, shuffle } from '../lib/outils/arrayOutils'
 import { range1 } from '../lib/outils/nombres'
+import { string } from 'mathjs'
 
 export const interactifType = 'mathLive'
 export const interactifReady = true
@@ -38,7 +39,6 @@ export default class MetaExercice extends Exercice {
     if (this.sup3) {
       this.sup2 = false
     } else {
-      // this.nbQuestions = 30
       exercicesRef = this.Exercices
     }
 
@@ -50,7 +50,7 @@ export default class MetaExercice extends Exercice {
         defaut: 1,
         melange: 31,
         shuffle: false,
-        nbQuestions: this.sup2.split('-').length
+        nbQuestions: string(this.sup2).includes('-') ? this.sup2.split('-').length : 1
       })
     } else {
       listeTypeDeQuestions = range1(this.nbQuestions)
