@@ -25,7 +25,7 @@ export default class VecteurEgal extends Exercice {
     this.canOfficielle = true
     this.typeExercice = 'simple'
     this.nbQuestions = 1
-    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
+    this.formatChampTexte = KeyboardType.alphanumeric
     this.formatInteractif = 'fillInTheBlank'
   }
 
