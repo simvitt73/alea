@@ -5,46 +5,44 @@ import prefs from '../../helpers/prefs.js'
 
 async function testEleveView () {
   const goodAnswers = [
-    '25',
-    '-8\\times \\placeholder[champ1]{4}=32',
+    '42',
+    '0,64',
+    '12',
+    '36',
+    '105',
+    '23',
+    '2,5',
+    '340',
+    '2,8',
+    '25', // Q10
+    '400,3',
+    '6,2',
+    '970',
+    '300',
+    '14', // Q15
+    '9',
+    '3500',
     '50',
-    '1024',
-    '531',
-    '5{\\:\\text{h}\\:}25{\\:\\text{min}\\:}',
-    '32',
-    '40',
-    '1+\\dfrac{3}{10}=\\dfrac{{\\placeholder[champ1]{13}}}{10}',
-    '', // Q10
-    '540',
-    '\\placeholder[champ1]{10}\\times\\placeholder[champ2]{100}',
-    '0,1',
-    '17,2',
-    'B', // Q15
-    'A',
-    '24',
-    '4,5',
-    '',
-    '80', // Q20
-    '100',
-    '800',
-    '0,31',
-    '3',
-    '', // Q25
-    'E',
-    '30',
-    '2,4',
-    '18,5',
-    '3',
+    '2',
+    '6', // Q20
+    '1313',
+    '12,50',
+    '4',
+    '0,7',
+    '33', // Q25
+    '12',
+    '3,80',
+    '500',
+    '0',
+    '10',
   ]
 
-  const checkBoxesIds = [
-    'checkEx0Q9R1',
-    'checkEx0Q18R0',
-    'checkEx0Q24R0'
+  const checkBoxesIds: string[] = [
+
   ]
   const page = await getDefaultPage()
   const hostname = `http://localhost:${process.env.CI ? '80' : '5173'}/alea/`
-  const urlExercice = hostname + '?uuid=d6ee9&n=30&d=10&s=true&s2=1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30&s3=false&i=1&cd=1&alea=FZNI&v=eleve&es=0111001'
+  const urlExercice = hostname + '?uuid=d6d89&n=30&d=10&s=true&s2=1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30&s3=false&i=1&cd=1&alea=sr34&v=eleve&es=0111001'
   await page.goto(urlExercice)
 
   for (let i = 0; i < goodAnswers.length; i++) {
