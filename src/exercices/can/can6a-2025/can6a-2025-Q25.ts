@@ -33,7 +33,7 @@ export default class Can2025N6Q25 extends Exercice {
 
     this.autoCorrection[0] = {
       options: { ordered: true },
-      enonce: `Coche la réponse du calcul $${texNombre(a, 0)}\\times ${b}$.`,
+      enonce: `Coche le résultat du calcul $${texNombre(a, 0)}\\times ${b}$.`,
       propositions: [
         {
           texte: `$${texNombre(a * b, 0)}$`,

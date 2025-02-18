@@ -23,7 +23,7 @@ export default class Can2025CM2Q23 extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.optionsChampTexte = { texteApres: '€' }
+    this.optionsChampTexte = { texteApres: '€.' }
   }
 
   nouvelleVersion () {
