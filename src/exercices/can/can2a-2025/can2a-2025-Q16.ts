@@ -69,7 +69,7 @@ export default class AdditionFractionVF extends Exercice {
       this.question = 'Entoure la bonne réponse. ' + qcm.texte
     }
 
-    this.canEnonce = `Vrai ou faux ? <br> $${a}+${b}=${c}$`
+    this.canEnonce = `Vrai ou faux ? <br>\\vspace{5mm} $${a}+${b}=${c}$`
     this.canReponseACompleter = `Vrai ${sp(7)} Faux`
   }
 }

@@ -4,7 +4,7 @@ import { choice } from '../../../lib/outils/arrayOutils'
 import FractionEtendue from '../../../modules/FractionEtendue'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-export const titre = 'Différence de fracion'
+export const titre = 'Différence de fractions'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = '97290'
