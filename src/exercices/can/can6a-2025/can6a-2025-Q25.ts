@@ -53,7 +53,7 @@ export default class Can2025N6Q25 extends Exercice {
     const qcm = propositionsQcm(this, 0)
 
     this.question += `${qcm.texte}`
-    this.canEnonce = 'Entoure le plus grand nombre.'
+    this.canEnonce = 'Coche le plus grand nombre.'
     this.canReponseACompleter = qcm.texte
     this.reponse = a * b// C'est juste pour pas faire planter mathaleaHandleExerciceSimple, cette réponse ne sera pas utilisée.
     this.correction = qcm.texteCorr + `Le résultat est proche de $${texNombre(a, 0)}\\times 100= ${texNombre(a * 100, 0)}$. <br>

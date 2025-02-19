@@ -47,7 +47,7 @@ export default class PrixApresReduction extends Exercice {
              Le nouveau prix est de  $${a}-${texNombre(b * a / 100)}= ${miseEnEvidence(texPrix(a - (b * a) / 100))}$  €.`
 
     this.reponse = (a - (b * a) / 100)
-    this.canEnonce = this.question
+    this.canEnonce = this.question + ':'
     this.canReponseACompleter = '$\\ldots$ euros'
     if (!this.interactif) {
       this.question += ' $\\ldots$ euros.'

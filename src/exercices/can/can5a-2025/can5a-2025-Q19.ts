@@ -28,7 +28,7 @@ export default class Can2025N5Q19 extends ExerciceCan {
     this.reponse = nbStr[index]
     this.question = `Le chiffre des ${b} dans le nombre $${texNombre(a, 3)}$ est `
     this.correction = `Le chiffre des ${b} dans le nombre $${texNombre(a, 3)}$ est $${miseEnEvidence(`${nbStr[index]}`)}$.`
-    this.canEnonce = this.question
+    this.canEnonce = this.question + ':'
     this.canReponseACompleter = '$\\ldots$'
     if (!this.interactif) {
       this.question += '$\\ldots$'
