@@ -39,6 +39,6 @@ export default class Can2025CM2Q23 extends Exercice {
       On me rend  $${miseEnEvidence(texNombre(5 - a, 2, true))}$ €.`
 
     this.canEnonce = `Je dois payer $${texNombre(a, 2, true)}$ €. Je paie avec un billet de $5$ euros.`
-    this.canReponseACompleter = 'On me rend $\\ldots$ €.'
+    this.canReponseACompleter = 'On me rend $\\ldots~$ €.'
   }
 }
