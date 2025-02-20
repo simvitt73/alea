@@ -24,7 +24,7 @@ export default class recurrence extends Exercice {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
     this.optionsChampTexte = { texteAvant: '<br> $n$' }
-    this.formatChampTexte = KeyboardType.clavierCompare
+    this.formatChampTexte = KeyboardType.clavierCompareAvecNombres
   }
 
   nouvelleVersion () {
