@@ -1,8 +1,8 @@
 import Exercice from '../../Exercice'
 import { randint } from '../../../modules/outils'
-import { ecritureAlgebriqueSauf1, ecritureParentheseSiNegatif, rienSi1 } from '../../../lib/outils/ecritures'
+import { ecritureAlgebrique, ecritureAlgebriqueSauf1, ecritureParentheseSiNegatif, rienSi1 } from '../../../lib/outils/ecritures'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-export const titre = 'Somme élémentaire avec le logarithme népérien'
+export const titre = 'Calculer une somme élémentaire avec le logarithme népérien'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
@@ -31,12 +31,12 @@ export default class logarithme extends Exercice {
     const a2 = randint(-5, 5, 0)
     const a3 = randint(-5, 5, 0)
     const n1 = randint(-3, 3, [0, 1])
-    const n3 = randint(-3, 3, [0, 1])
+    const n3 = randint(-3, 3, [0, 1,n1])
     const a4 = randint(-5, 5, 0)
-    const n4 = randint(-3, 3, [0, 1])
+    const n4 = randint(-3, 3, [0, 1,n1,n3])
     this.question = `Calculer $A=${rienSi1(a1)} \\ln\\left(\\text{e}^{${n1}}\\right)${ecritureAlgebriqueSauf1(a2)} \\ln(1)${ecritureAlgebriqueSauf1(a3)} \\ln\\left(\\dfrac{1}{\\text{e}^{${n3}}}\\right)${ecritureAlgebriqueSauf1(a4)}\\ln\\left(\\text{e}^{${n4}}\\right)$.`
     this.correction = `$\\begin{aligned} A&=${rienSi1(a1)} \\ln\\left(\\text{e}^{${n1}}\\right)${ecritureAlgebriqueSauf1(a2)} \\ln(1)${ecritureAlgebriqueSauf1(a3)} \\ln\\left(\\dfrac{1}{\\text{e}^{${n3}}}\\right)${ecritureAlgebriqueSauf1(a4)}\\ln\\left(\\text{e}^{${n4}}\\right)\\\\
-    &=${a1} \\times ${ecritureParentheseSiNegatif(n1)}\\ln(\\text{e})${ecritureAlgebriqueSauf1(a2)} \\times 0${ecritureAlgebriqueSauf1(a3)} \\times ${ecritureParentheseSiNegatif(n3)}\\ln\\left(\\dfrac{1}{\\text{e}}\\right)${ecritureAlgebriqueSauf1(a4)}\\times ${ecritureParentheseSiNegatif(n4)}\\\\
+    &=${a1} \\times ${ecritureParentheseSiNegatif(n1)}\\ln(\\text{e})${ecritureAlgebrique(a2)} \\times 0${ecritureAlgebriqueSauf1(a3)} \\times ${ecritureParentheseSiNegatif(n3)}\\ln\\left(\\dfrac{1}{\\text{e}}\\right)${ecritureAlgebriqueSauf1(a4)}\\times ${ecritureParentheseSiNegatif(n4)}\\\\
     &=${a1 * n1} \\times 1 ${ecritureAlgebriqueSauf1(a3 * n3)} \\times \\ln\\left({\\text{e}}^{-1}\\right)${ecritureAlgebriqueSauf1(a4 * n4)}\\\\
     &=${a1 * n1}${ecritureAlgebriqueSauf1(-a3 * n3)}${ecritureAlgebriqueSauf1(a4 * n4)}\\\\
     &=${miseEnEvidence(a1 * n1 - a3 * n3 + a4 * n4)}\\end{aligned}$`
