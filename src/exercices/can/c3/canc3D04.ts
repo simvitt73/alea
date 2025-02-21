@@ -41,7 +41,6 @@ export default class ExerciceInteractiveClock extends Exercice {
         enonce += mathalea2d({ xmin: -3, ymin: -3, xmax: 3, ymax: 3, scale: 0.6, style: 'margin: auto' }, horloge)
       }
       let correction = ''
-      console.log(context)
       if (context.isHtml) {
         correction = `<interactive-clock hour="${hour}" minute="${minute}" isDynamic="false"/>`
       } else {
