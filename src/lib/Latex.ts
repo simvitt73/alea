@@ -341,6 +341,7 @@ Correction
     contents.preamble += '\n\\usepackage{fancyhdr}'
     contents.preamble += '\n\\pagestyle{fancy}'
     contents.preamble += '\n\\usepackage{fvextra} %EE: Pour la gestion de verb (police Python)'
+    contents.preamble += '\n\\usepackage{tabularray} %EE: Pour la gestion des tableaux tblr'
     contents.preamble += '\n\\renewcommand\\headrulewidth{0pt}'
     contents.preamble += '\n\\setlength{\\headheight}{18pt}'
     contents.preamble += '\n\\fancyhead[R]{\\href{https://coopmaths.fr/alea}{Mathaléa}}'
