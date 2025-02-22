@@ -6,7 +6,7 @@ import prefs from '../../helpers/prefs.js'
 async function testEleveView () {
   const goodAnswers = [
     '25',
-    '-8\\times \\placeholder[champ1]{4}=32',
+    '4',
     '50',
     '1024',
     '531',
@@ -66,7 +66,7 @@ async function testEleveView () {
   await button.click()
   const stringScore = await page.locator('#divScoreEx0').first().innerText()
   // Attendre 5 minutes pour analyser les résultats
-  // await page.waitForTimeout(5 * 60 * 1000)
+  await page.waitForTimeout(5 * 60 * 1000)
   await expect(stringScore).toBe('30 / 30')
   return true
 }
