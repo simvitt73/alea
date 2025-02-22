@@ -25,7 +25,7 @@ export default class ExerciceInteractiveClock extends Exercice {
   goodAnswers: { hour: string, minute: string }[] = []
   constructor () {
     super()
-    this.nbQuestions = 4
+    this.nbQuestions = 1
     handleInteractiveClock() // Obligatoire pour la gestion de l'élément custom <interactive-clock>
   }
 

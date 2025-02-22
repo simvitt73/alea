@@ -8,14 +8,13 @@
  * @attr {boolean} [showHands=true] - Indique si les aiguilles de l'horloge doivent être affichées
  */
 class InteractiveClock extends HTMLElement {
-  buttonContainer!: HTMLDivElement
-  buttonHour!: HTMLButtonElement
-  buttonMinute!: HTMLButtonElement
-  currentAction: 'hour' | 'minute' = 'hour' // Par défaut, on déplace l'aiguille des heures
+  currentAction: 'hour' | 'minute' = 'minute' // Par défaut, on déplace l'aiguille des heures
   svgHandHour!: SVGElement
   svgHandMinute!: SVGElement
   radius = 200
   showHands = true
+  draggingHand: boolean
+  previousMinute = 0
   private _isDynamic = true
 
   constructor () {
@@ -25,8 +24,8 @@ class InteractiveClock extends HTMLElement {
     this.svgHandHour = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     this.svgHandMinute = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     this.showHands = !(this.getAttribute('showHands') === 'false')
-    this.buttonContainer = document.createElement('div')
     this.isDynamic = !(this.getAttribute('isDynamic') === 'false')
+    this.draggingHand = false
   }
 
   /**
@@ -75,6 +74,8 @@ class InteractiveClock extends HTMLElement {
       text.setAttribute('font-size', '20')
       text.textContent = i.toString()
       text.setAttribute('pointer-events', 'none')
+      text.style.userSelect = 'none'
+      text.style.webkitUserSelect = 'none'
       svg.appendChild(text)
     }
 
@@ -113,31 +114,51 @@ class InteractiveClock extends HTMLElement {
     }
 
     container.appendChild(svgContainer)
-
-    // Ajouter les boutons
-    if (this.isDynamic) {
-      this.buttonContainer.className = 'flex-1 flex flex-col items-center justify-center'
-
-      this.buttonHour = document.createElement('button')
-      const defaultClassesForButtons = 'inline-block px-6 py-2.5 mr-10 my-5 ml-6 bg-coopmaths-action dark:bg-coopmathsdark-action text-coopmaths-canvas dark:text-coopmathsdark-canvas font-medium text-xs leading-tight uppercase rounded shadow-md transform hover:shadow-lg focus:bg-coopmaths-action-lightest dark:focus:bg-coopmathsdark-action-lightest focus:shadow-lg focus:outline-none focus:ring-0 active:bg-coopmaths-action-lightest dark:active:bg-coopmathsdark-action-lightest active:shadow-lg transition duration-150 ease-in-out'
-      this.buttonHour.className = defaultClassesForButtons
-      this.buttonHour.textContent = 'Cliquer pour déplacer la petite aiguille'
-      this.buttonHour.onclick = () => this.setCurrentAction('hour')
-      this.buttonContainer.appendChild(this.buttonHour)
-
-      this.buttonMinute = document.createElement('button')
-      this.buttonMinute.className = defaultClassesForButtons
-      this.buttonMinute.classList.add('bg-opacity-50')
-      this.buttonMinute.textContent = 'Cliquer pour déplacer la grande aiguille'
-      this.buttonMinute.onclick = () => this.setCurrentAction('minute')
-      this.buttonContainer.appendChild(this.buttonMinute)
-      container.appendChild(this.buttonContainer)
-    }
-
     this.appendChild(container)
 
     if (this.isDynamic) {
-      svg.addEventListener('click', (event) => this.moveHand(event))
+      const preventDefault = (event: PointerEvent | TouchEvent) => {
+        event.preventDefault()
+      }
+
+      const handlePointerDown = (event: PointerEvent | TouchEvent) => {
+        this.draggingHand = true
+        // Empêche le défilement pendant le drag
+        svg.addEventListener('pointermove', preventDefault, { passive: false })
+        svg.addEventListener('touchmove', preventDefault, { passive: false })
+      }
+
+      const handlePointerUp = () => {
+        this.draggingHand = false
+        this.setCurrentAction('minute')
+        // Réactive le défilement après le drag
+        svg.removeEventListener('pointermove', preventDefault)
+        svg.removeEventListener('touchmove', preventDefault)
+      }
+
+      svg.addEventListener('pointerdown', handlePointerDown)
+      svg.addEventListener('pointerup', handlePointerUp)
+      svg.addEventListener('pointermove', (event) => this.dragHand(event))
+
+      svg.addEventListener('touchstart', handlePointerDown)
+      svg.addEventListener('touchend', handlePointerUp)
+      svg.addEventListener('touchmove', (event) => this.dragHand(event.touches[0]))
+
+      this.svgHandHour.addEventListener('pointerdown', (event) => {
+        this.draggingHand = true
+        this.setCurrentAction('hour')
+        handlePointerDown(event)
+      })
+
+      this.svgHandHour.addEventListener('pointerup', handlePointerUp)
+
+      this.svgHandMinute.addEventListener('pointerdown', (event) => {
+        this.draggingHand = true
+        this.setCurrentAction('minute')
+        handlePointerDown(event)
+      })
+
+      this.svgHandMinute.addEventListener('pointerup', handlePointerUp)
     }
   }
 
@@ -149,7 +170,7 @@ class InteractiveClock extends HTMLElement {
     hand.setAttribute('x1', '0')
     hand.setAttribute('y1', '0')
     hand.setAttribute('stroke', 'black')
-    hand.setAttribute('stroke-width', type === 'hour' ? '6' : '4')
+    hand.setAttribute('stroke-width', type === 'hour' ? '12' : '8')
     hand.setAttribute('stroke-linecap', 'round')
     hand.setAttribute('class', type + '-hand')
     return hand
@@ -176,18 +197,11 @@ class InteractiveClock extends HTMLElement {
 
   setCurrentAction (action: 'hour' | 'minute') {
     this.currentAction = action
-    // Mettre à jour l'apparence des boutons pour indiquer quel est actif
-    if (action === 'minute') {
-      this.buttonHour.classList.add('bg-opacity-50')
-      this.buttonMinute.classList.remove('bg-opacity-50')
-    } else {
-      this.buttonHour.classList.remove('bg-opacity-50')
-      this.buttonMinute.classList.add('bg-opacity-50')
-    }
   }
 
-  moveHand (event: MouseEvent) {
+  dragHand (event: MouseEvent) {
     if (!this.isDynamic) return
+    if (!this.draggingHand) return
     const rect = (event.target as SVGElement).getBoundingClientRect()
     const x = event.clientX - rect.left - rect.width / 2
     const y = event.clientY - rect.top - rect.height / 2
@@ -198,15 +212,16 @@ class InteractiveClock extends HTMLElement {
     if (this.currentAction === 'hour') {
       this.hour = value
     } else {
+      if (this.previousMinute > 50 && value < 10) {
+        this.hour = (this.hour + 1) % 12
+      } else if (this.previousMinute < 10 && value > 50) {
+        this.hour = (this.hour + 11) % 12
+      }
       this.minute = value
     }
     // this.updateHandHour(!(this.currentAction === 'hour'))
     this.updateHandHour()
     this.updateHandMinute()
-  }
-
-  hideButtons () {
-    this.buttonContainer.style.display = 'none'
   }
 
   disconnectedCallback () {
@@ -227,7 +242,6 @@ class InteractiveClock extends HTMLElement {
 
   set isDynamic (value: boolean) {
     this._isDynamic = value
-    this.buttonContainer.style.display = value ? 'flex' : 'none'
   }
 
   get minute () {
@@ -236,6 +250,7 @@ class InteractiveClock extends HTMLElement {
 
   set minute (value) {
     this.setAttribute('minute', value.toString())
+    this.previousMinute = this.minute
   }
 }
 
