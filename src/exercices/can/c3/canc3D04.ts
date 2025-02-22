@@ -33,7 +33,7 @@ export default class ExerciceInteractiveClock extends Exercice {
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const hour = randint(1, 12)
       const minute = randint(1, 11) * 5
-      let enonce = `Placer correctement les aiguilles pour indiquer ${hour} h ${minute}.`
+      let enonce = `Placer correctement les aiguilles pour indiquer ${hour} h ${formatMinute(minute)}.`
       if (context.isHtml) {
         enonce += `<br><br><interactive-clock id="clockEx${this.numeroExercice}Q${i}" isDynamic="${this.interactif}" showHands="${this.interactif}"/>`
       } else {
@@ -77,9 +77,13 @@ export default class ExerciceInteractiveClock extends Exercice {
       return 'OK'
     } else {
       const divFeedback = document.createElement('div')
-      divFeedback.innerHTML = `☹️ Tu as marqué ${clock.getAttribute('hour')} h ${clock.getAttribute('minute')}.`
+      divFeedback.innerHTML = `☹️ Tu as marqué ${clock.getAttribute('hour')} h ${formatMinute(clock.getAttribute('minute'))}.`
       clock.parentElement?.appendChild(divFeedback)
       return 'KO'
     }
   }
+}
+
+function formatMinute (minute: number): string {
+  return minute < 10 ? `0${minute}` : minute.toString()
 }

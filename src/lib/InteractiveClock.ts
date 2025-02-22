@@ -169,7 +169,7 @@ class InteractiveClock extends HTMLElement {
     const hand = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     hand.setAttribute('x1', '0')
     hand.setAttribute('y1', '0')
-    hand.setAttribute('stroke', 'black')
+    hand.setAttribute('stroke', '#F15929')
     hand.setAttribute('stroke-width', type === 'hour' ? '12' : '8')
     hand.setAttribute('stroke-linecap', 'round')
     hand.setAttribute('class', type + '-hand')
