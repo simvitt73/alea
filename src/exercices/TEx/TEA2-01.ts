@@ -62,7 +62,7 @@ export default class ExerciceEuclide extends Exercice {
         tempA = tempB
         tempB = reste
       }
-      etapes.push(`<br>Le dernier reste non-nul est ${tempA}.<br>`)
+      etapes.push(`<br>Le dernier reste non nul est ${tempA}.<br>`)
 
       // Texte de la question et correction
       texte = `Calculer, en utilisant l'algorithme d'Euclide, $PGCD (${a} ; ${b})$.`
