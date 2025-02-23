@@ -89,7 +89,7 @@ class Latex {
 
           for (let i = 0; i < exercice.listeQuestions.length; i++) {
             // Enoncé de la question
-            const enonce = (exercice.listeCanEnonces != null && exercice.listeCanEnonces[i] !== undefined)
+            const enonce = (exercice.listeCanEnonces != null && exercice.listeCanEnonces[i] !== undefined && exercice.listeCanEnonces[i].length !== 0)
               ? exercice.listeCanEnonces[i]
               : exercice.listeQuestions[i]
 
