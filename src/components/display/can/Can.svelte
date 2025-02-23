@@ -96,11 +96,10 @@
           exercice.score++
         }
         // récupération de la réponse
-        answers.push(
+        answers[i] =
           exercice.answers![
             `Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`
-          ],
-        )
+          ]
       } else if (type === "qcm") {
         resultsByQuestion[i] =
           verifQuestionQcm(exercice, indiceQuestionInExercice[i]) === "OK"
@@ -122,31 +121,40 @@
             }
           }
         })
-        answers.push(qcmAnswers.join(" ; "))
+        answers[i] = qcmAnswers.join(" ; ")
       } else if (type === "listeDeroulante") {
         resultsByQuestion[i] =
           verifQuestionListeDeroulante(
             exercice,
             indiceQuestionInExercice[i],
           ) === "OK"
+        answers[i] =
+          exercice.answers![
+            `Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`
+          ]
       } else if (type === "cliqueFigure") {
         resultsByQuestion[i] =
           verifQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]) ===
           "OK"
-        answers.push(
-          indexQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]),
+        answers[i] = indexQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]
         )
       } else if (type === "custom") {
         // si le type est `custom` on est sûr que `correctionInteractive` existe
         // d'où le ! après `correctionInteractive`
         resultsByQuestion[i] = exercice.correctionInteractive!(i) === "OK"
-      } else { // Rémi Angot : j'ai ajouté cela car le type est undefined pour un exercice comme betaInteractiveClock
+        // L'affichage de la réponse n'est pas gérée pour les exercices custom
+        answers[i] = ''
+      } else {
+        // Rémi Angot : j'ai ajouté cela car le type est undefined pour un exercice comme betaInteractiveClock
         if (exercice.correctionInteractive !== undefined) {
           resultsByQuestion[i] = exercice.correctionInteractive!(i) === "OK"
-          if (exercice?.answers && exercice.answers[`clockEx${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`] !== undefined) {
-            answers.push(
-              exercice.answers[`clockEx${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`]
-            )
+          if (
+            exercice?.answers &&
+            exercice.answers[
+              `clockEx${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`
+            ] !== undefined
+          ) {
+            answers[i] = exercice.answers[`clockEx${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`]
           }
         }
       }
@@ -189,9 +197,9 @@
       if (
         getRecordedScore() > getScoreTotal() ||
         (getRecordedScore() === getScoreTotal() &&
-          assignmentDataFromCapytale?.duration && assignmentDataFromCapytale?.duration  <
-            getDuration()
-      )) {
+          assignmentDataFromCapytale?.duration &&
+          assignmentDataFromCapytale?.duration < getDuration())
+      ) {
         return
       }
       sendToCapytaleSaveStudentAssignment({
