@@ -8,7 +8,7 @@ fetchServerVersion().then(version => {
 
 // Fonction pour récupérer la version du serveur
 export async function fetchServerVersion (): Promise<string> {
-  const response = await fetch('/version.txt')
+  const response = await fetch('/alea/version.txt')
   if (!response.ok) {
     throw new Error('Failed to fetch server version')
   }
