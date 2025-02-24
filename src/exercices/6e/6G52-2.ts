@@ -64,7 +64,6 @@ export default class ProprietesParallelesPerpendiculaires extends Exercice {
     } else {
       questionsParNiveau = [[2], [5], [15], [31], [2, 5, 15, 31]]
     }
-    console.log('questionsParNiveau', questionsParNiveau)
     const IndiceNew = [0, 0, 0, 0, 0]
     let NumQuestionsDisponibles
     const QuestionsDisponibles = gestionnaireFormulaireTexte({
