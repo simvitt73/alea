@@ -285,6 +285,7 @@
           }
         }
         // const answersOfExercise = Object.values(exercise.answers)
+        console.log('answersOfExercise', answersOfExercise)
         answers = answers.concat(answersOfExercise)
       }
     }
