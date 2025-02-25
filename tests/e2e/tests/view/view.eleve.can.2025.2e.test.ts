@@ -71,5 +71,5 @@ if (process.env.CI) {
   runTest(testEleveView, import.meta.url, { pauseOnError: false })
 } else {
   prefs.headless = false
-  runTest(testEleveView, import.meta.url, { pauseOnError: false })
+  runTest(testEleveView, import.meta.url, { pauseOnError: true })
 }

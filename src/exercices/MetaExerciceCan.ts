@@ -109,7 +109,7 @@ export default class MetaExercice extends Exercice {
             this.listeCanNumerosLies[indexQuestion] = Question.canNumeroLie
 
             if (Question.formatInteractif === 'fillInTheBlank' || (typeof Question.reponse === 'object' && 'champ1' in Question.reponse)) {
-              this.listeQuestions[indexQuestion] = consigne + remplisLesBlancs(this, indexQuestion, Question.question ?? '', formatChampTexte, '\\ldots')
+              this.listeQuestions[indexQuestion] = consigne + remplisLesBlancs(this, indexQuestion, Question.question, formatChampTexte, '\\ldots')
               if (typeof Question.reponse === 'string') {
                 handleAnswers(this, indexQuestion, {
                   champ1: {
@@ -119,7 +119,7 @@ export default class MetaExercice extends Exercice {
                   }
                 })
               } else if (typeof Question.reponse === 'object') {
-                handleAnswers(this, indexQuestion, { reponse: { value: Question.reponse } })
+                handleAnswers(this, indexQuestion, Question.reponse)
               } else {
                 window.notify('Erreur avec cette question de type fillInTheBlank qui contient une reponse au format inconnu', { reponse: Question.reponse })
               }
@@ -131,7 +131,8 @@ export default class MetaExercice extends Exercice {
             } else {
               if (Question.compare == null) {
                 const options = Question.optionsDeComparaison == null ? {} : Question.optionsDeComparaison
-                handleAnswers(this, indexQuestion, { reponse: { value: Question.reponse ?? '', options } })
+                if (Question.reponse.reponse instanceof Object && Question.reponse.reponse.value != null && typeof Question.reponse.reponse.value === 'string') handleAnswers(this, indexQuestion, Question.reponse, options)
+                else handleAnswers(this, indexQuestion, { reponse: { value: Question.reponse, options } })
               } else {
                 const compare = Question.compare
                 const options = Question.optionsDeComparaison == null ? {} : Question.optionsDeComparaison

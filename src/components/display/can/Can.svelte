@@ -87,20 +87,13 @@
         exercice.autoCorrection?.[indiceQuestionInExercice[i]]?.reponse?.param
           ?.formatInteractif
       if (type === "mathlive" || type === "fillInTheBlank") {
-        resultsByQuestion[i] = Boolean(
-          verifQuestionMathLive(exercice, indiceQuestionInExercice[i])?.isOk,
-        )
+        resultsByQuestion[i] = 
+          Boolean(verifQuestionMathLive(exercice, indiceQuestionInExercice[i])?.isOk)
         // récupération de la réponse
-        answers[i] =
-          exercice.answers![
-            `Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`
-          ]
+        answers[i]= exercice.answers![`Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`]
       } else if (type === "qcm") {
         resultsByQuestion[i] =
           verifQuestionQcm(exercice, indiceQuestionInExercice[i]) === "OK"
-        if (resultsByQuestion[i] && exercice.score !== undefined) {
-          exercice.score++
-        }
         // récupération de la réponse
         const propositions =
           exercice.autoCorrection[indiceQuestionInExercice[i]].propositions
@@ -121,39 +114,29 @@
         resultsByQuestion[i] =
           verifQuestionListeDeroulante(
             exercice,
-            indiceQuestionInExercice[i],
-          ) === "OK"
+            indiceQuestionInExercice[i]) === "OK"
         answers[i] =
           exercice.answers![
             `Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`
           ]
       } else if (type === "cliqueFigure") {
         resultsByQuestion[i] =
-          verifQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]) ===
-          "OK"
-        answers[i] = indexQuestionCliqueFigure(
-          exercice,
-          indiceQuestionInExercice[i],
+          verifQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]) === "OK"
+        answers[i] = indexQuestionCliqueFigure(exercice, indiceQuestionInExercice[i]
         )
       } else if (type === "custom") {
         // si le type est `custom` on est sûr que `correctionInteractive` existe
         // d'où le ! après `correctionInteractive`
         if (exercice instanceof MetaExercice) {
-          const result = exercice.correctionInteractives[
-            indiceQuestionInExercice[i]
-          ](indiceQuestionInExercice[i])
-          resultsByQuestion[i] = result === "OK"
+          const result = exercice.correctionInteractives[indiceQuestionInExercice[i]](indiceQuestionInExercice[i])
+          resultsByQuestion[i] = (result === "OK")
         } else {
-          resultsByQuestion[i] =
-            exercice.correctionInteractive!(indiceQuestionInExercice[i]) ===
-            "OK"
+          resultsByQuestion[i] = exercice.correctionInteractive!(indiceQuestionInExercice[i]) === "OK"
         }
         const keys = Object.keys(exercice.answers || {})
         // on cherche des id avec clockEx0Q0
-        const key = keys.find((k) =>
-          k.endsWith(`Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`),
-        )
-        answers[i] = key ? exercice.answers![key] : ""
+        const key = keys.find(k => k.endsWith(`Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`));
+        answers[i] = key ? exercice.answers![key] : ''
       }
       // Pour Capytale, on a besoin du score de l'exercice et non de la question
       // donc on sauvegarde le score dans l'exercice

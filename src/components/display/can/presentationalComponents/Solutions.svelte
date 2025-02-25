@@ -28,7 +28,6 @@
     if (questionContent) {
       mathaleaRenderDiv(questionContent)
     }
-    console.info('Answers', answers)
   })
 
   afterUpdate(() => {
