@@ -4,7 +4,7 @@ import { Point, point, pointIntersectionDD, tracePoint } from '../../lib/2d/poin
 import { segment } from '../../lib/2d/segmentsVecteurs'
 import { latexParCoordonnees, texteParPosition } from '../../lib/2d/textes'
 import { symetrieAxiale } from '../../lib/2d/transformations'
-import { shuffle } from '../../lib/outils/arrayOutils'
+import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../lib/outils/embellissements'
 import { numAlpha } from '../../lib/outils/outilString'
 import { nombreAvecEspace } from '../../lib/outils/texNombre'
@@ -274,7 +274,7 @@ export default class PavageEtReflexion2d extends Exercice {
 
     texte = mathalea2d(fenetre, objets, texteNoir) // monpavage.fenetre est calibrée pour faire entrer le pavage dans une feuille A4
     texte += '<br>'
-    const couleurs = ['green', 'red', 'blue']
+    const couleurs = combinaisonListes(['green', 'red', 'blue'], this.nbQuestions)
     for (let i = 0; i < this.nbQuestions; i++) {
       setReponse(this, i, couples[i][1])
       texte += numAlpha(i) + `Quelle est l'image de la figure $${couples[i][0]}$ dans la symétrie d'axe $(d)$ ?` + ajouteChampTexteMathLive(this, i, '') + '<br>'
@@ -285,6 +285,7 @@ export default class PavageEtReflexion2d extends Exercice {
         B = monpavage.barycentres[couples[i][1] - 1]
         P1 = monpavage.polygones[couples[i][0] - 1]
         P1.color = colorToLatexOrHTML(couleurs[i])
+        console.log('couleurs[i]', couleurs[i], couleurs[i])
         P1.couleurDeRemplissage = colorToLatexOrHTML(couleurs[i])
         P1.opaciteDeRemplissage = 0.5
         P1.epaisseur = 2
