@@ -186,7 +186,7 @@ export default class ExerciceInequationProduit extends Exercice {
       // Paramètre la largeur des colonnes
       const lgt = 10 // Première colonne
       const deltacl = 0.8 // Distance entre la bordure et les premiers et derniers antécédents
-      const espcl = 3.5 // Espace entre les antécédents
+      const espcl = context.isHtml ? 3.5 : 2.5 // Espace entre les antécédents
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // Génère la consigne (texte) et la correction (texteCorr) pour les questions de type '(x+a)(x+b)<0'                                      Type 1        //
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
