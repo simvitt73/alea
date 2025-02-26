@@ -16,6 +16,7 @@
     isMenuNeededForExercises,
     isMenuNeededForQuestions
   } from '../../../lib/stores/generalStore'
+  import { vendor } from '../../../lib/stores/vendorStore'
   import type TypeExercice from '../../../exercices/Exercice'
   import Exercice from '../../shared/exercice/Exercice.svelte'
   import { onDestroy, onMount, tick, afterUpdate, beforeUpdate } from 'svelte'
@@ -55,6 +56,8 @@
   const divsCorrection: HTMLDivElement[] = []
   let currentWindowWidth: number = document.body.clientWidth
   let eleveSection: HTMLElement
+  const brandImagePath = $vendor.brand.logoPath
+  const productImagePath = $vendor.product.logoPath
 
   function urlToDisplay() {
     const urlOptions = mathaleaUpdateExercicesParamsFromUrl()
@@ -367,8 +370,10 @@
     ? 'dark'
     : ''}"
 >
-  <div>
-    <Banner />
+  <div
+    class={$globalOptions.v === 'myriade' || $globalOptions.v === 'indices' ? 'block' : 'hidden'}
+  >
+    <Banner {brandImagePath} {productImagePath} />
   </div>
   <div
     class="fixed z-20 h-16 bottom-4 right-2 {(typeof $globalOptions.title === 'string' &&
