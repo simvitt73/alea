@@ -34,51 +34,51 @@ export function isAMCVariation (obj: unknown): obj is AMCVariation {
 
 export type Variation = '' | StudentVariation | LatexVariation | AMCVariation
 
-export type CallbackType = (page: Page, view: View, variation: Variation, questionNb: number) => Promise<void>
+export type CallbackType = (page: Page, view: View, variation: Variation) => Promise<void>
 
-export async function testAllViews (url: string, page: Page, context: BrowserContext, questionsNb: number, callback: CallbackType) {
+export async function testAllViews (url: string, page: Page, context: BrowserContext, callback: CallbackType) {
   await page.goto(url)
   await page.waitForLoadState('networkidle')
-  await callback(page, 'start', '', questionsNb)
-  await checkSlideshow(page, questionsNb, callback)
-  await callback(page, 'start', '', questionsNb)
-  await checkStudent(page, context, questionsNb, callback)
-  await callback(page, 'start', '', questionsNb)
-  await checkLatex(page, questionsNb, callback)
-  await callback(page, 'start', '', questionsNb)
-  await checkAmc(page, questionsNb, callback)
-  await callback(page, 'start', '', questionsNb)
+  await callback(page, 'start', '')
+  await checkSlideshow(page, callback)
+  await callback(page, 'start', '')
+  await checkStudent(page, context, callback)
+  await callback(page, 'start', '')
+  await checkLatex(page, callback)
+  await callback(page, 'start', '')
+  await checkAmc(page, callback)
+  await callback(page, 'start', '')
 }
 
-async function checkSlideshow (page: Page, questionsNb: number, callback: CallbackType) {
+async function checkSlideshow (page: Page, callback: CallbackType) {
   await page.locator('div[data-tip="Diaporama"]').click()
-  await checkSlideshowPlay(page, questionsNb, callback)
-  await checkSlideshowPreview(page, questionsNb, callback)
+  await checkSlideshowPlay(page, callback)
+  await checkSlideshowPreview(page, callback)
   await page.locator('.bx-x').first().click()
 }
 
-async function checkSlideshowPlay (page: Page, questionsNb: number, callback: CallbackType) {
+async function checkSlideshowPlay (page: Page, callback: CallbackType) {
   await page.locator('#diaporama-play-button').click()
-  callback(page, 'diaporama', '', questionsNb)
+  callback(page, 'diaporama', '')
 }
 
-async function checkSlideshowPreview (page: Page, questionNb: number, callback: CallbackType) {
+async function checkSlideshowPreview (page: Page, callback: CallbackType) {
   await page.locator('.bx-detail').click()
-  await callback(page, 'apercu', '', questionNb)
+  await callback(page, 'apercu', '')
   await page.locator('.bx-arrow-back').click()
 }
 
-async function checkStudent (page: Page, context: BrowserContext, questionNb: number, callback: CallbackType) {
+async function checkStudent (page: Page, context: BrowserContext, callback: CallbackType) {
   await page.locator('.bx-link').click()
-  await checkStudentVariation('Tous les exercices sur une page', page, context, questionNb, callback)
-  await checkStudentVariation('Une page par exercice', page, context, questionNb, callback)
-  await checkStudentVariation('Toutes les questions sur une page', page, context, questionNb, callback)
-  await checkStudentVariation('Une page par question', page, context, questionNb, callback)
-  await checkStudentVariation('Course aux nombres', page, context, questionNb, callback)
+  await checkStudentVariation('Tous les exercices sur une page', page, context, callback)
+  await checkStudentVariation('Une page par exercice', page, context, callback)
+  await checkStudentVariation('Toutes les questions sur une page', page, context, callback)
+  await checkStudentVariation('Une page par question', page, context, callback)
+  await checkStudentVariation('Course aux nombres', page, context, callback)
   await page.locator('.bx-x').first().click()
 }
 
-async function checkStudentVariation (variation: Variation, page: Page, browserContext: BrowserContext, questionNb: number, callback: CallbackType) {
+async function checkStudentVariation (variation: Variation, page: Page, browserContext: BrowserContext, callback: CallbackType) {
   await page.click(`text=${variation}`)
   page.click('text=Visualiser') // Si on await ici, on risque de manquer le context.waitForEvent('page') qui suit
   const newPage = await browserContext.waitForEvent('page')
@@ -88,23 +88,23 @@ async function checkStudentVariation (variation: Variation, page: Page, browserC
     await newPage.click('text=Démarrer')
     await newPage.waitForTimeout(6000)
   }
-  await callback(newPage, 'eleve', variation, questionNb)
+  await callback(newPage, 'eleve', variation)
   await newPage.close()
 }
 
-async function checkLatex (page: Page, questionsNb: number, callback: CallbackType) {
-  await checkLatexVariation(page, 'LaTeX', 'Coopmaths', questionsNb, callback)
-  await checkLatexVariation(page, 'LaTeX', 'Classique', questionsNb, callback)
-  await checkLatexVariation(page, 'LaTeX', 'ProfMaquette', questionsNb, callback)
-  await checkLatexVariation(page, 'LaTeX', 'ProfMaquetteQrcode', questionsNb, callback)
-  await checkLatexVariation(page, 'LaTeX', 'Can', questionsNb, callback)
+async function checkLatex (page: Page, callback: CallbackType) {
+  await checkLatexVariation(page, 'LaTeX', 'Coopmaths', callback)
+  await checkLatexVariation(page, 'LaTeX', 'Classique', callback)
+  await checkLatexVariation(page, 'LaTeX', 'ProfMaquette', callback)
+  await checkLatexVariation(page, 'LaTeX', 'ProfMaquetteQrcode', callback)
+  await checkLatexVariation(page, 'LaTeX', 'Can', callback)
 }
 
-async function checkLatexVariation (page: Page, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation, questionsNb: number, callback: CallbackType) {
+async function checkLatexVariation (page: Page, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation, callback: CallbackType) {
   await page.locator(`button[data-tip="${view}"]`).click()
   await page.click(`input[type="radio"][value="${variation}"]`)
   await waitForLatex(page, variation)
-  await callback(page, view, variation, questionsNb)
+  await callback(page, view, variation)
   await page.locator('.bx-x').first().click()
 }
 
@@ -143,8 +143,8 @@ async function waitForLatex (page: Page, model: LatexVariation | AMCVariation) {
   }
 }
 
-async function checkAmc (page: Page, questionsNb: number, callback: CallbackType) {
-  await checkLatexVariation(page, 'AMC', 'AMCcodeGrid', questionsNb, callback)
-  await checkLatexVariation(page, 'AMC', 'AMCassociation', questionsNb, callback)
-  await checkLatexVariation(page, 'AMC', 'manuscrits', questionsNb, callback)
+async function checkAmc (page: Page, callback: CallbackType) {
+  await checkLatexVariation(page, 'AMC', 'AMCcodeGrid', callback)
+  await checkLatexVariation(page, 'AMC', 'AMCassociation', callback)
+  await checkLatexVariation(page, 'AMC', 'manuscrits', callback)
 }

@@ -14,6 +14,7 @@ type State = {
 }
 
 const states: State[] = []
+const questionsNb = 20
 
 let exerciseType: ExerciseType = 'classique'
 
@@ -21,35 +22,35 @@ async function test (page: Page) {
   const browser = prefs.browserInstance
   if (browser === null) throw Error('can\'t test a null browser')
   const [context] = browser.contexts()
-  const questionsNb = 20
   const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/` : 'https://coopmaths.fr/alea/'
   const classicExerciseUrl = hostname + '?uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true&uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true'
   exerciseType = 'classique'
-  await testAllViews(classicExerciseUrl, page, context, questionsNb, callback)
+  await testAllViews(classicExerciseUrl, page, context, callback)
   const simpleExerciseUrl = hostname + '?uuid=4ba86&id=canc3C04&n=10&d=10&cd=1&uuid=4ba86&id=canc3C04&n=10&d=10&cd=1'
   exerciseType = 'simple'
-  await testAllViews(simpleExerciseUrl, page, context, questionsNb, callback)
+  await testAllViews(simpleExerciseUrl, page, context, callback)
   return isConsistent()
 }
 
-const callback = async (page: Page, view: View, variation: Variation, questionsNb: number) => {
+const callback = async (page: Page, view: View, variation: Variation) => {
   if (view === 'diaporama') {
-    await diaporamaStatePush(page, view, questionsNb)
+    await diaporamaStatePush(page, view)
   } else if (view === 'LaTeX' || view === 'AMC') {
     if (!isLatexVariation(variation) && !isAMCVariation(variation)) throw new Error('LaTeX or AMC callback called with invalid variation')
     if (view === 'LaTeX' && !isLatexVariation(variation)) throw new Error('LaTeX invalid variation')
     if (view === 'AMC' && !isAMCVariation(variation)) throw new Error('AMC invalid variation')
-    await LatexStatePush(page, view, variation, questionsNb)
+    await LatexStatePush(page, view, variation)
   } else {
     if (view === 'eleve' && !isStudentVariation(variation)) throw new Error('Student callback called with invalid view')
     await defaultViewStatePush(page, view, variation)
   }
 }
 
-async function diaporamaStatePush (page: Page, view: View, questionsNb: number) {
+async function diaporamaStatePush (page: Page, view: View) {
   const url = page.url()
   const numbers: string[] = []
-  for (let i = 0; i < questionsNb; i++) {
+  const maxQuestionsNb = 50
+  for (let i = 0; i < maxQuestionsNb; i++) {
     numbers.push(await getSlideshowNumbers(page))
     await page.locator('.bx-skip-next').click()
   }
@@ -69,10 +70,10 @@ async function getSlideshowNumbers (page: Page) {
   return number
 }
 
-async function LatexStatePush (page: Page, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation, questionsNb: number) {
+async function LatexStatePush (page: Page, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation) {
   const url = page.url()
   const latex = await getLatex(page)
-  const numbers = getLatexNumbers(latex, view, variation, questionsNb)
+  const numbers = getLatexNumbers(latex, view, variation)
   states.push({
     url,
     view: view + ':' + variation,
@@ -87,7 +88,7 @@ async function getLatex (page: Page) {
   return await locator.innerText()
 }
 
-function getLatexNumbers (latex: string, view: 'LaTeX' | 'AMC', model: LatexVariation | AMCVariation, questionsNb: number) {
+function getLatexNumbers (latex: string, view: 'LaTeX' | 'AMC', model: LatexVariation | AMCVariation) {
   const lineRegex: RegExp = view === 'LaTeX' ? model === 'Can' ? /\\CompteurTC\s+&[^\r\n]*/g : /\\item[^\r\n]*/g : /\$ [^\r\n]*/g
   const rawLines: string[] = latex.match(lineRegex) || []
   if (model === 'Can') {
@@ -97,11 +98,11 @@ function getLatexNumbers (latex: string, view: 'LaTeX' | 'AMC', model: LatexVari
     return cleanNumbers.map(number => number + number)
   } else {
     const numbersQuestionsAnswers = rawLines.map(line => line.replace(/\D/g, '') + line.replace(/\D/g, ''))
-    return removeAnswers(numbersQuestionsAnswers, view, model, rawLines.length, questionsNb)
+    return removeAnswers(numbersQuestionsAnswers, view, model, rawLines.length)
   }
 }
 
-function removeAnswers (calculationsQuestionsAnswers: string[], view: 'LaTeX' | 'AMC', model: LatexVariation | AMCVariation, linesNumber: number, questionsNb: number): string[] {
+function removeAnswers (calculationsQuestionsAnswers: string[], view: 'LaTeX' | 'AMC', model: LatexVariation | AMCVariation, linesNumber: number): string[] {
   if (view === 'LaTeX') {
     if (model === 'ProfMaquette' || model === 'ProfMaquetteQrcode') {
       const firstExercise = calculationsQuestionsAnswers.slice(0, questionsNb / 2)
