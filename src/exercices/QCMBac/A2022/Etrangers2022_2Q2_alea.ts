@@ -10,7 +10,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM Bac centres étrangers 2022 : concavité et logarithme'
+export const titre = 'QCM Bac centres étrangers 2022 : Concavité et logarithme'
 export const dateDePublication = '24/02/2025'
 /**
  * Ceci est un exo construit à partir d'une question de qcm de Bac.
@@ -39,7 +39,6 @@ On note $\\mathcal{C}_g$ sa courbe représentative dans un repère du plan.`
     this.correction += '<br> Puis $f\'\'(x) = \\dfrac{1}{x} - 2$.'
     this.correction += '<br>On a donc $f\'\'(x) = 0 \\iff \\dfrac{1}{x} - 2 = 0 \\iff \\dfrac{1}{x} = 2 \\iff x = \\dfrac{1}{2}$.'
     this.correction += `<br>Sur $]0~;~+ \\infty[$,   ${texteEnCouleurEtGras('$f$ admet un seul point d\'inflexion d\'abscisse $\\dfrac{1}{2}$.')}`
-  
   }
 
   constructor () {

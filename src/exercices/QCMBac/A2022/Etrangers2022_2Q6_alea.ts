@@ -1,16 +1,16 @@
-import { miseEnEvidence, texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import ExerciceQcm from '../../ExerciceQcm'
 
 export const uuid = 'e4f38'
 export const refs = {
-  'fr-fr': ['TSA5-QCM06'],
+  'fr-fr': ['TSA5-QCM07'],
   'fr-ch': []
 }
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM Bac centres étrangers 2022 : Equation de tangente et logarithme'
+export const titre = 'QCM Bac centres étrangers 2022 : Inéquations en logarithme'
 export const dateDePublication = '25/02/2025'
 /**
  * Ceci est un exo construit à partir d'une question de qcm de Bac.
