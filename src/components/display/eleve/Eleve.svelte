@@ -16,7 +16,7 @@
     isMenuNeededForExercises,
     isMenuNeededForQuestions
   } from '../../../lib/stores/generalStore'
-  import { vendor } from '../../../lib/stores/vendorStore'
+  import { vendor, accessToSetupGrantedInVendor } from '../../../lib/stores/vendorStore'
   import type TypeExercice from '../../../exercices/Exercice'
   import Exercice from '../../shared/exercice/Exercice.svelte'
   import { onDestroy, onMount, tick, afterUpdate, beforeUpdate } from 'svelte'
@@ -361,6 +361,10 @@
       prepareExerciceCliqueFigure(exercices[exoNum])
     }
   }
+  function switchAccessToSetupGrantedInVendor() {
+    $accessToSetupGrantedInVendor = !$accessToSetupGrantedInVendor
+    // console.log('accessToSetupGrantedInVendor: ', $accessToSetupGrantedInVendor)
+  }
 </script>
 
 <svelte:window bind:innerWidth={currentWindowWidth} />
@@ -371,7 +375,11 @@
     : ''}"
 >
   {#if $globalOptions.v === 'myriade' || $globalOptions.v === 'indices'}
-    <Banner {brandImagePath} {productImagePath} />
+    <Banner
+      {brandImagePath}
+      {productImagePath}
+      on:banner-state={switchAccessToSetupGrantedInVendor}
+    />
   {/if}
   <div
     class="fixed z-20 h-16 bottom-4 right-2 {(typeof $globalOptions.title === 'string' &&

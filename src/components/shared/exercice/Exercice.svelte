@@ -13,6 +13,7 @@
   import ExerciceHtml from './presentationalComponents/exerciceHtml/ExerciceHtml.svelte'
   import ExerciceMathalea from './exerciceMathalea/ExerciceMathalea.svelte'
   import { isStatic } from '../../../lib/components/exercisesUtils'
+  import { accessToSetupGrantedInVendor } from '../../../lib/stores/vendorStore'
 
   export let paramsExercice: InterfaceParams
   export let indiceExercice: number
@@ -56,8 +57,8 @@
     } else {
       if (
         $globalOptions.v === 'eleve' ||
-        $globalOptions.v === 'myriade' ||
-        $globalOptions.v === 'indices'
+        (($globalOptions.v === 'myriade' || $globalOptions.v === 'indices') &&
+          $accessToSetupGrantedInVendor === false)
       ) {
         return 'mathaleaVueEleve'
       } else {
