@@ -2,7 +2,9 @@ import { runTest } from '../../helpers/run'
 import type { Locator, Page } from 'playwright'
 import { clean } from '../../helpers/text'
 import prefs from '../../helpers/prefs'
-import { type AMCVariation, type LatexVariation, type ExerciseType, type View, type Variation, testAllViews, isLatexVariation, isAMCVariation, isStudentVariation } from '../../helpers/testAllViews'
+import { type AMCVariation, type LatexVariation, type View, type Variation, testAllViews, isLatexVariation, isAMCVariation, isStudentVariation } from '../../helpers/testAllViews'
+
+type ExerciseType = 'classique' | 'simple'
 
 type State = {
   url: string
@@ -13,6 +15,8 @@ type State = {
 
 const states: State[] = []
 
+let exerciseType: ExerciseType = 'classique'
+
 async function test (page: Page) {
   const browser = prefs.browserInstance
   if (browser === null) throw Error('can\'t test a null browser')
@@ -20,26 +24,29 @@ async function test (page: Page) {
   const questionsNb = 20
   const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/` : 'https://coopmaths.fr/alea/'
   const classicExerciseUrl = hostname + '?uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true&uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true'
-  await testAllViews(classicExerciseUrl, page, context, questionsNb, 'classique', callback)
+  exerciseType = 'classique'
+  await testAllViews(classicExerciseUrl, page, context, questionsNb, callback)
   const simpleExerciseUrl = hostname + '?uuid=4ba86&id=canc3C04&n=10&d=10&cd=1&uuid=4ba86&id=canc3C04&n=10&d=10&cd=1'
-  await testAllViews(simpleExerciseUrl, page, context, questionsNb, 'simple', callback)
+  exerciseType = 'simple'
+  await testAllViews(simpleExerciseUrl, page, context, questionsNb, callback)
   return isConsistent()
 }
-const callback = async (page: Page, view: View, variation: Variation, exerciseType: ExerciseType, questionsNb: number) => {
+
+const callback = async (page: Page, view: View, variation: Variation, questionsNb: number) => {
   if (view === 'diaporama') {
-    await diaporamaStatePush(page, view, exerciseType, questionsNb)
+    await diaporamaStatePush(page, view, questionsNb)
   } else if (view === 'LaTeX' || view === 'AMC') {
     if (!isLatexVariation(variation) && !isAMCVariation(variation)) throw new Error('LaTeX or AMC callback called with invalid variation')
     if (view === 'LaTeX' && !isLatexVariation(variation)) throw new Error('LaTeX invalid variation')
     if (view === 'AMC' && !isAMCVariation(variation)) throw new Error('AMC invalid variation')
-    await LatexStatePush(page, view, variation, exerciseType, questionsNb)
+    await LatexStatePush(page, view, variation, questionsNb)
   } else {
     if (view === 'eleve' && !isStudentVariation(variation)) throw new Error('Student callback called with invalid view')
-    await defaultViewStatePush(page, view, variation, exerciseType)
+    await defaultViewStatePush(page, view, variation)
   }
 }
 
-async function diaporamaStatePush (page: Page, view: View, exerciseType: ExerciseType, questionsNb: number) {
+async function diaporamaStatePush (page: Page, view: View, questionsNb: number) {
   const url = page.url()
   const numbers: string[] = []
   for (let i = 0; i < questionsNb; i++) {
@@ -62,7 +69,7 @@ async function getSlideshowNumbers (page: Page) {
   return number
 }
 
-async function LatexStatePush (page: Page, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation, exerciseType: ExerciseType, questionsNb: number) {
+async function LatexStatePush (page: Page, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation, questionsNb: number) {
   const url = page.url()
   const latex = await getLatex(page)
   const numbers = getLatexNumbers(latex, view, variation, questionsNb)
@@ -108,7 +115,7 @@ function removeAnswers (calculationsQuestionsAnswers: string[], view: 'LaTeX' | 
   }
 }
 
-async function defaultViewStatePush (page: Page, view: View, variation: Variation, exerciseType: ExerciseType) {
+async function defaultViewStatePush (page: Page, view: View, variation: Variation) {
   const url = page.url()
   await page.waitForSelector('.katex')
   const locators = await page.locator('.katex').all()
