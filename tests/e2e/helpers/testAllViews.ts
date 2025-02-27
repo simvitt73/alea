@@ -1,4 +1,5 @@
 import type { BrowserContext, Page } from 'playwright'
+import prefs from './prefs'
 
 export const ViewValidKeys = <const>['start', 'diaporama', 'apercu', 'eleve', 'LaTeX', 'AMC']
 type ViewValidKeysType = typeof ViewValidKeys
@@ -36,8 +37,14 @@ export type Variation = '' | StudentVariation | LatexVariation | AMCVariation
 
 export type CallbackType = (page: Page, view: View, variation: Variation) => Promise<void>
 
-export async function testAllViews (url: string, page: Page, context: BrowserContext, callback: CallbackType) {
-  await page.goto(url)
+const local = true
+
+export async function testAllViews (page: Page, params: string, callback: CallbackType) {
+  const browser = prefs.browserInstance
+  if (browser === null) throw Error('can\'t test a null browser')
+  const [context] = browser.contexts()
+  const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/` : 'https://coopmaths.fr/alea/'
+  await page.goto(hostname + params)
   await page.waitForLoadState('networkidle')
   await callback(page, 'start', '')
   await checkSlideshow(page, callback)

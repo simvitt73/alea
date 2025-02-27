@@ -19,16 +19,12 @@ const questionsNb = 20
 let exerciseType: ExerciseType = 'classique'
 
 async function test (page: Page) {
-  const browser = prefs.browserInstance
-  if (browser === null) throw Error('can\'t test a null browser')
-  const [context] = browser.contexts()
-  const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/` : 'https://coopmaths.fr/alea/'
-  const classicExerciseUrl = hostname + '?uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true&uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true'
+  const classicExerciseParams = '?uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true&uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true'
   exerciseType = 'classique'
-  await testAllViews(classicExerciseUrl, page, context, callback)
-  const simpleExerciseUrl = hostname + '?uuid=4ba86&id=canc3C04&n=10&d=10&cd=1&uuid=4ba86&id=canc3C04&n=10&d=10&cd=1'
+  await testAllViews(page, classicExerciseParams, callback)
+  const simpleExerciseParams = '?uuid=4ba86&id=canc3C04&n=10&d=10&cd=1&uuid=4ba86&id=canc3C04&n=10&d=10&cd=1'
   exerciseType = 'simple'
-  await testAllViews(simpleExerciseUrl, page, context, callback)
+  await testAllViews(page, simpleExerciseParams, callback)
   return isConsistent()
 }
 
@@ -181,7 +177,6 @@ function getDifferencesIndexes () {
   return differenceIndexes
 }
 
-const local = true
 if (process.env.CI) {
   // utiliser pour les tests d'intégration
   prefs.headless = true
