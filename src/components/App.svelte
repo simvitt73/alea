@@ -160,7 +160,7 @@
     } else {
       context.isAmc = false
     }
-    // initialisation du vendor pour l'intégration de la banière dans la vue élève
+    // initialisation du vendor pour l'intégration de la bannière dans la vue élève
     if ($globalOptions.v === 'myriade') {
       $vendor.product = {
         name: 'indices',
