@@ -370,11 +370,9 @@
     ? 'dark'
     : ''}"
 >
-  <div
-    class={$globalOptions.v === 'myriade' || $globalOptions.v === 'indices' ? 'block' : 'hidden'}
-  >
+  {#if $globalOptions.v === 'myriade' || $globalOptions.v === 'indices'}
     <Banner {brandImagePath} {productImagePath} />
-  </div>
+  {/if}
   <div
     class="fixed z-20 h-16 bottom-4 right-2 {(typeof $globalOptions.title === 'string' &&
       $globalOptions.title.length === 0 &&
