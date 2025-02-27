@@ -1,9 +1,9 @@
-import { miseEnEvidence, texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import ExerciceQcm from '../../ExerciceQcm'
 
 export const uuid = 'd873d'
 export const refs = {
-  'fr-fr': ['TSA5-QCM05'],
+  'fr-fr': ['TSA5-QCM06'],
   'fr-ch': []
 }
 export const interactifReady = true
@@ -39,8 +39,7 @@ export default class SujetZero2024Ex5Q5 extends ExerciceQcm {
     this.correction += '<br>$\\bullet~~f\'(x) = 2x - 4 + 3 \\times \\dfrac{2}{2x - 1} = 2x - 4 + \\dfrac{6}{2x - 1}$,'
     this.correction += '<br>d\'où $f\'(1) = 2 - 4 + \\dfrac{6}{1} = - 2 + 6 = 4$.'
     this.correction += `<br>Une équation de la tangente est donc $y - (- 3) = 4(x - 1) \\iff y = 4x - 4 - 3\\iff ${miseEnEvidence('y = 4x - 7')}$ .`
-
-}
+  }
 
   constructor () {
     super()

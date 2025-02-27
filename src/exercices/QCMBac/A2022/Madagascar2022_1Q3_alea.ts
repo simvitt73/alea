@@ -1,16 +1,16 @@
-import { miseEnEvidence, texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
+import { texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
 import ExerciceQcm from '../../ExerciceQcm'
 
 export const uuid = '5dd79'
 export const refs = {
-  'fr-fr': ['TSA5-QCM08'],
+  'fr-fr': ['TSA5-QCM09'],
   'fr-ch': []
 }
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'QCM Bac Madagascar 2022 : asymptote et logarithme népérien'
+export const titre = 'QCM Bac Madagascar 2022 : Asymptote et logarithme népérien'
 export const dateDePublication = '25/02/2025'
 /**
  * Ceci est un exo construit à partir d'une question de qcm de Bac.
@@ -33,7 +33,7 @@ export default class SujetZero2024Ex5Q5 extends ExerciceQcm {
     ]
 
     this.enonce = ' On considère la fonction $g$ définie sur l\'intervalle $]1~;~+\\infty[$ par : $g(x) = \\dfrac{\\ln (x)}{x - 1}$.<br>'
-    this.enonce += ' On note $\\mathcal{C}_g$ la courbe représentative de la fonction $g$ dans un repère orthogonal. La courbe $\\mathcal{C}_g$ admet :<br>'
+    this.enonce += ' On note $\\mathcal{C}_g$ la courbe représentative de la fonction $g$ dans un repère orthogonal. <br>La courbe $\\mathcal{C}_g$ admet :'
     this.correction = '$\\bullet~~$Limite de la fonction $g$ au voisinage de plus l\'infini :<br>'
     this.correction += 'On a : $g(x) = \\dfrac{\\ln x}{x} \\times \\dfrac{x}{x - 1}$.<br>'
     this.correction += 'Or on sait que d\'après les croissances comparées, que $\\displaystyle\\lim_{x \\to +\\infty} \\dfrac{\\ln x}{x} = 0$ et que, en étudiant le quotient des termes de plus au degré,   $\\displaystyle\\lim_{x \\to +\\infty} \\dfrac{x}{x - 1} = 1$,<br>'
@@ -43,7 +43,7 @@ export default class SujetZero2024Ex5Q5 extends ExerciceQcm {
     this.correction += 'On a : $g(x) = \\dfrac{\\ln (x)}{x - 1} = \\dfrac{\\ln (x) - \\ln (1)}{x - 1}$<br>'
     this.correction += 'donc $\\displaystyle\\lim_{x \\to 1^{+}}g(x)=\\displaystyle\\lim_{x \\to 1^{+}} \\dfrac{\\ln (x) - \\ln (1)}{x - 1}$'
     this.correction += '<br>Ce nombre est égal à la limite du taux d\'accroissement de la fonction $\\ln$ au voisinnage de $1$,<br> il est donc égal au nombre dérivé de la fonction logarithme népérien en $x = 1$.<br>'
-     this.correction += 'Comme sur $]1~;~+\\infty[$ , $(\\ln(x))\'=\\dfrac 1x$, on a  $\\displaystyle\\lim_{x \\to 1^{+}}g(x)=\\dfrac{1}{1} = 1$ .<br>'
+    this.correction += 'Comme sur $]1~;~+\\infty[$ , $(\\ln(x))\'=\\dfrac 1x$, on a  $\\displaystyle\\lim_{x \\to 1^{+}}g(x)=\\dfrac{1}{1} = 1$ .<br>'
     this.correction += 'Il n\'y a pas d\'asymptote verticale au voisinage de $1$. <br>'
     this.correction += `${texteEnCouleurEtGras('La courbe $\\mathcal{C}_g$ admet donc une asymptote horizontale et aucune asymptote verticale.')}`
   }
