@@ -1,10 +1,11 @@
 <script lang="ts">
   import ButtonIconTooltip from '../forms/ButtonIconTooltip.svelte'
-  export let brandImagePath: string | null = 'assets/images/vendors/bordas/bordas_logo.png'
-  export let productImagePath: string | null = 'assets/images/vendors/bordas/myriade_logo.png'
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher()
+  export let brandImagePath: string | null = 'assets/images/vendors/bordas/bordas_logo.png'
+  export let productImagePath: string | null = 'assets/images/vendors/bordas/myriade_logo.png'
+  export let state: boolean = false
   function switchState() {
     dispatch('banner-state')
   }
@@ -21,14 +22,14 @@
       <img class="h-6 lg:h-8" src={brandImagePath} alt="Brand" />
     </div>
     <ButtonIconTooltip
-      icon="bxs-cog"
+      icon={state ? 'bx-log-out-circle' : 'bxs-cog'}
       tooltip="Accéder aux réglages"
       class="hidden lg:block text-3xl"
       on:click={switchState}
     />
   </div>
   <ButtonIconTooltip
-    icon="bxs-cog"
+    icon={state ? 'bx-log-out-circle' : 'bxs-cog'}
     tooltip="Accéder aux réglages"
     class="block lg:hidden text-3xl"
     on:click={switchState}

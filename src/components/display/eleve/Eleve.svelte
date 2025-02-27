@@ -378,6 +378,7 @@
     <Banner
       {brandImagePath}
       {productImagePath}
+      bind:state={$accessToSetupGrantedInVendor}
       on:banner-state={switchAccessToSetupGrantedInVendor}
     />
   {/if}
