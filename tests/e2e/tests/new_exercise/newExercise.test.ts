@@ -4,7 +4,7 @@ import { runTest } from '../../helpers/run'
 import { getUrlParam, testAllViews, type Variation, type View } from '../../helpers/testAllViews'
 
 // Exemple de test avec des paramètres définis dans les variables d'environnement :
-// params=id=5A11-1&n=4&d=10&s=2-5-10&s2=4&s3=1&s4=1&cd=1 pnpm testExercice
+// params="id=5A11-1&n=4&d=10&s=2-5-10&s2=4&s3=1&s4=1&cd=1" pnpm testExercice
 
 let params = 'uuid=d7e11&id=4C20&n=5&d=10&s=12&s2=true&cd=1' // paramètres par défaut utilisés si non définis dans les variables d'environnement (voir ci-dessus)
 
@@ -13,7 +13,8 @@ async function test (page: Page) {
   if (shellId) params = shellId
   await testAllViews(page, params, callback)
   console.warn(`Les captures d'écran sont dans le dossier screenshots/${getUrlParam(page, 'id')}`)
-  console.warn('N\'oubliez pas de tester les différents paramètres de votre exercice !')
+  console.warn('N\'oubliez pas de tester les différents paramètres de votre exercice avec et sans interactivité !')
+  await testNanUndefined(page)
   return true
 }
 
@@ -121,6 +122,17 @@ function getScenario (page: Page, view: View, variation: Variation): Scenario {
   }
   return {
     displayCorrectionSelectors: [],
+  }
+}
+
+async function testNanUndefined (page: Page) {
+  for (let i = 0; i < 5; i++) {
+    const NaNLocators = await page.locator('text=NaN').all()
+    const undefinedLocators = await page.locator('text=undefined').all()
+    if (NaNLocators.length > 0 || undefinedLocators.length > 0) {
+      await action(page, 'start', '', `NaN-undefined-${i + 1}`)
+    }
+    await page.locator('.bx-refresh.text-3xl').click()
   }
 }
 
