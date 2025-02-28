@@ -31,20 +31,21 @@ export const refs = {
 export default class SimpleDistributivite extends Exercice {
   constructor () {
     super()
-    this.besoinFormulaireTexte = ['Type d\'expressions', 'Nombres séparés par des tirets\n1 : c(ax+b)\n2 : (ax+b)*c\n3 : cx(ax+b) \n4 : (ax+b)*cx\n5 : Mélange']
+    this.besoinFormulaireTexte = ['Type d\'expressions', 'Nombre séparés par des tirets\n1 : c(ax+b)\n2 : (ax+b)*c\n3 : cx(ax+b) \n4 : (ax+b)*cx\n5 : Mélange']
     this.besoinFormulaire2Numerique = ['Signe de $a$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']
     this.besoinFormulaire3Numerique = ['Signe de $b$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']
     this.besoinFormulaire4Numerique = ['Signe de $c$', 3, '1 : Positif\n2 : Négatif \n3 : Hasard']
     this.besoinFormulaire5CaseACocher = ['Uniquement avec la variable $x$', false]
-    this.sup = 5
+    this.sup = '5'
     this.sup2 = 3
     this.sup3 = 3
     this.sup4 = 3
     this.spacing = 2
     this.spacingCorr = 2
     this.nbQuestions = 4
-
     this.listeAvecNumerotation = false
+    this.comment = 'Les expressions sont toutes de la forme $(ax+b)\\times c$, $(ax+b)\\times cx$, $c(ax+b)$ ou bien $cx(ax+b)$.<br>'
+    this.comment += 'Le paramétrage permet de choisir finement les signes des coefficients et de modifier le nom de la variable $x$.'
   }
 
   nouvelleVersion () {
@@ -89,12 +90,12 @@ export default class SimpleDistributivite extends Exercice {
       reponse1 = a * c
       reponse2 = b * c
       if (typeDeQuestions < 3) {
-        texteCorr += `= ${simpleDeveloppement({ a, b, c, x: variable, sommeAGauche: typeDeQuestions === 2 })[0]}`
-        texteCorr += `= ${simpleDeveloppement({ a, b, c, x: variable, sommeAGauche: typeDeQuestions === 2 })[1]}`
+        texteCorr += `= ${simpleDeveloppement(a, b, c, variable, typeDeQuestions === 2)[0]}`
+        texteCorr += `=${simpleDeveloppement(a, b, c, variable, typeDeQuestions === 2)[1]}`
         reponse = reduirePolynomeDegre3(0, 0, reponse1, reponse2, variable)
       } else {
-        texteCorr += `= ${simpleDeveloppementAvecDoubleX({ a, b, c, x: variable, sommeAGauche: typeDeQuestions === 4 })[0]}`
-        texteCorr += `= ${simpleDeveloppementAvecDoubleX({ a, b, c, x: variable, sommeAGauche: typeDeQuestions === 4 })[1]}`
+        texteCorr += `= ${simpleDeveloppementAvecDoubleX(a, b, c, variable, typeDeQuestions === 4)[0]}`
+        texteCorr += `=${simpleDeveloppementAvecDoubleX(a, b, c, variable, typeDeQuestions === 4)[1]}`
         reponse = reduirePolynomeDegre3(0, reponse1, reponse2, 0, variable)
       }
       texteCorr += reponse2 > 0 ? '$' : `=${reponse}$`
