@@ -1,9 +1,6 @@
 <script lang="ts">
   import {
     mathaleaFormatExercice,
-    // mathaleaHandleExerciceSimple,
-    // mathaleaHandleParamOfOneExercice,
-    // mathaleaLoadExerciceFromUuid,
     mathaleaRenderDiv,
     mathaleaUpdateExercicesParamsFromUrl,
     mathaleaUpdateUrlFromExercicesParams
@@ -16,11 +13,10 @@
     isMenuNeededForExercises,
     isMenuNeededForQuestions
   } from '../../../lib/stores/generalStore'
-  import { vendor, accessToSetupGrantedInVendor } from '../../../lib/stores/vendorStore'
+  import { vendor } from '../../../lib/stores/vendorStore'
   import type TypeExercice from '../../../exercices/Exercice'
   import Exercice from '../../shared/exercice/Exercice.svelte'
   import { onDestroy, onMount, tick, afterUpdate, beforeUpdate } from 'svelte'
-  // import seedrandom from 'seedrandom'
   import { loadMathLive } from '../../../modules/loaders'
   import ButtonTextAction from '../../shared/forms/ButtonTextAction.svelte'
   import { verifQuestionMathLive } from '../../../lib/interactif/mathLive'
@@ -361,10 +357,6 @@
       prepareExerciceCliqueFigure(exercices[exoNum])
     }
   }
-  function switchAccessToSetupGrantedInVendor() {
-    $accessToSetupGrantedInVendor = !$accessToSetupGrantedInVendor
-    // console.log('accessToSetupGrantedInVendor: ', $accessToSetupGrantedInVendor)
-  }
 </script>
 
 <svelte:window bind:innerWidth={currentWindowWidth} />
@@ -378,8 +370,6 @@
     <Banner
       {brandImagePath}
       {productImagePath}
-      bind:state={$accessToSetupGrantedInVendor}
-      on:banner-state={switchAccessToSetupGrantedInVendor}
     />
   {/if}
   <div

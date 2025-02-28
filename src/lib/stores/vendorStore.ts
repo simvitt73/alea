@@ -19,5 +19,3 @@ export const vendor = writable<Vendor>({
     logoPath: 'assets/images/vendors/bordas/indices_logo.png'
   }
 })
-
-export const accessToSetupGrantedInVendor = writable<boolean>(false)

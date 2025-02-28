@@ -1,15 +1,19 @@
 <script lang="ts">
-  import ButtonIconTooltip from '../forms/ButtonIconTooltip.svelte'
-  import { createEventDispatcher } from 'svelte'
+  import { mathaleaGoToView } from "../../../lib/mathalea"
+  import ButtonIconTooltip from "../forms/ButtonIconTooltip.svelte"
 
-  const dispatch = createEventDispatcher()
-  export let brandImagePath: string | null = 'assets/images/vendors/bordas/bordas_logo.png'
-  export let productImagePath: string | null = 'assets/images/vendors/bordas/myriade_logo.png'
-  export let state: boolean = false
-  export let iconOnTrue: string = 'bx-log-out-circle'
-  export let iconOnFalse: string = 'bxs-cog'
-  function switchState() {
-    dispatch('banner-state')
+  export let brandImagePath: string | null =
+    "assets/images/vendors/bordas/bordas_logo.png"
+  export let productImagePath: string | null =
+    "assets/images/vendors/bordas/myriade_logo.png"
+  export let icon: string = "bxs-cog"
+
+  function goToVueProf() {
+    window.history.replaceState({}, "", window.location.href)
+    console.log(window.location.href)
+    mathaleaGoToView("")
+    console.log(window.location.href)
+    window.history.replaceState({}, "", window.location.href)
   }
 </script>
 
@@ -18,22 +22,26 @@
   class="flex flex-col items-center justify-center w-full px-2 lg:px-8 bg-coopmaths-canvas"
 >
   <div class="flex items-center justify-between w-full p-4">
-    <img src="assets/svg/logo_mathalea.svg" alt="Dé MathALÉA" class="h-7 lg:h-9" />
+    <img
+      src="assets/svg/logo_mathalea.svg"
+      alt="Dé MathALÉA"
+      class="h-7 lg:h-9"
+    />
     <div class="flex flex-row m-0 p-0 items-center justify-center space-x-3">
       <img class="h-6 lg:h-8" src={productImagePath} alt="Manual" />
       <img class="h-6 lg:h-8" src={brandImagePath} alt="Brand" />
     </div>
     <ButtonIconTooltip
-      icon={state ? iconOnTrue : iconOnFalse}
+      {icon}
       tooltip="Accéder aux réglages"
       class="hidden lg:block text-3xl"
-      on:click={switchState}
+      on:click={goToVueProf}
     />
   </div>
   <ButtonIconTooltip
-    icon={state ? iconOnTrue : iconOnFalse}
+    {icon}
     tooltip="Accéder aux réglages"
     class="block lg:hidden text-3xl"
-    on:click={switchState}
+    on:click={goToVueProf}
   />
 </div>
