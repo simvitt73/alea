@@ -19,10 +19,10 @@ const questionsNb = 20
 let exerciseType: ExerciseType = 'classique'
 
 async function test (page: Page) {
-  const classicExerciseParams = '?uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true&uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true'
+  const classicExerciseParams = 'uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true&uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true'
   exerciseType = 'classique'
   await testAllViews(page, classicExerciseParams, callback)
-  const simpleExerciseParams = '?uuid=4ba86&id=canc3C04&n=10&d=10&cd=1&uuid=4ba86&id=canc3C04&n=10&d=10&cd=1'
+  const simpleExerciseParams = 'uuid=4ba86&id=canc3C04&n=10&d=10&cd=1&uuid=4ba86&id=canc3C04&n=10&d=10&cd=1'
   exerciseType = 'simple'
   await testAllViews(page, simpleExerciseParams, callback)
   return isConsistent()

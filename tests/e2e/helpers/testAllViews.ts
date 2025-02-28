@@ -43,7 +43,7 @@ export async function testAllViews (page: Page, params: string, callback: Callba
   const browser = prefs.browserInstance
   if (browser === null) throw Error('can\'t test a null browser')
   const [context] = browser.contexts()
-  const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/` : 'https://coopmaths.fr/alea/'
+  const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/?` : 'https://coopmaths.fr/alea/?'
   await page.goto(hostname + params)
   await page.waitForLoadState('networkidle')
   await callback(page, 'start', '')
@@ -78,7 +78,7 @@ async function checkSlideshowPreview (page: Page, callback: CallbackType) {
 async function checkStudent (page: Page, context: BrowserContext, callback: CallbackType) {
   await page.locator('.bx-link').click()
   await checkStudentVariation('Tous les exercices sur une page', page, context, callback)
-  await checkStudentVariation('Une page par exercice', page, context, callback)
+  if (getExercisesCount(page) > 1) await checkStudentVariation('Une page par exercice', page, context, callback)
   await checkStudentVariation('Toutes les questions sur une page', page, context, callback)
   await checkStudentVariation('Une page par question', page, context, callback)
   await checkStudentVariation('Course aux nombres', page, context, callback)
@@ -97,6 +97,10 @@ async function checkStudentVariation (variation: Variation, page: Page, browserC
   }
   await callback(newPage, 'eleve', variation)
   await newPage.close()
+}
+
+function getExercisesCount (page: Page): number {
+  return page.url().split('&').filter(el => el.startsWith('uuid=')).length
 }
 
 async function checkLatex (page: Page, callback: CallbackType) {
@@ -154,4 +158,9 @@ async function checkAmc (page: Page, callback: CallbackType) {
   await checkLatexVariation(page, 'AMC', 'AMCcodeGrid', callback)
   await checkLatexVariation(page, 'AMC', 'AMCassociation', callback)
   await checkLatexVariation(page, 'AMC', 'manuscrits', callback)
+}
+
+export function getUrlParam (page: Page, param: string): string {
+  const url = page.url()
+  return url.split('?')[1].split('&').filter(el => el.startsWith(`${param}=`))[0].split('=')[1]
 }
