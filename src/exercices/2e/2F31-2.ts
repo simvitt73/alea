@@ -73,7 +73,7 @@ export default class EncadrerAvecFctRef extends Exercice {
         case 'carré':
           {
             let N = choice([1, 2, 3, 4, 5])
-            if (this.sup2) N = choice([1, 2, 3])
+            if (this.sup2) N = choice([1, 2])
             fonction = (x: number) => x ** 2
             derivee = (x: number) => 2 * x
             tolerance = 0.005
@@ -186,7 +186,8 @@ export default class EncadrerAvecFctRef extends Exercice {
           }
           break
         case 'inverse': {
-          const N = choice([1, 2, 3])
+          let N = choice([1, 2, 3])
+          if (this.sup2) N = 3
           fonction = (x: number) => 1 / x
           derivee = (x: number) => -1 / x / x
           tolerance = 0.000001
