@@ -43,7 +43,8 @@ const callback = async (page: Page, view: View, variation: Variation) => {
       }
       await page.waitForTimeout(100) // to limit white screenshots
       await action(page, view, variation, String(i + 1))
-      if (scenario.callbackBeforeNavigation) await scenario.callbackBeforeNavigation(page, i)
+      const viewSpecificExceptions = (view === 'diaporama' && i === scenario.navigationSelectors.length) // there is no correction to show in diaporama's ending screen
+      if (scenario.callbackBeforeNavigation && !viewSpecificExceptions) await scenario.callbackBeforeNavigation(page, i)
       if (scenario.navigationSelectors[i] !== '' && i < scenario.navigationSelectors.length) await page.locator(scenario.navigationSelectors[i]).click()
     }
   } else {
