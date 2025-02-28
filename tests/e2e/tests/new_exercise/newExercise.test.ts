@@ -27,7 +27,7 @@ type Scenario = {
 }
 
 const callback = async (page: Page, view: View, variation: Variation) => {
-  const scenario = getScenario(page, view, variation)
+  const scenario = await getScenario(page, view, variation)
   if (scenario.isMultiplePagesView) {
     if (!scenario.navigationSelectors || scenario.navigationSelectors.length === 0) {
       console.error('View has multiple pages but no navigation selector is found') // Je ne sais pas pourquoi mais the throw new Error apparaît comme <empty line> dans la console et donc on ne sait pas ce qui a causé l'erreur
@@ -71,8 +71,8 @@ async function action (page: Page, view: View, variation: Variation, append?: st
   await page.screenshot({ path: `screenshots/${id}/${view}${variation !== '' ? `-${variation}` : ''}${append !== undefined ? `-${append}` : ''}.png` })
 }
 
-function getScenario (page: Page, view: View, variation: Variation): Scenario {
-  const questionsNb = parseInt(getUrlParam(page, 'n'))
+async function getScenario (page: Page, view: View, variation: Variation): Promise<Scenario> {
+  const questionsNb = Math.max((await page.locator('.list-inside li').all()).length, 1)
   if (view === 'start') {
     return {
       displayCorrectionSelectors: ['.bx-check-circle']
@@ -84,7 +84,7 @@ function getScenario (page: Page, view: View, variation: Variation): Scenario {
     }
     return {
       displayCorrectionSelectors: [],
-      isMultiplePagesView: true,
+      isMultiplePagesView: true, // always true since we have to click next to go to the final screen
       navigationSelectors: new Array(questionsNb).fill('.bx-skip-next'),
       callbackBeforeNavigation
     }
@@ -100,13 +100,13 @@ function getScenario (page: Page, view: View, variation: Variation): Scenario {
       }
       return {
         displayCorrectionSelectors: new Array(questionsNb).fill('.bx-toggle-right:not(.hidden .bx-toggle-right)'),
-        isMultiplePagesView: true,
+        isMultiplePagesView: questionsNb > 1,
         navigationSelectors
       }
     } else if (variation === 'Course aux nombres') {
       return {
         displayCorrectionSelectors: [],
-        isMultiplePagesView: true,
+        isMultiplePagesView: questionsNb > 1,
         navigationSelectors: new Array(questionsNb - 1).fill('.bxs-chevron-right')
       }
     } else if (variation === 'Toutes les questions sur une page') {
