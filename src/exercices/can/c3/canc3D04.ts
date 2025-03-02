@@ -33,8 +33,12 @@ export default class ExerciceInteractiveClock extends Exercice {
 
   nouvelleVersion (numeroExercice: number, numeroQuestion?: number) {
     for (let i = numeroQuestion ?? 0, cpt = 0; i < (numeroQuestion ? numeroQuestion + 1 : this.nbQuestions) && cpt < 50;) {
-      const hour = randint(1, 12)
-      const minute = randint(1, 11) * 5
+      let hour = randint(1, 12)
+      let minute = randint(1, 11) * 5
+      if (this.canOfficielle) {
+        hour = 13
+        minute = 30
+      }
       let enonce = `Placer correctement les aiguilles pour indiquer ${hour} h ${formatMinute(minute)}.`
       if (context.isHtml) {
         enonce += `<br><br><interactive-clock id="clockEx${this.numeroExercice}Q${i}" isDynamic="${this.interactif}" showHands="${this.interactif}"/>`
@@ -73,7 +77,7 @@ export default class ExerciceInteractiveClock extends Exercice {
     if (this.answers == null) this.answers = {}
     // Sauvegarde de la réponse pour Capytale
     this.answers[id] = `${hour}h${minute}`
-    if (hour === this.goodAnswers[i].hour && minute === this.goodAnswers[i].minute) {
+    if (hour === formatHour012(this.goodAnswers[i].hour) && minute === this.goodAnswers[i].minute) {
       const divFeedback = document.createElement('div')
       divFeedback.innerHTML = '😎'
       clock.parentElement?.appendChild(divFeedback)
@@ -84,5 +88,14 @@ export default class ExerciceInteractiveClock extends Exercice {
       clock.parentElement?.appendChild(divFeedback)
       return 'KO'
     }
+  }
+}
+
+function formatHour012 (hour: string): string {
+  const hourNumber = parseInt(hour)
+  if (hourNumber > 12) {
+    return (hourNumber - 12).toString()
+  } else {
+    return hourNumber.toString()
   }
 }
