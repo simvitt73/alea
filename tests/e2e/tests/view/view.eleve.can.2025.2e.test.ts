@@ -26,13 +26,13 @@ async function testEleveView () {
     '300',
     '6',
     '15',
-    '\\dfrac{1}{7}',
+    '\\dfrac{1}{3}',
     '\\overrightarrow{AB}=\\overrightarrow{B{\\placeholder[champ1]{G}}}', // 'F'
     '\\overrightarrow{DE}={\\placeholder[champ1]{-2}}\\overrightarrow{AB}',
     '30',
     '\\dfrac{2}{3}',
     '1',
-    '\\emptyset',
+    '\\{-\\sqrt3;\\sqrt3\\}',
     '4-12x+9x^2',
     '5'
 
