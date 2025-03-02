@@ -114,6 +114,9 @@
           }
         })
         answers[i] = qcmAnswers.join(" ; ")
+        exercice.answers![
+          `Ex${indiceExercice[i]}Q${indiceQuestionInExercice[i]}`
+        ] = answers[i]
       } else if (type === "listeDeroulante") {
         resultsByQuestion[i] =
           verifQuestionListeDeroulante(
