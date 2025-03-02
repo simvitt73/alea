@@ -164,13 +164,13 @@
     if ($globalOptions.v === 'myriade') {
       $vendor.product = {
         name: 'indices',
-        logoPath: 'assets/images/vendors/bordas/myriade_logo.png'
+        logoPath: 'assets/images/vendors/bordas/myriade-bordas-logo.png'
       }
     }
     if ($globalOptions.v === 'indices') {
       $vendor.product = {
         name: 'indices',
-        logoPath: 'assets/images/vendors/bordas/indices_logo.png'
+        logoPath: 'assets/images/vendors/bordas/indices-bordas-logo.png'
       }
     }
     context.vue = ''

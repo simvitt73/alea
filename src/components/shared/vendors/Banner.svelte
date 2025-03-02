@@ -3,9 +3,9 @@
   import ButtonIconTooltip from "../forms/ButtonIconTooltip.svelte"
 
   export let brandImagePath: string | null =
-    "assets/images/vendors/bordas/bordas_logo.png"
+    null
   export let productImagePath: string | null =
-    "assets/images/vendors/bordas/myriade_logo.png"
+    "assets/images/vendors/bordas/myriade-bordas-logo.png"
   export let icon: string = "bxs-cog"
 
   function goToVueProf() {
@@ -29,7 +29,9 @@
     />
     <div class="flex flex-row m-0 p-0 items-center justify-center space-x-3">
       <img class="h-6 lg:h-8" src={productImagePath} alt="Manual" />
+    {#if brandImagePath}
       <img class="h-6 lg:h-8" src={brandImagePath} alt="Brand" />
+    {/if}
     </div>
     <ButtonIconTooltip
       {icon}
