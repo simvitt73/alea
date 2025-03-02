@@ -106,9 +106,9 @@
           clocks[0].addEventListener('click', () => $canOptions.questionGetAnswer[index] = true)
         } else {
           const qcm = questionContainer?.querySelectorAll('input')
-          if (qcm.length < 2) {
+          if (qcm.length < 2 && qcm.length !== 0) {
             window.notify(
-              'Question.svelte vérifie un qcm qui n\'a pas 2 inputs minimum ou alors, il n\'y a pas d\'input',
+              'Question.svelte vérifie un qcm qui n\'a pas 2 inputs minimum',
               { qcm: JSON.stringify(qcm) }
             )
             $canOptions.questionGetAnswer[index] = false
