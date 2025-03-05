@@ -227,7 +227,7 @@
   bind:this={questionContainer}
 >
   {#if mode === 'display' || mode === 'correction'}
-    <div style='padding:15px;' class='flex overflow-x-auto overflow-y-auto'>
+    <div style='padding:15px;' class='flex flex-col overflow-x-auto overflow-y-auto'>
       <div class='text-pretty'>
         <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html consigne}
