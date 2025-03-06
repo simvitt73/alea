@@ -145,7 +145,7 @@ export const splitExercisesIntoQuestions = (
       exercice.listeCorrections = []
     }
     for (let i = 0; i < exercice.listeQuestions.length; i++) {
-      consignes.push(exercice?.consigne + exercice?.introduction)
+      consignes.push(`${exercice?.consigne} ${exercice?.consigne && exercice?.introduction ? '<br>\n' : ''} ${exercice?.introduction}`)
       indiceExercice.push(k)
       indiceQuestionInExercice.push(i)
       if (exercice.consigneCorrection !== undefined) {
