@@ -9,6 +9,10 @@ import type FractionEtendue from '../modules/FractionEtendue'
 import type Decimal from 'decimal.js'
 import type Hms from '../modules/Hms'
 
+type Reponse = string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Hms | Grandeur[] | Hms[] | Decimal[] | FractionEtendue[]
+type Bareme = (listePoints: number[]) => [number, number]
+type ReponseComplexe = Reponse | { champ1?: { value: Reponse }, champ2?: { value: Reponse }, bareme?: Bareme }
+
 /**
  *
  *  Classe parente de tous les exercices.
@@ -41,7 +45,7 @@ export default class Exercice {
   listeCanLiees: number[][] = []
   listeCanNumerosLies: number[] = []
   question?: string // Seulement pour les exercices de type simple
-  reponse?: string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Hms | Grandeur[] | Hms[] | Decimal[] | FractionEtendue[] // Seulement pour les exercices de type simple
+  reponse?: ReponseComplexe // Seulement pour les exercices de type simple
   correction?: string // Seulement pour les exercices de type simple
   canOfficielle?: boolean = false
   canEnonce?: string // Seulement pour les exercices de type simple ??? NON ! NOTE de Jena-claude Lhote du 2/02/2025 : et pourquoi ça ???
