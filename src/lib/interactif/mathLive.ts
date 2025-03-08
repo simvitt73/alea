@@ -164,7 +164,7 @@ export function verifQuestionMathLive (exercice: Exercice, i: number, writeResul
           if (result.feedback != null) feedback += result.feedback
         }
         if (compteurBonnesReponses === variables.length) feedback = ''
-        else if (compteurBonnesReponses === 0 && compteurSaisiesVides === 0) feedback = variables.length === 1 ? ' Le résultat n\'est correct.' : ' Aucun résultat n\'est correct.'
+        else if (compteurBonnesReponses === 0 && compteurSaisiesVides === 0) feedback = variables.length === 1 ? ' Le résultat n\'est pas correct.' : ' Aucun résultat n\'est correct.'
 
         if (compteurSaisiesVides === 1) feedback += ` Il manque une réponse dans ${variables.length === 1 ? 'la' : 'une'} zone de saisie.<br>`
         else if (compteurSaisiesVides > 1) feedback += ` Il manque une réponse dans ${compteurSaisiesVides} zones de saisie.<br>`
