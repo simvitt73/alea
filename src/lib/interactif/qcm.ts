@@ -297,6 +297,10 @@ export function propositionsQcm (exercice: Exercice, i: number, options: { style
     texte += `</div><div class="m-2" id="resultatCheckEx${exercice.numeroExercice}Q${i}"></div>`
     texteCorr += '</div><div class="m-2"></div>'
   }
+  if (!context.isHtml) {
+    texte = '\\\\' + texte
+    texteCorr = '\\\\' + texteCorr
+  }
   return { texte, texteCorr, indexes }
 }
 
