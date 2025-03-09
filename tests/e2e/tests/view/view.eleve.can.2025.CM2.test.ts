@@ -31,7 +31,7 @@ async function testEleveView () {
     '3,2',
     '',
     '1,5',
-    '4{\\:\\text{h}\\:}10{\\:\\text{min}\\:}',
+    '250\\text{ min }=~\\placeholder[champ1]{4}~\\text{h}~\\placeholder[champ2]{10}~\\text{min}',
     '2,4',
     '540',
     '12',

@@ -30,7 +30,7 @@ async function testEleveView () {
     '0,31',
     '3',
     '', // Q25
-    'E',
+    '',
     '30',
     '2,4',
     '18,5',
@@ -42,7 +42,8 @@ async function testEleveView () {
     'checkEx0Q14R1',
     'checkEx0Q15R0',
     'checkEx0Q18R0',
-    'checkEx0Q24R0'
+    'checkEx0Q24R0',
+    'checkEx0Q25R4'
   ]
   const page = await getDefaultPage()
   const hostname = `http://localhost:${process.env.CI ? '80' : '5173'}/alea/`
@@ -67,7 +68,7 @@ async function testEleveView () {
   await button.click()
   const stringScore = await page.locator('#divScoreEx0').first().innerText()
   // Attendre 5 minutes pour analyser les résultats
-  // await page.waitForTimeout(5 * 60 * 1000)
+   await page.waitForTimeout(5 * 60 * 1000)
   await expect(stringScore).toBe('30 / 30')
   return true
 }
