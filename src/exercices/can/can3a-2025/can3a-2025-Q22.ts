@@ -29,8 +29,8 @@ export default class CalculMoyenne extends Exercice {
 
   nouvelleVersion () {
     const a = this.canOfficielle ? -3 : randint(-5, -2)
-    const b = this.canOfficielle ? 5 : randint(6, 10)
-    const d = this.canOfficielle ? 12 : randint(3, 7) * 3
+    const b = this.canOfficielle ? 8 : randint(6, 10)
+    const d = this.canOfficielle ? 15 : randint(3, 7) * 3
 
     const c = d - a - b
     this.reponse = d / 3
