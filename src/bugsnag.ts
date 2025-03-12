@@ -31,11 +31,9 @@ function handleBugsnag () {
   })
 }
 
-// Suppression de bugsnag
-// if (document.location.hostname === 'coopmaths.fr') {
-//   // Mgu supprime le await si pas de problème au chargement..
-//   handleBugsnag()
-// }
+if (document.location.hostname === 'coopmaths.fr') {
+  handleBugsnag()
+}
 
 function isDevMode () {
   return window.location.href.startsWith('http://localhost')
