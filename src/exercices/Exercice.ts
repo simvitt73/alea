@@ -11,7 +11,8 @@ import type Hms from '../modules/Hms'
 
 type Reponse = string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Hms | Grandeur[] | Hms[] | Decimal[] | FractionEtendue[]
 type Bareme = (listePoints: number[]) => [number, number]
-type ReponseComplexe = Reponse | { champ1?: { value: Reponse }, champ2?: { value: Reponse }, bareme?: Bareme }
+type CallbackReponse = (exercice: Exercice, question: number) => { isOk: boolean, feedback: string, score: { nbBonnesReponses: number, nbReponses: number } }
+type ReponseComplexe = Reponse | { champ1?: { value: Reponse }, champ2?: { value: Reponse }, bareme?: Bareme, callback?: CallbackReponse }
 
 /**
  *
