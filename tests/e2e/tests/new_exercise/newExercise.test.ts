@@ -125,9 +125,20 @@ async function cleanAuxiliaryFiles (page: Page, view: View, variation: Variation
     await removeFile(`${view}-${variation}.out`)
     if (variation === 'ProfMaquette' || variation === 'ProfMaquetteQrcode') {
       for (let i = 0; i < getExercisesCount(page); i++) {
-        const file = `LaTeX-ProfMaquette${variation === 'ProfMaquetteQrcode' ? 'Qrcode' : ''}-Ex${i + 1}.sol`
-        console.log(`remove ${file}`)
-        await removeFile(`${file}`)
+        try {
+          const file = `LaTeX-ProfMaquette${variation === 'ProfMaquetteQrcode' ? 'Qrcode' : ''}-Ex${i + 1}.sol`
+          console.log(`remove ${file}`)
+          await removeFile(`${file}`)
+        } catch (error) {
+          console.error('file not found')
+        }
+        try {
+          const file = `LaTeX-ProfMaquette${variation === 'ProfMaquetteQrcode' ? 'Qrcode' : ''}-Ma${i + 1}-Ex${i + 1}.sol`
+          console.log(`remove ${file}`)
+          await removeFile(`${file}`)
+        } catch (error) {
+          console.error('file not found')
+        }
       }
     }
   }
