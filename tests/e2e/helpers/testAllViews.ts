@@ -47,21 +47,23 @@ type Form = {
 
 const local = true
 
-export async function testAllViews (page: Page, params: string, callback: CallbackType) {
+export async function testAllViews (page: Page, options: { params: string, onlyOnce?: boolean }, callback: CallbackType) {
   const browser = prefs.browserInstance
   if (browser === null) throw Error('can\'t test a null browser')
   const [context] = browser.contexts()
   const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/?` : 'https://coopmaths.fr/alea/?'
-  await page.goto(hostname + params)
+  await page.goto(hostname + options.params)
   await page.waitForLoadState('networkidle')
-  await callback(page, 'start', '')
-  await checkSlideshow(page, callback)
-  await callback(page, 'start', '')
-  await checkStudent(page, context, callback)
-  await callback(page, 'start', '')
-  await checkLatex(page, callback)
-  await callback(page, 'start', '')
-  await checkAmc(page, callback)
+  await checkEachCombinationOfParams(page, async (page) => {
+    await callback(page, 'start', '')
+    await checkSlideshow(page, callback)
+    await callback(page, 'start', '')
+    await checkStudent(page, context, callback)
+    await callback(page, 'start', '')
+    await checkLatex(page, callback)
+    await callback(page, 'start', '')
+    await checkAmc(page, callback)
+  }, { onlyOnce: options.onlyOnce })
   await callback(page, 'start', '')
 }
 
@@ -95,6 +97,8 @@ async function checkStudent (page: Page, context: BrowserContext, callback: Call
 }
 
 async function checkStudentVariation (variation: Variation, page: Page, browserContext: BrowserContext, callback: CallbackType) {
+  await page.click('text=Présentation classique')
+  await page.click('text=Pas d\'interactivité') // Parce qu'il devient automatiquement "Tout interactif" de temps en temps
   await page.click(`text=${variation}`)
   page.click('text=Visualiser') // Si on await ici, on risque de manquer le context.waitForEvent('page') qui suit
   const newPage = await browserContext.waitForEvent('page')
@@ -185,19 +189,13 @@ async function isAmcAvailable (page: Page): Promise<boolean> {
   return true
 }
 
-export function getUrlParam (page: Page, param: string): string {
-  const url = page.url()
-  if (!url.includes(`${param}=`)) return ''
-  return url.split('?')[1].split('&').filter(el => el.startsWith(`${param}=`))[0].split('=')[1]
-}
-
 export async function getLatexFromPage (page: Page) {
   const questionSelector = 'pre.w-full'
   const locator = page.locator(questionSelector)
   return await locator.innerText()
 }
 
-export async function checkEachCombinationOfParams (page: Page, action: (page: Page) => Promise<void>) {
+export async function checkEachCombinationOfParams (page: Page, action: (page: Page) => Promise<void>, options?: { onlyOnce?: boolean }) {
   const { formChecks, formNums, formTexts } = await getForms(page)
   // On range par ordre décroissant pour facilement exclure les formulaires vides
   const allForms = [formNums, formTexts, formChecks].sort((a, b) => b.length - a.length)
@@ -205,23 +203,27 @@ export async function checkEachCombinationOfParams (page: Page, action: (page: P
   const forms2 = allForms[1]
   const forms3 = allForms[2]
 
-  if (forms1.length === 0) {
+  if (forms1.length === 0 || options?.onlyOnce) {
+    console.log('No form to test')
     await action(page)
   } else {
     for (const form1 of forms1) {
       for (const value1 of form1.values) {
+        console.log('Testing', form1.description, value1)
         await setParam(form1, value1)
         if (forms2.length === 0) {
           await action(page)
         } else {
           for (const form2 of forms2) {
             for (const value2 of form2.values) {
+              console.log('Testing', form2.description, value2)
               await setParam(form2, value2)
               if (forms3.length === 0) {
                 await action(page)
               } else {
                 for (const form3 of forms3) {
                   for (const value3 of form3.values) {
+                    console.log('Testing', form3.description, value3)
                     await setParam(form3, value3)
                     await action(page)
                   }
@@ -277,11 +279,14 @@ async function getForms (page: Page) {
         console.error('Max should be greater than min', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'min:', min, 'max:', max)
         throw new Error('Max should be greater than min')
       }
+      if (max - min > 5) {
+        console.warn('Too many values, slicing down to 5 first', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'min:', min, 'max:', max)
+      }
       formNums.push({
         description: await label.innerHTML(),
         locator: formNum,
         type: 'num',
-        values: rangeMinMax(min, max)
+        values: rangeMinMax(min, max).slice(0, 5)
       })
     }
   }
