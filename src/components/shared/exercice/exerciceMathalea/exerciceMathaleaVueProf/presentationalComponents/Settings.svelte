@@ -158,7 +158,7 @@
         </span>
         <input
           type="number"
-          id="settings-nb-questions-{exercice.uuid}"
+          id="settings-nb-questions-{exerciceIndex}"
           min="1"
           max="100"
           bind:value={nbQuestions}
