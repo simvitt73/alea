@@ -40,7 +40,7 @@ export type CallbackType = (page: Page, view: View, variation: Variation) => Pro
 type Form = {
   description: string,
   locator: Locator,
-  type: 'check' | 'num' | 'text',
+  type: 'check' | 'num' | 'text' | 'select',
   values: string[] | number[] | boolean[]
 }
 
@@ -195,12 +195,13 @@ export async function getLatexFromPage (page: Page) {
 }
 
 export async function checkEachCombinationOfParams (page: Page, action: (page: Page) => Promise<void>, options?: { onlyOnce?: boolean }) {
-  const { formChecks, formNums, formTexts } = await getForms(page)
+  const { formChecks, formNums, formNumSelects, formTexts } = await getForms(page)
   // On range par ordre décroissant pour facilement exclure les formulaires vides
-  const allForms = [formNums, formTexts, formChecks].sort((a, b) => b.length - a.length)
+  const allForms = [formChecks, formNums, formNumSelects, formTexts].sort((a, b) => b.length - a.length)
   const forms1 = allForms[0]
   const forms2 = allForms[1]
   const forms3 = allForms[2]
+  const forms4 = allForms[3]
 
   if (forms1.length === 0 || options?.onlyOnce) {
     console.log('No form to test')
@@ -224,7 +225,17 @@ export async function checkEachCombinationOfParams (page: Page, action: (page: P
                   for (const value3 of form3.values) {
                     console.log('Testing', form3.description, value3)
                     await setParam(page, form3, value3)
-                    await action(page)
+                    if (forms4.length === 0) {
+                      await action(page)
+                    } else {
+                      for (const form4 of forms4) {
+                        for (const value4 of form4.values) {
+                          console.log('Testing', form4.description, value4)
+                          await setParam(page, form4, value4)
+                          await action(page)
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -246,6 +257,9 @@ async function setParam (page: Page, form: Form, value: string | number | boolea
   }
   if (form.type === 'num') {
     await form.locator.fill(value.toString())
+  }
+  if (form.type === 'select') {
+    await form.locator.selectOption({ value: value.toString() })
   }
   if (form.type === 'text') {
     await page.locator('#settings-nb-questions-0').fill(value.toString().split('-').length.toString())
@@ -269,22 +283,44 @@ async function getForms (page: Page) {
     }
   }
   const formNums: Form[] = []
+  const formNumSelects: Form[] = []
   for (let i = 0; i < 5; i++) {
     const formNum = settingsLocator.locator(`#settings-formNum${i + 1}-0`)
+
     if (await formNum.isVisible()) {
+      const elementHandle = await formNum.elementHandle()
+      if (!elementHandle) throw new Error('Element not found')
       const label = formNum.locator('xpath=preceding-sibling::label')
-      const min = Number(await formNum.getAttribute('min'))
-      const max = Number(await formNum.getAttribute('max'))
-      if (max < min) {
-        console.error('Max should be greater than min', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'min:', min, 'max:', max)
-        throw new Error('Max should be greater than min')
+      const tagName = await elementHandle.evaluate(node => node.tagName.toLowerCase())
+
+      if (tagName === 'select') {
+        const options = await formNum.locator('option').all()
+        const allValues = await Promise.all(options.map(option => option.getAttribute('value')))
+        const values = allValues.filter(value => value !== null)
+        console.log(values)
+        formNumSelects.push({
+          description: await label.innerHTML(),
+          locator: formNum,
+          type: 'select',
+          values
+        })
+      } else if (tagName === 'input') {
+        const min = Number(await formNum.getAttribute('min'))
+        const max = Number(await formNum.getAttribute('max'))
+        if (max < min) {
+          console.error('Max should be greater than min', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'min:', min, 'max:', max)
+          throw new Error('Max should be greater than min')
+        }
+        formNums.push({
+          description: await label.innerHTML(),
+          locator: formNum,
+          type: 'num',
+          values: [min, min + 1, max]
+        })
+      } else {
+        console.error('Unknown formNum type', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'tagName:', tagName)
+        throw new Error('Unknown formNum type')
       }
-      formNums.push({
-        description: await label.innerHTML(),
-        locator: formNum,
-        type: 'num',
-        values: [min, min + 1, max]
-      })
     }
   }
   const formTexts: Form[] = []
@@ -304,7 +340,7 @@ async function getForms (page: Page) {
       })
     }
   }
-  return { formTexts, formChecks, formNums }
+  return { formTexts, formChecks, formNums, formNumSelects }
 }
 
 function getAllNumbersFromString (inputString: string) {
