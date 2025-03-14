@@ -9,8 +9,6 @@
     freezeUrl,
     globalOptions,
     isInIframe,
-    isMenuNeededForExercises,
-    resultsByExercice
   } from '../lib/stores/generalStore'
   import { context } from '../modules/context'
   import {
@@ -32,7 +30,6 @@
   import { updateReferentielLocaleFromURL } from '../lib/stores/languagesStore'
   import Alacarte from './setup/alacarte/Alacarte.svelte'
   import { fetchServerVersion } from '../lib/components/version'
-  import { UAParser } from 'ua-parser-js'
   import Popup from './shared/modal/Popup.svelte'
   import { checkBrowserVersion } from '../lib/components/browserVersion'
   import { vendor } from '../lib/stores/vendorStore'
@@ -57,7 +54,6 @@
     }
   })
 
-  context.versionMathalea = 3
   if (customElements.get('alea-instrumenpoche') === undefined) {
     customElements.define('alea-instrumenpoche', ElementInstrumenpoche)
     customElements.define('alea-buttoninstrumenpoche', ElementButtonInstrumenpoche)
@@ -66,44 +62,7 @@
   // charge le numéro de version du serveur
   fetchServerVersion()
 
-  // resultsByExercice.subscribe(value => {
-  //   console.log('resultsByExercice updated')
-  //   console.log(JSON.stringify(value))
-  // })
-
-  // isMenuNeededForExercises.subscribe(value => {
-  //   console.log('isMenuNeededForExercises updated')
-  //   console.log(JSON.stringify(value))
-  // })
-
-  // let globalOptionsParams : any
-  // globalOptions.subscribe(value => {
-  //   console.log('globalOptions updated')
-  //   if (globalOptionsParams){
-  //     if (JSON.stringify(globalOptionsParams) !== JSON.stringify(value)){
-  //       console.log('globalOptionsParams updated and difference')
-  //       console.log(JSON.stringify(globalOptionsParams))
-  //     }
-  //     globalOptionsParams = value
-  //   } else {
-  //     globalOptionsParams = value
-  //   }
-  //   console.log(JSON.stringify(value))
-  // })
-  // let InterfaceExercicesParams : any
-  // exercicesParams.subscribe(value => {
-  //   console.log('exercicesParams updated')
-  //   if (InterfaceExercicesParams){
-  //     if (JSON.stringify(InterfaceExercicesParams) !== JSON.stringify(value)){
-  //       console.log('exercicesParams updated and difference')
-  //       console.log(JSON.stringify(InterfaceExercicesParams))
-  //     }
-  //     InterfaceExercicesParams = value
-  //   } else {
-  //     InterfaceExercicesParams = value
-  //   }
-  //   console.log(JSON.stringify(value))
-  // })
+  
 
   // Gestion des recorders (Moodle, Capytale, etc. )
   // Lorsque la page d'accueil est dans un iFrame, l'URL est bloquée et les boutons d'exports cachés
