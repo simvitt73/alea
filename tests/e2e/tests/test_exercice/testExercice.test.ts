@@ -38,7 +38,7 @@ let questionsNb = 1
 
 const callback = async (page: Page, view: View, variation: Variation) => {
   if (view === 'start') questionsNb = (await page.locator('.list-inside').locator('li').all()).length
-  const scenario = await getScenario(page, view, variation)
+  const scenario = await getScenario(view, variation)
   if (scenario.isMultiplePagesView) {
     if (!scenario.navigationSelectors || scenario.navigationSelectors.length === 0) {
       console.error('View has multiple pages but no navigation selector is found') // Je ne sais pas pourquoi mais the throw new Error apparaît comme <empty line> dans la console et donc on ne sait pas ce qui a causé l'erreur
@@ -79,21 +79,21 @@ const callback = async (page: Page, view: View, variation: Variation) => {
 
 async function compileLaTeX (page: Page, view: View, variation: Variation, latex: string) {
   const texDir = `screenshots/${id}/tex`
-  const fileName = `${texDir}/${view}-${variation}.tex`
-  await writeStringToFile(fileName, latex)
+  const fileName = `${view}-${variation}-${getTimeStamp()}`
+  await writeStringToFile(`${texDir}/${fileName}.tex`, latex)
   const AmcFiles = ['automultiplechoice.sty', 'liste.csv']
 
   try {
-    await prepareCompilation(view, id, AmcFiles)
+    await prepareCompilation(view, AmcFiles)
     await compileLatex(texDir, fileName)
-    await cleanAuxiliaryFiles(page, view, variation, id, fileName, AmcFiles)
-    await movePdfFiles(view, variation, id, fileName)
+    await cleanAuxiliaryFiles(page, view, variation, fileName, AmcFiles)
+    await movePdfFiles(id, fileName)
   } catch (error) {
     console.error('Command execution failed', error)
   }
 }
 
-async function prepareCompilation (view: View, id: string, AmcFiles: string[]) {
+async function prepareCompilation (view: View, AmcFiles: string[]) {
   if (view === 'AMC') {
     for (const file of AmcFiles) {
       console.log(`copy ${file}`)
@@ -108,31 +108,31 @@ async function prepareCompilation (view: View, id: string, AmcFiles: string[]) {
 }
 
 async function compileLatex (texDir: string, fileName: string) {
-  const compilationCommand = `lualatex ${fileName}`
-  console.log(`First compilation of ${fileName}`)
+  const compilationCommand = `lualatex ${texDir}/${fileName}.tex`
+  console.log(`First compilation of ${texDir}/${fileName}.tex`)
   await runShellCommand(compilationCommand)
-  console.log(`Second compilation of ${fileName}`)
+  console.log(`Second compilation of ${texDir}/${fileName}.tex`)
   await runShellCommand(compilationCommand)
 }
 
-async function cleanAuxiliaryFiles (page: Page, view: View, variation: Variation, id: string, fileName: string, AmcFiles: string[]) {
+async function cleanAuxiliaryFiles (page: Page, view: View, variation: Variation, fileName: string, AmcFiles: string[]) {
   console.log(`Cleaning auxiliary filed of ${fileName}`)
-  await removeFile(`${view}-${variation}.aux`)
-  await removeFile(`${view}-${variation}.log`)
+  await removeFile(`${fileName}.aux`)
+  await removeFile(`${fileName}.log`)
   if (view === 'AMC') {
-    await removeFile(`${view}-${variation}.amc`)
+    await removeFile(`${fileName}.amc`)
     for (const file of AmcFiles) {
       console.log(`remove ${file} copy`)
       await removeFile(`${file}`)
     }
   } else if (view === 'LaTeX') {
-    await removeFile(`${view}-${variation}.out`)
+    await removeFile(`${fileName}.out`)
     if (variation === 'ProfMaquette' || variation === 'ProfMaquetteQrcode') {
       for (let i = 0; i < getExercisesCount(page); i++) {
-        let file = `LaTeX-ProfMaquette${variation === 'ProfMaquetteQrcode' ? 'Qrcode' : ''}-Ex${i + 1}.sol`
+        let file = `${fileName}-Ex${i + 1}.sol`
         console.log(`remove ${file}`)
         await removeFile(`${file}`, true)
-        file = `LaTeX-ProfMaquette${variation === 'ProfMaquetteQrcode' ? 'Qrcode' : ''}-Ma${i + 1}-Ex${i + 1}.sol`
+        file = `${fileName}-Ma${i + 1}-Ex${i + 1}.sol`
         console.log(`remove ${file}`)
         await removeFile(`${file}`, true)
       }
@@ -150,17 +150,17 @@ async function removeFile (fileName: string, canFail?: boolean) {
   }
 }
 
-async function movePdfFiles (view: View, variation: Variation, id: string, fileName: string) {
+async function movePdfFiles (id: string, fileName: string) {
   console.log(`Moving generated pdf from ${fileName}`)
   try {
-    await fs.rename(`${view}-${variation}.pdf`, `screenshots/${id}/${view}-${variation}.pdf`)
+    await fs.rename(`${fileName}.pdf`, `screenshots/${id}/${fileName}.pdf`)
     console.log('File moved successfully')
   } catch (err) {
     console.error('Error moving file:', err)
   }
 }
 
-async function getScenario (page: Page, view: View, variation: Variation): Promise<Scenario> {
+async function getScenario (view: View, variation: Variation): Promise<Scenario> {
   if (view === 'start') {
     return {
       displayCorrectionSelectors: ['.bx-check-circle']
@@ -228,8 +228,7 @@ async function displayCorrection (page: Page, scenario: Scenario, displayCorrect
 }
 
 async function action (page: Page, view: View, variation: Variation, append?: string) {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
-  await page.screenshot({ path: `screenshots/${id}/${view}${variation !== '' ? `-${variation}` : ''}${append !== undefined ? `-${append}` : ''}-${timestamp}.png`, fullPage: true })
+  await page.screenshot({ path: `screenshots/${id}/${view}${variation !== '' ? `-${variation}` : ''}${append !== undefined ? `-${append}` : ''}-${getTimeStamp()}.png`, fullPage: true })
 }
 
 async function writeStringToFile (filePath: string, content: string): Promise<void> {
@@ -266,6 +265,10 @@ async function testNanUndefined (page: Page) {
     }
     await page.locator('.bx-refresh.text-3xl').click()
   }
+}
+
+function getTimeStamp () {
+  return new Date().toISOString().replace(/[:.]/g, '-')
 }
 
 if (process.env.CI) {
