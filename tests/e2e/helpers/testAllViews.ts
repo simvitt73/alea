@@ -1,6 +1,5 @@
 import type { BrowserContext, Locator, Page } from 'playwright'
 import prefs from './prefs'
-import { rangeMinMax } from '../../../src/lib/outils/nombres'
 
 export const ViewValidKeys = <const>['start', 'diaporama', 'apercu', 'eleve', 'LaTeX', 'AMC']
 type ViewValidKeysType = typeof ViewValidKeys
@@ -41,7 +40,7 @@ export type CallbackType = (page: Page, view: View, variation: Variation) => Pro
 type Form = {
   description: string,
   locator: Locator,
-  type: 'check' | 'num' | 'text',
+  type: 'check' | 'num' | 'text' | 'select',
   values: string[] | number[] | boolean[]
 }
 
@@ -196,12 +195,13 @@ export async function getLatexFromPage (page: Page) {
 }
 
 export async function checkEachCombinationOfParams (page: Page, action: (page: Page) => Promise<void>, options?: { onlyOnce?: boolean }) {
-  const { formChecks, formNums, formTexts } = await getForms(page)
+  const { formChecks, formNums, formNumSelects, formTexts } = await getForms(page)
   // On range par ordre décroissant pour facilement exclure les formulaires vides
-  const allForms = [formNums, formTexts, formChecks].sort((a, b) => b.length - a.length)
+  const allForms = [formChecks, formNums, formNumSelects, formTexts].sort((a, b) => b.length - a.length)
   const forms1 = allForms[0]
   const forms2 = allForms[1]
   const forms3 = allForms[2]
+  const forms4 = allForms[3]
 
   if (forms1.length === 0 || options?.onlyOnce) {
     console.log('No form to test')
@@ -210,22 +210,32 @@ export async function checkEachCombinationOfParams (page: Page, action: (page: P
     for (const form1 of forms1) {
       for (const value1 of form1.values) {
         console.log('Testing', form1.description, value1)
-        await setParam(form1, value1)
+        await setParam(page, form1, value1)
         if (forms2.length === 0) {
           await action(page)
         } else {
           for (const form2 of forms2) {
             for (const value2 of form2.values) {
               console.log('Testing', form2.description, value2)
-              await setParam(form2, value2)
+              await setParam(page, form2, value2)
               if (forms3.length === 0) {
                 await action(page)
               } else {
                 for (const form3 of forms3) {
                   for (const value3 of form3.values) {
                     console.log('Testing', form3.description, value3)
-                    await setParam(form3, value3)
-                    await action(page)
+                    await setParam(page, form3, value3)
+                    if (forms4.length === 0) {
+                      await action(page)
+                    } else {
+                      for (const form4 of forms4) {
+                        for (const value4 of form4.values) {
+                          console.log('Testing', form4.description, value4)
+                          await setParam(page, form4, value4)
+                          await action(page)
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -237,7 +247,7 @@ export async function checkEachCombinationOfParams (page: Page, action: (page: P
   }
 }
 
-async function setParam (form: Form, value: string | number | boolean) {
+async function setParam (page: Page, form: Form, value: string | number | boolean) {
   if (form.type === 'check') {
     if (value) {
       await form.locator.check()
@@ -248,7 +258,11 @@ async function setParam (form: Form, value: string | number | boolean) {
   if (form.type === 'num') {
     await form.locator.fill(value.toString())
   }
+  if (form.type === 'select') {
+    await form.locator.selectOption({ value: value.toString() })
+  }
   if (form.type === 'text') {
+    await page.locator('#settings-nb-questions-0').fill(value.toString().split('-').length.toString())
     await form.locator.fill(value.toString())
   }
 }
@@ -269,25 +283,43 @@ async function getForms (page: Page) {
     }
   }
   const formNums: Form[] = []
+  const formNumSelects: Form[] = []
   for (let i = 0; i < 5; i++) {
     const formNum = settingsLocator.locator(`#settings-formNum${i + 1}-0`)
+
     if (await formNum.isVisible()) {
+      const elementHandle = await formNum.elementHandle()
+      if (!elementHandle) throw new Error('Element not found')
       const label = formNum.locator('xpath=preceding-sibling::label')
-      const min = Number(await formNum.getAttribute('min'))
-      const max = Number(await formNum.getAttribute('max'))
-      if (max < min) {
-        console.error('Max should be greater than min', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'min:', min, 'max:', max)
-        throw new Error('Max should be greater than min')
+      const tagName = await elementHandle.evaluate(node => node.tagName.toLowerCase())
+
+      if (tagName === 'select') {
+        const options = await formNum.locator('option').all()
+        const allValues = await Promise.all(options.map(option => option.getAttribute('value')))
+        const values = allValues.filter(value => value !== null)
+        formNumSelects.push({
+          description: await label.innerHTML(),
+          locator: formNum,
+          type: 'select',
+          values
+        })
+      } else if (tagName === 'input') {
+        const min = Number(await formNum.getAttribute('min'))
+        const max = Number(await formNum.getAttribute('max'))
+        if (max < min) {
+          console.error('Max should be greater than min', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'min:', min, 'max:', max)
+          throw new Error('Max should be greater than min')
+        }
+        formNums.push({
+          description: await label.innerHTML(),
+          locator: formNum,
+          type: 'num',
+          values: [min, min + 1, max]
+        })
+      } else {
+        console.error('Unknown formNum type', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'tagName:', tagName)
+        throw new Error('Unknown formNum type')
       }
-      if (max - min > 5) {
-        console.warn('Too many values, slicing down to 5 first', 'url', page.url(), 'formulaire:', `#settings-formNum${i + 1}-0`, 'label:', label, 'min:', min, 'max:', max)
-      }
-      formNums.push({
-        description: await label.innerHTML(),
-        locator: formNum,
-        type: 'num',
-        values: rangeMinMax(min, max).slice(0, 5)
-      })
     }
   }
   const formTexts: Form[] = []
@@ -297,15 +329,17 @@ async function getForms (page: Page) {
       const parent = formText.locator('..')
       const label = parent.locator('xpath=preceding-sibling::label')
       const dataTip = await parent.getAttribute('data-tip')
+      const allNumbers = getAllNumbersFromString(dataTip || '')
+      const uniqueNumbers = Array.from(new Set(allNumbers))
       formTexts.push({
         description: await label.innerHTML(),
         locator: formText,
         type: 'text',
-        values: getAllNumbersFromString(dataTip || '')
+        values: [uniqueNumbers.map(num => num.toString()).join('-')]
       })
     }
   }
-  return { formTexts, formChecks, formNums }
+  return { formTexts, formChecks, formNums, formNumSelects }
 }
 
 function getAllNumbersFromString (inputString: string) {
