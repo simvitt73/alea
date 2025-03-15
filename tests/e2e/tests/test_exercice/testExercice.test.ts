@@ -35,10 +35,14 @@ type Scenario = {
 }
 
 let questionsNb = 1
+let isFirstPage = true
 
-const callback = async (page: Page, view: View, variation: Variation) => {
-  if (view === 'start') questionsNb = (await page.locator('.list-inside').locator('li').all()).length
-  const scenario = await getScenario(view, variation)
+const callback = async (page: Page, description: string, view: View, variation: Variation) => {
+  if (view === 'start' && isFirstPage) {
+    questionsNb = (await page.locator('.list-inside').locator('li').all()).length
+    isFirstPage = false // des fois questionsNb n'est pas défini lorsqu'on lance la course aux nombres, peut-être pour ça ?
+  }
+  const scenario = await getScenario(description, view, variation)
   if (scenario.isMultiplePagesView) {
     if (!scenario.navigationSelectors || scenario.navigationSelectors.length === 0) {
       console.error('View has multiple pages but no navigation selector is found') // Je ne sais pas pourquoi mais the throw new Error apparaît comme <empty line> dans la console et donc on ne sait pas ce qui a causé l'erreur
@@ -53,7 +57,7 @@ const callback = async (page: Page, view: View, variation: Variation) => {
         await displayCorrection(page, scenario, i)
       }
       await page.waitForTimeout(100) // to limit white screenshots
-      await action(page, view, variation, String(i + 1))
+      await action(page, description, view, variation, String(i + 1))
       const viewSpecificExceptions = (view === 'diaporama' && i === scenario.navigationSelectors.length) // there is no correction to show in diaporama's ending screen
       if (scenario.callbackBeforeNavigation && !viewSpecificExceptions) await scenario.callbackBeforeNavigation(page, i)
       if (scenario.navigationSelectors[i] !== '' && i < scenario.navigationSelectors.length) await page.locator(scenario.navigationSelectors[i]).click()
@@ -69,17 +73,17 @@ const callback = async (page: Page, view: View, variation: Variation) => {
       } else {
         latex = await getLatexFromPage(page)
       }
-      await compileLaTeX(page, view, variation, latex)
+      await compileLaTeX(page, description, view, variation, latex)
     } else {
       await displayCorrection(page, scenario, 0)
-      await action(page, view, variation)
+      await action(page, description, view, variation)
     }
   }
 }
 
-async function compileLaTeX (page: Page, view: View, variation: Variation, latex: string) {
+async function compileLaTeX (page: Page, description: string, view: View, variation: Variation, latex: string) {
   const texDir = `screenshots/${id}/tex`
-  const fileName = `${view}-${variation}-${getTimeStamp()}`
+  const fileName = `${view}-${variation}${description !== '' ? `-${description}` : ''}`
   await writeStringToFile(`${texDir}/${fileName}.tex`, latex)
   const AmcFiles = ['automultiplechoice.sty', 'liste.csv']
 
@@ -160,7 +164,7 @@ async function movePdfFiles (id: string, fileName: string) {
   }
 }
 
-async function getScenario (view: View, variation: Variation): Promise<Scenario> {
+async function getScenario (description: string, view: View, variation: Variation): Promise<Scenario> {
   if (view === 'start') {
     return {
       displayCorrectionSelectors: ['.bx-check-circle']
@@ -168,7 +172,7 @@ async function getScenario (view: View, variation: Variation): Promise<Scenario>
   } else if (view === 'diaporama') {
     const callbackBeforeNavigation = async (page: Page, i: number) => {
       await page.locator('.bx-show').click()
-      await action(page, view, variation, `${i + 1}-correction`)
+      await action(page, description, view, variation, `${i + 1}-correction`)
     }
     return {
       displayCorrectionSelectors: [],
@@ -227,8 +231,8 @@ async function displayCorrection (page: Page, scenario: Scenario, displayCorrect
   }
 }
 
-async function action (page: Page, view: View, variation: Variation, append?: string) {
-  await page.screenshot({ path: `screenshots/${id}/${view}${variation !== '' ? `-${variation}` : ''}${append !== undefined ? `-${append}` : ''}-${getTimeStamp()}.png`, fullPage: true })
+async function action (page: Page, description: string, view: View, variation: Variation, append?: string) {
+  await page.screenshot({ path: `screenshots/${id}/${view}${variation !== '' ? `-${variation}` : ''}${append !== undefined ? `-${append}` : ''}${description !== '' ? `-${description}` : ''}.png`, fullPage: true })
 }
 
 async function writeStringToFile (filePath: string, content: string): Promise<void> {
@@ -261,7 +265,7 @@ async function testNanUndefined (page: Page) {
     const NaNLocators = await page.locator('text=NaN').all()
     const undefinedLocators = await page.locator('text=undefined').all()
     if (NaNLocators.length > 0 || undefinedLocators.length > 0) {
-      await action(page, 'start', '', `NaN-undefined-${i + 1}`)
+      await action(page, `NanUndefined ${getTimeStamp()}`, 'start', '', `NaN-undefined-${i + 1}`)
     }
     await page.locator('.bx-refresh.text-3xl').click()
   }

@@ -29,19 +29,19 @@ async function test (page: Page) {
   const classicExerciseParams = 'uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true&uuid=0e6bd&id=6C10-1&n=10&d=10&s=2-3-4-5-6-7-8-9-10&s2=1&s3=true'
   exerciseType = 'classique'
   log('Testing classic exercise')
-  await testAllViews(page, { params: classicExerciseParams, onlyOnce: true }, callback)
+  await testAllViews(page, { params: classicExerciseParams, onlyOnce: true, isFullViews: true }, callback)
   logState()
   const simpleExerciseParams = 'uuid=4ba86&id=canc3C04&n=10&d=10&cd=1&uuid=4ba86&id=canc3C04&n=10&d=10&cd=1'
   exerciseType = 'simple'
   log('Testing simple exercise')
-  await testAllViews(page, { params: simpleExerciseParams, onlyOnce: true }, callback)
+  await testAllViews(page, { params: simpleExerciseParams, onlyOnce: true, isFullViews: true }, callback)
   logState()
   log('Check differences')
   return isConsistent()
 }
 
-const callback = async (page: Page, view: View, variation: Variation) => {
-  log(`Testing ${view} ${variation}`)
+const callback = async (page: Page, description: string, view: View, variation: Variation) => {
+  log(`Testing ${view} ${variation} ${description}`)
   if (view === 'diaporama') {
     await diaporamaStatePush(page, view)
   } else if (view === 'LaTeX' || view === 'AMC') {
