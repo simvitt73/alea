@@ -700,8 +700,11 @@ export function mathaleaHandleExerciceSimple (exercice: TypeExercice, isInteract
         }
       } else {
         // La question doit contenir une unique variable %{champ1} On est en fillInTheBlank
+        // Ou bien, on fait appel à un callback
         exercice.listeQuestions.push(remplisLesBlancs(exercice, i, String(exercice.question), 'fillInTheBlank ' + exercice.formatChampTexte, '\\ldots'))
-        if (typeof exercice.reponse === 'object' && 'champ1' in exercice.reponse) {
+        if (typeof exercice.reponse === 'object' && 'callback' in exercice.reponse) { // Cas d'un callback dans un exercice simple
+          handleAnswers(exercice, i, exercice.reponse)
+        } else if (typeof exercice.reponse === 'object' && 'champ1' in exercice.reponse) {
           handleAnswers(exercice, i, exercice.reponse as Valeur, { formatInteractif: 'fillInTheBlank' })
         } else {
           handleAnswers(exercice, i, { champ1: { value: exercice.reponse ?? '' } }, { formatInteractif: 'fillInTheBlank' })
