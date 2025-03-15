@@ -35,7 +35,7 @@ export function isAMCVariation (obj: unknown): obj is AMCVariation {
 
 export type Variation = '' | StudentVariation | LatexVariation | AMCVariation
 
-export type CallbackType = (page: Page, view: View, variation: Variation) => Promise<void>
+export type CallbackType = (page: Page, description: string, view: View, variation: Variation) => Promise<void>
 
 type Form = {
   description: string,
@@ -46,56 +46,56 @@ type Form = {
 
 const local = true
 
-export async function testAllViews (page: Page, options: { params: string, onlyOnce?: boolean }, callback: CallbackType) {
+export async function testAllViews (page: Page, options: { params: string, onlyOnce?: boolean, isFullViews?: boolean }, callback: CallbackType) {
   const browser = prefs.browserInstance
   if (browser === null) throw Error('can\'t test a null browser')
   const [context] = browser.contexts()
   const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/?` : 'https://coopmaths.fr/alea/?'
   await page.goto(hostname + options.params)
   await page.waitForLoadState('networkidle')
-  await checkEachCombinationOfParams(page, async (page) => {
-    await callback(page, 'start', '')
-    await checkSlideshow(page, callback)
-    await callback(page, 'start', '')
-    await checkStudent(page, context, callback)
-    await callback(page, 'start', '')
-    await checkLatex(page, callback)
-    await callback(page, 'start', '')
-    await checkAmc(page, callback)
-  }, { onlyOnce: options.onlyOnce })
-  await callback(page, 'start', '')
+  await checkEachCombinationOfParams(page, async (page, description, isFullViews) => {
+    await callback(page, description, 'start', '')
+    await checkSlideshow(page, description, callback, isFullViews)
+    await callback(page, description, 'start', '')
+    if (isFullViews) await checkStudent(page, description, context, callback)
+    if (isFullViews) await callback(page, description, 'start', '')
+    await checkLatex(page, description, callback, isFullViews)
+    if (isFullViews) await callback(page, description, 'start', '')
+    if (isFullViews) await checkAmc(page, description, callback)
+  }, { onlyOnce: options.onlyOnce, isFullViews: options.isFullViews })
+  await callback(page, '', 'start', '')
 }
 
-async function checkSlideshow (page: Page, callback: CallbackType) {
+async function checkSlideshow (page: Page, description: string, callback: CallbackType, isFullViews: boolean) {
   await page.locator('div[data-tip="Diaporama"]').click()
   await page.waitForURL(url => url.searchParams.get('v') === 'diaporama')
-  await checkSlideshowPlay(page, callback)
-  await checkSlideshowPreview(page, callback)
+  if (isFullViews) await checkSlideshowPlay(page, description, callback)
+  await checkSlideshowPreview(page, description, callback)
   await page.locator('.bx-x').first().click()
 }
 
-async function checkSlideshowPlay (page: Page, callback: CallbackType) {
+async function checkSlideshowPlay (page: Page, description: string, callback: CallbackType) {
   await page.locator('#diaporama-play-button').click()
-  await callback(page, 'diaporama', '')
+  await callback(page, description, 'diaporama', '')
 }
 
-async function checkSlideshowPreview (page: Page, callback: CallbackType) {
+async function checkSlideshowPreview (page: Page, description: string, callback: CallbackType) {
   await page.locator('.bx-detail').click()
-  await callback(page, 'apercu', '')
+  await callback(page, description, 'apercu', '')
   await page.locator('.bx-arrow-back').click()
 }
 
-async function checkStudent (page: Page, context: BrowserContext, callback: CallbackType) {
+async function checkStudent (page: Page, description: string, context: BrowserContext, callback: CallbackType) {
   await page.locator('.bx-link').click()
-  await checkStudentVariation('Tous les exercices sur une page', page, context, callback)
-  if (getExercisesCount(page) > 1) await checkStudentVariation('Une page par exercice', page, context, callback)
-  await checkStudentVariation('Toutes les questions sur une page', page, context, callback)
-  await checkStudentVariation('Une page par question', page, context, callback)
-  await checkStudentVariation('Course aux nombres', page, context, callback)
+  await checkStudentVariation('Tous les exercices sur une page', page, description, context, callback)
+  if (getExercisesCount(page) > 1) await checkStudentVariation('Une page par exercice', page, description, context, callback)
+  await checkStudentVariation('Toutes les questions sur une page', page, description, context, callback)
+  await checkStudentVariation('Une page par question', page, description, context, callback)
+  await checkStudentVariation('Course aux nombres', page, description, context, callback)
   await page.locator('.bx-x').first().click()
 }
 
-async function checkStudentVariation (variation: Variation, page: Page, browserContext: BrowserContext, callback: CallbackType) {
+async function checkStudentVariation (variation: Variation, page: Page, description: string, browserContext: BrowserContext, callback: CallbackType) {
   await page.click('text=Présentation classique')
   await page.click('text=Pas d\'interactivité') // Parce qu'il devient automatiquement "Tout interactif" de temps en temps
   await page.click(`text=${variation}`)
@@ -107,7 +107,7 @@ async function checkStudentVariation (variation: Variation, page: Page, browserC
     await newPage.click('text=Démarrer')
     await newPage.waitForTimeout(6000)
   }
-  await callback(newPage, 'eleve', variation)
+  await callback(newPage, description, 'eleve', variation)
   await newPage.close()
 }
 
@@ -117,19 +117,21 @@ export function getExercisesCount (page: Page): number {
   return matches ? matches.length : 0
 }
 
-async function checkLatex (page: Page, callback: CallbackType) {
-  await checkLatexVariation(page, 'LaTeX', 'Coopmaths', callback)
-  await checkLatexVariation(page, 'LaTeX', 'Classique', callback)
-  await checkLatexVariation(page, 'LaTeX', 'ProfMaquette', callback)
-  await checkLatexVariation(page, 'LaTeX', 'ProfMaquetteQrcode', callback)
-  await checkLatexVariation(page, 'LaTeX', 'Can', callback)
+async function checkLatex (page: Page, description: string, callback: CallbackType, isFullViews: boolean) {
+  await checkLatexVariation(page, description, 'LaTeX', 'Coopmaths', callback)
+  if (isFullViews) {
+    await checkLatexVariation(page, description, 'LaTeX', 'Classique', callback)
+    await checkLatexVariation(page, description, 'LaTeX', 'ProfMaquette', callback)
+    await checkLatexVariation(page, description, 'LaTeX', 'ProfMaquetteQrcode', callback)
+    await checkLatexVariation(page, description, 'LaTeX', 'Can', callback)
+  }
 }
 
-async function checkLatexVariation (page: Page, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation, callback: CallbackType) {
+async function checkLatexVariation (page: Page, description: string, view: 'LaTeX' | 'AMC', variation: LatexVariation | AMCVariation, callback: CallbackType) {
   await page.locator(`button[data-tip="${view}"]`).click()
   await page.click(`input[type="radio"][value="${variation}"]`)
   await waitForLatex(page, variation)
-  await callback(page, view, variation)
+  await callback(page, description, view, variation)
   await page.locator('.bx-x').first().click()
 }
 
@@ -168,11 +170,11 @@ async function waitForLatex (page: Page, model: LatexVariation | AMCVariation) {
   }
 }
 
-async function checkAmc (page: Page, callback: CallbackType) {
+async function checkAmc (page: Page, description: string, callback: CallbackType) {
   if (!await isAmcAvailable(page)) return
-  await checkLatexVariation(page, 'AMC', 'AMCcodeGrid', callback)
-  await checkLatexVariation(page, 'AMC', 'AMCassociation', callback)
-  await checkLatexVariation(page, 'AMC', 'manuscrits', callback)
+  await checkLatexVariation(page, description, 'AMC', 'AMCcodeGrid', callback)
+  await checkLatexVariation(page, description, 'AMC', 'AMCassociation', callback)
+  await checkLatexVariation(page, description, 'AMC', 'manuscrits', callback)
 }
 
 async function isAmcAvailable (page: Page): Promise<boolean> {
@@ -194,56 +196,98 @@ export async function getLatexFromPage (page: Page) {
   return await locator.innerText()
 }
 
-export async function checkEachCombinationOfParams (page: Page, action: (page: Page) => Promise<void>, options?: { onlyOnce?: boolean }) {
+export async function checkEachCombinationOfParams (page: Page, action: (page: Page, description: string, isFullViews: boolean) => Promise<void>, options?: { onlyOnce?: boolean, isFullCombinations?: boolean, isFullViews?: boolean }) {
   const { formChecks, formNums, formNumSelects, formTexts } = await getForms(page)
-  // On range par ordre décroissant pour facilement exclure les formulaires vides
-  const allForms = [formChecks, formNums, formNumSelects, formTexts].sort((a, b) => b.length - a.length)
-  const forms1 = allForms[0]
-  const forms2 = allForms[1]
-  const forms3 = allForms[2]
-  const forms4 = allForms[3]
+  // On range par ordre décroissant pour facilement exclure les formulaires vides dans le fullTest
+  // C'est important de garder les formTexts en premier pour avoir tous les types de question pour le simpleTest et les formCheck ensuite pour les corrections détaillées
+  const allForms = [...formTexts, ...formChecks, ...formNums, ...formNumSelects].filter(form => form.values.length > 0)
+  const form1 = allForms[0]
+  const form2 = allForms[1]
+  const form3 = allForms[2]
+  const form4 = allForms[3]
+  const form5 = allForms[4]
 
-  if (forms1.length === 0 || options?.onlyOnce) {
+  if (!form1 || options?.onlyOnce) {
     console.log('No form to test')
-    await action(page)
+    await action(page, '', options?.isFullViews || false)
+    return
+  }
+  if (options?.isFullCombinations) {
+    await fullTest(page, form1, form2, form3, form4, form5, action, options?.isFullViews || false)
   } else {
-    for (const form1 of forms1) {
-      for (const value1 of form1.values) {
-        console.log('Testing', form1.description, value1)
-        await setParam(page, form1, value1)
-        if (forms2.length === 0) {
-          await action(page)
-        } else {
-          for (const form2 of forms2) {
-            for (const value2 of form2.values) {
-              console.log('Testing', form2.description, value2)
-              await setParam(page, form2, value2)
-              if (forms3.length === 0) {
-                await action(page)
-              } else {
-                for (const form3 of forms3) {
-                  for (const value3 of form3.values) {
-                    console.log('Testing', form3.description, value3)
-                    await setParam(page, form3, value3)
-                    if (forms4.length === 0) {
-                      await action(page)
-                    } else {
-                      for (const form4 of forms4) {
-                        for (const value4 of form4.values) {
-                          console.log('Testing', form4.description, value4)
-                          await setParam(page, form4, value4)
-                          await action(page)
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+    await simpleTest(page, form1, form2, form3, form4, form5, action, options?.isFullViews || false)
+  }
+}
+
+async function fullTest (page: Page, form1: Form, form2: Form, form3: Form, form4: Form, form5: Form, action: (page: Page, description: string, isFullViews: boolean) => Promise<void>, isFullViews: boolean) {
+  for (const value1 of form1.values) {
+    console.log('Testing', form1.description, value1)
+    await setParam(page, form1, value1)
+    if (!form2) {
+      await action(page, `${form1.description}_${value1}`, isFullViews)
+      continue
+    }
+    for (const value2 of form2.values) {
+      console.log('Testing', form2.description, value2)
+      await setParam(page, form2, value2)
+      if (!form3) {
+        await action(page, `${form1.description}_${value1}-${form2.description}_${value2}`, isFullViews)
+        continue
+      }
+      for (const value3 of form3.values) {
+        console.log('Testing', form3.description, value3)
+        await setParam(page, form3, value3)
+        if (!form4) {
+          await action(page, `${form1.description}_${value1}-${form2.description}_${value2}-${form3.description}_${value3}`, isFullViews)
+          continue
+        }
+        for (const value4 of form4.values) {
+          console.log('Testing', form4.description, value4)
+          await setParam(page, form4, value4)
+          if (!form5) {
+            await action(page, `${form1.description}_${value1}-${form2.description}_${value2}-${form3.description}_${value3}-${form4.description}_${value4}`, isFullViews)
+            continue
+          }
+          for (const value5 of form5.values) {
+            console.log('Testing', form5.description, value5)
+            await setParam(page, form5, value5)
+            await action(page, `${form1.description}_${value1}-${form2.description}_${value2}-${form3.description}_${value3}-${form4.description}_${value4}-${form5.description}_${value5}`, isFullViews)
           }
         }
       }
     }
+  }
+}
+
+async function simpleTest (page: Page, form1: Form, form2: Form, form3: Form, form4: Form, form5: Form, action: (page: Page, description: string, isFullViews: boolean) => Promise<void>, isFullViews: boolean) {
+  for (const value1 of form1.values) {
+    console.log('Testing', form1.description, value1)
+    await setParam(page, form1, value1)
+    await action(page, `${form1.description}_${value1}`, isFullViews)
+  }
+  if (!form2) return
+  for (const value2 of form2.values) {
+    console.log('Testing', form2.description, value2)
+    await setParam(page, form2, value2)
+    await action(page, `${form2.description}_${value2}`, isFullViews)
+  }
+  if (!form3) return
+  for (const value3 of form3.values) {
+    console.log('Testing', form3.description, value3)
+    await setParam(page, form3, value3)
+    await action(page, `${form3.description}_${value3}`, isFullViews)
+  }
+  if (!form4) return
+  for (const value4 of form4.values) {
+    console.log('Testing', form4.description, value4)
+    await setParam(page, form4, value4)
+    await action(page, `${form4.description}_${value4}`, isFullViews)
+  }
+  if (!form5) return
+  for (const value5 of form5.values) {
+    console.log('Testing', form5.description, value5)
+    await setParam(page, form5, value5)
+    await action(page, `${form5.description}_${value5}`, isFullViews)
   }
 }
 
@@ -275,12 +319,21 @@ async function getForms (page: Page) {
     if (await formCheck.isVisible()) {
       const label = formCheck.locator('xpath=preceding-sibling::label')
       formChecks.push({
-        description: await label.innerHTML(),
+        description: sanitizeFilename(await label.innerHTML()),
         locator: formCheck,
         type: 'check',
-        values: [true, false]
+        values: [false, true]
       })
     }
+  }
+  const formCorrectionDetaillee = settingsLocator.locator('#settings-correction-detaillee-0')
+  if (await formCorrectionDetaillee.isVisible()) {
+    formChecks.push({
+      description: sanitizeFilename('Correction détaillée'),
+      locator: formCorrectionDetaillee,
+      type: 'check',
+      values: [false, true] // Pour que les corrections détaillées restent en simpleTest
+    })
   }
   const formNums: Form[] = []
   const formNumSelects: Form[] = []
@@ -298,7 +351,7 @@ async function getForms (page: Page) {
         const allValues = await Promise.all(options.map(option => option.getAttribute('value')))
         const values = allValues.filter(value => value !== null)
         formNumSelects.push({
-          description: await label.innerHTML(),
+          description: sanitizeFilename(await label.innerHTML()),
           locator: formNum,
           type: 'select',
           values
@@ -311,7 +364,7 @@ async function getForms (page: Page) {
           throw new Error('Max should be greater than min')
         }
         formNums.push({
-          description: await label.innerHTML(),
+          description: sanitizeFilename(await label.innerHTML()),
           locator: formNum,
           type: 'num',
           values: [min, min + 1, max]
@@ -332,7 +385,7 @@ async function getForms (page: Page) {
       const allNumbers = getAllNumbersFromString(dataTip || '')
       const uniqueNumbers = Array.from(new Set(allNumbers))
       formTexts.push({
-        description: await label.innerHTML(),
+        description: sanitizeFilename(await label.innerHTML()),
         locator: formText,
         type: 'text',
         values: [uniqueNumbers.map(num => num.toString()).join('-')]
@@ -346,4 +399,9 @@ function getAllNumbersFromString (inputString: string) {
   const regex = /\d+/g // Regex pattern to match one or more digits
   const matches = inputString.match(regex)
   return matches ? matches.map(Number) : []
+}
+
+function sanitizeFilename (filename: string): string {
+  const forbiddenChars = /[\\/:*?"<>|]/g
+  return filename.replace(forbiddenChars, '').trim().replace(/\s+/g, '_')
 }

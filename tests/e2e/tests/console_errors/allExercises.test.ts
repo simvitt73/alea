@@ -26,7 +26,8 @@ function logDebug (...args: unknown[]) {
   }
 }
 
-async function action (page: Page) {
+async function action (page: Page, description: string) {
+  logDebug(`Test avec les paramètres ${description}`)
   // clic sur nouvel énoncé 3 fois
   const buttonNewData = page.getByRole('button', { name: 'Nouvel énoncé ' })
   logDebug('Actualier (nouvel énoncé) 3 fois')
@@ -109,7 +110,7 @@ async function getConsoleTest (page: Page, urlExercice: string) {
     await page.waitForSelector('div.mb-5>ul>div#consigne0-0')
     logDebug('fin : On cherche les questions')
     // Pour chaque combinaison de paramètres, on clique sur nouvel énoncé 3 fois, active le mode interactif et reclique sur nouvel énoncé 3 fois
-    await checkEachCombinationOfParams(page, action)
+    await checkEachCombinationOfParams(page, action, { isFullViews: true })
     // Paramètres ça va les refermer puisqu'ils sont ouverts par défaut
     const buttonParam = page.getByRole('button', { name: 'Changer les paramètres de l\'' })
     logDebug('Ferme les paramètres ')
