@@ -108,9 +108,6 @@ class ConstructionTriangle extends Exercice {
   }
 
   correctionInteractive = () => {
-    this.figure.buttons.get('SHAKE')?.addEventListener('click', () => {
-      console.log('CLIC')
-    })
     if (this.answers == null) this.answers = {}
     // Sauvegarde de la réponse pour Capytale
     this.answers[this.figure.id] = this.figure.json
