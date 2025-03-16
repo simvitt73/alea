@@ -87,7 +87,7 @@ export default class FactoriserIdentitesRemarquables3 extends Exercice {
       typesDeQuestionsDisponibles = [1, 2, 3]
     } // mélange des questions
     const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions)
-    for (let i = 0, texte, texteCorr, cpt = 0, a, b, ns, ds, typesDeQuestions; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, texte: string, texteCorr: string, cpt = 0, a, b, ns, ds, typesDeQuestions; i < this.nbQuestions && cpt < 50;) {
       typesDeQuestions = listeTypeDeQuestions[i]
       do {
         a = randint(1, 9)
@@ -108,7 +108,8 @@ export default class FactoriserIdentitesRemarquables3 extends Exercice {
           texteCorr = `$${lettreDepuisChiffre(i + 1)} = ${b * b}x^2-${a * a}=(${b}x)^2-${a}^2=(${b}x-${a})(${b}x+${a})$`
           handleAnswers(this, i, { reponse: { value: `(${reduireAxPlusB(b, -a)})(${reduireAxPlusB(b, a)})`, options: { factorisation: true } } })
           break
-        case 3:{
+        case 3:
+        default:{
           const dfrac = fraction(ns, ds).texFraction
           const dfrac2 = fraction(ns * ns, ds * ds).texFraction
           texte = `$${lettreDepuisChiffre(i + 1)} = ${dfrac2}x^2-${a * a}$` // b>1

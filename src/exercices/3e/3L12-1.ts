@@ -50,9 +50,12 @@ export default class DevelopperIdentitesRemarquables3 extends Exercice {
       [1, 6], [5, 6], [1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7], [1, 8], [3, 8], [5, 8], [7, 8],
       [1, 9], [2, 9], [4, 9], [5, 9], [7, 9], [8, 9], [1, 10], [3, 10], [7, 10], [9, 10]]
     const lettresPossibles = ['a', 'b', 'c', 'x', 'y', 'z']
-    for (let i = 0, ns, ds, texte, texteCorr, reponse, reponse1, choixLettre, choixPossible, cpt = 0, a, b, fraction = []; i < this.nbQuestions && cpt < 50;) {
+    for (let i = 0, ns, ds, texte, texteCorr: string, reponse, reponse1, choixLettre, choixPossible, cpt = 0, a, b, fraction = []; i < this.nbQuestions && cpt < 50;) {
       choixLettre = choice(lettresPossibles)
       choixPossible = this.sup === 4 ? choice(range1(3)) : this.sup
+      b = 0
+      ns = 0
+      ds = 1
       if (choixPossible === 1) {
         a = randint(1, 9) // coef de x est égal à 1
         texte = `$${lettreDepuisChiffre(i + 1)} = (${choixLettre}-${a})(${choixLettre}+${a})$` // (${choixLettre}-a)(${choixLettre}+a)

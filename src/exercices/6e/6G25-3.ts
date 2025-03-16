@@ -180,13 +180,13 @@ export default class PavageEtReflexion2d extends Exercice {
     let fenetre: FenetreType = { xmin: 0, ymin: 0, xmax: 10, ymax: 10, pixelsParCm: 20, scale: 0.5 }
     let texte = ''
     let texteCorr = ''
-    let typeDePavage = parseInt(this.sup)
+    let typeDePavage = this.sup3
     let nombreTentatives
     let nombrePavageTestes = 1
     if (this.sup3 === 8) {
       typeDePavage = randint(1, 7)
     } else {
-      typeDePavage = parseInt(this.sup3)
+      typeDePavage = this.sup3 % 8
     }
     while (couples.length < this.nbQuestions && nombrePavageTestes < 7) {
       nombreTentatives = 0
@@ -235,8 +235,8 @@ export default class PavageEtReflexion2d extends Exercice {
     objets.push(d) // la droite d est trouvée
     let pt1, pt2
     if (d.pente < 0 && d.pente > -10) {
-      pt1 = pointIntersectionDD(d, droiteHorizontaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3])))
-      pt2 = pointIntersectionDD(d, droiteVerticaleParPoint(point(context.fenetreMathalea2d[0], context.fenetreMathalea2d[1])))
+      pt1 = pointIntersectionDD(d, droiteHorizontaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3]))) as Point
+      pt2 = pointIntersectionDD(d, droiteVerticaleParPoint(point(context.fenetreMathalea2d[0], context.fenetreMathalea2d[1]))) as Point
       if (pt1.x > pt2.x) {
         objets.push(latexParCoordonnees('(d)', pt1.x, pt1.y - 2.5, 'red', 20, 10, '', 12))
       } else {
@@ -244,15 +244,15 @@ export default class PavageEtReflexion2d extends Exercice {
         else objets.push(latexParCoordonnees('(d)', pt2.x + 0.75 * context.zoom, pt2.y + 0.15 * context.zoom, 'red', 20, 10, '', 12))
       }
     } else if (d.pente >= 0 && d.pente < 10) {
-      pt1 = pointIntersectionDD(d, droiteHorizontaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3])))
-      pt2 = pointIntersectionDD(d, droiteVerticaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3])))
+      pt1 = pointIntersectionDD(d, droiteHorizontaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3]))) as Point
+      pt2 = pointIntersectionDD(d, droiteVerticaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3]))) as Point
       if (pt1.x < pt2.x) {
         objets.push(latexParCoordonnees('(d)', pt1.x - 0.75 * context.zoom, pt1.y - 2.5, 'red', 20, 10, '', 12))
       } else {
         objets.push(latexParCoordonnees('(d)', pt2.x - 0.75 * context.zoom, pt2.y + 0.5 * context.zoom, 'red', 20, 10, '', 12))
       }
     } else { // d est verticale
-      pt1 = pointIntersectionDD(d, droiteHorizontaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3])))
+      pt1 = pointIntersectionDD(d, droiteHorizontaleParPoint(point(context.fenetreMathalea2d[2], context.fenetreMathalea2d[3]))) as Point
       objets.push(latexParCoordonnees('(d)', pt1.x - 1, pt1.y - 1.5, 'red', 20, 10, '', 12))
     }
 

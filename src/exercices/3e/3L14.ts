@@ -42,7 +42,7 @@ export default class ResoudreUneEquationProduitNul extends Exercice {
 
   nouvelleVersion () {
     this.consigne = 'Résoudre ' + (this.nbQuestions !== 1 ? 'les équations suivantes' : 'l\'équation suivante') + '.'
-    let listeTypeDeQuestions = []
+    let listeTypeDeQuestions: number[] = []
     switch (contraindreValeur(1, 8, this.sup, 1)) {
       case 1:
         listeTypeDeQuestions = combinaisonListes([1, 2], this.nbQuestions) // coefficients à 1
@@ -70,6 +70,9 @@ export default class ResoudreUneEquationProduitNul extends Exercice {
         break
     }
     for (let i = 0, a, b, c, d, solution1, solution2, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      // initialisation des variables pour this.questionJamaisPosee
+      a = 0
+      c = 0
       switch (listeTypeDeQuestions[i]) {
         case 1: // (x+a)(x+b)=0 avec a et b entiers
           b = randint(1, context.isAmc ? 9 : 20)
@@ -224,7 +227,8 @@ export default class ResoudreUneEquationProduitNul extends Exercice {
           }
           // }
           break
-        case 6: {
+        case 6:
+        default: {
           a = randint(2, 9) // (ax+b)(cx-d)=0 avec b/a et d/c quelconques.
           b = randint(1, context.isAmc ? 9 : 20, [a])
           c = randint(2, 9, [a])
@@ -297,6 +301,7 @@ export default class ResoudreUneEquationProduitNul extends Exercice {
                     enonce: '',
                     sanscadre: false,
                     pointilles: true,
+                    // @ts-expect-error
                     sanslignes: true // facultatif. Permet d'enlever les lignes dans AMCOpen.
                   }]
               },
