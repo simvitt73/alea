@@ -167,9 +167,7 @@ class ConstructionSegmentRayLine extends Exercice {
     if (resultatCheck) {
       resultatCheck.innerHTML = resultat.every(r => r === 'OK') ? '😎' : '☹️'
     }
-    this.figure.isDynamic = false
-    this.figure.divButtons.style.display = 'none'
-    this.figure.divUserMessage.style.display = 'none'
+    this.figure.setToolbar({ position: 'top', tools: ['DRAG', 'DESCRIPTION'] })
     return resultat
   }
 }
