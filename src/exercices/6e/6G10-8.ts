@@ -117,7 +117,7 @@ export default class nomExercice extends Exercice {
         // J'ai enlevé cette partie car ce qui est tracé n'est pas un cercle mais un arc de cercle.
         // texteCorr += numAlpha(ee) + 'L' + texteCommun + ' est le ' + (this.estUnCercle[i][ee] ? 'cercle' : 'disque') + ` de centre ${this.lesPoints[i][ee].label} et de rayon $${texNombre(new Decimal(this.choixRayon[i][ee]).div(10).toNumber())}$ unités.<br>`
       }
-      this.figuresApiGeom[i].setToolbar({ tools: ['CIRCLE_CENTER_POINT', 'CIRCLE_RADIUS', 'DISC_CENTER_POINT', 'DISC_RADIUS', 'POINT', 'LINE', 'DRAG', 'REMOVE', 'FILL', 'SET_OPTIONS'] })
+      this.figuresApiGeom[i].setToolbar({ tools: ['CIRCLE_CENTER_POINT', 'CIRCLE_RADIUS', 'DISC_CENTER_POINT', 'DISC_RADIUS', 'POINT', 'LINE', 'DRAG', 'SHAKE', 'REMOVE', 'FILL', 'SET_OPTIONS'] })
       this.figuresApiGeom[i].options.fillColorAndBorderColorAreSame = true
       this.figuresApiGeom[i].options.changeColorChangeActionToSetOptions = true
 
@@ -189,6 +189,7 @@ export default class nomExercice extends Exercice {
     this.figuresApiGeom[i].isDynamic = false
     this.figuresApiGeom[i].divButtons.style.display = 'none'
     this.figuresApiGeom[i].divUserMessage.style.display = 'none'
+    this.figuresApiGeom[i].buttons.get('SHAKE')?.click()
     return resultat
   }
 }

@@ -363,6 +363,7 @@ class ConstrctionsSymetriquesPoints extends Exercice {
     this.figuresApiGeom[i].isDynamic = false
     this.figuresApiGeom[i].divButtons.style.display = 'none'
     this.figuresApiGeom[i].divUserMessage.style.display = 'none'
+    this.figuresApiGeom[i].buttons.get('SHAKE')?.click()
     return resultat
   }
 }
