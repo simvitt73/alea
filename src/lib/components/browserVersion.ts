@@ -31,7 +31,7 @@ export function checkBrowserVersion () {
     window.notify('Navigateur inconnu', { browserName, browserVersion, browser, cpu, os, device, ua })
   }
   const url = new URL(window.location.href)
-  if (url.hostname === 'localhost' && url.searchParams.has('triche')) {
+  if (url.hostname === 'localhost' && url.searchParams.get('log') === '2') {
     popupMessage = Object.entries({ browserName, browserVersion, browser, cpu, os, device, ua }).map(([key, value]) => `${key}: ${value}`).join('<br>')
   }
   return { popupMessage, browserName, browserVersion }
