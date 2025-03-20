@@ -6,7 +6,6 @@ import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import type Point from 'apigeom/src/elements/points/Point'
 import { numAlpha } from '../../lib/outils/outilString'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
-import checkLine from 'apigeom/src/check/checkLine'
 import Element2D from 'apigeom/src/elements/Element2D'
 
 export const titre = 'Construire des médiatrices'
@@ -316,12 +315,7 @@ export default class nomExercice extends Exercice {
         resultat[ee] = 'KO'
         feedbackUneQuestion = 'L\'élement en ' + this.ensembleDesQuestions[i].mediatrice[ee].couleurMed.couleurFrancais + ' n\'est pas une droite.'
       } else {
-        const verif = checkLine({
-          figure: this.figuresApiGeom[i],
-          point1: this.ensembleDesQuestions[i].mediatrice[ee].pointMed1,
-          point2: this.ensembleDesQuestions[i].mediatrice[ee].pointMed2,
-          color: this.ensembleDesQuestions[i].mediatrice[ee].couleurMed.couleurHTML
-        })
+        const verif = this.figuresApiGeom[i].checkPerpendicularBisector({ label1: this.mediatrices[ee].pointSeg1.label, label2: this.mediatrices[ee].pointSeg2.label, color: this.ensembleDesQuestions[i].mediatrice[ee].couleurMed.couleurHTML })
         resultat[ee] = verif.isValid ? 'OK' : 'KO'
         if (!verif.isValid) feedbackUneQuestion = `La droite en ${this.ensembleDesQuestions[i].mediatrice[ee].couleurMed.couleurFrancais} n'est pas la médiatrice de $[${this.ensembleDesQuestions[i].mediatrice[ee].pointSeg1.label}${this.ensembleDesQuestions[i].mediatrice[ee].pointSeg2.label}]$.`
       }
