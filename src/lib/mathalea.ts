@@ -1,5 +1,3 @@
-import loadjs from 'loadjs'
-
 import renderMathInElement from 'katex/contrib/auto-render'
 import Exercice from '../exercices/Exercice'
 import type TypeExercice from '../exercices/Exercice'
