@@ -121,7 +121,7 @@ export default class CalculerProbaCond extends Exercice {
           } else {
             reponse = pBsachantA.texFraction
             handleAnswers(this, i, { reponse: { value: reponse, options: { fractionEgale: true } } })
-            texte = `$${reponse}$On considère deux événements $${ev[0]}$ et  $${ev[1]}$ tels que : <br>
+            texte = `On considère deux événements $${ev[0]}$ et  $${ev[1]}$ tels que : <br>
         $P(${ev[0]})=${pA.texFraction}$ et $P(${ev[0]}\\cap ${ev[1]})=${pAinterB.texFraction}$.<br>
        ${this.interactif ? `$P_{${ev[0]}}(${ev[1]})=$` : `Calculer $P_{${ev[0]}}(${ev[1]})$.`}`
             texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBaseAvecFraction)
@@ -146,7 +146,7 @@ export default class CalculerProbaCond extends Exercice {
               pAinterB = pA * pBsachantA
               intro = choice([`On estime que la proportion de spams, sur la boîte de messagerie électronique d’un particulier est de $${texNombre(pA * 100, 0)}\\,\\%$. <br>
                Un logiciel de suppression de spams est installé sur l'ordinateur. Il ne supprime que des spams mais ne supprime pas tous les spams.<br>
-               En fait, il  supprime $${texNombre(pBsachantA * 100, 1)}\\,\\%$ de spams.<br>
+               On constate qu'il  supprime $${texNombre(pBsachantA * 100, 2)}\\,\\%$ de spams.<br>
                 On choisit un message au hasard et on note $${ev[0]}$ : « le message est un spam » et $${ev[1]}$ : « le message est supprimé ».<br>
               En utilisant les événements  $${ev[0]}$ et $${ev[1]}$,  écrire la probabilité que le message soit un spam supprimé, puis calculer cette probabilité.`, `Le cuisinier d’une colonie de vacances a confectionné des beignets pour le goûter :<br>
  $${texNombre(pA * 100, 0)}\\,\\%$ des beignets sont à l’ananas, les autres sont aux pommes  et $${texNombre(pBsachantA * 100, 1)}\\,\\%$ des beignets à l’ananas sont aromatisés à la cannelle.<br>
@@ -161,7 +161,7 @@ On choisit au hasard un client du magasin lors de cette grande journée de promo
 • $${ev[0]}$ : « le client choisi a été contacté lors de la campagne publicitaire ; »<br>
 • $${ev[1]}$ : le client choisi a effectué un achat. »<br>
 En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité que le client choisi ait été contacté par la campagne publicitaire et qu'il a fait un achat, puis calculer cette probabilité.`])
-              handleAnswers(this, 2 * i, { reponse: { value: [`P(${ev[0]} \\cap ${ev[1]})`, `P(${ev[1]} \\cap ${ev[0]})`], options: { texteAvecCasse: true } } })
+              handleAnswers(this, 2 * i, { reponse: { value: [`P(${ev[0]}\\cap ${ev[1]})`, `P(${ev[1]}\\cap ${ev[0]})`], options: { texteAvecCasse: true } } })
               handleAnswers(this, 2 * i + 1, { reponse: { value: texNombre(pAinterB, 4), compare: functionCompare } })
               texte = intro
               texte += '<br>' + ajouteChampTexteMathLive(this, 2 * i, KeyboardType.clavierProbabilite, { texteAvant: 'Notation de la probabilité :' }) + '<br>' + ajouteChampTexteMathLive(this, 2 * i + 1, KeyboardType.clavierDeBase, { texteAvant: 'Valeur de la probabilité :' })
@@ -180,7 +180,7 @@ En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité
               pAinterB = pA * pBsachantA
               intro = choice([`On estime que la proportion de spams, sur la boîte de messagerie électronique d’un particulier est de $${texNombre(pA * 100, 0)}\\,\\%$. <br>
                   Un logiciel de suppression de spams est installé sur l'ordinateur. Il ne supprime que des spams mais ne supprime pas tous les spams.<br>
-                 $${texNombre(pAinterB * 100, 1)}\\,\\%$ sont des spams supprimés.<br>
+                 $${texNombre(pAinterB * 100, 2)}\\,\\%$ des messages sont des spams supprimés.<br>
                  On note $${ev[0]}$ : « le message est un spam » et $${ev[1]}$ : « le message est supprimé ».<br>
                  On choisit un message au hasard.<br>
                   En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité  que le message soit supprimé par le logiciel lorsque c'est un spam, puis calculer cette probabilité.`, `Le cuisinier d’une colonie de vacances a confectionné des beignets pour le goûter :<br>
