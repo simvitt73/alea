@@ -7,6 +7,7 @@ import type Point from 'apigeom/src/elements/points/Point'
 import { numAlpha } from '../../lib/outils/outilString'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import Element2D from 'apigeom/src/elements/Element2D'
+import { context } from '../../modules/context'
 
 export const titre = 'Construire des médiatrices'
 
@@ -269,6 +270,7 @@ export default class nomExercice extends Exercice {
       }
 
       texte += figureApigeom({ exercice: this, i, figure: this.figuresApiGeom[i], idAddendum: '6G25' + i, defaultAction: 'DRAG' })
+      if (!context.isHtml) texte += this.figuresApiGeom[i].tikz()
       texteCorr += figureApigeom({ exercice: this, i, figure: this.figuresApiGeomCorr[i], idAddendum: '6G25Cor' + i })
       this.figuresApiGeomCorr[i].isDynamic = false
       this.figuresApiGeomCorr[i].divButtons.style.display = 'none'
