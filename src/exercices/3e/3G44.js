@@ -9,7 +9,7 @@ import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
 import { context } from '../../modules/context'
-import { calculANePlusJamaisUtiliser, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Grandeur from '../../modules/Grandeur'
 import {
   CodageAngleDroit3D,
@@ -172,7 +172,7 @@ export default class CalculPythagoreEspace extends Exercice {
           texteCorr += `<br> ${sp(10)}Le triangle $${C + A + D}$ est rectangle en $${D}$  donc d'après le théorème de Pythagore, on a : `
           texteCorr += `$${A + C}^2=${A + D}^2+${D + C}^2$.`
 
-          BC = texNombre(calculANePlusJamaisUtiliser(Math.sqrt(c ** 2 + c ** 2 + c ** 2), 1))
+          BC = texNombre(arrondi(Math.sqrt(c ** 2 + c ** 2 + c ** 2), 1))
           reponse = arrondi(Math.sqrt(c ** 2 + c ** 2 + c ** 2), 1)
           texteCorr += `<br> ${sp(10)}$${A + C}^2=${texNombre(c)}^2+${texNombre(c)}^2$`
           texteCorr += `<br> ${sp(10)}$${miseEnEvidence(A + C, 'green')}^2=${miseEnEvidence(texNombre(c ** 2 + c ** 2), 'green')}$`
@@ -274,7 +274,7 @@ export default class CalculPythagoreEspace extends Exercice {
           texteCorr += `<br> ${sp(10)}Le triangle $${K + I + M}$ est rectangle en $${M}$  donc d'après le théorème de Pythagore, on a : `
           texteCorr += `$${I + K}^2=${I + M}^2+${M + K}^2$.`
 
-          JK = texNombre(calculANePlusJamaisUtiliser(Math.sqrt(segmentChoisi[4] ** 2 + segmentChoisi[5] ** 2 + segmentChoisi[6] ** 2), 1))
+          JK = texNombre(arrondi(Math.sqrt(segmentChoisi[4] ** 2 + segmentChoisi[5] ** 2 + segmentChoisi[6] ** 2), 1))
           reponse = arrondi(Math.sqrt(segmentChoisi[4] ** 2 + segmentChoisi[5] ** 2 + segmentChoisi[6] ** 2), 1)
           texteCorr += `<br> ${sp(10)}$${I + K}^2=${texNombre(segmentChoisi[4])}^2+${texNombre(segmentChoisi[5])}^2$`
           texteCorr += `<br> ${sp(10)}$${miseEnEvidence(I + K, 'green')}^2=${miseEnEvidence(texNombre(segmentChoisi[4] ** 2 + segmentChoisi[5] ** 2), 'green')}$`
