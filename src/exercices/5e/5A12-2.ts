@@ -1,6 +1,6 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { contraindreValeur, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { listeNombresPremiersStrictJusqua, premiersEntreBornes } from '../../lib/outils/primalite'
 import { egalOuApprox, lister } from '../../lib/outils/ecritures'
 import { texNombre } from '../../lib/outils/texNombre'
@@ -33,16 +33,21 @@ export default class ReconnaitreNombrePremier extends Exercice {
     this.sup = 500
     this.besoinFormulaire2CaseACocher = ['Avec calcul de la racine carrée']
     this.sup2 = false
+    this.comment = 'Le nombre maximum ne peut pas être inférieur à 11 ou au nombre de questions +1 si celui-ci est plus grand'
   }
 
   nouvelleVersion () {
     const typeQuestionsDisponibles = ['premier', 'non premier']
 
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
-
+    // if (this.sup < this.nbQuestions + 1) { this.sup = this.nbQuestions + 1 }
+    this.sup = contraindreValeur(Math.max(this.nbQuestions + 1, 11), 10000, this.sup, 500)
+    const max = Number(this.sup)
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       let texteCorr = ''
-      const max = Number(this.sup)
+      let texte = ''
+
+      // const max = Number(this.sup)
       const listePremiers = listeNombresPremiersStrictJusqua(max)
       let a = 0
       switch (listeTypeQuestions[i]) {
@@ -80,7 +85,7 @@ export default class ReconnaitreNombrePremier extends Exercice {
           }
           break
       }
-      let texte = this.interactif ? `Le nombre $${texNombre(a)}$ est-il un nombre premier ?` : `Vérifier si $${texNombre(a)}$ est un nombre premier.`
+      texte += this.interactif ? `Le nombre $${texNombre(a)}$ est-il un nombre premier ?` : `Vérifier si $${texNombre(a)}$ est un nombre premier.`
       texteCorr = rediger(a, this.sup2)
       const monQcm = propositionsQcm(this, i)
       if (this.interactif) {
@@ -88,7 +93,7 @@ export default class ReconnaitreNombrePremier extends Exercice {
         texteCorr += monQcm.texteCorr
       }
 
-      if (this.questionJamaisPosee(i, texte)) {
+      if (this.questionJamaisPosee(i, a)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++
