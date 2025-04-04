@@ -1,4 +1,4 @@
-import MetaExercice from '../../MetaExerciceCan'
+import MetaExercice from '../MetaExerciceCan'
 import Question1 from './Flash1_Q1'
 
 export const titre = 'Questions flashs de cours Terminale'

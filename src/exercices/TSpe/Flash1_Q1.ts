@@ -1,14 +1,14 @@
-import Exercice from '../../Exercice'
-import { randint } from '../../../modules/outils'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import Exercice from '../Exercice'
+import { randint } from '../../modules/outils'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 import Decimal from 'decimal.js'
-import { texNombre } from '../../../lib/outils/texNombre'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { texNombre } from '../../lib/outils/texNombre'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 export const titre = 'Multiplier des décimaux'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const uuid = 'edbea'
+export const uuid = 'sgsgs'
 /**
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Gilles Mora
