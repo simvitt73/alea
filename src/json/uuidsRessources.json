@@ -5,5 +5,6 @@
   "test": "Test.svelte",
   "clavier": "ClavierTest.svelte",
   "version": "Version.svelte",
-  "sandboxCE": "ressources/sandboxCE.ts"
+  "sandboxCE": "ressources/sandboxCE.ts",
+  "questionsDeCours": "QuestionsDeCours.svelte"
 }
