@@ -14,7 +14,7 @@ export const titre = 'Affirmations sur les primitives'
 export const dateDePublication = '26/03/2025'
 
 /*
-* @author
+ @author Stéphane Guyon
 */
 export default class VraiFauxSuites extends ExerciceVraiFaux {
   constructor () {
