@@ -17,6 +17,7 @@ variables:
   FF_USE_POD_ACTIVE_DEADLINE_SECONDS: "false"
 
 stages:
+  - playwright-pdfDNB
   - playwright-pdf
   - deploy-server
   - build-projet
@@ -24,7 +25,6 @@ stages:
   - playwright-testCanEleve
   - playwright-test
   - playwright-testLycee
-  - playwright-pdfDNB
   - playwright-pdfBAC
 
 sast:
@@ -122,7 +122,6 @@ default:
     when: always
     paths:
       - tests/e2e/logs
-      - updatefile
     reports:
       junit: tests/e2e/logs/junit-report.xml
     expire_in: 10 day
@@ -244,6 +243,9 @@ testCan4e3ePDF:
   script:
     - NIV=can/4e^can/3e pnpm test:e2e:pdfexports
     - pnpm -v
+  artifacts:
+    paths:
+      - updatefile/output/can*
 
 testE3C20202024PDF:
   extends:
@@ -254,7 +256,6 @@ testE3C20202024PDF:
     - NIV=e3c_2024^e3c_2023^e3c_2022^e3c_2021 pnpm test:e2e:pdfexports
   artifacts:
     paths:
-      - updatefile/*
       - updatefile/output/e3c*
 
 testBAC20202024PDF:
@@ -266,7 +267,6 @@ testBAC20202024PDF:
     - NIV=bac_2024^bac_2023^bac_2022^bac_2021 pnpm test:e2e:pdfexports
   artifacts:
     paths:
-      - updatefile/*
       - updatefile/output/bac*
 
 testDNB20132015PDF:
@@ -278,7 +278,6 @@ testDNB20132015PDF:
     - NIV=dnb_2013^dnb_2014^dnb_2015 pnpm test:e2e:pdfexports
   artifacts:
     paths:
-      - updatefile/*
       - updatefile/output/dnb*
 
 testDNB20162019PDF:
@@ -290,7 +289,6 @@ testDNB20162019PDF:
     - NIV=dnb_2016^dnb_2017^dnb_2018^dnb_2019 pnpm test:e2e:pdfexports
   artifacts:
     paths:
-      - updatefile/*
       - updatefile/output/dnb*
 
 testDNB20202024PDF:
@@ -302,7 +300,6 @@ testDNB20202024PDF:
     - NIV=dnb_2020^dnb_2021^dnb_2022^dnb_2023^dnb_2024 pnpm test:e2e:pdfexports
   artifacts:
     paths:
-      - updatefile/*
       - updatefile/output/dnb*
 
 test6ePDF:
@@ -310,24 +307,36 @@ test6ePDF:
   script:
     - NIV=6e/6 pnpm test:e2e:pdfexports
     - pnpm -v
+  artifacts:
+    paths:
+      - updatefile/output/6e*
 
 test5ePDF:
   extends: .testCIPDF
   script:
     - NIV=5e/5 pnpm test:e2e:pdfexports
     - pnpm -v
+  artifacts:
+    paths:
+      - updatefile/output/5e*
 
 test4ePDF:
   extends: .testCIPDF
   script:
     - NIV=4e/4 pnpm test:e2e:pdfexports
     - pnpm -v
+  artifacts:
+    paths:
+      - updatefile/output/4e*
 
 test3ePDF:
   extends: .testCIPDF
   script:
     - NIV=3e/3 pnpm test:e2e:pdfexports
     - pnpm -v
+  artifacts:
+    paths:
+      - updatefile/output/3e*
 
 bcommit:
   stage: build-projet
