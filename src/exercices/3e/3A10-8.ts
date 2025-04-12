@@ -19,6 +19,7 @@ export const refs = {
 }
 /**
  * @Author Jean-Claude LHOTE
+ * Ajout de this.sup 7 et 8 par Guillaume Valmont le 12/04/2025
  */
 export default class LireUnePuissance extends Exercice {
   constructor () {
@@ -27,7 +28,7 @@ export default class LireUnePuissance extends Exercice {
     this.spacing = 1.5
     this.spacingCorr = 1.5
     this.sup = 6
-    this.besoinFormulaireNumerique = ['Choix des questions', 6, '1 : Décomposition seulement\n2 : Decomposition et liste des diviseurs\n3 : Decomposition, liste des diviseurs et PGCD\n4 : Liste des diviseurs et PGCD\n5 : Liste des diviseurs, PGCD et conclusion\n6 : Toutes les questions']
+    this.besoinFormulaireNumerique = ['Choix des questions', 6, '1 : Décomposition seulement\n2 : Decomposition et liste des diviseurs\n3 : Decomposition, liste des diviseurs et PGCD\n4 : Liste des diviseurs et PGCD\n5 : Liste des diviseurs, PGCD et conclusion\n6 : Toutes les questions\n7 : Décomposition et PGCD\n8 : Décomposition, PGCD et conclusion']
   }
 
   situations = [
@@ -149,7 +150,9 @@ export default class LireUnePuissance extends Exercice {
         [1, 2, 3],
         [2, 3],
         [2, 3, 4],
-        [1, 2, 3, 4]
+        [1, 2, 3, 4],
+        [1, 3],
+        [1, 3, 4]
       ]
       const listeQ = listeQuestParChoix[this.sup - 1]
       const situation = choice(this.situations)
