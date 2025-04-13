@@ -88,6 +88,11 @@ class ressourceVideo extends Exercice {
     updateIframeSize(this.container, this.iframe)
   }
 
+  destroy () {
+    window.removeEventListener('resize', this.updateSize)
+    this.container.removeEventListener('addedToDom', this.updateSize)
+  }
+
   get html () {
     if (get(globalOptions).v === 'eleve') {
       this.fieldUrl.remove()

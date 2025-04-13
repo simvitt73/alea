@@ -19,6 +19,7 @@ class ressourceVideo extends Exercice {
     this.iframe = document.createElement('iframe')
     this.iframe.setAttribute('width', '500')
     this.iframe.setAttribute('height', '315')
+    window.addEventListener('resize', this.updateSize)
     this.container.addEventListener('addedToDom', this.updateSize)
     this.iframe.classList.add('my-10')
     this.fieldUrl = createTextInput({ placeholder: 'URL', autoCorrect: false })
@@ -39,6 +40,11 @@ class ressourceVideo extends Exercice {
 
   private updateSize = () => {
     updateIframeSize(this.container, this.iframe)
+  }
+
+  destroy () {
+    window.removeEventListener('resize', this.updateSize)
+    this.container.removeEventListener('addedToDom', this.updateSize)
   }
 
   get html () {
@@ -62,7 +68,6 @@ class ressourceVideo extends Exercice {
       this.fieldUrl.value = decodeURIComponent(this.sup)
     }
     this.updateSize()
-    window.addEventListener('resize', this.updateSize)
     return this.container
   }
 }
