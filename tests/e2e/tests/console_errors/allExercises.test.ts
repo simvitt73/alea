@@ -182,6 +182,7 @@ async function testRunAllLots (filter: string) {
         page.on('console', msg => {
           logConsole(msg.text())
         })
+        log(filter)
         const hostname = local ? `http://localhost:${process.env.CI ? '80' : '5173'}/alea/` : 'https://coopmaths.fr/alea/'
         log(`uuid=${uuids[k][0]} exo=${uuids[k][1]} i=${k} / ${uuids.length}`)
         const resultReq = await getConsoleTest(page, `${hostname}?uuid=${uuids[k][0]}&id=${uuids[k][1].substring(0, uuids[k][1].lastIndexOf('.')) || uuids[k][1]}&alea=${alea}&testCI`)
@@ -209,7 +210,9 @@ if (process.env.CI && process.env.NIV !== null && process.env.NIV !== undefined)
   log(changedFiles)
   prefs.headless = true
   const filtered = changedFiles.filter(file => file.startsWith('src/exercices/') &&
-  !file.includes('ressources') && file.replace('src/exercices/', '').split('/').length === 2).map(file =>
+    !file.includes('ressources') &&
+    !file.includes('apps') &&
+    file.replace('src/exercices/', '').split('/').length >= 2).map(file =>
     file.replace(/^src\/exercices\//, '').replace(/\.ts$/, '')
   )
   log(filtered)
@@ -223,7 +226,6 @@ if (process.env.CI && process.env.NIV !== null && process.env.NIV !== undefined)
   } else {
     filtered.forEach(file => {
       const filter = file.replaceAll(' ', '')
-      log(filter)
       testRunAllLots(filter)
     })
   }
