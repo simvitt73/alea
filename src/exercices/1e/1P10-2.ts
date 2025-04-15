@@ -12,7 +12,7 @@ export const titre = 'Calculer avec une probabilité conditionnelle'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
-export const dateDePublication = '26/03/2025'
+export const dateDePublication = '15/04/2025'
 
 /**
  *
@@ -159,7 +159,7 @@ En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité
 contactés lors d'une  campagne publicitaire. Une étude statistique montre que la probabilité qu’un client effectue un achat sachant qu’il a été contacté au cours de la campagne publicitaire est de $${texNombre(pBsachantA, 2)}$.<br>
 On choisit au hasard un client du magasin lors de cette grande journée de promotion. <br>On définit les évènements suivants :<br>
 • $${ev[0]}$ : « le client choisi a été contacté lors de la campagne publicitaire ; »<br>
-• $${ev[1]}$ : le client choisi a effectué un achat. »<br>
+• $${ev[1]}$ : le client choisi a effectué un achat ».<br>
 En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité que le client choisi ait été contacté par la campagne publicitaire et qu'il a fait un achat, puis calculer cette probabilité.`])
               handleAnswers(this, 2 * i, { reponse: { value: [`P(${ev[0]}\\cap ${ev[1]})`, `P(${ev[1]}\\cap ${ev[0]})`], options: { texteAvecCasse: true } } })
               handleAnswers(this, 2 * i + 1, { reponse: { value: texNombre(pAinterB, 4), compare: functionCompare } })
@@ -168,8 +168,8 @@ En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité
               texteCorr = `La probabilité $P$ est donnée par  $${miseEnEvidence(`P(${ev[0]}\\cap ${ev[1]})`)}$.<br>
               $\\begin{aligned}
               P(${ev[0]}\\cap ${ev[1]})&=P(${ev[0]}) \\times P_{${ev[0]}}(${ev[1]})\\\\
-              &=${texNombre(pA, 2)}\\times ${texNombre(pBsachantA, 2)}\\\\
-              &=${miseEnEvidence(`${texNombre(pA * pBsachantA, 3)}`)}
+              &=${texNombre(pA, 4)}\\times ${texNombre(pBsachantA, 4)}\\\\
+              &=${miseEnEvidence(`${texNombre(pA * pBsachantA, 4)}`)}
               \\end{aligned}$`
               break
 
@@ -191,10 +191,10 @@ En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité
                  • $${ev[1]}$ : « le beignet choisi est aromatisé à la cannelle ».<br>
                  En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité que le beignet choisi soit aromatisé à la cannelle sachant que ce beignet est à l'ananas, puis calculer cette probabilité.`,
                 `Le jour d'une grande journée de promotion, $${texNombre(pA * 100, 0)}\\,\\%$ des clients qui entrent dans un magasin ont été
-contactés lors d'une  campagne publicitaire. Une étude statistique montre que parmi tous les clients  $${texNombre(pAinterB * 100, 3)}\\,\\%$ ont été contacté lors de la campagne publicitaire et ont fait un achat.<br>
+contactés lors d'une  campagne publicitaire. Une étude statistique montre que, parmi tous les clients,  $${texNombre(pAinterB * 100, 3)}\\,\\%$ ont été contactés lors de la campagne publicitaire et ont fait un achat.<br>
 On choisit au hasard un client du magasin lors de cette grande journée de promotion. <br>On définit les évènements suivants :<br>
 • $${ev[0]}$ : « le client choisi a été contacté lors de la campagne publicitaire  » ;<br>
-• $${ev[1]}$ : le client choisi a effectué un achat. »<br>
+• $${ev[1]}$ : « le client choisi a effectué un achat. »<br>
 Le client choisi a été contacté lors de la campagne publicitaire.<br>
 En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité que ce client ait fait un achat, puis calculer cette probabilité.`])
 
@@ -205,8 +205,8 @@ En utilisant les événements  $${ev[0]}$ et $${ev[1]}$, écrire la probabilité
               texteCorr = `La probabilité $P$ est donnée par  $${miseEnEvidence(`P_{${ev[0]}}(${ev[1]})`)}$.<br>
           $\\begin{aligned}
          P_{${ev[0]}}(${ev[1]})&=\\dfrac{P(${ev[0]}\\cap ${ev[1]})}{P(${ev[0]})}\\\\
-          &=\\dfrac{${texNombre(pAinterB, 4)}}{${texNombre(pA, 3)}}\\\\
-          &=${miseEnEvidence(`${texNombre(pBsachantA, 3)}`)}
+          &=\\dfrac{${texNombre(pAinterB, 4)}}{${texNombre(pA, 4)}}\\\\
+          &=${miseEnEvidence(`${texNombre(pBsachantA, 4)}`)}
           \\end{aligned}$`
           }
 
