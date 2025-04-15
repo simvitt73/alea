@@ -655,8 +655,8 @@ export function format (text: string, AvecLesDoublesEspaces:boolean = true): str
     .replace(/( )?€( )/g, '\\,\\euro{}~')
     .replace(/( )?€/g, '\\,\\euro{}')
     .replace(/\\\\\s*\n\n/gm, '\\\\')
-    .replace('«', '\\og{}')
-    .replace('»', '\\fg{}')
+    .replaceAll('«', '\\og{}')
+    .replaceAll('»', '\\fg{}')
 
   // Check if the language is 'fr-CH' and replace \times with \cdot if true
   if (lang === 'fr-CH') {
