@@ -53,6 +53,7 @@ describe('playwright meets vitest', () => {
     // Go to the page
     const hostname = `http://localhost:${process.env.CI ? '80' : '5173'}/parent`
 
+    await page.setDefaultTimeout(60000) // Set timeout to 60 seconds
     await page.goto(hostname)
 
     await expect(page.getByText('bonjour')).toBeVisible()

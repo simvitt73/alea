@@ -355,9 +355,6 @@ testExosModified:
     - echo "$CHANGED_FILES"
     - CHANGED_FILES="$CHANGED_FILES" pnpm test:e2e:console_errors
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: "$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS"
-      when: never
     - when: always
 
 bcommit:
@@ -387,9 +384,6 @@ build:
     - NODE_OPTIONS=--max-old-space-size=4096 pnpm run makeJson && pnpm vite build
     - echo "$CI_COMMIT_AUTHOR"
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: "$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS"
-      when: never
     - when: always
   artifacts:
     when: always
@@ -501,15 +495,7 @@ playwright-testCanEleve:
   script:
     - pnpm test:e2e:views
   rules:
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_OPEN_MERGE_REQUESTS
-      when: never
-    - if: $CI_COMMIT_BRANCH == "main"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "mathalea-jobs"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "guironne-jobs"
-      when: always
-    - when: never
+    - when: always
   artifacts:
     when: on_failure
 
@@ -520,15 +506,7 @@ playwright-testConsistency:
   script:
     - pnpm test:e2e:consistency
   rules:
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_OPEN_MERGE_REQUESTS
-      when: never
-    - if: $CI_COMMIT_BRANCH == "main"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "mathalea-jobs"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "guironne-jobs"
-      when: always
-    - when: never
+    - when: always
   artifacts:
     when: on_failure
 

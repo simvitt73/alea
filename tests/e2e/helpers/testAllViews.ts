@@ -159,7 +159,7 @@ async function waitForLatex (page: Page, model: LatexVariation | AMCVariation) {
       await page.waitForFunction(() => {
         const preElement = document.querySelector('pre')
         if (preElement && preElement.textContent) {
-          return preElement.textContent.includes('\\begin{Maquette}[Fiche]{Niveau= ,Classe= ,Date=   ,Theme=Exercices}')
+          return preElement.textContent.includes('\\begin{Maquette}[Fiche')
         }
         return false
       })

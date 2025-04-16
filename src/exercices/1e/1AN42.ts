@@ -98,7 +98,7 @@ export default class MesurePrincipale extends Exercice {
       {
         texte: '$\\sin\\big(\\pi-x\\big)=$',
         reponse: '\\sin(x)',
-        texteCorr: '$\\sin\\big(\\pi-x\\big)=\\si,(x)$'
+        texteCorr: '$\\sin\\big(\\pi-x\\big)=\\sin(x)$'
       }
     ]
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posés mais l'ordre diffère à chaque "cycle"
