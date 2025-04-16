@@ -59,15 +59,16 @@ class ExternalApp extends Exercice {
     if (this.sup !== undefined) {
       const searchParams = new URLSearchParams(this.sup)
       for (const [key, value] of searchParams.entries()) {
-        this.url.searchParams.append(key, value)
+        this.url.searchParams.set(key, value)
       }
     }
     if (get(globalOptions).v === 'eleve') {
-      this.url.searchParams.append('v', 'eleve')
+      this.url.searchParams.set('v', 'eleve')
     }
     if (this.numeroExercice !== undefined) {
-      this.url.searchParams.append('numeroExercice', this.numeroExercice.toString())
+      this.url.searchParams.set('numeroExercice', this.numeroExercice.toString())
     }
+    this.url.searchParams.set('seed', this.seed ?? '')
     this.iframe.setAttribute('src', this.url.toString())
     return this.container
   }
