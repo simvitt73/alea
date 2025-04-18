@@ -87,7 +87,7 @@ export default class nomExercice extends Exercice {
           if (n > 4) { texteCorr += `$E=\\left\\{1;2;\\ldots;${n}\\right\\}$.<br> ` }
           texteCorr += 'Le nombre de $k$-uplet d\'éléments distincts d\'un ensemble fini $E$ est appelé un arrangement, qu\'on peut noter ainsi : $A_n^k$.<br>'
           texteCorr += 'On sait alors que : $A_n^k=n\\times (n-1)\\ldots (n-k+1)$ ou encore : $A_n^k=\\dfrac{n~!}{(n-k)~!}$.<br>'
-          texteCorr += `Dans notre situation, $A_${n}^${k}=\\dfrac{${n}~!}{${n - k}~!}=${arrangement}$.<br>`
+          texteCorr += `Dans notre situation, $A_{${n}}^{${k}}=\\dfrac{${n}~!}{${n - k}~!}=${arrangement}$.<br>`
           texteCorr += `Il y a donc $${miseEnEvidence(arrangement)}$ tirages possibles.<br>`
           reponse = `${arrangement}`
           break
