@@ -24,6 +24,7 @@ import { egal, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } f
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import Exercice from '../Exercice'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 
 export const dateDeModifImportante = '11/04/2025'
 export const interactifReady = true
@@ -454,7 +455,7 @@ export default class Transformations extends Exercice {
         }
 
         handleAnswers(this, indiceQuestion * nbImages + i, { reponse: { value: String(images[i]) } })
-        texte += ajouteChampTexteMathLive(this, indiceQuestion * nbImages + i, '')
+        texte += ajouteChampTexteMathLive(this, indiceQuestion * nbImages + i, KeyboardType.clavierNumbers)
       }
       const graphique = mathalea2d({
         xmin: -4.5,
