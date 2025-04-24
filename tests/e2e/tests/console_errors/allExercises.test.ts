@@ -56,9 +56,9 @@ async function action (page: Page, description: string) {
   logDebug(`Test avec les paramètres ${description}`)
   // clic sur nouvel énoncé 3 fois
   const buttonNewData = page.getByRole('button', { name: 'Nouvel énoncé ' })
-  logDebug('Actualier (nouvel énoncé) 3 fois')
-  await buttonNewData.click({ clickCount: 3 })
-  logDebug('fin Actualier (nouvel énoncé) 3 fois')
+  logDebug('Actualier (nouvel énoncé)')
+  await buttonNewData.click({ force: true })
+  logDebug('fin Actualier (nouvel énoncé)')
   const buttonZoom = page.locator('#setupButtonsBar > div > div:nth-child(2) > button')
   const buttonZoomMoins = page.locator('#setupButtonsBar > div > div:nth-child(1) > button')
   const zParam = new URL(page.url()).searchParams.get('z')

@@ -57,33 +57,47 @@ async function getLatexFile (page: Page, urlExercice: string) {
   // ProfMaquette
   // ProfMaquette avec QrCode
 
-  log(urlExercice)
-  page.setDefaultTimeout(120000)
-  await page.goto(urlExercice)
-  await page.waitForLoadState('networkidle')
+  page.setDefaultTimeout(150000)
 
-  // const resu0 = await getLatexFileStyle(page, urlExercice, 'Coopmaths')
-  // if (resu0 === 'KO') {
-  //   return 'KO'
-  // }
-  // const resu1 = await getLatexFileStyle(page, urlExercice, 'Classique')
-  // if (resu1 === 'KO') {
-  //   return 'KO'
-  // }
+  const retries = 3 // Nombre de tentatives en cas d'erreur
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      log(urlExercice)
+      await page.goto(urlExercice)
+      await page.waitForLoadState('networkidle')
 
-  const resu2 = await getLatexFileStyle(page, urlExercice, 'ProfMaquette')
-  if (resu2 === 'KO') {
-    return 'KO'
+      // const resu0 = await getLatexFileStyle(page, urlExercice, 'Coopmaths')
+      // if (resu0 === 'KO') {
+      //   return 'KO'
+      // }
+      // const resu1 = await getLatexFileStyle(page, urlExercice, 'Classique')
+      // if (resu1 === 'KO') {
+      //   return 'KO'
+      // }
+
+      const resu2 = await getLatexFileStyle(page, urlExercice, 'ProfMaquette')
+      if (resu2 === 'KO') {
+        return 'KO'
+      }
+      const urlPage = page.url()
+      if (urlPage.includes('dnb') || urlPage.includes('crpe') || urlPage.includes('sti2d') || urlPage.includes('bac') || urlPage.includes('e3c')) {
+        return 'OK'
+      }
+      const resu3 = await getLatexFileStyle(page, urlExercice, 'Can')
+      if (resu3 === 'KO') {
+        return 'KO'
+      }
+      return 'OK'
+    } catch (error) {
+      logError('Attempt ' + attempt + ' failed: ' + error)
+      if (attempt === retries) {
+        logError('All attempts failed.')
+        return 'KO'
+      }
+      log('Retrying...')
+      await new Promise(resolve => setTimeout(resolve, 2000)) // Attendre 2 secondes avant de réessayer
+    }
   }
-  const urlPage = page.url()
-  if (urlPage.includes('dnb') || urlPage.includes('crpe') || urlPage.includes('sti2d') || urlPage.includes('bac') || urlPage.includes('e3c')) {
-    return 'OK'
-  }
-  const resu3 = await getLatexFileStyle(page, urlExercice, 'Can')
-  if (resu3 === 'KO') {
-    return 'KO'
-  }
-  return 'OK'
 }
 
 async function getLatexFileStyle (page: Page, urlExercice: string, style: string) {

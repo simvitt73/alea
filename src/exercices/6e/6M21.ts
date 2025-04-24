@@ -26,7 +26,6 @@ export const interactifType = 'qcm'
  * Comparer aires et/ou périmètres de figures avec ceux d'un rectangle référence
  * @author Eric Elter
  */
-
 export const uuid = '95313'
 
 export const refs = {
