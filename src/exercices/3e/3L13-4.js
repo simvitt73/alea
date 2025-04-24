@@ -9,6 +9,7 @@ import { texNombre } from '../../lib/outils/texNombre'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import Grandeur from '../../modules/Grandeur'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -108,7 +109,7 @@ $x$ est un nombre tel que $ {${AB}=${toTex(exprAB)}}$ et $ {${BC}=${toTex(exprBC
 
 Le périmètre de $${ABCD}$ mesure $${p}~cm$.<br>
 
-Déterminer son aire${this.interactif ? (' : ' + ajouteChampTexteMathLive(this, i, ' unites[Longueurs,Aires,Volumes]', { texteApres: '<em class="ml-2">(Une unité d\'aire est attendue.)</em>' })) : '.'}<br>
+Déterminer son aire${this.interactif ? (' : ' + ajouteChampTexteMathLive(this, i, KeyboardType.aire, { texteApres: '<em class="ml-2">(Une unité d\'aire est attendue.)</em>' })) : '.'}<br>
 
 ${graph}`
           exercice.texteCorr = name`$${ABCD}$ est un rectangle donc ses côtés opposés sont de la même longueur.<br>
@@ -204,7 +205,7 @@ $x$ est un nombre tel que $ {${AB}=${toTex(exprAB)}}$ et $ {${CD}=${toTex(exprCD
 
 Le périmètre de $${ABCD}$ mesure $${p}~cm$.<br>
 
-Déterminer son aire${this.interactif ? (' : ' + ajouteChampTexteMathLive(this, i, ' unites[Longueurs,Aires,Volumes]', { texteApres: '<em class="ml-2">(Une unité d\'aire est attendue.)</em>' })) : '.'}<br>
+Déterminer son aire${this.interactif ? (' : ' + ajouteChampTexteMathLive(this, i, KeyboardType.aire, { texteApres: '<em class="ml-2">(Une unité d\'aire est attendue.)</em>' })) : '.'}<br>
 
 ${graph}`
           exercice.texteCorr = name`$${ABCD}$ est un rectangle donc ses côtés opposés sont de la même longueur.<br>
