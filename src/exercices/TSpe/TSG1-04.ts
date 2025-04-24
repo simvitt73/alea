@@ -67,8 +67,8 @@ export default class nomExercice extends Exercice {
     question1 += ajouteChampTexteMathLive(this, 0, KeyboardType.clavierDeBase, { texteAvant: '<br>$n=$ ' })
     this.listeQuestions.push(question1)
     this.listeCorrections.push(correction1)
-    question2 += '<br>$p=$'+ remplisLesBlancs(this, 1, '%{champ1}')
     handleAnswers(this, 1, { champ1: { value: reponse2 } })
+    question2 += ajouteChampTexteMathLive(this, 1, KeyboardType.clavierDeBase, { texteAvant: '<br>$p=$ ' })
     this.listeQuestions.push(question2)
     this.listeCorrections.push(correction2)
   }
