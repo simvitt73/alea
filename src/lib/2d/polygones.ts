@@ -1202,7 +1202,8 @@ function TrouveExtremites (pt1: { x: number, y: number }, couplesPoints: [{ x: n
 /**
  * Classe Tetris
  * @description Cette classe permet de créer un pavage de carrés de surface aire
- * On crée une instance de la classe en lui donnant son aire et les coordonnées de l'origine (coin en bas à gauche du rectangle contenant la forme générée)
+ * On crée une instance de la classe en lui donnant son aire et les coordonnées de l'origine (coin en bas à gauche du rectangle contenant son polygone)
+ * Il faut savoir que les carresOccupes et les carresAdjacentDispo sont définis à partir du point (0;0), le polygone, lui, est translaté en (xOrigine; yOrigine).
  * sa propriété poly donne le polygone de la forme
  * sa méthode render retourne un array contenant toutes les cases carrées
  */
@@ -1270,6 +1271,59 @@ export class Polyquad {
     this.poly.epaisseur = 2
   }
 
+  ajouteCarres (n: number): Polyquad {
+    let cpt = 0
+    let aireTotale = 0
+    let aireExt = 0
+    const casesAdjacentes = [
+      { x: 0, y: 1 },
+      { x: 1, y: 0 },
+      { x: 0, y: -1 },
+      { x: -1, y: 0 }
+    ]
+    const aire = this.carresOccupes.length + n
+    let carresOccupes
+    let casesAdjacentesDispo
+    const tetris2 = new Polyquad(aire, this.xOrigine, this.yOrigine)
+    do {
+      carresOccupes = JSON.parse(JSON.stringify(this.carresOccupes))
+      casesAdjacentesDispo = JSON.parse(JSON.stringify(this.carresAdjacentsDispo))
+      cpt++
+      while (carresOccupes.length < aire) {
+        const index = randint(0, casesAdjacentesDispo.length - 1) // On choisit une case adjacente disponible
+        const carreChoisi = casesAdjacentesDispo[index] // La voilà
+        casesAdjacentesDispo.splice(index, 1) // On supprime la case choisie des cases adjacentes disponibles
+        carresOccupes.push({ x: carreChoisi.x, y: carreChoisi.y }) // Elle devient une case occupée
+        for (const caseAdj of casesAdjacentes) {
+          const caseAdjDispo = { x: carreChoisi.x + caseAdj.x, y: carreChoisi.y + caseAdj.y }
+          if (carresOccupes.find((caseOccupe: { x: number, y: number }) => caseAdjDispo.x === caseOccupe.x && caseAdjDispo.y === caseOccupe.y) == null) {
+            if (casesAdjacentesDispo.find((caseAdjDispoTrouvee: { x: number, y: number }) => caseAdjDispo.x === caseAdjDispoTrouvee.x && caseAdjDispo.y === caseAdjDispoTrouvee.y) == null) {
+              casesAdjacentesDispo.push(caseAdjDispo)
+            }
+          }
+        }
+      }
+      tetris2.carresOccupes = JSON.parse(JSON.stringify(carresOccupes))
+      tetris2.carresAdjacentsDispo = JSON.parse(JSON.stringify(casesAdjacentesDispo))
+      tetris2.rectangle = tetris2.findRectangle()
+      aireTotale = (tetris2.rectangle.xMax - tetris2.rectangle.xMin) * (tetris2.rectangle.yMax - tetris2.rectangle.yMin)
+      aireExt = tetris2.aireExt()
+
+      tetris2.translate(-tetris2.rectangle.xMin, -tetris2.rectangle.yMin)
+      // permet de renseigner this.dots (la liste des sommets)
+      tetris2.detoure()
+    } while ((aireTotale - aireExt !== aire) && cpt < 100)
+    tetris2.carresOccupes = JSON.parse(JSON.stringify(carresOccupes))
+    tetris2.carresAdjacentsDispo = JSON.parse(JSON.stringify(casesAdjacentesDispo))
+    tetris2.complexity = aireExt / aireTotale
+
+    tetris2.poly = translation(polygone(tetris2.dots.map((el: { x: number, y: number }) => point(el.x, el.y))), vecteur(tetris2.xOrigine, tetris2.yOrigine))
+    tetris2.poly.color = colorToLatexOrHTML('red')
+    tetris2.poly.couleurDeRemplissage = colorToLatexOrHTML('orange')
+    tetris2.poly.epaisseur = 2
+    return tetris2
+  }
+
   private findRectangle () {
     let xMin = 1000
     let xMax = -1000
@@ -1314,7 +1368,6 @@ export class Polyquad {
       carre.y = y
     }
     this.rectangle = this.findRectangle()
-
     this.translate(-this.rectangle.xMin, -this.rectangle.yMin)
     // permet de renseigner this.dots (la liste des sommets.)
     this.detoure()

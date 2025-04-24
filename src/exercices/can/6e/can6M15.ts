@@ -3,6 +3,7 @@ import { Polyquad } from '../../../lib/2d/polygones'
 import { grille } from '../../../lib/2d/reperes'
 import { segment } from '../../../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../../../lib/2d/textes'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../../modules/2dGeneralites'
 import { randint } from '../../../modules/outils'
@@ -43,6 +44,7 @@ export default class PerimetreParComptageCan extends Exercice {
         ? randint(10, 19)
         : randint(20, 29)
     const tetris = new Polyquad(aire, 0, 0)
+    if (tetris.rectangle.xMax < tetris.rectangle.yMax) tetris.rotate(choice([true, false]))
     const xmin = tetris.rectangle.xMin
     const ymin = tetris.rectangle.yMin
     const xmax = tetris.rectangle.xMax + 3
@@ -56,7 +58,7 @@ export default class PerimetreParComptageCan extends Exercice {
     const objets: NestedObjetMathalea2dArray = [tetris.poly, uniteLongueur, texteUniteLongueur]
     if (this.sup2) objets.push(grid)
     const fig1 = mathalea2d(Object.assign({ pixelsParCm: 20, scale: 0.5, style: 'display: inline-block' }, fixeBordures(objets, { rxmin: -0.1, rymin: -0.1, rxmax: 0.1, rymax: 0.1 })), objets)
-    this.question = `Quelle est le périmètre de la figure ci-dessous ?<br>
+    this.question = `Quel est le périmètre de la figure ci-dessous ?<br>
 
     ${fig1}`
     this.optionsChampTexte = { texteApres: ' u.l' }

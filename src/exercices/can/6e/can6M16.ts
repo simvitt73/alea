@@ -54,17 +54,19 @@ export default class AireUsuelleParComptageCan extends Exercice {
     let value: string[]
     let aire: string
     const choix = choice([true, false])
-    if (choix) {
-      a = randint(4, 10)
-      b = this.sup2
-        ? randint(3, 9, [4, 6, 8]) / 2
-        : randint(2, 5, a)
-    } else {
-      a = this.sup2
-        ? (randint(3, 5) * 2 + 1) / 2
-        : randint(4, 10)
-      b = randint(2, 5, Math.floor(a))
-    }
+    do {
+      if (choix) {
+        a = randint(4, 8)
+        b = this.sup2
+          ? randint(3, 7, [4, 6, 8]) / 2
+          : randint(2, 4, a)
+      } else {
+        a = this.sup2
+          ? (randint(2, 4) * 2 + 1) / 2
+          : randint(4, 8)
+        b = randint(2, 4, Math.floor(a))
+      }
+    } while (a * b > 20 || a * b < 5)
 
     switch (this.sup) {
       case 1:
