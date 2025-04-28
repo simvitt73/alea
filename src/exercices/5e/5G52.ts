@@ -1,7 +1,7 @@
 import Exercice from '../Exercice'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import { cylindre3d, droite3d, point3d, rotation3d, translation3d, vecteur3d } from '../../modules/3d'
+import { cylindre3d, droite3d, Point3d, point3d, rotation3d, translation3d, vecteur3d } from '../../modules/3d'
 import { labelPoint, Latex2d, TexteParPoint } from '../../lib/2d/textes'
 import { fixeBordures, mathalea2d, Vide2d } from '../../modules/2dGeneralites'
 import { longueur, Segment, segment, vecteur } from '../../lib/2d/segmentsVecteurs'
@@ -36,9 +36,9 @@ export default class nomExercice extends Exercice {
   }
 
   nouvelleVersion () {
-    const typeQuestionsDisponibles = ['CylindreVersPatron', 'PatronVersCylindre', 'type3']
+    const typeQuestionsDisponibles = ['CylindreVersPatron']// ['CylindreVersPatron', 'PatronVersCylindre', 'type3']
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
-    const orientationCylindre = ['DeboutVuDessus', 'DeboutVuDessous', 'CoucheVuGauche', 'CoucheVuGdroite']
+    const orientationCylindre = ['DeboutVuDessus', 'baseAvantCoucheVuDroite', 'baseCoteCoucheVuDroite']// ['DeboutVuDessus', 'DeboutVuDessous', 'baseAvantCoucheVuGauche', 'baseAvantCoucheVuDroite', 'baseCoteCoucheVuGauche', 'baseCoteCoucheVuDroite']
     const listetypeOrientationCylindre = combinaisonListes(orientationCylindre, this.nbQuestions)
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       let texte = ''
@@ -51,33 +51,55 @@ export default class nomExercice extends Exercice {
       const objetsPatron = []
       const objetsPatronReponse = []
 
-      const r = randint(2, 7) // rayon
+      let r = randint(2, 7) // rayon
       const h = randint(3, 10, [r]) // hauteur
+
       const centre1 = point3d(0, 0, 0, true, 'O', 'left')
-      const bord1 = point3d(r, 0, 0, true, 'B', 'right')
-      const centre2 = point3d(0, 0, h, true, 'D', 'left')
+      let bord1 :Point3d = point3d(0, 0, 0, true, 'B', 'right')
+      let centre2 :Point3d = point3d(0, 0, 0, true, 'D', 'left')
+      let ptBase1 :Point3d = point3d(0, 0, 0, true, 'B', 'right')
+      let ptBase2 :Point3d = point3d(0, 0, 0, true, 'D', 'left')
+      let rayon :Latex2d = placeLatexSurSegment('.', ptBase1.c2d, centre1.c2d)
+      let hauteur :Latex2d = placeLatexSurSegment('.', ptBase1.c2d, centre1.c2d)
+      switch (listetypeOrientationCylindre[i]) {
+        case 'DeboutVuDessus':
+          bord1 = point3d(r, 0, 0, true, 'B', 'right')
+          centre2 = point3d(0, 0, h, true, 'D', 'left')
+          ptBase1 = rotation3d(bord1, droite3d(centre1, vecteur3d(centre1, centre2)), 20, 'black')
+          ptBase2 = translation3d(ptBase1, vecteur3d(centre1, centre2))
+          rayon = placeLatexSurSegment(`${texNombre(r, 1)}\\text{ cm}`, ptBase1.c2d, centre1.c2d)
+          hauteur = placeLatexSurSegment(`${texNombre(h, 1)}\\text{ cm}`, ptBase2.c2d, ptBase1.c2d)
+          break
+        case 'baseCoteCoucheVuDroite':
+          bord1 = point3d(0, r, 0, true, 'B', 'right')
+          centre2 = point3d(h, 0, 0, true, 'D', 'left')
+          ptBase1 = rotation3d(bord1, droite3d(centre1, vecteur3d(centre1, centre2)), 80, 'black')
+          ptBase2 = translation3d(ptBase1, vecteur3d(centre1, centre2))
+          rayon = placeLatexSurSegment(`${texNombre(r, 1)}\\text{ cm}`, centre1.c2d, ptBase1.c2d)
+          hauteur = placeLatexSurSegment(`${texNombre(h, 1)}\\text{ cm}`, ptBase1.c2d, ptBase2.c2d)
+          break
+        case 'baseAvantCoucheVuDroite':
+          if (r === 2) { r = randint(4, 7, [h]) }
+          bord1 = point3d(0, 0, r, true, 'B', 'right')
+          centre2 = point3d(0, h, 0, true, 'D', 'left')
+          ptBase1 = rotation3d(bord1, droite3d(centre1, vecteur3d(centre1, centre2)), -30, 'black')
+          ptBase2 = translation3d(ptBase1, vecteur3d(centre1, centre2))
+          rayon = placeLatexSurSegment(`${texNombre(r, 1)}\\text{ cm}`, centre1.c2d, ptBase1.c2d)
+          hauteur = placeLatexSurSegment(`${texNombre(h, 1)}\\text{ cm}`, ptBase1.c2d, ptBase2.c2d)
+          break
+        default:
+          break
+      }
+
       const v = vecteur3d(centre1, bord1)
-      const ptBase1 = rotation3d(bord1, droite3d(centre1, vecteur3d(centre1, centre2)), 20, 'black')
-      const ptBase2 = translation3d(ptBase1, vecteur3d(centre1, centre2))
-      /*       if (choice([0, 1, 2]) === 0) { // pour l'orientation du cylindre
-        B = point3d(r, 0, 0)
-        D = point3d(0, 0, h, true, 'D', 'left')
-      } else if (choice([0, 1]) === 0) {
-        B = point3d(0, r, 0)
-        D = point3d(h, 0, 0, true, 'D', 'left')
-      } else {
-        B = point3d(0, 0, r)
-        D = point3d(0, h, 0, true, 'D', 'left')
-      } */
 
       const solideDessine = cylindre3d(centre1, centre2, v, v, 'black', false, true, false)
       const segmentRayon = segment(centre1.c2d, ptBase1.c2d, 'black')
       segmentRayon.pointilles = 1
-      const rayon = placeLatexSurSegment(`${texNombre(r, 1)}\\text{ cm}`, ptBase1.c2d, centre1.c2d)
-      const hauteur = placeLatexSurSegment(`${texNombre(h, 1)}\\text{ cm}`, ptBase2.c2d, ptBase1.c2d)
+
       cylindre.push(...solideDessine.c2d, segmentRayon, rayon, hauteur, segmentRayon, labelPoint(centre1.c2d, centre2.c2d, bord1.c2d))
       /*  const [dimlRect, dimLRect, dimRCercle] = [hauteur, Math.round(2 * Math.PI * rayon), rayon]       */
-      const [dimlRect, dimLRect, dimRCercle] = [3, 9, 3] // dimLargeurRectangle
+      const [dimlRect, dimLRect, dimRCercle] = [4, 12, 2] // dimLargeurRectangle
       const A = point(0, 0)
       const B = point(0, dimlRect)
       const C = point(dimLRect, dimlRect)
@@ -103,16 +125,11 @@ export default class nomExercice extends Exercice {
       if (choice([0, 1]) === 0) {
         coteLongueurPatron = afficheCoteSegmentSansTexte(segment(C, B), 0.5, 'black')
         qLongueurPatron = placeLatexSurSegment('\\text{.......}', C, B, { distance: 1 })
-        /*         rLongueurPatron = placeLatexSurSegment(`${texNombre(2 * r)
-                  }\\pi\\approx${texNombre(arrondi(2 * r * Math.PI, 1))}${sp()}\\text{cm}`, C, B, { distance: 1 })
- */
-        rLongueurPatron = placeLatexSurSegment('\\text{....cm}', C, B, { distance: 1 })
+        rLongueurPatron = placeLatexSurSegment(`\\approx\\text{${texNombre(arrondi(2 * r * Math.PI, 1))} cm}`, C, B, { distance: 1 })
       } else {
         coteLongueurPatron = afficheCoteSegmentSansTexte(segment(A, D), 0.5, 'black')
         qLongueurPatron = placeLatexSurSegment('\\text{.......}', A, D, { distance: 1 })
-        /*         rLongueurPatron = placeLatexSurSegment(`${texNombre(2 * r)
-                  }\\pi\\approx${texNombre(arrondi(2 * r * Math.PI, 1))}${sp()}\\text{cm}`, A, D, { distance: 1 })
- */ rLongueurPatron = placeLatexSurSegment('\\text{....cm}', A, D, { distance: 1 })
+        rLongueurPatron = placeLatexSurSegment(`\\approx\\text{${texNombre(arrondi(2 * r * Math.PI, 1))} cm}`, A, D, { distance: 1 })
       }
       if (choice([0, 1]) === 0) {
         coteHauteurPatron = afficheCoteSegmentSansTexte(segment(A, B), 0.5, 'black')
@@ -134,33 +151,36 @@ export default class nomExercice extends Exercice {
         ptExtremite1Diametre = point(centreBas.x - dimRCercle, centreBas.y)
         ptExtremite2Diametre = point(centreBas.x + dimRCercle, centreBas.y)
       }
-
       const coteRayon = afficheCoteSegmentSansTexte(segment(ptExtremite1Rayon, ptExtremite2Rayon), 0, 'black')
       const qRayon = placeLatexSurSegment('\\text{.......}', ptExtremite1Rayon, ptExtremite2Rayon)
       const rRayon = placeLatexSurSegment(`\\text{${r} cm}`, ptExtremite1Rayon, ptExtremite2Rayon)
       const coteDiametre = afficheCoteSegmentSansTexte(segment(ptExtremite1Diametre, ptExtremite2Diametre), 0, 'black')
       const qDiametre = placeLatexSurSegment('\\text{.......}', ptExtremite1Diametre, ptExtremite2Diametre)
       const rDiametre = placeLatexSurSegment(`\\text{${2 * r} cm}`, ptExtremite1Diametre, ptExtremite2Diametre)
+
       objetsPatron.push(coteLongueurPatron, coteHauteurPatron, coteRayon, coteDiametre, qLongueurPatron, qHauteurPatron, qRayon, qDiametre)
       objetsPatronReponse.push(coteLongueurPatron, coteHauteurPatron, coteRayon, coteDiametre, rLongueurPatron, rHauteurPatron, rRayon, rDiametre)
+
       const [colonne1, colonne2] = definiColonnes([...solideDessine.c2d, rayon, hauteur, segmentRayon], objetsPatron, scaleDessin)
       const [rColonne1, rColonne2] = definiColonnes([...solideDessine.c2d, rayon, hauteur, segmentRayon], objetsPatronReponse, scaleDessin)
 
       switch (listeTypeQuestions[i]) {
         case 'CylindreVersPatron':
-          texte = `Question ${i + 1} de type CylindreVersPatron<br>`
-          texte = 'On souhaite construire le patron  du cylindre ci-dessous. Complète le schéma du patron en indiquant les longeurs en valeur exacte si possible ou au millimètre près<br>'
+          // texte = `Question ${i + 1} de type CylindreVersPatron<br>${listetypeOrientationCylindre[i]}<br>`
+          texte += 'On souhaite construire le patron  du cylindre ci-dessous.<br> Complète le schéma du patron en indiquant les longeurs en valeur exacte si possible ou au millimètre près.<br>'
+          texte += '<br><br>'
           texte += deuxColonnesResp(colonne1, colonne2, {
             largeur1: largeurCol,
             eleId: '',
             widthmincol1: largeurHTMCol,
             widthmincol2: '0px'
           })
-          texteCorr = `Correction ${i + 1} de type CylindreVersPatron<br>`
-          texteCorr = `Le diamètre du cercle de base est 2 \\times ${r} = ${2 * r} cm<br>`
-          texteCorr = `La largeur du rectangle est la hauteur du cylindre soit ${h} cm<br>`
-          texteCorr = `La longueur du rectangle est égale à la longueur du cerlce de base soit 2\\times ${texNombre(r)}\\times \\pi=${texNombre(2 * r)
+          // texteCorr += `Correction ${i + 1} de type CylindreVersPatron<br>`
+          texteCorr += `Le diamètre du cercle de base est $2 \\times ${texNombre(r, 1)} = ${texNombre(2 * r, 1)}${sp()}\\text{cm}$<br>`
+          texteCorr += `La largeur du rectangle est la hauteur du cylindre soit $${texNombre(h, 1)}${sp()}\\text{cm}$<br>`
+          texteCorr += `La longueur du rectangle est égale à la longueur du cerlce de base soit $2 \\times ${texNombre(r, 1)}\\times \\pi=${texNombre(2 * r, 1)
                   }\\pi\\approx${texNombre(arrondi(2 * r * Math.PI, 1))}${sp()}\\text{cm}$<br>`
+          texteCorr += '<br><br>'
           texteCorr += deuxColonnesResp(rColonne1, rColonne2, {
             largeur1: largeurCol,
             eleId: '',
@@ -173,6 +193,7 @@ export default class nomExercice extends Exercice {
           texteCorr = `Correction ${i + 1} de type PatronVersCylindre`
           break
         case 'type3':
+        default:
           texte = `Question ${i + 1} de type 3`
           texteCorr = `Correction ${i + 1} de type 3`
           break
