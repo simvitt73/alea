@@ -530,12 +530,14 @@ export function buildImagesUrlsList (exosContentList: ExoContent[], picsNames: p
           } else {
             imagesFilesUrls.push(`${window.location.origin}/alea/static/${serie}/${year}/images/${file.name}.png`)
           }
-        } else {
+        } else if (serie != null) {
           if (file.format) {
             imagesFilesUrls.push(`${window.location.origin}/alea/static/${serie}/${year}/tex/${file.format}/${file.name}.${file.format}`)
           } else {
             imagesFilesUrls.push(`${window.location.origin}/alea/static/${serie}/${year}/tex/eps/${file.name}.eps`)
           }
+        } else {
+          imagesFilesUrls.push(`${window.location.origin}/alea/${file.name}.${file.format}`)
         }
       }
     }
