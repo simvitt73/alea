@@ -209,6 +209,13 @@
     e.preventDefault()
   })
 
+  /* Pour que les apps puissent fermer la sidenav */
+  window.addEventListener('message', (event) => {
+    if (event.data?.type === 'closeSidenav') {
+      if (isSidenavOpened) toggleSidenav(false)
+    }
+  })
+
   function updateSelectedThirdApps () {
     const appsTierceReferentielArray: AppTierceGroup[] =
       Object.values(appsTierce)
