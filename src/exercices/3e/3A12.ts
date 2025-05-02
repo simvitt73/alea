@@ -1,18 +1,17 @@
 import { choice, combinaisonListesSansChangerOrdre } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { katexPopup2 } from '../../lib/format/message'
 import { numAlpha } from '../../lib/outils/outilString'
 import { decompositionFacteursPremiers, pgcd } from '../../lib/outils/primalite'
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint, ppcm } from '../../modules/outils'
+import { ajouterAide } from '../../lib/outils/enrichissements'
 export const titre = 'Résoudre un exercice d\'engrenages'
 export const dateDeModifImportante = '01/04/2023'
 /**
  * ppcmEngrenages
  * les deux on besoin de la def partielle serie : stlX
- * pb dans la sortie LaTeX, revoir comment user de la fonction katexPopup2() pour affichage d'une note hors texte !
  * @author Sébastien Lozano
  */
 export const uuid = 'ce352'
@@ -92,11 +91,9 @@ export default class PpcmEngrenages extends Exercice {
             texte += '<br>' + numAlpha(0) + ` Écrire la liste des multiples de $${nbDentsr1}$ et de $${nbDentsr2}$ jusqu'à trouver un multiple commun.`
             if (ppcm(nbDentsr1, nbDentsr2) === (nbDentsr1 * nbDentsr2)) {
               texte += `<br>Justifier que ${nbDentsr1} et ${nbDentsr2} sont des `
-              texte += katexPopup2(
-                1,
-                'nombres premiers entre eux',
-                'Définition à partir du plus petit multiple commun',
-                `${context.isHtml ? '<br>' : '\\\\'} ${txtPopup}`
+              texte += ajouterAide(
+                `${context.isHtml ? '<br>' : '\\\\'} ${txtPopup}`,
+                { texteAvant: 'nombres premiers entre eux', titreAide: 'Définition à partir du plus petit multiple commun' }
               )
             }
             texte += '.'
@@ -139,11 +136,9 @@ export default class PpcmEngrenages extends Exercice {
             texteCorr += '<br>'
             if (ppcm(nbDentsr1, nbDentsr2) === (nbDentsr1 * nbDentsr2)) {
               texteCorr += '$ppcm(' + nbDentsr1 + ';' + nbDentsr2 + ')=' + nbDentsr1 + '\\times' + nbDentsr2 + `$ donc $${nbDentsr1}$ et $${nbDentsr2}$ sont des `
-              texteCorr += katexPopup2(
-                1,
-                'nombres premiers entre eux',
-                'Définition à partir du plus petit multiple commun',
-                `${context.isHtml ? '<br>' : '\\\\'} ${txtPopup}`
+              texteCorr += ajouterAide(
+                `${context.isHtml ? '<br>' : '\\\\'} ${txtPopup}`,
+                { texteAvant: 'nombres premiers entre eux', titreAide: 'Définition à partir du plus petit multiple commun' }
               )
             }
             texteCorr += '.'
@@ -187,11 +182,9 @@ export default class PpcmEngrenages extends Exercice {
           texte += '<br>' + numAlpha(0) + ` Décomposer $${nbDentsr1}$ et $${nbDentsr2}$ en produit de facteurs premiers.`
           if (ppcm(nbDentsr1, nbDentsr2) === (nbDentsr1 * nbDentsr2)) {
             texte += `<br>Justifier que ${nbDentsr1} et ${nbDentsr2} sont des `
-            texte += katexPopup2(
-              1,
-              'nombres premiers entre eux',
-              'Trois définitions équivalentes au choix',
-              `<br>- ${txtPopup} ${context.isHtml ? '<br>- ' : '\\\\- '} ${txtPopupBis} ${context.isHtml ? '<br>- ' : '\\\\- '} ${txtPopupTer}`
+            texte += ajouterAide(
+              `<br>- ${txtPopup} ${context.isHtml ? '<br>- ' : '\\\\- '} ${txtPopupBis} ${context.isHtml ? '<br>- ' : '\\\\- '} ${txtPopupTer}`,
+              { texteAvant: 'nombres premiers entre eux', titreAide: 'Trois définitions équivalentes au choix' }
             )
           }
           texte += '.'
@@ -207,11 +200,9 @@ export default class PpcmEngrenages extends Exercice {
             texteCorr += `D'après les calculs précédents, $ppcm(${nbDentsr1},${nbDentsr2})= ${decompositionFacteursPremiers(ppcm(nbDentsr1, nbDentsr2))}$.<br>`
 
             texteCorr += `Donc $${nbDentsr1}$ et $${nbDentsr2}$ sont des `
-            texteCorr += katexPopup2(
-              1,
-              'nombres premiers entre eux',
-              'Définition à partir du plus petit multiple commun',
-              `${context.isHtml ? '<br>' : '\\\\'} ${txtPopup}`
+            texteCorr += ajouterAide(
+              `${context.isHtml ? '<br>' : '\\\\'} ${txtPopup}`,
+              { texteAvant: 'nombres premiers entre eux', titreAide: 'Définition à partir du plus petit multiple commun' }
             )
           }
           texteCorr += '.'
@@ -220,11 +211,9 @@ export default class PpcmEngrenages extends Exercice {
 
             texteCorr += `D'après les calculs précédents, $pgcd(${nbDentsr1},${nbDentsr2})= ${pgcd(nbDentsr1, nbDentsr2) === 1 ? 1 : ''} ${decompositionFacteursPremiers(pgcd(nbDentsr1, nbDentsr2))}$.<br>`
             texteCorr += `Donc $${nbDentsr1}$ et $${nbDentsr2}$ sont des `
-            texteCorr += katexPopup2(
-              1,
-              'nombres premiers entre eux',
-              'Définition à partir du plus grand diviseur commun',
-              `${context.isHtml ? '<br>' : '\\\\'} ${txtPopupBis}`
+            texteCorr += ajouterAide(
+              `${context.isHtml ? '<br>' : '\\\\'} ${txtPopupBis}`,
+              { texteAvant: 'nombres premiers entre eux', titreAide: 'Définition à partir du plus grand diviseur commun' }
             )
           }
           texteCorr += '.'
@@ -233,11 +222,9 @@ export default class PpcmEngrenages extends Exercice {
 
             texteCorr += `D'après les calculs précédents, le seul diviseur commun à $${nbDentsr1}$ et $${nbDentsr2}$ vaut $1$.<br> `
             texteCorr += `Donc $${nbDentsr1}$ et $${nbDentsr2}$ sont des `
-            texteCorr += katexPopup2(
-              1,
-              'nombres premiers entre eux',
-              'Définition à partir de l\'intersection des diviseurs communs',
-              `${context.isHtml ? '<br>' : '\\\\'} ${txtPopupTer}`
+            texteCorr += ajouterAide(
+              `${context.isHtml ? '<br>' : '\\\\'} ${txtPopupTer}`,
+              { texteAvant: 'nombres premiers entre eux', titreAide: 'Définition à partir de l\'intersection des diviseurs communs' }
             )
           }
           texteCorr += '.'
