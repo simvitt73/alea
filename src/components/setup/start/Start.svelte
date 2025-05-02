@@ -263,7 +263,7 @@
 
   function setFullScreen (isFullScreen: boolean) {
     globalOptions.update((params) => {
-      isFullScreen ? (params.v = 'l') : delete params.v
+      isFullScreen ? (params.v = 'l') : (params.v = '')
       return params
     })
   }
