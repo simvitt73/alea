@@ -102,7 +102,7 @@
         handleFullScreenError(new Error('Requête de plein écran refusée'))
       }
     } else {
-      throw new Error('Plein écran non disponible')
+      handleFullScreenError(new Error('Plein écran non disponible'))
     }
   }
 
@@ -116,7 +116,7 @@
     if (method) {
       await method.call(document)
     } else {
-      throw new Error('Sortie du plein écran non disponible')
+      handleFullScreenError(new Error('Sortie du plein écran non disponible'))
     }
   }
 
