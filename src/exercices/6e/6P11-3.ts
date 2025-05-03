@@ -14,7 +14,6 @@ export const amcReady = true
 export const amcType = 'AMCNum'
 
 export const dateDePublication = '02/05/2025'
-export const dateDeModifImportante = '02/05/2025'
 
 /**
  *
@@ -50,11 +49,9 @@ export default class ProblemesDeFoisPlusEtDeFoisMoins extends Exercice {
       saisie: this.sup2
     })
     const n = this.sup - 1
-    if (this.interactif && context.isHtml) {
-      this.consigne = this.nbQuestions > 1 ? 'Résoudre les problèmes suivants au brouillon et écrire les réponses dans les cases, ne pas préciser "€" ni "euros" ...' : 'Résoudre le problème suivant au brouillon et écrire la réponse dans la case, ne pas préciser "€" ni "euros" ...'
-    } else {
-      this.consigne = this.nbQuestions > 1 ? 'Résoudre les problèmes suivants.' : 'Résoudre le problème suivant.'
-    }
+
+    this.consigne = this.nbQuestions > 1 ? 'Résoudre les problèmes suivants.' : 'Résoudre le problème suivant.'
+
     const listeTypeQuestions = []
     const fois = [2, 3, 4, 5, 10]
     const foisUsed : number[] = []
@@ -93,11 +90,10 @@ export default class ProblemesDeFoisPlusEtDeFoisMoins extends Exercice {
           break
         }
         case 'foisMoinsQue': {
-          texte = `${f} fois moins que $${texPrix(value)}$  €, c'est `
+          texte = `${f} fois moins que $${texPrix(value)}$  €, c'est ?`
           if (this.interactif && !context.isAmc) {
             texte += ajouteChampTexteMathLive(this, i, ' ', { texteApres: ' €' })
           }
-          texte += '?<br>'
           texteCorr = `$${texPrix(value)}$ € $\\div ${f}$ = $${texPrix(resu)}$ € <br>`
           texteCorr += 'Donc le résultat est ' + texteEnCouleur(`$${miseEnEvidence(texPrix(resu))}$ €.`)
           if (context.isAmc) setReponse(this, i, resu)
@@ -105,15 +101,13 @@ export default class ProblemesDeFoisPlusEtDeFoisMoins extends Exercice {
           break
         }
         case 'foisPlusQue': {
-          texte = `${f} fois plus que $${texPrix(resu)}$  €, c'est `
+          texte = `${f} fois plus que $${texPrix(resu)}$  €, c'est ?`
           if (this.interactif && !context.isAmc) {
             texte += ajouteChampTexteMathLive(this, i, ' ', { texteApres: ' €' })
           }
-          texte += '?<br>'
           texteCorr = `$${texPrix(resu)}$ € $\\times ${f}$ = $${texPrix(value)}$ € <br>`
           texteCorr += 'Donc le résultat est ' + texteEnCouleur(`$${miseEnEvidence(texPrix(value))}$ €.`)
-          if (context.isAmc) setReponse(this, i, value)
-          else handleAnswers(this, i, { reponse: { value: texPrix(value) } })
+          handleAnswers(this, i, { reponse: { value: texPrix(value) } })
           break
         }
       }
