@@ -16,7 +16,7 @@ import { deuxColonnesResp } from '../../lib/format/miseEnPage'
 import { arrondi } from '../../lib/outils/nombres'
 import { sp } from '../../lib/outils/outilString'
 // import { cylindre2d } from '../../lib/2d/projections3d'
-import { abs, random, round } from 'mathjs'
+import { abs, cos, random, round } from 'mathjs'
 import { ellipse, semiEllipse } from '../../lib/2d/projections3d'
 
 export const titre = 'Calculer des longueurs avec un patron de cylindre'
@@ -322,6 +322,21 @@ export class SemiEllipsePenchee extends ObjetMathalea2D {
     }
     this.N = rotation(this.M, centre, this.angle)
     this.bordures = [Math.min(this.M.x, this.N.x, med.x) - 0.1, Math.min(this.M.y, this.N.y, med.y) - 0.1, Math.max(this.M.x, this.N.x, med.x) + 0.1, Math.max(this.M.y, this.N.y, med.y) + 0.1]
+    let bA = point(this.bordures[0], this.bordures[1]) // (xmin, yMin)
+    let bB = point(this.bordures[2], this.bordures[1])// (xmax, yMin)
+    let bC = point(this.bordures[2], this.bordures[3])  // (xmax, yMax)
+    let bD = point(this.bordures[0], this.bordures[3]) // (xmiSn, yMax)
+    const bCentre = point((bA.x + bB.x) / 2, (bA.y + bB.y) / 2)
+    bA = rotation(bA, bCentre, this.anglesAxe)
+    bB = rotation(bB, bCentre, this.anglesAxe)
+    bC = rotation(bC, bCentre, this.anglesAxe)
+    bD = rotation(bD, bCentre, this.anglesAxe)
+    this.bordures = [Math.min(bA.x, bB.x, bC.x, bD.x), Math.min(bA.y, bB.y, bC.y, bD.y), Math.max(bA.x, bB.x, bC.x, bD.x), Math.max(bA.y, bB.y, bC.y, bD.y)]
+    // this.anglesAxe
+    /*     const coefx = Math.cos(this.anglesAxe * Math.PI / 180)
+    const coefy = Math.sin(this.anglesAxe * Math.PI / 180)
+    this.bordures = [coefx * Math.min(this.M.x, this.N.x, med.x) - 0.1, coefy * Math.min(this.M.y, this.N.y, med.y) - 0.1, coefx * Math.max(this.M.x, this.N.x, med.x) + 0.1, coefy * Math.max(this.M.y, this.N.y, med.y) + 0.1]
+ */
   }
 
   svg (coeff: number) {
@@ -362,7 +377,7 @@ export class SemiEllipsePenchee extends ObjetMathalea2D {
           couleurDesHachures: this.couleurDesHachures[0],
           couleurDeRemplissage: this.couleurDeRemplissage[0],
           opaciteDeRemplissage: this.opaciteDeRemplissage
-        }) + `<path d="M${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)} A ${this.rx * coeff} ${this.ry * coeff} 0 ${this.large} ${this.sweep} ${this.N.xSVG(coeff)} ${this.N.ySVG(coeff)} L ${this.centre.xSVG(coeff)} ${this.centre.ySVG(coeff)} Z" stroke="${this.color[0]}"  ${this.style} id="${this.id}" fill="url(#pattern${this.id})" />`
+        }) + `<g transform="rotate(${-this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"><path d="M${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)} A ${this.rx * coeff} ${this.ry * coeff} 0 ${this.large} ${this.sweep} ${this.N.xSVG(coeff)} ${this.N.ySVG(coeff)} L ${this.centre.xSVG(coeff)} ${this.centre.ySVG(coeff)} Z" stroke="${this.color[0]}"  ${this.style} id="${this.id}" fill="url(#pattern${this.id})" />`
       } else {
         if (this.opacite !== 1) {
           this.style += ` stroke-opacity="${this.opacite}" `
@@ -371,7 +386,7 @@ export class SemiEllipsePenchee extends ObjetMathalea2D {
           this.style += ` fill-opacity="${this.opaciteDeRemplissage}" `
         }
 
-        return `<g transform="rotate(${this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"><path d="M${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)} A ${this.rx * coeff} ${this.ry * coeff} 0 ${this.large} ${this.sweep} ${this.N.xSVG(coeff)} ${this.N.ySVG(coeff)} L ${this.centre.xSVG(coeff)} ${this.centre.ySVG(coeff)} Z" stroke="${this.color[0]}" fill="${this.couleurDeRemplissage[0]}" ${this.style}/>  </g>`
+        return `<g transform="rotate(${-this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"><path d="M${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)} A ${this.rx * coeff} ${this.ry * coeff} 0 ${this.large} ${this.sweep} ${this.N.xSVG(coeff)} ${this.N.ySVG(coeff)} L ${this.centre.xSVG(coeff)} ${this.centre.ySVG(coeff)} Z" stroke="${this.color[0]}" fill="${this.couleurDeRemplissage[0]}" ${this.style}/>  </g>`
       }
     } else {
       this.style = ''
@@ -401,14 +416,14 @@ export class SemiEllipsePenchee extends ObjetMathalea2D {
       }
       this.style += ` fill-opacity="${this.opaciteDeRemplissage}" `
 
-      return `<g transform="rotate(${this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"><path d="M${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)} A ${this.rx * coeff} ${this.ry * coeff} 0 ${this.large} ${this.sweep} ${this.N.xSVG(coeff)} ${this.N.ySVG(coeff)}" stroke="${this.color[0]}" fill="${this.couleurDeRemplissage[0]}" ${this.style} id="${this.id}" />  </g>`
+      return `<g transform="rotate(${-this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"><path d="M${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)} A ${this.rx * coeff} ${this.ry * coeff} 0 ${this.large} ${this.sweep} ${this.N.xSVG(coeff)} ${this.N.ySVG(coeff)}" stroke="${this.color[0]}" fill="${this.couleurDeRemplissage[0]}" ${this.style} id="${this.id}" />  </g>`
     }
   }
 
   tikz () {
     let optionsDraw = ''
     const tableauOptions = []
-    tableauOptions.push(`rotate=${-this.anglesAxe}`)
+    tableauOptions.push(`rotate=${this.anglesAxe}`)
     if (this.color[1].length > 1 && this.color[1] !== 'black') {
       tableauOptions.push(`color=${this.color[1]}`)
     }
@@ -469,8 +484,7 @@ export class SemiEllipsePenchee extends ObjetMathalea2D {
       this.style += ` stroke-opacity="${this.opacite}" `
     }
     this.style += ' fill="none" '
-    // <g transform="rotate(${this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"> </g>`
-    let code = `<g transform="rotate(${this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"> `
+    let code = `<g transform="rotate(${-this.anglesAxe}, ${this.centre.xSVG(coeff)}, ${this.centre.xSVG(coeff)})"> `
     code += `<path d="M${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)} S ${this.M.xSVG(coeff)} ${this.M.ySVG(coeff)}, `
     let compteur = 1
     const r = longueur(this.centre, this.M)
@@ -491,7 +505,7 @@ export class SemiEllipsePenchee extends ObjetMathalea2D {
   tikzml (amp:number) {
     let optionsDraw = ''
     const tableauOptions = []
-    tableauOptions.push(`rotate=${-this.anglesAxe}`)
+    tableauOptions.push(`rotate=${this.anglesAxe}`)
     if (this.color[1].length > 1 && this.color[1] !== 'black') {
       tableauOptions.push(`color=${this.color[1]}`)
     }
@@ -610,9 +624,6 @@ export class Cylindre2d extends ObjetMathalea2D {
     this.stringColor = color
     this.couleurDeRemplissage = couleurDeRemplissage
     this.opaciteDeRemplissage = opaciteDeRemplissage
-    // let debutArc:Point
-    // let demiCerclePlein:Arc
-    // let demiCerclePointille:Arc
     switch (position) {
       case 'baseCoteCoucheVuDroite':
         centre2 = point(centre.x + hauteur, centre.y)
@@ -623,7 +634,7 @@ export class Cylindre2d extends ObjetMathalea2D {
             ry: rx / 3,
             hemisphere: 'sud',
             rayon: false,
-            pointilles: 0,
+            pointilles: 1,
             couleurDeRemplissage,
             color,
             opaciteDeRemplissage,
@@ -636,7 +647,7 @@ export class Cylindre2d extends ObjetMathalea2D {
             ry: rx / 3,
             hemisphere: 'nord',
             rayon: false,
-            pointilles: 1,
+            pointilles: 0,
             couleurDeRemplissage,
             color,
             opaciteDeRemplissage,
