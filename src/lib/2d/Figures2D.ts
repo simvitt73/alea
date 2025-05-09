@@ -26,7 +26,7 @@ export class Figure2D extends ObjetMathalea2D {
     pixelsParCm = context.pixelsParCm,
     axes = [],
     centre = null,
-    nbAxes = 0
+    nbAxes
   }: {
     codeSvg: string,
     codeTikz: string,
