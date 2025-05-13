@@ -306,13 +306,29 @@ export class Figure2D extends ObjetMathalea2D {
       angle: 0,
       x: 0,
       y: 0,
-      opacite: 0.5,
+      opacite: 1,
       axes: this.Axes
     })
+    const ppcm = this.pixelsParCm
 
     copieAnimee.name = id
     document.addEventListener('exercicesAffiches', () => {
-      const rect = document.getElementById(id)
+      // Création du clipPath
+      const figure = document.getElementById(id)
+      const clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath')
+      const clipId = 'clip-' + id
+      clipPath.setAttribute('id', clipId)
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+      rect.setAttribute('id', `clipingRect_${id}`)
+      const largeur = 200 // Suffisamment grand pour couvrir la figure
+      const hauteur = 200
+      rect.setAttribute('x', String(cx * ppcm)) // String(cx - largeur / 2))
+      rect.setAttribute('y', String(cy * ppcm - hauteur / 2))
+      rect.setAttribute('width', String(largeur))
+      rect.setAttribute('height', String(hauteur))
+      clipPath.appendChild(rect)
+      figure?.appendChild(clipPath)
+      figure?.setAttribute('clip-path', `url(#${clipId})`)
       let progress = 0
       let currentSymmetry = 0
       let animating = false
@@ -333,8 +349,24 @@ export class Figure2D extends ObjetMathalea2D {
 
         return { a, b, c, d, tx, ty }
       }
-      const ppcm = this.pixelsParCm
       function animateSymmetry (angleDeg: number, onComplete: () => void) {
+        // Création du rectangle bord gauche centré en (cx, cy) avec largeur et hauteur suffisantes
+        const rect = document.getElementById(`clipingRect_${id}`)
+        if (!rect) return
+        const largeur = 200 // Suffisamment grand pour couvrir la figure
+        const hauteur = 200
+        rect.setAttribute('x', String(cx * ppcm))
+        rect.setAttribute('y', String(cy * ppcm - hauteur / 2))
+        rect.setAttribute('width', String(largeur))
+        rect.setAttribute('height', String(hauteur))
+
+        // Rotation du rectangle autour de (cx, cy) pour orienter la coupe
+        rect.setAttribute(
+          'transform',
+  `rotate(${angleDeg + 90}, ${cx * ppcm}, ${cy * ppcm})`
+        )
+
+        // Application du clipPath à la copie
         progress = 0
 
         function step () {
@@ -342,7 +374,7 @@ export class Figure2D extends ObjetMathalea2D {
           if (progress > 1) progress = 1
 
           const { a, b, c, d, tx, ty } = computeSymmetryMatrix(progress, angleDeg, cx * ppcm, cy * ppcm)
-          rect?.setAttribute('transform', `matrix(${a} ${b} ${c} ${d} ${tx} ${ty})`)
+          figure?.setAttribute('transform', `matrix(${a} ${b} ${c} ${d} ${tx} ${ty})`)
 
           if (progress < 1) {
             requestAnimationFrame(step)
@@ -370,10 +402,10 @@ export class Figure2D extends ObjetMathalea2D {
 
       const symetries = copieAnimee.axesAngles
       if (symetries.length === 0) {
-        rect?.setAttribute('transform', `matrix(1 0 0 1 ${cx * ppcm} ${-cy * ppcm})`)
-        return
+        figure?.setAttribute('transform', 'scale(1,1)')
+      } else {
+        loopSymetries(symetries)
       }
-      loopSymetries(symetries)
     })
     return copieAnimee
   }

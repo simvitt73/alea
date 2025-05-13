@@ -93,9 +93,11 @@ export default class NbAxesDeSymetrie extends Exercice {
 
         const formeTexte = texteParPosition(`figure ${j + 1}`, j * 6 * factor * scale, 2.8 * factor)
         objets.push(forme, formeTexte)
+        const formeBis = forme.translationAnimee({ dx: 0, dy: 0, duration: '0', repeatCount: '0' })
+        formeBis.opacite = 0.3
         const formeCorr = forme.autoReflectionAnimee(`${forme.name}Corr_${i * this.sup3 + j}`, forme.x, forme.y)
         const axes = formeCorr.Axes.map(el => factor > 1 ? homothetie(el, point(0, 0), factor) : el)
-        objetsCorr.push(formeCorr, formeTexte)
+        objetsCorr.push(formeBis, formeCorr, formeTexte)
         if (axes.length > 0) {
           for (let k = 0; k < axes.length; k++) {
             const seg = translation(axes[k], vecteur(j * 6 * factor * scale, 0))
