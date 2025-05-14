@@ -1,6 +1,6 @@
 import { point, pointAdistance, pointSurSegment } from '../../lib/2d/points'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
-import { rotation } from '../../lib/2d/transformations'
+import { rotationAbstraite } from '../../lib/2d/transformations-abstraites'
 import { randint } from '../outils'
 
 /**
@@ -13,8 +13,8 @@ export const carre1point1longueur = function (nom, A, c) {
   const interligne = 1
   A = point(5, 0, nom[0])
   const B = pointAdistance(A, c, randint(-20, 20), nom[1])
-  const C = rotation(A, B, -90, nom[2])
-  const D = rotation(B, A, 90, nom[3])
+  const C = rotationAbstraite(A, B, -90, nom[2])
+  const D = rotationAbstraite(B, A, 90, nom[3])
   const E = pointSurSegment(A, D, c + 2, 'E')
   const F = pointSurSegment(D, C, c + 2, 'F')
   this.equerreZoom((c + 3) * 100 / 7.5)

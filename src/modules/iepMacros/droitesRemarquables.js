@@ -1,10 +1,11 @@
 import { droite } from '../../lib/2d/droites'
 import { milieu, pointSurSegment } from '../../lib/2d/points'
-import { projectionOrtho, rotation } from '../../lib/2d/transformations'
+import { projectionOrtho } from '../../lib/2d/transformations'
 import { centreCercleCirconscrit } from '../../lib/2d/triangle'
-import {angleOriente} from "../../lib/2d/angles-vecteurs.js";
+import { angleOriente } from '../../lib/2d/angles-vecteurs.js'
 
-import {longueur} from "../../lib/2d/mesures.js";
+import { longueur } from '../../lib/2d/mesures.js'
+import { rotationAbstraite } from '../../lib/2d/transformations-abstraites'
 
 /**
  * Trace la médiatrice de [AB] au compas. Le paramétrage des longueurs correspond à la distance entre le milieu du segment et le point d'intersection des arcs de cercles
@@ -34,7 +35,7 @@ export const mediatriceAuCompas = function (A, B, options = {}) {
     options.coderFigure = true
   }
   const O = milieu(A, B)
-  const O2 = rotation(A, O, -90)
+  const O2 = rotationAbstraite(A, O, -90)
   const M = pointSurSegment(O, O2, options.longueur1)
   const N = pointSurSegment(O, O2, options.longueur2)
   this.compasMontrer()
@@ -81,8 +82,8 @@ export const mediatriceRegleEquerre = function (A, B, codage = 'X') {
   this.regleDeplacer(A)
   this.regleRotation(B)
   this.crayonMontrer()
-  const O2 = rotation(A, O, -90)
-  const O3 = rotation(A, O, 90)
+  const O2 = rotationAbstraite(A, O, -90)
+  const O3 = rotationAbstraite(A, O, 90)
   const M = pointSurSegment(O, O2, 0.2)
   const N = pointSurSegment(O, O3, 0.2)
   if (this.y(M) > this.y(N)) {
@@ -178,8 +179,8 @@ export const mediane = function (A, B, C, options = {}) {
   this.regleMontrer(A, options)
   this.regleRotation(B, options)
   this.crayonMontrer()
-  const O2 = rotation(A, O, -90)
-  const O3 = rotation(A, O, 90)
+  const O2 = rotationAbstraite(A, O, -90)
+  const O3 = rotationAbstraite(A, O, 90)
   const M = pointSurSegment(O, O2, 0.2)
   const N = pointSurSegment(O, O3, 0.2)
   if (M.y > N.y) {
@@ -205,7 +206,7 @@ export const bissectriceAuCompas = function (A, B, C, { codage = '/', l = 2, cou
   const A1 = pointSurSegment(B, A, l)
   const C1 = pointSurSegment(B, C, l)
   const angle = angleOriente(A, B, C)
-  const M = rotation(B, A1, -(180 - angle))
+  const M = rotationAbstraite(B, A1, -(180 - angle))
   const options = { couleur, tempo, vitesse, sens, pointilles: false }
   const arc1 = this.compasTracerArcCentrePoint(B, A1, options)
   const arc2 = this.compasTracerArcCentrePoint(B, C1, options)

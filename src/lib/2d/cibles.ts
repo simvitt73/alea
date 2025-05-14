@@ -9,8 +9,9 @@ import { grille } from './reperes'
 import { TexteParPoint, texteParPoint, texteParPosition } from './textes'
 import { rotation, similitude } from './transformations'
 import { arc } from './arc'
-import {segment} from "./segments";
-import {longueur} from "./mesures";
+import { segment } from './segments'
+import { longueur } from './mesures'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**  Retourne un couple de coordonnées correspondant au centre d'une cible, connaissant les coordonnées du point réponse et de la cellule dans laquelle on veut qu'il soit
  * @param {number} x Abscisse du point réponse
@@ -259,10 +260,10 @@ export class CibleRonde extends ObjetMathalea2D {
     const azimut2 = pointSurSegment(centre, azimut, longueur(centre, azimut) + 0.3)
     this.bordures = [this.x - this.rang * this.taille - 1, this.y - this.rang * this.taille - 1, this.x + this.rang * this.taille + 1, this.y + this.rang * this.taille + 1]
     for (let i = 0; i < 8; i++) {
-      rayon = segment(centre, rotation(azimut, centre, 45 * i), this.stringColor)
+      rayon = segment(centre, rotationAbstraite(azimut, centre, 45 * i), this.stringColor)
       rayon.opacite = this.opacite
       this.objets.push(rayon)
-      this.objets.push(texteParPoint(lettreDepuisChiffre(1 + i), rotation(azimut2, centre, 45 * i + 22.5), 0))
+      this.objets.push(texteParPoint(lettreDepuisChiffre(1 + i), rotationAbstraite(azimut2, centre, 45 * i + 22.5), 0))
     }
     for (let i = 0; i < this.rang; i++) {
       c = cercle(centre, arrondi(this.taille * (1 + i)), this.stringColor)
@@ -379,7 +380,7 @@ export class CibleCouronne extends ObjetMathalea2D {
     let rayon
     const arcPlein = semi ? 180 : 360
     const centre = point(this.x, this.y)
-    azimut = rotation(point(this.x + this.taille, this.y), centre, this.depart)
+    azimut = rotationAbstraite(point(this.x + this.taille, this.y), centre, this.depart)
     let azimut2 = pointSurSegment(centre, azimut, longueur(centre, azimut) + this.taille2)
     const rayons = []
     const arc1 = arc(azimut, centre, arcPlein - 0.1, false, 'none', this.stringColor)
@@ -394,15 +395,15 @@ export class CibleCouronne extends ObjetMathalea2D {
         this.objets.push(rayons[j - 1])
       }
       if (label) {
-        numero = texteParPoint(lettreDepuisChiffre(1 + i), rotation(milieu(azimut, azimut2), centre, arcPlein / nbDivisions / 2), 0, 'black', 1, 'milieu', true)
+        numero = texteParPoint(lettreDepuisChiffre(1 + i), rotationAbstraite(milieu(azimut, azimut2), centre, arcPlein / nbDivisions / 2), 0, 'black', 1, 'milieu', true)
         numero.contour = true
         this.objets.push(numero)
       }
       rayon.color = colorToLatexOrHTML(this.stringColor)
       rayon.opacite = this.opacite
       this.objets.push(rayon)
-      azimut = rotation(azimut, centre, arcPlein / nbDivisions)
-      azimut2 = rotation(azimut2, centre, arcPlein / nbDivisions)
+      azimut = rotationAbstraite(azimut, centre, arcPlein / nbDivisions)
+      azimut2 = rotationAbstraite(azimut2, centre, arcPlein / nbDivisions)
       rayon = segment(azimut, azimut2, this.stringColor)
     }
     if (semi) {

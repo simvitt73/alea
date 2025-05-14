@@ -22,7 +22,7 @@ import { propositionsQcm } from '../../lib/interactif/qcm'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { arcPointPointAngle } from '../../lib/2d/arc.js'
-import {segmentAvecExtremites} from "../../lib/2d/segments.js";
+import { segmentAvecExtremites } from '../../lib/2d/segments.js'
 
 export const titre = 'Effectuer des calculs liés aux homothéties'
 export const dateDePublication = '28/11/2021'

@@ -5,13 +5,14 @@ import { arrondi } from '../outils/nombres'
 import { codageBissectrice, codageMediatrice, codageSegments } from './codages'
 import { milieu, point, Point, pointSurDroite, pointSurSegment } from './points'
 import { Latex2d, latex2d, TexteParPoint, texteParPosition, type LetterSizeType } from './textes'
-import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } from './transformations'
+import { homothetie, projectionOrtho, symetrieAxiale, translation } from './transformations'
 import { traceCompas } from './arc'
 import { pointAbstrait, type PointAbstrait } from './points-abstraits'
 import { angleOriente } from './angles-vecteurs'
 import { DemiDroite, demiDroite, segment } from './segments'
 import { longueur } from './mesures'
 import { norme, VecteurAbstrait, vecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * Ajouter une étiquette sur une droite.
@@ -925,8 +926,8 @@ export class Mediatrice extends ObjetMathalea2D {
   ) {
     super()
     const O = milieu(A, B)
-    const m = rotation(A, O, 90)
-    const n = rotation(A, O, -90)
+    const m = rotationAbstraite(A, O, 90)
+    const n = rotationAbstraite(A, O, -90)
     const M = pointSurSegment(O, m, longueur(A, B) * 0.785)
     const N = pointSurSegment(O, n, longueur(A, B) * 0.785)
     const d = new Droite(M, N, nom, couleurMediatrice)
@@ -1104,7 +1105,7 @@ export class Bissectrice extends DemiDroite {
   ) {
     const demiangle = angleOriente(A, O, B) / 2
     const m = pointSurSegment(O, A, 3)
-    const X = rotation(m, O, demiangle)
+    const X = rotationAbstraite(m, O, demiangle)
     super(O, X, couleurBissectrice)
     this.color = colorToLatexOrHTML(color)
     this.tailleLosange = tailleLosange

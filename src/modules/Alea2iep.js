@@ -1,7 +1,7 @@
 // import iepLoadPromise from 'instrumenpoche'
 import { droite } from '../lib/2d/droites'
 import { milieu, point, pointAdistance, pointSurSegment } from '../lib/2d/points'
-import { homothetie, rotation, translation, translation2Points } from '../lib/2d/transformations'
+import { homothetie, translation, translation2Points } from '../lib/2d/transformations'
 import { context } from './context'
 import { bissectriceAuCompas, cercleCirconscrit, hauteur, mediane, mediatriceAuCompas, mediatriceRegleEquerre } from './iepMacros/droitesRemarquables'
 import { paralleleAuCompas, paralleleAuCompasAvecDescription, paralleleRegleEquerre2points3epoint, paralleleRegleEquerreDroitePointAvecDescription, perpendiculaireCompasPoint, perpendiculaireCompasPointSurLaDroite, perpendiculaireRegleEquerre2points3epoint, perpendiculaireRegleEquerreDroitePoint, perpendiculaireRegleEquerrePointSurLaDroite } from './iepMacros/parallelesEtPerpendiculaires'
@@ -12,7 +12,8 @@ import { triangle1longueur2angles, triangle2longueurs1angle, triangle3longueurs,
 import { angleOriente } from '../lib/2d/angles-vecteurs.js'
 import { segment } from '../lib/2d/segments.js'
 import { longueur } from '../lib/2d/mesures.js'
-import {norme, vecteurAbstrait} from '../lib/2d/vecteurs-abstraits'
+import { norme, vecteurAbstrait } from '../lib/2d/vecteurs-abstraits'
+import { rotationAbstraite } from '../lib/2d/transformations-abstraites'
 
 const store = {}
 
@@ -938,7 +939,7 @@ export default class Alea2iep {
       this.rapporteurDeplacerRotation2Points(A, B, { tempo, vitesse, sens })
       this.rapporteurCrayonMarqueAngle(angle, { tempo, vitesse, sens })
     } else {
-      const B2 = rotation(B, A, 180)
+      const B2 = rotationAbstraite(B, A, 180)
       this.rapporteurDeplacerRotation2Points(A, B2, { tempo, vitesse, sens })
       this.rapporteurCrayonMarqueAngle(180 - Math.abs(angle), { tempo, vitesse, sens })
     }
@@ -1232,7 +1233,7 @@ export default class Alea2iep {
 
   mesureAngle (A, O, B) {
     const a = angleOriente(A, O, B)
-    const C = translation(homothetie(rotation(A, O, a / 2), O, 1.3 / longueur(O, A)), vecteurAbstrait(-0.2, 0.5))
+    const C = translation(homothetie(rotationAbstraite(A, O, a / 2), O, 1.3 / longueur(O, A)), vecteurAbstrait(-0.2, 0.5))
     return this.textePoint(Math.abs(a) + '°', C)
   }
 

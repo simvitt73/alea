@@ -3,10 +3,11 @@ import { context } from '../../modules/context'
 import { CodageAngle } from './codages'
 import { Point, pointSurSegment } from './points'
 import { polygone, polyline } from './polygones'
-import { homothetie, rotation } from './transformations'
+import { homothetie } from './transformations'
 import { arc } from './arc'
 import type { PointAbstrait } from './points-abstraits'
 import { angleOriente } from './angles-vecteurs'
+import { rotationAbstraite } from './transformations-abstraites'
 
 export type MarkType = 'simple' | 'double' | 'triple' | 'gras' | 'double-gras' | 'gras-simple-gras' | 'simple-gras-simple' | 'pointilles' | 'double-pointilles' | 'mixte-simple-pointilles' | 'mixte-gras-pointilles'
 export const markTypeArray: MarkType[] = [
@@ -241,9 +242,9 @@ export class CodageAngleDroit extends ObjetMathalea2D {
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / context.pixelsParCm)
     let o
     if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
-      o = rotation(this.sommet, a, -90)
+      o = rotationAbstraite(this.sommet, a, -90)
     } else {
-      o = rotation(this.sommet, a, 90)
+      o = rotationAbstraite(this.sommet, a, 90)
     }
     const bordures = fixeBordures([a, b, o], { rxmin: 0, rxmax: 0, rymin: 0, rymax: 0 })
     this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
@@ -256,9 +257,9 @@ export class CodageAngleDroit extends ObjetMathalea2D {
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / coeff)
     let o: Point
     if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
-      o = rotation(this.sommet, a, -90)
+      o = rotationAbstraite(this.sommet, a, -90)
     } else {
-      o = rotation(this.sommet, a, 90)
+      o = rotationAbstraite(this.sommet, a, 90)
     }
     const result = polygone([this.sommet, a, o, b], this.color[0])
     if (this.couleurDeRemplissage[0] !== 'none') {
@@ -276,9 +277,9 @@ export class CodageAngleDroit extends ObjetMathalea2D {
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille / context.scale)
     let o: Point
     if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
-      o = rotation(this.sommet, a, -90)
+      o = rotationAbstraite(this.sommet, a, -90)
     } else {
-      o = rotation(this.sommet, a, 90)
+      o = rotationAbstraite(this.sommet, a, 90)
     }
     const result = polygone([this.sommet, a, o, b], this.color[1])
     if (this.couleurDeRemplissage[1] === '') {
@@ -295,9 +296,9 @@ export class CodageAngleDroit extends ObjetMathalea2D {
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille * 20 / coeff)
     let o: Point
     if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
-      o = rotation(this.sommet, a, -90)
+      o = rotationAbstraite(this.sommet, a, -90)
     } else {
-      o = rotation(this.sommet, a, 90)
+      o = rotationAbstraite(this.sommet, a, 90)
     }
     return polyline([a, o, b], this.color[0]).svgml(coeff, amp)
   }
@@ -307,9 +308,9 @@ export class CodageAngleDroit extends ObjetMathalea2D {
     const b = pointSurSegment(this.sommet, this.arrivee, this.taille / context.scale)
     let o: Point
     if (angleOriente(this.depart, this.sommet, this.arrivee) > 0) {
-      o = rotation(this.sommet, a, -90)
+      o = rotationAbstraite(this.sommet, a, -90)
     } else {
-      o = rotation(this.sommet, a, 90)
+      o = rotationAbstraite(this.sommet, a, 90)
     }
     return polyline([a, o, b], this.color[1]).tikzml(amp)
   }
@@ -380,6 +381,6 @@ export function codageAngle (A: Point, O: Point, angle: Point | number, taille =
     angleNumerique = angle
   }
   if ((angleNumerique === 90 || angleNumerique === -90) && !noAngleDroit) {
-    return new CodageAngleDroit(A, O, rotation(A, O, angleNumerique), color, taille, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage)
+    return new CodageAngleDroit(A, O, rotationAbstraite(A, O, angleNumerique), color, taille, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage)
   } else return new CodageAngle(A, O, angleNumerique, taille, mark, color, epaisseur, opacite, couleurDeRemplissage, opaciteDeRemplissage, mesureOn, texteACote, tailleTexte, { echelleMark, angleArrondi })
 }

@@ -5,7 +5,7 @@ import { randint } from '../../modules/outils'
 import { arrondi } from '../outils/nombres'
 import { Point, point, pointAdistance, pointSurSegment } from './points'
 import { Latex2d, LatexParCoordonnees, latexParCoordonnees, TexteParPoint, texteParPoint, texteParPosition } from './textes'
-import { homothetie, rotation, translation } from './transformations'
+import { homothetie, translation } from './transformations'
 import { aireTriangle } from './triangle'
 import { lettreDepuisChiffre } from '../outils/outilString'
 import { codageSegments } from './codages'
@@ -14,6 +14,7 @@ import { rangeMinMax } from '../outils/arrayOutils'
 import { segment } from './segments'
 import { longueur } from './mesures'
 import { vecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 type BinomeXY = { x: number, y: number }
 type BinomesXY = BinomeXY[]
@@ -584,7 +585,7 @@ export function renommePolygone (p: Polygone, noms: string | string[]) {
 export function polygoneRegulier (A: Point, B: Point, n: number, color = 'black') {
   const listePoints = [A, B]
   for (let i = 1; i < n - 1; i++) {
-    listePoints[i + 1] = rotation(
+    listePoints[i + 1] = rotationAbstraite(
       listePoints[i - 1],
       listePoints[i],
       -180 + 360 / n
@@ -622,7 +623,7 @@ export function polygoneRegulierParCentreEtRayon (O: Point, r: number, n: number
   const p = []
   p[0] = point(O.x + r, O.y)
   for (let i = 1; i < n; i++) {
-    p[i] = rotation(p[i - 1], O, -360 / n)
+    p[i] = rotationAbstraite(p[i - 1], O, -360 / n)
   }
   return polygone(p, color)
 }
@@ -887,7 +888,7 @@ export function parallelogramme2points1hauteur (nom:string, A: Point, B: Point, 
   }
   A.nom = nom[0]
   B.nom = nom[1]
-  let H = rotation(B, A, 90)
+  let H = rotationAbstraite(B, A, 90)
   H = pointSurSegment(A, H, h)
   const D = translation(H, homothetie(vecteurAbstrait(A, B), A, randint(-5, 5, rangeMinMax(-2, 2)) / 10), nom[3])
   const C = translation(D, vecteurAbstrait(A, B), nom[2])
@@ -913,8 +914,8 @@ export function rectangle1Point2Longueurs (A: Point, longueur: number, largeur: 
   const objets: ObjetMathalea2D[] = []
   const angleRotation = options.angleRotation ?? 0
   const B = pointAdistance(A, longueur, angleRotation)
-  const C = rotation(pointAdistance(B, largeur, 180 + angleRotation), B, -90)
-  const D = rotation(pointAdistance(A, largeur, angleRotation), A, 90)
+  const C = rotationAbstraite(pointAdistance(B, largeur, 180 + angleRotation), B, -90)
+  const D = rotationAbstraite(pointAdistance(A, largeur, angleRotation), A, 90)
   if (options.nom) {
     A.nom = options.nom[0]
     B.nom = options.nom[1]

@@ -5,9 +5,10 @@ import { arrondi } from '../outils/nombres'
 import { angleOriente } from './angles-vecteurs'
 import MainLevee from './MainLevee'
 import { context } from '../../modules/context'
-import { rotation, similitude } from './transformations'
+import { similitude } from './transformations'
 import { Droite, droite } from './droites'
 import { Cercle } from './cercle'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * s = segment(A, B) //Segment d'extrémités A et B
@@ -277,8 +278,8 @@ export class Segment extends ObjetMathalea2D {
       if (fin === '|') {
         // si ça termine par | on le rajoute en B
         const M = pointSurSegment(B, A, h / context.pixelsParCm)
-        const B1 = rotation(M, B, 90)
-        const B2 = rotation(M, B, -90)
+        const B1 = rotationAbstraite(M, B, 90)
+        const B2 = rotationAbstraite(M, B, -90)
         code += `<line x1="${B1.xSVG(coeff)}" y1="${B1.ySVG(
                     coeff
                 )}" x2="${B2.xSVG(coeff)}" y2="${B2.ySVG(coeff)}" stroke="${this.color[0]
@@ -379,8 +380,8 @@ export class Segment extends ObjetMathalea2D {
       if (debut === '|') {
         // si ça commence par | on le rajoute en A
         const N = pointSurSegment(A, B, h / context.pixelsParCm)
-        const A1 = rotation(N, A, 90)
-        const A2 = rotation(N, A, -90)
+        const A1 = rotationAbstraite(N, A, 90)
+        const A2 = rotationAbstraite(N, A, -90)
         code += `<line x1="${A1.xSVG(coeff)}" y1="${A1.ySVG(
                     coeff
                 )}" x2="${A2.xSVG(coeff)}" y2="${A2.ySVG(coeff)}" stroke="${this.color[0]

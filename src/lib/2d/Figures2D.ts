@@ -2,8 +2,8 @@ import { ObjetMathalea2D } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { point } from './points'
 import type { PointAbstrait } from './points-abstraits'
-import { rotation } from './transformations'
-import {Segment} from "./segments";
+import { rotation as rotationAbstraite } from './transformations'
+import { Segment } from './segments'
 function rotatedBoundingBoxWithCenter (
   xmin: number,
   ymin: number,
@@ -417,6 +417,6 @@ export class Figure2D extends ObjetMathalea2D {
   }
 
   get Axes () {
-    return this.axes.map(el => rotation(el, point(0, 0), this.angle))
+    return this.axes.map(el => rotationAbstraite(el, point(0, 0), this.angle))
   }
 }

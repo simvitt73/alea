@@ -8,9 +8,9 @@ import { arrondi } from '../outils/nombres'
 import { droite, mediatrice } from './droites'
 import { pointAbstrait, type PointAbstrait } from './points-abstraits'
 import { angleOriente } from './angles-vecteurs'
-
 import { longueur } from './mesures'
 import type { Point } from './points'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /** Trace un arc de cercle, connaissant une extrémité, son centre et la mesure de l'angle
  * @param {PointAbstrait} M Extrémité de départ de l'arc
@@ -86,8 +86,8 @@ export class Arc extends ObjetMathalea2D {
     const medX: number[] = []
     const medY: number[] = []
     for (let ee = 1; ee < 9; ee++) {
-      medX.push(rotation(M, omega, (ee * this.angle) / 10).x)
-      medY.push(rotation(M, omega, (ee * this.angle) / 10).y)
+      medX.push(rotationAbstraite(M, omega, (ee * this.angle) / 10).x)
+      medY.push(rotationAbstraite(M, omega, (ee * this.angle) / 10).y)
     }
     this.rayon = longueur(omega, M, 2)
     const A = pointAbstrait(omega.x + 1, omega.y)
@@ -95,7 +95,7 @@ export class Arc extends ObjetMathalea2D {
     this.angleFin = this.azimut + this.angle
     const angleSVG = angleModulo(this.angle)
 
-    this.pointFinal = rotation(M, omega, angleSVG)
+    this.pointFinal = rotationAbstraite(M, omega, angleSVG)
     this.bordures = [
       Math.min(M.x, this.pointFinal.x, ...medX) - 0.1,
       Math.min(M.y, this.pointFinal.y, ...medY) - 0.1,
@@ -420,7 +420,7 @@ export function traceCompas (
   epaisseur = 1,
   pointilles = 0
 ) {
-  const B = rotation(A, O, -angle / 2)
+  const B = rotationAbstraite(A, O, -angle / 2)
   const a = arc(B, O, angle, false)
   a.epaisseur = epaisseur
   a.opacite = opacite

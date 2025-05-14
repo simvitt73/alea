@@ -2,7 +2,7 @@ import { cercle } from '../lib/2d/cercle'
 import { point, Point } from '../lib/2d/points'
 import { carre } from '../lib/2d/polygones'
 import { texteParPosition } from '../lib/2d/textes'
-import { rotation, translation } from '../lib/2d/transformations'
+import { translation } from '../lib/2d/transformations'
 import { miseEnEvidence } from '../lib/outils/embellissements'
 import { extraireRacineCarree } from '../lib/outils/calculs'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif, signeMoinsEnEvidence } from '../lib/outils/ecritures'
@@ -25,6 +25,7 @@ import { egal } from '../lib/outils/comparaisons'
 import { arc } from '../lib/2d/arc'
 import { segment } from '../lib/2d/segments'
 import { vecteurAbstrait } from '../lib/2d/vecteurs-abstraits'
+import { rotationAbstraite } from '../lib/2d/transformations-abstraites'
 
 type FractionRepresentationType = 'gateau' | 'barre' | 'segment'
 
@@ -1223,14 +1224,14 @@ class FractionEtendue {
         const C = cercle(O, rayon)
         objets.push(C)
         for (let i = 0; i < this.denIrred; i++) {
-          const s = segment(O, rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.denIrred))
+          const s = segment(O, rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.denIrred))
           objets.push(s)
         }
-        let dep = rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.denIrred)
+        let dep = rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.denIrred)
         for (let j = 0; j < Math.min(this.denIrred, num); j++) {
           const a = arc(dep, O, -360 / this.denIrred, true, couleur)
           a.opacite = 0.3
-          dep = rotation(dep, O, -360 / this.denIrred)
+          dep = rotationAbstraite(dep, O, -360 / this.denIrred)
           objets.push(a)
         }
         num -= this.denIrred
@@ -1240,14 +1241,14 @@ class FractionEtendue {
         const C = cercle(O, rayon)
         objets.push(C)
         for (let i = 0; i < this.denIrred; i++) {
-          const s = segment(O, rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.denIrred))
+          const s = segment(O, rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.denIrred))
           objets.push(s)
         }
-        let dep = rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.denIrred)
+        let dep = rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.denIrred)
         for (let j = 0; j < Math.min(this.denIrred, num); j++) {
           const a = arc(dep, O, -360 / this.denIrred, true, couleur)
           a.opacite = 0.3
-          dep = rotation(dep, O, -360 / this.denIrred)
+          dep = rotationAbstraite(dep, O, -360 / this.denIrred)
           objets.push(a)
         }
       }
@@ -1379,14 +1380,14 @@ class FractionEtendue {
         const C = cercle(O, rayon)
         objets.push(C)
         for (let i = 0; i < this.den; i++) {
-          const s = segment(O, rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.den))
+          const s = segment(O, rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.den))
           objets.push(s)
         }
-        let dep = rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.den)
+        let dep = rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.den)
         for (let j = 0; j < Math.min(this.den, num); j++) {
           const a = arc(dep, O, -360 / this.den, true, couleur)
           a.opacite = 0.3
-          dep = rotation(dep, O, -360 / this.den)
+          dep = rotationAbstraite(dep, O, -360 / this.den)
           objets.push(a)
         }
         num -= this.den
@@ -1396,16 +1397,16 @@ class FractionEtendue {
         const C = cercle(O, rayon)
         objets.push(C)
         for (let i = 0; i < this.den; i++) {
-          const s = segment(O, rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.den))
+          const s = segment(O, rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - i * 360 / this.den))
           objets.push(s)
         }
 
-        let dep = rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.den)
+        let dep = rotationAbstraite(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90 - depart * 360 / this.den)
         if (this.num % this.den !== 0) {
           for (let j = 0; j < Math.min(this.den, num); j++) {
             const a = arc(dep, O, -360 / this.den, true, couleur)
             a.opacite = 0.3
-            dep = rotation(dep, O, -360 / this.den)
+            dep = rotationAbstraite(dep, O, -360 / this.den)
             objets.push(a)
           }
         }

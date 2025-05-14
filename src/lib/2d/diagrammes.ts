@@ -8,10 +8,11 @@ import { texcolors } from '../format/style'
 import { combinaisonListes } from '../outils/arrayOutils'
 import { numberFormat, texNombre } from '../outils/texNombre'
 import { latexParPoint, TexteParPoint, texteParPoint, texteParPosition } from './textes'
-import { rotation, similitude, translation } from './transformations'
+import { similitude, translation } from './transformations'
 import { arc } from './arc'
 import { segment } from './segments'
 import { vecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * Trace un graphique cartésien dans un repère
@@ -522,7 +523,7 @@ export class DiagrammeCirculaire extends ObjetMathalea2D {
     for (let i = 0, a, angle, legende, textelegende, hachure; i < effectifs.length; i++) {
     // on crée les secteurs
       angle = angleTotal * effectifs[i] / effectifTotal
-      a = arc(rotation(depart, centre, alpha), centre, angle, true)
+      a = arc(rotationAbstraite(depart, centre, alpha), centre, angle, true)
       if (hachures[i]) {
         hachure = motifs(listeMotifs[i])
         a.hachures = hachure

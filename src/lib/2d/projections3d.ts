@@ -4,12 +4,13 @@ import { cercle, Cercle } from './cercle'
 import { afficheCoteSegment } from './codages'
 import { point, pointAdistance } from './points'
 import { pattern, polygone } from './polygones'
-import { homothetie, rotation, translation } from './transformations'
+import { homothetie, translation } from './transformations'
 import { arc } from './arc'
 import type { PointAbstrait } from './points-abstraits'
 import { segment } from './segments'
 import { longueur } from './mesures'
 import { vecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  *
@@ -318,7 +319,7 @@ export class SemiEllipse extends ObjetMathalea2D {
     this.anglesAxe = anglesAxe
     this.angle = hemisphere === 'nord' ? 180 : -180
     this.M = point(centre.x + rx, centre.y)
-    const med = homothetie(rotation(this.M, centre, this.angle / 2), centre, ry / rx)
+    const med = homothetie(rotationAbstraite(this.M, centre, this.angle / 2), centre, ry / rx)
 
     this.large = 0
     this.sweep = 0
@@ -332,7 +333,7 @@ export class SemiEllipse extends ObjetMathalea2D {
       this.large = 0
       this.sweep = 1 - (this.angle > 0 ? 1 : 0)
     }
-    this.N = rotation(this.M, centre, this.angle)
+    this.N = rotationAbstraite(this.M, centre, this.angle)
     // reglage des bordures intégrant les rotation
     const [bxmin, bymin, bxmax, bymax] = [Math.min(this.M.x, this.N.x, med.x) - 0.1, Math.min(this.M.y, this.N.y, med.y) - 0.1, Math.max(this.M.x, this.N.x, med.x) + 0.1, Math.max(this.M.y, this.N.y, med.y) + 0.1]
     let bA = point(bxmin, bymin) // (xmin, yMin)
@@ -340,10 +341,10 @@ export class SemiEllipse extends ObjetMathalea2D {
     let bC = point(bxmax, bymax)  // (xmax, yMax)
     let bD = point(bxmin, bymax) // (xmiSn, yMax)
     const bCentre = point((bA.x + bB.x) / 2, (bA.y + bB.y) / 2)
-    bA = rotation(bA, bCentre, this.anglesAxe)
-    bB = rotation(bB, bCentre, this.anglesAxe)
-    bC = rotation(bC, bCentre, this.anglesAxe)
-    bD = rotation(bD, bCentre, this.anglesAxe)
+    bA = rotationAbstraite(bA, bCentre, this.anglesAxe)
+    bB = rotationAbstraite(bB, bCentre, this.anglesAxe)
+    bC = rotationAbstraite(bC, bCentre, this.anglesAxe)
+    bD = rotationAbstraite(bD, bCentre, this.anglesAxe)
     this.bordures = [Math.min(bA.x, bB.x, bC.x, bD.x), Math.min(bA.y, bB.y, bC.y, bD.y), Math.max(bA.x, bB.x, bC.x, bD.x), Math.max(bA.y, bB.y, bC.y, bD.y)]
   }
 
@@ -500,11 +501,11 @@ export class SemiEllipse extends ObjetMathalea2D {
     const r = longueur(this.centre, this.M)
     for (let k = 0, variation; abs(k) <= abs(this.angle) - 2; k += this.angle < 0 ? -2 : 2) {
       variation = (random(0, 2) - 1) / r * amp / 10
-      P = rotation(homothetie(this.M, this.centre, 1 + variation), this.centre, k)
+      P = rotationAbstraite(homothetie(this.M, this.centre, 1 + variation), this.centre, k)
       code += `${round(P.xSVG(coeff), 2)} ${round(P.ySVG(coeff), 2)}, `
       compteur++
     }
-    P = rotation(this.M, this.centre, this.angle)
+    P = rotationAbstraite(this.M, this.centre, this.angle)
     if (compteur % 2 === 0) code += `${P.xSVG(coeff)} ${P.ySVG(coeff)}, ` // Parce qu'on utilise S et non C dans le path
     code += `${P.xSVG(coeff)} ${P.ySVG(coeff)}`
     code += `" stroke="${this.color[0]}" ${this.style}/>`

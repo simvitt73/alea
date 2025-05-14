@@ -8,6 +8,7 @@ import { arc } from './arc'
 import { PointAbstrait } from './points-abstraits'
 import { Segment, segment } from './segments'
 import { VecteurAbstrait, vecteurAbstrait } from './vecteurs-abstraits'
+import { vecteur, type Vecteur } from './vecteurs'
 
 /**
  * M = translation(O,v) //M est l'image de O dans la translation de vecteur v
@@ -96,7 +97,7 @@ export function translation2Points<T extends PointAbstrait | Point | Droite | Se
  * @return L'image de A par la rotation de centre O et d'angle angle
  * @author Rémi Angot et Jean-Claude Lhote
  */
-export function rotation<T extends PointAbstrait | Point | Droite | Segment | Polygone | VecteurAbstrait> (A: T, O: PointAbstrait, angle: number, nom = '', positionLabel = 'above', color = 'black'):T {
+export function rotation<T extends Point | Droite | Segment | Polygone | Vecteur> (A: T, O: PointAbstrait, angle: number, nom = '', positionLabel = 'above', color = 'black'):T {
   if (A instanceof Point) {
     const x = O.x +
       (A.x - O.x) * Math.cos((angle * Math.PI) / 180) -
@@ -130,7 +131,7 @@ export function rotation<T extends PointAbstrait | Point | Droite | Segment | Po
       A.y * Math.sin((angle * Math.PI) / 180)
   const y = A.x * Math.sin((angle * Math.PI) / 180) +
       A.y * Math.cos((angle * Math.PI) / 180)
-  const v = vecteurAbstrait(x, y)
+  const v = vecteur(x, y)
   return v as T
 }
 
@@ -393,7 +394,7 @@ export function affiniteOrtho<T extends PointAbstrait | Point | Droite | Segment
  * M = similitude(B,O,30,1.1,'M') // Le point M est l'image de B dans la similitude de centre O d'angle 30° et de rapport 1.1
  * @author Jean-Claude Lhote
  */
-export function similitude<T extends PointAbstrait | Point | Droite | Segment | Polygone | VecteurAbstrait> (A:T, O:PointAbstrait, a:number, k:number, nom = '', positionLabel = 'above', color = 'black'): T {
+export function similitude<T extends Point | Droite | Segment | Polygone> (A:T, O:PointAbstrait, a:number, k:number, nom = '', positionLabel = 'above', color = 'black'): T {
   if (A instanceof Point) {
     const ra = degToRad(a)
     const x = O.x + k * (Math.cos(ra) * (A.x - O.x) - Math.sin(ra) * (A.y - O.y))

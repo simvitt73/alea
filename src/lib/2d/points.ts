@@ -9,11 +9,12 @@ import { arrondi } from '../outils/nombres'
 import { Cercle, cercle } from './cercle'
 import { droite, Droite, droiteParPointEtPerpendiculaire, Mediatrice } from './droites'
 import { carre, Polygone, polygone } from './polygones'
-import { homothetie, rotation, similitude } from './transformations'
+import { homothetie, similitude } from './transformations'
 import { PointAbstrait } from './points-abstraits'
 import { DemiDroite, Segment, segment } from './segments'
 import { longueur } from './mesures'
 import { vecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * Un point avec toutes les fonctionnalités estSur... etc.
@@ -497,7 +498,7 @@ export class TracePointSurDroite extends ObjetMathalea2D {
         })
       }
       M = pointSurSegment(this.lieu, O, 1)
-      this.direction = rotation(M, this.lieu, 90)
+      this.direction = rotationAbstraite(M, this.lieu, 90)
     } else {
       d = droiteParPointEtPerpendiculaire(this.lieu, O as Droite)
       this.direction = pointSurSegment(point(d.x1, d.y1), point(d.x2, d.y2), 1)

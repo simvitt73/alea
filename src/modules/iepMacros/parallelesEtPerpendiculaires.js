@@ -4,7 +4,6 @@ import { point, pointIntersectionLC, pointSurDroite, pointSurSegment } from '../
 import {
   homothetie,
   projectionOrtho,
-  rotation,
   similitude,
   translation,
   translation2Points
@@ -13,6 +12,7 @@ import { angleOriente } from '../../lib/2d/angles-vecteurs.js'
 
 import { longueur } from '../../lib/2d/mesures.js'
 import { vecteurAbstrait } from '../../lib/2d/vecteurs-abstraits'
+import { rotationAbstraite } from '../../lib/2d/transformations-abstraites'
 
 /**
    * Trace la parallèle à (AB) passant par C avec la règle et l'équerre. Peut prolonger le segment [AB] si le pied de la hauteur est trop éloigné des extrémités du segment
@@ -101,7 +101,7 @@ export const perpendiculaireRegleEquerre2points3epoint = function (A, B, C, desc
   if (A.nom === undefined) A.nom = 'A'
   if (B.nom === undefined) B.nom = 'B'
   if (C.estSur(droite(A, B))) {
-    const H = rotation(C, C, 0)
+    const H = rotationAbstraite(C, C, 0)
     const dd = droiteParPointEtPerpendiculaire(C, d)
     C = pointIntersectionLC(dd, cercle(H, 5.5), 1)
     dist = 7.5
@@ -130,8 +130,8 @@ export const perpendiculaireRegleEquerre2points3epoint = function (A, B, C, desc
 export const perpendiculaireRegleEquerreDroitePoint = function (d, P, description) {
   if (!P.estSur(d)) {
     const H = projectionOrtho(P, d)
-    const A = rotation(P, H, 90)
-    const B = rotation(A, H, 180)
+    const A = rotationAbstraite(P, H, 90)
+    const B = rotationAbstraite(A, H, 180)
     const P3 = homothetie(P, H, 1.2)
     const alpha = angleOriente(point(10000, H.y), H, B)
     if (description) this.textePosition(`1. Placer un côté de l'angle droit de l'équerre sur la droite ${d.nom} et l'autre côté de l'angle droit passant par le point ${P.nom}.`, 0, 10, { couleur: 'lightblue' })
@@ -145,7 +145,7 @@ export const perpendiculaireRegleEquerreDroitePoint = function (d, P, descriptio
     this.regleMontrer(P3)
     this.regleRotation(alpha - 90)
     this.crayonDeplacer(P3)
-    this.tracer(rotation(P3, H, 180))
+    this.tracer(rotationAbstraite(P3, H, 180))
     if (description) this.textePosition('4. Coder l\'angle droit.', 0, 7.9, { couleur: 'lightblue' })
     this.regleMasquer()
     this.codageAngleDroit(A, H, P)
@@ -154,8 +154,8 @@ export const perpendiculaireRegleEquerreDroitePoint = function (d, P, descriptio
     const C = cercle(P, 6)
     const A = pointSurDroite(d, -10000)
     const B = pointSurDroite(d, 10000)
-    let P3 = rotation(pointIntersectionLC(d, C, 1), P, 90)
-    if (P3.y < P.y) P3 = rotation(P3, P, 180)
+    let P3 = rotationAbstraite(pointIntersectionLC(d, C, 1), P, 90)
+    if (P3.y < P.y) P3 = rotationAbstraite(P3, P, 180)
     const alpha = angleOriente(point(10000, H.y), H, B)
     if (description) this.textePosition(`1. Placer un côté de l'angle droit de l'équerre sur la droite ${d.nom} avec l'angle droit au point ${P.nom}.`, 0, 10, { couleur: 'lightblue' })
     this.equerreRotation(alpha)
@@ -168,7 +168,7 @@ export const perpendiculaireRegleEquerreDroitePoint = function (d, P, descriptio
     this.regleMontrer(P3)
     this.regleRotation(alpha - 90)
     this.crayonDeplacer(P3)
-    this.tracer(rotation(P3, H, 180))
+    this.tracer(rotationAbstraite(P3, H, 180))
     if (description) this.textePosition('4. Coder l\'angle droit.', 0, 7.9, { couleur: 'lightblue' })
     this.regleMasquer()
     this.codageAngleDroit(A, H, P3)
@@ -183,8 +183,8 @@ export const perpendiculaireRegleEquerreDroitePoint = function (d, P, descriptio
 export const perpendiculaireRegleEquerrePointSurLaDroite = function (d, x, description) {
   const A = pointSurDroite(d, x, 'A')
   const B = pointSurDroite(d, x + 5)
-  const P1 = rotation(B, A, 90)
-  const P2 = rotation(P1, A, 180)
+  const P1 = rotationAbstraite(B, A, 90)
+  const P2 = rotationAbstraite(P1, A, 180)
   if (d.nom === undefined) {
     d.nom = '(d)'
   }
@@ -264,7 +264,7 @@ export const perpendiculaireCompasPoint = function (d, A, description) {
   const H = projectionOrtho(A, d)
   const B = similitude(A, H, -90, 1.2, 'B')
   const C = homothetie(B, H, -0.7, 'C')
-  const D = rotation(A, H, 180)
+  const D = rotationAbstraite(A, H, 180)
   const P1 = homothetie(A, H, 1.2)
   const P2 = homothetie(A, H, -1.2)
   if (d.nom === '') {
@@ -312,7 +312,7 @@ export const paralleleRegleEquerreDroitePointAvecDescription = function (A, B, M
   const AA = homothetie(A, B, 2)
   const BB = homothetie(B, A, 2)
   const d = droite(A, B)
-  const dd = rotation(d, A, 90)
+  const dd = rotationAbstraite(d, A, 90)
   const H = projectionOrtho(M, dd)
   const N = homothetie(M, H, 1.5)
   const P = homothetie(H, M, 2)
@@ -328,10 +328,10 @@ export const paralleleRegleEquerreDroitePointAvecDescription = function (A, B, M
   if (description) this.textePosition('2. Placer ensuite la règle contre l\'autre côté de l\'angle droit de l\'équerre.', -9, 8.6, { couleur: 'lightblue', taille: 2, tempo: 10 })
   this.regleRotation(d.angleAvecHorizontale - 90)
   this.regleMontrer(AA)
-  this.regleDeplacer(homothetie(rotation(B, A, 90), A, 1.5), { tempo: 20 })
+  this.regleDeplacer(homothetie(rotationAbstraite(B, A, 90), A, 1.5), { tempo: 20 })
   if (description) this.textePosition('Remarque : On peut tracer des pointillés pour matérialiser la position de la règle.', -9.5, 7.9, { couleur: 'pink', taille: 2, tempo: 10 })
   this.crayonMontrer(A)
-  this.tracer(homothetie(rotation(B, A, dessus ? 90 : -90), A, 1.5), { pointilles: 5 })
+  this.tracer(homothetie(rotationAbstraite(B, A, dessus ? 90 : -90), A, 1.5), { pointilles: 5 })
   if (description) this.textePosition('3. Faire glisser l\'équerre le long de la règle jusqu\'au point M.', -9, 7.2, { couleur: 'lightblue', taille: 2, tempo: 10 })
   if (!dessus) {
     this.equerreRotation(d.angleAvecHorizontale - 90)

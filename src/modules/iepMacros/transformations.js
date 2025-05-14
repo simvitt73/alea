@@ -1,11 +1,12 @@
 import { milieu } from '../../lib/2d/points'
-import { homothetie, rotation, symetrieAxiale, translation } from '../../lib/2d/transformations'
+import { homothetie, symetrieAxiale, translation } from '../../lib/2d/transformations'
 import { arrondi } from '../../lib/outils/nombres'
 import { stringNombre } from '../../lib/outils/texNombre'
 import { randint } from '../outils'
 
 import { longueur } from '../../lib/2d/mesures.js'
 import { vecteurAbstrait } from '../../lib/2d/vecteurs-abstraits'
+import { rotationAbstraite } from '../../lib/2d/transformations-abstraites'
 
 /**
    *
@@ -24,8 +25,8 @@ export function symetrieAxialePoint (p, d, nom, { couleur = this.couleur, couleu
   const image = symetrieAxiale(p, d, nom) // on définit le point image (pour le viser avec la règle on ajoute une apostrophe au nom)
   if (longueur(p, image) !== 0) {
     const M = milieu(p, image) // on crée le point milieu
-    const N = rotation(p, M, 90)
-    const D = rotation(N, M, 180)
+    const N = rotationAbstraite(p, M, 90)
+    const D = rotationAbstraite(N, M, 180)
     this.regleMasquerGraduations()
     this.perpendiculaireRegleEquerre2points3epoint(N, D, p)
     this.compasEcarter2Points(M, p)
@@ -56,7 +57,7 @@ export const rotationPoint = function (p, centre, angle, nom, { couleur = this.c
   if (nom === undefined || nom === '') {
     nom = p.nom + "'"
   }
-  const image = rotation(p, centre, angle, nom) // on définit le point image (pour le viser avec la règle on ajoute une apostrophe au nom)
+  const image = rotationAbstraite(p, centre, angle, nom) // on définit le point image (pour le viser avec la règle on ajoute une apostrophe au nom)
   this.regleSegment(centre, p) // On trace le support du rapporteur
   this.rapporteurMontrer(centre)
   this.rapporteurTracerDemiDroiteAngle(centre, p, angle) // On trace le deuxième côté
@@ -71,7 +72,7 @@ export const rotationPoint = function (p, centre, angle, nom, { couleur = this.c
       this.codageAngleDroit(p, centre, image, { couleur: couleurCodage })
     } else {
       this.angleCodage(p, centre, image, { couleur: couleurCodage })
-      this.textePoint(Math.abs(angle) + '°', translation(homothetie(rotation(p, centre, angle / 2), centre, 1.3 / longueur(centre, p)), vecteurAbstrait(-0.2, 0.5)))
+      this.textePoint(Math.abs(angle) + '°', translation(homothetie(rotationAbstraite(p, centre, angle / 2), centre, 1.3 / longueur(centre, p)), vecteurAbstrait(-0.2, 0.5)))
     }
   }
 }
@@ -166,7 +167,7 @@ export const demiTourPoint = function (p, centre, nom, { couleur = 'black', coul
   if (nom === undefined || nom === '') {
     nom = p.nom + "'"
   }
-  const image = rotation(p, centre, 180, nom) // on définit le point image (pour le viser avec la règle on ajoute une apostrophe au nom)
+  const image = rotationAbstraite(p, centre, 180, nom) // on définit le point image (pour le viser avec la règle on ajoute une apostrophe au nom)
   this.compasEcarter2Points(centre, p)
   this.compasTracerArcCentrePoint(centre, image)
   this.compasMasquer()
@@ -228,7 +229,7 @@ export const homothetiePoint = function (p, centre, k, nom, { couleur = this.cou
   */
 export const rotationPolygone = function (p, centre, angle, noms = [], { couleur = this.couleur, couleurCodage = this.couleurCodage } = {}) {
   let nom
-  const p2 = rotation(p, centre, angle) // Pour tracer la figure image à la fin de l'animation avec polygoneRapide
+  const p2 = rotationAbstraite(p, centre, angle) // Pour tracer la figure image à la fin de l'animation avec polygoneRapide
   this.epaisseur = 0.5 // épaisseur et couleur de crayon de papier bien taillé pour la construction
   this.couleur = 'gray'
   let i = 0; let codage
@@ -323,7 +324,7 @@ export const translationPolygone = function (p, A, B, noms = [], { couleur = thi
    * @author Jean-Claude Lhote
    */
 export const demiTourPolygone = function (p, centre, noms = [], { couleur = this.couleur, couleurCodage = this.couleurCodage } = {}) {
-  const p2 = rotation(p, centre, 180) // Pour tracer la figure image à la fin de l'animation avec polygoneRapide
+  const p2 = rotationAbstraite(p, centre, 180) // Pour tracer la figure image à la fin de l'animation avec polygoneRapide
   this.epaisseur = 0.5 // épaisseur et couleur de crayon de papier bien taillé pour la construction
   this.couleur = 'gray'
   let nom

@@ -13,6 +13,7 @@ import { angleOriente } from './angles-vecteurs'
 import { Segment, segment } from './segments'
 import { longueur } from './mesures'
 import { vecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * Code le milieu d'un segment
@@ -90,7 +91,7 @@ export class CodageMediatrice extends ObjetMathalea2D {
     if (longueur(A, B) < 0.1) window.notify('CodageMediatrice : Points trop rapprochés pour créer ce codage', { A, B })
     this.color = colorToLatexOrHTML(color)
     const O = milieu(A, B)
-    const M = rotation(A, O, 90)
+    const M = rotationAbstraite(A, O, 90)
     const c = codageAngleDroit(M, O, B, color)
     const v = codageSegments(mark, color, A, O, O, B)
     this.svg = function (coeff) {
@@ -151,7 +152,7 @@ export class CodageBissectrice extends ObjetMathalea2D {
     this.centre = O
     this.depart = pointSurSegment(O, A, 1.5)
     const demiangle = angleOriente(A, O, B) / 2
-    const lieu = rotation(this.depart, O, demiangle)
+    const lieu = rotationAbstraite(this.depart, O, demiangle)
     const a1 = codageAngle(pointSurSegment(this.centre, this.depart), O, demiangle, 1, this.mark, color, 1, 1)
     const a2 = codageAngle(pointSurSegment(this.centre, lieu), O, demiangle, 1, this.mark, color, 1, 1)
     this.objets = [a1, a2]
@@ -303,7 +304,7 @@ export class AfficheLongueurSegment extends ObjetMathalea2D {
     super()
     this.stringColor = color
     this.O = milieu(A, B)
-    this.M = rotation(A, this.O, -90)
+    this.M = rotationAbstraite(A, this.O, -90)
     const s = segment(A, B)
     const l = stringNombre(s.longueur, precision)
     this.text = `${l}${unite !== '' ? ' ' + unite : ''}`
@@ -380,7 +381,7 @@ export class TexteSurSegment extends ObjetMathalea2D {
     this.mathOn = true
     this.distance = horizontal ? (d - 0.1 + this.texte.length / 10) : d
     this.O = milieu(this.extremite1, this.extremite2)
-    this.M = rotation(this.extremite1, this.O, -90)
+    this.M = rotationAbstraite(this.extremite1, this.O, -90)
     const s = segment(this.extremite1, this.extremite2)
     const pos = pointSurSegment(this.O, this.M, this.distance)
     const space = 0.2 * (this.texte.length ?? 2)
@@ -463,7 +464,7 @@ export class TexteSurArc extends ObjetMathalea2D {
     this.centre = point(Omegax, Omegay)
     const s = segment(this.extremite1, this.extremite2)
     this.normale = -s.angleAvecHorizontale
-    this.milieu = rotation(A, this.centre, angle / 2)
+    this.milieu = rotationAbstraite(A, this.centre, angle / 2)
     const pos = pointSurSegment(this.milieu, this.centre, this.distance)
     const space = 0.2 * texte.length
     this.bordures = [pos.x - space, pos.y - space, pos.x + space, pos.y + space]
@@ -565,7 +566,7 @@ export class AfficheMesureAngle extends ObjetMathalea2D {
     this.saillant = saillant
     this.epaisseur = arcEpaisseur
     const M = pointSurSegment(this.sommet, this.depart, this.distance)
-    const N = rotation(pointSurSegment(this.sommet, M, this.distance + this.ecart * 20 / context.pixelsParCm), this.sommet, mesureAngle / 2)
+    const N = rotationAbstraite(pointSurSegment(this.sommet, M, this.distance + this.ecart * 20 / context.pixelsParCm), this.sommet, mesureAngle / 2)
     let mesureAngleString
     if (label !== '') {
       mesureAngleString = label
@@ -945,7 +946,7 @@ export class CodageAngle extends ObjetMathalea2D {
     this.angleArrondi = angleArrondi
     this.objets = []
     const depart = pointSurSegment(this.centre, this.debut, this.taille * 20 / context.pixelsParCm)
-    const P = rotation(depart, this.centre, this.angle / 2)
+    const P = rotationAbstraite(depart, this.centre, this.angle / 2)
     const M = pointSurSegment(this.centre, P, this.taille + 0.6 * 20 / context.pixelsParCm)
     const d = droite(this.centre, P)
     const mesure = arrondi(Math.abs(this.angle), this.angleArrondi) + '^\\circ'
@@ -996,7 +997,7 @@ function directionLatex2d (A: Point, B: Point): number {
 function placeLatex2d (A: Point, B: Point, distance: number = 0.5): Point {
   // le point d'affichage du texte à 0.5 sous le milieu du segment orienté
   const M = milieu(A, B)
-  const N = rotation(A, M, -90)
+  const N = rotationAbstraite(A, M, -90)
   const P = pointSurSegment(M, N, distance)
   return P
 }

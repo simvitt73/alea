@@ -18,7 +18,8 @@ import { Polygone, polygone } from './polygones'
 import { projectionOrtho, rotation, similitude } from './transformations'
 import type { PointAbstrait } from './points-abstraits'
 
-import {longueur} from "./mesures";
+import { longueur } from './mesures'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * retourne un objet contenant le triangle ABC et le pied de la hauteur H
@@ -75,9 +76,9 @@ export function triangle2points2angles (A: Point, B: Point, a1: number, a2: numb
     a1 *= -1
   }
   const a = pointSurSegment(A, B, 1)
-  const c1 = rotation(a, A, a1)
+  const c1 = rotationAbstraite(a, A, a1)
   const b = pointSurSegment(B, A, 1)
-  const c2 = rotation(b, B, a2)
+  const c2 = rotationAbstraite(b, B, a2)
   const dAc1 = droite(A, c1)
   const dBc2 = droite(B, c2)
   const C = pointIntersectionDD(dAc1, dBc2, 'C') as Point
@@ -101,7 +102,7 @@ export function triangle2points1angle1longueur (A: Point, B: Point, a:number, l:
     a = -(Math.abs(a) % 180)
   }
   const P = pointSurSegment(A, B, l)
-  const Q = rotation(P, A, a)
+  const Q = rotationAbstraite(P, A, a)
   return polygone([A, B, Q], color)
 }
 
@@ -226,7 +227,7 @@ export class CodageHauteurTriangle extends ObjetMathalea2D {
     this.color = colorToLatexOrHTML(color)
     this.d = droite(B, C)
     const p = projectionOrtho(A, this.d)
-    const q = rotation(A, p, -90)
+    const q = rotationAbstraite(A, p, -90)
     this.traceD = false
     if (B.x < C.x) {
       if (p.x > C.x || p.x < B.x) {

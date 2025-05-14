@@ -1,9 +1,9 @@
 import { arrondi, unSiPositifMoinsUnSinon } from '../outils/nombres'
 import { angle } from './angles-vecteurs'
 import type { PointAbstrait } from './points-abstraits'
-import { rotation } from './transformations'
 import { longueur } from './mesures'
 import { vecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * Convertit un nombre de degrés quelconque en une mesure comprise entre -180 et 180
@@ -48,7 +48,7 @@ export function angleOriente (A: PointAbstrait, O: PointAbstrait, B: PointAbstra
     // window.notify('angleOriente() a reçu des points confondus pour déterminer l\'angle !', { OA, OB })
     return 0
   }
-  const A2 = rotation(A, O, 90)
+  const A2 = rotationAbstraite(A, O, 90)
   const v = vecteurAbstrait(O, B)
   const u = vecteurAbstrait(O, A2)
 

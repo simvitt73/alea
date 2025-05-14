@@ -7,12 +7,13 @@ import {
   pointIntersectionLC,
   pointSurSegment
 } from '../../lib/2d/points'
-import { homothetie, rotation } from '../../lib/2d/transformations'
+import { homothetie } from '../../lib/2d/transformations'
 import { triangle2points2longueurs } from '../../lib/2d/triangle'
 import { nombreAvecEspace } from '../../lib/outils/texNombre'
 import { randint } from '../outils'
 
-import {longueur} from "../../lib/2d/mesures.js";
+import { longueur } from '../../lib/2d/mesures.js'
+import { rotationAbstraite } from '../../lib/2d/transformations-abstraites'
 
 /**
    * Macro de construction d'un triangle à partir de ses 3 dimensions. Le premier point aura pour coordonnées (6,0).
@@ -202,9 +203,9 @@ export const triangle1longueur2angles = function (NOM, AB, BAC, CBA, description
   const E1 = pointSurSegment(E, E2, -0.4)
   const F = pointAdistance(B, 5.2, 180 - a2 + angle)
   const F1 = pointSurSegment(F, E2, 0.4)
-  const d = rotation(droite(A, B), A, a1)
+  const d = rotationAbstraite(droite(A, B), A, a1)
   D.isVisible = false
-  const d2 = rotation(droite(B, A), B, -a2)
+  const d2 = rotationAbstraite(droite(B, A), B, -a2)
   d2.isVisible = false
   const C = pointIntersectionDD(d, d2)
   if (NOM.length !== 3) {
@@ -324,7 +325,7 @@ export const triangle2longueurs1angle = function (NOM, AB, AC, BAC, description 
      * @return {array} [A, B, C]
      */
 export const triangleEquilateral2Sommets = function (A, B, nomC = '') {
-  const C = rotation(B, A, 60)
+  const C = rotationAbstraite(B, A, 60)
   C.nom = nomC
   this.traitRapide(A, B)
   this.pointCreer(A, A.nom, 0)
@@ -353,7 +354,7 @@ export const triangleEquilateral2Sommets = function (A, B, nomC = '') {
 export const triangleEquilateral = function (NOM, AB) {
   const A = point(6, 0)
   const B = pointAdistance(A, AB, randint(-20, 20))
-  const C = rotation(B, A, 60)
+  const C = rotationAbstraite(B, A, 60)
   if (NOM.length === 3) {
     A.nom = NOM[0]
     B.nom = NOM[1]

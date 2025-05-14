@@ -2,10 +2,11 @@ import { colorToLatexOrHTML, fixeBordures, ObjetMathalea2D } from '../../modules
 import FractionEtendue from '../../modules/FractionEtendue'
 import { milieu, point, Point } from './points'
 import { latex2d, texteParPosition } from './textes'
-import { rotation, similitude, translation } from './transformations'
+import { similitude, translation } from './transformations'
 import { PointAbstrait } from './points-abstraits'
 import { segment } from './segments'
 import { VecteurAbstrait } from './vecteurs-abstraits'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * v = vecteur('V') // son nom
@@ -94,7 +95,7 @@ export class NomVecteurParPosition extends ObjetMathalea2D {
     const M = point(this.x, this.y)
     const P = point(M.x + 0.25 * this.nom.length, M.y)
     const M0 = similitude(P, M, 90 + this.angle, 1.5)
-    const M1 = rotation(translation(M0, vecteur(P, M)), M0, this.angle)
+    const M1 = rotationAbstraite(translation(M0, vecteur(P, M)), M0, this.angle)
     const M2 = similitude(M1, M0, 180, 1.5)
     const s = segment(M1, M2, color)
     s.styleExtremites = '->'

@@ -1,9 +1,9 @@
 import { egal } from '../outils/comparaisons'
 import { arrondi, unSiPositifMoinsUnSinon } from '../outils/nombres'
 import type { PointAbstrait } from './points-abstraits'
-import { rotation } from './transformations'
 import { vecteurAbstrait } from './vecteurs-abstraits'
 import { longueur } from './mesures'
+import { rotationAbstraite } from './transformations-abstraites'
 
 /**
  * Renvoie la mesure d'angle en degré
@@ -65,7 +65,7 @@ export function angleOriente (A: PointAbstrait, O: PointAbstrait, B: PointAbstra
     // window.notify('angleOriente() a reçu des points confondus pour déterminer l\'angle !', { OA, OB })
     return 0
   }
-  const A2 = rotation(A, O, 90)
+  const A2 = rotationAbstraite(A, O, 90)
   const v = vecteurAbstrait(O, B)
   const u = vecteurAbstrait(O, A2)
 
