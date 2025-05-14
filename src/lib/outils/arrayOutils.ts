@@ -1,4 +1,5 @@
-import { egal, epsilon } from '../../modules/outils'
+import { egal, epsilon } from './comparaisons'
+
 declare global {
   interface Window {
     notify: (message: string, object: unknown) => void;

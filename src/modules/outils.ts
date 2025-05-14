@@ -10,11 +10,10 @@ import { texMulticols } from '../lib/format/miseEnPage'
 import { arrondi, rangeMinMax } from '../lib/outils/nombres'
 import { context } from './context'
 import Decimal from 'decimal.js'
-import FractionEtendue from './FractionEtendue'
 import type Exercice from '../exercices/Exercice'
+import { epsilon } from '../lib/outils/comparaisons'
 
 export const tropDeChiffres = 'Trop de chiffres'
-export const epsilon = 0.000001
 
 /**
  * Affecte les propriétés contenues et contenuCorrection (d'après les autres propriétés de l'exercice)
@@ -146,56 +145,6 @@ export function gestionnaireFormulaireTexte (params: gestionnaireFormulaireTexte
 export function entreDeux (a: number, b: number) {
   if (a < b) return arrondi(a + (b - a) * randint(10, 90) / 100, 2)
   else return arrondi(b + (a - b) * randint(10, 90) / 100, 2)
-}
-
-/**
- * Compare deux nombres (pour les nombres en virgule flottante afin d'éviter les effets de la conversion en virgule flottante).
- * Devient compatible avec les FractionEtendue le 7/05/2024 en comparant leur valeur décimale
- * Pour les Decimal, la conversion automatique en number doit fonctionner.
- * @author Jean-Claude Lhote
- * @param {number} a premier nombre
- * @param {number} b deuxième nombre
- * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
- * @return {boolean}
- */
-export function egal (a: number | FractionEtendue, b: number | FractionEtendue, tolerance = epsilon) {
-  tolerance = tolerance === 0 ? 1e-10 : tolerance
-  if (a instanceof FractionEtendue) a = a.valeurDecimale
-  if (b instanceof FractionEtendue) b = b.valeurDecimale
-  return (Math.abs(a - b) <= tolerance)
-}
-
-/**
- * Retourne true si le nombre a est inférieur à b
- * @param {number} a premier nombre
- * @param {number} b deuxième nombre
- * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
- * @return {boolean}
- */
-export function inferieur (a: number, b: number, tolerance = epsilon) {
-  return (b - a > tolerance)
-}
-
-/**
- * Retourne true si le nombre a est supérieur ou égal à b
- * @param {number} a premier nombre
- * @param {number} b deuxième nombre
- * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
- * @return {boolean}
- */
-export function superieurouegal (a: number, b: number, tolerance = epsilon) {
-  return (a - b > tolerance || egal(a, b, tolerance))
-}
-
-/**
- * Retourne true si le nombre a est inférieur ou égal à b
- * @param {number} a premier nombre
- * @param {number} b deuxième nombre
- * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
- * @return {boolean}
- */
-export function inferieurouegal (a: number, b: number, tolerance = epsilon) {
-  return (b - a > tolerance || egal(a, b, tolerance))
 }
 
 /**
