@@ -1,5 +1,6 @@
 import { abs, acos, equal, largerEq, max, polynomialRoot, round } from 'mathjs'
-import { egal, randint } from '../../modules/outils'
+import { randint } from '../../modules/outils'
+import { egal } from '../../lib/outils/comparaisons'
 import { choice } from '../outils/arrayOutils'
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1, ecritureParentheseSiNegatif, rienSi1 } from '../outils/ecritures'
 import Decimal from 'decimal.js'

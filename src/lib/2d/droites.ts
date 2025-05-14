@@ -1,6 +1,6 @@
 import { colorToLatexOrHTML, ObjetMathalea2D, vide2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { egal } from '../../modules/outils'
+import { egal } from '../../lib/outils/comparaisons'
 import { arrondi } from '../outils/nombres'
 import { angleOriente } from './angles'
 import { traceCompas } from './cercle'

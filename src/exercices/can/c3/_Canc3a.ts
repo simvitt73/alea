@@ -12,7 +12,8 @@ import { formatMinute, stringNombre, texNombre } from '../../../lib/outils/texNo
 import { mathalea2d, fixeBordures, colorToLatexOrHTML } from '../../../modules/2dGeneralites'
 import FractionEtendue from '../../../modules/FractionEtendue'
 import { context } from '../../../modules/context'
-import { egal, randint } from '../../../modules/outils'
+import { randint } from '../../../modules/outils'
+import { egal } from '../../../lib/outils/comparaisons'
 
 export const titre = 'Classe CAN C3'
 

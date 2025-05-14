@@ -2,6 +2,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choisiDelta } from '../../lib/mathFonctions/outilsMaths'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { extraireRacineCarree } from '../../lib/outils/calculs'
+import { egal } from '../../lib/outils/comparaisons'
 import {
   ecritureAlgebrique,
   ecritureAlgebriqueSauf1,
@@ -11,7 +12,7 @@ import {
 import { pgcd } from '../../lib/outils/primalite'
 import type FractionEtendue from '../../modules/FractionEtendue'
 import { fraction } from '../../modules/fractions'
-import { egal, listeQuestionsToContenu } from '../../modules/outils'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import Exercice from '../Exercice'
 
 export const interactifReady = false

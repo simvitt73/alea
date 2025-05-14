@@ -4,7 +4,8 @@ import { listeDesDiviseurs } from '../../lib/outils/primalite'
 import { nombreAvecEspace } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
 import { context } from '../../modules/context'
-import { listeQuestionsToContenu, egal, randint, contraindreValeur } from '../../modules/outils'
+import { listeQuestionsToContenu, randint, contraindreValeur } from '../../modules/outils'
+import { egal } from '../../lib/outils/comparaisons'
 
 export const titre = 'Comprendre le vocabulaire : division euclidienne, diviseurs, multiples'
 

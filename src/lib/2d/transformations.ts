@@ -1,5 +1,5 @@
 import { colorToLatexOrHTML, fixeBordures, ObjetMathalea2D } from '../../modules/2dGeneralites'
-import { egal } from '../../modules/outils'
+import { egal } from '../../lib/outils/comparaisons'
 import { degToRad } from '../mathFonctions/trigo'
 import { arc } from './cercle'
 import { Droite, droite, Mediatrice } from './droites'

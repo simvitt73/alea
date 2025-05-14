@@ -1,5 +1,5 @@
 import { gcd, isPrime } from 'mathjs'
-import { egal } from '../../modules/outils.js'
+import { egal } from '../../lib/outils/comparaisons'
 import { ecritureParentheseSiNegatif } from './ecritures'
 import { abs } from './nombres'
 

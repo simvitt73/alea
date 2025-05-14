@@ -4,7 +4,7 @@ import { vecteur } from '../lib/2d/segmentsVecteurs'
 import { TexteParPoint, texteParPosition } from '../lib/2d/textes'
 import { homothetie, rotation, similitude, translation } from '../lib/2d/transformations'
 import { nombreAvecEspace } from '../lib/outils/texNombre'
-import { egal } from './outils'
+import { egal } from '../lib/outils/comparaisons'
 
 /**
  * Classe Pavage : permet de créer des pavages de polygones en un tour de main et de manipuler les polygones qu'il contient

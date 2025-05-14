@@ -6,7 +6,8 @@ import { ecritureAlgebrique, ecritureAlgebriqueSauf1, rienSi1 } from '../../lib/
 import { pgcd } from '../../lib/outils/primalite'
 import type FractionEtendue from '../../modules/FractionEtendue'
 import { fraction } from '../../modules/fractions'
-import { egal, listeQuestionsToContenu } from '../../modules/outils'
+import { listeQuestionsToContenu } from '../../modules/outils'
+import { egal } from '../../lib/outils/comparaisons'
 import Exercice from '../Exercice'
 
 export const interactifReady = false

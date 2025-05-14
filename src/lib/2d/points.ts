@@ -2,7 +2,8 @@ import { colorToLatexOrHTML, ObjetMathalea2D } from '../../modules/2dGeneralites
 import type { Point3d } from '../../modules/3d'
 
 import { context } from '../../modules/context'
-import { egal, inferieurouegal, randint, superieurouegal } from '../../modules/outils'
+import { randint } from '../../modules/outils'
+import { egal, inferieurouegal, superieurouegal } from '../../lib/outils/comparaisons'
 import { degToRad } from '../mathFonctions/trigo'
 import { arrondi } from '../outils/nombres'
 import { Cercle, cercle } from './cercle'

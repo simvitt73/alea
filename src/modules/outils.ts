@@ -207,7 +207,7 @@ export function carreParfait (x: number) {
  * @author Rémi Angot
  * @see https://gist.github.com/pc035860/6546661
  */
-export function randint (min: number | Decimal, max: number | Decimal, listeAEviter: number[] | string = []) {
+export function randint (min: number | Decimal, max: number | Decimal, listeAEviter: number[] | number | string = []) {
   // Source : https://gist.github.com/pc035860/6546661
   if (min instanceof Decimal) min = min.toNumber()
   if (max instanceof Decimal) max = max.toNumber()

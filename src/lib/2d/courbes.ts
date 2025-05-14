@@ -1,6 +1,7 @@
 import { colorToLatexOrHTML, fixeBordures, ObjetMathalea2D, xSVG, ySVG } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { estentier, inferieurouegal } from '../../modules/outils'
+import { estentier } from '../../modules/outils'
+import { inferieurouegal } from '../../lib/outils/comparaisons'
 import { Point, point, tracePoint } from './points'
 import { elimineBinomesXYIntermediairesAlignes, motifs, Polygone, polygone, polyline } from './polygones'
 import { segment } from './segmentsVecteurs'

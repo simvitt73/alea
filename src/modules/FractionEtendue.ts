@@ -17,11 +17,12 @@ import {
 import { stringNombre, texNombre } from '../lib/outils/texNombre'
 import {
   quotientier,
-  egal, ppcm
+  ppcm
 } from './outils'
 import { abs, multiply, gcd, round, lcm, max, min } from 'mathjs'
 import { colorToLatexOrHTML } from './2dGeneralites'
 import Decimal from 'decimal.js'
+import { egal } from '../lib/outils/comparaisons'
 
 type FractionRepresentationType = 'gateau' | 'barre' | 'segment'
 

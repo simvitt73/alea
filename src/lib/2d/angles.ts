@@ -1,6 +1,6 @@
 import { colorToLatexOrHTML, fixeBordures, mathalea2d, ObjetMathalea2D, vide2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { egal } from '../../modules/outils'
+import { egal } from '../../lib/outils/comparaisons'
 import type { Angle } from '../mathFonctions/trigo'
 import { arrondi, unSiPositifMoinsUnSinon } from '../outils/nombres'
 import { arc, cercle, cercleCentrePoint } from './cercle'

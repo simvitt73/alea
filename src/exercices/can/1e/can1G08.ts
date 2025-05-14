@@ -2,7 +2,8 @@ import { ecritureAlgebrique, ecritureAlgebriqueSauf1, rienSi1 } from '../../../l
 import { texteCentre } from '../../../lib/format/miseEnPage'
 import { sp } from '../../../lib/outils/outilString'
 import Exercice from '../../Exercice'
-import { egal, listeQuestionsToContenu, randint } from '../../../modules/outils'
+import { listeQuestionsToContenu, randint } from '../../../modules/outils'
+import { egal } from '../../../lib/outils/comparaisons'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
