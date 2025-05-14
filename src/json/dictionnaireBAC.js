@@ -1,13 +1,10 @@
 /* Thèmes
-  Bienaymé-Tchebychev
-   Combinatoire
    Convexité
    Dénombrement
    Équations différentielles
    Espace
    Exponentielle
-   Fonctions trigonométriques
-   Intégration
+   Trigonométrie
    Logarithme
    Loi binomiale
    Primitives
@@ -1266,7 +1263,7 @@ export const dictionnaireBAC = {
     mois: 'Janvier',
     numeroInitial: '5',
     typeExercice: 'bac',
-    tags: ['Fonctions trigonométriques', 'Convexité', 'QCM', 'Combinatoire', 'Loi binomiale']
+    tags: ['Trigonométrie', 'Convexité', 'QCM', 'Dénombrement', 'Loi binomiale']
   },
   bac_2024_01_sujet0_6: {
     annee: '2024',
@@ -2147,7 +2144,7 @@ export const dictionnaireBAC = {
     jour: 'J1',
     numeroInitial: '3',
     typeExercice: 'bac',
-    tags: ['Équations différentielles', 'Fonctions trigonométriques']
+    tags: ['Équations différentielles', 'Trigonométrie']
   },
   bac_2024_06_sujet1_etrangers_4: {
     annee: '2024',
