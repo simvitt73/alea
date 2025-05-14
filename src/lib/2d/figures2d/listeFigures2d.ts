@@ -10,6 +10,7 @@ import { panneauStationnementInterdit } from './stationnementInterdit'
 import { briqueLego } from './legos'
 import { aileDelta, carreAnime, cerfVolant, coeur, croissantDeLune, croixRouge, etoile4Branches, etoile5Branches, ferACheval, hexagoneNonRegulier, losange, ogive, pacman, parallelogramme, pentagoneRegulier, rectangle, trapezeIsocele, triangleEquilateral, triangleIsocele, triangleQuelconque1 } from './geometrie'
 import { randint } from '../../../modules/outils'
+import { lettreA, lettreB, lettreC, lettreD, lettreE, lettreF, lettreG, lettreH } from './lettres'
 /**
  * @description formes utilisées dans l'exercice 6G25-4 notzmment
  * @author Jean-Claude Lhote
@@ -495,7 +496,54 @@ export const listeFigures2d: Forme[] = [
     figure2d: carreAnime,
     options: { base: 4, fillStyle: 'red' }
   },
-
+  {
+    numero: 71,
+    name: 'lettre A',
+    type: 'lettre',
+    figure2d: lettreA
+  },
+  {
+    numero: 72,
+    name: 'lettre B',
+    type: 'lettre',
+    figure2d: lettreB
+  },
+  {
+    numero: 73,
+    name: 'lettre C',
+    type: 'lettre',
+    figure2d: lettreC
+  },
+  {
+    numero: 74,
+    name: 'lettre D',
+    type: 'lettre',
+    figure2d: lettreD
+  },
+  {
+    numero: 75,
+    name: 'lettre E',
+    type: 'lettre',
+    figure2d: lettreE
+  },
+  {
+    numero: 76,
+    name: 'lettre F',
+    type: 'lettre',
+    figure2d: lettreF
+  },
+  {
+    numero: 77,
+    name: 'lettre G',
+    type: 'lettre',
+    figure2d: lettreG
+  },
+  {
+    numero: 78,
+    name: 'lettre H',
+    type: 'lettre',
+    figure2d: lettreH
+  },
 ]
 export type Figure2DOptions = {
   fillStyle?: string

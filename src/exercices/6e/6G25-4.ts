@@ -1,4 +1,4 @@
-import { vecteur } from '../../lib/2d/segmentsVecteurs'
+import { Segment, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../../lib/2d/textes'
 import { choice } from '../../lib/outils/arrayOutils'
 import { colorToLatexOrHTML, fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
@@ -34,7 +34,7 @@ export default class NbAxesDeSymetrie extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 3
-    this.besoinFormulaireTexte = ['Type de figures', 'Nombres séparés par des tirets\n1 : Panneaux\n2 : Formes géométriques\n3 : Legos\n4 : Mélange']
+    this.besoinFormulaireTexte = ['Type de figures', 'Nombres séparés par des tirets\n1 : Panneaux\n2 : Formes géométriques\n3 : Legos\n4 : Lettres\n5 : Mélange']
     this.sup = '4'
     this.besoinFormulaire2Numerique = ['Nombre de figures par question', 3]
     this.sup2 = 3
@@ -47,7 +47,7 @@ export default class NbAxesDeSymetrie extends Exercice {
   nouvelleVersion (): void {
     let nbFigures = this.sup2
     const factor = this.sup4 ? 2 : 1
-    const typeDeFigures = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 3, defaut: 1, melange: 4, nbQuestions: this.nbQuestions }).map(Number)
+    const typeDeFigures = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 4, defaut: 1, melange: 5, nbQuestions: this.nbQuestions }).map(Number)
     const numerosChoisis: number[] = []
     for (let i = 0; i < this.nbQuestions;) {
       let texte = ''
@@ -55,7 +55,7 @@ export default class NbAxesDeSymetrie extends Exercice {
       const objets: NestedObjetMathalea2dArray = []
       const objetsCorr: NestedObjetMathalea2dArray = []
 
-      const typeDeFigureChoisie = ['panneau', 'geometrique', 'lego'][typeDeFigures[i] - 1]
+      const typeDeFigureChoisie = ['panneau', 'geometrique', 'lego', 'lettre'][typeDeFigures[i] - 1]
       const listeFigs = listeFigures2d.filter(el => el.type === typeDeFigureChoisie).filter(el => !numerosChoisis.includes(el.numero))
       if (listeFigs.length === 0) {
         this.listeQuestions.push('Aucune figure disponible')
@@ -93,11 +93,16 @@ export default class NbAxesDeSymetrie extends Exercice {
 
         const formeTexte = texteParPosition(`figure ${j + 1}`, j * 6 * factor * scale, 2.8 * factor)
         objets.push(forme, formeTexte)
-        const formeBis = forme.translationAnimee({ dx: 0, dy: 0, duration: '0', repeatCount: '0' })
-        formeBis.opacite = 0.3
-        const formeCorr = forme.autoReflectionAnimee(`${forme.name}Corr_${i * this.sup3 + j}`, forme.x, forme.y)
-        const axes = formeCorr.Axes.map(el => factor > 1 ? homothetie(el, point(0, 0), factor) : el)
-        objetsCorr.push(formeBis, formeCorr, formeTexte)
+        let axes: Segment[] = []
+        if (forme.nbAxes !== 0) {
+          const formeBis = forme.translationAnimee({ dx: 0, dy: 0, duration: '0', repeatCount: '0' })
+          formeBis.opacite = 0.3
+          const formeCorr = forme.autoReflectionAnimee(`${forme.name}Corr_${i * this.sup3 + j}`, forme.x, forme.y)
+          axes = formeCorr.Axes.map(el => factor > 1 ? homothetie(el, point(0, 0), factor) : el)
+          objetsCorr.push(formeBis, formeCorr, formeTexte)
+        } else {
+          objetsCorr.push(forme, formeTexte)
+        }
         if (axes.length > 0) {
           for (let k = 0; k < axes.length; k++) {
             const seg = translation(axes[k], vecteur(j * 6 * factor * scale, 0))
@@ -125,7 +130,7 @@ export default class NbAxesDeSymetrie extends Exercice {
               ordered: true
             }
           }
-          const monQcm = propositionsQcm(this, i * nbFigures + j, { style: 'inline-block', format: 'case' })
+          const monQcm = propositionsQcm(this, i * nbFigures + j, { style: 'inline-block', format: 'case', radio: true })
           texte += `figure ${j + 1} : ${monQcm.texte}`
         }
       }
