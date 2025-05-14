@@ -1,6 +1,6 @@
 import { max } from 'mathjs'
 import { colorToLatexOrHTML, fixeBordures, ObjetMathalea2D, Vide2d, vide2d } from '../../modules/2dGeneralites'
-import { arc, cercle } from './cercle'
+import { cercle } from './cercle'
 import { Point, point, tracePoint } from './points'
 import { carre, motifs, Polygone, polygone, polyline } from './polygones'
 import { axeY, labelY, pointDansRepere, Repere } from './reperes'
@@ -10,6 +10,7 @@ import { numberFormat, texNombre } from '../outils/texNombre'
 import { segment, vecteur } from './segmentsVecteurs'
 import { latexParPoint, TexteParPoint, texteParPoint, texteParPosition } from './textes'
 import { rotation, similitude, translation } from './transformations'
+import { arc } from './arc'
 
 /**
  * Trace un graphique cartésien dans un repère

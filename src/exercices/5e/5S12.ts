@@ -1,4 +1,4 @@
-import { arc, cercleCentrePoint } from '../../lib/2d/cercle'
+import { cercleCentrePoint } from '../../lib/2d/cercle'
 import { point, tracePoint } from '../../lib/2d/points'
 import { carre, motifs } from '../../lib/2d/polygones'
 import { repere } from '../../lib/2d/reperes'
@@ -17,6 +17,7 @@ import Exercice from '../Exercice'
 import { mathalea2d, colorToLatexOrHTML } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'
 import { tableauColonneLigne } from '../../lib/2d/tableau'
+import { arc } from '../../lib/2d/arc'
 
 export const dateDePublication = '20/03/2022' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
 export const dateDeModifImportante = '17/04/2022'

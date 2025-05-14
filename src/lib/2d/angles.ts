@@ -2,7 +2,7 @@ import { colorToLatexOrHTML, fixeBordures, mathalea2d, ObjetMathalea2D, vide2d }
 import { context } from '../../modules/context'
 import { egal } from '../../lib/outils/comparaisons'
 import type { Angle } from '../mathFonctions/trigo'
-import { arc, cercle, cercleCentrePoint } from './cercle'
+import { cercle, cercleCentrePoint } from './cercle'
 import { CodageAngle } from './codages'
 import { Point, point, pointSurCercle, pointSurSegment } from './points'
 import { polygone, polyline } from './polygones'
@@ -10,6 +10,7 @@ import { segment } from './segmentsVecteurs'
 import { latexParPoint, texteParPoint, texteParPosition } from './textes'
 import { homothetie, rotation } from './transformations'
 import { angleOriente } from './angles-mesures'
+import { arc } from './arc'
 
 export type MarkType = 'simple' | 'double' | 'triple' | 'gras' | 'double-gras' | 'gras-simple-gras' | 'simple-gras-simple' | 'pointilles' | 'double-pointilles' | 'mixte-simple-pointilles' | 'mixte-gras-pointilles'
 export const markTypeArray: MarkType[] = [

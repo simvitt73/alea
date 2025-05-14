@@ -1,4 +1,4 @@
-import { cercle, cercleCentrePoint, traceCompas } from '../../lib/2d/cercle'
+import { cercle, cercleCentrePoint } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { codageSegments } from '../../lib/2d/codages'
 import { droite } from '../../lib/2d/droites'
@@ -16,6 +16,7 @@ import { listeQuestionsToContenu, randint, gestionnaireFormulaireTexte } from '.
 import Alea2iep from '../../modules/Alea2iep'
 import { context } from '../../modules/context'
 import { arrondi } from '../../lib/outils/nombres'
+import { traceCompas } from '../../lib/2d/arc'
 
 export const titre = 'Construire des parallélogrammes'
 export const dateDeModifImportante = '18/04/2024'

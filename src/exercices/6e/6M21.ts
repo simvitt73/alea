@@ -1,4 +1,3 @@
-import { arc } from '../../lib/2d/cercle'
 import { codageSegment } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPente } from '../../lib/2d/droites'
 import { milieu, Point, point, pointIntersectionDD, pointSurSegment } from '../../lib/2d/points'
@@ -15,6 +14,7 @@ import { min, max } from 'mathjs'
 import { propositionsQcm } from '../../lib/interactif/qcm'
 import { context } from '../../modules/context'
 import { translationPuisRotationAnimees } from '../../modules/2dAnimation'
+import { arc } from '../../lib/2d/arc'
 
 export const dateDePublication = '08/06/2022'
 export const dateDeModifImportante = '22/01/2025'

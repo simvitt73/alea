@@ -1,4 +1,3 @@
-import { arc } from '../../lib/2d/cercle'
 import { codageSegments, placeLatexSurSegment } from '../../lib/2d/codages'
 import { point, pointAdistance } from '../../lib/2d/points'
 import { rotation } from '../../lib/2d/transformations'
@@ -11,6 +10,7 @@ import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { arrondi } from '../../lib/outils/nombres'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
+import { arc } from '../../lib/2d/arc'
 
 export const interactifReady = true
 export const interactifType = 'mathLive'

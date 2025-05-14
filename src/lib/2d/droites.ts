@@ -3,12 +3,12 @@ import { context } from '../../modules/context'
 import { egal } from '../../lib/outils/comparaisons'
 import { arrondi } from '../outils/nombres'
 import { angleOriente } from '../../lib/2d/angles-mesures'
-import { traceCompas } from './cercle'
 import { codageBissectrice, codageMediatrice, codageSegments } from './codages'
 import { milieu, Point, point, pointSurDroite, pointSurSegment } from './points'
 import { DemiDroite, demiDroite, longueur, norme, segment, Vecteur, vecteur } from './segmentsVecteurs'
 import { Latex2d, latex2d, TexteParPoint, texteParPosition, type LetterSizeType } from './textes'
 import { homothetie, projectionOrtho, rotation, symetrieAxiale, translation } from './transformations'
+import { traceCompas } from './arc'
 
 /**
  * Ajouter une étiquette sur une droite.

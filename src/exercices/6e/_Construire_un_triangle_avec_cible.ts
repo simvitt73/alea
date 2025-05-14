@@ -1,5 +1,5 @@
 import { codageAngle, codageAngleDroit } from '../../lib/2d/angles'
-import { cercle, traceCompas } from '../../lib/2d/cercle'
+import { cercle } from '../../lib/2d/cercle'
 import { cibleRonde, dansLaCibleRonde } from '../../lib/2d/cibles'
 import { afficheLongueurSegment, afficheMesureAngle, codageSegments } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
@@ -25,6 +25,7 @@ import Alea2iep from '../../modules/Alea2iep'
 import { context } from '../../modules/context'
 import Exercice from '../Exercice'
 import { angle } from '../../lib/2d/angles-mesures'
+import { traceCompas } from '../../lib/2d/arc'
 
 export const dateDeModifImportante = '18/01/2025'
 // Rémi Angot : Formulaire, affichage de la cible ou non, de la figure à main levée ou non et correction des erreurs

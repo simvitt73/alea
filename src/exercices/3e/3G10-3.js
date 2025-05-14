@@ -1,4 +1,3 @@
-import { arcPointPointAngle } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { point, tracePoint } from '../../lib/2d/points'
 import { longueur } from '../../lib/2d/segmentsVecteurs'
@@ -11,6 +10,7 @@ import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import { arcPointPointAngle } from '../../lib/2d/arc.js'
 export const titre = 'Construire l\'image d\'un point par une rotation avec cible auto-corrective'
 
 /**

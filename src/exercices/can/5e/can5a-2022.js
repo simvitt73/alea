@@ -1,5 +1,4 @@
 import { codageAngle, codageAngleDroit, rapporteur } from '../../../lib/2d/angles'
-import { arc } from '../../../lib/2d/cercle'
 import { droite } from '../../../lib/2d/droites'
 import { milieu, point, pointSurSegment, tracePoint } from '../../../lib/2d/points'
 import { polygone } from '../../../lib/2d/polygones'
@@ -25,6 +24,7 @@ import { handleAnswers, setReponse } from '../../../lib/interactif/gestionIntera
 import { tableauColonneLigne } from '../../../lib/2d/tableau'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { angleModulo } from '../../../lib/2d/angles-mesures'
+import { arc } from '../../../lib/2d/arc.js'
 
 export const titre = 'CAN 5e sujet 2022'
 export const interactifReady = true

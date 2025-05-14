@@ -1,4 +1,4 @@
-import { arc, cercle } from '../lib/2d/cercle'
+import { cercle } from '../lib/2d/cercle'
 import { Point, point } from '../lib/2d/points'
 import { carre } from '../lib/2d/polygones'
 import { segment, vecteur } from '../lib/2d/segmentsVecteurs'
@@ -23,6 +23,7 @@ import { abs, multiply, gcd, round, lcm, max, min } from 'mathjs'
 import { colorToLatexOrHTML } from './2dGeneralites'
 import Decimal from 'decimal.js'
 import { egal } from '../lib/outils/comparaisons'
+import { arc } from '../lib/2d/arc'
 
 type FractionRepresentationType = 'gateau' | 'barre' | 'segment'
 

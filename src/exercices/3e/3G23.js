@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import { angleOriente } from '../../lib/2d/angles-mesures'
-import { arc } from '../../lib/2d/cercle'
 import { codageSegments } from '../../lib/2d/codages'
 import { droite } from '../../lib/2d/droites'
 import { milieu, point, pointIntersectionDD, pointSurSegment, tracePoint } from '../../lib/2d/points'
@@ -21,6 +20,7 @@ import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { rotationAnimee, translationAnimee } from '../../modules/2dAnimation'
 import { propositionsQcm } from '../../lib/interactif/qcm'
 import { context } from '../../modules/context'
+import { arc } from '../../lib/2d/arc.js'
 export const interactifReady = true
 export const interactifType = 'qcm'
 

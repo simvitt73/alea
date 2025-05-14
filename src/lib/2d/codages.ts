@@ -4,13 +4,13 @@ import { arrondi } from '../outils/nombres'
 import { stringNombre } from '../outils/texNombre'
 import { codageAngle, codageAngleDroit } from './angles'
 import { angleOriente } from '../../lib/2d/angles-mesures'
-import { arc } from './cercle'
 import { Droite, droite, mediatrice } from './droites'
 import { milieu, Point, point, pointSurSegment, tracePointSurDroite } from './points'
 import { longueur, Segment, segment, vecteur } from './segmentsVecteurs'
 import { Latex2d, latex2d, latexParCoordonnees, tailleDeNbVersLatex, TexteParPoint, texteParPoint, type LetterSizeType } from './textes'
 import { rotation, similitude, translation } from './transformations'
 import type { Polygone } from './polygones'
+import { arc } from './arc'
 
 /**
  * Code le milieu d'un segment

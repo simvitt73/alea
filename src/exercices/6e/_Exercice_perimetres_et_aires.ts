@@ -1,5 +1,5 @@
 import { codageAngleDroit } from '../../lib/2d/angles'
-import { arc, cercle } from '../../lib/2d/cercle'
+import { cercle } from '../../lib/2d/cercle'
 import { afficheLongueurSegment, codageSegments, texteSurSegment } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
 import {
@@ -27,6 +27,7 @@ import { context } from '../../modules/context'
 import { texTexte } from '../../lib/format/texTexte'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import Exercice from '../Exercice'
+import { arc } from '../../lib/2d/arc'
 
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -6,10 +6,10 @@ import { Point, point, tracePoint } from './points'
 import { elimineBinomesXYIntermediairesAlignes, motifs, Polygone, polygone, polyline } from './polygones'
 import { segment } from './segmentsVecteurs'
 import { texteParPosition } from './textes'
-import { arc } from './cercle'
 import { Repere } from './reperes'
 import type { Spline } from '../mathFonctions/Spline'
 import { tousDeMemeSigne } from '../outils/nombres'
+import { arc } from './arc'
 
 export class LectureImage extends ObjetMathalea2D {
   x: number

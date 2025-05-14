@@ -1,11 +1,12 @@
 import { abs, random, round } from 'mathjs'
 import { colorToLatexOrHTML, fixeBordures, ObjetMathalea2D } from '../../modules/2dGeneralites'
-import { arc, cercle, Cercle } from './cercle'
+import { cercle, Cercle } from './cercle'
 import { afficheCoteSegment } from './codages'
 import { Point, point, pointAdistance } from './points'
 import { pattern, polygone } from './polygones'
 import { longueur, segment, vecteur } from './segmentsVecteurs'
 import { homothetie, rotation, translation } from './transformations'
+import { arc } from './arc'
 
 /**
  *

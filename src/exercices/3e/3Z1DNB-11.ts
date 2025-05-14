@@ -15,11 +15,11 @@ import { labelPoint, latex2d } from '../../lib/2d/textes'
 import type FractionEtendue from '../../modules/FractionEtendue'
 import { fraction } from '../../modules/fractions'
 import { cone, ellipse } from '../../lib/2d/projections3d'
-import { arc } from '../../lib/2d/cercle'
 import { premierMultipleInferieur, premierMultipleSuperieur } from '../../lib/outils/primalite'
 import { egalOuApprox } from '../../lib/outils/ecritures'
 import { prenomM } from '../../lib/outils/Personne'
 import { context } from '../../modules/context'
+import { arc } from '../../lib/2d/arc'
 
 export const uuid = 'fb6ee'
 export const refs = {

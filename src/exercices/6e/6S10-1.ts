@@ -1,4 +1,4 @@
-import { arc, cercleCentrePoint } from '../../lib/2d/cercle'
+import { cercleCentrePoint } from '../../lib/2d/cercle'
 import { point, tracePoint } from '../../lib/2d/points'
 import { carre, motifs } from '../../lib/2d/polygones'
 import { repere } from '../../lib/2d/reperes'
@@ -14,6 +14,7 @@ import { mathalea2d, colorToLatexOrHTML, fixeBordures } from '../../modules/2dGe
 import { randint, listeQuestionsToContenu } from '../../modules/outils'
 import { propositionsQcm } from '../../lib/interactif/qcm'
 import { context } from '../../modules/context'
+import { arc } from '../../lib/2d/arc'
 
 export const titre = 'Lire des données représentées dans un diagramme'
 export const interactifReady = true

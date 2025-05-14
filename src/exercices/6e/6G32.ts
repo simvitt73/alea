@@ -1,4 +1,3 @@
-import { arc } from '../../lib/2d/cercle'
 import { afficheLongueurSegment } from '../../lib/2d/codages'
 import { distancePointDroite, droite } from '../../lib/2d/droites'
 import { Point, point, pointSurDroite, tracePoint } from '../../lib/2d/points'
@@ -18,6 +17,7 @@ import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { arrondi } from '../../lib/outils/nombres'
 import { angle, angleOriente } from '../../lib/2d/angles-mesures'
+import { arc } from '../../lib/2d/arc'
 export const titre = 'Utiliser les propriétés de conservation de la symétrie axiale'
 
 // Gestion de la date de publication initiale

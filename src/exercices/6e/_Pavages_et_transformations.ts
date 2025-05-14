@@ -1,5 +1,4 @@
 import { codageAngleDroit } from '../../lib/2d/angles'
-import { arc } from '../../lib/2d/cercle'
 import { codageSegments } from '../../lib/2d/codages'
 import { Droite, droiteHorizontaleParPoint, droiteVerticaleParPoint, mediatrice } from '../../lib/2d/droites'
 import { milieu, point, pointIntersectionDD, pointSurDroite, tracePoint } from '../../lib/2d/points'
@@ -19,6 +18,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { rotationAnimee, symetrieAnimee, translationAnimee } from '../../modules/2dAnimation'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import Exercice from '../Exercice'
+import { arc } from '../../lib/2d/arc'
 
 export const interactifReady = true
 export const interactifType = 'mathLive'

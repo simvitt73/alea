@@ -1,4 +1,3 @@
-import { traceCompas } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { codageMilieu } from '../../lib/2d/codages'
 import { point, tracePoint } from '../../lib/2d/points'
@@ -13,6 +12,7 @@ import { mathalea2d } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { context } from '../../modules/context'
 import { arrondi } from '../../lib/outils/nombres'
+import { traceCompas } from '../../lib/2d/arc'
 
 export const titre = 'Construire le symétrique d\'un point avec cible auto-corrective'
 
