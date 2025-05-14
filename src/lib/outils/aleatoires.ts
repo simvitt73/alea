@@ -1,9 +1,8 @@
 import {
   randint
 } from '../../modules/outils'
-import { shuffle } from './arrayOutils'
+import {rangeMinMax, shuffle} from './arrayOutils'
 import { joursParMois } from './dateEtHoraires'
-import { rangeMinMax } from './nombres'
 import { lettreDepuisChiffre, lettreMinusculeDepuisChiffre } from './outilString'
 
 /**

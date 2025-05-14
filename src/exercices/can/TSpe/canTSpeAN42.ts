@@ -5,9 +5,9 @@ import { Courbe, courbe, IntegraleComptable } from '../../../lib/2d/courbes'
 import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
 import { randint } from '../../../modules/outils'
 import { interpolationDeLagrange } from '../../../lib/mathFonctions/outilsMaths'
-import { range } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { propositionsQcm } from '../../../lib/interactif/qcm'
+import {range} from "../../../lib/outils/arrayOutils";
 export const titre = 'Encadrer une intégrale'
 export const interactifReady = true
 export const interactifType = 'mathLive'

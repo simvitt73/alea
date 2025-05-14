@@ -1,4 +1,4 @@
-import { choice, combinaisonListes, enleveDoublonNum } from '../../lib/outils/arrayOutils'
+import {choice, combinaisonListes, enleveDoublonNum, rangeMinMax} from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import Exercice from '../Exercice'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
@@ -6,7 +6,6 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import FractionEtendue from '../../modules/FractionEtendue'
-import { rangeMinMax } from '../../lib/outils/nombres'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { partieEntiereEnLettres } from '../../modules/nombreEnLettres'
 import { numAlpha } from '../../lib/outils/outilString'

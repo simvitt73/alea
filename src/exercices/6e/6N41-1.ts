@@ -1,4 +1,4 @@
-import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import {combinaisonListes, rangeMinMax} from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { pgcd } from '../../lib/outils/primalite'
 import { labyrinthe } from '../../modules/Labyrinthe'
@@ -10,7 +10,6 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 
 import FractionEtendue from '../../modules/FractionEtendue'
-import { rangeMinMax } from '../../lib/outils/nombres'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 export const interactifReady = true
 export const interactifType = 'mathLive'

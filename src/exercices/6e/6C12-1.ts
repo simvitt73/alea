@@ -1,6 +1,6 @@
-import { choice, enleveElementNo } from '../../lib/outils/arrayOutils'
+import {choice, enleveElementNo, range, rangeMinMax} from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { arrondi, range, rangeMinMax, troncature } from '../../lib/outils/nombres'
+import { arrondi, troncature } from '../../lib/outils/nombres'
 import { numAlpha, sp } from '../../lib/outils/outilString'
 import { prenomF } from '../../lib/outils/Personne'
 import { texPrix } from '../../lib/format/style'

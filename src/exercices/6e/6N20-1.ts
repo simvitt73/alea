@@ -1,5 +1,4 @@
-import { choice } from '../../lib/outils/arrayOutils'
-import { rangeMinMax } from '../../lib/outils/nombres'
+import {choice, rangeMinMax} from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'

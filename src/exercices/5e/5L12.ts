@@ -1,6 +1,5 @@
-import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
+import { choice, combinaisonListes, range1 } from '../../lib/outils/arrayOutils'
 import { rienSi1 } from '../../lib/outils/ecritures'
-import { range1 } from '../../lib/outils/nombres'
 import { lettreIndiceeDepuisChiffre, sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'

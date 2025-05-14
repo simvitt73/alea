@@ -1,12 +1,12 @@
 import {
-  choice,
-  combinaisonListes,
-  combinaisonListesSansChangerOrdre,
-  enleveElement,
-  shuffle
+    choice,
+    combinaisonListes,
+    combinaisonListesSansChangerOrdre,
+    enleveElement, range1,
+    shuffle
 } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { nombreDeChiffresDansLaPartieEntiere, range1 } from '../../lib/outils/nombres'
+import { nombreDeChiffresDansLaPartieEntiere } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { listeDesDiviseurs } from '../../lib/outils/primalite'
 import { context } from '../../modules/context'

@@ -1,6 +1,5 @@
-import { choice, combinaisonListes, enleveElement } from '../../lib/outils/arrayOutils'
+import { choice, combinaisonListes, enleveElement, range } from '../../lib/outils/arrayOutils'
 import { ecritureParentheseSiNegatif } from '../../lib/outils/ecritures'
-import { range } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
 import { context } from '../../modules/context'

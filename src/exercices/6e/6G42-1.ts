@@ -1,7 +1,6 @@
-import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
+import {choice, combinaisonListes, rangeMinMax} from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
-import { rangeMinMax } from '../../lib/outils/nombres'
 import { numAlpha } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
 import { context } from '../../modules/context'

@@ -1,10 +1,9 @@
-import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import { combinaisonListes, range1 } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import Exercice from '../Exercice'
 import { listeQuestionsToContenu } from '../../modules/outils'
 import { context } from '../../modules/context'
 import { propositionsQcm } from '../../lib/interactif/qcm'
-import { range1 } from '../../lib/outils/nombres'
 
 export const titre = 'Compléter une phrase par la définition ou une propriété d\'un parallélogramme'
 export const interactifReady = true

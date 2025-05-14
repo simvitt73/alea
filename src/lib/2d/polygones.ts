@@ -2,7 +2,7 @@ import earcut from 'earcut'
 import { colorToLatexOrHTML, ObjetMathalea2D, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { randint } from '../../modules/outils'
-import { arrondi, rangeMinMax } from '../outils/nombres'
+import { arrondi } from '../outils/nombres'
 import { Point, point, pointAdistance, pointSurSegment } from './points'
 import { longueur, segment, Vecteur, vecteur } from './segmentsVecteurs'
 import { Latex2d, LatexParCoordonnees, latexParCoordonnees, TexteParPoint, texteParPoint, texteParPosition } from './textes'
@@ -11,6 +11,7 @@ import { aireTriangle } from './triangle'
 import { lettreDepuisChiffre } from '../outils/outilString'
 import { codageSegments } from './codages'
 import { codageAngleDroit } from './angles'
+import {rangeMinMax} from "../outils/arrayOutils";
 
 type BinomeXY = { x: number, y: number }
 type BinomesXY = BinomeXY[]

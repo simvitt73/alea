@@ -1,12 +1,11 @@
 import {
-  choice,
-  combinaisonListes,
-  combinaisonListes2,
-  enleveElement,
-  enleveElementNo
+    choice,
+    combinaisonListes,
+    combinaisonListes2,
+    enleveElement,
+    enleveElementNo, range, rangeMinMax
 } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { range, rangeMinMax } from '../../lib/outils/nombres'
 import { numAlpha } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import { context } from '../../modules/context'

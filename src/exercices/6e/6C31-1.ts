@@ -1,8 +1,6 @@
-import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
+import {choice, combinaisonListes, range1, rangeMinMax} from '../../lib/outils/arrayOutils'
 import {
-  arrondi,
-  range1,
-  rangeMinMax
+  arrondi
 } from '../../lib/outils/nombres'
 import { texNombre, texPrix } from '../../lib/outils/texNombre'
 import { context } from '../../modules/context'

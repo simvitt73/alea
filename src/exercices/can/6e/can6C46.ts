@@ -1,6 +1,5 @@
-import { choice } from '../../../lib/outils/arrayOutils'
+import {choice, rangeMinMax} from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { rangeMinMax } from '../../../lib/outils/nombres'
 import { prenomF, prenomM } from '../../../lib/outils/Personne'
 import { mathalea2d } from '../../../modules/2dGeneralites'
 import { context } from '../../../modules/context'//

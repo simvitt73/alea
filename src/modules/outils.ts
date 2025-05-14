@@ -4,10 +4,10 @@ import {
   combinaisonListes,
   combinaisonListesSansChangerOrdre,
   compteOccurences,
-  enleveDoublonNum
+  enleveDoublonNum, rangeMinMax
 } from '../lib/outils/arrayOutils'
 import { texMulticols } from '../lib/format/miseEnPage'
-import { arrondi, rangeMinMax } from '../lib/outils/nombres'
+import { arrondi } from '../lib/outils/nombres'
 import { context } from './context'
 import Decimal from 'decimal.js'
 import type Exercice from '../exercices/Exercice'

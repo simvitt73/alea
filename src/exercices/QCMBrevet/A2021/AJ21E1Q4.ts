@@ -1,6 +1,5 @@
-import { choice } from '../../../lib/outils/arrayOutils'
+import {choice, rangeMinMax} from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { rangeMinMax } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { nombreElementsDifferents } from '../../ExerciceQcm'
 import ExerciceQcmA from '../../ExerciceQcmA'

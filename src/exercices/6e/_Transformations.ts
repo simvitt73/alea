@@ -6,15 +6,15 @@ import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { labelLatexPoint, latexParCoordonnees, texteParPositionEchelle } from '../../lib/2d/textes'
 import { translation } from '../../lib/2d/transformations'
 import {
-  choice,
-  combinaisonListes,
-  compteOccurences,
-  enleveElementBis,
-  enleveElementNo
+    choice,
+    combinaisonListes,
+    compteOccurences,
+    enleveElementBis,
+    enleveElementNo, rangeMinMax
 } from '../../lib/outils/arrayOutils'
 import { miseEnCouleur, miseEnEvidence } from '../../lib/outils/embellissements'
 import { texFractionReduite } from '../../lib/outils/deprecatedFractions'
-import { arrondi, rangeMinMax } from '../../lib/outils/nombres'
+import { arrondi } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre, numAlpha } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import { imagePointParTransformation, type TransformationsIndex } from '../../modules/imagePointParTransformation'

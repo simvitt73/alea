@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
-import { rangeMinMax } from '../../src/lib/outils/nombres'
 import { interpolationDeLagrange } from '../../src/lib/mathFonctions/outilsMaths'
 import { randint } from '../../src/modules/outils'
+import {rangeMinMax} from "../../src/lib/outils/arrayOutils";
 
 test('Interpolation de Lagrange', () => {
   const x: number[] = rangeMinMax(randint(-4, -2), randint(1, 3))

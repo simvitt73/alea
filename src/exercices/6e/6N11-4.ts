@@ -1,7 +1,7 @@
 import {
-  combinaisonListes,
-  enleveDoublonNum,
-  shuffle
+    combinaisonListes,
+    enleveDoublonNum, range1,
+    shuffle
 } from '../../lib/outils/arrayOutils'
 import {
   miseEnEvidence,
@@ -18,7 +18,7 @@ import {
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
-import { arrondi, range1 } from '../../lib/outils/nombres'
+import { arrondi } from '../../lib/outils/nombres'
 import { bleuMathalea } from '../../lib/colors'
 import { numAlpha } from '../../lib/outils/outilString'
 import FractionEtendue from '../../modules/FractionEtendue'

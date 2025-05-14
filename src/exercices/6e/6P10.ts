@@ -1,6 +1,5 @@
-import { combinaisonListes, compteOccurences } from '../../lib/outils/arrayOutils'
+import {combinaisonListes, compteOccurences, range} from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { range } from '../../lib/outils/nombres'
 import { sp } from '../../lib/outils/outilString'
 import { prenomF, prenomM } from '../../lib/outils/Personne'
 import { texPrix } from '../../lib/format/style'

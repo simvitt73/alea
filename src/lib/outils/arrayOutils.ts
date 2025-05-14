@@ -444,3 +444,67 @@ export function getRandomSubarray<T> (arr: T[], size: number): T[] {
   // Return the last 'size' elements after shuffling
   return shuffled.slice(min)
 }
+
+/**
+ * Retourne une liste des entiers de 0 à max sans appartenir à une liste donnée
+ * @param {number} max
+ * @param {number[]} listeAEviter
+ *
+ * @example
+ * // Renvoie [0,1,4,5,6,7,8,9,10]
+ * range(10,[2,3])
+ *
+ * @author Rémi Angot
+ */
+export function range (max: number = 10, listeAEviter: number[] = []) {
+  // Créer un tableau avec toutes les valeurs de 0 à max sauf celle de la liste à éviter
+  const liste = [...Array(max + 1).keys()]
+  for (let i = 0; i < listeAEviter.length; i++) {
+    enleveElement(liste, listeAEviter[i])
+  }
+  return liste
+}
+
+/**
+ * Retourne une liste entre 2 bornes sans appartenir à une liste donnée (par défaut des entiers, mais on peut changer le pas)
+ * @param {number} min
+ * @param {number} max
+ * @param {number[]} listeAEviter
+ * @param {number} step
+ * @example
+ * // Renvoie [6,7,10]
+ * rangeMinMax(6,10,[8,9])
+ *
+ * @author Rémi Angot
+ */
+export function rangeMinMax (min: number, max: number, listeAEviter: number | number[] = [], step = 1) {
+  // Créer un tableau avec toutes les valeurs de 0 à max sauf celle de la liste à éviter
+  const liste = []
+  for (let i = min; i <= max; i = i + step) {
+    liste.push(i)
+  }
+  if (typeof listeAEviter === 'number') listeAEviter = [listeAEviter]
+  for (let i = 0; i < listeAEviter.length; i++) {
+    enleveElement(liste, listeAEviter[i])
+  }
+  return liste
+}
+
+/**
+ * Créé un tableau avec toutes les valeurs de 1 à max sauf celle de la liste à éviter
+ *
+ *
+ * @param {number} max
+ * @param {number[]} listeAEviter valeurs à éviter
+ * @author Rémi Angot
+ */
+export function range1 (max: number = 10, listeAEviter: number[] = []) {
+  const liste = []
+  for (let i = 1; i <= max; i++) {
+    liste.push(i)
+  }
+  for (let i = 0; i < listeAEviter.length; i++) {
+    enleveElement(liste, listeAEviter[i])
+  }
+  return liste
+}

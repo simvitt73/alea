@@ -1,4 +1,4 @@
-import FractionEtendue from '../../modules/FractionEtendue'
+import type FractionEtendue from '../../modules/FractionEtendue'
 
 export const epsilon = 0.000001
 
@@ -14,8 +14,8 @@ export const epsilon = 0.000001
  */
 export function egal (a: number | FractionEtendue, b: number | FractionEtendue, tolerance = epsilon) {
   tolerance = tolerance === 0 ? 1e-10 : tolerance
-  if (a instanceof FractionEtendue) a = a.valeurDecimale
-  if (b instanceof FractionEtendue) b = b.valeurDecimale
+  if (!(typeof a === 'number')) a = a.valeurDecimale
+  if (!(typeof b === 'number')) b = b.valeurDecimale
   return (Math.abs(a - b) <= tolerance)
 }
 

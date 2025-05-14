@@ -1,7 +1,6 @@
 import { glisseNombre } from '../../lib/2d/GlisseNombre'
-import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
+import {choice, combinaisonListes, range, rangeMinMax} from '../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteGras } from '../../lib/outils/embellissements'
-import { range, rangeMinMax } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'

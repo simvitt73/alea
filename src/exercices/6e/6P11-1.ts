@@ -1,10 +1,9 @@
-import { choice, combinaisonListes, shuffle2tableaux } from '../../lib/outils/arrayOutils'
+import {choice, combinaisonListes, rangeMinMax, shuffle2tableaux} from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import {
   arrondi,
   nombreDeChiffresDansLaPartieDecimale,
-  nombreDeChiffresDe,
-  rangeMinMax
+  nombreDeChiffresDe
 } from '../../lib/outils/nombres'
 import { numAlpha, sp } from '../../lib/outils/outilString'
 import { prenom } from '../../lib/outils/Personne'

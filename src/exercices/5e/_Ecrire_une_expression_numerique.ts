@@ -7,8 +7,7 @@ import { context } from '../../modules/context'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
-import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { range } from '../../lib/outils/nombres'
+import { combinaisonListes, range } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
 
 export const interactifReady = true

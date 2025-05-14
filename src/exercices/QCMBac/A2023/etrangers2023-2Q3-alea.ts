@@ -1,6 +1,5 @@
 // import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { choice } from '../../../lib/outils/arrayOutils'
-import { rangeMinMax } from '../../../lib/outils/nombres'
+import {choice, rangeMinMax} from '../../../lib/outils/arrayOutils'
 import { randint } from '../../../modules/outils'
 import { nombreElementsDifferents } from '../../ExerciceQcm'
 import ExerciceQcmA from '../../ExerciceQcmA'

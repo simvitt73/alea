@@ -1,6 +1,5 @@
-import { choice, compteOccurences, enleveDoublonNum } from '../../lib/outils/arrayOutils'
+import { choice, compteOccurences, enleveDoublonNum, range1 } from '../../lib/outils/arrayOutils'
 import { lampeMessage } from '../../lib/format/message'
-import { range1 } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
 import { contraindreValeur, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'

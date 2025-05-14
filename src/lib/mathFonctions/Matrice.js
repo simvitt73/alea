@@ -1,5 +1,6 @@
 import { create, all } from 'mathjs'
-import { rangeMinMax } from '../outils/nombres'
+
+import {rangeMinMax} from "../outils/arrayOutils.js";
 const config = {
   epsilon: 1e-12,
   matrix: 'Array',

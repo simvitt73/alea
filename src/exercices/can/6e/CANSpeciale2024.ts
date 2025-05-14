@@ -1,6 +1,6 @@
-import { choice, combinaisonListes, shuffle } from '../../../lib/outils/arrayOutils'
+import {choice, combinaisonListes, range, shuffle} from '../../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, rienSi1, reduirePolynomeDegre3, ecritureParentheseSiNegatif, reduireAxPlusB } from '../../../lib/outils/ecritures'
-import { arrondi, abs, range } from '../../../lib/outils/nombres'
+import { arrondi, abs } from '../../../lib/outils/nombres'
 import { codageSegments } from '../../../lib/2d/codages'
 import { codageAngleDroit } from '../../../lib/2d/angles'
 import { milieu, point } from '../../../lib/2d/points'

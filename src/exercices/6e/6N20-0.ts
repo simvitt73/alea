@@ -4,12 +4,12 @@ import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { fractionCliquable } from '../../modules/2dinteractif'
-import { rangeMinMax } from '../../lib/outils/nombres'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { getDynamicFractionDiagram } from './6N20-2'
 import figureApigeom from '../../lib/figureApigeom'
+import {rangeMinMax} from "../../lib/outils/arrayOutils";
 
 export const titre = 'Écrire un nombre entier sous la forme d\'une fraction'
 export const interactifReady = true

@@ -1,7 +1,6 @@
-import { choice } from '../../lib/outils/arrayOutils'
+import { choice, range1 } from '../../lib/outils/arrayOutils'
 import { texFractionFromString } from '../../lib/outils/deprecatedFractions'
 import { reduirePolynomeDegre3 } from '../../lib/outils/ecritures'
-import { range1 } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
 import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'

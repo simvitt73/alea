@@ -1,6 +1,5 @@
-import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import {combinaisonListes, range} from '../../lib/outils/arrayOutils'
 import { texFractionFromString, simplificationDeFractionAvecEtapes } from '../../lib/outils/deprecatedFractions'
-import { range } from '../../lib/outils/nombres'
 import { numAlpha, sp } from '../../lib/outils/outilString'
 import { Personne } from '../../lib/outils/Personne'
 import Exercice from '../Exercice'

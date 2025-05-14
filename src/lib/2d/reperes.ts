@@ -1,6 +1,6 @@
 import { colorToLatexOrHTML, fixeBordures, ObjetMathalea2D } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { arrondi, rangeMinMax } from '../outils/nombres'
+import { arrondi } from '../outils/nombres'
 import { nombreAvecEspace, stringNombre } from '../outils/texNombre'
 import { Plot, plot, point, tracePoint } from './points'
 import { segment } from './segmentsVecteurs'
@@ -10,6 +10,7 @@ import {
   texteParPoint,
   texteParPosition
 } from './textes'
+import {rangeMinMax} from "../outils/arrayOutils";
 
 /**  Trace un axe gradué
  * @param {Object} parametres À saisir entre accolades

@@ -1,5 +1,4 @@
-import { choice, combinaisonListes, compteOccurences } from '../../lib/outils/arrayOutils'
-import { rangeMinMax } from '../../lib/outils/nombres'
+import {choice, combinaisonListes, compteOccurences, rangeMinMax} from '../../lib/outils/arrayOutils'
 import { texNombre } from '../../lib/outils/texNombre'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
