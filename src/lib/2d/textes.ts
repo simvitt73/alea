@@ -5,7 +5,7 @@ import { stringNombre } from '../outils/texNombre'
 import { point, Point, pointSimpleVersPoint } from './points'
 import { Point3d } from '../../modules/3d'
 import { Polygone } from './polygones'
-import { PointSimple } from './points-simples'
+import { PointAbstrait } from './points-abstraits'
 
 export type AncrageDeRotationType = 'gauche' | 'milieu' | 'droite'
 export const tikzAncrages = {
@@ -23,7 +23,7 @@ export const svgAncrages = {
  * @param {number} [distance=1.5] Taille de l'angle
  * @param {string} [label=''] Si vide, alors affiche la mesure de l'angle sinon affiche ce label.
  * @param {Object} parametres À saisir entre accolades
- * @param {PointSimple|PointSimple[]} [parametres.points = []] Point ou tableau de points
+ * @param {PointAbstrait|PointAbstrait[]} [parametres.points = []] Point ou tableau de points
  * @param {string} [parametres.color = 'black'] Couleur du label : du type 'blue' ou du type '#f15929'
  * @param {number} [parametres.taille = 8] Taille du label
  * @param {number} [parametres.largeur = 10] Largeur en pixels du label à des fins de centrage
@@ -228,7 +228,7 @@ export class TexteParPoint extends ObjetMathalea2D {
   contour: boolean
   taille: number
 
-  constructor (texte: string, A: PointSimple, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: AncrageDeRotationType = 'milieu', mathOn: boolean = false, opacite: number = 1) {
+  constructor (texte: string, A: PointAbstrait, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: AncrageDeRotationType = 'milieu', mathOn: boolean = false, opacite: number = 1) {
     super()
     if (typeof orientation !== 'number') {
       if (orientation === 'milieu' || typeof orientation === 'string') {
@@ -342,9 +342,9 @@ export class TexteParPoint extends ObjetMathalea2D {
  * Si le texte commence et finit par des $ la chaine est traitée par latexParPoint
  * @author Rémi Angot rectifié par Jean-Claude Lhote
  */
-export function texteParPoint (texte: string, A: PointSimple | PointSimple, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: 'milieu' | 'droite' | 'gauche' = 'milieu', mathOn: boolean = false, opacite: number = 1) {
-  let point: PointSimple
-  if (A instanceof PointSimple) {
+export function texteParPoint (texte: string, A: PointAbstrait | PointAbstrait, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: 'milieu' | 'droite' | 'gauche' = 'milieu', mathOn: boolean = false, opacite: number = 1) {
+  let point: PointAbstrait
+  if (A instanceof PointAbstrait) {
     point = pointSimpleVersPoint(A)
   } else {
     point = A
@@ -367,7 +367,7 @@ export class TexteParPointEchelle extends ObjetMathalea2D {
   opaciteDeRemplissage!: number
   bordures: [number, number, number, number]
   taille: number
-  constructor (texte: string, A: PointSimple, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: AncrageDeRotationType = 'milieu', mathOn: boolean = false, scaleFigure: number) {
+  constructor (texte: string, A: PointAbstrait, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: AncrageDeRotationType = 'milieu', mathOn: boolean = false, scaleFigure: number) {
     super()
     if (typeof orientation !== 'number') {
       if (orientation === 'milieu' || typeof orientation === 'string') {
@@ -417,7 +417,7 @@ export class TexteParPointEchelle extends ObjetMathalea2D {
       }) node[anchor = ${tikzAncrages[this.ancrageDeRotation]}, rotate = ${String(-this.orientation)}, scale=${(this.scale * this.scaleFigure * 1.25).toFixed(2)}] {${copyThistexte}};`
   }
 }
-export function texteParPointEchelle (texte: string, A: PointSimple, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: 'milieu' | 'droite' | 'gauche' = 'milieu', mathOn: boolean = false, scaleFigure: number = 1): TexteParPointEchelle {
+export function texteParPointEchelle (texte: string, A: PointAbstrait, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: 'milieu' | 'droite' | 'gauche' = 'milieu', mathOn: boolean = false, scaleFigure: number = 1): TexteParPointEchelle {
   return new TexteParPointEchelle(texte, A, orientation, color, scale, ancrageDeRotation, mathOn, scaleFigure)
 }
 

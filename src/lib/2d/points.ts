@@ -10,7 +10,7 @@ import { Cercle, cercle } from './cercle'
 import { droite, Droite, droiteParPointEtPerpendiculaire, Mediatrice } from './droites'
 import { carre, Polygone, polygone } from './polygones'
 import { homothetie, rotation, similitude } from './transformations'
-import { PointSimple } from './points-simples'
+import { PointAbstrait } from './points-abstraits'
 import { DemiDroite, Segment, segment } from './segments'
 import { longueur } from './mesures'
 import { vecteurAbstrait } from './vecteurs-abstraits'
@@ -177,7 +177,7 @@ export function point (x: number, y: number, A = '', positionLabel = 'above') {
   return new Point(x, y, A, positionLabel)
 }
 
-export function pointSimpleVersPoint (A: PointSimple) {
+export function pointSimpleVersPoint (A: PointAbstrait) {
   if (A instanceof Point) return A
   return new Point(A.x, A.y)
 }
@@ -535,7 +535,7 @@ export function traceMilieuSegment (A: Point, B: Point) {
  * @returns {Point} Milieu du segment [AB]
  * @author Rémi Angot
  */
-export function milieu (A: PointSimple, B: PointSimple, nom = '', positionLabel = 'above'): Point {
+export function milieu (A: PointAbstrait, B: PointAbstrait, nom = '', positionLabel = 'above'): Point {
   if (isNaN(longueur(A, B))) window.notify('milieu : Quelque chose ne va pas avec les points', { A, B })
   const x = (A.x + B.x) / 2
   const y = (A.y + B.y) / 2
@@ -552,7 +552,7 @@ export function milieu (A: PointSimple, B: PointSimple, nom = '', positionLabel 
  * Sécurité ajoutée par Jean-Claude Lhote : si AB=0, alors on retourne A
  * @author Rémi Angot
  */
-export function pointSurSegment<T extends PointSimple | Point > (A: T, B: T, l?: number, nom = '', positionLabel = 'above'): T {
+export function pointSurSegment<T extends PointAbstrait | Point > (A: T, B: T, l?: number, nom = '', positionLabel = 'above'): T {
   if (isNaN(longueur(A, B))) window.notify('pointSurSegment : Quelque chose ne va pas avec les points', { A, B })
   if (longueur(A, B) === 0) return A
   if (l === undefined || typeof l === 'string') {
@@ -625,7 +625,7 @@ export function pointIntersectionDD (d: Droite | Mediatrice, f: Droite, nom = ''
  * @example p=pointAdistance(A,5,'M') // Place un point aléatoirement à 5 unités de A et lui donne le nom de 'M'.
  * @author Jean-Claude Lhote
  */
-export function pointAdistance (A: PointSimple, d: number = 1, angle:string | number = 0, nom = '', positionLabel = 'above'): Point {
+export function pointAdistance (A: PointAbstrait, d: number = 1, angle:string | number = 0, nom = '', positionLabel = 'above'): Point {
   let leNom = ''
   let lAngle = 0
   let lePositionLabel = 'above'

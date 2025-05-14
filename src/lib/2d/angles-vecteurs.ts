@@ -1,15 +1,15 @@
 import { egal } from '../outils/comparaisons'
 import { arrondi, unSiPositifMoinsUnSinon } from '../outils/nombres'
-import type { PointSimple } from './points-simples'
+import type { PointAbstrait } from './points-abstraits'
 import { rotation } from './transformations'
 import { vecteurAbstrait } from './vecteurs-abstraits'
 import { longueur } from './mesures'
 
 /**
  * Renvoie la mesure d'angle en degré
- * @param {PointSimple} A Point sur un côté de l'angle
- * @param {PointSimple} O Sommet de l'angle
- * @param {PointSimple} B Point sur l'autre côté de l'angle
+ * @param {PointAbstrait} A Point sur un côté de l'angle
+ * @param {PointAbstrait} O Sommet de l'angle
+ * @param {PointAbstrait} B Point sur l'autre côté de l'angle
  * @param {number} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle
  * @example x = angle(H,E,T)
  * // x contient la mesure en degré de l'angle HET, arrondi au centième
@@ -19,7 +19,7 @@ import { longueur } from './mesures'
  * @author Rémi Angot
  */
 // JSDOC Validee par EE Juin 2022
-export function angle (A: PointSimple, O: PointSimple, B: PointSimple, precision = 2) {
+export function angle (A: PointAbstrait, O: PointAbstrait, B: PointAbstrait, precision = 2) {
   const OA = longueur(O, A, precision)
   const OB = longueur(O, B, precision)
   const AB = longueur(A, B, precision)
@@ -46,9 +46,9 @@ export function angle (A: PointSimple, O: PointSimple, B: PointSimple, precision
 
 /**
  * Retourne la valeur signée de la mesure d'un angle en degré
- * @param {PointSimple} A Point sur un côté de l'angle
- * @param {PointSimple} O Sommet de l'angle
- * @param {PointSimple} B Point sur l'autre côté de l'angle
+ * @param {PointAbstrait} A Point sur un côté de l'angle
+ * @param {PointAbstrait} O Sommet de l'angle
+ * @param {PointAbstrait} B Point sur l'autre côté de l'angle
  * @param {number} [precision = 2] Nombre maximal de décimales de la valeur arrondie de la mesure de l'angle orienté
  * @example x = angleOriente(H,E,T)
  * // x contient la valeur de la mesure de l'angle orienté HET, arrondie au centième
@@ -58,7 +58,7 @@ export function angle (A: PointSimple, O: PointSimple, B: PointSimple, precision
  * @author Jean-Claude Lhote
  */
 // JSDOC Validee par EE Juin 2022
-export function angleOriente (A: PointSimple, O: PointSimple, B: PointSimple, precision = 2) {
+export function angleOriente (A: PointAbstrait, O: PointAbstrait, B: PointAbstrait, precision = 2) {
   const OA = longueur(O, A, precision)
   const OB = longueur(O, B, precision)
   if (OA < 1e-12 || OB < 1e-12) { // On considère qu'un côté de l'angle a une longueur nulle, et ce n'est pas normal !

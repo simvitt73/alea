@@ -1,5 +1,5 @@
 import FractionEtendue from '../../modules/FractionEtendue'
-import { PointSimple } from './points-simples'
+import { PointAbstrait } from './points-abstraits'
 
 /**
  * Vecteur sans toute la partie représentation graphique / 2d à privilégier dans le moteur pour limiter les dépendances circulaires.
@@ -10,7 +10,7 @@ export class VecteurAbstrait {
   x: number
   y: number
 
-  constructor (arg1: FractionEtendue | number | PointSimple | string, arg2: FractionEtendue | number | PointSimple, nom = '') {
+  constructor (arg1: FractionEtendue | number | PointAbstrait | string, arg2: FractionEtendue | number | PointAbstrait, nom = '') {
     if (arguments.length === 1) {
       this.nom = String(arg1)
       this.x = 0
@@ -20,7 +20,7 @@ export class VecteurAbstrait {
         this.x = arg1 instanceof FractionEtendue ? arg1.valeurDecimale : Number(arg1)
         this.y = arg2 instanceof FractionEtendue ? arg2.valeurDecimale : Number(arg2)
       } else {
-        if ((arg1 instanceof PointSimple) && (arg2 instanceof PointSimple)) {
+        if ((arg1 instanceof PointAbstrait) && (arg2 instanceof PointAbstrait)) {
           this.x = arg2.x - arg1.x
           this.y = arg2.y - arg1.y
         } else {
@@ -62,7 +62,7 @@ export class VecteurAbstrait {
  * @example v = vecteur(x,y,'v') // son nom et ses composantes.
  * @author Jean-Claude Lhote et Rémi Angot
  */
-export function vecteurAbstrait (arg1: FractionEtendue | number | PointSimple | string, arg2: FractionEtendue | number | PointSimple, nom = '') {
+export function vecteurAbstrait (arg1: FractionEtendue | number | PointAbstrait | string, arg2: FractionEtendue | number | PointAbstrait, nom = '') {
   return new VecteurAbstrait(arg1, arg2, nom)
 }
 

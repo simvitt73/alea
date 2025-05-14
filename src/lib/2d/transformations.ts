@@ -6,7 +6,7 @@ import { Point, point } from './points'
 import { Polygone, polygone } from './polygones'
 import { Vecteur } from './vecteurs'
 import { arc } from './arc'
-import { PointSimple } from './points-simples'
+import { PointAbstrait } from './points-abstraits'
 import { Segment, segment } from './segments'
 import { vecteurAbstrait } from './vecteurs-abstraits'
 
@@ -21,8 +21,8 @@ import { vecteurAbstrait } from './vecteurs-abstraits'
  * @param {string} [color='black'] Code couleur HTML acceptée
  * @author Rémi Angot
  */
-export function translation<T extends PointSimple | Point | Droite | Segment | Polygone | Vecteur> (O: T, v: PointSimple, nom = '', positionLabel = 'above', color = 'black'): T {
-  if (O instanceof PointSimple) {
+export function translation<T extends PointAbstrait | Point | Droite | Segment | Polygone | Vecteur> (O: T, v: PointAbstrait, nom = '', positionLabel = 'above', color = 'black'): T {
+  if (O instanceof PointAbstrait) {
     const x = O.x + v.x
     const y = O.y + v.y
     return point(x, y, nom, positionLabel) as T
@@ -58,7 +58,7 @@ export function translation<T extends PointSimple | Point | Droite | Segment | P
  * @author Rémi Angot
  */
 
-export function translation2Points<T extends PointSimple | Point | Droite | Segment | Polygone | Vecteur> (O: T, A: Point, B: Point, nom = '', positionLabel = 'above', color = 'black'): T {
+export function translation2Points<T extends PointAbstrait | Point | Droite | Segment | Polygone | Vecteur> (O: T, A: Point, B: Point, nom = '', positionLabel = 'above', color = 'black'): T {
   if (O instanceof Point) {
     const x = O.x + B.x - A.x
     const y = O.y + B.y - A.y
@@ -97,7 +97,7 @@ export function translation2Points<T extends PointSimple | Point | Droite | Segm
  * @return L'image de A par la rotation de centre O et d'angle angle
  * @author Rémi Angot et Jean-Claude Lhote
  */
-export function rotation<T extends PointSimple | Point | Droite | Segment | Polygone | Vecteur> (A: T, O: PointSimple, angle: number, nom = '', positionLabel = 'above', color = 'black'):T {
+export function rotation<T extends PointAbstrait | Point | Droite | Segment | Polygone | Vecteur> (A: T, O: PointAbstrait, angle: number, nom = '', positionLabel = 'above', color = 'black'):T {
   if (A instanceof Point) {
     const x = O.x +
       (A.x - O.x) * Math.cos((angle * Math.PI) / 180) -
@@ -196,8 +196,8 @@ export function sensDeRotation (A:Point, O:Point, sens:1 | -1, color = 'black') 
  * @author Rémi Angot
  * @return {Point|Segment|Droite|Polygone|Vecteur}
  */
-export function homothetie<T extends PointSimple | Point | Droite | Segment | Polygone | Vecteur> (Objet:T, O: PointSimple | Point, k: number, nom = '', positionLabel = 'above', color = 'black'):T {
-  if (Objet instanceof PointSimple || Objet instanceof Point) {
+export function homothetie<T extends PointAbstrait | Point | Droite | Segment | Polygone | Vecteur> (Objet:T, O: PointAbstrait | Point, k: number, nom = '', positionLabel = 'above', color = 'black'):T {
+  if (Objet instanceof PointAbstrait || Objet instanceof Point) {
     const x = O.x + k * (Objet.x - O.x)
     const y = O.y + k * (Objet.y - O.y)
     return new Point(x, y, nom, positionLabel) as T
@@ -238,7 +238,7 @@ export function homothetie<T extends PointSimple | Point | Droite | Segment | Po
  * @param {string} [color='black'] Code couleur HTML acceptée
  * @author Jean-Claude Lhote
  */
-export function symetrieAxiale<T extends PointSimple | Point | Droite | Segment | Polygone | Vecteur> (A:T, d:Droite | Mediatrice, nom = '', positionLabel = 'above', color = 'black'):T {
+export function symetrieAxiale<T extends PointAbstrait | Point | Droite | Segment | Polygone | Vecteur> (A:T, d:Droite | Mediatrice, nom = '', positionLabel = 'above', color = 'black'):T {
   let x, y
   const a = d.a
   const b = d.b
@@ -337,7 +337,7 @@ export function projectionOrtho<T extends Point | Vecteur> (M:T, d: Droite, nom 
  * @return {Point|Segment|Droite|Polygone|Vecteur} Retourne un objet du même type que le paramètre objet de la fonction
  */
 // JSDOC Validee par EE Juin 2022
-export function affiniteOrtho<T extends PointSimple | Point | Droite | Segment | Polygone | Vecteur> (A: T, d: Droite, k: number, nom = '', positionLabel = 'above', color = 'black'):T {
+export function affiniteOrtho<T extends PointAbstrait | Point | Droite | Segment | Polygone | Vecteur> (A: T, d: Droite, k: number, nom = '', positionLabel = 'above', color = 'black'):T {
   const a = d.a
   const b = d.b
   const c = d.c
@@ -394,7 +394,7 @@ export function affiniteOrtho<T extends PointSimple | Point | Droite | Segment |
  * M = similitude(B,O,30,1.1,'M') // Le point M est l'image de B dans la similitude de centre O d'angle 30° et de rapport 1.1
  * @author Jean-Claude Lhote
  */
-export function similitude<T extends PointSimple | Point | Droite | Segment | Polygone | Vecteur> (A:T, O:PointSimple, a:number, k:number, nom = '', positionLabel = 'above', color = 'black'): T {
+export function similitude<T extends PointAbstrait | Point | Droite | Segment | Polygone | Vecteur> (A:T, O:PointAbstrait, a:number, k:number, nom = '', positionLabel = 'above', color = 'black'): T {
   if (A instanceof Point) {
     const ra = degToRad(a)
     const x = O.x + k * (Math.cos(ra) * (A.x - O.x) - Math.sin(ra) * (A.y - O.y))

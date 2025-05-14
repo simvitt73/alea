@@ -5,7 +5,7 @@ import { Point, pointSurSegment } from './points'
 import { polygone, polyline } from './polygones'
 import { homothetie, rotation } from './transformations'
 import { arc } from './arc'
-import type { PointSimple } from './points-simples'
+import type { PointAbstrait } from './points-abstraits'
 import { angleOriente } from './angles-vecteurs'
 
 export type MarkType = 'simple' | 'double' | 'triple' | 'gras' | 'double-gras' | 'gras-simple-gras' | 'simple-gras-simple' | 'pointilles' | 'double-pointilles' | 'mixte-simple-pointilles' | 'mixte-gras-pointilles'
@@ -23,7 +23,7 @@ export const markTypeArray: MarkType[] = [
   'mixte-gras-pointilles'
 ]
 export class MarqueAngle extends ObjetMathalea2D {
-  constructor (start: PointSimple, sommet: PointSimple, end: PointSimple, {
+  constructor (start: PointAbstrait, sommet: PointAbstrait, end: PointAbstrait, {
     mark = 'simple',
     color = 'black',
     rayon = 1
@@ -182,7 +182,7 @@ export class MarqueAngle extends ObjetMathalea2D {
   }
 }
 
-export function marqueAngle (start: PointSimple, sommet: PointSimple, end: PointSimple, {
+export function marqueAngle (start: PointAbstrait, sommet: PointAbstrait, end: PointAbstrait, {
   mark = 'simple',
   color = 'black',
   rayon = 1
@@ -196,9 +196,9 @@ export function marqueAngle (start: PointSimple, sommet: PointSimple, end: Point
 
 /**
  * Code un angle droit
- * @param {PointSimple} A Point sur un côté de l'angle droit
- * @param {PointSimple} O Sommet de l'angle droit
- * @param {PointSimple} B Point sur l'autre côté de l'angle droit
+ * @param {PointAbstrait} A Point sur un côté de l'angle droit
+ * @param {PointAbstrait} O Sommet de l'angle droit
+ * @param {PointAbstrait} B Point sur l'autre côté de l'angle droit
  * @param {string} [color='black'] Couleur du codage : du type 'blue' ou du type '#f15929'
  * @param {number} [d=0.4] Taille du codage de l'angle droit
  * @param {number} [epaisseur=0.5] Epaisseur du trait
@@ -317,9 +317,9 @@ export class CodageAngleDroit extends ObjetMathalea2D {
 
 /**
  * Code un angle droit
- * @param {PointSimple} A Point sur un côté de l'angle droit
- * @param {PointSimple} O Sommet de l'angle droit
- * @param {PointSimple} B Point sur l'autre côté de l'angle droit
+ * @param {PointAbstrait} A Point sur un côté de l'angle droit
+ * @param {PointAbstrait} O Sommet de l'angle droit
+ * @param {PointAbstrait} B Point sur l'autre côté de l'angle droit
  * @param {string} [color='black'] Couleur du codage : du type 'blue' ou du type '#f15929'
  * @param {number} [d=0.4] Taille du codage de l'angle droit
  * @param {number} [epaisseur=0.5] Epaisseur du trait
@@ -340,9 +340,9 @@ export function codageAngleDroit (A: Point, O: Point, B: Point, color = 'black',
 
 /**
  * Code un angle
- * @param {PointSimple} A Point sur un côté de l'angle
- * @param {PointSimple} O Sommet de l'angle
- * @param {number|PointSimple} angle Mesure de l'angle ou nom d'un point sur l'autre côté de l'angle
+ * @param {PointAbstrait} A Point sur un côté de l'angle
+ * @param {PointAbstrait} O Sommet de l'angle
+ * @param {number|PointAbstrait} angle Mesure de l'angle ou nom d'un point sur l'autre côté de l'angle
  * @param {number} [taille=0.8] Taille de l'angle
  * @param {string} [mark=''] Marque sur l'angle
  * @param {string} [color='black'] Couleur de l'angle : du type 'blue' ou du type '#f15929'

@@ -3,7 +3,7 @@ import FractionEtendue from '../../modules/FractionEtendue'
 import { milieu, point, Point } from './points'
 import { latex2d, texteParPosition } from './textes'
 import { rotation, similitude, translation } from './transformations'
-import { PointSimple } from './points-simples'
+import { PointAbstrait } from './points-abstraits'
 import { segment } from './segments'
 import { VecteurAbstrait } from './vecteurs-abstraits'
 
@@ -49,7 +49,7 @@ export class Vecteur extends VecteurAbstrait {
  * @example v = vecteur(x,y,'v') // son nom et ses composantes.
  * @author Jean-Claude Lhote et Rémi Angot
  */
-export function vecteur (arg1: FractionEtendue | number | PointSimple | string, arg2: FractionEtendue | number | PointSimple, nom = '') {
+export function vecteur (arg1: FractionEtendue | number | PointAbstrait | string, arg2: FractionEtendue | number | PointAbstrait, nom = '') {
   return new Vecteur(arg1, arg2, nom)
 }
 

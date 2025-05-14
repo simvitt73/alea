@@ -6,15 +6,15 @@ import { degToRad } from '../mathFonctions/trigo'
 import MainLevee from './MainLevee'
 import { arrondi } from '../outils/nombres'
 import { droite, Droite, mediatrice } from './droites'
-import { pointSimple, type PointSimple } from './points-simples'
+import { pointAbstrait, type PointAbstrait } from './points-abstraits'
 import {angleOriente} from "./angles-vecteurs";
 
 import {longueur} from "./mesures";
 
 /** Trace un arc de cercle, connaissant une extrémité, son centre et la mesure de l'angle
- * @param {PointSimple} M Extrémité de départ de l'arc
- * @param {PointSimple} Omega Centre de l'arc
- * @param {number|PointSimple} angle Mesure de l'angle compris entre -360 et 360 (valeur négative = sens indirect) ou bien point formant un angle avec M et Omega.
+ * @param {PointAbstrait} M Extrémité de départ de l'arc
+ * @param {PointAbstrait} Omega Centre de l'arc
+ * @param {number|PointAbstrait} angle Mesure de l'angle compris entre -360 et 360 (valeur négative = sens indirect) ou bien point formant un angle avec M et Omega.
  * @param {boolean} [rayon = false] Si true, les rayons délimitant l'arc sont ajoutés.
  * @param {string} [couleurDeRemplissage = 'none'] Couleur ou 'none' : du type 'blue' ou du type '#f15929'
  * @param {string} [color = 'black'] Couleur de l'arc ou 'none' : du type 'blue' ou du type '#f15929'
@@ -50,14 +50,14 @@ export class Arc extends ObjetMathalea2D {
   rayon: number
   angleFin: number
   azimut: number
-  pointDepart: PointSimple
-  centre: PointSimple
-  pointFinal: PointSimple
+  pointDepart: PointAbstrait
+  centre: PointAbstrait
+  pointFinal: PointAbstrait
 
   constructor (
-    M: PointSimple,
-    omega: PointSimple,
-    angle: PointSimple | number,
+    M: PointAbstrait,
+    omega: PointAbstrait,
+    angle: PointAbstrait | number,
     rayons = false,
     couleurDeRemplissage = 'none',
     color = 'black',
@@ -89,7 +89,7 @@ export class Arc extends ObjetMathalea2D {
       medY.push(rotation(M, omega, (ee * this.angle) / 10).y)
     }
     this.rayon = longueur(omega, M, 2)
-    const A = pointSimple(omega.x + 1, omega.y)
+    const A = pointAbstrait(omega.x + 1, omega.y)
     this.azimut = angleOriente(A, omega, M)
     this.angleFin = this.azimut + this.angle
     const angleSVG = angleModulo(this.angle)
@@ -277,7 +277,7 @@ export class Arc extends ObjetMathalea2D {
     const width = longueur(this.pointDepart, this.centre, 2) * coeff * 2
     const height = width
     const closed = this.rayons
-    const A = pointSimple(this.centre.x + 1, this.centre.y)
+    const A = pointAbstrait(this.centre.x + 1, this.centre.y)
     const end = degToRad(angleOriente(this.pointDepart, this.centre, A))
     const start = end - degToRad(this.angle)
     const mainLevee = MainLevee.create()
@@ -319,8 +319,8 @@ export class Arc extends ObjetMathalea2D {
 }
 
 /** Trace un arc de cercle, connaissant une extrémité, son centre et la mesure de l'angle
- * @param {PointSimple} M Extrémité de départ de l'arc
- * @param {PointSimple} Omega Centre de l'arc
+ * @param {PointAbstrait} M Extrémité de départ de l'arc
+ * @param {PointAbstrait} Omega Centre de l'arc
  * @param {number} angle Mesure de l'angle compris entre -360 et 360 (valeur négative = sens indirect)
  * @param {boolean} [rayon = false] Booléen. Si true, les rayons délimitant l'arc sont ajoutés.
  * @param {string} [couleurDeRemplissage = 'none'] Couleur ou 'none' : du type 'blue' ou du type '#f15929'
@@ -336,9 +336,9 @@ export class Arc extends ObjetMathalea2D {
  */
 // JSDOC Validee par EE Juin 2022
 export function arc (
-  M: PointSimple,
-  Omega: PointSimple,
-  angle: PointSimple | number,
+  M: PointAbstrait,
+  Omega: PointAbstrait,
+  angle: PointAbstrait | number,
   rayon = false,
   couleurDeRemplissage = 'none',
   color = 'black',
@@ -358,8 +358,8 @@ export function arc (
 }
 
 /** Trace un arc de cercle, connaissant deux extrémités et la mesure de l'angle
- * @param {PointSimple} M Première extrémité de l'arc
- * @param {PointSimple} N Deuxième extrémité de l'arc
+ * @param {PointAbstrait} M Première extrémité de l'arc
+ * @param {PointAbstrait} N Deuxième extrémité de l'arc
  * @param {number} angle Mesure de l'angle compris entre -360 et 360 (valeur négative = sens indirect)
  * @param {boolean} [rayon = false] Booléen. Si true, les rayons délimitant l'arc sont ajoutés.
  * @param {boolean|'none'} [couleurDeRemplissage = 'none'] Couleur ou 'none' : du type 'blue' ou du type '#f15929'
@@ -375,8 +375,8 @@ export function arc (
  */
 // JSDOC Validee par EE Juin 2022
 export function arcPointPointAngle (
-  M: PointSimple,
-  N: PointSimple,
+  M: PointAbstrait,
+  N: PointAbstrait,
   angle: number,
   rayon = false,
   couleurDeRemplissage = 'none',
@@ -393,7 +393,7 @@ export function arcPointPointAngle (
   const determinant = d.a * f.b - f.a * d.b
   const Omegax = (d.b * f.c - f.b * d.c) / determinant
   const Omegay = (f.a * d.c - d.a * f.c) / determinant
-  const Omega = pointSimple(Omegax, Omegay)
+  const Omega = pointAbstrait(Omegax, Omegay)
   return new Arc(
     M,
     Omega,
@@ -411,8 +411,8 @@ export function arcPointPointAngle (
  *@author Jean-Claude Lhote
  */
 export function traceCompas (
-  O: PointSimple,
-  A: PointSimple,
+  O: PointAbstrait,
+  A: PointAbstrait,
   angle = 20,
   color = 'gray',
   opacite = 1.1,

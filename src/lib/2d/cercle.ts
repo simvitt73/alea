@@ -1,13 +1,13 @@
 import { colorToLatexOrHTML, ObjetMathalea2D } from '../../modules/2dGeneralites'
 import { pattern } from './polygones'
 import MainLevee from './MainLevee'
-import type { PointSimple } from './points-simples'
+import type { PointAbstrait } from './points-abstraits'
 
 import {longueur} from "./mesures";
 
 /**
  * Construit le cercle (ou le disque) de centre O, de rayon r
- * @param {PointSimple} O Centre du cercle
+ * @param {PointAbstrait} O Centre du cercle
  * @param {number} r Rayon du cercle
  * @param {string} [color = 'black'] Couleur du cercle ou 'none' : du type 'blue' ou du type '#f15929'
  * @param {string} [couleurDeRemplissage = 'none'] Couleur de remplissage ou 'none' : du type 'blue' ou du type '#f15929'
@@ -40,7 +40,7 @@ import {longueur} from "./mesures";
  */
 // JSDOC Validee par EE Juin 2022
 export class Cercle extends ObjetMathalea2D {
-  centre: PointSimple
+  centre: PointAbstrait
   rayon: number
   couleurDeRemplissage: string[]
   opaciteDeRemplissage: number
@@ -50,7 +50,7 @@ export class Cercle extends ObjetMathalea2D {
   distanceDesHachures: number
 
   constructor (
-    O: PointSimple,
+    O: PointAbstrait,
     r: number,
     color = 'black',
     couleurDeRemplissage = 'none',
@@ -229,7 +229,7 @@ export class Cercle extends ObjetMathalea2D {
 
 /**
  * Construit le cercle (ou le disque) de centre O, de rayon r
- * @param {PointSimple} O Centre du cercle
+ * @param {PointAbstrait} O Centre du cercle
  * @param {number} r Rayon du cercle
  * @param {string} [color = 'black'] Couleur du cercle ou 'none' : du type 'blue' ou du type '#f15929'
  * @param {string} [couleurDeRemplissage = 'none'] Couleur de remplissage ou 'none' : du type 'blue' ou du type '#f15929'
@@ -251,7 +251,7 @@ export class Cercle extends ObjetMathalea2D {
  */
 // JSDOC Validee par EE Juin 2022
 export function cercle (
-  O: PointSimple,
+  O: PointAbstrait,
   r: number,
   color = 'black',
   couleurDeRemplissage = 'none',
@@ -280,8 +280,8 @@ export function cercle (
 
 /**
  * Construit le cercle (ou le disque) de centre O, passant par M
- * @param {PointSimple} O Centre du cercle
- * @param {PointSimple} M Point du cercle
+ * @param {PointAbstrait} O Centre du cercle
+ * @param {PointAbstrait} M Point du cercle
  * @param {string} [color = 'black'] Couleur du cercle ou 'none' : du type 'blue' ou du type '#f15929'
  * @param {string} [couleurDeRemplissage = 'none'] Couleur de remplissage ou 'none' : du type 'blue' ou du type '#f15929'
  * @param {string} [couleurDesHachures = 'none'] Couleur des hachures ou 'none' : du type 'blue' ou du type '#f15929' Si 'none' ou '', pas de hachures.
@@ -302,8 +302,8 @@ export function cercle (
  */
 // JSDOC Validee par EE Juin 2022
 export function cercleCentrePoint (
-  O: PointSimple,
-  M: PointSimple,
+  O: PointAbstrait,
+  M: PointAbstrait,
   color = 'black',
   couleurDeRemplissage = 'none',
   couleurDesHachures = 'none',

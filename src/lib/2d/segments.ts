@@ -1,6 +1,6 @@
 import { point, Point, pointIntersectionDD, pointIntersectionLC, pointSurSegment } from './points'
 import { colorToLatexOrHTML, ObjetMathalea2D } from '../../modules/2dGeneralites'
-import { PointSimple } from './points-simples'
+import { PointAbstrait } from './points-abstraits'
 import { arrondi } from '../outils/nombres'
 import { angleOriente } from './angles-vecteurs'
 import MainLevee from './MainLevee'
@@ -56,7 +56,7 @@ export class Segment extends ObjetMathalea2D {
       }
     } else if (arguments.length === 4) {
       if (typeof arg3 !== 'number') {
-        if ((arg1 instanceof PointSimple) && (arg2 instanceof PointSimple)) {
+        if ((arg1 instanceof PointAbstrait) && (arg2 instanceof PointAbstrait)) {
           this.x1 = arg1.x
           this.y1 = arg1.y
           this.x2 = arg2.x

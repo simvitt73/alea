@@ -6,7 +6,7 @@ import { arrondi } from '../outils/nombres'
  * À utiliser pour les valeurs intermédiaires utilisées par le moteur (lorsqu'une fonction destinée à des développeurs d'exercices renvoie un point, renvoyer un Point avec toutes les options, pas un PointSimple).
  * @author Guillaume Valmont
  */
-export class PointSimple {
+export class PointAbstrait {
   x: number
   y: number
 
@@ -31,8 +31,8 @@ export class PointSimple {
  * @param {number} y ordonnée
  * @param {string} [A] son nom qui apparaîtra
  * @param {string} [positionLabel] Les possibilités sont : 'left', 'right', 'below', 'above', 'above right', 'above left', 'below right', 'below left'. Si on se trompe dans l'orthographe, ce sera 'above left' et si on ne précise rien, pour un point ce sera 'above'.
- * @return {PointSimple}
+ * @return {PointAbstrait}
  */
-export function pointSimple (x: number, y: number) {
-  return new PointSimple(x, y)
+export function pointAbstrait (x: number, y: number) {
+  return new PointAbstrait(x, y)
 }
