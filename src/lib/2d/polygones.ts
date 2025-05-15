@@ -440,30 +440,31 @@ export class Polygone extends ObjetMathalea2D {
       tableauOptions.push(`preaction={fill,color = ${this.couleurDeRemplissage[1]}${this.opaciteDeRemplissage !== 1 ? ', opacity = ' + this.opaciteDeRemplissage : ''}}`)
     }
 
-    if (this.hachures) {
-      tableauOptions.push(pattern({
-        motif: String(this.hachures),
-        id: String(this.id),
-        distanceDesHachures: this.distanceDesHachures,
-        couleurDesHachures: this.couleurDesHachures[1] ?? 'black',
-        couleurDeRemplissage: this.couleurDeRemplissage[1],
-        opaciteDeRemplissage: this.opaciteDeRemplissage
-      }))
-    }
     let optionsDraw = ''
     if (tableauOptions.length > 0) {
       optionsDraw = '[' + tableauOptions.join(',') + ']'
     }
 
     let binomeXY = ''
+
     for (const point of this.listePoints) {
       binomeXY += `(${arrondi(point.x)},${arrondi(point.y)})--`
     }
-    // if (this.couleurDeRemplissage === '') {
-    return `\\draw${optionsDraw} ${binomeXY}cycle;`
-    // } else {
-    //  return `\\filldraw ${optionsDraw} ${binomeXY}cycle;`
-    // }
+    let lines = `\\draw${optionsDraw} ${binomeXY}cycle;`
+
+    if (this.hachures != null && typeof this.hachures === 'string') {
+      lines += patternTikZ({
+        motif: this.hachures,
+        x0: this.listePoints[0].x,
+        y0: this.listePoints[0].y,
+        x1: this.listePoints[2].x,
+        y1: this.listePoints[2].y,
+        distanceDesHachures: this.distanceDesHachures / 10,
+        couleurDesHachures: this.couleurDesHachures[1] === '' ? 'black' : this.couleurDesHachures[1],
+      })
+    }
+
+    return lines
   }
 
   svgml (coeff: number, amp: number) {
@@ -1029,6 +1030,218 @@ export function motifs (index: number) {
     default:
       return 'north east lines'
   }
+}
+
+/**
+ * Génère du code TikZ pour dessiner un motif de hachures personnalisé dans un rectangle.
+ *
+ * @param params - Objet contenant les paramètres de dessin.
+ * @param params.x0 - Coordonnée x du coin inférieur gauche.
+ * @param params.y0 - Coordonnée y du coin inférieur gauche.
+ * @param params.x1 - Coordonnée x du coin supérieur droit.
+ * @param params.y1 - Coordonnée y du coin supérieur droit.
+ * @param params.distanceDesHachures - Espacement entre les éléments du motif (hachures, points...).
+ * @param params.couleurDesHachures - Couleur utilisée pour dessiner le motif.
+ * @param params.motif - Type de motif à dessiner. Valeurs possibles :
+ *   - "north east lines" : lignes diagonales à 45°
+ *   - "horizontal lines" : hachures horizontales
+ *   - "vertical lines" : hachures verticales
+ *   - "dots" : points réguliers (taille fixe ~0.05cm)
+ *   - "crosshatch" : superposition de hachures horizontales et verticales
+ *   - "grid" : identique à "crosshatch"
+ *   - "checkerboard" : damier avec des carrés de côté `distanceDesHachures`
+ *   - "crosshatch dots" : grille de points superposée à un quadrillage
+ *   - "fivepointed stars" : étoiles à 5 branches disposées en grille.
+ *       → Modifier `minimum size` dans le code pour ajuster la taille des étoiles (par défaut : 5pt)
+ *   - "sixpointed stars" : étoiles à 6 branches, même principe que ci-dessus.
+ *       → Modifier `minimum size` ou `star point ratio` pour ajuster style/taille
+ *   - "bricks" : motif de briques horizontales décalées.
+ *       → La largeur est `2 × distanceDesHachures` et la hauteur est `distanceDesHachures`
+ *       → Pour des briques plus grandes, augmenter `distanceDesHachures`
+ *
+ * @author Eric Elter
+ * @returns Une chaîne contenant le code TikZ généré, ou une chaîne vide si le motif est inconnu.
+ */
+export function patternTikZ (params: {
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+  distanceDesHachures: number;
+  couleurDesHachures: string;
+  motif: string;
+}): string {
+  const {
+    x0,
+    y0,
+    x1,
+    y1,
+    distanceDesHachures,
+    couleurDesHachures,
+    motif
+  } = params
+
+  const lignes: string[] = []
+  const hauteur = y1 - y0
+
+  lignes.push('\\begin{scope}')
+  lignes.push(`\\clip (${x0},${y0}) rectangle (${x1},${y1});`)
+
+  switch (motif) {
+    case 'horizontal lines': {
+      for (let y = y0; y <= y1; y += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x0},${y.toFixed(2)}) -- (${x1},${y.toFixed(2)});`
+        )
+      }
+      break
+    }
+
+    case 'vertical lines': {
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x.toFixed(2)},${y0}) -- (${x.toFixed(2)},${y1});`
+        )
+      }
+      break
+    }
+
+    case 'dots': {
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        for (let y = y0; y <= y1; y += distanceDesHachures) {
+          lignes.push(
+            `\\fill[${couleurDesHachures}] (${x.toFixed(2)},${y.toFixed(2)}) circle (0.05);`
+          )
+        }
+      }
+      break
+    }
+
+    case 'crosshatch': {
+      // Combine horizontal + vertical
+      for (let y = y0; y <= y1; y += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x0},${y.toFixed(2)}) -- (${x1},${y.toFixed(2)});`
+        )
+      }
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x.toFixed(2)},${y0}) -- (${x.toFixed(2)},${y1});`
+        )
+      }
+      break
+    }
+
+    case 'grid': {
+      // Quadrillage = idem crosshatch
+      for (let y = y0; y <= y1; y += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x0},${y.toFixed(2)}) -- (${x1},${y.toFixed(2)});`
+        )
+      }
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x.toFixed(2)},${y0}) -- (${x.toFixed(2)},${y1});`
+        )
+      }
+      break
+    }
+
+    case 'checkerboard': {
+      const side = distanceDesHachures
+      let toggle = false
+      for (let y = y0; y < y1; y += side) {
+        toggle = !toggle
+        for (let x = x0 + (toggle ? 0 : side); x < x1; x += 2 * side) {
+          lignes.push(
+            `\\fill[${couleurDesHachures}] (${x.toFixed(2)},${y.toFixed(2)}) rectangle (${(x + side).toFixed(2)},${(y + side).toFixed(2)});`
+          )
+        }
+      }
+      break
+    }
+
+    case 'fivepointed stars': {
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        for (let y = y0; y <= y1; y += distanceDesHachures) {
+          lignes.push(
+            `\\node[star,star points=5,star point ratio=2.25,fill=${couleurDesHachures},inner sep=0pt,minimum size=5pt] at (${x.toFixed(2)},${y.toFixed(2)}) {};`
+          )
+        }
+      }
+      break
+    }
+
+    case 'sixpointed stars': {
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        for (let y = y0; y <= y1; y += distanceDesHachures) {
+          lignes.push(
+            `\\node[star,star points=6,star point ratio=2.25,fill=${couleurDesHachures},inner sep=0pt,minimum size=5pt] at (${x.toFixed(2)},${y.toFixed(2)}) {};`
+          )
+        }
+      }
+      break
+    }
+
+    case 'crosshatch dots': {
+      // Grille de points
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        for (let y = y0; y <= y1; y += distanceDesHachures) {
+          lignes.push(
+            `\\fill[${couleurDesHachures}] (${x.toFixed(2)},${y.toFixed(2)}) circle (0.05);`
+          )
+        }
+      }
+      // Hachures horizontales
+      for (let y = y0; y <= y1; y += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x0},${y.toFixed(2)}) -- (${x1},${y.toFixed(2)});`
+        )
+      }
+      // Hachures verticales
+      for (let x = x0; x <= x1; x += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x.toFixed(2)},${y0}) -- (${x.toFixed(2)},${y1});`
+        )
+      }
+      break
+    }
+
+    case 'bricks': {
+      const brickWidth = distanceDesHachures * 2
+      const brickHeight = distanceDesHachures
+      for (let y = y0; y < y1; y += brickHeight) {
+        const isOddRow = Math.floor((y - y0) / brickHeight) % 2 === 1
+        const xStart = isOddRow ? x0 - brickWidth / 2 : x0
+        for (let x = xStart; x < x1; x += brickWidth) {
+          const xLeft = Math.max(x, x0)
+          const xRight = Math.min(x + brickWidth, x1)
+          const yTop = Math.min(y + brickHeight, y1)
+          if (xRight > x0 && xLeft < x1) {
+            lignes.push(
+              `\\draw(${xLeft.toFixed(2)},${y.toFixed(2)}) rectangle (${xRight.toFixed(2)},${yTop.toFixed(2)});`
+            )
+          }
+        }
+      }
+      break
+    }
+
+    case 'north east lines':
+    default : {
+      const xmin = x0 - hauteur
+      const xmax = x1 + hauteur
+      for (let x = xmin; x <= xmax; x += distanceDesHachures) {
+        lignes.push(
+          `\\draw[${couleurDesHachures}] (${x.toFixed(2)},${y0}) -- ++(${hauteur},${hauteur});`
+        )
+      }
+      break
+    }
+  }
+
+  lignes.push('\\end{scope};')
+  return lignes.join('\n')
 }
 
 /**
