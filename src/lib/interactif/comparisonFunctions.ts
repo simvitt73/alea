@@ -905,8 +905,9 @@ function comparaisonFraction (
       return { isOk: false, feedback: 'Résultat incorrect car une fraction décimale est attendue.' } // Sous-entendu : Et pas une autre fraction qu'irréductible
     }
     if (fractionIrreductible) {
-      if ((saisieNativeParsed.operator === 'Divide' || saisieNativeParsed.operator === 'Rational') && (
-        saisieNativeParsed.engine.box(['GCD', saisieNativeParsed.op1, saisieNativeParsed.op2]).value === 1)) {
+      if (((saisieNativeParsed.operator === 'Divide' || saisieNativeParsed.operator === 'Rational') && (
+        saisieNativeParsed.engine.box(['GCD', saisieNativeParsed.op1, saisieNativeParsed.op2]).value === 1)) ||
+      saisieNativeParsed.canonical.isInteger) {
         return { isOk: true }
       }
       return { isOk: false, feedback: 'Résultat incorrect car une fraction irréductible est attendue.' } // Sous-entendu : Et pas une autre fraction qu'irréductible
