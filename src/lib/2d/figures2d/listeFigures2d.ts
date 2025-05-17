@@ -11,6 +11,7 @@ import { briqueLego } from './legos'
 import { aileDelta, cerfVolant, coeur, croissantDeLune, croixRouge, etoile4Branches, etoile5Branches, ferACheval, hexagoneNonRegulier, losange, ogive, pacman, parallelogramme, pentagoneRegulier, rectangle, trapezeIsocele, triangleEquilateral, triangleIsocele, triangleQuelconque1 } from './geometrie'
 import { randint } from '../../../modules/outils'
 import { lettreA, lettreB, lettreC, lettreD, lettreE, lettreF, lettreG, lettreH, lettreI, lettreJ, lettreK, lettreL, lettreM, lettreN, lettreO, lettreP, lettreQ, lettreR, lettreS, lettreT, lettreU, lettreV, lettreW, lettreX, lettreY, lettreZ } from './lettres'
+import { chiffreDigital, nombre13, nombre25, nombre26, nombre30, nombre38, nombre42, nombre52, nombre73, nombre75, nombre80, nombre88, nombre96 } from './chiffres'
 /**
  * @description formes utilisées dans l'exercice 6G25-4 notzmment
  * @author Jean-Claude Lhote
@@ -647,6 +648,149 @@ export const listeFigures2d: Forme[] = [
     type: 'lettre',
     figure2d: lettreZ
   },
+  // chiffres
+  {
+    numero: 97,
+    name: 'chiffre 0',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 0 }
+  },
+  {
+    numero: 98,
+    name: 'chiffre 1',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 1 }
+  },
+  {
+    numero: 99,
+    name: 'chiffre 2',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 2 }
+  },
+  {
+    numero: 100,
+    name: 'chiffre 3',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 3 }
+  },
+  {
+    numero: 101,
+    name: 'chiffre 4',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 4 }
+  },
+  {
+    numero: 102,
+    name: 'chiffre 5',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 5 }
+  },
+  {
+    numero: 103,
+    name: 'chiffre 6',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 6 }
+  },
+  {
+    numero: 104,
+    name: 'chiffre 7',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 7 }
+  },
+  {
+    numero: 105,
+    name: 'chiffre 8',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 8 }
+  },
+  {
+    numero: 106,
+    name: 'chiffre 9',
+    type: 'chiffre',
+    figure2d: chiffreDigital,
+    options: { chiffre: 9 }
+  },
+  {
+    numero: 107,
+    name: 'quatre-vingt-huit',
+    type: 'chiffre',
+    figure2d: nombre88
+  },
+  {
+    numero: 108,
+    name: 'trente-huit',
+    type: 'chiffre',
+    figure2d: nombre38
+  },
+  {
+    numero: 109,
+    name: 'trente',
+    type: 'chiffre',
+    figure2d: nombre30
+  },
+  {
+    numero: 110,
+    name: 'vingt-cinq',
+    type: 'chiffre',
+    figure2d: nombre25
+  },
+  {
+    numero: 111,
+    name: 'soixante-quinze',
+    type: 'chiffre',
+    figure2d: nombre75
+  },
+  {
+    numero: 112,
+    name: 'treize',
+    type: 'chiffre',
+    figure2d: nombre13
+  },
+  {
+    numero: 113,
+    name: 'cinquante-deux',
+    type: 'chiffre',
+    figure2d: nombre52
+  },
+  {
+    numero: 114,
+    name: 'soixante-treize',
+    type: 'chiffre',
+    figure2d: nombre73
+  },
+  {
+    numero: 115,
+    name: 'vingt-six',
+    type: 'chiffre',
+    figure2d: nombre26
+  },
+  {
+    numero: 116,
+    name: 'quarante-deux',
+    type: 'chiffre',
+    figure2d: nombre42
+  },
+  {
+    numero: 117,
+    name: 'quatre-vingt-seize',
+    type: 'chiffre',
+    figure2d: nombre96
+  },
+  {
+    numero: 118,
+    name: 'quatre-vingt',
+    type: 'chiffre',
+    figure2d: nombre80
+  }
 ]
 export type Figure2DOptions = {
   fillStyle?: string
@@ -672,6 +816,7 @@ export type Figure2DOptions = {
   coinsArrondis?: boolean
   opacite?: number
   name?: string
+  chiffre?: number
 }
 export type Forme = {
   numero: number
