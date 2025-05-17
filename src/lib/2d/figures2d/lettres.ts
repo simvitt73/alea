@@ -50,17 +50,17 @@ export function lettreA (
     `(${-largeur / 2},${-hauteur / 2})`, // Bas gauche
     `(0,${hauteur / 2})`, // Sommet
     `(${largeur / 2},${-hauteur / 2})`, // Bas droit
-    `(${largeur * 3 / 8},${-hauteur / 2})`, // Intérieur bas droit
-    `(0,${hauteur / 4})`, // Intérieur milieu
-    `(${-largeur * 3 / 8},${-hauteur / 2})`, // Intérieur bas gauche
+    `(${largeur * 7 / 16},${-hauteur / 2})`, // Intérieur bas droit
+    `(0,${hauteur / 3})`, // Intérieur milieu
+    `(${-largeur * 7 / 16},${-hauteur / 2})`, // Intérieur bas gauche
   ].join(' -- ')
 
   // Génération du code TikZ
   const codeTikz = `
     % Lettre A
-   \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners]
+   \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt, , rounded corners, line cap=round]
         ${tikzPoints} -- cycle;
-    \\draw[draw=${strokeStyle}, line width=${lineWidth * 5}pt, rounded corners]
+    \\draw[draw=${strokeStyle}, line width=${lineWidth * 1.5}pt,, rounded corners, line cap=round]
         (${-largeur / 4},${-hauteur / 5}) -- (${largeur / 4},${-hauteur / 5});
   `.trim()
   const axes = [
@@ -120,7 +120,7 @@ export function lettreB (
   // Génération du code TikZ
   const codeTikz = `
             % Lettre B
-            \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+            \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
                     (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
                     -- (0,${hauteur / 2})
                     arc[start angle=90, end angle=-90, radius=${rayon / 20}cm]
@@ -184,7 +184,7 @@ export function lettreC (
   // Génération du code TikZ
   const codeTikz = `
                             % Lettre C
-                            \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+                            \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
                                             (${largeur / 3},${hauteur / 2})
                                             -- (0,${hauteur / 2})
                                             arc[start angle=90, end angle=270, x radius=${rayon * 3 / 80}cm, y radius=${rayon / 20}cm]
@@ -245,7 +245,7 @@ export function lettreD (
     // Génération du code TikZ
   const codeTikz = `
                 % Lettre D
-                \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+                \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
                         (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
                         -- (0,${hauteur / 2})
                         arc[start angle=90, end angle=-90, x radius=${largeur / 2}cm, y radius=${rayon / 20}cm]
@@ -307,10 +307,10 @@ export function lettreE (
   // Génération du code TikZ
   const codeTikz = `
                 % Lettre E
-                \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+                \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
                         (${(largeur / 2)},${hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
                         -- (${-largeur / 2},${-hauteur / 2}) -- (${largeur / 2},${-hauteur / 2});
-                \\draw[draw=${strokeStyle}, line width=${lineWidth}pt]
+                \\draw[draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
                         (${(-largeur / 2)},0) -- (${largeur / 4},0);
         `.trim()
 
@@ -346,7 +346,7 @@ export function lettreF (
   const strokeStyle = options?.strokeStyle || 'black'
   const lineWidth = options?.lineWidth || 8
   const largeur = options?.largeur || 2.5 // en cm
-  const hauteur = options?.hauteur || 3.6 // en cm
+  const hauteur = options?.hauteur || 3.8 // en cm
   const opacite = options?.opacite || 1
 
   // Conversion des dimensions en pixels (20 pixels par cm)
@@ -367,10 +367,10 @@ export function lettreF (
   // Génération du code TikZ
   const codeTikz = `
                     % Lettre F
-                    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+                    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
                                     (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
                                     -- (${largeur / 2},${hauteur / 2});
-                    \\draw[draw=${strokeStyle}, line width=${lineWidth}pt]
+                    \\draw[draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
                                     (${(-largeur / 2)},0) -- (${largeur / 4},0);
     `.trim()
 
@@ -422,10 +422,12 @@ export function lettreG (
 
   // Génération du code TikZ
   const codeTikz = `
-                                    % Lettre G
-                                    \\node[anchor=center, scale=10, text=${strokeStyle}, font=\\sffamily] at (0,0) {G};
-                    `.trim()
-
+          % Lettre G
+          \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+            (${(largeur / 2)},${hauteur / 3 - offsetY / 10})
+            arc[start angle=60, end angle=360, x radius=${rayon / 20}cm, y radius=${rayon / 20}cm]
+            -- (${largeur / 4},${-offsetY / 10});
+        `.trim()
   const figure = new Figure2D({
     codeSvg,
     codeTikz,
@@ -476,12 +478,12 @@ export function lettreH (
   // Génération du code TikZ
   const codeTikz = `
         % Lettre H
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
-            (${(-largeur * 0.4)},${-hauteur / 2}) -- (${(-largeur * 0.4)},${hauteur / 2});
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
-            (${(largeur * 0.4)},${-hauteur / 2}) -- (${(largeur * 0.4)},${hauteur / 2});
-        \\draw[draw=${strokeStyle}, line width=${lineWidth}pt]
-            (${(-largeur * 0.4)},0) -- (${(largeur * 0.4)},0);
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+            (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2});
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+            (${largeur / 2},${-hauteur / 2}) -- (${largeur / 2},${hauteur / 2});
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+            (${(-largeur / 2)},0) -- (${largeur / 2},0);
     `.trim()
 
   const axes = [
@@ -540,11 +542,11 @@ export function lettreI (
   // Génération du code TikZ
   const codeTikz = `
         % Lettre I
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (${(-largeur / 2)},${hauteur / 2}) -- (${(largeur / 2)},${hauteur / 2});
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (0,${hauteur / 2}) -- (0,${-hauteur / 2});
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (${(-largeur / 2)},${-hauteur / 2}) -- (${(largeur / 2)},${-hauteur / 2});
     `.trim()
 
@@ -602,7 +604,7 @@ export function lettreJ (
   // Génération du code TikZ
   const codeTikz = `
         % Lettre J
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (${(-largeur / 2)},${-hauteur / 2 + largeur / 2})
             arc[start angle=-180, end angle=0, radius=${rayon / 20}cm]
             -- (${largeur / 2},${hauteur / 2});
@@ -657,12 +659,12 @@ export function lettreK (
   // Génération du code TikZ
   const codeTikz = `
         % Lettre K
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2});
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
-            (${(-largeur * 0.4)},0) -- (${(largeur / 2)},${hauteur * 0.45});
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
-            (${(-largeur * 0.4)},0) -- (${(largeur / 2)},${-hauteur * 0.45});
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+            (${(-largeur * 0.4)},0) -- (${(largeur * 0.4)},${hauteur * 0.5});
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+            (${(-largeur * 0.4)},0) -- (${(largeur * 0.4)},${-hauteur * 0.5});
     `.trim()
 
   const axes = [
@@ -716,7 +718,7 @@ export function lettreL (
   // Génération du code TikZ
   const codeTikz = `
         % Lettre L
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (${(-largeur / 2)},${hauteur / 2}) -- (${(-largeur / 2)},${-hauteur / 2})
             -- (${(largeur / 2)},${-hauteur / 2});
     `.trim()
@@ -769,7 +771,7 @@ export function lettreM (
   // Génération du code TikZ
   const codeTikz = `
         % Lettre M
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
             -- (0,${hauteur / 4}) -- (${(largeur / 2)},${hauteur / 2})
             -- (${(largeur / 2)},${-hauteur / 2});
@@ -828,7 +830,7 @@ export function lettreN (
   // Génération du code TikZ
   const codeTikz = `
         % Lettre N
-        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+        \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
             (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
             -- (${(largeur / 2)},${-hauteur / 2}) -- (${(largeur / 2)},${hauteur / 2});
     `.trim()
@@ -945,7 +947,7 @@ export function lettreP (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre P
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
       -- (0,${hauteur / 2})
       arc[start angle=90, end angle=-90, radius=${rayon / 20}cm]
@@ -1011,9 +1013,9 @@ export function lettreQ (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre Q
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (0,0) ellipse [x radius=${largeur / 2}cm, y radius=${hauteur / 2}cm];
-    \\draw[draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[draw=${strokeStyle}, line width=${lineWidth}pt, line cap=round]
       (${largeur / 4},${-hauteur / 4}) -- (${largeur / 2},${-hauteur / 2});
   `.trim()
 
@@ -1068,7 +1070,7 @@ export function lettreR (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre R
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2})
       -- (0,${hauteur / 2})
       arc[start angle=90, end angle=-90, radius=${rayon / 20}cm]
@@ -1124,9 +1126,9 @@ export function lettreT (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre T
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${hauteur / 2}) -- (${(largeur / 2)},${hauteur / 2});
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (0,${hauteur / 2}) -- (0,${-hauteur / 2});
   `.trim()
 
@@ -1183,10 +1185,10 @@ export function lettreU (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre U
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
-      (${(-largeur / 2)},${-hauteur / 2}) -- (${(-largeur / 2)},${hauteur / 2 - largeur / 2})
-      arc[start angle=180, end angle=0, radius=${rayon / 20}cm]
-      -- (${(largeur / 2)},${-hauteur / 2});
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+      (${(-largeur / 2)},${hauteur / 2}) -- (${(-largeur / 2)},${-hauteur / 2 + largeur / 2})
+      arc[start angle=-180, end angle=0, radius=${rayon / 20}cm]
+      -- (${(largeur / 2)},${hauteur / 2});
   `.trim()
 
   const axes = [
@@ -1240,7 +1242,7 @@ export function lettreV (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre V
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${hauteur / 2}) -- (0,${-hauteur / 2}) -- (${(largeur / 2)},${hauteur / 2});
   `.trim()
 
@@ -1297,7 +1299,7 @@ export function lettreW (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre W
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${hauteur / 2}) -- (${(-largeur / 4)},${-hauteur / 2})
       -- (0,${hauteur / 4}) -- (${(largeur / 4)},${-hauteur / 2})
       -- (${(largeur / 2)},${hauteur / 2});
@@ -1355,9 +1357,9 @@ export function lettreX (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre X
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${hauteur / 2}) -- (${(largeur / 2)},${-hauteur / 2});
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${-hauteur / 2}) -- (${(largeur / 2)},${hauteur / 2});
   `.trim()
 
@@ -1416,9 +1418,9 @@ export function lettreY (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre Y
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (${(-largeur / 2)},${hauteur / 2}) -- (0,0) -- (${(largeur / 2)},${hauteur / 2});
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
       (0,0) -- (0,${-hauteur / 2});
   `.trim()
 
@@ -1474,9 +1476,9 @@ export function lettreZ (
   // Génération du code TikZ
   const codeTikz = `
     % Lettre Z
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
-      (${(-largeur * 0.4)},${hauteur * 0.4}) -- (${(largeur * 0.4)},${hauteur * 0.4})
-      -- (${(-largeur * 0.4)},${-hauteur * 0.4}) -- (${(largeur * 0.4)},${-hauteur * 0.4});
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners, line cap=round]
+      (${(-largeur * 0.4)},${hauteur * 0.5}) -- (${(largeur * 0.4)},${hauteur * 0.5})
+      -- (${(-largeur * 0.4)},${-hauteur * 0.5}) -- (${(largeur * 0.4)},${-hauteur * 0.5});
   `.trim()
 
   return new Figure2D({
@@ -1527,14 +1529,21 @@ export function lettreS (
       A ${rayon},${rayon * 0.8} 0 0,1 ${-largeurPx / 2},${hauteurPx / 4}
     " fill="none" stroke="${strokeStyle}" stroke-width="${lineWidth}" stroke-linecap="round" stroke-linejoin="round" />
   `.trim()
+  // Adaptation du code TikZ pour correspondre au SVG
+  // Le SVG dessine la lettre S avec une succession d'arcs alternés, on adapte donc le TikZ :
+  // On part du haut à droite, on fait un arc vers le haut gauche, puis vers le bas gauche, puis vers le centre, puis vers le bas droite, puis vers le bas centre, puis vers le bas gauche.
+  // Les rayons sont adaptés pour correspondre à ceux du SVG.
 
   // Génération du code TikZ
   const codeTikz = `
     % Lettre S
-    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt]
-      (${largeur / 2},${hauteur / 4}) arc[start angle=0, end angle=180, radius=${rayon / 20}cm]
-      -- (${(-largeur / 2)},${-hauteur / 4}) arc[start angle=180, end angle=0, radius=${rayon / 20}cm]
-      -- (${(largeur / 2)},${-hauteur / 2 + largeur / 2}) arc[start angle=0, end angle=180, radius=${rayon / 20}cm];
+    \\draw[fill=none, draw=${strokeStyle}, line width=${lineWidth}pt, line cap=round]
+      (${largeur / 2},${hauteur / 4}) arc[start angle=0, end angle=90, x radius=${rayon / 20}cm, y radius=${hauteur / 4}cm]
+       arc[start angle=90, end angle=180, x radius=${rayon / 20}cm, y radius=${hauteur / 4}cm]
+       arc[start angle=180, end angle=270, x radius=${rayon / 20}cm, y radius=${hauteur / 4}cm]
+       arc[start angle=90, end angle=0, x radius=${rayon / 20}cm, y radius=${hauteur / 4}cm]
+       arc[start angle=0, end angle=-90, x radius=${rayon / 20}cm, y radius=${hauteur / 4}cm]
+       arc[start angle=-90, end angle=-180, x radius=${rayon / 20}cm, y radius=${hauteur / 4}cm];
   `.trim()
 
   return new Figure2D({

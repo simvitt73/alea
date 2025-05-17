@@ -115,7 +115,9 @@ export class Figure2D extends ObjetMathalea2D {
   tikz () {
     // const tikzCenterX = this.width / 2
     // const tikzCenterY = this.height / 2
-    return `\\begin{scope}[shift={(${this.x},${this.y})}, xscale=${this.scale.x}, yscale=${this.scale.y}, rotate around={${this.angle}:(0,0)}]${this.codeTikz}\\end{scope}`
+    return `\\begin{scope}[shift={(${(this.x).toFixed(1)},${(this.y).toFixed(1)})}, xscale=${this.scale.x}, yscale=${this.scale.y}, rotate around={${this.angle}:(0,0)}]
+    ${this.codeTikz}
+    \\end{scope}`
   }
 
   rotate (angle: number) {

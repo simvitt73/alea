@@ -34,7 +34,7 @@ export default class NbAxesDeSymetrie extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 3
-    this.besoinFormulaireTexte = ['Type de figures', 'Nombres séparés par des tirets\n1 : Panneaux\n2 : Formes géométriques\n3 : Legos\n4 : Lettres\n5 : Mélange']
+    this.besoinFormulaireTexte = ['Type de figures', 'Nombres séparés par des tirets\n1 : Panneaux\n2 : Formes géométriques\n3 : Legos\n4 : Lettres\n5 : Chiffres et nombres\n6 : Mélange']
     this.sup = '5'
     this.besoinFormulaire2Numerique = ['Nombre de figures par question', 3]
     this.sup2 = 3
@@ -47,7 +47,7 @@ export default class NbAxesDeSymetrie extends Exercice {
   nouvelleVersion (): void {
     let nbFigures = this.sup2
     const factor = this.sup4 ? 2 : 1
-    const typeDeFigures = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 4, defaut: 1, melange: 5, nbQuestions: this.nbQuestions }).map(Number)
+    const typeDeFigures = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 5, defaut: 1, melange: 6, nbQuestions: this.nbQuestions }).map(Number)
     const numerosChoisis: number[] = []
     for (let i = 0; i < this.nbQuestions;) {
       let texte = ''
@@ -55,7 +55,7 @@ export default class NbAxesDeSymetrie extends Exercice {
       const objets: NestedObjetMathalea2dArray = []
       const objetsCorr: NestedObjetMathalea2dArray = []
 
-      const typeDeFigureChoisie = ['panneau', 'geometrique', 'lego', 'lettre'][typeDeFigures[i] - 1]
+      const typeDeFigureChoisie = ['panneau', 'geometrique', 'lego', 'lettre', 'chiffre'][typeDeFigures[i] - 1]
       const listeFigs = listeFigures2d.filter(el => el.type === typeDeFigureChoisie).filter(el => !numerosChoisis.includes(el.numero))
       if (listeFigs.length === 0) {
         this.listeQuestions.push('Aucune figure disponible')
@@ -86,31 +86,31 @@ export default class NbAxesDeSymetrie extends Exercice {
         const alpha = randint(-30, 30, 0)
         const figure = figures[j]
         const options = figure.options ?? {}
-        const forme = figure.figure2d(options).dilate(factor).translate(j * 6 * factor * scale, 0)
+        const forme = figure.figure2d(options).dilate(factor).translate(j * 6.5 * factor * scale, 0)
         forme.name = figure.name.replace(/ /g, '_')
         if (this.sup3) forme.rotate(alpha)
         formes.push(forme)
 
-        const formeTexte = texteParPosition(`figure ${j + 1}`, j * 6 * factor * scale, 2.8 * factor)
+        const formeTexte = texteParPosition(`figure ${j + 1}`, j * 6.5 * factor * scale, 2.8 * factor)
         objets.push(forme, formeTexte)
         let axes: Segment[] = []
         if (forme.nbAxes !== 0) {
           const formeBis = forme.copy(forme.name + 'Bis')
           formeBis.opacite = 0.3
-          const formeCorr = forme.autoReflectionAnimee(`${forme.name}Corr_${i * this.sup3 + j}`, forme.x, forme.y)
+          const formeCorr = forme.autoReflectionAnimee(`${forme.name}Corr_${i * this.sup2 + j}`, forme.x, forme.y)
           axes = formeCorr.Axes.map(el => factor > 1 ? homothetie(el, point(0, 0), factor) : el)
           objetsCorr.push(formeBis, formeCorr, formeTexte)
         } else {
           if (forme.nonAxe) {
             const formeBis = forme.copy(forme.name + 'Bis')
             formeBis.opacite = 0.3
-            const formeCorr = forme.autoReflectionAnimee(`${forme.name}Corr_${i * this.sup3 + j}`, forme.x, forme.y)
+            const formeCorr = forme.autoReflectionAnimee(`${forme.name}Corr_${i * this.sup2 + j}`, forme.x, forme.y)
             const axe = formeCorr.nonAxe
             if (axe) {
-              const seg = translation(axe, vecteur(j * 6 * factor * scale, 0))
+              const seg = translation(axe, vecteur(j * 6.5 * factor * scale, 0))
               seg.epaisseur = 1.5
               seg.color = colorToLatexOrHTML(orangeMathalea)
-              objetsCorr.push(formeBis, formeCorr, formeTexte, seg, texteParPosition('Pas symétrique !', j * 6 * factor * scale, 0, 45, 'red'))
+              objetsCorr.push(formeBis, formeCorr, formeTexte, seg, texteParPosition('Pas symétrique !', j * 6.5 * factor * scale, 0, 45, 'red'))
             } else {
               objetsCorr.push(forme, formeTexte)
             }
@@ -120,7 +120,7 @@ export default class NbAxesDeSymetrie extends Exercice {
         }
         if (axes.length > 0) {
           for (let k = 0; k < axes.length; k++) {
-            const seg = translation(axes[k], vecteur(j * 6 * factor * scale, 0))
+            const seg = translation(axes[k], vecteur(j * 6.5 * factor * scale, 0))
             seg.epaisseur = 1.5
             seg.color = colorToLatexOrHTML(orangeMathalea)
             objetsCorr.push(seg)
