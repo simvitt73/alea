@@ -63,7 +63,7 @@ export default class NombreDecimalOraliseDeDifferentesManieres extends Exercice 
       b = randint(2, 9, a)
       c = randint(2, 9, [a, b])
       switch (listeTypeDeQuestions[i]) {
-        case 4: // 128/10
+        case 1: // 128/10
           n = a * 100 + b * 10 + c
           choix = randint(1, 3)
           if (choix === 1) {
@@ -80,7 +80,7 @@ export default class NombreDecimalOraliseDeDifferentesManieres extends Exercice 
             texteCorr = `$${texFractionFromString(n, 1000)}=${texNombre(reponseAMC)}$`
           }
           break
-        case 5: // 8+5/100+7/100
+        case 2: // 8+5/100+7/100
         default:
           choix = randint(1, 2)
           if (choix === 1) {
@@ -134,7 +134,7 @@ export default class NombreDecimalOraliseDeDifferentesManieres extends Exercice 
 
       // Fin de cette uniformisation
 
-      if (this.questionJamaisPosee(i, a, b, c)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
+      if (this.questionJamaisPosee(i, reponseAMC)) { // <- laisser le i et ajouter toutes les variables qui rendent les exercices différents (par exemple a, b, c et d)
         // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         if (!context.isHtml && i === 0) {
