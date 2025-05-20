@@ -226,7 +226,11 @@ class MonomePlusieursVariables {
         if (exposant === 0) {
           return ''
         } else if (exposant === 1) {
-          return `\\left(${variables[variable].texFractionSimplifiee}\\right)`
+          if (variables[variable].signe === -1) {
+            return `\\left(${variables[variable].texFractionSimplifiee}\\right)`
+          } else {
+            return `${variables[variable].texFractionSimplifiee}`
+          }
         } else {
           return `\\left(${variables[variable].texFractionSimplifiee}\\right)^{${exposant}}`
         }
