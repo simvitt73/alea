@@ -118,11 +118,11 @@ export default class NbAxesDeSymetrie extends Exercice {
       if (this.interactif) {
         this.autoCorrection[i] = {
           propositions: [
-            { texte: 'oui', statut: choixReponse === 'symetrie' },
-            { texte: 'non', statut: choixReponse !== 'symetrie' }
+            { texte: 'Oui', statut: choixReponse === 'symetrie' },
+            { texte: 'Non', statut: choixReponse !== 'symetrie' }
           ],
           options: {
-            ordered: true
+            ordered: true, radio: true
           }
         }
         const monQcm = propositionsQcm(this, i, { style: 'inline-block', format: 'case', radio: true })
