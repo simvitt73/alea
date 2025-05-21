@@ -252,7 +252,7 @@ class MonomePlusieursVariables {
         return `-${partieLitteraleString}`
       }
     } else {
-      return `${this.coefficient.texFractionSimplifiee}${partieLitteraleString === '' ? '' : '\\cdot'} ${partieLitteraleString}`
+      return `${this.coefficient.texFractionSimplifiee}${partieLitteraleString === '' ? '' : '\\times'} ${partieLitteraleString}`
     }
   }
 
