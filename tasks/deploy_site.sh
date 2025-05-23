@@ -22,4 +22,4 @@ rsync -avz ${LOCAL_DIST_PATH}/ ${REMOTE_SERVER}:${REMOTE_CURRENT_BUILD_PATH}/
 # Edit the symbolic link to point to the new build
 ssh ${REMOTE_SERVER} "rm ${REMOTE_DIST_PATH}; ln -s ${REMOTE_CURRENT_BUILD_PATH}/ ${REMOTE_DIST_PATH}; ln -s ${REMOTE_STATIC_PATH}/ ${REMOTE_DIST_PATH}/static"
 
-echo "Déploiement terminé. Le site est disponible dans ${REMOTE_CURRENT_BUILD_PATH} et lié à ${REMOTE_DIST_PATH}."
+echo "Déploiement terminé. Le site est disponible dans ${REMOTE_CURRENT_BUILD_PATH} et lié à ${REMOTE_DIST_PATH}. Le dossier des statiques ${REMOTE_STATIC_PATH} est lié à ${REMOTE_DIST_PATH}/static."
