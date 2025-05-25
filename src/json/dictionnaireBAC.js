@@ -2670,7 +2670,7 @@ export const dictionnaireBAC = {
     jour: 'J1',
     numeroInitial: '1',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Probabilités conditionnelles', 'Loi binomiale', 'Variables aléatoires','Bienaymé-Tchebychev']
   },
   bac_2025_05_sujet1_ameriquenord_2: {
     annee: '2025',
@@ -2679,7 +2679,7 @@ export const dictionnaireBAC = {
     jour: 'J1',
     numeroInitial: '2',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Suites', 'Python']
   },
   bac_2025_05_sujet1_ameriquenord_3: {
     annee: '2025',
@@ -2688,7 +2688,7 @@ export const dictionnaireBAC = {
     jour: 'J1',
     numeroInitial: '3',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Affirmations', 'Espace']
   },
   bac_2025_05_sujet1_ameriquenord_4: {
     annee: '2025',
@@ -2697,7 +2697,7 @@ export const dictionnaireBAC = {
     jour: 'J1',
     numeroInitial: '4',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Exponentielle', 'Equations différentielles', 'Intégration', 'Primitives']
   },
   bac_2025_05_sujet2_ameriquenord_1: {
     annee: '2025',
@@ -2706,7 +2706,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '1',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Variables aléatoires', 'Loi binomiale', 'Bienaymé-Tchebychev']
   },
   bac_2025_05_sujet2_ameriquenord_2: {
     annee: '2025',
@@ -2715,7 +2715,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '2',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Suites', 'logarithme', 'Python']
   },
   bac_2025_05_sujet2_ameriquenord_3: {
     annee: '2025',
@@ -2724,7 +2724,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '3',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Affirmations', 'Espace']
   },
   bac_2025_05_sujet2_ameriquenord_4: {
     annee: '2025',
@@ -2733,7 +2733,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '4',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Trigonométrie', 'Exponentielle', 'Intégration']
   },
 
 }
