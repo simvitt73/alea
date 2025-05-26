@@ -102,20 +102,21 @@ export default class ConstructionsParallelogrammesParticuliers extends Exercice 
   }
 
   nouvelleVersion () {
+    const listeTypeDeQuestion = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 3, melange: 4, defaut: 1, nbQuestions: this.nbQuestions }).map(Number)
+
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       let texte = ''
       let texteCorr = ''
 
       // On prépare la figure...
       const noms = choisitLettresDifferentes(5, 'QOX', true) // on choisit 5 lettres, les 4 premières sont les sommets, la 5e est le centre
-      const nom = noms[0] + noms[1] + noms[2] + noms[3]
+      const nom = noms.slice(0, 4).join('')
       const objetsEnonce: NestedObjetMathalea2dArray = []
       const objetsCorrection: NestedObjetMathalea2dArray = []
-      const listeTypeDeQuestion = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 3, melange: 4, defaut: 1, nbQuestions: this.nbQuestions }).map(Number)
       const withFractions = this.sup2
       const withRelatifs = this.sup3
       const withSides = this.sup4
-      const choix = listeTypeDeQuestion[i] // 1, 2, 3, 4 ou 5
+      const choix = listeTypeDeQuestion[i] // 1, 2, ou 3
       const sommets: { x: number, y: number, nom: string, visible: boolean, p?: Point }[] = []
       let v1: Vecteur
       let v2: Vecteur
@@ -243,8 +244,8 @@ export default class ConstructionsParallelogrammesParticuliers extends Exercice 
         objetsCorrection.push(trace2, labels2)
       }
       texte += choix === 1 || choix === 2
-        ? `Dans le repère ci-dessous, donner les coordonnées du centre $${noms[4]}$ du parallélogramme $${nom}$.<br>`
-        : `Dans le repère ci-dessous, donner les coordonnées des points manquant pour que $${nom}$ soit un parallélogramme de centre $${noms[4]}$.<br>`
+        ? `Dans le repère ci-dessous, donner les coordonnées du centre $${noms[4]}$ du parallélogramme $${nom}$${choix === 2 ? ' dont on a placé $3$ sommets' : ''}.<br>`
+        : `Dans le repère ci-dessous, donner les coordonnées des points manquants pour que $${nom}$ soit un parallélogramme de centre $${noms[4]}$.<br>`
       if (pointsInvisibles) {
         if (choix === 3) {
           texte += ajouteQuestionMathlive({
@@ -277,6 +278,68 @@ export default class ConstructionsParallelogrammesParticuliers extends Exercice 
         }
         texte += mathalea2d(Object.assign({ pixelsParCm: 30 }, fixeBordures(objetsEnonce)), objetsEnonce)
         texteCorr += mathalea2d(Object.assign({ pixelsParCm: 30 }, fixeBordures(objetsCorrection)), objetsCorrection)
+        if (this.correctionDetaillee) {
+          let dx: number
+          let dy: number
+          let sensX: string
+          let sensY: string
+          let plurielX: string
+          let plurielY: string
+          let plurielX2: string
+          let plurielY2: string
+          let indicesSommetsVisibles: [number, number] = [0, 0]
+          switch (choix) {
+            case 1:
+              dx = sommets[2].x - sommets[0].x
+              dy = sommets[2].y - sommets[0].y
+              sensX = dx > 0 ? 'droite' : 'gauche'
+              sensY = dy > 0 ? 'haut' : 'bas'
+              plurielX = Math.abs(dx) > 1 ? 's' : ''
+              plurielY = Math.abs(dy) > 1 ? 's' : ''
+              plurielX2 = Math.abs(dx / 2) > 1 ? 's' : ''
+              plurielY2 = Math.abs(dy / 2) > 1 ? 's' : ''
+              texteCorr += `Comme le centre du parallélogramme $${nom}$ est le milieu de ses diagonales, il suffit de chercher les coordonnées du milieu de $[${sommets[0].nom}${sommets[2].nom}]$.<br>
+              On effectue la moitié des déplacements horizontaux et verticaux de $${sommets[0].nom}$ à $${sommets[2].nom}$, on trouve ainsi ce milieu.<br>
+              Comme on se déplace de $${texNombre(Math.abs(dx), 2)}$ unité${plurielX} vers la ${sensX}, et de $${texNombre(Math.abs(dy), 2)}$ unité${plurielY} vers le ${sensY} pour aller de $${sommets[0].nom}$ à $${sommets[2].nom}$,
+              on doit se déplacer de $${texNombre(Math.abs(dx / 2), 2)}$ unité${plurielX2} vers la ${sensX}, et de $${texNombre(Math.abs(dy / 2), 2)}$ unité${plurielY2} vers le ${sensY} pour aller de $${sommets[0].nom}$ à $${sommets[4].nom}$.<br>`
+              break
+            case 2:
+              for (let j = 0; j < choixSommetsVisibles.length; j++) {
+                if (choixSommetsVisibles.includes((choixSommetsVisibles[j] + 2 % 4))) {
+                  indicesSommetsVisibles = [choixSommetsVisibles[j], (choixSommetsVisibles[j] + 2) % 4]
+                  break
+                }
+              }
+              if (indicesSommetsVisibles.length !== 2) {
+                throw new Error('Indices des sommets visibles incorrects')
+              }
+              dx = sommets[indicesSommetsVisibles[1]].x - sommets[indicesSommetsVisibles[0]].x
+              dy = sommets[indicesSommetsVisibles[1]].y - sommets[indicesSommetsVisibles[0]].y
+              sensX = dx > 0 ? 'droite' : 'gauche'
+              sensY = dy > 0 ? 'haut' : 'bas'
+              plurielX = Math.abs(dx) > 1 ? 's' : ''
+              plurielY = Math.abs(dy) > 1 ? 's' : ''
+              plurielX2 = Math.abs(dx / 2) > 1 ? 's' : ''
+              plurielY2 = Math.abs(dy / 2) > 1 ? 's' : ''
+              texteCorr += `Comme le centre du parallélogramme $${nom}$ est le milieu de ses diagonales, il suffit de chercher les coordonnées du milieu de $[${sommets[indicesSommetsVisibles[0]].nom}${sommets[indicesSommetsVisibles[1]].nom}]$.<br>
+              On effectue la moitié des déplacements horizontaux et verticaux de $${sommets[indicesSommetsVisibles[0]].nom}$ à $${sommets[indicesSommetsVisibles[1]].nom}$, on trouve ainsi ce milieu.<br>
+              Comme on se déplace de $${texNombre(Math.abs(dx), 2)}$ unité${plurielX} vers la ${sensX}, et de $${texNombre(Math.abs(dy), 2)}$ unité${plurielY} vers le ${sensY} pour aller de $${sommets[indicesSommetsVisibles[0]].nom}$ à $${sommets[indicesSommetsVisibles[1]].nom}$,
+              on doit se déplacer de $${texNombre(Math.abs(dx / 2), 2)}$ unité${plurielX2} vers la ${sensX}, et de $${texNombre(Math.abs(dy / 2), 2)}$ unité${plurielY2} vers le ${sensY} pour aller de $${sommets[indicesSommetsVisibles[0]].nom}$ à $${sommets[4].nom}$.<br>`
+              break
+            case 3:
+              dx = sommets[4].x - sommets[indicesSommetsVisibles[0]].x
+              dy = sommets[4].y - sommets[indicesSommetsVisibles[0]].y
+              sensX = dx > 0 ? 'droite' : 'gauche'
+              sensY = dy > 0 ? 'haut' : 'bas'
+              plurielX = Math.abs(dx) > 1 ? 's' : ''
+              plurielY = Math.abs(dy) > 1 ? 's' : ''
+              texteCorr += `Pour trouver les sommets manquants, il suffit d'appliquer la symétrie centrale de centre $${noms[4]}$ aux points $${sommets[choixSommetsVisibles[0]].nom}$ et $${sommets[choixSommetsVisibles[1]].nom}$.<br>
+              On effectue le double des déplacements horizontaux et verticaux des points $${sommets[choixSommetsVisibles[0]].nom}$ et $${sommets[choixSommetsVisibles[1]].nom}$ jusqu'à $${noms[4]}$, on trouve ainsi les points $${sommets[(choixSommetsVisibles[0] + 2) % 4].nom}$ et $${sommets[(choixSommetsVisibles[1] + 2) % 4].nom}$.<br>
+             Par exemple, comme on se déplace de $${texNombre(Math.abs(dx), 2)}$ unité${plurielX} vers la ${sensX}, et de $${texNombre(Math.abs(dy), 2)}$ unité${plurielY} vers le ${sensY} pour aller de $${sommets[indicesSommetsVisibles[0]].nom}$ à $${sommets[4].nom}$,
+              on doit se déplacer aussi de $${texNombre(Math.abs(dx), 2)}$ unité${plurielX} vers la ${sensX}, et de $${texNombre(Math.abs(dy), 2)}$ unité${plurielY} vers le ${sensY} pour aller de $${sommets[4].nom}$ à $${sommets[(indicesSommetsVisibles[0] + 2) % 4].nom}$.<br>`
+              break
+          }
+        }
         texteCorr += choix === 3
           ? `Les coordonnées des points manquants sont $${miseEnEvidence(`${pointsInvisibles.map(p => `${p.nom}(${texNombre(p.x)}, ${texNombre(p.y)})`).join('\\text{~et~}')}`)}$.`
           : `Les coordonnées du centre $${noms[4]}$ du parallélogramme $${nom}$ sont : $${miseEnEvidence(`(~${texNombre(centre.x, 2)}~;~${texNombre(centre.y, 2)})`)}$.`
