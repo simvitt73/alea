@@ -2736,4 +2736,41 @@ export const dictionnaireBAC = {
     tags: ['Trigonométrie', 'Exponentielle', 'Intégration']
   },
 
+  bac_2025_05_sujet2_ameriquenord_secours_1: {                
+                annee: '2025',                
+                lieu: 'Amérique du Nord',                
+                mois: 'Mai',                
+                jour: 'J2',                
+                numeroInitial: 'secours',                              
+                typeExercice: 'bac',                               
+                tags: ['']            
+            },
+  bac_2025_05_sujet2_ameriquenord_secours_2: {                
+                annee: '2025',                
+                lieu: 'Amérique du Nord',                
+                mois: 'Mai',                
+                jour: 'J2',                
+                numeroInitial: 'secours',                              
+                typeExercice: 'bac',                               
+                tags: ['']            
+            },
+  bac_2025_05_sujet2_ameriquenord_secours_3: {                
+                annee: '2025',                
+                lieu: 'Amérique du Nord',                
+                mois: 'Mai',                
+                jour: 'J2',                
+                numeroInitial: 'secours',                              
+                typeExercice: 'bac',                               
+                tags: ['']            
+            },
+  bac_2025_05_sujet2_ameriquenord_secours_4: {                
+                annee: '2025',                
+                lieu: 'Amérique du Nord',                
+                mois: 'Mai',                
+                jour: 'J2',                
+                numeroInitial: 'secours',                              
+                typeExercice: 'bac',                               
+                tags: ['']            
+            },
+
 }
