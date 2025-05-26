@@ -102,6 +102,8 @@ export default class ConstructionsParallelogrammesParticuliers extends Exercice 
   }
 
   nouvelleVersion () {
+    const listeTypeDeQuestion = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 4, melange: 5, defaut: 1, nbQuestions: this.nbQuestions }).map(Number)
+
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       let texte = ''
       let texteCorr = ''
@@ -111,7 +113,6 @@ export default class ConstructionsParallelogrammesParticuliers extends Exercice 
       const nom = noms[0] + noms[1] + noms[2] + noms[3]
       const objetsEnonce: NestedObjetMathalea2dArray = []
       const objetsCorrection: NestedObjetMathalea2dArray = []
-      const listeTypeDeQuestion = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 4, melange: 5, defaut: 1, nbQuestions: this.nbQuestions }).map(Number)
       const withFractions = this.sup2
       const withRelatifs = this.sup3
       const withSides = this.sup4
