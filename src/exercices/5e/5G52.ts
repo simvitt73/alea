@@ -24,7 +24,7 @@ export const dateDePublication = '27/04/2024'
 export const uuid = 'bc788'
 export const refs = {
   'fr-fr': ['5G52'],
-  'fr-ch': []
+  'fr-ch': ['11ES1-2', '10ES1-2']
 }
 /**
  * calculer des longueurs avec un patron de cylindre
