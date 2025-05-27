@@ -11,7 +11,7 @@ import { miseEnEvidence } from '../../lib/outils/embellissements'
 export const uuid = '9d5ef'
 export const refs = {
   'fr-fr': ['c3C32-02'],
-  'fr-ch': []
+  'fr-ch': ['9FA3-20']
 }
 export const titre = 'Au marché (addition et soustraction de masses, conversions)'
 export const dateDePublication = '20/11/2024'
