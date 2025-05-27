@@ -4,6 +4,7 @@
    Équations différentielles
    Espace
    Exponentielle
+   Intégration
    Trigonométrie
    Logarithme
    Loi binomiale
@@ -13,7 +14,6 @@
    QCM
    Suites
    Variables aléatoires
-   Vrai/Faux
    TVI
    Tableur
 */
@@ -2670,7 +2670,7 @@ export const dictionnaireBAC = {
     jour: 'J1',
     numeroInitial: '1',
     typeExercice: 'bac',
-    tags: ['Probabilités conditionnelles', 'Loi binomiale', 'Variables aléatoires','Bienaymé-Tchebychev']
+    tags: ['Probabilités conditionnelles', 'Loi binomiale', 'Variables aléatoires', 'Bienaymé-Tchebychev']
   },
   bac_2025_05_sujet1_ameriquenord_2: {
     annee: '2025',
@@ -2736,41 +2736,41 @@ export const dictionnaireBAC = {
     tags: ['Trigonométrie', 'Exponentielle', 'Intégration']
   },
 
-  bac_2025_05_sujet2_ameriquenord_secours_1: {                
-                annee: '2025',                
-                lieu: 'Amérique du Nord',                
-                mois: 'Mai',                
-                jour: 'J2',                
-                numeroInitial: 'secours',                              
-                typeExercice: 'bac',                               
-                tags: ['']            
-            },
-  bac_2025_05_sujet2_ameriquenord_secours_2: {                
-                annee: '2025',                
-                lieu: 'Amérique du Nord',                
-                mois: 'Mai',                
-                jour: 'J2',                
-                numeroInitial: 'secours',                              
-                typeExercice: 'bac',                               
-                tags: ['']            
-            },
-  bac_2025_05_sujet2_ameriquenord_secours_3: {                
-                annee: '2025',                
-                lieu: 'Amérique du Nord',                
-                mois: 'Mai',                
-                jour: 'J2',                
-                numeroInitial: 'secours',                              
-                typeExercice: 'bac',                               
-                tags: ['']            
-            },
-  bac_2025_05_sujet2_ameriquenord_secours_4: {                
-                annee: '2025',                
-                lieu: 'Amérique du Nord',                
-                mois: 'Mai',                
-                jour: 'J2',                
-                numeroInitial: 'secours',                              
-                typeExercice: 'bac',                               
-                tags: ['']            
-            },
+  bac_2025_05_sujet2_ameriquenord_secours_1: {
+    annee: '2025',
+    lieu: 'Amérique du Nord',
+    mois: 'Mai',
+    jour: 'J2',
+    numeroInitial: 'secours',
+    typeExercice: 'bac',
+    tags: ['Exponentielle', 'Convexité', 'Intégration', 'TVI']
+  },
+  bac_2025_05_sujet2_ameriquenord_secours_2: {
+    annee: '2025',
+    lieu: 'Amérique du Nord',
+    mois: 'Mai',
+    jour: 'J2',
+    numeroInitial: 'secours',
+    typeExercice: 'bac',
+    tags: ['Espace']
+  },
+  bac_2025_05_sujet2_ameriquenord_secours_3: {
+    annee: '2025',
+    lieu: 'Amérique du Nord',
+    mois: 'Mai',
+    jour: 'J2',
+    numeroInitial: 'secours',
+    typeExercice: 'bac',
+    tags: ['Probabilités conditionnelles', 'Loi binomiale', 'Variables aléatoires', 'Bienaymé-Tchebychev']
+  },
+  bac_2025_05_sujet2_ameriquenord_secours_4: {
+    annee: '2025',
+    lieu: 'Amérique du Nord',
+    mois: 'Mai',
+    jour: 'J2',
+    numeroInitial: 'secours',
+    typeExercice: 'bac',
+    tags: ['Suites']
+  },
 
 }
