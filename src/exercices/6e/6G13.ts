@@ -4,7 +4,6 @@ import { afficheLongueurSegment, texteSurSegment } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
 import {
   milieu,
-  Point,
   point,
   pointAdistance,
   pointIntersectionCC,
@@ -175,10 +174,10 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
           const diagonale = disSave[1] / 10
           B = point(disSave[0] / 10, 0, nomPoly.charAt(1), 'below right')
 
-          C = pointIntersectionLC(droiteParPointEtPerpendiculaire(B, droite(A, B)), cercle(A, diagonale), nomPoly[2], 1) as Point
+          C = pointIntersectionLC(droiteParPointEtPerpendiculaire(B, droite(A, B)), cercle(A, diagonale), nomPoly[2], 1)
           C.positionLabel = 'above right'
 
-          D = pointIntersectionLC(droiteParPointEtPerpendiculaire(A, droite(A, B)), cercle(B, diagonale), nomPoly[3], 1) as Point
+          D = pointIntersectionLC(droiteParPointEtPerpendiculaire(A, droite(A, B)), cercle(B, diagonale), nomPoly[3], 1)
           D.positionLabel = 'above left'
           figure = polygone(A, B, C, D)
           break
@@ -212,9 +211,9 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
           C.positionLabel = 'right'
           const cA = cercle(A, cote)
           const cB = cercle(C, cote)
-          B = pointIntersectionCC(cA, cB, nomPoly[1], 2) as Point
+          B = pointIntersectionCC(cA, cB, nomPoly[1], 2)
           B.positionLabel = 'below'
-          D = pointIntersectionCC(cA, cB, nomPoly[3], 1) as Point
+          D = pointIntersectionCC(cA, cB, nomPoly[3], 1)
           D.positionLabel = 'above'
           figure = polygone(A, B, C, D)
           break
@@ -245,9 +244,9 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
           const diagonale2 = 2 * disSave[2] / 10
           C = pointAdistance(A, diagonale1, randint(-10, 10), nomPoly[2])
           C.positionLabel = 'right'
-          B = pointIntersectionLC(droiteParPointEtPerpendiculaire(milieu(A, C), droite(A, C)), cercle(milieu(A, C), diagonale2 / 2), nomPoly[1], 2) as Point
+          B = pointIntersectionLC(droiteParPointEtPerpendiculaire(milieu(A, C), droite(A, C)), cercle(milieu(A, C), diagonale2 / 2), nomPoly[1], 2)
           B.positionLabel = 'below'
-          D = pointIntersectionLC(droiteParPointEtPerpendiculaire(milieu(A, C), droite(A, C)), cercle(milieu(A, C), diagonale2 / 2), nomPoly[3], 1) as Point
+          D = pointIntersectionLC(droiteParPointEtPerpendiculaire(milieu(A, C), droite(A, C)), cercle(milieu(A, C), diagonale2 / 2), nomPoly[3], 1)
           D.positionLabel = 'above'
           figure = polygone(A, B, C, D)
           break
@@ -282,9 +281,9 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
           const cote2 = disSave[2] / 10
           C = pointAdistance(A, diagonale1, randint(-10, 10), nomPoly[2])
           C.positionLabel = 'right'
-          D = pointIntersectionCC(cercle(A, cote1), cercle(C, cote2), nomPoly[3], 1) as Point
+          D = pointIntersectionCC(cercle(A, cote1), cercle(C, cote2), nomPoly[3], 1)
           D.positionLabel = 'above'
-          B = pointIntersectionCC(cercle(A, cote2), cercle(C, cote1), nomPoly[1], 2) as Point
+          B = pointIntersectionCC(cercle(A, cote2), cercle(C, cote1), nomPoly[1], 2)
           B.positionLabel = 'below'
           figure = polygone(A, B, C, D)
           break

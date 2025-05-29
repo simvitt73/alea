@@ -52,9 +52,9 @@ export function triangle2points2longueurs (A: Point, B: Point, l1: number, l2: n
   const c2 = cercle(B, l2)
   let C: Point
   if (n === 1) {
-    C = pointIntersectionCC(c1, c2) as Point
+    C = pointIntersectionCC(c1, c2)
   } else {
-    C = pointIntersectionCC(c1, c2, '', 2) as Point
+    C = pointIntersectionCC(c1, c2, '', 2)
   }
   return polygone([A, B, C], color)
 }
@@ -77,7 +77,7 @@ export function triangle2points2angles (A: Point, B: Point, a1: number, a2: numb
   const c2 = rotation(b, B, a2)
   const dAc1 = droite(A, c1)
   const dBc2 = droite(B, c2)
-  const C = pointIntersectionDD(dAc1, dBc2, 'C') as Point
+  const C = pointIntersectionDD(dAc1, dBc2, 'C')
   return polygone([A, B, C], color)
 }
 
@@ -124,8 +124,8 @@ export function triangle2points1angle1longueurOppose (A:Point, B:Point, a: numbe
   const d = droite(A, B)
   const e = rotation(d, A, a)
   const c = cercle(B, l)
-  if ((n + 1) >> 1 === 1) M = pointIntersectionLC(e, c, '', 1) as Point
-  else M = pointIntersectionLC(e, c, '', 2) as Point
+  if ((n + 1) >> 1 === 1) M = pointIntersectionLC(e, c, '', 1)
+  else M = pointIntersectionLC(e, c, '', 2)
   return polygone([A, B, M], color)
 }
 
@@ -179,7 +179,7 @@ export function medianeTriangle (A:Point, B:Point, C:Point, color = 'black') {
 export function centreGraviteTriangle (A:Point, B:Point, C:Point, nom = '', positionLabel = 'above') {
   const d = medianeTriangle(B, A, C)
   const e = medianeTriangle(A, B, C)
-  const p = pointIntersectionDD(d, e) as Point
+  const p = pointIntersectionDD(d, e)
   const x = p.x
   const y = p.y
   return new Point(x, y, nom, positionLabel)
@@ -308,7 +308,7 @@ export function codageMedianeTriangle (A: Point, B: Point, color = 'black', mark
 export function orthoCentre (A:Point, B:Point, C:Point, nom = '', positionLabel = 'above') {
   const d = hauteurTriangle(B, A, C)
   const e = hauteurTriangle(A, B, C)
-  const p = pointIntersectionDD(d, e) as Point
+  const p = pointIntersectionDD(d, e)
   const x = p.x
   const y = p.y
   return point(x, y, nom, positionLabel)
@@ -332,7 +332,7 @@ export function orthoCentre (A:Point, B:Point, C:Point, nom = '', positionLabel 
 export function centreCercleCirconscrit (A:Point, B:Point, C:Point, nom = '', positionLabel = 'above') {
   const d = mediatrice(A, B)
   const e = mediatrice(B, C)
-  const p = pointIntersectionDD(d, e) as Point
+  const p = pointIntersectionDD(d, e)
   const x = p.x
   const y = p.y
   return new Point(x, y, nom, positionLabel)

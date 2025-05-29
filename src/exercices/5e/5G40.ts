@@ -2,7 +2,7 @@ import { cercle, cercleCentrePoint, traceCompas } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { codageSegments } from '../../lib/2d/codages'
 import { droite } from '../../lib/2d/droites'
-import { Point, point, pointAdistance, pointIntersectionCC, tracePoint } from '../../lib/2d/points'
+import { point, pointAdistance, pointIntersectionCC, tracePoint } from '../../lib/2d/points'
 import { polygone, polygoneAvecNom } from '../../lib/2d/polygones'
 import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPoint } from '../../lib/2d/textes'
@@ -213,7 +213,7 @@ export default class ConstructionsParallelogrammes extends Exercice {
           animIEP.regleZoom(200)
           animIEP.equerreZoom(200)
           animIEP.parallelogrammeAngleCentre(D, A, B, O)
-          objetsEnonce.push(dd1, dd2, tracePoint(O), labelPoint(O, A), texteParPoint('x', pointIntersectionCC(cercleCentrePoint(A, D), cercle(D, 0.5), '', 1) as Point), texteParPoint('y', similitude(B, A, 4, 1.3)))
+          objetsEnonce.push(dd1, dd2, tracePoint(O), labelPoint(O, A), texteParPoint('x', pointIntersectionCC(cercleCentrePoint(A, D), cercle(D, 0.5), '', 1)), texteParPoint('y', similitude(B, A, 4, 1.3)))
           objetsCorrection.push(dd1, dd2, dd3, dd4, p[0], p[1], tracePoint(O), labelPoint(O), d1, d3, codageSegments('||', 'red', A, O, O, C))
           if (this.sup3) {
             texteCorr += `Le point $${noms[2]}$ se trouve dans la case ${cellule} de la cible 1.<br>`

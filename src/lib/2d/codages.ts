@@ -202,7 +202,7 @@ export class CodageCarre extends ObjetMathalea2D {
   constructor (c: Polygone, color = 'black', mark = '×') {
     super()
     this.objets = []
-    this.objets.push(codageSegments(mark, color, ...(c.listePoints as Point[])))
+    this.objets.push(codageSegments(mark, color, ...(c.listePoints)))
     this.objets.push(
       codageAngleDroit(
         c.listePoints[0],
@@ -316,6 +316,7 @@ export class AfficheLongueurSegment extends ObjetMathalea2D {
   }
 
   svg (coeff: number) {
+    console.log(this.text)
     const N = pointSurSegment(this.O, this.M, (this.distance * 20) / coeff)
     return texteParPoint(this.text, N, this.angle, this.stringColor, 1, 'milieu', false).svg(coeff)
   }
@@ -815,7 +816,7 @@ export class CodageSegments extends ObjetMathalea2D {
       }
     } else {
       for (let i = 0; i < (this.isEchelle ? this.args.length - 1 : this.args.length); i += 2) {
-        const codage = codageSegment(this.args[i] as Point, this.args[i + 1] as Point, this.mark, this.stringColor, this.echelle)
+        const codage = codageSegment(this.args[i], this.args[i + 1], this.mark, this.stringColor, this.echelle)
         code += codage.svg(coeff)
         code += '\n'
       }
@@ -853,7 +854,7 @@ export class CodageSegments extends ObjetMathalea2D {
     } else {
       const condition = this.isEchelle ? this.args.length - 1 : this.args.length
       for (let i = 0; i < condition; i += 2) {
-        code += codageSegment(this.args[i] as Point, this.args[i + 1] as Point, this.mark, this.stringColor, this.echelle).tikz()
+        code += codageSegment(this.args[i], this.args[i + 1], this.mark, this.stringColor, this.echelle).tikz()
         code += '\n'
       }
     }

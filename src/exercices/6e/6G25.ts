@@ -2,7 +2,7 @@ import { cercle } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { codageMediatrice } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPerpendiculaire, positionLabelDroite } from '../../lib/2d/droites'
-import { Point, point, pointAdistance, pointIntersectionLC, tracePoint } from '../../lib/2d/points'
+import { point, pointAdistance, pointIntersectionLC, tracePoint } from '../../lib/2d/points'
 import { norme, segmentAvecExtremites, Vecteur, vecteur } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPoint } from '../../lib/2d/textes'
 import { homothetie, similitude, symetrieAxiale, translation } from '../../lib/2d/transformations'
@@ -64,10 +64,10 @@ export default class ConstruireMediatrices6e extends Exercice {
       medB.color = colorToLatexOrHTML('green')
       const cA = cercle(A, arrondi(randint(25, 40) / 20))
       const cB = cercle(B, arrondi(randint(45, 60) / 20))
-      const A1 = pointIntersectionLC(dA, cA, noms[0], 1) as Point
-      const A2 = symetrieAxiale(A1, medA, noms[1]) as Point
-      const B1 = pointIntersectionLC(dB, cB, noms[2], 1) as Point
-      const B2 = symetrieAxiale(B1, medB, noms[3]) as Point
+      const A1 = pointIntersectionLC(dA, cA, noms[0], 1)
+      const A2 = symetrieAxiale(A1, medA, noms[1])
+      const B1 = pointIntersectionLC(dB, cB, noms[2], 1)
+      const B2 = symetrieAxiale(B1, medB, noms[3])
       const sA = segmentAvecExtremites(A1, A2)
       const sB = segmentAvecExtremites(B1, B2)
       sA.color = colorToLatexOrHTML('black')

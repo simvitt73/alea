@@ -4,7 +4,6 @@ import { afficheLongueurSegment, codageSegments, texteSurSegment } from '../../l
 import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
 import {
   milieu,
-  Point,
   point,
   pointAdistance,
   pointIntersectionCC,
@@ -121,7 +120,7 @@ export default class ConstruireUnTriangle extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, sommets[2])
           objetsEnonce.push(afficheLongueurSegment(B, A), texteSurSegment(`${stringNombre(segment(B, C).longueur, 1)} cm`, CC, B), texteSurSegment(`${stringNombre(segment(A, C).longueur, 1)} cm`, A, CC))
@@ -141,7 +140,7 @@ export default class ConstruireUnTriangle extends Exercice {
           cA = cercle(A, lAC)
           dAB = droite(A, B)
           dBC = droiteParPointEtPerpendiculaire(B, dAB)
-          C = pointIntersectionLC(dBC, cA, sommets[2], 1) as Point
+          C = pointIntersectionLC(dBC, cA, sommets[2], 1)
           CC = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, sommets[2])
 
           objetsEnonce.push(afficheLongueurSegment(B, A), texteSurSegment(`${stringNombre(segment(A, C).longueur, 1)} cm`, CC, A), codageAngleDroit(A, B, CC))
@@ -182,7 +181,7 @@ export default class ConstruireUnTriangle extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, sommets[2])
           objetsEnonce.push(afficheLongueurSegment(B, A), texteSurSegment(`${stringNombre(segment(B, C).longueur, 1)} cm`, CC, B), texteSurSegment(`${stringNombre(segment(A, C).longueur, 1)} cm`, A, CC))
@@ -237,7 +236,7 @@ export default class ConstruireUnTriangle extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, sommets[2])
 
@@ -292,7 +291,7 @@ export default class ConstruireUnTriangle extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, sommets[2])
 
@@ -348,7 +347,7 @@ export default class ConstruireUnTriangle extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, sommets[2])
 
@@ -408,7 +407,7 @@ export default class ConstruireUnTriangle extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, 0) / 10, C.y + randint(-5, 5, 0) / 10, sommets[2])
 

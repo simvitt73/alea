@@ -136,13 +136,13 @@ export function labelPoint (...args: (Point | string)[]) {
   for (const unPoint of points) {
     let A
     if (unPoint instanceof Point3d) {
-      A = unPoint.c2d as Point
+      A = unPoint.c2d
     } else {
-      A = unPoint as Point
+      A = unPoint
     }
 
     let x, y
-    if (A.nom !== undefined) {
+    if (A instanceof Point) {
       x = A.x
       y = A.y
       // if (this.positionLabel === '' && unPoint.typeObjet === 'point3d') A.positionLabel = this.positionLabel
@@ -213,7 +213,7 @@ export function deplaceLabel (p: Polygone, nom: string, positionLabel: string) {
  */
 export class TexteParPoint extends ObjetMathalea2D {
   texte: string
-  point: Point
+  point: Point | Vide2d
   orientation: number
   color: [string, string]
   scale: number
@@ -227,7 +227,7 @@ export class TexteParPoint extends ObjetMathalea2D {
   contour: boolean
   taille: number
 
-  constructor (texte: string, A: Point, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: AncrageDeRotationType = 'milieu', mathOn: boolean = false, opacite: number = 1) {
+  constructor (texte: string, A: Point | Vide2d, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: AncrageDeRotationType = 'milieu', mathOn: boolean = false, opacite: number = 1) {
     super()
     if (typeof orientation !== 'number') {
       if (orientation === 'milieu' || typeof orientation === 'string') {
@@ -341,7 +341,7 @@ export class TexteParPoint extends ObjetMathalea2D {
  * Si le texte commence et finit par des $ la chaine est traitée par latexParPoint
  * @author Rémi Angot rectifié par Jean-Claude Lhote
  */
-export function texteParPoint (texte: string, A: Point, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: 'milieu' | 'droite' | 'gauche' = 'milieu', mathOn: boolean = false, opacite: number = 1) {
+export function texteParPoint (texte: string, A: Point | Vide2d, orientation: number = 0, color: string = 'black', scale: number = 1, ancrageDeRotation: 'milieu' | 'droite' | 'gauche' = 'milieu', mathOn: boolean = false, opacite: number = 1) {
   return new TexteParPoint(texte, A, orientation, color, scale, ancrageDeRotation, mathOn, opacite)
 }
 
@@ -460,7 +460,7 @@ export function texteParPosition (texte: string | number, x: number, y: number, 
  * tailleCaracteres est à 8 par défaut et correspond à \footnotesize. tailleCaracteres va de 5 = \small à 20 = \huge
  * @author Rémi Angot
  */
-export function latexParPoint (texte: string, A: Point, color: string = 'black', largeur: number = 20, hauteur: number = 12, colorBackground: string = 'white', tailleCaracteres: number = 8): LatexParCoordonnees | Vide2d {
+export function latexParPoint (texte: string, A: Point | Vide2d, color: string = 'black', largeur: number = 20, hauteur: number = 12, colorBackground: string = 'white', tailleCaracteres: number = 8): LatexParCoordonnees | Vide2d {
   let x
   let y
   const coeff = context.pixelsParCm

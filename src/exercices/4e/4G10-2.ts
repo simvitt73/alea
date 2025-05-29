@@ -82,10 +82,10 @@ export default class nomExercice extends Exercice {
       const perpendiculaire = droiteParPointEtPerpendiculaire(pied, DE, '', 'red')
       perpendiculaire.pointilles = 2
       const pied2 = pointSurDroite(perpendiculaire, (min + max) / 2 + 0.1)
-      const AA = pointIntersectionDD(droite(A, imageA), perpendiculaire) as Point
+      const AA = pointIntersectionDD(droite(A, imageA), perpendiculaire)
       const AA2 = pointSurDroite(perpendiculaire, AA.x - 0.1)
-      const BB = pointIntersectionDD(droite(B, imageB), perpendiculaire) as Point
-      const CC = pointIntersectionDD(droite(C, imageC), perpendiculaire) as Point
+      const BB = pointIntersectionDD(droite(B, imageB), perpendiculaire)
+      const CC = pointIntersectionDD(droite(C, imageC), perpendiculaire)
       objetsCorrectionOnly.push(perpendiculaire, codageAngleDroit(D, pied, pied2, 'red'))
       objetsCorrectionOnly.push(codageAngleDroit(A, AA, pied, 'red'), codageAngleDroit(B, BB, pied, 'red'), codageAngleDroit(C, CC, pied, 'red'))
 

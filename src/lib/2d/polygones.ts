@@ -60,7 +60,7 @@ export class Polyline extends ObjetMathalea2D {
       this.stringColor = points[1] as string
       this.color = colorToLatexOrHTML(String(points[1]))
     } else {
-      this.listePoints = points as unknown as Point[]
+      this.listePoints = points
       this.color = colorToLatexOrHTML('black')
       this.stringColor = 'black'
     }
@@ -291,7 +291,7 @@ export class Polygone extends ObjetMathalea2D {
         this.stringColor = String(points[points.length - 1])
         points.splice(points.length - 1, 1)
       }
-      this.listePoints = points as unknown as Point[]
+      this.listePoints = points
       this.nom = this.listePoints.map(el => el.nom).join('')
       this.couleurDeRemplissage = colorToLatexOrHTML('none')
       this.couleurDesHachures = colorToLatexOrHTML('none') // Rajout EE du 22/02/2024 pour 6N22 cas 3
@@ -539,9 +539,9 @@ export function polygoneAvecNom (...args: (Point | number)[]): [Polygone, NommeP
     k = Number(args[args.length - 1])
     args.splice(args.length - 1, 1)
   }
-  const p = polygone(...args as unknown as Point[])
+  const p = polygone(...args)
   let nom = ''
-  ;(args as Point[]).forEach((el: Point) => {
+  ;(args).forEach((el: Point) => {
     nom += el.nom + ','
   })
   nom = nom.substring(0, nom.length - 1)

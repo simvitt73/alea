@@ -4,7 +4,6 @@ import { cibleRonde, dansLaCibleRonde } from '../../lib/2d/cibles'
 import { afficheLongueurSegment, afficheMesureAngle, codageSegments } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
 import {
-  Point,
   point,
   pointAdistance,
   pointIntersectionCC,
@@ -107,7 +106,7 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, C.y + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, sommets[2])
           cellule = celluleAleaRonde(5)
@@ -136,7 +135,7 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
           cB = cercle(B, lBC)
           dAB = droite(A, B)
           dBC = droiteParPointEtPerpendiculaire(B, dAB)
-          C = pointIntersectionLC(dBC, cB, sommets[2], 1) as Point
+          C = pointIntersectionLC(dBC, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, C.y + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, sommets[2])
           cellule = celluleAleaRonde(5)
@@ -168,7 +167,7 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, C.y + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, sommets[2])
           cellule = celluleAleaRonde(5)
@@ -199,7 +198,7 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
           cB = cercle(B, lBC)
           dAB = droite(A, B)
           dBC = droiteParPointEtPerpendiculaire(B, dAB)
-          C = pointIntersectionLC(dBC, cB, sommets[2], 1) as Point
+          C = pointIntersectionLC(dBC, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, C.y + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, sommets[2])
           cellule = celluleAleaRonde(5)
@@ -230,7 +229,7 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
           B.positionLabel = 'right'
           cA = cercle(A, lAC)
           cB = cercle(B, lBC)
-          C = pointIntersectionCC(cA, cB, sommets[2], 1) as Point
+          C = pointIntersectionCC(cA, cB, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, C.y + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, sommets[2])
           cellule = celluleAleaRonde(5)
@@ -313,7 +312,7 @@ export default class ConstruireUnTriangleAvecCible extends Exercice {
           cA = cercle(A, lAC)
           dAB = droite(A, B)
           dBC = droiteParPointEtPerpendiculaire(B, dAB)
-          C = pointIntersectionLC(dBC, cA, sommets[2], 1) as Point
+          C = pointIntersectionLC(dBC, cA, sommets[2], 1)
           C.positionLabel = 'above'
           CC = point(C.x + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, C.y + randint(-5, 5, [-2, -1, 0, 1, 2]) / 10, sommets[2])
           cellule = celluleAleaRonde(5)
