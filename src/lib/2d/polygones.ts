@@ -11,6 +11,7 @@ import { aireTriangle } from './triangle'
 import { lettreDepuisChiffre } from '../outils/outilString'
 import { codageSegments } from './codages'
 import { codageAngleDroit } from './angles'
+import type { PointAbstrait } from './points-abstraits'
 
 type BinomeXY = { x: number, y: number }
 type BinomesXY = BinomeXY[]
@@ -46,10 +47,10 @@ export function barycentre (p: Polygone, nom = '', positionLabel = 'above') {
  * @author Rémi Angot
  */
 export class Polyline extends ObjetMathalea2D {
-  listePoints: Point[]
+  listePoints: PointAbstrait[]
   nom: string
   stringColor: string
-  constructor (...points: Point[] | (Point[] | string)[]) {
+  constructor (...points: PointAbstrait[] | (PointAbstrait[] | string)[]) {
     super()
     this.epaisseur = 1
     this.pointilles = 0
@@ -205,7 +206,7 @@ export class Polyline extends ObjetMathalea2D {
  * @returns Polyline
  * @author Rémi Angot
  */
-export function polyline (...args: Point[] | (Point[] | string)[]) {
+export function polyline (...args: PointAbstrait[] | (PointAbstrait[] | string)[]) {
   return new Polyline(...args)
 }
 
@@ -244,15 +245,15 @@ export class Polygone extends ObjetMathalea2D {
   distanceDesHachures: number
   epaisseurDesHachures: number
   hachures: boolean | string
-  listePoints: Point[]
+  listePoints: PointAbstrait[]
   nom: string
   pointilles: number
-  _triangulation: [Point, Point, Point][]
+  _triangulation: [PointAbstrait, PointAbstrait, PointAbstrait][]
   _flat: number[]
   _aire: number
   stringColor: string
   readonly perimetre: number
-  constructor (...points: (Point | Point[] | string)[]) {
+  constructor (...points: (PointAbstrait | PointAbstrait[] | string)[]) {
     super()
     this.epaisseurDesHachures = 1
     this.distanceDesHachures = 10
@@ -504,7 +505,7 @@ export class Polygone extends ObjetMathalea2D {
  * @example polygone(A,B,C,D,E) //Trace ABCDE
  * @example polygone([A,B,C,D],"blue") // Trace ABCD en bleu
  * @example polygone([A,B,C,D],"#f15929") // Trace ABCD en orange (code couleur HTML : #f15929)
- * @property {Point[]} listePoints
+ * @property {PointAbstrait[]} listePoints
  * @property {string[]} color
  * @property {string[]} couleurDeRemplissage
  * @property {string[]} couleurDesHachures
@@ -522,7 +523,7 @@ export class Polygone extends ObjetMathalea2D {
  *
  * @author Rémi Angot
  */
-export function polygone (...args: (Point | Point[] | string)[]) {
+export function polygone (...args: (PointAbstrait | PointAbstrait[] | string)[]) {
   return new Polygone(...args)
 }
 
