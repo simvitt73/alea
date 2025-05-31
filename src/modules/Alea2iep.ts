@@ -48,32 +48,46 @@ type Compas = ObjetIep & {
 
 type StringOutil = 'regle' | 'equerre' | 'requerre' | 'rapporteur' | 'compas' | 'crayon'
 
-type OptionsIep = {
+export type OptionsIep = {
   id?: string // Identifiant de l'objet
   tempo?: number // Temps d'attente après l'instruction
   vitesse?: number // Vitesse de déplacement des instruments
   couleur?: string // Couleur des traits
-  couleurCompas?: string // Couleur du compas
-  couleurTexte?: string // Couleur du texte
-  couleurPoint?: string // Couleur du nom des points
-  couleurCodage?: string // Couleur du codage
-  couleurTraitsDeConstruction?: string // Couleur des traits de construction
   epaisseur?: number // Epaisseur des traits
-  epaisseurTraitsDeConstruction?: number // Epaisseur des traits de construction
   pointilles?: boolean // Pointillés ou traits pleins
-  sens?: number // Sens de la rotation
-  label?: string // Label du point
-  dx?: number // Décalage horizontal du label du point
-  dy?: number // Décalage vertical du label du point
-  couleurLabel?: string // Couleur du label du point
-  delta?: number // Delta pour l'arc de cercle autour d'un point
-  longueur?: number // Longueur pour la règle ou le compas
-  vecteur?: boolean // Si true, on applique un style vecteur pour tracer un segment
-  codage?: string // Code pour le codage
-  rayon?: number // Rayon pour le codage d'angle
 }
 
-type OptionsTexte = {
+export type OptionsOutil = OptionsIep & {
+}
+
+export type OptionsOutilMesure = OptionsOutil & {
+  longueur?: number // Longueur pour la règle ou le compas
+  codage?: string // Code pour le codage
+}
+
+export type OptionsRegle = OptionsOutilMesure & {
+}
+
+export type OptionsCompas = OptionsOutilMesure & {
+  rayon?: number // Rayon du cercle tracé par le compas
+  delta?: number // Delta pour l'arc de cercle autour d'un point
+  sens?: number // Sens de la rotation
+  couleurCompas?: string // Couleur du compas
+}
+
+export type OptionsPoint = OptionsIep & {
+  label?: string // Label du point
+  couleurLabel?: string // Couleur du label du point
+  couleurPoint?: string // Couleur du nom des points
+  dx?: number // Décalage horizontal du label du point
+  dy?: number // Décalage vertical du label du point
+}
+
+export type OptionsTracer = OptionsIep & {
+  vecteur?: boolean
+}
+
+export type OptionsTexte = {
   police?: string
   taille?: number
   couleur?: string
@@ -439,7 +453,7 @@ export default class Alea2iep {
     this.deplacer('rapporteur', A, options)
   }
 
-  rotation (outil: StringOutil, angle: number | PointAbstrait, options: OptionsIep = {}) {
+  rotation (outil: StringOutil, angle: number | PointAbstrait, options: OptionsCompas = {}) {
     options.tempo = options.tempo ?? this.tempo
     options.sens = options.sens ?? Math.round(this.vitesse / 2)
     let angleDeRotation: number
@@ -553,7 +567,7 @@ export default class Alea2iep {
  * @param {PointAbstrait} A
  * @param {objet} [options] Défaut : { dx = 0.1, dy, label = A.nom, tempo = this.tempo, couleur = this.couleurPoint, couleurLabel = this.couleurTexte, id }
  */
-  pointCreer (A: PointAbstrait, options: OptionsIep = {}) {
+  pointCreer (A: PointAbstrait, options: OptionsPoint = {}) {
     options.label = options.label ?? A.nom
     options.couleur = options.couleur ?? this.couleurPoint
     options.tempo = options.tempo ?? this.tempo
@@ -642,7 +656,7 @@ export default class Alea2iep {
    * @param {string} nom
    * @param {objet} [options] dx pour le déplacement vertical du nom du point, dy pour le déplacemetn horizontal, couleur: this.couleurPoint, tempo: this.tempo
    */
-  pointNommer (A: PointAbstrait, nom: string, options: OptionsIep = {}) {
+  pointNommer (A: PointAbstrait, nom: string, options: OptionsPoint = {}) {
     // const coordonneesTexte = ''
     const M = point(A.x, A.y)
     if (options.dx) {
@@ -752,7 +766,7 @@ export default class Alea2iep {
 * @param {objet} [options] Défaut : { tempo: this.tempo, sens: this.vitesse / 2, epaisseur: this.epaisseur, couleur: this.couleurCompas, pointilles: this.pointilles }
 * @return {id}
 */
-  compasTracerArc2Angles (angle1: number, angle2: number, options: OptionsIep = {}) {
+  compasTracerArc2Angles (angle1: number, angle2: number, options: OptionsCompas = {}) {
     options.pointilles = options.pointilles ?? this.pointilles
     options.tempo = options.tempo ?? this.tempo
     options.sens = options.sens ?? this.vitesse / 2
@@ -786,7 +800,7 @@ export default class Alea2iep {
 * @param {objet} [options] Défaut : { delta: 10, tempo: this.tempo, sens: this.vitesse / 2, epaisseur: this.epaisseur, couleur: this.couleurCompas, pointilles: this.pointilles }
 * @return {id}
 */
-  compasTracerArcCentrePoint (centre: PointAbstrait, point: PointAbstrait, options: OptionsIep = {}) {
+  compasTracerArcCentrePoint (centre: PointAbstrait, point: PointAbstrait, options: OptionsCompas = {}) {
     options.delta = options.delta ?? 10
     this.compasMontrer(this.compas.position, options)
     this.compasDeplacer(centre, options)
@@ -982,7 +996,7 @@ export default class Alea2iep {
  * @param {PointAbstrait} A Direction
  * @param {objet} [options] Défaut {longueur: this.regle.longueur, tempo : this.tempo, vitesse: this.vitesse, sens: this.vitesse / 2}
  */
-  regleDemiDroiteOriginePoint (O: PointAbstrait, A: PointAbstrait, options: OptionsIep = {}) {
+  regleDemiDroiteOriginePoint (O: PointAbstrait, A: PointAbstrait, options: OptionsRegle = {}) {
     options.longueur = options.longueur ?? this.regle.longueur
     const M = pointSurSegment(O, A, options.longueur)
     this.regleSegment(O, M, options)
@@ -994,7 +1008,7 @@ export default class Alea2iep {
    * @param {PointAbstrait} B
    * @param {objet} [options] Défaut {longueur: this.regle.longueur, tempo : this.tempo, vitesse: this.vitesse, sens: this.vitesse / 2}
    */
-  regleDroite (A: PointAbstrait, B: PointAbstrait, options: OptionsIep = {}) {
+  regleDroite (A: PointAbstrait, B: PointAbstrait, options: OptionsRegle = {}) {
     options.longueur = options.longueur ?? this.regle.longueur
     const M = homothetie(B, A, (-(options.longueur) * 0.5 + longueur(A, B) * 0.5) / longueur(A, B))
     const N = homothetie(A, B, (-(options.longueur) * 0.5 + longueur(A, B) * 0.5) / longueur(A, B))
@@ -1015,7 +1029,7 @@ export default class Alea2iep {
  * @param {PointAbstrait} B
  * @param {objet} [options] Défaut {longueur: this.regle.longueur - 3, tempo: this.tempo, vitesse: this.vitesse, sens: this.vitesse / 2}
  */
-  regleProlongerSegment (A: PointAbstrait, B: PointAbstrait, options: OptionsIep = {}) {
+  regleProlongerSegment (A: PointAbstrait, B: PointAbstrait, options: OptionsRegle = {}) {
     options.longueur = options.longueur ?? (this.regle.longueur - 3)
     const longueur = options.longueur
     if (longueur > 0) {
@@ -1041,7 +1055,7 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut { tempo: this.tempo, vitesse: this.vitesse, epaisseur: this.epaisseur, couleur: this.couleur, pointilles: this.pointilles, vecteur: false }
  * @return {id} id utilisée pour le tracé
  */
-  tracer (B: PointAbstrait, options: OptionsIep = {}) {
+  tracer (B: PointAbstrait, options: OptionsTracer = {}) {
     options.tempo = options.tempo ?? this.tempo
     options.vitesse = options.vitesse ?? this.vitesse
     options.epaisseur = options.epaisseur ?? this.epaisseur
@@ -1218,7 +1232,7 @@ export default class Alea2iep {
       stringOptions += ` taille="${optionsTexte.taille}"`
     }
     let codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" id="${this.idIEP}" mouvement="creer" objet="texte" />`
-    codeXML += `\n<action ${policeTexte} couleur="${optionsTexte.couleur || optionsIep.couleurTexte || this.couleurTexte}" texte="${texte}" id="${this.idIEP}" mouvement="ecrire" objet="texte" ${stringOptions} tempo="${optionsIep.tempo}" />`
+    codeXML += `\n<action ${policeTexte} couleur="${optionsTexte.couleur || this.couleurTexte}" texte="${texte}" id="${this.idIEP}" mouvement="ecrire" objet="texte" ${stringOptions} tempo="${optionsIep.tempo}" />`
     this.liste_script.push(codeXML)
     return this.idIEP
   }
@@ -1295,9 +1309,9 @@ export default class Alea2iep {
    * @param {objet} [options] si les deux premiers arguments étaient des points. Défaut : { tempo: this.tempo, couleur: this.couleurCodage, codage: '//', }
    * @return {id}
   */
-  segmentCodage (arg1: Segment | PointAbstrait, arg2?: OptionsIep | PointAbstrait, arg3?: OptionsIep) {
+  segmentCodage (arg1: Segment | PointAbstrait, arg2?: OptionsRegle | PointAbstrait, arg3?: OptionsRegle) {
     let s: Segment
-    let options: OptionsIep = {}
+    let options: OptionsRegle = {}
     if (arg1 instanceof Segment) {
       s = arg1
       if (arg2 instanceof PointAbstrait) {
@@ -1357,7 +1371,7 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : {longueur : 0.3, couleur: this.couleurCodage}
    * @return {array} [idTrait1, idTrait2]
    */
-  codageAngleDroit (A: PointAbstrait, B: PointAbstrait, C: PointAbstrait, options: OptionsIep = {}) {
+  codageAngleDroit (A: PointAbstrait, B: PointAbstrait, C: PointAbstrait, options: OptionsRegle = {}) {
     options.longueur = options.longueur ?? 0.3
     options.couleur = options.couleur ?? this.couleurCodage
     this.crayonMontrer()
@@ -1393,7 +1407,7 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { rayon : 1, couleur: this.couleurCodage, codage: 'plein'}
    * @return {id} L'identifiant correspond à l'identifiant des 3 points de l'angle séparés par _
    */
-  angleCodage (B: PointAbstrait, A: PointAbstrait, C: PointAbstrait, options: OptionsIep = {}) {
+  angleCodage (B: PointAbstrait, A: PointAbstrait, C: PointAbstrait, options: OptionsCompas = {}) {
     options.couleur = options.couleur ?? this.couleurCodage
     options.codage = options.codage ?? 'plein'
     options.rayon = options.rayon ?? 1
