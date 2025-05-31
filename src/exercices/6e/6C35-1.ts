@@ -7,6 +7,7 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { premiereLettreEnMajuscule } from '../../lib/outils/outilString'
 import { premierAvec } from '../../lib/outils/primalite'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 export const titre = 'Modéliser des problèmes niveau 2'
 export const interactifReady = true
@@ -523,21 +524,19 @@ const partageEquitable: FonctionProbleme = (interactif = false, typeQuestion: Qu
     Réponse : ${prenom} a zone3 amis.`
     const barre = new SchemaEnBoite({
       topBraces: [
-        { start: 1, end: 13, text: 'zone0' }
+        { start: 1, end: 9, text: 'zone0 fois', type: 'curl' }
       ],
       topBar: [
-        { color: 'lightgray', length: 4, content: 'zone1' },
-        { color: 'lightgray', length: 4, content: '\\ldots' },
-        { color: 'lightgray', length: 4, content: '\\ldots' }
+        { color: 'lightgray', length: 1, content: 'zone1', options: { style: ' border-right: dashed 1px;' } },
+        { color: 'lightgray', length: 7, content: ' \\ldots', options: { justify: 'start', style: 'border-left: none;' } },
       ],
       bottomBar: [
-        { color: 'lightgray', length: 3, content: 'zone2' },
-        { color: 'lightgray', length: 3, content: '\\ldots' },
-        { color: 'lightgray', length: 3, content: '\\ldots' },
-        { color: 'lightgray', length: 3, content: texNombre(nombrePartsRestantes, 0) }
+        { color: 'lightgray', length: 2, content: 'zone2', options: { style: ' border-right: dashed 1px;' } },
+        { color: 'lightgray', length: 5, content: ' \\ldots', options: { justify: 'start', style: ' border-left: none;' } },
+        { color: 'lightgray', length: 1, content: texNombre(nombrePartsRestantes, 0) }
       ],
       bottomBraces: [
-        { start: 1, end: 10, text: 'zone3' }
+        { start: 1, end: 8, text: 'zone3 fois', type: 'curl' }
       ]
     })
 
@@ -553,9 +552,11 @@ const partageEquitable: FonctionProbleme = (interactif = false, typeQuestion: Qu
         enonce = enonce.replace(`zone${i}`, `$${texNombre(reponse[i], 2)}$`)
       } else if (typeQuestion === 'énoncé') {
         if (barre.topBar != null) {
-          const bar = barre.topBar.findIndex(b => b.content.includes(`zone${i}`))
-          if (bar !== -1) {
-            barre.topBar[bar].content = barre.topBar[bar].content.replace(`zone${i}`, `$${texNombre(reponse[i], 2)}$`)
+          const bar = barre.topBar.filter(b => b.content.includes(`zone${i}`))
+          if (bar.length > 0) {
+            barre.topBar.forEach(b => {
+              b.content = b.content.replace(`zone${i}`, `$${texNombre(reponse[i], 2)}$`)
+            })
           }
         }
         if (barre.bottomBar != null) {
@@ -632,30 +633,30 @@ function genereEnonces (exercice: Exercice, typeQuestion: QuestionType, startInt
   const barreCorr = new SchemaEnBoite({ topBraces: barre.topBraces ? JSON.parse(JSON.stringify(barre.topBraces)) : undefined, bottomBraces: barre.bottomBraces ? JSON.parse(JSON.stringify(barre.bottomBraces)) : undefined, topBar: JSON.parse(JSON.stringify(barre.topBar)), bottomBar: JSON.parse(JSON.stringify(barre.bottomBar)) })
   for (let k = 0; k < 4; k++) {
     if (enonceCorr.includes(`zone${k}`)) {
-      enonceCorr = enonceCorr.replaceAll(`zone${k}`, `$${texNombre(reponse[k], 2)}$`)
+      enonceCorr = enonceCorr.replaceAll(`zone${k}`, `$${miseEnEvidence(texNombre(reponse[k], 2))}$`)
     }
     if (barreCorr.topBraces != null) {
       const brace = barreCorr.topBraces.findIndex(b => b.text.includes(`zone${k}`))
       if (brace !== -1) {
-        barreCorr.topBraces[brace].text = barreCorr.topBraces[brace].text.replace(`zone${k}`, `$${texNombre(reponse[k], 2)}$`)
+        barreCorr.topBraces[brace].text = barreCorr.topBraces[brace].text.replace(`zone${k}`, `$${miseEnEvidence(texNombre(reponse[k], 2))}$`)
       }
     }
     if (barreCorr.bottomBraces != null) {
       const brace = barreCorr.bottomBraces.findIndex(b => b.text.includes(`zone${k}`))
       if (brace !== -1) {
-        barreCorr.bottomBraces[brace].text = barreCorr.bottomBraces[brace].text.replace(`zone${k}`, `$${texNombre(reponse[k], 2)}$`)
+        barreCorr.bottomBraces[brace].text = barreCorr.bottomBraces[brace].text.replace(`zone${k}`, `$${miseEnEvidence(texNombre(reponse[k], 2))}$`)
       }
     }
     if (barreCorr.topBar != null) {
       const bar = barreCorr.topBar.findIndex(b => b.content.includes(`zone${k}`))
       if (bar !== -1) {
-        barreCorr.topBar[bar].content = barreCorr.topBar[bar].content.replace(`zone${k}`, `$${texNombre(reponse[k], 2)}$`)
+        barreCorr.topBar[bar].content = barreCorr.topBar[bar].content.replace(`zone${k}`, `$${miseEnEvidence(texNombre(reponse[k], 2))}$`)
       }
     }
     if (barreCorr.bottomBar != null) {
       const bar = barreCorr.bottomBar.findIndex(b => b.content.includes(`zone${k}`))
       if (bar !== -1) {
-        barreCorr.bottomBar[bar].content = barreCorr.bottomBar[bar].content.replace(`zone${k}`, `$${texNombre(reponse[k], 2)}$`)
+        barreCorr.bottomBar[bar].content = barreCorr.bottomBar[bar].content.replace(`zone${k}`, `$${miseEnEvidence(texNombre(reponse[k], 2))}$`)
       }
     }
   }
@@ -674,7 +675,7 @@ ${barreCorr.display()}`
   for (let k = 0; k < 4; k++) {
     if (enonce.includes(`zone${k}`)) {
       if (interactif && exercice != null) {
-        enonce = enonce.replace(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
+        enonce = enonce.replaceAll(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
         handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
         i++
       } else {
@@ -685,53 +686,73 @@ ${barreCorr.display()}`
   }
   for (let k = 0; k < 4; k++) {
     if (barre.topBraces != null) {
-      const brace = barre.topBraces.findIndex(b => b.text.includes(`zone${k}`))
-      if (brace !== -1) {
+      const braces = barre.topBraces.filter(b => b.text.includes(`zone${k}`))
+      if (braces.length > 0) {
         if (interactif && exercice != null) {
-          barre.topBraces[brace].text = barre.topBraces[brace].text.replace(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
-          handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          braces.forEach(b => {
+            b.text = b.text.replace(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
+            handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          })
           i++
         } else {
-          barre.topBraces[brace].text = barre.topBraces[brace].text.replace(`zone${k}`, '\\ldots')
+          braces.forEach(b => {
+            b.text = b.text.replace(`zone${k}`, '\\ldots')
+          }
+          )
           i++
         }
       }
     }
     if (barre.bottomBraces != null) {
-      const brace = barre.bottomBraces.findIndex(b => b.text.includes(`zone${k}`))
-      if (brace !== -1) {
+      const braces = barre.bottomBraces.filter(b => b.text.includes(`zone${k}`))
+      if (braces.length > 0) {
         if (interactif && exercice != null) {
-          barre.bottomBraces[brace].text = barre.bottomBraces[brace].text.replace(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
-          handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          braces.forEach(b => {
+            b.text = b.text.replace(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
+            handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          })
           i++
         } else {
-          barre.bottomBraces[brace].text = barre.bottomBraces[brace].text.replace(`zone${k}`, '\\ldots')
+          braces.forEach(b => {
+            b.text = b.text.replace(`zone${k}`, '\\ldots')
+          })
           i++
         }
       }
     }
     if (barre.topBar != null) {
-      const bar = barre.topBar.findIndex(b => b.content.includes(`zone${k}`))
-      if (bar !== -1) {
+      const bars = barre.topBar.filter(b => b.content.includes(`zone${k}`))
+      if (bars.length > 0) {
         if (interactif && exercice != null) {
-          barre.topBar[bar].content = ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite')
-          handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          bars.forEach(b => {
+            b.content = b.content.replace(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
+            handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          }
+          )
           i++
         } else {
-          barre.topBar[bar].content = '\\ldots'
+          bars.forEach(b => {
+            b.content = b.content.replace(`zone${k}`, '\\ldots')
+          }
+          )
           i++
         }
       }
     }
     if (barre.bottomBar != null) {
-      const bar = barre.bottomBar.findIndex(b => b.content.includes(`zone${k}`))
-      if (bar !== -1) {
+      const bars = barre.bottomBar.filter(b => b.content.includes(`zone${k}`))
+      if (bars.length > 0) {
         if (interactif && exercice != null) {
-          barre.bottomBar[bar].content = ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite')
-          handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          bars.forEach(b => {
+            b.content = b.content.replace(`zone${k}`, ajouteChampTexteMathLive(exercice, i, 'schemaEnBoite'))
+            handleAnswers(exercice, i, { reponse: { value: texNombre(reponse[k], 2), options: { noFeedback: true } } })
+          })
           i++
         } else {
-          barre.bottomBar[bar].content = '\\ldots'
+          bars.forEach(b => {
+            b.content = b.content.replace(`zone${k}`, '\\ldots')
+          }
+          )
           i++
         }
       }
