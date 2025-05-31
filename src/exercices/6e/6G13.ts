@@ -403,7 +403,7 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
         anim.compasMontrer(A)
         anim.compasEcarterAvecRegle(segment(A, C).longueur)
         anim.regleMasquer()
-        anim.compasTracerArcCentrePoint(A, C, 40)
+        anim.compasTracerArcCentrePoint(A, C, { tempo: 40 })
         anim.compasMasquer()
 
         anim.crayonMontrer(C)
@@ -418,7 +418,7 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
         anim.compasMontrer(C)
         anim.compasEcarterAvecRegle(segment(A, B).longueur)
         anim.regleMasquer()
-        anim.compasTracerArcCentrePoint(C, D, 40)
+        anim.compasTracerArcCentrePoint(C, D, { tempo: 40 })
         anim.compasMasquer()
         anim.codageAngleDroit(B, C, D)
 
@@ -438,10 +438,10 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
         anim.compasMontrer(A)
         anim.compasEcarterAvecRegle(segment(A, B).longueur)
         anim.regleMasquer()
-        anim.compasTracerArcCentrePoint(A, B, 40)
+        anim.compasTracerArcCentrePoint(A, B, { tempo: 40 })
         anim.compasEcarterAvecRegle(segment(C, B).longueur)
         anim.regleMasquer()
-        anim.compasTracerArcCentrePoint(C, B, 40)
+        anim.compasTracerArcCentrePoint(C, B, { tempo: 40 })
         anim.compasMasquer()
 
         anim.crayonMontrer(B)
@@ -454,12 +454,12 @@ export default class TracerQuadrilatèresParticuliers extends Exercice {
         anim.compasMontrer(A)
         anim.compasEcarterAvecRegle(segment(A, D).longueur)
         anim.regleMasquer()
-        anim.compasTracerArcCentrePoint(A, D, 40)
+        anim.compasTracerArcCentrePoint(A, D, { tempo: 40 })
 
         anim.compasMontrer(C)
         anim.compasEcarterAvecRegle(segment(C, D).longueur)
         anim.regleMasquer()
-        anim.compasTracerArcCentrePoint(C, D, 40)
+        anim.compasTracerArcCentrePoint(C, D, { tempo: 40 })
         anim.compasMasquer()
 
         anim.crayonMontrer()
