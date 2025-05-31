@@ -120,43 +120,43 @@ export default class Alea2iep {
   rapporteur: Rapporteur
   compas: Compas
   xml: string // Code XML de l'animation
-  symetrieAxialePoint: typeof symetrieAxialePoint
-  parallelogramme3sommetsConsecutifs: typeof parallelogramme3sommetsConsecutifs
-  parallelogrammeAngleCentre: typeof parallelogrammeAngleCentre
-  partageSegment: typeof partageSegment
-  paralleleRegleEquerre2points3epoint: typeof paralleleRegleEquerre2points3epoint
-  perpendiculaireRegleEquerre2points3epoint: typeof perpendiculaireRegleEquerre2points3epoint
-  perpendiculaireRegleEquerreDroitePoint: typeof perpendiculaireRegleEquerreDroitePoint
-  perpendiculaireRegleEquerrePointSurLaDroite: typeof perpendiculaireRegleEquerrePointSurLaDroite
-  perpendiculaireCompasPointSurLaDroite: typeof perpendiculaireCompasPointSurLaDroite
-  perpendiculaireCompasPoint: typeof perpendiculaireCompasPoint
-  paralleleRegleEquerreDroitePointAvecDescription: typeof paralleleRegleEquerreDroitePointAvecDescription
-  paralleleAuCompasAvecDescription: typeof paralleleAuCompasAvecDescription
-  paralleleAuCompas: typeof paralleleAuCompas
-  mediatriceAuCompas: typeof mediatriceAuCompas
-  mediatriceRegleEquerre: typeof mediatriceRegleEquerre
-  hauteur: typeof hauteur
-  mediane: typeof mediane
-  bissectriceAuCompas: typeof bissectriceAuCompas
-  cercleCirconscrit: typeof cercleCirconscrit
-  triangle3longueurs: typeof triangle3longueurs
-  triangleRectangleCoteHypotenuse: typeof triangleRectangleCoteHypotenuse
-  triangleRectangle2Cotes: typeof triangleRectangle2Cotes
-  triangle1longueur2angles: typeof triangle1longueur2angles
-  triangle2longueurs1angle: typeof triangle2longueurs1angle
-  triangleEquilateral2Sommets: typeof triangleEquilateral2Sommets
-  triangleEquilateral: typeof triangleEquilateral
-  carre1point1longueur: typeof carre1point1longueur
-  rotationPoint: typeof rotationPoint
-  translationPoint: typeof translationPoint
-  demiTourPoint: typeof demiTourPoint
-  homothetiePoint: typeof homothetiePoint
-  rotationPolygone: typeof rotationPolygone
-  symetrieAxialePolygone: typeof symetrieAxialePolygone
-  translationPolygone: typeof translationPolygone
-  demiTourPolygone: typeof demiTourPolygone
-  homothetiePolygone: typeof homothetiePolygone
-  parallelogramme2sommetsConsecutifsCentre: typeof parallelogramme2sommetsConsecutifsCentre
+  symetrieAxialePoint = symetrieAxialePoint
+  parallelogramme3sommetsConsecutifs = parallelogramme3sommetsConsecutifs
+  parallelogrammeAngleCentre = parallelogrammeAngleCentre
+  partageSegment = partageSegment
+  paralleleRegleEquerre2points3epoint = paralleleRegleEquerre2points3epoint
+  perpendiculaireRegleEquerre2points3epoint = perpendiculaireRegleEquerre2points3epoint
+  perpendiculaireRegleEquerreDroitePoint = perpendiculaireRegleEquerreDroitePoint
+  perpendiculaireRegleEquerrePointSurLaDroite = perpendiculaireRegleEquerrePointSurLaDroite
+  perpendiculaireCompasPointSurLaDroite = perpendiculaireCompasPointSurLaDroite
+  perpendiculaireCompasPoint = perpendiculaireCompasPoint
+  paralleleRegleEquerreDroitePointAvecDescription = paralleleRegleEquerreDroitePointAvecDescription
+  paralleleAuCompasAvecDescription = paralleleAuCompasAvecDescription
+  paralleleAuCompas = paralleleAuCompas
+  mediatriceAuCompas = mediatriceAuCompas
+  mediatriceRegleEquerre = mediatriceRegleEquerre
+  hauteur = hauteur
+  mediane = mediane
+  bissectriceAuCompas = bissectriceAuCompas
+  cercleCirconscrit = cercleCirconscrit
+  triangle3longueurs = triangle3longueurs
+  triangleRectangleCoteHypotenuse = triangleRectangleCoteHypotenuse
+  triangleRectangle2Cotes = triangleRectangle2Cotes
+  triangle1longueur2angles = triangle1longueur2angles
+  triangle2longueurs1angle = triangle2longueurs1angle
+  triangleEquilateral2Sommets = triangleEquilateral2Sommets
+  triangleEquilateral = triangleEquilateral
+  carre1point1longueur = carre1point1longueur
+  rotationPoint = rotationPoint
+  translationPoint = translationPoint
+  demiTourPoint = demiTourPoint
+  homothetiePoint = homothetiePoint
+  rotationPolygone = rotationPolygone
+  symetrieAxialePolygone = symetrieAxialePolygone
+  translationPolygone = translationPolygone
+  demiTourPolygone = demiTourPolygone
+  homothetiePolygone = homothetiePolygone
+  parallelogramme2sommetsConsecutifsCentre = parallelogramme2sommetsConsecutifsCentre
 
   constructor () {
     this.idIEP = 0 // Identifiant pour les tracés
@@ -232,44 +232,6 @@ export default class Alea2iep {
     }
 
     this.xml = ''
-    this.symetrieAxialePoint = symetrieAxialePoint
-    this.parallelogramme3sommetsConsecutifs = parallelogramme3sommetsConsecutifs
-    this.parallelogramme2sommetsConsecutifsCentre = parallelogramme2sommetsConsecutifsCentre
-    this.parallelogrammeAngleCentre = parallelogrammeAngleCentre
-    this.partageSegment = partageSegment
-    this.paralleleRegleEquerre2points3epoint = paralleleRegleEquerre2points3epoint
-    this.paralleleRegleEquerre2points3epoint = paralleleRegleEquerre2points3epoint
-    this.perpendiculaireRegleEquerre2points3epoint = perpendiculaireRegleEquerre2points3epoint
-    this.perpendiculaireRegleEquerreDroitePoint = perpendiculaireRegleEquerreDroitePoint
-    this.perpendiculaireRegleEquerrePointSurLaDroite = perpendiculaireRegleEquerrePointSurLaDroite
-    this.perpendiculaireCompasPointSurLaDroite = perpendiculaireCompasPointSurLaDroite
-    this.perpendiculaireCompasPoint = perpendiculaireCompasPoint
-    this.paralleleRegleEquerreDroitePointAvecDescription = paralleleRegleEquerreDroitePointAvecDescription
-    this.paralleleAuCompasAvecDescription = paralleleAuCompasAvecDescription
-    this.paralleleAuCompas = paralleleAuCompas
-    this.mediatriceAuCompas = mediatriceAuCompas
-    this.mediatriceRegleEquerre = mediatriceRegleEquerre
-    this.hauteur = hauteur
-    this.mediane = mediane
-    this.bissectriceAuCompas = bissectriceAuCompas
-    this.cercleCirconscrit = cercleCirconscrit
-    this.triangle3longueurs = triangle3longueurs
-    this.triangleRectangleCoteHypotenuse = triangleRectangleCoteHypotenuse
-    this.triangleRectangle2Cotes = triangleRectangle2Cotes
-    this.triangle1longueur2angles = triangle1longueur2angles
-    this.triangle2longueurs1angle = triangle2longueurs1angle
-    this.triangleEquilateral2Sommets = triangleEquilateral2Sommets
-    this.triangleEquilateral = triangleEquilateral
-    this.carre1point1longueur = carre1point1longueur
-    this.rotationPoint = rotationPoint
-    this.translationPoint = translationPoint
-    this.demiTourPoint = demiTourPoint
-    this.homothetiePoint = homothetiePoint
-    this.rotationPolygone = rotationPolygone
-    this.symetrieAxialePolygone = symetrieAxialePolygone
-    this.translationPolygone = translationPolygone
-    this.demiTourPolygone = demiTourPolygone
-    this.homothetiePolygone = homothetiePolygone
   }
   /** **** Fin du constructeur */
 
