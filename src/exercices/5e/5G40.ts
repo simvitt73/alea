@@ -161,13 +161,13 @@ export default class ConstructionsParallelogrammes extends Exercice {
             texteCorr += `En voici une utilisant l'égalité des longueurs : $${noms[0] + noms[1]}=${noms[3] + noms[2]}$ et $${noms[2] + noms[1]}=${noms[3] + noms[0]}$.<br>`
           }
           P = polygoneAvecNom(D, A, B)
-          animIEP.pointCreer(D, D.nom)
-          animIEP.pointCreer(A, A.nom)
-          animIEP.pointCreer(B, B.nom)
+          animIEP.pointCreer(D)
+          animIEP.pointCreer(A)
+          animIEP.pointCreer(B)
           animIEP.regleSegment(D, A)
           animIEP.regleSegment(A, B)
-          animIEP.regleMasquer(0)
-          animIEP.crayonMasquer(0)
+          animIEP.regleMasquer()
+          animIEP.crayonMasquer()
           animIEP.parallelogramme3sommetsConsecutifs(D, A, B, C.nom)
           objetsEnonce.push(tracePoint(A, B, D), P[1])
           objetsCorrection.push(p[0], p[1], traceCompas(D, C, 30), traceCompas(B, C, 30), codageSegments('||', 'red', A, B, D, C), codageSegments('///', 'blue', A, D, B, C))
