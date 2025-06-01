@@ -12,6 +12,7 @@ import {
   translation,
   translation2Points
 } from '../../lib/2d/transformations'
+import type { OptionsEquerre } from '../Alea2iep'
 import type Alea2iep from '../Alea2iep'
 
 /**
@@ -21,7 +22,7 @@ import type Alea2iep from '../Alea2iep'
    * @param {Point} C
    * @param {*} [options]
    */
-export const paralleleRegleEquerre2points3epoint = function (this: Alea2iep, A: PointAbstrait, B: PointAbstrait, C: PointAbstrait, options) {
+export const paralleleRegleEquerre2points3epoint = function (this: Alea2iep, A: PointAbstrait, B: PointAbstrait, C: PointAbstrait, options?: OptionsEquerre) {
   let G, D, H1
   // G est le point le plus à gauche, D le plus à droite et H le projeté de C sur (AB)
   // H1 est un point de (AB) à gauche de H, c'est là où seront la règle et l'équerre avant de glisser
@@ -76,13 +77,16 @@ export const paralleleRegleEquerre2points3epoint = function (this: Alea2iep, A: 
     } else {
       this.regleDeplacer(C12, { vitesse: 1000, tempo: 0 })
       this.regleRotation(H1, { sens: 1000, tempo: 0 })
+      this.regleMontrer()
     }
   }
-  this.regleMontrer()
   this.equerreDeplacer(C1, options)
   this.crayonMontrer()
   this.crayonDeplacer(C1, options)
   this.tracer(M, options)
+  this.regleMasquer()
+  this.equerreMasquer()
+  this.crayonMasquer()
 }
 /**
    * Trace la perpendiculaire à (AB) passant par C avec la règle et l'équerre. Peut prolonger le segment [AB] si le pied de la hauteur est trop éloigné des extrémités du segment
@@ -92,7 +96,7 @@ export const paralleleRegleEquerre2points3epoint = function (this: Alea2iep, A: 
    * @param {Point} C
    * @param {*} [options]
    */
-export const perpendiculaireRegleEquerre2points3epoint = function (A, B, C, description = false) {
+export const perpendiculaireRegleEquerre2points3epoint = function (this: Alea2iep, A: PointAbstrait, B: PointAbstrait, C: PointAbstrait, description = false) {
   const longueurRegle = this.regle.longueur
   const zoomEquerre = this.equerre.zoom
   const d = droite(A, B)
@@ -103,7 +107,7 @@ export const perpendiculaireRegleEquerre2points3epoint = function (A, B, C, desc
   if (C.estSur(droite(A, B))) {
     const H = rotation(C, C, 0)
     const dd = droiteParPointEtPerpendiculaire(C, d)
-    C = pointIntersectionLC(dd, cercle(H, 5.5), 1)
+    C = pointIntersectionLC(dd, cercle(H, 5.5))
     dist = 7.5
   } else {
     const H = projectionOrtho(C, d)
@@ -111,13 +115,12 @@ export const perpendiculaireRegleEquerre2points3epoint = function (A, B, C, desc
   }
   this.equerreZoom(dist * 100 / 7.5)
   this.regleModifierLongueur(Math.max(dist * 2, 15))
-  const P1 = homothetie(A, B, 1.2)
-  const P2 = homothetie(B, A, 1.2)
-  this.traitRapide(P1, P2)
-  this.pointsCreer(A, B, C)
   this.perpendiculaireRegleEquerreDroitePoint(d, C, description)
   this.equerreZoom(zoomEquerre)
   this.regleModifierLongueur(longueurRegle)
+  this.regleMasquer()
+  this.equerreMasquer()
+  this.crayonMasquer()
 }
 
 /**
@@ -181,7 +184,7 @@ export const perpendiculaireRegleEquerreDroitePoint = function (this: Alea2iep, 
  * @param {number} x  // pour choisir le point sur d : l'abscisse de A
  * @param {boolean} description
  */
-export const perpendiculaireRegleEquerrePointSurLaDroite = function (d, x, description) {
+export const perpendiculaireRegleEquerrePointSurLaDroite = function (this: Alea2iep, d: Droite, x: number, description?: boolean) {
   const A = pointSurDroite(d, x, 'A')
   const B = pointSurDroite(d, x + 5)
   const P1 = rotation(B, A, 90)
@@ -217,7 +220,7 @@ export const perpendiculaireRegleEquerrePointSurLaDroite = function (d, x, descr
  * @param {number} x // pour choisir le point sur d : l'abscisse de A
  * @param {boolean} description
  */
-export const perpendiculaireCompasPointSurLaDroite = function (d, x, description) {
+export const perpendiculaireCompasPointSurLaDroite = function (this: Alea2iep, d: Droite, x: number, description?: boolean) {
   const A = pointSurDroite(d, x, 'A')
   const B = pointSurDroite(d, x + 3, 'B')
   const C = pointSurDroite(d, x - 3, 'C')
@@ -232,7 +235,6 @@ export const perpendiculaireCompasPointSurLaDroite = function (d, x, description
   this.compasEcarter2Points(A, B)
   this.compasTracerArcCentrePoint(A, B, { couleur: 'lightgray', epaisseur: 1 })
   this.compasTracerArcCentrePoint(A, C, { couleur: 'lightgray', epaisseur: 1 })
-  this.pointsCreer(B, C, { tempo: 10 })
   if (description) {
     this.textePosition('2. Choisir un écartement de compas supérieur à la longueur AB.', 0, 9.3, { couleur: 'lightblue' })
   }
@@ -261,7 +263,7 @@ export const perpendiculaireCompasPointSurLaDroite = function (d, x, description
  * @param {number} x // pour choisir le point sur d : l'abscisse de A
  * @param {boolean} description
  */
-export const perpendiculaireCompasPoint = function (d, A, description) {
+export const perpendiculaireCompasPoint = function (this: Alea2iep, d: Droite, A: PointAbstrait, description?: boolean) {
   const H = projectionOrtho(A, d)
   const B = similitude(A, H, -90, 1.2, 'B')
   const C = homothetie(B, H, -0.7, 'C')
@@ -306,7 +308,7 @@ export const perpendiculaireCompasPoint = function (d, A, description) {
    * @param {boolean} dessus
    * @param {*} [options]
    */
-export const paralleleRegleEquerreDroitePointAvecDescription = function (A, B, M, dessus, description = true) {
+export const paralleleRegleEquerreDroitePointAvecDescription = function (this: Alea2iep, A: PointAbstrait, B: PointAbstrait, M: PointAbstrait, dessus: boolean, description = true) {
   A.nom = 'A'
   B.nom = 'B'
   M.nom = 'M'
@@ -318,7 +320,6 @@ export const paralleleRegleEquerreDroitePointAvecDescription = function (A, B, M
   const N = homothetie(M, H, 1.5)
   const P = homothetie(H, M, 2)
   this.tempo = 10
-  this.pointsCreer(A, B, M)
   this.pointMasquer(AA, BB)
   this.traitRapide(AA, BB)
   this.textePosition('Parallèle à une droite passant par un point (règle et équerre)', -10, 10.7, { couleur: 'green', taille: 4, tempo: 20 })
@@ -332,7 +333,7 @@ export const paralleleRegleEquerreDroitePointAvecDescription = function (A, B, M
   this.regleDeplacer(homothetie(rotation(B, A, 90), A, 1.5), { tempo: 20 })
   if (description) this.textePosition('Remarque : On peut tracer des pointillés pour matérialiser la position de la règle.', -9.5, 7.9, { couleur: 'pink', taille: 2, tempo: 10 })
   this.crayonMontrer(A)
-  this.tracer(homothetie(rotation(B, A, dessus ? 90 : -90), A, 1.5), { pointilles: 5 })
+  this.tracer(homothetie(rotation(B, A, dessus ? 90 : -90), A, 1.5))
   if (description) this.textePosition('3. Faire glisser l\'équerre le long de la règle jusqu\'au point M.', -9, 7.2, { couleur: 'lightblue', taille: 2, tempo: 10 })
   if (!dessus) {
     this.equerreRotation(d.angleAvecHorizontale - 90)
@@ -360,7 +361,7 @@ export const paralleleRegleEquerreDroitePointAvecDescription = function (A, B, M
  * @param {Point} C
  * @param {boolean} description
  */
-export const paralleleAuCompasAvecDescription = function (A, B, C, description = true) {
+export const paralleleAuCompasAvecDescription = function (this: Alea2iep, A: PointAbstrait, B: PointAbstrait, C: PointAbstrait, description = true) {
   const D = translation2Points(C, A, B, 'D')
   A.nom = 'A'
   B.nom = 'B'
@@ -370,7 +371,6 @@ export const paralleleAuCompasAvecDescription = function (A, B, C, description =
   const N = homothetie(C, D, 1.5)
   const P = homothetie(D, C, 1.5)
   this.tempo = 10
-  this.pointsCreer(A, B, C)
   this.traitRapide(AA, BB)
   this.textePosition('Parallèle à une droite passant par un point (compas et règle)', -10, 10.7, { couleur: 'green', taille: 4, tempo: 20 })
   if (description) this.textePosition('On veut construire la parallèle à (AB) passant par C à la règle et au compas.', -10, 10, { couleur: 'red', taille: 4, tempo: 30 })
@@ -398,7 +398,7 @@ export const paralleleAuCompasAvecDescription = function (A, B, C, description =
  * @param {Point} C
  * @param {boolean} description
  */
-export const paralleleAuCompas = function (A, B, C) {
+export const paralleleAuCompas = function (this: Alea2iep, A: PointAbstrait, B: PointAbstrait, C: PointAbstrait) {
   const D = translation2Points(C, A, B)
   const N = homothetie(C, D, 1.5)
   const P = homothetie(D, C, 1.5)
