@@ -68,6 +68,7 @@ export type OptionsOutilMesure = OptionsCrayon & {
   longueur?: number // Longueur pour la règle ou le compas
   codage?: string // Code pour le codage
   couleurCodage?: string // Couleur du codage
+  sens?: number // Sens de la rotation
 }
 
 export type OptionsRegle = OptionsOutilMesure & {
@@ -85,7 +86,6 @@ export type OptionsRapporteur = OptionsOutilMesure & {
 export type OptionsCompas = OptionsRapporteur & {
   rayon?: number // Rayon du cercle tracé par le compas
   delta?: number // Delta pour l'arc de cercle autour d'un point
-  sens?: number // Sens de la rotation
   couleurCompas?: string // Couleur du compas
 }
 
@@ -345,7 +345,7 @@ export default class Alea2iep {
   }
 
   montrer (outil: StringOutil, A: PointAbstrait, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? this.tempo
+    const tempo = options.tempo ?? this.tempo
     if (!this[outil].visibilite || this[outil].position !== A) { // On ajoute une ligne xml que si l'objet est caché ou doit apparaitre à un autre endroit
       let codeXML = ''
       let A1
@@ -357,7 +357,7 @@ export default class Alea2iep {
       if (this[outil].visibilite) { // S'il est déjà visible, montrer devient un déplacer
         this.deplacer(outil, A1, options)
       } else {
-        codeXML = `<action objet="${outil}" mouvement="montrer" abscisse="${this.x(A1)}" ordonnee="${this.y(A1)}" tempo="${options.tempo}" />`
+        codeXML = `<action objet="${outil}" mouvement="montrer" abscisse="${this.x(A1)}" ordonnee="${this.y(A1)}" tempo="${tempo}" />`
         this[outil].visibilite = true
       }
       this[outil].position = A1
@@ -390,9 +390,9 @@ export default class Alea2iep {
   }
 
   masquer (outil: StringOutil, options: OptionsOutil = {}) {
-    options.tempo = options.tempo ?? this.tempo
+    const tempo = options.tempo ?? this.tempo
     if (this[outil].visibilite) { // On ajoute une ligne xml que si l'objet est visible
-      const codeXML = `<action objet="${outil}" mouvement="masquer" tempo="${options.tempo}" />`
+      const codeXML = `<action objet="${outil}" mouvement="masquer" tempo="${tempo}" />`
       this[outil].visibilite = false
       this.liste_script.push(codeXML)
     }
@@ -423,10 +423,10 @@ export default class Alea2iep {
   }
 
   deplacer (outil: StringOutil, A: PointAbstrait, options: OptionsOutil = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    options.vitesse = options.vitesse ?? this.vitesse
+    const tempo = options.tempo ?? this.tempo
+    const vitesse = options.vitesse ?? this.vitesse
     if (this[outil].position !== A) { // On n'ajoute une commande xml que s'il y a vraiment un déplacement
-      const codeXML = `<action objet="${outil}" mouvement="translation" abscisse="${this.x(A)}" ordonnee="${this.y(A)}" tempo="${options.tempo}" vitesse="${options.vitesse}" />`
+      const codeXML = `<action objet="${outil}" mouvement="translation" abscisse="${this.x(A)}" ordonnee="${this.y(A)}" tempo="${tempo}" vitesse="${vitesse}" />`
       this[outil].position = A
       this.liste_script.push(codeXML)
     }
@@ -437,9 +437,9 @@ export default class Alea2iep {
   }
 
   texteDeplacer (id: string, A: PointAbstrait, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    options.vitesse = options.vitesse ?? this.vitesse
-    const codeXML = `<action objet="texte" id="${id}" mouvement="translation" abscisse="${this.x(A)}" ordonnee="${this.y(A)}" tempo="${options.tempo}" vitesse="${options.vitesse}" />`
+    const tempo = options.tempo ?? this.tempo
+    const vitesse = options.vitesse ?? this.vitesse
+    const codeXML = `<action objet="texte" id="${id}" mouvement="translation" abscisse="${this.x(A)}" ordonnee="${this.y(A)}" tempo="${tempo}" vitesse="${vitesse}" />`
     this.liste_script.push(codeXML)
   }
 
@@ -464,8 +464,8 @@ export default class Alea2iep {
   }
 
   rotation (outil: StringOutil, angle: number | PointAbstrait, options: OptionsCompas = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    options.sens = options.sens ?? Math.round(this.vitesse / 2)
+    const tempo = options.tempo ?? this.tempo
+    const sens = options.sens ?? Math.round(this.vitesse / 2)
     let angleDeRotation: number
     if (typeof angle === 'number') {
       angleDeRotation = angle
@@ -475,7 +475,7 @@ export default class Alea2iep {
     }
     if (this[outil].angle !== angle) { // Si la rotation est inutile, on ne la fait pas
       // Les angles de MathALEA2D et de IEP sont opposés !!!!!
-      const codeXML = `<action objet="${outil}" mouvement="rotation" angle="${-1 * angleDeRotation}" tempo="${options.tempo}" sens="${options.sens}" />`
+      const codeXML = `<action objet="${outil}" mouvement="rotation" angle="${-1 * angleDeRotation}" tempo="${tempo}" sens="${sens}" />`
       this[outil].angle = angleDeRotation
       if (typeof angleDeRotation === 'number' && isFinite(angleDeRotation)) {
         this.liste_script.push(codeXML)
@@ -515,9 +515,9 @@ export default class Alea2iep {
  * @param {objet} [options] tempo = 0 par défaut
  */
   zoom (outil: StringOutil, echelle: number, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? 0
+    const tempo = options.tempo ?? 0
     this[outil].zoom = echelle
-    this.liste_script.push(`<action echelle="${echelle}" mouvement="zoom" objet="${outil}" tempo="${options.tempo}" />`)
+    this.liste_script.push(`<action echelle="${echelle}" mouvement="zoom" objet="${outil}" tempo="${tempo}" />`)
   }
 
   /**
@@ -578,10 +578,10 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut : { dx = 0.1, dy, label = A.nom, tempo = this.tempo, couleur = this.couleurPoint, couleurLabel = this.couleurTexte, id }
  */
   pointCreer (A: PointAbstrait, options: OptionsPoint = {}) {
-    options.label = options.label ?? A.nom
-    options.couleur = options.couleur ?? this.couleurPoint
-    options.tempo = options.tempo ?? this.tempo
-    options.couleurLabel = options.couleurLabel ?? this.couleurTexte
+    const label = options.label ?? A.nom
+    const couleur = options.couleur ?? this.couleurPoint
+    const tempo = options.tempo ?? this.tempo
+    const couleurLabel = options.couleurLabel ?? this.couleurTexte
     if (options.id) {
       A.id = options.id
     } else {
@@ -589,8 +589,8 @@ export default class Alea2iep {
       A.id = this.idIEP
     }
     let codeXML
-    if (options.label) {
-      codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" couleur="${options.couleur}" id="${A.id}" mouvement="creer" objet="point" tempo="${options.tempo}"/>`
+    if (label) {
+      codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" couleur="${couleur}" id="${A.id}" mouvement="creer" objet="point" tempo="${tempo}"/>`
       // codeXML += `\n<action couleur="${couleurLabel}" nom="${label}" id="${this.idIEP}" mouvement="nommer" objet="point" tempo="${tempo}"  />`
       const M = point(A.x, A.y)
       if (options.dx) {
@@ -599,9 +599,9 @@ export default class Alea2iep {
       if (options.dy) {
         M.y += options.dy
       }
-      this.textePoint(`$${options.label}$`, M, { tempo: 0, couleur: options.couleurLabel })
+      this.textePoint(`$${label}$`, M, { tempo: 0, couleur: couleurLabel })
     } else {
-      codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" couleur="${options.couleur}" id="${A.id}" mouvement="creer" objet="point" tempo="${options.tempo}" />`
+      codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" couleur="${couleur}" id="${A.id}" mouvement="creer" objet="point" tempo="${tempo}" />`
     }
     this.liste_script.push(codeXML)
   }
@@ -642,8 +642,8 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut : { tempo: 0 }
  */
   pointMontrer (A: PointAbstrait, options: OptionsPoint = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action id="${A.id}" mouvement="montrer" objet="point" tempo="${options.tempo}" />`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action id="${A.id}" mouvement="montrer" objet="point" tempo="${tempo}" />`)
   }
 
   /**
@@ -654,10 +654,10 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { tempo: this.tempo, vitesse: this.vitesse }
    */
   pointDeplacer (A: PointAbstrait, x: number, y: number, options: OptionsPoint = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    options.vitesse = options.vitesse ?? this.vitesse
+    const tempo = options.tempo ?? this.tempo
+    const vitesse = options.vitesse ?? this.vitesse
     const B = point(x, y)
-    this.liste_script.push(`<action abscisse="${this.x(B)}" ordonnee="${this.y(B)}" id="${A.id}" mouvement="translation" objet="point" tempo="${options.tempo}" vitesse="${options.vitesse}" />`)
+    this.liste_script.push(`<action abscisse="${this.x(B)}" ordonnee="${this.y(B)}" id="${A.id}" mouvement="translation" objet="point" tempo="${tempo}" vitesse="${vitesse}" />`)
   }
 
   /**
@@ -690,8 +690,8 @@ export default class Alea2iep {
 * @param {objet} [options] Défaut : { tempo: this.tempo}
 */
   compasRetourner (options: OptionsCompas = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    const codeXML = `<action mouvement="retourner" objet="compas" tempo="${options.tempo}" />`
+    const tempo = options.tempo ?? this.tempo
+    const codeXML = `<action mouvement="retourner" objet="compas" tempo="${tempo}" />`
     if (this.compas.orientation === 'droite') {
       this.compas.orientation = 'gauche'
     } else {
@@ -706,9 +706,9 @@ export default class Alea2iep {
 * @param {objet} [options] Défaut : { tempo: this.tempo, vitesse: this.vitesse }
 */
   compasEcarter (l: number, options: OptionsCompas = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    options.vitesse = options.vitesse ?? this.vitesse
-    const codeXML = `<action ecart="${l * 30}" mouvement="ecarter" objet="compas" tempo="${options.tempo}" vitesse="${options.vitesse}" />`
+    const tempo = options.tempo ?? this.tempo
+    const vitesse = options.vitesse ?? this.vitesse
+    const codeXML = `<action ecart="${l * 30}" mouvement="ecarter" objet="compas" tempo="${tempo}" vitesse="${vitesse}" />`
     this.compas.ecartement = l
     this.liste_script.push(codeXML)
   }
@@ -748,9 +748,9 @@ export default class Alea2iep {
 * @param {objet} [options] Défaut : { tempo: this.tempo }
 */
   compasLever (options: OptionsCompas = {}) {
-    options.tempo = options.tempo ?? this.tempo
+    const tempo = options.tempo ?? this.tempo
     if (!this.compas.leve) { // On ne fait rien si le compas est déjà levé
-      const codeXML = `<action mouvement="lever" objet="compas" tempo="${options.tempo} />`
+      const codeXML = `<action mouvement="lever" objet="compas" tempo="${tempo} />`
       this.compas.leve = true
       this.liste_script.push(codeXML)
     }
@@ -761,9 +761,9 @@ export default class Alea2iep {
 * @param {objet} [options] Défaut : { tempo: this.tempo }
 */
   compasCoucher (options: OptionsCompas = {}) {
-    options.tempo = options.tempo ?? this.tempo
+    const tempo = options.tempo ?? this.tempo
     if (this.compas.leve) { // On ne fait rien si le compas est déjà levé
-      const codeXML = `<action mouvement="coucher" objet="compas" tempo="${options.tempo}" />`
+      const codeXML = `<action mouvement="coucher" objet="compas" tempo="${tempo}" />`
       this.compas.leve = false
       this.liste_script.push(codeXML)
     }
@@ -777,27 +777,26 @@ export default class Alea2iep {
 * @return {id}
 */
   compasTracerArc2Angles (angle1: number, angle2: number, options: OptionsCompas = {}) {
-    options.pointilles = options.pointilles ?? this.pointilles
-    options.tempo = options.tempo ?? this.tempo
-    options.sens = options.sens ?? this.vitesse / 2
-    options.epaisseur = options.epaisseur ?? this.epaisseur
-    options.couleurCompas = options.couleurCompas ?? this.couleurCompas
+    const tempo = options.tempo ?? this.tempo
+    const sens = options.sens ?? this.vitesse / 2
+    const epaisseur = options.epaisseur ?? this.epaisseur
+    const couleurCompas = options.couleurCompas ?? this.couleurCompas
     const pointillesTexte = options.pointilles ? 'pointille="tiret"' : ''
     this.idIEP += 1
     if (Math.abs(this.compas.angle - angle1) > Math.abs(this.compas.angle - angle2)) { // On cherche à commencer par le point le plus proche de la position courante du compas
       [angle1, angle2] = [angle2, angle1]
     }
-    let codeXML = `<action sens="${options.sens}" angle="${-angle1}" mouvement="rotation" objet="compas" tempo="${options.tempo}" />\n`
+    let codeXML = `<action sens="${sens}" angle="${-angle1}" mouvement="rotation" objet="compas" tempo="${tempo}" />\n`
     codeXML += '<action mouvement="lever" objet="compas" />\n'
-    codeXML += `<action sens="${options.sens}" angle="${-angle1}" mouvement="rotation" objet="compas" />\n`
+    codeXML += `<action sens="${sens}" angle="${-angle1}" mouvement="rotation" objet="compas" />\n`
     let sensTexte
     if (angle2 > angle1) {
-      sensTexte = options.sens
+      sensTexte = sens
     } else {
-      sensTexte = -1 * (options.sens)
+      sensTexte = -1 * (sens)
     }
-    codeXML += `<action couleur="${options.couleurCompas}" epaisseur="${options.epaisseur}" sens="${sensTexte}" debut="${-angle1}" fin="${-angle2}" mouvement="tracer" objet="compas"  ${pointillesTexte} id="${this.idIEP}" />\n`
-    codeXML += `<action mouvement="coucher" objet="compas" tempo="${options.tempo}"/>`
+    codeXML += `<action couleur="${couleurCompas}" epaisseur="${epaisseur}" sens="${sensTexte}" debut="${-angle1}" fin="${-angle2}" mouvement="tracer" objet="compas"  ${pointillesTexte} id="${this.idIEP}" />\n`
+    codeXML += `<action mouvement="coucher" objet="compas" tempo="${tempo}"/>`
     this.compas.angle = angle2
     this.liste_script.push(codeXML)
     return this.idIEP
@@ -811,13 +810,13 @@ export default class Alea2iep {
 * @return {id}
 */
   compasTracerArcCentrePoint (centre: PointAbstrait, point: PointAbstrait, options: OptionsCompas = {}) {
-    options.delta = options.delta ?? 10
+    const delta = options.delta ?? 10
     this.compasMontrer(this.compas.position, options)
     this.compasDeplacer(centre, options)
     const s = segment(centre, point)
     s.visibility = false
-    const angle1 = s.angleAvecHorizontale - options.delta
-    const angle2 = s.angleAvecHorizontale + options.delta
+    const angle1 = s.angleAvecHorizontale - delta
+    const angle2 = s.angleAvecHorizontale + delta
     if ((Math.abs(this.compas.ecartement - longueur(this.compas.position, point))) > 0.1) {
       this.compasEcarter(longueur(centre, point), options)
     }
@@ -849,9 +848,9 @@ export default class Alea2iep {
    * @param {*} options Défaut : { tempo: this.tempo, vitesse: this.vitesse }
    */
   requerreGlisserEquerre (deplacement: number, options: OptionsRequerre = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    options.vitesse = options.vitesse ?? this.vitesse
-    this.liste_script.push(`<action abscisse="${deplacement * 30}" mouvement="glisser" objet="requerre" tempo="${options.tempo}" vitesse="${options.vitesse}" />`)
+    const tempo = options.tempo ?? this.tempo
+    const vitesse = options.vitesse ?? this.vitesse
+    this.liste_script.push(`<action abscisse="${deplacement * 30}" mouvement="glisser" objet="requerre" tempo="${tempo}" vitesse="${vitesse}" />`)
   }
 
   /**
@@ -882,8 +881,8 @@ export default class Alea2iep {
    */
 
   rapporteurMasquerGraduationsExterieures (options: OptionsRapporteur = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action mouvement="masquer_nombres" objet="rapporteur" tempo="${options.tempo}"/>`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action mouvement="masquer_nombres" objet="rapporteur" tempo="${tempo}"/>`)
   }
 
   /**
@@ -891,8 +890,8 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { tempo: this.tempo }
    */
   rapporteurMontrerGraduationsExterieures (options: OptionsRapporteur = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action mouvement="montrer_nombres" objet="rapporteur" tempo="${options.tempo}"/>`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action mouvement="montrer_nombres" objet="rapporteur" tempo="${tempo}"/>`)
   }
 
   /**
@@ -900,8 +899,8 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { tempo: this.tempo }
    */
   rapporteurMasquerGraduationsInterieures (options: OptionsRapporteur = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action mouvement="vide" objet="rapporteur" tempo="${options.tempo}"/>`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action mouvement="vide" objet="rapporteur" tempo="${tempo}"/>`)
   }
 
   /**
@@ -909,8 +908,8 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { tempo: this.tempo }
    */
   rapporteurMontrerGraduationsInterieures (options: OptionsRapporteur = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action mouvement="graduations" objet="rapporteur" tempo="${options.tempo}"/>`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action mouvement="graduations" objet="rapporteur" tempo="${tempo}"/>`)
   }
 
   /**
@@ -976,8 +975,8 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut : { tempo: this.tempo }
  */
   regleMasquerGraduations (options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action mouvement="vide" objet="regle" tempo="${options.tempo}"/>`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action mouvement="vide" objet="regle" tempo="${tempo}"/>`)
   }
 
   /**
@@ -985,8 +984,8 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut : { tempo: this.tempo }
  */
   regleMontrerGraduations (options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action mouvement="graduations" objet="regle" tempo="${options.tempo}"/>`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action mouvement="graduations" objet="regle" tempo="${tempo}"/>`)
   }
 
   /**
@@ -995,9 +994,9 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { tempo: this.tempo }
    */
   regleModifierLongueur (longueur = 20, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? this.tempo
+    const tempo = options.tempo ?? this.tempo
     this.regle.longueur = longueur
-    this.liste_script.push(`<action mouvement="modifier_longueur" objet="regle" longueur="${this.regle.longueur}" tempo="${options.tempo}"/>`)
+    this.liste_script.push(`<action mouvement="modifier_longueur" objet="regle" longueur="${this.regle.longueur}" tempo="${tempo}"/>`)
   }
 
   /**
@@ -1007,8 +1006,8 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut {longueur: this.regle.longueur, tempo : this.tempo, vitesse: this.vitesse, sens: this.vitesse / 2}
  */
   regleDemiDroiteOriginePoint (O: PointAbstrait, A: PointAbstrait, options: OptionsRegle = {}) {
-    options.longueur = options.longueur ?? this.regle.longueur
-    const M = pointSurSegment(O, A, options.longueur)
+    const longueur = options.longueur ?? this.regle.longueur
+    const M = pointSurSegment(O, A, longueur)
     this.regleSegment(O, M, options)
   }
 
@@ -1019,9 +1018,9 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut {longueur: this.regle.longueur, tempo : this.tempo, vitesse: this.vitesse, sens: this.vitesse / 2}
    */
   regleDroite (A: PointAbstrait, B: PointAbstrait, options: OptionsRegle = {}) {
-    options.longueur = options.longueur ?? this.regle.longueur
-    const M = homothetie(B, A, (-(options.longueur) * 0.5 + longueur(A, B) * 0.5) / longueur(A, B))
-    const N = homothetie(A, B, (-(options.longueur) * 0.5 + longueur(A, B) * 0.5) / longueur(A, B))
+    const longueurRegle = options.longueur ?? this.regle.longueur
+    const M = homothetie(B, A, (-(longueurRegle) * 0.5 + longueur(A, B) * 0.5) / longueur(A, B))
+    const N = homothetie(A, B, (-(longueurRegle) * 0.5 + longueur(A, B) * 0.5) / longueur(A, B))
     if (this.x(A) <= this.x(B)) {
       this.regleMontrer(M)
       this.regleRotation(N, options)
@@ -1040,8 +1039,7 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut {longueur: this.regle.longueur - 3, tempo: this.tempo, vitesse: this.vitesse, sens: this.vitesse / 2}
  */
   regleProlongerSegment (A: PointAbstrait, B: PointAbstrait, options: OptionsRegle = {}) {
-    options.longueur = options.longueur ?? (this.regle.longueur - 3)
-    const longueur = options.longueur
+    const longueur = options.longueur ?? (this.regle.longueur - 3)
     if (longueur > 0) {
       const B1 = pointSurSegment(B, A, 3)
       const B2 = pointSurSegment(B, A, -longueur)
@@ -1066,15 +1064,15 @@ export default class Alea2iep {
  * @return {id} id utilisée pour le tracé
  */
   tracer (B: PointAbstrait, options: OptionsCrayon = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    options.vitesse = options.vitesse ?? this.vitesse
-    options.epaisseur = options.epaisseur ?? this.epaisseur
-    options.couleur = options.couleur ?? this.couleur
-    options.pointilles = options.pointilles ?? this.pointilles
-    const pointillesTexte = options.pointilles ? 'pointille="tiret"' : ''
+    const tempo = options.tempo ?? this.tempo
+    const vitesse = options.vitesse ?? this.vitesse
+    const epaisseur = options.epaisseur ?? this.epaisseur
+    const couleur = options.couleur ?? this.couleur
+    const pointilles = options.pointilles ?? this.pointilles
+    const pointillesTexte = pointilles ? 'pointille="tiret"' : ''
     const vecteurTexte = options.vecteur ? 'style="vecteur"' : ''
     this.idIEP += 1
-    const codeXML = `<action abscisse="${this.x(B)}" ordonnee="${this.y(B)}" epaisseur="${options.epaisseur}" couleur="${options.couleur}" mouvement="tracer" objet="crayon" tempo="${options.tempo}" vitesse="${options.vitesse}"  ${pointillesTexte} ${vecteurTexte} id="${this.idIEP}" />`
+    const codeXML = `<action abscisse="${this.x(B)}" ordonnee="${this.y(B)}" epaisseur="${epaisseur}" couleur="${couleur}" mouvement="tracer" objet="crayon" tempo="${tempo}" vitesse="${vitesse}"  ${pointillesTexte} ${vecteurTexte} id="${this.idIEP}" />`
     this.crayon.position = B
     this.liste_script.push(codeXML)
     return this.idIEP
@@ -1100,10 +1098,10 @@ export default class Alea2iep {
    * @return {id} id utilisée pour le tracé
    */
   traitRapide (A: PointAbstrait, B: PointAbstrait, options: OptionsCrayon = {}) {
-    options.tempo = 0
-    options.vitesse = 10000
-    this.crayonDeplacer(A, options)
-    return this.tracer(B, options)
+    const tempo = 0
+    const vitesse = 10000
+    this.crayonDeplacer(A, Object.assign(options, { tempo, vitesse }))
+    return this.tracer(B, Object.assign(options, { tempo, vitesse }))
   }
 
   /**
@@ -1112,8 +1110,8 @@ export default class Alea2iep {
  * @param {objet} [options] Défaut : { vitesse: 200 }
  */
   traitMasquer (id: number, options: OptionsCrayon = {}) {
-    options.vitesse = options.vitesse ?? 200
-    this.liste_script.push(`<action mouvement="masquer" objet="trait" id="${id}" vitesse="${options.vitesse}" />`)
+    const vitesse = options.vitesse ?? 200
+    this.liste_script.push(`<action mouvement="masquer" objet="trait" id="${id}" vitesse="${vitesse}" />`)
   }
 
   /**
@@ -1207,7 +1205,7 @@ export default class Alea2iep {
    * @return {id}
    */
   textePoint (texte: string, A: PointAbstrait, options: OptionsTexte = {}) {
-    options.tempo = options.tempo ?? this.tempo
+    const tempo = options.tempo ?? this.tempo
     this.idIEP++
     const policeTexte = options.police ? `police="${options.police}"` : ''
     let stringOptions = ''
@@ -1242,7 +1240,7 @@ export default class Alea2iep {
       stringOptions += ` taille="${options.taille}"`
     }
     let codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" id="${this.idIEP}" mouvement="creer" objet="texte" />`
-    codeXML += `\n<action ${policeTexte} couleur="${options.couleur || this.couleurTexte}" texte="${texte}" id="${this.idIEP}" mouvement="ecrire" objet="texte" ${stringOptions} tempo="${options.tempo}" />`
+    codeXML += `\n<action ${policeTexte} couleur="${options.couleur || this.couleurTexte}" texte="${texte}" id="${this.idIEP}" mouvement="ecrire" objet="texte" ${stringOptions} tempo="${tempo}" />`
     this.liste_script.push(codeXML)
     return this.idIEP
   }
@@ -1342,13 +1340,13 @@ export default class Alea2iep {
         options = arg3
       }
     }
-    options.tempo = options.tempo ?? this.tempo
-    options.couleur = options.couleur ?? this.couleurCodage
-    options.codage = options.codage ?? '\\'
+    const tempo = options.tempo ?? this.tempo
+    const couleur = options.couleur ?? this.couleurCodage
+    const codage = options.codage ?? '\\'
     this.idIEP++
     const id = this.idIEP
     const M = milieu(s.extremite1, s.extremite2)
-    const codeXML = `<action abscisse="${this.x(M)}" ordonnee="${this.y(M)}" forme="${options.codage}"  couleur="${options.couleur}" id="${id}" tempo="${options.tempo}" mouvement="creer" objet="longueur" />`
+    const codeXML = `<action abscisse="${this.x(M)}" ordonnee="${this.y(M)}" forme="${codage}"  couleur="${couleur}" id="${id}" tempo="${tempo}" mouvement="creer" objet="longueur" />`
     this.liste_script.push(codeXML)
     return id
   }
@@ -1359,8 +1357,8 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { tempo: this.tempo }
    */
   segmentCodageMasquer (id: number, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action id="${id}" mouvement="masquer" objet="longueur" tempo="${options.tempo}" />`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action id="${id}" mouvement="masquer" objet="longueur" tempo="${tempo}" />`)
   }
 
   /**
@@ -1369,8 +1367,8 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut : { tempo: this.tempo }
    */
   segmentCodageMontrer (id: number, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? this.tempo
-    this.liste_script.push(`<action id="${id}" mouvement="montrer" objet="longueur" tempo="${options.tempo}" />`)
+    const tempo = options.tempo ?? this.tempo
+    this.liste_script.push(`<action id="${id}" mouvement="montrer" objet="longueur" tempo="${tempo}" />`)
   }
 
   /**
@@ -1382,16 +1380,16 @@ export default class Alea2iep {
    * @return {array} [idTrait1, idTrait2]
    */
   codageAngleDroit (A: PointAbstrait, B: PointAbstrait, C: PointAbstrait, options: OptionsRegle = {}) {
-    options.longueur = options.longueur ?? 0.3
-    options.couleur = options.couleur ?? this.couleurCodage
+    const longueur = options.longueur ?? 0.3
+    const couleur = options.couleur ?? this.couleurCodage
     this.crayonMontrer()
-    const C1 = pointSurSegment(B, C, options.longueur)
-    const A1 = pointSurSegment(B, A, options.longueur)
+    const C1 = pointSurSegment(B, C, longueur)
+    const A1 = pointSurSegment(B, A, longueur)
     const M = translation2Points(A1, B, C1)
     const options1 = { ...options } // On recopie options pour pouvoir en changer le tempo du premier tracé
     options1.tempo = 0
-    const trait1 = this.trait(C1, M, options1)
-    const trait2 = this.trait(M, A1, options)
+    const trait1 = this.trait(C1, M, Object.assign(options1, { couleur }))
+    const trait2 = this.trait(M, A1, Object.assign(options, { couleur }))
     return [trait1, trait2]
   }
 
@@ -1401,9 +1399,9 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut { tempo: 0 }
    */
   codageAngleDroitMasquer (id: [number, number], options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? 0
-    this.traitMasquer(id[0], options)
-    this.traitMasquer(id[1], options)
+    const tempo = options.tempo ?? 0
+    this.traitMasquer(id[0], Object.assign(options, { tempo }))
+    this.traitMasquer(id[1], Object.assign(options, { tempo }))
   }
 
   /**
@@ -1418,10 +1416,10 @@ export default class Alea2iep {
    * @return {id} L'identifiant correspond à l'identifiant des 3 points de l'angle séparés par _
    */
   angleCodage (B: PointAbstrait, A: PointAbstrait, C: PointAbstrait, options: OptionsCompas = {}) {
-    options.couleur = options.couleur ?? this.couleurCodage
-    options.codage = options.codage ?? 'plein'
-    options.rayon = options.rayon ?? 1
-    options.tempo = options.tempo ?? this.tempo
+    const couleur = options.couleur ?? this.couleurCodage
+    const codage = options.codage ?? 'plein'
+    const rayon = options.rayon ?? 1
+    const tempo = options.tempo ?? this.tempo
     const id = B.id + '_' + A.id + '_' + C.id
     const d1 = droite(A, B)
     const d2 = droite(A, C)
@@ -1429,7 +1427,7 @@ export default class Alea2iep {
     d2.isVisible = false
     const angle1 = -d1.angleAvecHorizontale
     const angle2 = -d2.angleAvecHorizontale
-    const codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" rayon="${options.rayon * 30}" angle1="${angle1}" angle2="${angle2}" forme="${options.codage}"  couleur="${options.couleur}" id="${id}" tempo="${options.tempo}" mouvement="creer" objet="angle" />`
+    const codeXML = `<action abscisse="${this.x(A)}" ordonnee="${this.y(A)}" rayon="${rayon * 30}" angle1="${angle1}" angle2="${angle2}" forme="${codage}"  couleur="${couleur}" id="${id}" tempo="${tempo}" mouvement="creer" objet="angle" />`
     this.liste_script.push(codeXML)
     return id
   }
@@ -1442,9 +1440,9 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut { tempo: 0 }
    */
   angleCodageMasquer (B: PointAbstrait, A: PointAbstrait, C: PointAbstrait, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? 0
+    const tempo = options.tempo ?? 0
     const id = B.id + '_' + A.id + '_' + C.id
-    this.liste_script.push(`<action id="${id}" mouvement="masquer" objet="angle" tempo="${options.tempo}" />`)
+    this.liste_script.push(`<action id="${id}" mouvement="masquer" objet="angle" tempo="${tempo}" />`)
   }
 
   /**
@@ -1455,9 +1453,9 @@ export default class Alea2iep {
    * @param {objet} [options] Défaut { tempo: 0 }
    */
   angleCodageMontrer (B: PointAbstrait, A: PointAbstrait, C: PointAbstrait, options: OptionsIep = {}) {
-    options.tempo = options.tempo ?? 0
+    const tempo = options.tempo ?? 0
     const id = B.id + '_' + A.id + '_' + C.id
-    this.liste_script.push(`<action id="${id}" mouvement="montrer" objet="angle" tempo="${options.tempo}" />`)
+    this.liste_script.push(`<action id="${id}" mouvement="montrer" objet="angle" tempo="${tempo}" />`)
   }
 
   /**
