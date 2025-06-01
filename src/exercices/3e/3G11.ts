@@ -42,7 +42,7 @@ export default class ConstruireHomothetiePoint3e extends Exercice {
     this.sup2 = 3
   }
 
-  nouvelleVersion () {
+  nouvelleVersion (numeroExercice: number) {
     let plusieursCiblesPourUnPoint = true
     const listeRapports = [-2, -1.5, -0.5, 0.5, 1.5, 2]
     const choixCodage = ['OO', '|||', '//']
