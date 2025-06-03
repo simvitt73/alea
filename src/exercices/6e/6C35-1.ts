@@ -13,7 +13,7 @@ export const titre = 'Modéliser des problèmes niveau 2'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
-export const dateDePublication = '28/05/2025'
+export const dateDePublication = '3/06/2025'
 
 /**
  * Associer des problèmes à des modélisations en barres.
@@ -22,7 +22,7 @@ export const dateDePublication = '28/05/2025'
 export const uuid = '4e89c'
 
 export const refs = {
-  'fr-fr': [],
+  'fr-fr': ['6C35-1'],
   'fr-ch': []
 }
 
@@ -43,7 +43,7 @@ type ReponseType = [number, number, number, number]
  }
 
 type FonctionProbleme = {
-  (interactif?: boolean, typeQuestion?: QuestionType, decimaux?: boolean): { enonce: string, barre: SchemaEnBoite, reponses: ReponseType, type: string }
+  (interactif?: boolean, typeQuestion?: QuestionType, decimaux?: boolean): { enonce: string, barre: SchemaEnBoite, reponses: ReponseType }
 }
 
 // matériel des fonctions problèmes
@@ -115,7 +115,7 @@ const sommeTroisParties: FonctionProbleme = (interactif = false, typeQuestion = 
     const enonce = `${prenom} achète ${choix[0].nom} à zone0 €, ${choix[1].nom} à zone1 € et ${choix[2].nom} à zone2 €. Combien a-t-${pronom} dépensé au total ?<br><br>
     Réponse : ${prenom} a dépensé au total zone3 €.`
     const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
-    return { enonce, barre, reponses: [prixAchat[0], prixAchat[1], prixAchat[2], total], type: 'additif' }
+    return { enonce, barre, reponses: [prixAchat[0], prixAchat[1], prixAchat[2], total] }
   }
 
   /**
@@ -163,7 +163,7 @@ const sommeTroisParties: FonctionProbleme = (interactif = false, typeQuestion = 
     const choix = choice([triathlon, etapeDeMontagne, randonnee])
     const [enonce, barre, distance1, distance2, distance3, total] = choix(prenom, pronom)
     const reponses: [number, number, number, number] = [distance1, distance2, distance3, total]
-    return { enonce, barre, reponses, type: 'additif' }
+    return { enonce, barre, reponses }
   }
 
   const choixFonction = choice([troisAchats, troisDistances])
@@ -251,44 +251,35 @@ const partageEquitable: FonctionProbleme = (interactif = false, typeQuestion: Qu
     const enonce = `${prenom} a zone0 ${objet.nom} chacun contenant zone1 ${objet.nomPart}. Quand ${pronom} les distribue à ses amis, chacun en a zone2 et il en reste ${nombrePartsRestantes}. Combien a-t-${pronom} d'amis ?<br><br>
     Réponse : ${prenom} a zone3 amis.`
     const barre = SchemaEnBoite.multiplicationPuisDivisionAvecReste('zone0', 'zone1', 'zone2', 'zone3', nombrePartsRestantes, 0)
-    /*
-    new SchemaEnBoite({
-      topBraces: [
-        { start: 1, end: 9, text: 'zone0 fois', type: 'accolade' }
-      ],
-      lignes: [
-        {
-          barres: [
-            { color: 'lightgray', length: 1, content: 'zone1', options: { style: ' border-right: dashed 1px;' } },
-            { color: 'lightgray', length: 7, content: ' \\ldots', options: { justify: 'start', style: 'border-left: none;' } },
-          ]
-        },
-        {
-          barres: [
-            { color: 'lightgray', length: 2, content: 'zone2', options: { style: ' border-right: dashed 1px;' } },
-            { color: 'lightgray', length: 5, content: ' \\ldots', options: { justify: 'start', style: ' border-left: none;' } },
-            { color: 'lightgray', length: 1, content: texNombre(nombrePartsRestantes, 0) }
-          ]
-        }
-      ],
-      bottomBraces: [
-        { start: 1, end: 8, text: 'zone3 fois', type: 'accolade' }
-      ]
-    })
-*/
     const reponses: [number, number, number, number] = [
       nombreObjets,
       nombrePartsParObjet,
       nombrePartsParAmi,
       nombreAmis
     ]
-    return { enonce, barre, reponses, type: 'partage' }
+    return { enonce, barre, reponses }
   } // fin de partageEntreAmis
 
   const choixFonction = choice([partageEntreAmis])
   return choixFonction(interactif, typeQuestion, decimaux)
 } // fin de partageEquitable
 
+const comparaisonDeuxSommes: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
+  const prenomData = choice(prenoms)
+  const prenom = prenomData.prenom
+  const pronom = prenomData.pronom
+  const objets = choice(troisObjetsAVendre)
+  const prixAchat1 = randint(objets[0].prixMini, objets[0].prixMaxi) + (decimaux ? Number(Math.random().toFixed(1)) + choice([0.05, 0]) : 0)
+  const prixAchat2 = randint(objets[1].prixMini, objets[1].prixMaxi) + (decimaux ? Number(Math.random().toFixed(1)) + choice([0.05, 0]) : 0)
+  const [objet1, prix1] = prixAchat1 < prixAchat2 ? [objets[0], prixAchat1] : [objets[1], prixAchat2]
+  const [objet2, prix2] = prixAchat1 < prixAchat2 ? [objets[1], prixAchat2] : [objets[0], prixAchat1]
+  const argentDePrenom = Math.round((prixAchat1 + prixAchat2) * randint(5, 8) / 10)
+  const enonce = `${premiereLettreEnMajuscule(objet1.nom)} coûte zone0 € et ${objet2.nom} coûte zone1 €. ${prenom} a zone2 €. Combien ${prenom} doit-${pronom} avoir en plus pour acheter ces deux objets ?<br><br>
+  Réponse : ${prenom} doit avoir en plus zone3 € pour acheter ces deux objets.`
+  const barre = SchemaEnBoite.additionPartiesToutComparaison2('zone0', 'zone1', 'zone2', 'zone3')
+  const reponses: [number, number, number, number] = [prix1, prix2, argentDePrenom, Math.max(0, prix1 + prix2 - argentDePrenom)]
+  return { enonce, barre, reponses }
+}
 /**
  * Fonction qui va produire l'énoncé et la correction en choisissant aléatoirement une fonction problème.
  * C'est aussi dans cette fonction qu'est géré l'interactivité le cas échéant.
@@ -299,7 +290,7 @@ const partageEquitable: FonctionProbleme = (interactif = false, typeQuestion: Qu
  */
 function genereEnonces (exercice: Exercice, typeQuestion: QuestionType, startInteractif = 0) : { enonce: string, nextInteractif: number, correction: string } {
   const interactif = exercice.interactif
-  const fonctionsGenerales = [sommeTroisParties, unePartieTout, partageEquitable]
+  const fonctionsGenerales = [sommeTroisParties, unePartieTout, partageEquitable, comparaisonDeuxSommes]
   const fonctionEnonce = choice(fonctionsGenerales)
   let { enonce, barre, reponses } = fonctionEnonce(interactif, typeQuestion)
   let i = startInteractif
@@ -466,13 +457,7 @@ export default class ModelisationProblemes extends Exercice {
 
     this.nbQuestions = 1
     this.besoinFormulaireTexte = ['Types de questions', 'nombres séparés par des tirets\n1 : Compléter le schéma\n2 : Compléter l\'énoncé\n3 : Compléter le schéma et l\'énoncé\n4 : Mélange']
-    this.sup = '1'
-    this.sup = 2
-    this.sup2 = 3
-    this.sup3 = 3
-
-    this.correctionDetailleeDisponible = true
-    this.correctionDetaillee = true
+    this.sup = '4'
   }
 
   nouvelleVersion () {
