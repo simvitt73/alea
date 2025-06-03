@@ -296,7 +296,7 @@ export default class SchemaEnBoite {
       </div>
     </div>
   </div>
-    <div class="latexAccoladeRight" style="grid-row: ${Math.round((start + end) / 2)}; grid-column-start: ${gridLength + 3}; grid-column-end: ${gridLength + 4};text-align: ${justify}; color: ${color}; font-size: ${fontSize}; font-weight: ${fontWeight}">
+    <div class="latexAccoladeRight" style="grid-row: ${Math.round((start + end) / 2)}; grid-column-start: ${gridLength + 3}; grid-column-end: ${gridLength + 6};text-align: ${justify}; color: ${color}; font-size: ${fontSize}; font-weight: ${fontWeight}">
       ${texte.includes('<br>')
         ? `<div style="text-align: center;">${texte}</div>\n`
         : `${texte}`
@@ -737,6 +737,54 @@ export default class SchemaEnBoite {
         }
       ]
     })
+    return seb
+  }
+
+  static additionPartiesToutComparaison2 (partie1:string, partie2:string, partie3:string, difference:string, tout?:string, afficherTout?: boolean): SchemaEnBoite {
+    const seb = new SchemaEnBoite(afficherTout
+      ? Object.assign({}, {
+        lignes: [
+          {
+            spacing: 0.5,
+            barres: [
+              { color: 'lightgray', length: 3, content: partie1 },
+              { color: 'lightgray', length: 7, content: partie2 }
+            ]
+          },
+          {
+            barres: [
+              { color: 'lightgray', length: 6, content: partie3 },
+              { color: 'white', type: 'flèche' as const, length: 4, content: difference }
+            ]
+          }
+        ],
+        topBraces: [
+          {
+            start: 1,
+            end: 11,
+            text: tout,
+            type: 'accolade'
+          }
+        ]
+      })
+      : Object.assign({}, {
+        lignes: [
+          {
+            spacing: 0.5,
+            barres: [
+              { color: 'lightgray', length: 3, content: partie1 },
+              { color: 'lightgray', length: 7, content: partie2 }
+            ]
+          },
+          {
+            barres: [
+              { color: 'lightgray', length: 6, content: partie3 },
+              { color: 'white', type: 'flèche' as const, length: 4, content: difference }
+            ]
+          }
+        ]
+      }))
+
     return seb
   }
 

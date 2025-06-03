@@ -14,7 +14,7 @@ export default class BetaSchemaEnBoite extends Exercice {
   constructor () {
     super()
     this.comment = 'Les exercices qui sont en magenta sont des exercices tirés du guide "La résolution de problèmes au cours moyen."'
-    this.nbQuestions = 11
+    this.nbQuestions = 12
     this.besoinFormulaireTexte = ['Types de problèmes', [
       'Nombres séparés par des tirets  :',
       '1 : Somme dont on cherche le résultat',
@@ -28,13 +28,14 @@ export default class BetaSchemaEnBoite extends Exercice {
       '9 : Problème additif de comparaison',
       '10 : Problème multiplicatif de parties-tout',
       '11 : Problème multiplicatif de comparaison',
-      '12 : Mélange'
+      '12 : Problème algébrique à une inconnue',
+      '13 : Mélange'
     ].join('\n')]
-    this.sup = '12'
+    this.sup = '13'
   }
 
   nouvelleVersion (numeroExercice?: number): void {
-    const type: number[] = gestionnaireFormulaireTexte({ nbQuestions: this.nbQuestions, saisie: this.sup, min: 1, max: 11, defaut: 12, melange: 12 }).map(Number)
+    const type: number[] = gestionnaireFormulaireTexte({ nbQuestions: this.nbQuestions, saisie: this.sup, min: 1, max: 12, defaut: 13, melange: 13 }).map(Number)
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
       const lea = prenomF(1)
       const eric = prenomM(1)
@@ -340,6 +341,74 @@ Combien ${prenoms[1]} a-t-il de cartes ?<br>`
               type: 'accolade'
             }
             ]
+          })
+        }
+          break
+        case 12: { // Algébrique à une inconnue
+          const bleuesDePlus = randint(1, 9)
+
+          const nbBillesVertes = randint(50, 100)
+          const nbBillesRouges = 3 * nbBillesVertes
+          const nbBillesBleues = nbBillesVertes + bleuesDePlus
+          const total = nbBillesVertes + nbBillesRouges + nbBillesBleues
+          nb1 = nbBillesVertes
+          nb2 = bleuesDePlus
+          texte = `Dans un bocal, il y a des billes vertes, rouges et bleues. Il y a trois fois plus de billes rouges que de  billes vertes et il y a ${bleuesDePlus} billes vertes de moins que de billes bleues. Combien y a-t-il de billes rouges ?<br>`
+          seb = new SchemaEnBoite({
+            lignes: [{
+              height: 1,
+              entete: {
+                content: 'Billes vertes',
+                couleur: 'magenta',
+                longueur: 5
+              },
+              barres: [{
+                length: 3,
+                type: 'boite',
+                color: 'magenta',
+                content: '$\\phantom{M}$',
+              }],
+              spacing: 1
+            }, {
+              height: 1,
+              entete: {
+                content: 'Billes rouges',
+                couleur: 'magenta',
+                longueur: 5
+              },
+              barres: [1, 2, 3].map(() => ({
+                length: 3,
+                type: 'boite',
+                color: 'magenta',
+                content: '$\\phantom{M}$'
+              })),
+              spacing: 1
+            }, {
+              height: 1,
+              entete: {
+                content: 'Billes bleues',
+                couleur: 'magenta',
+                longueur: 5
+              },
+              barres: [{
+                length: 3,
+                type: 'boite',
+                color: 'magenta',
+                content: ''
+              }, {
+                length: 1,
+                type: 'boite',
+                color: 'magenta',
+                content: `${bleuesDePlus}`
+              }]
+            }],
+            rightBraces: [{
+              text: `${total} billes`,
+              options: { color: 'magenta' },
+              start: 1,
+              end: 7,
+              type: 'accolade'
+            }]
           })
         }
           break
