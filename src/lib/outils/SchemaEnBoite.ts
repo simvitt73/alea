@@ -433,6 +433,8 @@ export default class SchemaEnBoite {
             latex += `\\node[anchor=${anchor}, align=${align}] at (${x},${(y + rectHeight / 2).toFixed(1)}) {${texteLatex}};\n`
           } else if (barre.type === 'flèche') {
             latex += `\\draw[<->,thick, draw=${color}] (${(start * 2 / 3).toFixed(1)},${(y + 0.8).toFixed(1)}) -- (${((start + barre.length) * 2 / 3).toFixed(1)},${(y + 0.8).toFixed(1)}) node[pos=0.5, below] {${texteLatex}};\n`
+            // Ligne verticale à l'extrémité droite de la flèche
+            latex += `\\draw[dashed, thick, draw=${color}] (${((start + barre.length) * 2 / 3).toFixed(1)},${y}) -- (${((start + barre.length) * 2 / 3).toFixed(1)},${(y + rectHeight).toFixed(1)});\n`
           } else {
             latex += `\\draw[fill=${barre.color}] (${(start * 2 / 3).toFixed(1)},${y}) rectangle (${((start + barre.length) * 2 / 3).toFixed(1)},${(rectHeight + y).toFixed(1)}) node[pos=0.5] {${texteLatex}};\n`
           }
@@ -469,7 +471,7 @@ export default class SchemaEnBoite {
               ? `${styleTexte}${fontSizeCmd}${fontWeightCmd}\\shortstack{${texte.replaceAll('<br>', '\\\\')}}${fontWeight === 'bold' ? '}' : ''}${color ? '}' : ''}`
               : `${styleTexte}${fontSizeCmd}${fontWeightCmd}${texte}${fontWeight === 'bold' ? '}' : ''}${color ? '}' : ''}`
             if (type === 'flèche') {
-              latex += `\\draw[<->,thick, draw=${color}] (${start.toFixed(1)},${y}) -- (${end.toFixed(1)},${y}) node[below, pos=0.5] {${texteLatex}};\n`
+              latex += `\\draw[<->,thick, draw=${color}] (${start.toFixed(1)},${y - 0.2}) -- (${end.toFixed(1)},${y - 0.2}) node[below, pos=0.5] {${texteLatex}};\n`
             } else {
               latex += `\\draw[decorate,decoration={brace,amplitude=10pt},xshift=0pt,yshift=0pt, draw=${color}] (${end.toFixed(1)},${y}) -- node[below=10pt, pos=0.5] {${texteLatex}} (${start.toFixed(1)},${y});\n`
             }
@@ -602,13 +604,13 @@ export default class SchemaEnBoite {
             return { color: 'white', length: 3, content: nb1Tex, type: 'boite' }
           })
           : [
-              { color: 'white', length: 3, content: nb1 != null ? typeof nb1 === 'number' ? `$${texNombre(nb1, precison)}$` : `${nb1}` : '?', type: 'boite' },
-              { color: 'white', length: longueur - 3, content: '\\ldots', type: 'boite', options: { justify: 'start' } }
+              { color: 'lightgray', length: 3, content: nb1 != null ? typeof nb1 === 'number' ? `$${texNombre(nb1, precison)}$` : `${nb1}` : '?', type: 'boite' },
+              { color: 'lightgray', length: longueur - 3, content: '\\ldots', type: 'boite', options: { justify: 'start' } }
             ]
       }, {
-        barres: [{ color: 'white', length: 3, content: nb2 != null ? typeof nb2 === 'number' ? `$${texNombre(nb2, precison)}$` : `${nb2}` : '?', type: 'boite' as const },
-          { color: 'white', length: longueur - 6, content: '\\ldots', type: 'boite' as const, options: { justify: 'start' as 'start' } },
-          { color: 'white', length: 3, content: reste != null ? typeof reste === 'number' ? `$${texNombre(reste, precison)}$` : `${reste}` : '?', type: 'boite' as const, options: { justify: 'center' as const } }]
+        barres: [{ color: 'lightgray', length: 3, content: nb2 != null ? typeof nb2 === 'number' ? `$${texNombre(nb2, precison)}$` : `${nb2}` : '?', type: 'boite' as const },
+          { color: 'lightgray', length: longueur - 6, content: '\\ldots', type: 'boite' as const, options: { justify: 'start' as 'start' } },
+          { color: 'lightgray', length: 3, content: reste != null ? typeof reste === 'number' ? `$${texNombre(reste, precison)}$` : `${reste}` : '?', type: 'boite' as const, options: { justify: 'center' as const } }]
       }],
       bottomBraces: [
         {
@@ -732,7 +734,7 @@ export default class SchemaEnBoite {
         {
           barres: [
             { color: 'lightgray', length: 4 + precision, content: partie2 == null ? '?' : `$${texNombre(partie2, precision)}$` },
-            { color: 'white', type: 'flèche', length: 4 + precision, content: difference != null ? `$${texNombre(difference, precision)}$` : 'différence' }
+            { color: 'white', type: 'flèche', length: 4 + precision, content: difference != null ? `$${texNombre(difference, precision)}$` : 'différence', options: { style: 'border-left: none;border-top: none; border-bottom: none;border-right: dashed;' } }
           ]
         }
       ]
@@ -754,7 +756,7 @@ export default class SchemaEnBoite {
           {
             barres: [
               { color: 'lightgray', length: 6, content: partie3 },
-              { color: 'white', type: 'flèche' as const, length: 4, content: difference }
+              { color: 'white', type: 'flèche' as const, length: 4, content: difference, options: { style: 'border-left: none;border-top: none; border-bottom: none;border-right: dashed;' } }
             ]
           }
         ],
@@ -779,7 +781,7 @@ export default class SchemaEnBoite {
           {
             barres: [
               { color: 'lightgray', length: 6, content: partie3 },
-              { color: 'white', type: 'flèche' as const, length: 4, content: difference }
+              { color: 'white', type: 'flèche' as const, length: 4, content: difference, options: { style: 'border-left: none;border-top: none; border-bottom: none;border-right: dashed;' } }
             ]
           }
         ]
