@@ -6,6 +6,12 @@ export interface Icell {
   gras: boolean
   color: string
   style?: Record<string, string>
+  options?: {
+    texteApres?: string
+    texteAvant?: string
+    blocCenter?: boolean
+    espace?: boolean
+  }
 }
 
 export type FlecheCote = false | string
@@ -49,9 +55,19 @@ export interface ItabDbleEntry {
 function appendCell ({ isInteractif, line, icell, indexCol, indexLine, tag, classes, NoEx, NoQ, style }: { isInteractif: boolean, line: HTMLElement, icell: Icell, indexCol: number, indexLine: number, tag: 'th' | 'td', classes: string, NoEx: number, NoQ: number, style: string }) {
   const cell = document.createElement(tag)
   let element: HTMLElement
+  const options = icell.options || {}
   if (icell.texte === '') {
     if (isInteractif) {
+      if (options.texteAvant != null && options.texteAvant !== '') {
+        const spanAvant = document.createElement('span')
+        spanAvant.classList.add('tableauMathlive')
+        spanAvant.textContent = options.texteAvant
+        cell.appendChild(spanAvant)
+      }
       element = document.createElement('math-field')
+      if (options.espace) {
+        element.setAttribute('data-space', 'true')
+      }
       element.classList.add('tableauMathlive')
       for (const classe of classes.split(' ')) {
         // if (classe === 'clavierDeBase') element.setAttribute('data-keyboard', 'numbersOperations')
@@ -64,6 +80,11 @@ function appendCell ({ isInteractif, line, icell, indexCol, indexLine, tag, clas
       element.id = `champTexteEx${NoEx}Q${NoQ}L${indexLine}C${indexCol}`
       element.setAttribute('virtual-keyboard-mode', 'manual')
       cell.appendChild(element)
+      if (options.texteApres != null && options.texteApres !== '') {
+        const spanApres = document.createElement('span')
+        spanApres.textContent = options.texteApres
+        cell.appendChild(spanApres)
+      }
       const spanResultat = document.createElement('span')
       spanResultat.id = `resultatCheckEx${NoEx}Q${NoQ}L${indexLine}C${indexCol}`
       cell.appendChild(spanResultat)
