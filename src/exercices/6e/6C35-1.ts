@@ -94,13 +94,7 @@ const objetsAPartager: ObjetAPartager[] = [
 ]
 
 // Somme de trois parties
-/**
-   *
-   * @param interactif fournit un énoncé d'achat cumulé de 3 objets.
-   * @param typeQuestion
-   * @param decimaux
-   * @returns
-   */
+
 const troisAchats: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
   const choix = choice(troisObjetsAVendre)
   const prixAchat = choix.map(o => randint(o.prixMini, o.prixMaxi) + (decimaux ? Number(Math.random().toFixed(1)) + choice([0.05, 0]) : 0))
@@ -114,53 +108,50 @@ const troisAchats: FonctionProbleme = (interactif = false, typeQuestion: Questio
   return { enonce, barre, reponses: [prixAchat[0], prixAchat[1], prixAchat[2], total] }
 }
 
-/**
-   * Fonction problème qui sous-traite 3 situations identiques d'addition dans des contextes légèrement différents.
-   * Elle fait partie de sommeTroisParties avec troisAchats
-   * @param interactif
-   * @param typeQuestion
-   * @returns
-   */
-const troisDistances = (interactif = false, typeQuestion: QuestionType = 'schéma') => {
+const triathlon: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
   const prenomData = choice(prenoms)
   const prenom = prenomData.prenom
   const pronom = prenomData.pronom
-    type TroisDistancesFonction = [string, SchemaEnBoite, number, number, number, number]
-    function triathlon (prenom: string, pronom: string): TroisDistancesFonction {
-      const distanceNatation = randint(2, 15) * 100 // en mètres
-      const distanceVelo = distanceNatation * 15 // en mètres
-      const distanceCourse = distanceNatation * 5 // en mètres
-      const total = distanceNatation + distanceVelo + distanceCourse
-      const enonce = `${prenom} participe à un triathlon. Il nage zone0 m, fait du vélo sur zone1 m et court sur zone2 m. Quelle distance totale a-t-${pronom} parcourue ?<br><br>
+
+  const distanceNatation = randint(2, 15) * 100 // en mètres
+  const distanceVelo = distanceNatation * 15 // en mètres
+  const distanceCourse = distanceNatation * 5 // en mètres
+  const total = distanceNatation + distanceVelo + distanceCourse
+  const enonce = `${prenom} participe à un triathlon. Il nage zone0 m, fait du vélo sur zone1 m et court sur zone2 m. Quelle distance totale a-t-${pronom} parcourue ?<br><br>
       Réponse : ${prenom} a parcouru au total : $${texNombre(distanceNatation, 0)}+${texNombre(distanceVelo, 0)}+${texNombre(distanceCourse, 0)} = $ zone3 m.`
-      const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
-      return [enonce, barre, distanceNatation, distanceVelo, distanceCourse, total]
-    }
-    function etapeDeMontagne (prenom: string, pronom: string): TroisDistancesFonction {
-      const ascension1 = randint(5, 25) * 50 // en mètres
-      const ascension2 = randint(5, 25, Math.round(ascension1 / 100)) * 50// en mètres
-      const ascension3 = randint(5, 25, [ascension1 / 100, ascension2 / 100].map(Math.round)) * 50// en mètres
-      const total = ascension1 + ascension2 + ascension3
-      const enonce = `${prenom} effectue à vélo une étape de montagne du tour de France. ${premiereLettreEnMajuscule(pronom)} grimpe trois cols qui ont les dénivelés suivants : zone0 m pour le premier col, zone1 m pour le deuxième et zone2 m pour le dernier. Quelle dénivelé cumulé a-t-${pronom} grimpé ?<br><br>
-      Réponse : ${prenom} a grimpé au total zone3 m.`
-      const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
-      return [enonce, barre, ascension1, ascension2, ascension3, total]
-    }
-    function randonnee (prenom: string, pronom: string):TroisDistancesFonction {
-      const distance1 = randint(10, 15) * 300 // en mètres
-      const distance2 = randint(10, 15, Math.round(distance1 / 300)) * 300 // en mètres
-      const distance3 = randint(10, 15, [distance1 / 300, distance2 / 300].map(Math.round)) * 100 // en mètres
-      const total = distance1 + distance2 + distance3
-      const enonce = `${prenom} part en randonnée. ${premiereLettreEnMajuscule(pronom)} marche zone0 m avant sa première halte, puis zone1 m avant le repas de midi et enfin zone2 m. Quelle distance totale a-t-${pronom} parcourue ?<br><br>
-      Réponse : ${prenom} a parcouru au total : $${texNombre(distance1, 0)}+${texNombre(distance2, 0)}+${texNombre(distance3, 0)}=$ zone3 m.`
-      const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
-      return [enonce, barre, distance1, distance2, distance3, total]
-    }
-    const choix = choice([triathlon, etapeDeMontagne, randonnee])
-    const [enonce, barre, distance1, distance2, distance3, total] = choix(prenom, pronom)
-    const reponses: [number, number, number, number] = [distance1, distance2, distance3, total]
-    return { enonce, barre, reponses }
+  const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
+  return { enonce, barre, reponses: [distanceNatation, distanceVelo, distanceCourse, total] }
 }
+const etapeDeMontagne: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
+  const prenomData = choice(prenoms)
+  const prenom = prenomData.prenom
+  const pronom = prenomData.pronom
+
+  const ascension1 = randint(5, 25) * 50 // en mètres
+  const ascension2 = randint(5, 25, Math.round(ascension1 / 100)) * 50// en mètres
+  const ascension3 = randint(5, 25, [ascension1 / 100, ascension2 / 100].map(Math.round)) * 50// en mètres
+  const total = ascension1 + ascension2 + ascension3
+  const enonce = `${prenom} effectue à vélo une étape de montagne du tour de France. ${premiereLettreEnMajuscule(pronom)} grimpe trois cols qui ont les dénivelés suivants : zone0 m pour le premier col, zone1 m pour le deuxième et zone2 m pour le dernier. Quelle dénivelé cumulé a-t-${pronom} grimpé ?<br><br>
+      Réponse : ${prenom} a grimpé au total en m : $${texNombre(ascension1, 0)}+${texNombre(ascension2, 0)}+${texNombre(ascension3)}=$ zone3.`
+  const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
+  return { enonce, barre, reponses: [ascension1, ascension2, ascension3, total] }
+}
+const randonnee: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
+  const prenomData = choice(prenoms)
+  const prenom = prenomData.prenom
+  const pronom = prenomData.pronom
+
+  const distance1 = randint(10, 15) * 300 // en mètres
+  const distance2 = randint(10, 15, Math.round(distance1 / 300)) * 300 // en mètres
+  const distance3 = randint(10, 15, [distance1 / 300, distance2 / 300].map(Math.round)) * 100 // en mètres
+  const total = distance1 + distance2 + distance3
+  const enonce = `${prenom} part en randonnée. ${premiereLettreEnMajuscule(pronom)} marche zone0 m avant sa première halte, puis zone1 m avant le repas de midi et enfin zone2 m. Quelle distance totale a-t-${pronom} parcourue ?<br><br>
+      Réponse : ${prenom} a parcouru au total : $${texNombre(distance1, 0)}+${texNombre(distance2, 0)}+${texNombre(distance3, 0)}=$ zone3 m.`
+  const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
+  return { enonce, barre, reponses: [distance1, distance2, distance3, total] }
+}
+
+// Différence entre un tout et la somme de deux parties
 
 const unAchatParmisTrois: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
   const choix = choice(troisObjetsAVendre)
@@ -178,55 +169,56 @@ const unAchatParmisTrois: FonctionProbleme = (interactif = false, typeQuestion: 
   const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
   return { enonce, barre, reponses: [prixAchat[0], prixAchat[1], prixAchat[2], total], type: 'parties-tout' }
 } // fin de unAchatParmisTrois
-const uneDistanceParmiTrois: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma') => {
+const triathlon2: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
   const prenomData = choice(prenoms)
   const prenom = prenomData.prenom
   const pronom = prenomData.pronom
-    type UneDistanceParmiTroisFonction = [string, SchemaEnBoite, number, number, number, number]
-    function triathlon (prenom: string, pronom: string): UneDistanceParmiTroisFonction {
-      const distanceNatation = randint(2, 15) * 100 // en mètres
-      const distanceVelo = distanceNatation * 15 // en mètres
-      const distanceCourse = distanceNatation * 5 // en mètres
-      const total = distanceNatation + distanceVelo + distanceCourse
-      const totalInter = distanceNatation + distanceVelo
-      const enonce = `${prenom} participe à un triathlon. Il nage zone0 m, fait ensuite du vélo et ensuite court sur zone2 m. ${premiereLettreEnMajuscule(pronom)} a parcouru en tout zone3 m. Quelle distance a-t-${pronom} parcourue à vélo ?<br><br>
+  const distanceNatation = randint(2, 15) * 100 // en mètres
+  const distanceVelo = distanceNatation * 15 // en mètres
+  const distanceCourse = distanceNatation * 5 // en mètres
+  const total = distanceNatation + distanceVelo + distanceCourse
+  const totalInter = distanceNatation + distanceVelo
+  const enonce = `${prenom} participe à un triathlon. Il nage zone0 m, fait ensuite du vélo et ensuite court sur zone2 m. ${premiereLettreEnMajuscule(pronom)} a parcouru en tout zone3 m. Quelle distance a-t-${pronom} parcourue à vélo ?<br><br>
       Réponse :<br>
       - Calcul de la distance parcourue en nage et en vélo en m : $${texNombre(distanceNatation, 0)}+${texNombre(distanceVelo, 0)}=${texNombre(totalInter, 0)}$<br>
       - Distance parcourue en course à pied en m : $${texNombre(total, 0)}-${texNombre(totalInter, 0)}=$ zone2.`
 
-      const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
-      return [enonce, barre, distanceNatation, distanceVelo, distanceCourse, total]
-    }
-    function etapeDeMontagne (prenom: string, pronom: string): UneDistanceParmiTroisFonction {
-      const ascension1 = randint(5, 25) * 50 // en mètres
-      const ascension2 = randint(5, 25, Math.round(ascension1 / 100)) * 50// en mètres
-      const ascension3 = randint(5, 25, [ascension1 / 100, ascension2 / 100].map(Math.round)) * 50// en mètres
-      const total = ascension1 + ascension2 + ascension3
-      const enonce = `${prenom} effectue à vélo une étape de montagne du tour de France. ${premiereLettreEnMajuscule(pronom)} grimpe trois cols qui ont les dénivelés suivants : zone0 m pour le premier col et zone2 m pour le dernier. ${premiereLettreEnMajuscule(pronom)} a grimpé au total zone3 m. Combien de mètres a-t-${pronom} grimpé lors de l'ascension du deuxième col ?<br><br>
+  const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
+  return { enonce, barre, reponses: [distanceNatation, distanceVelo, distanceCourse, total] }
+}
+
+const etapeDeMontagne2: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
+  const prenomData = choice(prenoms)
+  const prenom = prenomData.prenom
+  const pronom = prenomData.pronom
+  const ascension1 = randint(5, 25) * 50 // en mètres
+  const ascension2 = randint(5, 25, Math.round(ascension1 / 100)) * 50// en mètres
+  const ascension3 = randint(5, 25, [ascension1 / 100, ascension2 / 100].map(Math.round)) * 50// en mètres
+  const total = ascension1 + ascension2 + ascension3
+  const enonce = `${prenom} effectue à vélo une étape de montagne du tour de France. ${premiereLettreEnMajuscule(pronom)} grimpe trois cols qui ont les dénivelés suivants : zone0 m pour le premier col et zone2 m pour le dernier. ${premiereLettreEnMajuscule(pronom)} a grimpé au total zone3 m. Combien de mètres a-t-${pronom} grimpé lors de l'ascension du deuxième col ?<br><br>
       Réponse : ${prenom} a grimpé zone1 m au deuxième col.`
-      const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
-      return [enonce, barre, ascension1, ascension2, ascension3, total]
-    }
-    function randonnee (prenom: string, pronom: string): UneDistanceParmiTroisFonction {
-      const distance1 = randint(10, 15) * 300 // en mètres
-      const distance2 = randint(10, 15, Math.round(distance1 / 300)) * 300 // en mètres
-      const distance3 = randint(10, 15, [distance1 / 300, distance2 / 300].map(Math.round)) * 100 // en mètres
-      const total = distance1 + distance2 + distance3
-      const totalInter = distance1 + distance2
-      const enonce = `${prenom} part en randonnée. ${premiereLettreEnMajuscule(pronom)} marche zone0 m avant sa première halte, ${pronom} marche encore un peu avant le repas de midi et repart ensuite pour éffectuer zone2 m. ${premiereLettreEnMajuscule(pronom)} a parcouru au total zone3 m. Quelle distance a-t-${pronom} parcourue entre sa halte matinale et le repas de midi ?<br><br>
+  const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
+  return { enonce, barre, reponses: [ascension1, ascension2, ascension3, total] }
+}
+const randonnee2:FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
+  const prenomData = choice(prenoms)
+  const prenom = prenomData.prenom
+  const pronom = prenomData.pronom
+  const distance1 = randint(10, 15) * 300 // en mètres
+  const distance2 = randint(10, 15, Math.round(distance1 / 300)) * 300 // en mètres
+  const distance3 = randint(10, 15, [distance1 / 300, distance2 / 300].map(Math.round)) * 100 // en mètres
+  const total = distance1 + distance2 + distance3
+  const totalInter = distance1 + distance2
+  const enonce = `${prenom} part en randonnée. ${premiereLettreEnMajuscule(pronom)} marche zone0 m avant sa première halte, ${pronom} marche encore un peu avant le repas de midi et repart ensuite pour éffectuer zone2 m. ${premiereLettreEnMajuscule(pronom)} a parcouru au total zone3 m. Quelle distance a-t-${pronom} parcourue entre sa halte matinale et le repas de midi ?<br><br>
          Réponse :<br>
       - Calcul de la distance parcourue le matin en m : $${texNombre(distance1, 0)}+${texNombre(distance2, 0)}=${texNombre(totalInter, 0)}$<br>
       - Distance parcourue l'après-midi en m : $${texNombre(total, 0)}-${texNombre(totalInter, 0)}=$ zone2.`
 
-      const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
-      return [enonce, barre, distance1, distance2, distance3, total]
-    }
+  const barre = SchemaEnBoite.additionPartiesTout('zone3', 2, ['zone0', 'zone1', 'zone2'])
+  return { enonce, barre, reponses: [distance1, distance2, distance3, total] }
+}
 
-    const choix = choice([triathlon, etapeDeMontagne, randonnee])
-    const [enonce, barre, distance1, distance2, distance3, total] = choix(prenom, pronom)
-    return { enonce, barre, reponses: [distance1, distance2, distance3, total], type: 'partie-tout' }
-} // fin de uneDistanceParmiTrois
-
+// quotient entier d'un produit par un diviseur (avec reste)
 const partageEntreAmis: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
   const objet = choice(objetsAPartager)
   const prenomData = choice(prenoms)
@@ -334,6 +326,7 @@ const preparationCulinaire: FonctionProbleme = (interactif = false, typeQuestion
   return { enonce, barre, reponses }
 } // fin de preparationCulinaire
 
+// Différence entre une somme de deux parties et une troisième partie
 const comparaisonDeuxSommes: FonctionProbleme = (interactif = false, typeQuestion: QuestionType = 'schéma', decimaux = false) => {
   const prenomData = choice(prenoms)
   const prenom = prenomData.prenom
@@ -525,16 +518,24 @@ ${barreCorr.display()}`
 export default class ModelisationProblemes extends Exercice {
   constructor () {
     super()
-
+    this.consigne = 'compléter les vides dans les énoncés et les schémas pour les faire se correspondre.'
     this.nbQuestions = 1
     this.besoinFormulaireTexte = ['Types de questions', 'nombres séparés par des tirets\n1 : Compléter le schéma\n2 : Compléter l\'énoncé\n3 : Compléter le schéma et l\'énoncé\n4 : Mélange']
     this.sup = '4'
+    this.besoinFormulaire2Texte = ['Types de problèmes', 'nombres séparés par des tirets\n1 : Calcul de partie manquante avec comparaison\n2 : Somme de trois parties\n3 : Partie manquante d\'une somme\n4 : Quotient (avec reste)d\'un produit de deux nombre\n5 : Mélange']
+    this.sup2 = '5'
   }
 
   nouvelleVersion () {
     const typeDeQuestions = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 3, defaut: 1, melange: 4, nbQuestions: this.nbQuestions, listeOfCase: ['schéma', 'énoncé', 'mixte'] }) as unknown as QuestionType[]
-    const fonctionsGenerales = [comparaisonDeuxSommes, troisAchats, troisDistances, unAchatParmisTrois, uneDistanceParmiTrois, partageEntreAmis, partageDuTemps, preparationCulinaire]
-    const fonctions = combinaisonListes(fonctionsGenerales, this.nbQuestions)
+    const typeDeProblèmes = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 4, defaut: 5, melange: 5, nbQuestions: this.nbQuestions, }).map(el => Number(el) - 1)
+    const problèmes = [
+      [comparaisonDeuxSommes],
+      [troisAchats, triathlon, etapeDeMontagne, randonnee],
+      [unAchatParmisTrois, triathlon2, etapeDeMontagne2, randonnee2],
+      [partageEntreAmis, partageDuTemps, preparationCulinaire]
+    ]
+    const fonctions = typeDeProblèmes.map((type, i) => problèmes[type][i % (problèmes[type].length)])
     let indexInteractif = 0
     for (let i = 0; i < this.nbQuestions;) {
       const { enonce, nextInteractif, correction } = genereEnonces(this, typeDeQuestions[i], indexInteractif, fonctions[i])
