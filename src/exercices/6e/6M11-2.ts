@@ -613,7 +613,7 @@ export default class PerimetreOuAireDeFiguresComposees extends Exercice {
         }
       } else {
         if (this.sup4 === 1 || this.sup4 === 3) handleAnswers(this, i * (this.sup4 === 3 ? 2 : 1), { reponse: { value: [new Grandeur(perimetreReponses[0], 'cm'), new Grandeur(perimetreReponses[1], 'cm')], compare: fonctionComparaison, options: { unite: true, precisionUnite: this.sup3 - 1 } } })
-        if (this.sup4 === 2 || this.sup4 === 3) handleAnswers(this, (this.sup4 === 3 ? 1 : 0) + i * (this.sup4 === 3 ? 2 : 1), { reponse: { value: [new Grandeur(aireReponses[0], 'cm^2'), new Grandeur(aireReponses[1], 'cm^2')], compare: fonctionComparaison, options: { unite: true, precisionUnite: this.sup3 - 1 } } })
+        if (this.sup4 === 2 || this.sup4 === 3) handleAnswers(this, (this.sup4 === 3 ? 1 : 0) + i * (this.sup4 === 3 ? 2 : 1), { reponse: { value: [new Grandeur(aireReponses[0], 'cm^2'), new Grandeur(aireReponses[1], 'cm^2')], options: { unite: true, precisionUnite: this.sup3 - 1 } } })
       }
       if (this.questionJamaisPosee(i, perimetreReponses[0], aireReponses[0])) {
         this.listeQuestions[i] = texte
