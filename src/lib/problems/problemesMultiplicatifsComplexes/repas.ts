@@ -27,7 +27,7 @@ export function repas (decimal = false): Probleme {
     Combien de sacs de légumes frais faut-il pour préparer les ${data.nb1Fois} repas ?`
   probleme.correction = `Pour préparer les ${data.nb1Fois} repas, il faut $${nb1Fois}\\times ${data.part1}=${texNombre(data.nb1Fois * data.part1, 0)}$, soit $${texNombre(data.nb1Fois * data.part1, 0)}$ g de légumes frais.<br>
   Chaque sac contient $${texNombre(data.part2 / 1000, 0)}$ kg, soit $${texNombre(data.part2, 0)}$ g.<br>
-  Il faut donc $${texNombre(data.nb1Fois * data.part1, 0)}\\div ${texNombre(data.part2, 0)}${egalOuApprox(data.nb1Fois * data.part1 / data.part2, 2)}${texNombre(data.nb1Fois * data.part1 / data.part2, 2)}$ sacs.<br>`
+  Il faut donc $\\dfrac{${texNombre(data.nb1Fois * data.part1, 0)}}{${texNombre(data.part2, 0)}}${egalOuApprox(data.nb1Fois * data.part1 / data.part2, 2)}${texNombre(data.nb1Fois * data.part1 / data.part2, 2)}$ sacs.<br>`
   if (!egal(data.nb1Fois * data.part1, nb2Fois * data.part2)) {
     probleme.correction += `Comme on ne peut pas acheter une fraction de sac, il faut ${miseEnEvidence(Math.ceil((data.nb1Fois * data.part1) / data.part2))} sacs de légumes frais.`
   }

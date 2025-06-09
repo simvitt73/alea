@@ -20,7 +20,7 @@ export function distribution (decimal = false): Probleme {
   probleme.enonce = `Dans une classe, il y a ${nb1Fois} élèves. ${premiereLettreEnMajuscule(personne)} distribue à chaque élève ${part1} sucreries. Les sucreries sont achétées par paquets en contenant chacun ${part2}.<br>
 Combien de paquets de sucreries ${personne} doit-${pronom} acheter pour contenter tous les élèves ?`.replaceAll('sucreries', sucrerie)
   probleme.correction = `Pour contenter $${nb1Fois}$ élèves, ${personne} devra distribuer $${nb1Fois}\\times ${part1}=${nb1Fois * part1}$ sucreries.<br>
-Pour cela, ${pronom} doit acheter $${nb1Fois * part1}\\div ${part2}\\approx ${(texNombre(nb1Fois * part1 / part2, 1))}$ paquets.<br>
+Pour cela, ${pronom} doit acheter $\\dfrac{${nb1Fois * part1}}{ ${part2}}\\approx ${(texNombre(nb1Fois * part1 / part2, 1))}$ paquets.<br>
 Comme ${pronom} ne peut pas acheter une fraction de paquet, ${pronom} doit acheter : $${miseEnEvidence(Math.ceil(nb1Fois * part1 / part2))}$ paquets de sucreries.`.replaceAll('sucreries', sucrerie)
   if (probleme.schema.rightBraces != null) {
     probleme.schema.rightBraces[0].text = probleme.schema.rightBraces[0].text.replace('cm', sucrerie)
