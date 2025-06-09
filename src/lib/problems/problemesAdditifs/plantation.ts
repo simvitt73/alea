@@ -1,5 +1,6 @@
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../interactif/claviers/keyboard'
+import { miseEnEvidence } from '../../outils/embellissements'
 import { prenomPronom } from '../../outils/Personne'
 import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
@@ -15,7 +16,7 @@ export function plantation (): Probleme {
   const enonce = `${personnage.prenom} a planté $${texNombre(nb1, 0)}$ arbres le matin et $${texNombre(nb2, 0)}$ arbres l'après-midi.
 Combien d'arbres a-t-${personnage.pronom} plantés en tout ?`
   const correction = `${personnage.prenom} a planté $${texNombre(nb1, 0)}$ arbres le matin et $${texNombre(nb2, 0)}$ arbres l'après-midi.
-Donc, au total, ${personnage.pronom} a planté $${texNombre(nb1, 0)}+${texNombre(nb2, 0)}=${texNombre(nb1 + nb2, 0)}$ arbres.`
+Donc, au total, ${personnage.pronom} a planté $${texNombre(nb1, 0)}+${texNombre(nb2, 0)}=${miseEnEvidence(texNombre(nb1 + nb2, 0))}$ arbres.`
   const probleme = new ProblemeAdditif('plantation', data)
   probleme.enonce = enonce
   probleme.correction = correction

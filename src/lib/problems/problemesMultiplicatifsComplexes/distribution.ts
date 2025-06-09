@@ -1,5 +1,6 @@
 import { randint } from '../../../modules/outils'
 import { choice } from '../../outils/arrayOutils'
+import { miseEnEvidence } from '../../outils/embellissements'
 import { premiereLettreEnMajuscule } from '../../outils/outilString'
 import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
@@ -20,7 +21,7 @@ export function distribution (decimal = false): Probleme {
 Combien de paquets de sucreries ${personne} doit-${pronom} acheter pour contenter tous les élèves ?`.replaceAll('sucreries', sucrerie)
   probleme.correction = `Pour contenter $${nb1Fois}$ élèves, ${personne} devra distribuer $${nb1Fois}\\times ${part1}=${nb1Fois * part1}$ sucreries.<br>
 Pour cela, ${pronom} doit acheter $${nb1Fois * part1}\\div ${part2}\\approx ${(texNombre(nb1Fois * part1 / part2, 1))}$ paquets.<br>
-Comme ${pronom} ne peut pas acheter une fraction de paquet, ${pronom} doit acheter : $${Math.ceil(nb1Fois * part1 / part2)}$ paquets de sucreries.`.replaceAll('sucreries', sucrerie)
+Comme ${pronom} ne peut pas acheter une fraction de paquet, ${pronom} doit acheter : $${miseEnEvidence(Math.ceil(nb1Fois * part1 / part2))}$ paquets de sucreries.`.replaceAll('sucreries', sucrerie)
   if (probleme.schema.rightBraces != null) {
     probleme.schema.rightBraces[0].text = probleme.schema.rightBraces[0].text.replace('cm', sucrerie)
     probleme.schema.rightBraces[1].text = probleme.schema.rightBraces[1].text.replace('cm', sucrerie)

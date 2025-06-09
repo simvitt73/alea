@@ -1,5 +1,7 @@
 import { randint } from '../../../modules/outils'
 import { choice } from '../../outils/arrayOutils'
+import { miseEnEvidence } from '../../outils/embellissements'
+import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
 import ProblemeMultiplicatifsComplexes from './problemesMultiplicatifsComplexes'
 /**
@@ -13,6 +15,6 @@ export function couverture (decimal = false): Probleme {
   const data = { nb1Fois, part1, part2 }
   const probleme = new ProblemeMultiplicatifsComplexes('couverture', data)
   probleme.enonce = probleme.enonce.replace(`$${data.part2}$ m`, `$${part2EnM}$ m`)
-  probleme.correction = probleme.correction.replace(`$${data.part2}$ m`, `$${part2EnM}$ m, soit ${data.part2} cm`)
+  probleme.correction = probleme.correction.replace(`$${data.part2}$ m`, `$${miseEnEvidence(texNombre(part2EnM, 0))}$ m, soit ${miseEnEvidence(data.part2)} cm`)
   return probleme
 }

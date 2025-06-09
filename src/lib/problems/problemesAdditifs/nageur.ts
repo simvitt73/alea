@@ -1,5 +1,6 @@
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../interactif/claviers/keyboard'
+import { miseEnEvidence } from '../../outils/embellissements'
 import { prenomPronom } from '../../outils/Personne'
 import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
@@ -17,7 +18,7 @@ export function nageur (decimal = false): Probleme {
   const enonce = `${personnage.prenom} a nagé $${texNombre(nb1, 1)}$ ${uniteComplete} le matin et $${texNombre(nb2, 1)}$ ${uniteComplete} l'après-midi.
 Quelle distance totale a-t-${personnage.pronom} parcourue à la nage ?`
   const correction = `${personnage.prenom} a nagé $${texNombre(nb1, 1)}$ ${uniteComplete} le matin et $${texNombre(nb2, 1)}$ ${uniteComplete} l'après-midi.
-Donc, au total, ${personnage.pronom} a nagé : $${texNombre(nb1, 1)}\\text{ ${unite}}+${texNombre(nb2, 1)}\\text{ ${unite}}=${texNombre(nb1 + nb2, 1)}$ ${uniteComplete}.`
+Donc, au total, ${personnage.pronom} a nagé : $${texNombre(nb1, 1)}\\text{ ${unite}}+${texNombre(nb2, 1)}\\text{ ${unite}}=${miseEnEvidence(texNombre(nb1 + nb2, 1))}$ ${uniteComplete}.`
   const probleme = new ProblemeAdditif('nageur', data)
   probleme.enonce = enonce
   probleme.correction = correction

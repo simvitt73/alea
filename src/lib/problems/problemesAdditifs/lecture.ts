@@ -1,5 +1,6 @@
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../interactif/claviers/keyboard'
+import { miseEnEvidence } from '../../outils/embellissements'
 import { prenomPronom } from '../../outils/Personne'
 import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
@@ -15,7 +16,7 @@ export function lecture (): Probleme {
   const enonce = `${personnage.prenom} a lu $${texNombre(nb1, 0)}$ pages d'un livre le matin et $${texNombre(nb2, 0)}$ pages le soir.
 Combien de pages a-t-${personnage.pronom} lues en tout ?`
   const correction = `${personnage.prenom} a lu $${texNombre(nb1, 0)}$ pages le matin et $${texNombre(nb2, 0)}$ pages le soir.
-Donc, en tout, ${personnage.pronom} a lu $${texNombre(nb1, 0)}+${texNombre(nb2, 0)}=${texNombre(nb1 + nb2, 0)}$ pages.`
+Donc, en tout, ${personnage.pronom} a lu $${texNombre(nb1, 0)}+${texNombre(nb2, 0)}=${miseEnEvidence(texNombre(nb1 + nb2, 0))}$ pages.`
   const probleme = new ProblemeAdditif('lecture', data)
   probleme.enonce = enonce
   probleme.correction = correction
