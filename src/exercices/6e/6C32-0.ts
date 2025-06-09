@@ -66,7 +66,7 @@ export default class ProblemesVaries extends Exercice {
       }
       if (this.questionJamaisPosee(i, probleme.enonce)) {
         this.listeQuestions.push(question)
-        this.listeCorrections.push(probleme.correction + '<br><br>' + probleme.schema.display())
+        this.listeCorrections.push(probleme.correction + '<br><br>' + probleme.schema.display(1))
         i++
       }
       cpt++

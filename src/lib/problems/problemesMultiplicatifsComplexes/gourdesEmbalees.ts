@@ -1,5 +1,6 @@
 import { egal, randint } from '../../../modules/outils'
 import { egalOuApprox } from '../../outils/ecritures'
+import { miseEnEvidence } from '../../outils/embellissements'
 import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
 import ProblemeMultiplicatifsComplexes from './problemesMultiplicatifsComplexes'
@@ -27,7 +28,7 @@ export function gourdes (decimal = false): Probleme {
   probleme.correction = `Pour emballer $${data.nb1Fois}$ gourdes, il faut $${data.nb1Fois}\\times ${data.part1}=${texNombre(data.nb1Fois * data.part1, 0)}$ cm de carton.<br>
     Un rouleau de carton mesure $${texNombre(data.part2 / 100, 0)}$ m, soit $${data.part2}$ cm.<br>
     Il faut donc $${texNombre(data.nb1Fois * data.part1, 0)}\\div ${data.part2}${egalOuApprox(data.nb1Fois * data.part1 / data.part2, 2)} ${(texNombre(data.nb1Fois * data.part1 / data.part2, 2))}$ rouleaux.<br>`
-  if (!egal(data.nb1Fois * data.part1, nb2Fois * data.part2)) probleme.correction += `Comme on ne peut pas acheter une fraction de rouleau, il faut acheter : $${Math.ceil(data.nb1Fois * data.part1 / data.part2)}$ rouleaux de carton.`
+  if (!egal(data.nb1Fois * data.part1, nb2Fois * data.part2)) probleme.correction += `Comme on ne peut pas acheter une fraction de rouleau, il faut acheter : $${miseEnEvidence(Math.ceil(data.nb1Fois * data.part1 / data.part2))}$ rouleaux de carton.`
   if (probleme.schema.rightBraces != null) {
     probleme.schema.rightBraces[0].text = probleme.schema.rightBraces[0].text.replace('cm', 'ml')
     probleme.schema.rightBraces[1].text = probleme.schema.rightBraces[1].text.replace('cm', 'ml')

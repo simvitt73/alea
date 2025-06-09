@@ -1,4 +1,5 @@
 import { egal, randint } from '../../../modules/outils'
+import { miseEnEvidence } from '../../outils/embellissements'
 import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
 import ProblemeMultiplicatifsComplexes from './problemesMultiplicatifsComplexes'
@@ -27,7 +28,7 @@ export function gelHA (decimal = false): Probleme {
     Un bidon de gel contient $${texNombre(data.part2 / 1000, 0)}$ litres, soit $${texNombre(data.part2, 0)}$ ml.<br>
     Il faut donc $${texNombre(data.nb1Fois * data.part1, 0)}\\div ${data.part2}\\approx ${(texNombre(data.nb1Fois * data.part1 / data.part2, 2))}$ bidons.<br>`
   if (!egal(data.nb1Fois * data.part1, nb2Fois * data.part2)) {
-    probleme.correction += `Comme on ne peut pas acheter une fraction de bidon, il faut acheter : $${Math.ceil(data.nb1Fois * data.part1 / data.part2)}$ bidons de gel.`
+    probleme.correction += `Comme on ne peut pas acheter une fraction de bidon, il faut acheter : $${miseEnEvidence(Math.ceil(data.nb1Fois * data.part1 / data.part2))}$ bidons de gel.`
   }
   if (probleme.schema.rightBraces != null) {
     probleme.schema.rightBraces[0].text = probleme.schema.rightBraces[0].text.replace('cm', 'ml')

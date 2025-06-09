@@ -1,6 +1,7 @@
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../interactif/claviers/keyboard'
 import { choice } from '../../outils/arrayOutils'
+import { miseEnEvidence } from '../../outils/embellissements'
 import { prenomPronom } from '../../outils/Personne'
 import { texNombre } from '../../outils/texNombre'
 import type Probleme from '../Probleme'
@@ -18,11 +19,12 @@ export function coureur2 (decimal = false): Probleme {
   const data = { nbFois, facteur }
   const enonce = `${personnage.prenom} a couru ${nbFois} tours du ${coin}, chacun mesurant $${texNombre(facteur, 1)}$ ${uniteComplete}. Quelle distance totale a-t-${personnage.pronom} parcourue ?`
   const correction = `${personnage.prenom} a couru ${nbFois} tours de $${texNombre(facteur, 1)}$ ${uniteComplete}.
-Le calcul est : $${texNombre(nbFois, 0)}\\times ${texNombre(facteur, 1)}=${texNombre(nbFois * facteur, 1)}$ ${uniteComplete}.`
+La distance totale parcourue est : $${texNombre(nbFois, 0)}\\times ${texNombre(facteur, 1)}=${miseEnEvidence(texNombre(nbFois * facteur, 1))}$ ${uniteComplete}.`
   const probleme = new ProblemeMultiplicatifs('coureur2', data)
   probleme.enonce = enonce
   probleme.correction = correction
   probleme.schema.lignes[0].barres[0].content = `$${texNombre(facteur, 1)}$ ${unite}`
+  probleme.schema.lignes[1].barres[0].content = `$${texNombre(nbFois * facteur, 1)}\\text{ ${unite}}$`
   probleme.styleChampTexteMathlive = KeyboardType.longueur
   probleme.reponse = `${texNombre(nbFois * facteur, 1)}${unite}`
   probleme.optionsComparaison = { unite: true }
