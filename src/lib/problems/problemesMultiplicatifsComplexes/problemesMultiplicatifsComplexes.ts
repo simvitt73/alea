@@ -81,7 +81,7 @@ export default class ProblemeMultiplicatifsComplexes extends Probleme {
     Combien de rouleaux de papier kraft faut-il pour couvrir les ${data.nb1Fois} livres ?`
     this.correction = `Pour couvrir ${data.nb1Fois} livres, il en faut $${data.nb1Fois}\\times ${data.part1}$, soit $${data.nb1Fois * data.part1}$ cm de papier kraft.<br>
     Un rouleau de papier kraft mesure $${data.part2}$ m.<br>
-    Donc, il faut $${texNombre(data.nb1Fois * data.part1, 0)} \\div ${texNombre(data.part2, 0)}${egalOuApprox(data.nb1Fois * data.part1 / data.part2, 2)}${texNombre((data.nb1Fois * data.part1) / data.part2, 2)}$ rouleaux de papier kraft.<br>`
+    Donc, il faut $\\dfrac{${texNombre(data.nb1Fois * data.part1, 0)}}{${texNombre(data.part2, 0)}}${egalOuApprox(data.nb1Fois * data.part1 / data.part2, 2)}${texNombre((data.nb1Fois * data.part1) / data.part2, 2)}$ rouleaux de papier kraft.<br>`
     if (!egal(data.nb1Fois * data.part1, nb2Fois * data.part2)) {
       this.correction += `Comme on ne peut pas acheter une fraction de rouleau, il faut ${Math.ceil((data.nb1Fois * data.part1) / data.part2)} rouleaux de papier kraft.`
     }
