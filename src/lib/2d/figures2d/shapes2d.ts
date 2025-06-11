@@ -1,0 +1,314 @@
+import { Shape2D } from '../Figures2D'
+
+/**
+ * Génère une figure représentant un carré de taille 1x1.
+ * @param options Options pour personnaliser le style du carré.
+ * @returns Une instance de Figure2D représentant un carré.
+ */
+
+export function shapeCarre (
+  options?: {
+    fillStyle?: string; // Couleur de remplissage du carré (par défaut gris)
+    strokeStyle?: string; // Couleur de la bordure du carré (par défaut noir)
+    lineWidth?: number; // Épaisseur de la bordure
+    opacite?: number; // Opacité de la figure (par défaut 1)
+  }
+): Shape2D {
+  const fillStyle = options?.fillStyle || 'gray'
+  const strokeStyle = options?.strokeStyle || 'black'
+  const lineWidth = options?.lineWidth || 1
+  const opacite = options?.opacite || 1
+
+  const points = [
+    '-10,-10',
+    '10,-10',
+    '10,10',
+    '-10,10'
+  ].join(' ')
+
+  const codeSvg = `
+    <polygon points="${points}" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
+  `.trim()
+
+  const codeTikz = `
+    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt] (-0.5,-0.5) rectangle (0.5,0.5);
+  `.trim()
+
+  return new Shape2D({
+    codeSvg,
+    codeTikz,
+    width: 1,
+    height: 1,
+    opacite
+  })
+}
+
+/**
+ * Génère une figure représentant une étoile à 4 branches centrée en (0,0),
+ * dont les diagonales font 1.
+ * @param options Options pour personnaliser le style de l'étoile.
+ * @returns Une instance de Shape2D représentant une étoile à 4 branches.
+ */
+export function shapeEtoile4Branches (
+  options?: {
+    fillStyle?: string;
+    strokeStyle?: string;
+    lineWidth?: number;
+    opacite?: number;
+  }
+): Shape2D {
+  const fillStyle = options?.fillStyle || 'gray'
+  const strokeStyle = options?.strokeStyle || 'black'
+  const lineWidth = options?.lineWidth || 1
+  const opacite = options?.opacite || 1
+
+  // Points pour une étoile à 4 branches, diagonales de longueur 1, centrée en (0,0)
+  // Branches sur les axes et les diagonales
+  const r = 0.5 // demi-diagonale
+  const r2 = r / 3 / Math.SQRT2 // demi-côté sur les axes diagonaux
+  // Appliquer une rotation de 45 degrés (pi/4) à chaque point
+  const angle = Math.PI / 4
+  function rotate45 (x: number, y: number): [number, number] {
+    const cos = Math.cos(angle)
+    const sin = Math.sin(angle)
+    return [
+      x * cos - y * sin,
+      x * sin + y * cos
+    ]
+  }
+  const points = [
+    `0,${-r}`,
+    `${r2},${-r2}`,
+    `${r},0`,
+    `${r2},${r2}`,
+    `0,${r}`,
+    `${-r2},${r2}`,
+    `${-r},0`,
+    `${-r2},${-r2}`
+  ]
+
+  const codeSvg = `
+    <polygon points="${points.map(p => {
+    // Convertir en coordonnées SVG (x*20, y*20)
+    const [x, y] = p.split(',').map(Number)
+    return `${rotate45(x, y).map(el => (el * 20).toFixed(3)).join(',')}`
+  }).join(' ')}" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
+  `.trim()
+
+  // Appliquer la rotation de 45° aux points TikZ
+  const tikzPoints = [
+    [0, -r],
+    [r2, -r2],
+    [r, 0],
+    [r2, r2],
+    [0, r],
+    [-r2, r2],
+    [-r, 0],
+    [-r2, -r2]
+  ].map(([x, y]) => {
+    const [xr, yr] = rotate45(x, y)
+    // Les coordonnées TikZ sont dans [-0.5, 0.5]
+    return `(${xr.toFixed(3)},${yr.toFixed(3)})`
+  }).join(' -- ')
+
+  const codeTikz = `
+    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt]
+      ${tikzPoints} -- cycle;
+  `.trim()
+
+  return new Shape2D({
+    codeSvg,
+    codeTikz,
+    width: 1,
+    height: 1,
+    opacite
+  })
+}
+
+/**
+ * Génère une figure représentant un carré aux bords arrondis de côté 0.8 centré en (0,0).
+ * @param options Options pour personnaliser le style du carré arrondi.
+ * @returns Une instance de Shape2D représentant un carré aux coins arrondis.
+ */
+export function shapeCarreArrondi (
+  options?: {
+    fillStyle?: string;
+    strokeStyle?: string;
+    lineWidth?: number;
+    opacite?: number;
+    radius?: number; // Rayon des coins arrondis (par défaut 0.15)
+  }
+): Shape2D {
+  const fillStyle = options?.fillStyle || 'gray'
+  const strokeStyle = options?.strokeStyle || 'black'
+  const lineWidth = options?.lineWidth || 1
+  const opacite = options?.opacite || 1
+  const radius = options?.radius ?? 0.15
+
+  // Côté du carré
+  const size = 0.8
+  // Pour SVG, on multiplie par 20 pour correspondre à l'échelle des autres formes
+  const svgSize = size * 20
+  const svgRadius = radius * 20
+  const svgX = -svgSize / 2
+  const svgY = -svgSize / 2
+
+  const codeSvg = `
+    <rect x="${svgX}" y="${svgY}" width="${svgSize}" height="${svgSize}" rx="${svgRadius}" ry="${svgRadius}"
+      fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
+  `.trim()
+
+  // Pour TikZ, le carré va de (-0.4,-0.4) à (0.4,0.4)
+  // TikZ: rounded corners=<radius>
+  const codeTikz = `
+    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners=${radius}cm]
+      (-0.4,-0.4) rectangle (0.4,0.4);
+  `.trim()
+
+  return new Shape2D({
+    codeSvg,
+    codeTikz,
+    width: size,
+    height: size,
+    opacite
+  })
+}
+/**
+ * Génère une figure représentant un petit chat stylisé de taille 1x1 centré en (0,0).
+ * @param options Options pour personnaliser le style du chat.
+ * @returns Une instance de Shape2D représentant un chat.
+ */
+export function shapeChat (
+  options?: {
+    fillStyle?: string;
+    strokeStyle?: string;
+    lineWidth?: number;
+    opacite?: number;
+  }
+): Shape2D {
+  const fillStyle = options?.fillStyle || 'gray'
+  const strokeStyle = options?.strokeStyle || 'black'
+  const lineWidth = options?.lineWidth || 1
+  const opacite = options?.opacite || 1
+
+  // SVG: centré en (0,0), échelle *20
+  const svg = `
+    <g>
+      <!-- Tête -->
+      <ellipse cx="0" cy="-8" rx="7" ry="7" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
+      <!-- Oreille gauche -->
+      <polygon points="-6,-13 -2,-13 -4,-19" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
+      <!-- Oreille droite -->
+      <polygon points="2,-13 6,-13 4,-19" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
+      <!-- Yeux -->
+      <ellipse cx="-2" cy="-9" rx="1" ry="1.5" fill="white" stroke="${strokeStyle}" stroke-width="0.5" />
+      <ellipse cx="2" cy="-9" rx="1" ry="1.5" fill="white" stroke="${strokeStyle}" stroke-width="0.5" />
+      <ellipse cx="-2" cy="-9" rx="0.4" ry="0.7" fill="black" />
+      <ellipse cx="2" cy="-9" rx="0.4" ry="0.7" fill="black" />
+      <!-- Nez -->
+      <ellipse cx="0" cy="-7" rx="0.7" ry="0.4" fill="pink" stroke="${strokeStyle}" stroke-width="0.3" />
+      <!-- Moustaches -->
+      <path d="M-1,-7 Q-4,-7.5 -7,-7" stroke="${strokeStyle}" stroke-width="0.5" fill="none" />
+      <path d="M-1,-6.5 Q-4,-6 -7,-6.5" stroke="${strokeStyle}" stroke-width="0.5" fill="none" />
+      <path d="M1,-7 Q4,-7.5 7,-7" stroke="${strokeStyle}" stroke-width="0.5" fill="none" />
+      <path d="M1,-6.5 Q4,-6 7,-6.5" stroke="${strokeStyle}" stroke-width="0.5" fill="none" />
+    </g>
+  `.trim()
+
+  // TikZ : centré en (0,0), taille 1x1
+  const codeTikz = `
+    % Tête
+    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt] (0,0.35) ellipse [x radius=0.35, y radius=0.35];
+    % Oreilles
+    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt] (-0.22,0.65) -- (-0.08,0.65) -- (-0.15,0.95) -- cycle;
+    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt] (0.08,0.65) -- (0.22,0.65) -- (0.15,0.95) -- cycle;
+    % Yeux
+    \\draw[fill=white, draw=${strokeStyle}, line width=0.2pt] (-0.08,0.4) ellipse [x radius=0.05, y radius=0.08];
+    \\draw[fill=white, draw=${strokeStyle}, line width=0.2pt] (0.08,0.4) ellipse [x radius=0.05, y radius=0.08];
+    \\fill[black] (-0.08,0.4) ellipse [x radius=0.02, y radius=0.04];
+    \\fill[black] (0.08,0.4) ellipse [x radius=0.02, y radius=0.04];
+    % Nez
+    \\draw[fill=pink, draw=${strokeStyle}, line width=0.1pt] (0,0.33) ellipse [x radius=0.035, y radius=0.02];
+    % Moustaches
+    \\draw[draw=${strokeStyle}, line width=0.2pt] (-0.03,0.33) .. controls (-0.15,0.36) .. (-0.3,0.33);
+    \\draw[draw=${strokeStyle}, line width=0.2pt] (-0.03,0.31) .. controls (-0.15,0.29) .. (-0.3,0.31);
+    \\draw[draw=${strokeStyle}, line width=0.2pt] (0.03,0.33) .. controls (0.15,0.36) .. (0.3,0.33);
+    \\draw[draw=${strokeStyle}, line width=0.2pt] (0.03,0.31) .. controls (0.15,0.29) .. (0.3,0.31);
+  `.trim()
+
+  return new Shape2D({
+    codeSvg: svg,
+    codeTikz,
+    width: 1,
+    height: 1,
+    opacite
+  })
+}
+/**
+ * Génère une figure représentant un soleil stylisé centré en (0,0), taille 1x1.
+ * @param options Options pour personnaliser le style du soleil.
+ * @returns Une instance de Shape2D représentant un soleil.
+ */
+export function shapeSoleil (
+  options?: {
+    fillStyle?: string;
+    strokeStyle?: string;
+    lineWidth?: number;
+    opacite?: number;
+    rayons?: number; // Nombre de rayons (par défaut 8)
+  }
+): Shape2D {
+  const fillStyle = options?.fillStyle || 'yellow'
+  const strokeStyle = options?.strokeStyle || 'orange'
+  const lineWidth = options?.lineWidth || 1
+  const opacite = options?.opacite || 1
+  const rayons = options?.rayons || 8
+
+  // Soleil centré, rayon du disque central
+  const r = 6 // rayon du cercle central (SVG)
+  const rExt = 10 // longueur des rayons (SVG)
+  const rInt = 7 // début des rayons (SVG)
+  const rays: string[] = []
+  for (let i = 0; i < rayons; i++) {
+    const angle = (2 * Math.PI * i) / rayons
+    const x1 = (rInt * Math.cos(angle)).toFixed(3)
+    const y1 = (rInt * Math.sin(angle)).toFixed(3)
+    const x2 = (rExt * Math.cos(angle)).toFixed(3)
+    const y2 = (rExt * Math.sin(angle)).toFixed(3)
+    rays.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />`)
+  }
+
+  const codeSvg = `
+    <g>
+      <circle cx="0" cy="0" r="${r}" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
+      ${rays.join('\n')}
+    </g>
+  `.trim()
+
+  // TikZ : cercle central et rayons
+  const tikzR = 0.3
+  const tikzRInt = 0.35
+  const tikzRext = 0.5
+  const tikzRays: string[] = []
+  for (let i = 0; i < rayons; i++) {
+    const angle = (2 * Math.PI * i) / rayons
+    const x1 = (tikzRInt * Math.cos(angle)).toFixed(3)
+    const y1 = (tikzRInt * Math.sin(angle)).toFixed(3)
+    const x2 = (tikzRext * Math.cos(angle)).toFixed(3)
+    const y2 = (tikzRext * Math.sin(angle)).toFixed(3)
+    tikzRays.push(`\\draw[draw=${strokeStyle}, line width=${lineWidth}pt] (${x1},${y1}) -- (${x2},${y2});`)
+  }
+
+  const codeTikz = `
+    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt] (0,0) circle (${tikzR});
+    ${tikzRays.join('\n')}
+  `.trim()
+
+  return new Shape2D({
+    codeSvg,
+    codeTikz,
+    width: 1,
+    height: 1,
+    opacite
+  })
+}
