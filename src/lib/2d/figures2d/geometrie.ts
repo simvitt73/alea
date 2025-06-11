@@ -1,4 +1,4 @@
-import { Figure2D, Shape2D } from '../Figures2D'
+import { Figure2D } from '../Figures2D'
 import { point } from '../points'
 import { segment } from '../segmentsVecteurs'
 
@@ -1202,47 +1202,5 @@ export function ovale (
       segment(0, -1.2, 0, 1.2)
     ],
     centre: point(0, 0)
-  })
-}
-
-/**
- * Génère une figure représentant un carré de taille 1x1.
- * @param options Options pour personnaliser le style du carré.
- * @returns Une instance de Figure2D représentant un carré.
- */
-export function shapeCarre (
-  options?: {
-    fillStyle?: string; // Couleur de remplissage du carré (par défaut gris)
-    strokeStyle?: string; // Couleur de la bordure du carré (par défaut noir)
-    lineWidth?: number; // Épaisseur de la bordure
-    opacite?: number; // Opacité de la figure (par défaut 1)
-  }
-): Shape2D {
-  const fillStyle = options?.fillStyle || 'gray'
-  const strokeStyle = options?.strokeStyle || 'black'
-  const lineWidth = options?.lineWidth || 1
-  const opacite = options?.opacite || 1
-
-  const points = [
-    '-10,-10',
-    '10,-10',
-    '10,10',
-    '-10,10'
-  ].join(' ')
-
-  const codeSvg = `
-    <polygon points="${points}" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
-  `.trim()
-
-  const codeTikz = `
-    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt] (-0.5,-0.5) rectangle (0.5,0.5);
-  `.trim()
-
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 1,
-    height: 1,
-    opacite
   })
 }

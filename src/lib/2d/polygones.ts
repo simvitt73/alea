@@ -13,7 +13,7 @@ import { codageSegments } from './codages'
 import { codageAngleDroit } from './angles'
 import type { PointAbstrait } from './points-abstraits'
 import { Shape2D } from './Figures2D'
-import { shapeCarre } from './figures2d/geometrie'
+import { shapeCarre } from './figures2d/shapes2d'
 
 type BinomeXY = { x: number, y: number }
 type BinomesXY = BinomeXY[]
@@ -1869,7 +1869,7 @@ export class PatternNumerique {
     return this.cells.has(PatternNumerique.coordToKey([x, y]))
   }
 
-  iterate (): Set<string> {
+  iterate (this: PatternNumerique): Set<string> {
     return this.cells // cette méthode doit être modifiée pour créer un motif changeant.
   }
 
@@ -1904,9 +1904,10 @@ export class PatternNumerique {
     const objets: NestedObjetMathalea2dArray = []
     for (const cell of cells) {
       const [x, y] = PatternNumerique.keyToCoord(cell)
-      if (x < 0 || y < 0) {
+      /*  if (x < 0 || y < 0) {
         throw new Error('PatternNumerique: les coordonnées doivent être positives')
       }
+        */
       const newShape = this.shape.clone()
       newShape.x = x + dx
       newShape.y = y + dy
@@ -1914,5 +1915,9 @@ export class PatternNumerique {
       objets.push(newShape)
     }
     return objets
+  }
+
+  print (): string {
+    return Array.from(this.cells).join(';')
   }
 }
