@@ -552,7 +552,7 @@ export default class ModelisationProblemes extends Exercice {
   }
 
   nouvelleVersion () {
-    this.consigne = `Trouver les nombres manquants dans ${this.nbQuestions > 1 ? 'ces problèmes' : 'ce problème'} afin que énoncé, réponse et schéma se correspondent ?`
+    this.consigne = `Trouver les nombres manquants dans ${this.nbQuestions > 1 ? 'ces problèmes' : 'ce problème'} afin que énoncé, réponse et schéma se correspondent.`
     const typeDeQuestions = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 3, defaut: 1, melange: 4, nbQuestions: this.nbQuestions, listeOfCase: ['schéma', 'énoncé', 'mixte'] }) as unknown as QuestionType[]
     const typeDeProblèmes = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 4, defaut: 5, melange: 5, nbQuestions: this.nbQuestions, }).map(el => Number(el) - 1)
     const problèmes = [
