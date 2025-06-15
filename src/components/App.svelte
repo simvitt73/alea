@@ -77,12 +77,12 @@
   }
 
   // le plus tôt possible, on met à jour la vue
-  const view = url.searchParams.get('v') ?? ''
-  const v = convertVueType(view) ?? ''
-  globalOptions.update((options) => {
-    options.v = v
-    return options
-  })
+  // const view = url.searchParams.get('v') ?? ''
+  // const v = convertVueType(view) ?? ''
+  // globalOptions.update((options) => {
+  //   options.v = v
+  //   return options
+  // })
 
 
   // Gestion des paramètres de la CAN
