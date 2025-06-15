@@ -9,6 +9,7 @@ import { shapeCarre, shapeCarreArrondi, shapeChat, shapeEtoile4Branches, shapeSo
 import { listePatternsPreDef, type PatternRiche } from '../../lib/2d/patterns/patternsPreDef'
 import { createList } from '../../lib/format/lists'
 import { texNombre } from '../../lib/outils/texNombre'
+import { texteParPosition } from '../../lib/2d/textes'
 
 export const titre = 'Comprendre un algorithme itératif'
 export const interactifReady = true
@@ -18,7 +19,7 @@ export const interactifType = 'mathLive'
 export const dateDePublication = '10/06/2025'
 
 /**
- * Étudier les premiers termes d'une série de motifs afin de donner le nombre de formes du motif suivant.
+ * Étudier les premiers termes d'une série de motifs afin de donner le nombre de formes ${['e','a','é','i','o','u','y','è','ê'].includes(pattern.shape.name[0]) ? 'd\'':'de'}${pattern.shape.name} du motif suivant.
  * Les patterns sont des motifs numériques qui évoluent selon des règles définies.
  * Cet exercice contient des patterns issus de l'excellent site : https://www.visualpatterns.org/
  * @author Jean-Claude Lhote
@@ -176,7 +177,8 @@ export default class PaternNum0 extends Exercice {
       let objet = pattern.render(1, 0, 0)
       for (let j = 1; j <= nbFigures; j++) {
         objets.push(objet)
-        const { xmax, ymax } = fixeBordures(objet, { rxmin: 0.5, rymin: 0, rxmax: 0.5, rymax: 0 })
+        const { xmax, ymax, xmin } = fixeBordures(objet, { rxmin: 0.5, rymin: 0, rxmax: 0.5, rymax: 0 })
+        objets.push(texteParPosition(`Motif ${j}`, (xmax + xmin - 1) / 2, -1, 0, 'black', 0.8, 'milieu'))
         yMax = Math.max(yMax, ymax)
         objet = pattern.render(j + 1, xmax + 1, 0)
       }
@@ -187,14 +189,14 @@ export default class PaternNum0 extends Exercice {
       for (const q of typesQuestions) {
         switch (q) {
           case 1:
-            listeQuestions.push('\nDessiner le motif suivant.<br>')
-            listeCorrections.push(`Voici le motif suivant :<br>
+            listeQuestions.push(`\nDessiner le motif $${nbFigures + 1}$.<br>`)
+            listeCorrections.push(`Voici le motif $${nbFigures + 1}$ :<br>
               ${mathalea2d(Object.assign(fixeBordures(objetsCorr, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { scale: nbFigures === 3 ? 0.5 : 0.4 }), objetsCorr)}`)
             break
           case 2:{
             const nbFormes = pat[i].fonction(nbFigures + 1)
 
-            listeQuestions.push(`\nQuel sera le nombre de formes dans le motif suivant ?${ajouteQuestionMathlive(
+            listeQuestions.push(`\nQuel sera le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s dans le motif $${nbFigures + 1}$ ?${ajouteQuestionMathlive(
             {
 exercice: this,
               question: indexInteractif++,
@@ -202,48 +204,55 @@ exercice: this,
               typeInteractivite: 'mathlive'
             }
           )}<br>`)
-            listeCorrections.push(`Le motif suivant contient $${miseEnEvidence(texNombre(nbFormes, 0))}$ formes.<br>
+            listeCorrections.push(`Le motif $${nbFigures + 1}$ contient $${miseEnEvidence(texNombre(nbFormes, 0))}$ formes ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s.<br>
           ${mathalea2d(Object.assign(fixeBordures(objetsCorr, { rxmin: -1, rymin: 0, rxmax: 0, rymax: 1 }), { scale: nbFigures === 3 ? 0.5 : 0.4 }), objetsCorr)}`)
           }
             break
-          case 3:
-            listeQuestions.push(`\nQuel sera le nombre de formes pour le motif 10 ?${ajouteQuestionMathlive(
+          case 3:{
+            const nbFormes = pat[i].fonction(10)
+            listeQuestions.push(`\nQuel sera le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s pour le motif $10$ ?${ajouteQuestionMathlive(
             {
               exercice: this,
               question: indexInteractif++,
-              objetReponse: { reponse: { value: pat[i].fonction(10) } },
+              objetReponse: { reponse: { value: nbFormes } },
               typeInteractivite: 'mathlive'
               }
             )}
             <br>`)
-            listeCorrections.push(`Le motif $10$ contient $${miseEnEvidence(pat[i].fonction(10))}$ formes.<br>
-            En effet, la formule pour trouver le nombre de formes est : $${miseEnEvidence(pat[i].formule.replaceAll('n', '10'))}$.<br>`)
+            listeCorrections.push(`Le motif $10$ contient $${miseEnEvidence(nbFormes)}$ formes ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s.<br>
+            En effet, la formule pour trouver le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s est : $${miseEnEvidence(pat[i].formule.replaceAll('n', '10'))}$.<br>`)
+          }
             break
-          case 4:
-            listeQuestions.push(`\nQuel sera le nombre de formes pour le motif $42$ ?${ajouteQuestionMathlive(
+          case 4:{
+            const nbFormes = pat[i].fonction(43)
+
+            listeQuestions.push(`\nQuel sera le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s pour le motif $43$ ?${ajouteQuestionMathlive(
             {
               exercice: this,
               question: indexInteractif++,
-              objetReponse: { reponse: { value: pat[i].fonction(42) } },
+              objetReponse: { reponse: { value: nbFormes } },
               typeInteractivite: 'mathlive'
               }
             )}
             <br>`)
-            listeCorrections.push(`Le motif $42$ contient $${miseEnEvidence(pat[i].fonction(42))}$ formes.<br>
-            En effet, la formule pour trouver le nombre de formes est : $${miseEnEvidence(pat[i].formule.replaceAll('n', '42'))}$.<br>`)
+            listeCorrections.push(`Le motif $43$ contient $${miseEnEvidence(nbFormes)}$ formes ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s.<br>
+            En effet, la formule pour trouver le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s est : $${miseEnEvidence(pat[i].formule.replaceAll('n', '43'))}$.<br>`)
+          }
             break
-          case 5:
-            listeQuestions.push(`\nQuel sera le nombre de formes pour le motif $100$ ?${ajouteQuestionMathlive(
+          case 5:{
+            const nbFormes = pat[i].fonction(100)
+            listeQuestions.push(`\nQuel sera le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s pour le motif $100$ ?${ajouteQuestionMathlive(
             {
               exercice: this,
               question: indexInteractif++,
-              objetReponse: { reponse: { value: pat[i].fonction(100) } },
+              objetReponse: { reponse: { value: nbFormes } },
               typeInteractivite: 'mathlive'
               }
             )}
             <br>`)
-            listeCorrections.push(`Le motif $100$ contient $${miseEnEvidence(pat[i].fonction(100))}$ formes.<br>
-            En effet, la formule pour trouver le nombre de formes est : $${miseEnEvidence(pat[i].formule.replaceAll('n', '100'))}$.<br>`)
+            listeCorrections.push(`Le motif $100$ contient $${miseEnEvidence(nbFormes)}$ formes ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s.<br>
+            En effet, la formule pour trouver le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s est : $${miseEnEvidence(pat[i].formule.replaceAll('n', '100'))}$.<br>`)
+          }
             break
         }
       }

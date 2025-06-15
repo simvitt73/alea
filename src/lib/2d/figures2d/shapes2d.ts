@@ -39,7 +39,8 @@ export function shapeCarre (
     codeTikz,
     width: 1,
     height: 1,
-    opacite
+    opacite,
+    name: 'carré'
   })
 }
 
@@ -121,7 +122,8 @@ export function shapeEtoile4Branches (
     codeTikz,
     width: 1,
     height: 1,
-    opacite
+    opacite,
+    name: 'étoile'
   })
 }
 
@@ -170,7 +172,8 @@ export function shapeCarreArrondi (
     codeTikz,
     width: size,
     height: size,
-    opacite
+    opacite,
+    name: 'pastille'
   })
 }
 /**
@@ -241,7 +244,8 @@ export function shapeChat (
     codeTikz,
     width: 1,
     height: 1,
-    opacite
+    opacite,
+    name: 'chat'
   })
 }
 /**
@@ -309,6 +313,7 @@ export function shapeSoleil (
     codeTikz,
     width: 1,
     height: 1,
-    opacite
+    opacite,
+    name: 'soleil'
   })
 }

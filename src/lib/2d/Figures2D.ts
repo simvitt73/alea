@@ -69,6 +69,7 @@ export class Shape2D extends ObjetMathalea2D {
   bordures: [number, number, number, number] // [xmin, ymin, xmax, ymax]
   opacite = 1
   constructor ({
+    name = '',
     codeSvg,
     codeTikz,
     x = 0,
@@ -81,6 +82,7 @@ export class Shape2D extends ObjetMathalea2D {
     opacite = 1,
     bordures
   }: {
+    name?: string,
     codeSvg: string,
     codeTikz: string,
     x?: number,
@@ -94,6 +96,7 @@ export class Shape2D extends ObjetMathalea2D {
     bordures?: [number, number, number, number]
   }) {
     super()
+    this.name = name
     this.codeSvg = codeSvg
     this.codeTikz = codeTikz
     this.x = x
