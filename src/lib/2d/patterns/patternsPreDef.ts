@@ -151,7 +151,7 @@ const pattern3:PatternRiche = {
 //                  ■ ■ ■
 const pattern4:PatternRiche = {
   fonction: (n:number) => n * (n + 1) / 2,
-  formule: '\\frac{n\\times (n+1)}{2}',
+  formule: '\\dfrac{n\\times (n+1)}{2}',
   pattern: new PatternNumerique(
     [
       [0, 0]
@@ -493,6 +493,114 @@ const pattern15:PatternRiche = {
   }
 }
 
+const pattern16:PatternRiche = {
+  fonction: (x:number) => 2 * (x * x + x),
+  formule: '2\\times (n^2 +  n)',
+  pattern: new PatternNumerique(
+    [
+      [0, 0],
+      [1, 0],
+      [0, 1],
+      [1, 1]
+    ]
+  ),
+  iterate: function (this: PatternNumerique, n) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i <= n; i++) {
+      for (let j = 0; j <= n; j++) {
+        newCells.add(PatternNumerique.coordToKey([i, j]))
+      }
+    }
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        newCells.add(PatternNumerique.coordToKey([n + i, n + j]))
+      }
+    }
+    return newCells
+  }
+}
+
+const pattern17: PatternRiche = {
+  fonction: (x:number) => 2 + 2 * x * (1 + x),
+  formule: '2\\times (n^2+2\\times n + 1)',
+  pattern: new PatternNumerique(
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+      [1, 0],
+      [1, 2],
+      [1, 3]
+    ]),
+  iterate: function (this: PatternNumerique, n) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    newCells.add(PatternNumerique.coordToKey([0, 1]))
+    for (let j = 0; j < 2 * n + 2; j++) {
+      for (let i = 1; i <= n; i++) {
+        newCells.add(PatternNumerique.coordToKey([i, j]))
+      }
+    }
+    newCells.add(PatternNumerique.coordToKey([n + 1, 1]))
+    return newCells
+  }
+}
+
+const pattern18: PatternRiche = {
+  fonction: (x:number) => x ** 2 + 4 * x + 2,
+  formule: 'n^2+4\\times n + 2',
+  pattern: new PatternNumerique(
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+      [1, 1],
+      [2, 1],
+      [3, 1],
+      [4, 1]
+    ]),
+  iterate: function (this: PatternNumerique, n) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < 2 * n + 1; i++) {
+      newCells.add(PatternNumerique.coordToKey([i, 0]))
+    }
+    for (let i = n; i < 2 * n + 1; i++) {
+      for (let j = 1; j < n + 1; j++) {
+        newCells.add(PatternNumerique.coordToKey([i, j]))
+      }
+    }
+    for (let i = n; i < 3 * n + 2; i++) {
+      newCells.add(PatternNumerique.coordToKey([i, n]))
+    }
+    return newCells
+  }
+}
+
+const pattern19: PatternRiche = {
+  fonction: (x:number) => x * (x + 1) / 2 + 2,
+  formule: '\\dfrac{n\\times (n+1)}{2}+2',
+  pattern: new PatternNumerique(
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0]
+    ]),
+  iterate: function (this: PatternNumerique, n) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    newCells.add(PatternNumerique.coordToKey([0, 0]))
+    newCells.add(PatternNumerique.coordToKey([n + 1, 0]))
+    for (let i = 1; i <= n; i++) {
+      for (let j = n - i; j >= 0; j--) {
+        newCells.add(PatternNumerique.coordToKey([i, j]))
+      }
+    }
+    return newCells
+  }
+}
+
 const listePatternsPreDef: PatternRiche[] = [
   pattern0,
   pattern1,
@@ -509,6 +617,10 @@ const listePatternsPreDef: PatternRiche[] = [
   pattern12,
   pattern13,
   pattern14,
-  pattern15
+  pattern15,
+  pattern16,
+  pattern17,
+  pattern18,
+  pattern19
 ]
 export { listePatternsPreDef }
