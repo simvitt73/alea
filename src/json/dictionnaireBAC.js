@@ -2889,7 +2889,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '1',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Suites', 'Python', 'Logarithme']
   },
   bac_2025_06_sujet2_etrangers_2: {
     annee: '2025',
@@ -2898,7 +2898,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '2',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Exponentielle', 'Intégration', 'TVI', 'Primitives']
   },
   bac_2025_06_sujet2_etrangers_3: {
     annee: '2025',
@@ -2907,7 +2907,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '3',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Dénombrement', 'Loi binomiale', 'Variables aléatoires']
   },
   bac_2025_06_sujet2_etrangers_4: {
     annee: '2025',
@@ -2916,7 +2916,7 @@ export const dictionnaireBAC = {
     jour: 'J2',
     numeroInitial: '4',
     typeExercice: 'bac',
-    tags: ['']
+    tags: ['Espace']
   },
 
 }
