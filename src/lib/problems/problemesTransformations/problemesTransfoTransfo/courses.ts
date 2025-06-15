@@ -25,7 +25,7 @@ export function courses4 (decimal = true): Probleme {
     augmentation = randint(1, Math.ceil(prix1 * 0.05))
   }
   const data = { nb1: prix1, nb2: augmentation }
-  const enonce = `${personnage.prenom} a repéré hier ${objet.nom} à $${texNombre(prix1, 2)}$ € dans une boutique. Mais aujourd'hui le prix est de $${texNombre(prix1 + augmentation, 2)}$ €.
+  const enonce = `${personnage.prenom} a repéré hier ${objet.nom} à $${texNombre(prix1, 2)}$ € dans une boutique. Mais aujourd'hui, le prix est de $${texNombre(prix1 + augmentation, 2)}$ €.
 Quelle est le montant de l'augmentation ?`
   const correction = `Le montant de l'augmentation est de $${texNombre(prix1 + augmentation, 2)}\\text{\\,€}-${texNombre(prix1, 2)}\\text{\\,€} = ${miseEnEvidence(texNombre(augmentation, 2))}$ €.`
   const probleme = new ProblemeTransfoTransfo('courses4', data)
