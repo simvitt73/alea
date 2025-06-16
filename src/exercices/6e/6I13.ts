@@ -1,15 +1,16 @@
-import { PatternNumerique } from '../../lib/2d/polygones'
+import { PatternNumerique, polygone } from '../../lib/2d/polygones'
 import { shuffle } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { gestionnaireFormulaireTexte } from '../../modules/outils'
-import { shapeCarre, shapeCarreArrondi, shapeChat, shapeEtoile4Branches, shapeSoleil } from '../../lib/2d/figures2d/shapes2d'
+import { shapeCarre, shapeCarreArrondi, shapeChat, shapeCubeIso, shapeEtoile4Branches, shapeSoleil } from '../../lib/2d/figures2d/shapes2d'
 import { listePatternsPreDef, type PatternRiche } from '../../lib/2d/patterns/patternsPreDef'
 import { createList } from '../../lib/format/lists'
 import { texNombre } from '../../lib/outils/texNombre'
 import { texteParPosition } from '../../lib/2d/textes'
+import { point } from '../../lib/2d/points'
 
 export const titre = 'Comprendre un algorithme itératif'
 export const interactifReady = true
@@ -147,42 +148,53 @@ export default class PaternNum0 extends Exercice {
         patterns.push(pattern)
       */
 
-      switch (formes[i]) {
-        case 2:
-          patterns[i].shape = shapeEtoile4Branches()
-          break
-        case 3:
-          patterns[i].shape = shapeCarreArrondi()
-          break
-        case 4:
-          patterns[i].shape = shapeChat()
-          break
-        case 5:
-          patterns[i].shape = shapeSoleil()
-          break
-        case 1:
-        default:
-          patterns[i].shape = shapeCarre()
-          break
+      if (pat[i].shapeDefault.name === 'cube') {
+        patterns[i].shape = shapeCubeIso()
+      } else {
+        switch (formes[i]) {
+          case 2:
+            patterns[i].shape = shapeEtoile4Branches()
+            break
+          case 3:
+            patterns[i].shape = shapeCarreArrondi()
+            break
+          case 4:
+            patterns[i].shape = shapeChat()
+            break
+          case 5:
+            patterns[i].shape = shapeSoleil()
+            break
+          case 6:
+            patterns[i].shape = shapeCubeIso()
+            break
+          case 1:
+          default:
+            patterns[i].shape = shapeCarre()
+            break
+        }
       }
     }
     let indexInteractif = 0
     for (let i = 0; i < this.nbQuestions;) {
-      const objets: NestedObjetMathalea2dArray = []
       const pattern = patterns[i]
       const objetsCorr = pattern.render(nbFigures + 1, 0, 0)
       let yMax = 0
 
       let texte = `Voici les ${nbFigures} premiers motifs d'une série de motifs numériques. Ils évoluent selon des règles définies.<br>`
       let objet = pattern.render(1, 0, 0)
+      const figures: NestedObjetMathalea2dArray[] = []
       for (let j = 1; j <= nbFigures; j++) {
-        objets.push(objet)
+        figures[j - 1] = []
+        figures[j - 1].push(objet)
         const { xmax, ymax, xmin } = fixeBordures(objet, { rxmin: 0.5, rymin: 0, rxmax: 0.5, rymax: 0 })
-        objets.push(texteParPosition(`Motif ${j}`, (xmax + xmin - 1) / 2, -1, 0, 'black', 0.8, 'milieu'))
+        figures[j - 1].push(texteParPosition(`Motif ${j}`, (xmax + xmin - 1) / 2, -1, 0, 'black', 0.8, 'milieu'))
+        const cadre = polygone(point(xmin - 1, -1.5), point(xmax, -1.5), point(xmax, ymax + 1), point(xmin - 1, ymax + 1))
+        cadre.pointilles = 4
+        figures[j - 1].push(cadre)
         yMax = Math.max(yMax, ymax)
         objet = pattern.render(j + 1, xmax + 1, 0)
       }
-      texte += mathalea2d(Object.assign(fixeBordures(objets, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { ymax: yMax + 1, scale: nbFigures === 3 ? 0.5 : 0.4 }), objets)
+      texte += figures.map((fig) => mathalea2d(Object.assign(fixeBordures(fig, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { ymax: yMax + 1, scale: nbFigures === 3 ? 0.5 : 0.4, style: 'display: inline-block' }), fig)).join('\n')
       let texteCorr = ''
       const listeQuestions: string[] = []
       const listeCorrections: string[] = []
