@@ -6,7 +6,7 @@
     dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
 >
   <h5 class="mb-2 text-2xl font-bold tracking-tight text-coopmaths-struct dark:text-white">
-    Nouvelles versions des cahiers de vacances !
+    Nouvelle version des cahiers de vacances !
   </h5>
   <div class="hidden lg:flex space-x-2 sm:hiidden">
     <img
