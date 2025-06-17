@@ -45,17 +45,21 @@
   })
 
   function formatAnswer (question: string, answer: string) {
+    console.log(question)
     if (!answer) return 'aucune'
     if (question.includes('checkbox')) return answer // Pour les QCM
     if (question.includes('<select')) return answer // Pour les listeDeroulante
+    if (question.includes('interactive-clock')) return `$${answer.split('h')[0]}$ h $${answer.split('h')[1]}$` // Pour les horloges interactives
+    if (question.includes('apigeomEx')) return answer // Pour le "Voir figure" des figures apigeom
+    if (question.includes('divDragAndDropEx')) return answer // Pour les drag and drop
     return '$' + cleanFillInTheBlanks(answer, false) + '$'
   }
 
-  function removeMF (text: string, removeDollar: boolean = true) {
+  function removeMathField (text: string, removeDollar: boolean = true) {
     if (typeof text !== 'string') return ''
-    if (text.includes('placeholder')) return cleanFillInTheBlanks(text, removeDollar)
-    if (text.includes('interactive-clock')) return removeInteractiveClock(text)
-    if (text.includes('<select')) return cleanSelect(text)
+    if (text.includes('placeholder')) return cleanFillInTheBlanks(text, removeDollar) // Pour les fillInTheBlanks
+    if (text.includes('interactive-clock')) return removeInteractiveClock(text) // Pour les horloges interactives
+    if (text.includes('<select')) return cleanSelect(text) // Pour les listeDeroulante
     const regex = /<math-field[^>]*>[^]*?<\/math-field>/g
     return text.replace(regex, ' ... ')
   }
@@ -206,7 +210,7 @@
               hidden={!solutionDisplayed[i] && resultsByQuestion[i] && displayCorrection}
             >
               <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-              {@html removeMF(questions[i], false)}
+              {@html removeMathField(questions[i], false)}
             </div>
             <div
               class="p-2 text-pretty bg-coopmaths-warn-200 dark:bg-coopmathsdark-warn-lightest text-coopmaths-corpus dark:text-coopmathsdark-corpus-darkest"
