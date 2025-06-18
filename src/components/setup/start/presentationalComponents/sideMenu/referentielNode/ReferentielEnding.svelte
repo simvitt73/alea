@@ -10,7 +10,11 @@
   } from '../../../../../../lib/types/referentiels'
   import katex from 'katex/dist/katex'
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  import { changes, exercicesParams, globalOptions } from '../../../../../../lib/stores/generalStore'
+  import {
+    changes,
+    exercicesParams,
+    globalOptions
+  } from '../../../../../../lib/stores/generalStore'
   import type { InterfaceParams } from '../../../../../../lib/types'
   import { isLessThanAMonth } from '../../../../../../lib/types/dates'
   import NoInteractivityIcon from '../../../../../shared/icons/NoInteractivityIcon.svelte'
@@ -54,7 +58,7 @@
       if (endingTitre.includes('$')) {
         const regexp = /(['$])(.*?)\1/g
         const matchs = endingTitre.match(regexp)
-        matchs?.forEach(match => {
+        matchs?.forEach((match) => {
           endingTitre = endingTitre.replace(match, katex.renderToString(match.replaceAll('$', '')))
         })
       }
@@ -67,7 +71,7 @@
   /**
    * Ajouter l'exercice courant à la liste
    */
-  function addToList () {
+  function addToList() {
     const newExercise = {
       uuid: ending.uuid,
       alea: mathaleaGenerateSeed(),
@@ -86,10 +90,8 @@
    * Retirer l'exercice de la liste (si plusieurs occurences
    * la première est retirée)
    */
-  function removeFromList () {
-    const matchingIndex = $exercicesParams
-      .map((item) => item.uuid)
-      .findIndex(compareCodes)
+  function removeFromList() {
+    const matchingIndex = $exercicesParams.map((item) => item.uuid).findIndex(compareCodes)
     exercicesParams.update((list) => [
       ...list.slice(0, matchingIndex),
       ...list.slice(matchingIndex + 1)
@@ -103,12 +105,12 @@
   let icon = 'bxs-message-alt'
   let rotation = '-rotate-90'
   let mouseIsOut = true
-  function handleMouseOver () {
+  function handleMouseOver() {
     icon = 'bx-trash'
     rotation = 'rotate-0'
     mouseIsOut = false
   }
-  function handleMouseOut () {
+  function handleMouseOut() {
     icon = 'bxs-message-alt'
     rotation = '-rotate-90'
     mouseIsOut = true
@@ -128,7 +130,7 @@
   style="padding-left: {(nestedLevelCount * 2) / 6}rem"
 >
   <div
-    class="w-full relative inline-flex text-start justify-start items-start hover:bg-coopmaths-action-light dark:hover:bg-coopmathsdark-action-light dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas-darkest cursor-pointer"
+    class={`w-full relative inline-flex text-start justify-start items-start hover:bg-coopmaths-action-light dark:hover:bg-coopmathsdark-action-light dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest ${selectedCount >= 1 ? 'bg-coopmaths-warn dark:bg-coopmathsdark-warn' : 'bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas-darkest'} cursor-pointer`}
   >
     <button
       type="button"
@@ -146,7 +148,7 @@
               &nbsp;
               <span
                 class="tooltip tooltip-bottom tooltip-neutral"
-                data-tip="{ending.datePublication}"
+                data-tip={ending.datePublication}
               >
                 <span
                   class="inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-warn-dark dark:bg-coopmathsdark-warn-dark text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 ml-2 font-semibold leading-normal"
@@ -159,10 +161,10 @@
               &nbsp;
               <span
                 class="tooltip tooltip-bottom tooltip-neutral"
-                data-tip="{ending.dateModification}"
+                data-tip={ending.dateModification}
               >
                 <span
-                class="tooltip tooltip-bottom tooltip-neutral
+                  class="tooltip tooltip-bottom tooltip-neutral
                   inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-struct-light dark:bg-coopmathsdark-struct-light text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 ml-2 font-semibold leading-normal"
                 >
                   MAJ
@@ -199,7 +201,8 @@
               {#if resourceHasMonth(ending)}
                 {ending.mois}
               {/if}
-              {ending.annee} {ending.lieu}
+              {ending.annee}
+              {ending.lieu}
               {#if ending.jour !== undefined}
                 [{ending.jour === 'J1' ? 'Sujet 1' : 'Sujet 2'}]
               {/if}
@@ -224,9 +227,7 @@
           </div>
         {:else}
           <!-- Exercice de la bibliothèque -->
-          <div
-            class="text-start text-coopmaths-corpus dark:text-coopmathsdark-corpus"
-          >
+          <div class="text-start text-coopmaths-corpus dark:text-coopmathsdark-corpus">
             <span class="font-bold">{ending.uuid}</span>
           </div>
         {/if}
@@ -238,7 +239,7 @@
     {#if selectedCount >= 1}
       <button
         type="button"
-        class="absolute -left-4 -top-[0.15rem]"
+        class="absolute -left-4 top-1/2 transform -translate-y-1/2"
         on:mouseover={handleMouseOver}
         on:focus={handleMouseOver}
         on:mouseout={handleMouseOut}
