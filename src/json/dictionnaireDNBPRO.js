@@ -29,7 +29,7 @@ export const dictionnaireDNBPRO = {
     mois: 'Juin',
     numeroInitial: '4',
     typeExercice: 'dnbpro',
-    tags: ['Calcul numérique', 'Recherche d\'informations']
+    tags: ['Calcul numérique', "Recherche d'informations"]
   },
   dnbpro_2024_06_polynesie_5: {
     annee: '2024',
@@ -45,7 +45,14 @@ export const dictionnaireDNBPRO = {
     mois: 'Juillet',
     numeroInitial: '1',
     typeExercice: 'dnbpro',
-    tags: ['QCM', 'Puissances', 'Proportionnalité', 'Probabilités', 'Pourcentages', 'Agrandissement-réduction']
+    tags: [
+      'QCM',
+      'Puissances',
+      'Proportionnalité',
+      'Probabilités',
+      'Pourcentages',
+      'Agrandissement-réduction'
+    ]
   },
   dnbpro_2024_07_metropole_2: {
     annee: '2024',
@@ -93,7 +100,7 @@ export const dictionnaireDNBPRO = {
     mois: 'Septembre',
     numeroInitial: '2',
     typeExercice: 'dnbpro',
-    tags: ['Pourcentages', 'Recherche d\'informations']
+    tags: ['Pourcentages', "Recherche d'informations"]
   },
   dnbpro_2024_09_metropole_3: {
     annee: '2024',
@@ -141,7 +148,7 @@ export const dictionnaireDNBPRO = {
     mois: 'Septembre',
     numeroInitial: '3',
     typeExercice: 'dnbpro',
-    tags: ['Statistiques', 'Recherche d\'informations']
+    tags: ['Statistiques', "Recherche d'informations"]
   },
   dnbpro_2024_09_polynesie_4: {
     annee: '2024',
@@ -149,7 +156,7 @@ export const dictionnaireDNBPRO = {
     mois: 'Septembre',
     numeroInitial: '4',
     typeExercice: 'dnbpro',
-    tags: ['Recherche d\'informations', 'Volumes']
+    tags: ["Recherche d'informations", 'Volumes']
   },
   dnbpro_2024_09_polynesie_5: {
     annee: '2024',
@@ -174,7 +181,7 @@ export const dictionnaireDNBPRO = {
     mois: 'Juin',
     numeroInitial: '2',
     typeExercice: 'dnbpro',
-    tags: ['Volumes', 'Réduction-agrandissement']
+    tags: ['Volumes', 'Agrandissement-réduction']
   },
   dnbpro_2023_06_metropole_3: {
     annee: '2023',
@@ -286,7 +293,15 @@ export const dictionnaireDNBPRO = {
     mois: 'Septembre',
     numeroInitial: '1',
     typeExercice: 'dnbpro',
-    tags: ['QCM', 'Statistiques', 'Calcul littéral', 'Pythagore', 'Calcul numérique', 'Fonctions', 'Volumes']
+    tags: [
+      'QCM',
+      'Statistiques',
+      'Calcul littéral',
+      'Pythagore',
+      'Calcul numérique',
+      'Fonctions',
+      'Volumes'
+    ]
   },
   dnbpro_2023_09_polynesie_2: {
     annee: '2023',
@@ -319,6 +334,5 @@ export const dictionnaireDNBPRO = {
     numeroInitial: '5',
     typeExercice: 'dnbpro',
     tags: ['Tableur', 'Probabilités']
-  },
-
+  }
 }
