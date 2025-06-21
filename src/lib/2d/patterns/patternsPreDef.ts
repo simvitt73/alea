@@ -1,13 +1,23 @@
 import type { Shape2D } from '../Figures2D'
-import { shapeCarre, shapeCubeIso, shapeCubeIsoRot40 } from '../figures2d/shapes2d'
-import { PatternNumerique } from '../polygones'
+import { shapeCarre } from '../figures2d/shapes2d'
+import { Shape3D, shapeCubeIso } from '../figures2d/Shape3d'
+import { VisualPattern } from './VisualPattern'
+import { VisualPattern3D } from './VisualPattern3D'
 export type PatternRiche = {
   shapeDefault: Shape2D,
   fonction: (x: number) => number,
   formule: string,
   type: 'linéaire' | 'affine' | 'degré2' | 'degré3' | 'autre',
-  pattern: PatternNumerique,
-  iterate: (this: PatternNumerique, n?:number) => Set<string>
+  pattern: VisualPattern,
+  iterate: (this: VisualPattern, n?:number) => Set<string>
+}
+export type PatternRiche3D = {
+  shapeDefault: Shape3D,
+  fonction: (x: number) => number,
+  formule: string,
+  type: 'linéaire' | 'affine' | 'degré2' | 'degré3' | 'autre',
+  pattern: VisualPattern3D,
+  iterate3d: (this: VisualPattern3D, angle: number) => Set<string>
 }
 
 // Il faudra peut-être trouver un moyen de classer les patterns.
@@ -26,36 +36,36 @@ const pattern0:PatternRiche = {
   fonction: (x:number) => 2 * x + 1,
   formule: '2\\times n + 1',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [0, 1],
       [1, 0],
     ]
   ),
-  iterate: function (this: PatternNumerique) {
+  iterate: function (this: VisualPattern) {
     const newCells = new Set<string>()
 
     for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
+      const [x, y] = VisualPattern.keyToCoord(key)
       let replaced = false
       // Check neighbor below
       if (this.hasCell(x, y - 1)) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-        newCells.add(PatternNumerique.coordToKey([x, y + 1]))
+        newCells.add(VisualPattern.coordToKey([x, y]))
+        newCells.add(VisualPattern.coordToKey([x, y + 1]))
         replaced = true
       }
 
       // Check neighbor to the left
       if (this.hasCell(x - 1, y)) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-        newCells.add(PatternNumerique.coordToKey([x + 1, y]))
+        newCells.add(VisualPattern.coordToKey([x, y]))
+        newCells.add(VisualPattern.coordToKey([x + 1, y]))
         replaced = true
       }
 
       // If no replacement triggered, keep original cell
       if (!replaced) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
+        newCells.add(VisualPattern.coordToKey([x, y]))
       }
     }
     return newCells
@@ -74,19 +84,19 @@ const pattern1:PatternRiche = {
   fonction: (x:number) => x * x,
   formule: 'n^2',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0]
     ]
   ),
-  iterate: function (this: PatternNumerique) {
+  iterate: function (this: VisualPattern) {
     const newCells = new Set<string>()
     for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
-      newCells.add(PatternNumerique.coordToKey([x, y]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-      newCells.add(PatternNumerique.coordToKey([x, y + 1]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y + 1]))
+      const [x, y] = VisualPattern.keyToCoord(key)
+      newCells.add(VisualPattern.coordToKey([x, y]))
+      newCells.add(VisualPattern.coordToKey([x + 1, y]))
+      newCells.add(VisualPattern.coordToKey([x, y + 1]))
+      newCells.add(VisualPattern.coordToKey([x + 1, y + 1]))
     }
     return newCells
   }
@@ -104,21 +114,21 @@ const pattern2:PatternRiche = {
   fonction: (x:number) => 2 * x - 1,
   formule: '2\\times n -1',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0]
     ]
   ),
-  iterate: function (this: PatternNumerique) {
+  iterate: function (this: VisualPattern) {
     const newCells = new Set<string>()
     for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
+      const [x, y] = VisualPattern.keyToCoord(key)
       if (y === 0) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-        newCells.add(PatternNumerique.coordToKey([x, y + 1]))
-        newCells.add(PatternNumerique.coordToKey([x + 1, y]))
+        newCells.add(VisualPattern.coordToKey([x, y]))
+        newCells.add(VisualPattern.coordToKey([x, y + 1]))
+        newCells.add(VisualPattern.coordToKey([x + 1, y]))
       } else {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
+        newCells.add(VisualPattern.coordToKey([x, y]))
       }
     }
     return newCells
@@ -137,20 +147,20 @@ const pattern3:PatternRiche = {
   fonction: (x:number) => x * x + x,
   formule: 'n^2 + n',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [0, 1]
     ]
   ),
-  iterate: function (this: PatternNumerique) {
+  iterate: function (this: VisualPattern) {
     const newCells = new Set<string>()
     for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
-      newCells.add(PatternNumerique.coordToKey([x, y]))
-      newCells.add(PatternNumerique.coordToKey([x, y + 1]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y + 1]))
+      const [x, y] = VisualPattern.keyToCoord(key)
+      newCells.add(VisualPattern.coordToKey([x, y]))
+      newCells.add(VisualPattern.coordToKey([x, y + 1]))
+      newCells.add(VisualPattern.coordToKey([x + 1, y]))
+      newCells.add(VisualPattern.coordToKey([x + 1, y + 1]))
     }
     return newCells
   }
@@ -166,18 +176,18 @@ const pattern4:PatternRiche = {
   fonction: (n:number) => n * (n + 1) / 2,
   formule: '\\dfrac{n\\times (n+1)}{2}',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0]
     ]
   ),
-  iterate: function (this: PatternNumerique) {
+  iterate: function (this: VisualPattern) {
     const newCells = new Set<string>()
     for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
-      newCells.add(PatternNumerique.coordToKey([x, y]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-      newCells.add(PatternNumerique.coordToKey([x, y + 1]))
+      const [x, y] = VisualPattern.keyToCoord(key)
+      newCells.add(VisualPattern.coordToKey([x, y]))
+      newCells.add(VisualPattern.coordToKey([x + 1, y]))
+      newCells.add(VisualPattern.coordToKey([x, y + 1]))
     }
     return newCells
   }
@@ -195,7 +205,7 @@ const pattern5:PatternRiche = {
   fonction: (n:number) => 4 * n + 1,
   formule: '4\\times n + 1',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [1, 1],
       [2, 2],
@@ -204,13 +214,13 @@ const pattern5:PatternRiche = {
       [2, 0]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let x = 0; x <= 2 * n; x++) {
       for (let y = 0; y <= 2 * n; y++) {
         if (x === y || x + y === 2 * n) {
-          newCells.add(PatternNumerique.coordToKey([x, y]))
+          newCells.add(VisualPattern.coordToKey([x, y]))
         }
       }
     }
@@ -228,7 +238,7 @@ const pattern6:PatternRiche = {
   fonction: (n:number) => 4 * n + 1,
   formule: '4\\times n + 1',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [1, 1],
       [1, 0],
@@ -237,20 +247,20 @@ const pattern6:PatternRiche = {
       [2, 1]
     ]
   ),
-  iterate: function (this: PatternNumerique) {
+  iterate: function (this: VisualPattern) {
     const newCells = new Set<string>()
     const keys = Array.from(this.cells)
     for (let i = 0; i < this.cells.size; i++) {
       const key = keys[i]
-      const [x, y] = PatternNumerique.keyToCoord(key)
+      const [x, y] = VisualPattern.keyToCoord(key)
       if (i === keys.length - 1) {
-        newCells.add(PatternNumerique.coordToKey([x + 1, y + 1]))
-        newCells.add(PatternNumerique.coordToKey([x + 1, y - 1]))
-        newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-        newCells.add(PatternNumerique.coordToKey([x + 2, y]))
+        newCells.add(VisualPattern.coordToKey([x + 1, y + 1]))
+        newCells.add(VisualPattern.coordToKey([x + 1, y - 1]))
+        newCells.add(VisualPattern.coordToKey([x + 1, y]))
+        newCells.add(VisualPattern.coordToKey([x, y]))
+        newCells.add(VisualPattern.coordToKey([x + 2, y]))
       } else {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
+        newCells.add(VisualPattern.coordToKey([x, y]))
       }
     }
     return newCells
@@ -269,18 +279,18 @@ const pattern7:PatternRiche = {
   fonction: (x:number) => x * x,
   formule: 'n^2',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     const newCells = new Set<string>()
     if (n === undefined) n = 1
     for (let i = 0; i < n; i++) { // de ligne 0 à n
       let x = i
       for (let j = i; j < 2 * n - i - 1; j++) { // la ligne commence à i et finit à
-        newCells.add(PatternNumerique.coordToKey([x++, i]))
+        newCells.add(VisualPattern.coordToKey([x++, i]))
       }
     }
     return newCells
@@ -291,7 +301,7 @@ const pattern8:PatternRiche = {
   fonction: (x:number) => x ** 2 + 4,
   formule: 'n^2 + 4',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 1],
@@ -300,16 +310,16 @@ const pattern8:PatternRiche = {
       [2, 0]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
-    newCells.add(PatternNumerique.coordToKey([0, 0]))
-    newCells.add(PatternNumerique.coordToKey([1 + n, 0]))
-    newCells.add(PatternNumerique.coordToKey([0, 1 + n]))
-    newCells.add(PatternNumerique.coordToKey([1 + n, 1 + n]))
+    newCells.add(VisualPattern.coordToKey([0, 0]))
+    newCells.add(VisualPattern.coordToKey([1 + n, 0]))
+    newCells.add(VisualPattern.coordToKey([0, 1 + n]))
+    newCells.add(VisualPattern.coordToKey([1 + n, 1 + n]))
     for (let i = 1; i <= n; i++) {
       for (let j = 1; j <= n; j++) {
-        newCells.add(PatternNumerique.coordToKey([i, j]))
+        newCells.add(VisualPattern.coordToKey([i, j]))
       }
     }
     return newCells
@@ -320,20 +330,20 @@ const pattern9:PatternRiche = {
   fonction: (x:number) => x * x + 2 * x,
   formule: '(n+1)^2-1',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [0, 1],
       [1, 0]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 0; i <= n; i++) {
       for (let j = 0; j <= n; j++) {
         if (!(i === n && j === n)) {
-          newCells.add(PatternNumerique.coordToKey([i, j]))
+          newCells.add(VisualPattern.coordToKey([i, j]))
         }
       }
     }
@@ -345,7 +355,7 @@ const pattern10:PatternRiche = {
   fonction: (x:number) => 4 * x + 4,
   formule: '4\\times n + 4',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 0],
@@ -357,13 +367,13 @@ const pattern10:PatternRiche = {
       [2, 2]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 0; i <= n + 1; i++) {
       for (let j = 0; j <= n + 1; j++) {
         if (i === 0 || i === n + 1 || j === 0 || j === n + 1) {
-          newCells.add(PatternNumerique.coordToKey([i, j]))
+          newCells.add(VisualPattern.coordToKey([i, j]))
         }
       }
     }
@@ -375,20 +385,20 @@ const pattern11:PatternRiche = {
   fonction: (x:number) => x * x + 1,
   formule: 'n^2 + 1',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 1]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
-    newCells.add(PatternNumerique.coordToKey([0, 0]))
-    newCells.add(PatternNumerique.coordToKey([n, n]))
+    newCells.add(VisualPattern.coordToKey([0, 0]))
+    newCells.add(VisualPattern.coordToKey([n, n]))
     for (let i = 1; i < n; i++) {
       for (let j = 0; j <= n; j++) {
-        newCells.add(PatternNumerique.coordToKey([i, j]))
+        newCells.add(VisualPattern.coordToKey([i, j]))
       }
     }
     return newCells
@@ -399,23 +409,23 @@ const pattern12:PatternRiche = {
   fonction: (x:number) => 3 * x,
   formule: '3\\times n',
   type: 'linéaire',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 0],
       [0, 1]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 0; i <= n; i++) {
       if (i === 0) {
-        newCells.add(PatternNumerique.coordToKey([0, 0]))
+        newCells.add(VisualPattern.coordToKey([0, 0]))
       } else {
-        newCells.add(PatternNumerique.coordToKey([i, 0]))
-        newCells.add(PatternNumerique.coordToKey([0, i]))
-        if (i > 1) newCells.add(PatternNumerique.coordToKey([i - 1, i - 1]))
+        newCells.add(VisualPattern.coordToKey([i, 0]))
+        newCells.add(VisualPattern.coordToKey([0, i]))
+        if (i > 1) newCells.add(VisualPattern.coordToKey([i - 1, i - 1]))
       }
     }
     return newCells
@@ -427,7 +437,7 @@ const pattern13:PatternRiche = {
   fonction: (x:number) => 7 * x,
   formule: '7\\times n',
   type: 'linéaire',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [1, 0],
       [1, 1],
@@ -438,22 +448,22 @@ const pattern13:PatternRiche = {
       [0, 3]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let j = 0; j <= 3; j++) {
       for (let i = 0; i <= 2 * n; i++) {
         if (j < 2) {
           if (i > 0 && i < 2 * n) {
-            newCells.add(PatternNumerique.coordToKey([i, j]))
+            newCells.add(VisualPattern.coordToKey([i, j]))
           }
         }
         if (j === 2) {
-          newCells.add(PatternNumerique.coordToKey([i, j]))
+          newCells.add(VisualPattern.coordToKey([i, j]))
         }
         if (j === 3) {
           if (i % 2 === 0) {
-            newCells.add(PatternNumerique.coordToKey([i, j]))
+            newCells.add(VisualPattern.coordToKey([i, j]))
           }
         }
       }
@@ -466,7 +476,7 @@ const pattern14:PatternRiche = {
   fonction: (x:number) => 8 * x - 1,
   formule: '8\\times n - 1',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [1, 0],
       [1, 1],
@@ -477,27 +487,27 @@ const pattern14:PatternRiche = {
       [0, 3]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let j = 0; j <= 4; j++) {
       for (let i = 0; i <= 2 * n; i++) {
         if (j < 2) {
           if (i > 0 && i < 2 * n) {
-            newCells.add(PatternNumerique.coordToKey([i, j]))
+            newCells.add(VisualPattern.coordToKey([i, j]))
           }
         }
         if (j === 2) {
-          newCells.add(PatternNumerique.coordToKey([i, j]))
+          newCells.add(VisualPattern.coordToKey([i, j]))
         }
         if (j === 3) {
           if (i % 2 === 0) {
-            newCells.add(PatternNumerique.coordToKey([i, j]))
+            newCells.add(VisualPattern.coordToKey([i, j]))
           }
         }
         if (j === 4) {
           if (i % 2 === 0 && i > 1 && i < 2 * n) {
-            newCells.add(PatternNumerique.coordToKey([i, j]))
+            newCells.add(VisualPattern.coordToKey([i, j]))
           }
         }
       }
@@ -511,21 +521,21 @@ const pattern15:PatternRiche = {
   fonction: (x:number) => 4 * x - 3,
   formule: '4\\times n - 3',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 1]
 
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 1; i < n; i++) {
-      newCells.add(PatternNumerique.coordToKey([i, 1]))
-      newCells.add(PatternNumerique.coordToKey([i + 1, 1]))
-      newCells.add(PatternNumerique.coordToKey([0.5 + (i - 1) * 3, 0]))
-      newCells.add(PatternNumerique.coordToKey([1.5 + (i - 1) * 3, 0]))
-      newCells.add(PatternNumerique.coordToKey([2.5 + (i - 1) * 3, 0]))
+      newCells.add(VisualPattern.coordToKey([i, 1]))
+      newCells.add(VisualPattern.coordToKey([i + 1, 1]))
+      newCells.add(VisualPattern.coordToKey([0.5 + (i - 1) * 3, 0]))
+      newCells.add(VisualPattern.coordToKey([1.5 + (i - 1) * 3, 0]))
+      newCells.add(VisualPattern.coordToKey([2.5 + (i - 1) * 3, 0]))
     }
     return newCells
   }
@@ -536,7 +546,7 @@ const pattern16:PatternRiche = {
   fonction: (x:number) => 2 * (x * x + x),
   formule: '2\\times (n^2 +  n)',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 0],
@@ -544,17 +554,17 @@ const pattern16:PatternRiche = {
       [1, 1]
     ]
   ),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 0; i <= n; i++) {
       for (let j = 0; j <= n; j++) {
-        newCells.add(PatternNumerique.coordToKey([i, j]))
+        newCells.add(VisualPattern.coordToKey([i, j]))
       }
     }
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
-        newCells.add(PatternNumerique.coordToKey([n + i, n + j]))
+        newCells.add(VisualPattern.coordToKey([n + i, n + j]))
       }
     }
     return newCells
@@ -566,7 +576,7 @@ const pattern17: PatternRiche = {
   fonction: (x:number) => 2 + 2 * x * (1 + x),
   formule: '2\\times (n^2+2\\times n + 1)',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 1],
       [1, 1],
@@ -575,16 +585,16 @@ const pattern17: PatternRiche = {
       [1, 2],
       [1, 3]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
-    newCells.add(PatternNumerique.coordToKey([0, 1]))
+    newCells.add(VisualPattern.coordToKey([0, 1]))
     for (let j = 0; j < 2 * n + 2; j++) {
       for (let i = 1; i <= n; i++) {
-        newCells.add(PatternNumerique.coordToKey([i, j]))
+        newCells.add(VisualPattern.coordToKey([i, j]))
       }
     }
-    newCells.add(PatternNumerique.coordToKey([n + 1, 1]))
+    newCells.add(VisualPattern.coordToKey([n + 1, 1]))
     return newCells
   }
 }
@@ -594,7 +604,7 @@ const pattern18: PatternRiche = {
   fonction: (x:number) => x ** 2 + 4 * x + 2,
   formule: 'n^2+4\\times n + 2',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 0],
@@ -604,19 +614,19 @@ const pattern18: PatternRiche = {
       [3, 1],
       [4, 1]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 0; i < 2 * n + 1; i++) {
-      newCells.add(PatternNumerique.coordToKey([i, 0]))
+      newCells.add(VisualPattern.coordToKey([i, 0]))
     }
     for (let i = n; i < 2 * n + 1; i++) {
       for (let j = 1; j < n + 1; j++) {
-        newCells.add(PatternNumerique.coordToKey([i, j]))
+        newCells.add(VisualPattern.coordToKey([i, j]))
       }
     }
     for (let i = n; i < 3 * n + 2; i++) {
-      newCells.add(PatternNumerique.coordToKey([i, n]))
+      newCells.add(VisualPattern.coordToKey([i, n]))
     }
     return newCells
   }
@@ -627,20 +637,20 @@ const pattern19: PatternRiche = {
   fonction: (x:number) => x * (x + 1) / 2 + 2,
   formule: '\\dfrac{n\\times (n+1)}{2}+2',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 0],
       [2, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
-    newCells.add(PatternNumerique.coordToKey([0, 0]))
-    newCells.add(PatternNumerique.coordToKey([n + 1, 0]))
+    newCells.add(VisualPattern.coordToKey([0, 0]))
+    newCells.add(VisualPattern.coordToKey([n + 1, 0]))
     for (let i = 1; i <= n; i++) {
       for (let j = n - i; j >= 0; j--) {
-        newCells.add(PatternNumerique.coordToKey([i, j]))
+        newCells.add(VisualPattern.coordToKey([i, j]))
       }
     }
     return newCells
@@ -652,7 +662,7 @@ const pattern20: PatternRiche = {
   fonction: (x:number) => 2 * x + 3,
   formule: '2\\times n + 3',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [1, 0],
       [1, 1],
@@ -660,15 +670,15 @@ const pattern20: PatternRiche = {
       [0, 1],
       [2, 1]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 0; i <= 2 * n; i++) {
       if (i === n) {
-        newCells.add(PatternNumerique.coordToKey([i, 0]))
-        newCells.add(PatternNumerique.coordToKey([i, 2]))
+        newCells.add(VisualPattern.coordToKey([i, 0]))
+        newCells.add(VisualPattern.coordToKey([i, 2]))
       }
-      newCells.add(PatternNumerique.coordToKey([i, 1]))
+      newCells.add(VisualPattern.coordToKey([i, 1]))
     }
     return newCells
   }
@@ -710,267 +720,251 @@ const rangeCubes = function (coords: [number, number, number][]): [number, numbe
   return result
 }
 
-const project = function (x: number, y: number, z: number, n: number): [number, number] {
-  // Projection isometric simple
-  const xIso = (x + y) * 0.866 // x * cos(30°) = x * √3/2
-  const yIso = 0.5 * (1 + n - x + y) + z // y * sin(30°) = y / 2
-  return [xIso, yIso]
-}
-/**
- *
- * @param x une fonction pour calculer les coordonnées 2D d'un cube dans l'espace isométrique avec rotation de 10 degrés autour de z
- * @param y
- * @param z
- * @returns
- */
-function projectRot40 (x: number, y: number, z: number, n:number): [number, number] {
-  const xIso = (x + y) * 0.766 // x * cos(30°) = x * √3/2
-  const yIso = 0.643 * (1 + n - x + y) + z // y * sin(30°) = y / 2
-  return [xIso, yIso]
-}
-const pattern21: PatternRiche = {
-  shapeDefault: shapeCubeIso(),
+const pattern21: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
   fonction: (x:number) => (x + 1) * (x + 2) / 2,
   formule: '\\dfrac{(n+1)\\times (n+2)}{2}',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern3D(
     [
-      [0, 1],
-      [0, 2],
-      [0.866, 0.5]
+      [0, 0, 0],
+      [0, 0, 1],
+      [1, 0, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate3d: function (this: VisualPattern3D, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     const cubes: [number, number, number][] = []
-    for (let i = 0; i <= n; i++) {
-      for (let j = 0; j <= n - i; j++) {
+
+    for (let i = -Math.round(n / 2); i < n + Math.round(n / 2); i++) {
+      for (let j = 0; j <= n - i - Math.round(n / 2); j++) {
         cubes.push([i, 0, j])
       }
     }
     const cubesSorted = rangeCubes(cubes)
     for (const [x, y, z] of cubesSorted) {
-      const key = PatternNumerique.coordToKey(project(x, y, z, n))
+      const key = VisualPattern3D.coordToKey([x, y, z])
       if (newCells.has(key)) {
         newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
       }
-      newCells.add(PatternNumerique.coordToKey(project(x, y, z, n)))
+      newCells.add(VisualPattern3D.coordToKey([x, y, z]))
     }
     return newCells
   }
 }
 
-const pattern22: PatternRiche = {
-  shapeDefault: shapeCubeIso(),
+const pattern22: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
   fonction: (x:number) => 6 * x - 5,
   formule: '6\\times n-5',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern3D(
     [
-      [0, 0.5]
+      [0, 0, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate3d: function (this: VisualPattern3D, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     const cubes: [number, number, number][] = []
-    for (let i = 0; i <= 2 * n - 2; i++) {
-      cubes.push([i, n - 1, n - 1])
+    for (let i = -n + 0.5; i <= n - 1.5; i += 1) {
+      cubes.push([i, -0.5, n - 1])
+    }
+
+    for (let i = -n + 0.5; i <= n - 1.5; i += 1) {
+      cubes.push([-0.5, i, n - 1])
     }
 
     for (let i = 0; i <= 2 * n - 2; i++) {
-      cubes.push([n - 1, i, n - 1])
-    }
-
-    for (let i = 0; i <= 2 * n - 2; i++) {
-      cubes.push([n - 1, n - 1, i])
+      cubes.push([-0.5, -0.5, i])
     }
 
     const cubesSorted = rangeCubes(cubes)
     for (const [x, y, z] of cubesSorted) {
-      const key = PatternNumerique.coordToKey(project(x, y, z, n))
+      const key = VisualPattern3D.coordToKey([x, y, z])
       if (newCells.has(key)) {
         newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
       }
-      newCells.add(PatternNumerique.coordToKey(project(x, y, z, n)))
+      newCells.add(VisualPattern3D.coordToKey([x, y, z]))
     }
-    return newCells
     return newCells
   }
 }
 
-const pattern23: PatternRiche = {
-  shapeDefault: shapeCubeIso(),
+const pattern23: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
   fonction: (x:number) => (2 * x ** 3 + 3 * x ** 2 + x) / 6,
   formule: '\\dfrac{2\\times n^3 + 3\\times n^2 + n}{6}',
   type: 'degré3',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern3D(
     [
-      [0, 0.5],
+      [0, 0, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate3d: function (this: VisualPattern3D, n:number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     const cubes: [number, number, number][] = []
     for (let z = 0; z < n; z++) {
-      for (let y = 1; y <= n - z; y++) {
-        for (let x = 0; x <= n - z - 1; x++) {
-          cubes.push([x, n - y, z])
+      for (let y = 0; y < n - z; y++) {
+        for (let x = 0; x < n - z; x++) {
+          cubes.push([x - 1, n - y - 2, z])
         }
       }
     }
     const cubesSorted = rangeCubes(cubes)
     for (const [x, y, z] of cubesSorted) {
-      const key = PatternNumerique.coordToKey(project(x, y, z, n))
+      const key = VisualPattern3D.coordToKey([x, y, z])
       if (newCells.has(key)) {
         newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
       }
-      newCells.add(PatternNumerique.coordToKey(project(x, y, z, n)))
+      newCells.add(VisualPattern3D.coordToKey([x, y, z]))
     }
     return newCells
   }
 }
 
-const pattern24: PatternRiche = {
-  shapeDefault: shapeCubeIso(),
+const pattern24: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
   fonction: (x:number) => x ** 3,
   formule: 'n^3',
   type: 'degré3',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern3D(
     [
-      [0, 0.5]
+      [0, 0, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate3d: function (this: VisualPattern3D, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     const cubes: [number, number, number][] = []
+    const demiPas = n / 2
     for (let z = 0; z < n; z++) {
-      for (let y = 0; y < n; y++) {
-        for (let x = 0; x < n; x++) {
-          cubes.push([x, n - y - 1, z])
+      for (let y = 0 - demiPas; y < n - demiPas; y++) {
+        for (let x = 0 - demiPas; x < n - demiPas; x++) {
+          cubes.push([x, y, z])
         }
       }
     }
     const cubesSorted = rangeCubes(cubes)
     for (const [x, y, z] of cubesSorted) {
-      const key = PatternNumerique.coordToKey(project(x, y, z, n))
+      const key = VisualPattern3D.coordToKey([x, y, z])
       if (newCells.has(key)) {
         newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
       }
-      newCells.add(PatternNumerique.coordToKey(project(x, y, z, n)))
+      newCells.add(VisualPattern3D.coordToKey([x, y, z]))
     }
     return newCells
   }
 }
-const pattern25: PatternRiche = {
-  shapeDefault: shapeCubeIso(),
+const pattern25: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
   fonction: (x:number) => x ** 3 - (x - 1) ** 3,
   formule: '3\\times n^2 - 3\\times n + 1',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern3D(
     [
-      [0, 0.5]
+      [0, 0, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate3d: function (this: VisualPattern3D, n) {
     if (n === undefined) n = 1
+    const demiPas = n / 2
     const newCells = new Set<string>()
     const cubes: [number, number, number][] = []
     for (let z = 0; z < n; z++) {
       if (z === 0) {
-        for (let y = n - 1; y > -1; y--) {
+        for (let y = 0; y < n; y++) {
           for (let x = 0; x < n; x++) {
-            cubes.push([x, y, z])
+            cubes.push([x - demiPas, y - demiPas, z])
           }
         }
       } else {
-        for (let y = n - 1; y > -1; y--) {
-          cubes.push([0, y, z]) // Ajouter la première colonne de chaque ligne
+        for (let y = 0; y < n; y++) {
+          cubes.push([0 - demiPas, y - demiPas, z]) // Ajouter la première colonne de chaque ligne
         }
         for (let x = 0; x < n; x++) {
-          cubes.push([x, n - 1, z])
+          cubes.push([x - demiPas, n - 1 - demiPas, z])
         }
       }
     }
     const cubesSorted = rangeCubes(cubes)
     for (const [x, y, z] of cubesSorted) {
-      const key = PatternNumerique.coordToKey(project(x, y, z, n))
+      const key = VisualPattern3D.coordToKey([x, y, z])
       if (newCells.has(key)) {
         newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
       }
-      newCells.add(PatternNumerique.coordToKey(project(x, y, z, n)))
+      newCells.add(VisualPattern3D.coordToKey([x, y, z]))
     }
     return newCells
   }
 }
-const pattern26: PatternRiche = {
-  shapeDefault: shapeCubeIso(),
+const pattern26: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
   fonction: (x:number) => 5 * x - 4,
   formule: '5\\times n - 4',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern3D(
     [
-      [0, 0.5]
+      [0, 0, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate3d: function (this: VisualPattern3D, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     const cubes: [number, number, number][] = []
     for (let z = 0; z < n; z++) {
       if (z === 0) {
-        for (let y = 2 * n - 2; y > -1; y--) {
-          cubes.push([n - 1, y, 0])
+        for (let y = -n + 1; y <= n - 1; y++) {
+          cubes.push([0, y, 0])
         }
-        for (let x = 0; x <= 2 * n - 2; x++) {
-          cubes.push([x, n - 1, 0])
+        for (let x = -n + 1; x <= n - 1; x++) {
+          cubes.push([x, 0, 0])
         }
       } else {
-        cubes.push([n - 1, n - 1, z])
+        cubes.push([0, 0, z])
       }
     }
     const cubesSorted = rangeCubes(cubes)
     for (const [x, y, z] of cubesSorted) {
-      const key = PatternNumerique.coordToKey(project(x, y, z, n))
+      const key = VisualPattern3D.coordToKey([x, y, z])
       if (newCells.has(key)) {
         newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
       }
-      newCells.add(PatternNumerique.coordToKey(project(x, y, z, n)))
+      newCells.add(VisualPattern3D.coordToKey([x, y, z]))
     }
     return newCells
   }
 }
 
-const pattern27: PatternRiche = {
-  shapeDefault: shapeCubeIsoRot40(),
+const pattern27: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
 
   fonction: (x:number) => 2 * x ** 2 - x,
   formule: 'n\\times (2\\times n - 1)',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern3D(
     [
-      [0, 0.5]
+      [0, 0, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate3d: function (this: VisualPattern3D, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     const cubes: [number, number, number][] = []
     for (let z = 0; z < n; z++) {
       if (z < n - 1) {
-        for (let y = 2 * n - z - 2; y >= z; y--) {
-          cubes.push([n - 1, y, z])
+        for (let y = n - z - 1; y >= z - n + 1; y--) {
+          cubes.push([-0.5, y - 0.5, z])
         }
-        for (let x = z; x <= 2 * n - z - 2; x++) {
-          cubes.push([x, n - 1, z])
+        for (let x = z - n + 1; x <= n - z - 1; x++) {
+          cubes.push([x - 0.5, -0.5, z])
         }
       } else {
-        cubes.push([n - 1, n - 1, z])
+        cubes.push([-0.5, -0.5, z])
       }
     }
     const cubesSorted = rangeCubes(cubes)
     for (const [x, y, z] of cubesSorted) {
-      const key = PatternNumerique.coordToKey(projectRot40(x, y, z, n))
+      const key = VisualPattern3D.coordToKey([x, y, z])
       if (newCells.has(key)) {
         newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
       }
-      newCells.add(PatternNumerique.coordToKey(projectRot40(x, y, z, n)))
+      newCells.add(VisualPattern3D.coordToKey([x, y, z]))
     }
     return newCells
   }
@@ -980,20 +974,20 @@ const pattern28: PatternRiche = {
   fonction: (x:number) => 2 * x + 1,
   formule: '2\\times n + 1',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 1],
       [1, 0],
       [1, 2]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 0; i <= n; i++) {
-      newCells.add(PatternNumerique.coordToKey([n - i, i]))
-      newCells.add(PatternNumerique.coordToKey([n - i, 2 * n - i]))
+      newCells.add(VisualPattern.coordToKey([n - i, i]))
+      newCells.add(VisualPattern.coordToKey([n - i, 2 * n - i]))
     }
-    newCells.add(PatternNumerique.coordToKey([0, n]))
+    newCells.add(VisualPattern.coordToKey([0, n]))
     return newCells
   }
 }
@@ -1003,7 +997,7 @@ const pattern29: PatternRiche = {
   fonction: (x:number) => 3 * x + 2,
   formule: '3\\times n + 2',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 0],
@@ -1011,14 +1005,14 @@ const pattern29: PatternRiche = {
       [3, 0],
       [4, 0]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
-    newCells.add(PatternNumerique.coordToKey([0, 0]))
-    newCells.add(PatternNumerique.coordToKey([4, 0]))
+    newCells.add(VisualPattern.coordToKey([0, 0]))
+    newCells.add(VisualPattern.coordToKey([4, 0]))
     for (let i = 1; i < 4; i++) {
       for (let j = 0; j < n; j++) {
-        newCells.add(PatternNumerique.coordToKey([i, j]))
+        newCells.add(VisualPattern.coordToKey([i, j]))
       }
     }
     return newCells
@@ -1030,24 +1024,24 @@ const pattern30: PatternRiche = {
   fonction: (x:number) => 3 * x + 1,
   formule: '3\\times n + 1',
   type: 'affine',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 0],
       [2, 0],
       [1, 1]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let i = 1; i < n + 2; i++) {
-      newCells.add(PatternNumerique.coordToKey([i, n - 1]))
+      newCells.add(VisualPattern.coordToKey([i, n - 1]))
       if (i < n + 1) {
-        newCells.add(PatternNumerique.coordToKey([i, n]))
+        newCells.add(VisualPattern.coordToKey([i, n]))
       }
     }
     for (let j = 0; j > -n; j--) {
-      newCells.add(PatternNumerique.coordToKey([0, j + n - 1]))
+      newCells.add(VisualPattern.coordToKey([0, j + n - 1]))
     }
     return newCells
   }
@@ -1058,13 +1052,13 @@ const pattern31: PatternRiche = {
   fonction: (x:number) => x ** 2 + 4 * x - 2,
   formule: 'n^2 + 4\\times n - 2',
   type: 'degré2',
-  pattern: new PatternNumerique(
+  pattern: new VisualPattern(
     [
       [0, 0],
       [1, 1],
       [2, 2]
     ]),
-  iterate: function (this: PatternNumerique, n) {
+  iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
     for (let x = 0; x < 3; x++) {
@@ -1072,7 +1066,7 @@ const pattern31: PatternRiche = {
         if (x === y) {
           for (let k = 0; k < n; k++) {
             for (let l = 0; l < n; l++) {
-              newCells.add(PatternNumerique.coordToKey([x + k, y + l]))
+              newCells.add(VisualPattern.coordToKey([x + k, y + l]))
             }
           }
         }
@@ -1082,7 +1076,7 @@ const pattern31: PatternRiche = {
   }
 }
 
-const listePatternsPreDef: PatternRiche[] = [
+const listePatternsPreDef: (PatternRiche | PatternRiche3D)[] = [
   pattern0,
   pattern1,
   pattern2,
