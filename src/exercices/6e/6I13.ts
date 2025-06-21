@@ -1,17 +1,20 @@
-import { PatternNumerique, polygone } from '../../lib/2d/polygones'
+import { polygone } from '../../lib/2d/polygones'
 import { shuffle } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { gestionnaireFormulaireTexte } from '../../modules/outils'
-import { carreDef, carreRondDef, chatDef, etoileDef, losangeDef, shapeCarre, shapeCarreArrondi, shapeChat, shapeCubeIso, shapeCubeIsoRot40, shapeEtoile4Branches, shapeLosange, shapeSoleil, soleilDef } from '../../lib/2d/figures2d/shapes2d'
-import { listePatternsPreDef, type PatternRiche } from '../../lib/2d/patterns/patternsPreDef'
+import { carreDef, carreRondDef, chatDef, etoileDef, losangeDef, shapeCarre, shapeCarreArrondi, shapeChat, shapeEtoile4Branches, shapeLosange, shapeSoleil, soleilDef } from '../../lib/2d/figures2d/shapes2d'
+import { listePatternsPreDef, type PatternRiche, type PatternRiche3D } from '../../lib/2d/patterns/patternsPreDef'
 import { createList } from '../../lib/format/lists'
 import { texNombre } from '../../lib/outils/texNombre'
 import { texteParPosition } from '../../lib/2d/textes'
 import { point } from '../../lib/2d/points'
-import { arrondi } from '../../lib/outils/nombres'
+import type { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
+import { cubeDef, project3dIso, Shape3D, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
+import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
+import { context } from '../../modules/context'
 
 export const titre = 'Comprendre un algorithme itératif'
 export const interactifReady = true
@@ -32,71 +35,7 @@ export const refs = {
   'fr-fr': ['6I13'],
   'fr-ch': []
 }
-/* Fonctions pour aléatoiriser des patterns... peut-être une mauvaise idée.
-const fonctions = [
-  function (this: PatternNumerique) {
-    const newCells = new Set<string>()
-    for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
-      if (y === 0) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-        newCells.add(PatternNumerique.coordToKey([x, y + 1]))
-        newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-      } else {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-      }
-    }
-    return newCells
-  },
-  function (this: PatternNumerique) {
-    const newCells = new Set<string>()
-    for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
-      newCells.add(PatternNumerique.coordToKey([x, y]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y + 1]))
-    }
-    return newCells
-  },
-  function (this: PatternNumerique) {
-    const newCells = new Set<string>()
-    for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
-      let replaced = false
-      // Check neighbor below
-      if (this.hasCell(x, y - 1)) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-        newCells.add(PatternNumerique.coordToKey([x, y + 1]))
-        replaced = true
-      }
 
-      // Check neighbor to the left
-      if (this.hasCell(x - 1, y)) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-        newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-        replaced = true
-      }
-
-      // If no replacement triggered, keep original cell
-      if (!replaced) {
-        newCells.add(PatternNumerique.coordToKey([x, y]))
-      }
-    }
-    return newCells
-  },
-  function (this: PatternNumerique) {
-    const newCells = new Set<string>()
-    for (const key of this.cells) {
-      const [x, y] = PatternNumerique.keyToCoord(key)
-      newCells.add(PatternNumerique.coordToKey([x, y]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y]))
-      newCells.add(PatternNumerique.coordToKey([x, y + 1]))
-      newCells.add(PatternNumerique.coordToKey([x + 1, y + 1]))
-    }
-    return newCells
-  }
-]
-*/
 export default class PaternNum0 extends Exercice {
   constructor () {
     super()
@@ -118,40 +57,27 @@ export default class PaternNum0 extends Exercice {
     const nbFigures = Math.max(2, this.sup)
     // const typesMotifs = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 2, defaut: 3, melange: 3, nbQuestions: this.nbQuestions }).map(Number)
     const formes = gestionnaireFormulaireTexte({ saisie: this.sup3, min: 1, max: 6, defaut: 7, melange: 7, nbQuestions: this.nbQuestions }).map(Number)
-    const patterns : PatternNumerique[] = []
+    const patterns : (VisualPattern | VisualPattern3D)[] = []
     const typesQuestions = Array.from(new Set(gestionnaireFormulaireTexte({ saisie: this.sup4, min: 1, max: 5, defaut: 1, melange: 6, nbQuestions: 5, shuffle: false }).map(Number)))
-    const pat: PatternRiche[] = []
+    const pat: (PatternRiche | PatternRiche3D)[] = []
     for (let i = 0; i < this.nbQuestions; i++) {
-    //  if (typesMotifs[i] === 1 && listePreDef.length > 0) {
       const popped = listePreDef.pop()
       if (!popped) {
         continue
       }
       pat[i] = popped
       const pattern = pat[i].pattern
-      pattern.iterate = pat[i].iterate
+      if (pattern instanceof VisualPattern3D) {
+        pattern.shape = pat[i].shapeDefault as Shape3D ?? shapeCubeIso() as Shape3D
+        pattern.iterate3d = (pat[i] as PatternRiche3D).iterate3d
+      } else {
+        pattern.iterate = (pat[i] as PatternRiche).iterate
+      }
+
       patterns.push(pattern)
-      // patterns.push(listePreDef.pop() as PatternNumerique)
-      /*  } else {
-        let pattern: PatternNumerique
-        let cpt = 0
-        do {
-          const setIninial = shuffle([
-            [0, 0], [0, 1], [1, 0], [1, 1],
-            [2, 0], [2, 1],
-            [0, 2], [1, 2], [2, 2]]
-          ).slice(0, randint(2, 5))
-          pattern = new PatternNumerique(setIninial.map(coord => [coord[0], coord[1]].join(',')))
-          pattern.iterate = choice(fonctions)
-          cpt++
-        } while (cpt < 10 && pattern.render(1, 0, 0).length === pattern.render(3, 0, 0).length)
-        patterns.push(pattern)
-      */
 
       if (pat[i].shapeDefault.name === 'cube') {
         patterns[i].shape = shapeCubeIso()
-      } else if (pat[i].shapeDefault.name === 'cube-rot10') {
-        patterns[i].shape = shapeCubeIsoRot40()
       } else {
         switch (formes[i]) {
           case 2:
@@ -184,51 +110,75 @@ export default class PaternNum0 extends Exercice {
         : pattern.shape.name === 'soleil'
           ? [soleilDef]
           : pattern.shape.name === 'cube'
-            ? []
-            : pattern.shape.name === 'cube-rot10'
-              ? []
-              : pattern.shape.name === 'étoile'
-                ? [etoileDef]
-                : pattern.shape.name === 'pastille'
-                  ? [carreRondDef]
-                  : pattern.shape.name === 'carré'
-                    ? [carreDef]
-                    : [losangeDef]
+            ? [cubeDef('cubeIso')]
+            : pattern.shape.name === 'étoile'
+              ? [etoileDef]
+              : pattern.shape.name === 'pastille'
+                ? [carreRondDef]
+                : pattern.shape.name === 'carré'
+                  ? [carreDef]
+                  : [losangeDef]
 
-      const rendered = pattern.render(nbFigures + 1, 0, 0)
+      const rendered = pattern.render(nbFigures + 1, 0, 0, Math.PI / 6)
       objetsCorr.push(...rendered)
 
       let yMax = 0
       let yMin = 0
+      const angle = Math.PI / 6
       let texte = `Voici les ${nbFigures} premiers motifs d'une série de motifs numériques. Ils évoluent selon des règles définies.<br>`
-      let objet = pattern.render(1, 0, 0)
       const figures: NestedObjetMathalea2dArray[] = []
-      for (let j = 1; j <= nbFigures; j++) {
-        figures[j - 1] = []
+      for (let j = 0; j <= nbFigures; j++) {
+        figures[j] = []
         if (pattern.shape.name === 'chat') {
-          figures[j - 1].push(chatDef)
+          figures[j].push(chatDef)
         } else if (pattern.shape.name === 'soleil') {
-          figures[j - 1].push(soleilDef)
+          figures[j].push(soleilDef)
         } else if (pattern.shape.name === 'étoile') {
-          figures[j - 1].push(etoileDef)
+          figures[j].push(etoileDef)
         } else if (pattern.shape.name === 'pastille') {
-          figures[j - 1].push(carreRondDef)
+          figures[j].push(carreRondDef)
         } else if (pattern.shape.name === 'carré') {
-          figures[j - 1].push(carreDef)
+          figures[j].push(carreDef)
         } else if (pattern.shape.name === 'losange') {
-          figures[j - 1].push(losangeDef)
+          figures[j].push(losangeDef)
+        } else if (pattern.shape.name === 'cube') {
+          figures[j].push(cubeDef(`cubeIsoQ${i}F${j}`))
         }
-        figures[j - 1].push(objet)
-        const { xmax, ymax, xmin, ymin } = fixeBordures(objet, { rxmin: 0.5, rymin: 0, rxmax: 0.5, rymax: 0 })
-        figures[j - 1].push(texteParPosition(`Motif ${j}`, (xmax + xmin - 1) / 2, -1, 0, 'black', 0.8, 'milieu'))
-        const cadre = polygone(point(xmin - 1, -1.5), point(xmax, -1.5), point(xmax, ymax + 1), point(xmin - 1, ymax + 1))
+        let xmin = Infinity
+        let ymin = Infinity
+        let xmax = -Infinity
+        let ymax = -Infinity
+        if (pattern instanceof VisualPattern3D) {
+          if (context.isHtml) {
+            updateCubeIso(pattern, i, j, angle)
+            pattern.shape.codeSvg = `<use href="#cubeIsoQ${i}F${j}"></use>`
+            const cells = (pattern as VisualPattern3D).render3d(j + 1)
+            // Ajouter les SVG générés par svg() de chaque objet
+            cells.forEach(cell => {
+              const [px, py] = project3dIso(cell[0], cell[1], cell[2], angle)
+              const obj = shapeCubeIso(`cubeIsoQ${i}F${j}`, px, py)
+              figures[j].push(obj)
+              ymin = Math.min(ymin, -py / 20)
+              ymax = Math.max(ymax, -py / 20)
+              xmin = Math.min(xmin, px / 20)
+              xmax = Math.max(xmax, px / 20)
+            })
+          } else {
+            figures[j].push(...(pattern as VisualPattern3D).render(j + 1, 0, 0, Math.PI / 6))
+            ;({ xmin, ymin, xmax, ymax } = fixeBordures(figures[j]))
+          }
+        } else {
+          figures[j].push(...pattern.render(j + 1, 0, 0))
+          ;({ xmin, ymin, xmax, ymax } = fixeBordures(figures[j]))
+        }
+        figures[j].push(texteParPosition(`Motif ${j + 1}`, (xmax + xmin + 1) / 2, -1.5, 0, 'black', 0.8, 'milieu'))
+        const cadre = polygone(point(xmin - 1, -2), point(xmax + 2, -2), point(xmax + 2, ymax + 2), point(xmin - 1, ymax + 2))
         cadre.pointilles = 4
-        figures[j - 1].push(cadre)
+        figures[j].push(cadre)
         yMax = Math.max(yMax, ymax)
         yMin = Math.min(yMin, ymin)
-        objet = pattern.render(j + 1, 0, 0)
       }
-      texte += figures.map((fig, index) => mathalea2d(Object.assign(fixeBordures(fig, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { pixelsParCm: arrondi(20 * 0.9 ** index, 2), yMax, yMin, scale: arrondi(0.6 * 0.9 ** index, 2), style: 'display: inline-block', optionsTikz: 'transform shape' }), fig)).join('\n')
+      texte += figures.map((fig, index) => mathalea2d(Object.assign(fixeBordures(fig, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { id: `Motif${i}F${index}`, pixelsParCm: 20, yMax, yMin, scale: 0.4, style: 'display: inline-block', optionsTikz: 'transform shape' }), fig)).join('\n')
       let texteCorr = ''
       const listeQuestions: string[] = []
       const listeCorrections: string[] = []
@@ -237,7 +187,7 @@ export default class PaternNum0 extends Exercice {
           case 1:
             listeQuestions.push(`\nDessiner le motif $${nbFigures + 1}$.<br>`)
             listeCorrections.push(`Voici le motif $${nbFigures + 1}$ :<br>
-              ${mathalea2d(Object.assign(fixeBordures(objetsCorr, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { scale: 0.6 * 0.9 ** (nbFigures + 1), optionsTikz: 'transform shape' }), objetsCorr)}`)
+              ${mathalea2d(Object.assign(fixeBordures(objetsCorr, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { scale: 0.4, optionsTikz: 'transform shape' }), objetsCorr)}`)
             break
           case 2:{
             const nbFormes = pat[i].fonction(nbFigures + 1)
@@ -251,7 +201,7 @@ exercice: this,
             }
           )}`)
             listeCorrections.push(`Le motif $${nbFigures + 1}$ contient $${miseEnEvidence(texNombre(nbFormes, 0))}$ formes ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shape.name[0]) ? 'd\'' : 'de '}${pattern.shape.name}s.<br>
-          ${!typesQuestions.includes(1) ? mathalea2d(Object.assign(fixeBordures(objetsCorr, { rxmin: -1, rymin: 0, rxmax: 0, rymax: 1 }), { scale: 0.6 * 0.9 ** (nbFigures + 1), optionsTikz: 'transform shape' }), objetsCorr) : ''}`)
+          ${!typesQuestions.includes(1) ? mathalea2d(Object.assign(fixeBordures(objetsCorr, { rxmin: -1, rymin: 0, rxmax: 0, rymax: 1 }), { scale: 0.4, optionsTikz: 'transform shape' }), objetsCorr) : ''}`)
           }
             break
           case 3:{
