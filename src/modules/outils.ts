@@ -1,4 +1,3 @@
-import Algebrite from 'algebrite'
 import { round } from 'mathjs'
 import {
   combinaisonListes,
@@ -68,6 +67,19 @@ export function contraindreValeur (min, max, valeur, defaut) {
   return !isNaN(valeur) ? (Number(valeur) < Number(min) ? Number(min) : (Number(valeur) > Number(max) ? Number(max) : Number(valeur))) : Number(defaut)
 }
 
+type GestionnaireFormulaireTexteParams = {
+  saisie: string | number,
+  min?: number,
+  max: number,
+  defaut: number,
+  listeOfCase?: string[] | number[],
+  shuffle?: boolean,
+  nbQuestions: number,
+  melange: number,
+  enleveDoublons?: boolean,
+  exclus?: number[]
+}
+
 /**
  * @param {Object} params - Les paramètres de la fonction
  * @param {string|number} params.saisie - Ce qui vient du formulaireTexte donc une série de nombres séparés par des tirets ou un seul nombre (normalement en string) ou rien
@@ -81,18 +93,19 @@ export function contraindreValeur (min, max, valeur, defaut) {
  * @param {boolean} [params.enleveDoublons=false] - Si true, la liste en sortie ne peut pas contenir deux fois la même valeur
  * @param {number[]} [params.exclus] - Liste de valeurs à exclure entre min et max
  */
-export function gestionnaireFormulaireTexte ({
-  saisie,
-  min = 1,
-  max,
-  defaut,
-  listeOfCase,
-  shuffle = true,
-  nbQuestions,
-  melange,
-  enleveDoublons = false,
-  exclus
-} = {}) {
+export function gestionnaireFormulaireTexte (params: GestionnaireFormulaireTexteParams) {
+  let {
+    saisie,
+    min = 1,
+    max,
+    defaut,
+    listeOfCase,
+    shuffle = true,
+    nbQuestions,
+    melange = 0,
+    enleveDoublons = false,
+    exclus
+  } = params
   if (exclus) {
     exclus = exclus.filter((element) => element >= min && element <= max)
   }
@@ -224,14 +237,6 @@ export function quotientier (a, b) {
 }
 
 /**
- * Renvoie le PPCM de deux nombres
- * @author Rémi Angot
- */
-export const ppcm = (a, b) => {
-  return parseInt(Algebrite.run(`lcm(${a},${b})`))
-}
-
-/**
  * Retourne true si x est un carré parfait (à epsilon près)
  * @param {number} x
  * @return {boolean}
@@ -261,7 +266,7 @@ export function carreParfait (x) {
  * @author Rémi Angot
  * @see https://gist.github.com/pc035860/6546661
  */
-export function randint (min, max, listeAEviter = []) {
+export function randint (min: number | Decimal, max: number | Decimal, listeAEviter: (number | Decimal | string)[] | string | number = []) {
   // Source : https://gist.github.com/pc035860/6546661
   if (min instanceof Decimal) min = min.toNumber()
   if (max instanceof Decimal) max = max.toNumber()
@@ -297,7 +302,7 @@ export function randint (min, max, listeAEviter = []) {
       cpt++
     }
     if (cpt === 50) {
-      window.notify(`Randint n'a pas pu trouver de valeur en dehors de la liste à éviter, c'est donc cette valeur qui a été choisie : ${min + rand}`)
+      window.notify(`Randint n'a pas pu trouver de valeur en dehors de la liste à éviter, c'est donc cette valeur qui a été choisie : ${min + rand}`, { min, max, listeAEviter, rand })
     }
   }
   return min + rand
