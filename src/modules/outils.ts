@@ -517,21 +517,6 @@ export function href (texte, lien) {
 }
 
 /**
- * Utilise printlatex et quote de Algebrite
- * @author Rémi Angot
- */
-
-export function printlatex (e) {
-  if (typeof e === 'string' && e !== '') {
-    if (e === '0x') {
-      return '0'
-    } else {
-      return Algebrite.run(`printlatex(quote(${e}))`)
-    }
-  }
-}
-
-/**
  * Retourne un environnement LaTeX itemize à partir d'une liste
  * @author Rémi Angot
  */
