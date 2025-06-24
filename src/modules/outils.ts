@@ -10,6 +10,7 @@ import { arrondi, rangeMinMax } from '../lib/outils/nombres'
 import { context } from './context'
 import Decimal from 'decimal.js'
 import FractionEtendue from './FractionEtendue'
+import type Exercice from '../exercices/Exercice'
 
 export const tropDeChiffres = 'Trop de chiffres'
 export const epsilon = 0.000001
@@ -18,7 +19,7 @@ export const epsilon = 0.000001
  * Affecte les propriétés contenues et contenuCorrection (d'après les autres propriétés de l'exercice)
  * @param {Exercice} exercice
  */
-export function listeQuestionsToContenu (exercice) {
+export function listeQuestionsToContenu (exercice: Exercice) {
   let vspace = ''
   if (exercice.vspace) {
     vspace = `\\vspace{${exercice.vspace} cm}\n`
@@ -29,7 +30,7 @@ export function listeQuestionsToContenu (exercice) {
   exercice.contenuCorrection = texConsigne('') + texIntroduction(exercice.consigneCorrection) + texMulticols(texEnumerate(exercice.listeCorrections, exercice.spacingCorr), exercice.nbColsCorr)
   exercice.contenuCorrection = exercice.contenuCorrection.replace(/\\\\\n*/g, '\\\\\n')
   // console.log(exercice.contenu) // Pour récupérer le code latex des exos pour les cahiers de vacances
-  exercice.contenu = exercice.contenu.replace(/\\\\\n*/g, '\\\\\n')
+  exercice.contenu = exercice.contenu?.replace(/\\\\\n*/g, '\\\\\n')
 }
 
 /**
@@ -39,8 +40,9 @@ export function listeQuestionsToContenu (exercice) {
  * @param {boolean} retourCharriot
  * @author Rémi Angot
  */
-export function listeQuestionsToContenuSansNumero (exercice, retourCharriot = true) {
-  if (document.getElementById('supprimer_reference') && document.getElementById('supprimer_reference').checked === true) {
+export function listeQuestionsToContenuSansNumero (exercice: Exercice, retourCharriot = true) {
+  const supprimerReferenceCheckbox = document.getElementById('supprimer_reference')
+  if (supprimerReferenceCheckbox && supprimerReferenceCheckbox instanceof HTMLInputElement && supprimerReferenceCheckbox.checked === true) {
     exercice.contenu = texConsigne(exercice.consigne) + texIntroduction(exercice.introduction) + texMulticols(texParagraphe(exercice.listeQuestions, exercice.spacing, retourCharriot), exercice.nbCols)
   } else {
     exercice.contenu = texConsigne(exercice.consigne) + `\n\\marginpar{\\footnotesize ${exercice.id}}` + texIntroduction(exercice.introduction) + texMulticols(texParagraphe(exercice.listeQuestions, exercice.spacing, retourCharriot), exercice.nbCols)
@@ -57,14 +59,14 @@ export function listeQuestionsToContenuSansNumero (exercice, retourCharriot = tr
  * @param {number|string} valeur la valeur à contraindre
  * @param {number|string} defaut valeur par défaut si non entier
  */
-export function contraindreValeur (min, max, valeur, defaut) {
+export function contraindreValeur (min: number, max: number, valeur: string | number, defaut: number) {
   // if (isNaN(min) || isNaN(max) || (defaut !== undefined && isNaN(defaut))) { // Rajout de Remi
   if (isNaN(min) || isNaN(max) || (isNaN(defaut))) {
     throw Error(`Erreur dans contraindreValeur : un des paramètres de contrainte est NaN : ${
             ['min : ' + String(min) + ' ', max, valeur, defaut].reduce((accu, value, index) => String(accu) + ['min', ',max', ',valeur', ',defaut'][index] + ' : ' + String(value) + ' ')
         }`)
   }
-  return !isNaN(valeur) ? (Number(valeur) < Number(min) ? Number(min) : (Number(valeur) > Number(max) ? Number(max) : Number(valeur))) : Number(defaut)
+  return !isNaN(Number(valeur)) ? (Number(valeur) < Number(min) ? Number(min) : (Number(valeur) > Number(max) ? Number(max) : Number(valeur))) : Number(defaut)
 }
 
 type GestionnaireFormulaireTexteParams = {
@@ -159,7 +161,7 @@ export function gestionnaireFormulaireTexte (params: GestionnaireFormulaireTexte
  * @author Eric Elter
  * @returns {number}
  */
-export function entreDeux (a, b) {
+export function entreDeux (a: number, b: number) {
   if (a < b) return arrondi(a + (b - a) * randint(10, 90) / 100, 2)
   else return arrondi(b + (a - b) * randint(10, 90) / 100, 2)
 }
@@ -174,7 +176,7 @@ export function entreDeux (a, b) {
  * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
  * @return {boolean}
  */
-export function egal (a, b, tolerance = epsilon) {
+export function egal (a: number | FractionEtendue, b: number | FractionEtendue, tolerance = epsilon) {
   tolerance = tolerance === 0 ? 1e-10 : tolerance
   if (a instanceof FractionEtendue) a = a.valeurDecimale
   if (b instanceof FractionEtendue) b = b.valeurDecimale
@@ -188,7 +190,7 @@ export function egal (a, b, tolerance = epsilon) {
  * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
  * @return {boolean}
  */
-export function inferieur (a, b, tolerance = epsilon) {
+export function inferieur (a: number, b: number, tolerance = epsilon) {
   return (b - a > tolerance)
 }
 
@@ -199,7 +201,7 @@ export function inferieur (a, b, tolerance = epsilon) {
  * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
  * @return {boolean}
  */
-export function superieurouegal (a, b, tolerance = epsilon) {
+export function superieurouegal (a: number, b: number, tolerance = epsilon) {
   return (a - b > tolerance || egal(a, b, tolerance))
 }
 
@@ -210,7 +212,7 @@ export function superieurouegal (a, b, tolerance = epsilon) {
  * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
  * @return {boolean}
  */
-export function inferieurouegal (a, b, tolerance = epsilon) {
+export function inferieurouegal (a: number, b: number, tolerance = epsilon) {
   return (b - a > tolerance || egal(a, b, tolerance))
 }
 
@@ -220,7 +222,7 @@ export function inferieurouegal (a, b, tolerance = epsilon) {
  * @param {number} [tolerance=0.000001] seuil positif en dessous duquel une valeur est considérée comme nulle
  * @return {boolean}
  */
-export function estentier (a, tolerance = epsilon) {
+export function estentier (a: number, tolerance = epsilon) {
   if (typeof a !== 'number') window.notify('Erreur dans estEntier()', { a })
   return (Math.abs(a - round(a)) < tolerance)
 }
@@ -231,7 +233,7 @@ export function estentier (a, tolerance = epsilon) {
  * @param {number} b
  * @return {number}
  */
-export function quotientier (a, b) {
+export function quotientier (a: number, b: number) {
   if (estentier(a) && estentier(b)) return Math.floor(a / b)
   return Math.floor(Math.round(a) / Math.round(b))
 }
@@ -241,7 +243,7 @@ export function quotientier (a, b) {
  * @param {number} x
  * @return {boolean}
  */
-export function carreParfait (x) {
+export function carreParfait (x: number) {
   return estentier(Math.sqrt(x))
 }
 
@@ -314,7 +316,7 @@ export function randint (min: number | Decimal, max: number | Decimal, listeAEvi
  * afin de contrôler que l'aléatoire ne produit pas deux questions identiques.
  * @author Jean-Claude Lhote
  */
-export function checkSum (...args) {
+export function checkSum (...args: number[]) {
   let checkString = ''
   for (let i = 0; i < args.length; i++) {
     if (typeof args[i] === 'number') {
@@ -333,19 +335,14 @@ export function checkSum (...args) {
  */
 if (!Object.fromEntries) {
   Object.defineProperty(Object, 'fromEntries', {
-    value (entries) {
-      if (!entries || !entries[Symbol.iterator]) {
+    value (entries: Iterable<[string, any]>) {
+      if (!entries || typeof (entries as any)[Symbol.iterator] !== 'function') {
         throw new Error('Object.fromEntries() requires a single iterable argument')
       }
-
-      const o = {}
-
-      Object.keys(entries).forEach((key) => {
-        const [k, v] = entries[key]
-
+      const o: Record<string, any> = {}
+      for (const [k, v] of entries as Iterable<[string, any]>) {
         o[k] = v
-      })
-
+      }
       return o
     }
   })
@@ -377,7 +374,7 @@ const sansPrecision = (arrondir === undefined)
  * * L'espacement est généré avec spacing
  * @author Rémi Angot
  */
-export function texEnumerate (liste, spacing) {
+export function texEnumerate (liste: string[], spacing: number) {
   let result = ''
   if (liste.length > 1) {
     result = '\\begin{enumerate}\n'
@@ -410,7 +407,7 @@ export function texEnumerate (liste, spacing) {
  * * L'espacement est généré avec spacing
  * @author Rémi Angot
  */
-export function texEnumerateSansNumero (liste, spacing) {
+export function texEnumerateSansNumero (liste: string[], spacing: number) {
   // return texEnumerate(liste,spacing).replace('\\begin{enumerate}[label={}]','\\begin{enumerate}[label={}]')
   return texEnumerate(liste, spacing).replace('\\begin{enumerate}', '\\begin{enumerate}[label={}]')
 }
@@ -421,7 +418,7 @@ export function texEnumerateSansNumero (liste, spacing) {
  * * `<br><br>` est remplacé par un saut de paragraphe et un medskip
  * @author Rémi Angot
  */
-export function texParagraphe (liste, spacing = false, retourCharriot) {
+export function texParagraphe (liste: string[], spacing: number = 0, retourCharriot: boolean) {
   let result = ''
   if (spacing > 1) {
     result = `\\begin{spacing}{${spacing}}\n`
@@ -449,7 +446,7 @@ export function texParagraphe (liste, spacing = false, retourCharriot) {
  * @return {string}
  * @author Rémi Angot
  */
-export function texIntroduction (texte) {
+export function texIntroduction (texte: string) {
   if (typeof texte === 'string' && texte !== '') {
     return texte.replace(/(<br *\/?>[\n\t ]*)+<br *\/?>/mig, '\n\n\\medskip\n').replace(/<br>/g, '\\\\\n')
   } else {
@@ -464,7 +461,7 @@ export function texIntroduction (texte) {
  * @param spacing interligne (line-height en css)
  * @author Rémi Angot
  */
-export function enumerate (liste, spacing) {
+export function enumerate (liste: string[], spacing: number) {
   return texEnumerate(liste, spacing)
 }
 
@@ -475,7 +472,7 @@ export function enumerate (liste, spacing) {
  * @param spacing interligne (line-height en css)
  * @author Sébastien Lozano
  */
-export function enumerateSansPuceSansNumero (liste, spacing) {
+export function enumerateSansPuceSansNumero (liste: string[], spacing: number) {
   return texEnumerate(liste, spacing).replace('\\begin{enumerate}', '\\begin{enumerate}[label={}]')
 }
 
@@ -483,7 +480,7 @@ export function enumerateSansPuceSansNumero (liste, spacing) {
  * Renvoie \exo{consigne}
  * @author Rémi Angot
  */
-export function texConsigne (consigne) {
+export function texConsigne (consigne: string) {
   return ((consigne != null && typeof consigne === 'string') ? consigne.replace(/<br>/g, '\\\\') : '') + '\n\n'
 }
 
@@ -492,7 +489,7 @@ export function texConsigne (consigne) {
  * @param {number} nb
  * @returns retourne un nombre au format français sans espace après la virgule
  */
-export function num (nb) {
+export function num (nb: number) {
   if (typeof nb === 'number') {
     return Intl.NumberFormat('fr-FR', { maximumFractionDigits: 20 }).format(nb).toString().replace(/\s+/g, '\\thickspace ').replace(',', '{,}')
   } else {
@@ -506,7 +503,7 @@ export function num (nb) {
  * @param {string} lien
  * @author Rémi Angot
  */
-export function href (texte, lien) {
+export function href (texte: string, lien: string) {
   if (typeof texte === 'string' && texte !== '' && typeof lien === 'string' && lien !== '') {
     if (context.isHtml) {
       return `<a target="_blank" href=${lien}> ${texte} </a>`
@@ -520,7 +517,7 @@ export function href (texte, lien) {
  * Retourne un environnement LaTeX itemize à partir d'une liste
  * @author Rémi Angot
  */
-export function itemize (tableauDeTexte) {
+export function itemize (tableauDeTexte: string[]) {
   if (Array.isArray(tableauDeTexte) && tableauDeTexte.filter(el => typeof el === 'string').length !== 0) {
     let texte
     if (context.isHtml) {
