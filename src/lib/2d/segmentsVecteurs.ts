@@ -10,6 +10,7 @@ import { latex2d, texteParPosition } from './textes'
 import { rotation, similitude, translation } from './transformations'
 import MainLevee from './MainLevee'
 import { PointAbstrait } from './points-abstraits'
+import type { Point3d } from '../../modules/3d'
 
 /**
  * v = vecteur('V') // son nom
@@ -668,7 +669,7 @@ export function demiDroite (A: PointAbstrait, B: PointAbstrait, color = 'black',
  * C'est à la fonction d'affichage de limiter le nombre de chiffres
  * @author Rémi Angot
  */
-export function longueur (A: PointAbstrait, B: PointAbstrait, precision = 2) {
+export function longueur (A: PointAbstrait | Point3d, B: PointAbstrait | Point3d, precision = 2) {
   return arrondi(Math.sqrt((B.x - A.x) ** 2 + (B.y - A.y) ** 2), precision ?? 6)
   // j chiffres après la virgule pour l'arrondi sachant que c'est à la fonction d'affichage de limiter le nombre de chiffres.
 }

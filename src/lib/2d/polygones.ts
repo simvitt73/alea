@@ -12,6 +12,7 @@ import { lettreDepuisChiffre } from '../outils/outilString'
 import { codageSegments } from './codages'
 import { codageAngleDroit } from './angles'
 import type { PointAbstrait } from './points-abstraits'
+import type { Point3d } from '../../modules/3d'
 
 type BinomeXY = { x: number, y: number }
 type BinomesXY = BinomeXY[]
@@ -50,7 +51,7 @@ export class Polyline extends ObjetMathalea2D {
   listePoints: PointAbstrait[]
   nom: string
   stringColor: string
-  constructor (...points: PointAbstrait[] | (PointAbstrait[] | string)[]) {
+  constructor (...points: (PointAbstrait | Point3d)[] | [(PointAbstrait | Point3d)[], string]) {
     super()
     this.epaisseur = 1
     this.pointilles = 0
@@ -206,7 +207,7 @@ export class Polyline extends ObjetMathalea2D {
  * @returns Polyline
  * @author Rémi Angot
  */
-export function polyline (...args: PointAbstrait[] | (PointAbstrait[] | string)[]) {
+export function polyline (...args: (PointAbstrait | Point3d)[] | [(PointAbstrait | Point3d)[], string]) {
   return new Polyline(...args)
 }
 

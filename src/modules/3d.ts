@@ -651,14 +651,14 @@ export class Sphere3d extends ObjetMathalea2D {
           if (polyLineCachee.length > 4) { // une précaution au cas où la liste de points est courte ça pourrait boucler à l'infini
             while (securite < 10 && longueur(polyLineCachee[polyLineCachee.length - 1], polyLineCachee[0]) < 1) {
               const dernierPoint = polyLineCachee.pop()
-              polyLineCachee = [point(dernierPoint.x, dernierPoint.y), ...polyLineCachee]
+              if (dernierPoint) polyLineCachee = [point(dernierPoint.x, dernierPoint.y), ...polyLineCachee]
               securite++
             }
           }
           if (polyLineVisible.length > 4) {
             while (securite < 20 && longueur(polyLineVisible[polyLineVisible.length - 1], polyLineVisible[0]) < 1) {
               const premierPoint = polyLineVisible.shift()
-              polyLineVisible.push(point(premierPoint.x, premierPoint.y))
+              if (premierPoint) polyLineVisible.push(point(premierPoint.x, premierPoint.y))
               securite++
             }
           }
