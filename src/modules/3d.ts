@@ -138,20 +138,20 @@ class Arete3d {
   extremite1: Point3d
   extremite2: Point3d
   color: any
-  visible: boolean
+  isVisible: boolean
   c2d: Segment
-  constructor (point1: Point3d, point2: Point3d, color: string, visible: boolean) {
+  constructor (point1: Point3d, point2: Point3d, color: string, isVisible: boolean) {
     this.extremite1 = point1
     this.extremite2 = point2
     this.color = Array.isArray(color) ? color[0] : color // MGu parfois un tableau de couleurs, pasd compatible avec segment.
-    this.visible = visible
-    if (!point1.visible || !point2.visible || !this.visible) {
-      this.visible = false
+    this.isVisible = isVisible
+    if (!point1.isVisible || !point2.isVisible || !this.isVisible) {
+      this.isVisible = false
     } else {
-      this.visible = true
+      this.isVisible = true
     }
     this.c2d = segment(point1.c2d, point2.c2d, this.color)
-    if (!this.visible) {
+    if (!this.isVisible) {
       this.c2d.pointilles = 2
     } else {
       this.c2d.pointilles = 0
@@ -369,12 +369,12 @@ class Polygone3d {
     A = this.listePoints[0]
     this.listePoints2d = [A.c2d]
     for (let i = 1; i < this.listePoints.length; i++) {
-      segments3d.push(arete3d(A, this.listePoints[i], this.color, A.visible && this.listePoints[i].visible))
+      segments3d.push(arete3d(A, this.listePoints[i], this.color, A.isVisible && this.listePoints[i].isVisible))
       segments.push(segments3d[i - 1].c2d)
       A = this.listePoints[i]
       this.listePoints2d.push(A.c2d)
     }
-    segments3d.push(arete3d(A, this.listePoints[0], this.color, A.visible && this.listePoints[0].visible))
+    segments3d.push(arete3d(A, this.listePoints[0], this.color, A.isVisible && this.listePoints[0].isVisible))
     segments.push(segments3d[this.listePoints.length - 1].c2d)
     this.aretes = segments3d
     this.c2d = segments
@@ -544,10 +544,10 @@ export class Sphere3d extends ObjetMathalea2D {
       for (let ee = 0; ee < paralleles.listePoints3d[0].length; ee++) {
         paralleles.listePoints3d[j][ee].isVisible = !(paralleles.listePoints3d[j][ee].c2d.estDansPolygone(poly))
       }
-      paralleles.ptCachePremier.push('')
-      paralleles.indicePtCachePremier.push('')
-      paralleles.ptCacheDernier.push('')
-      paralleles.indicePtCacheDernier.push('')
+      paralleles.ptCachePremier.push(point3d(0, 0, 0, false))
+      paralleles.indicePtCachePremier.push(0)
+      paralleles.ptCacheDernier.push(point3d(0, 0, 0, false))
+      paralleles.indicePtCacheDernier.push(0)
 
       for (let ee = 0, s, s1, d1, d2, jj, pt; ee < paralleles.listePoints3d[0].length; ee++) {
         s = segment(paralleles.listePoints3d[j][ee].c2d, paralleles.listePoints3d[j][(ee + 1) % paralleles.listePoints3d[0].length].c2d)
@@ -1142,7 +1142,7 @@ export class Prisme3d extends ObjetMathalea2D {
     let toutesLesAretesSontVisibles = true
     for (let i = 0; i < this.base1.listePoints.length; i++) {
       const areteVisibleOuPas = pointSurSegment(this.base1.listePoints[i].c2d, this.base2.listePoints[i].c2d, longueur(this.base1.listePoints[i].c2d, this.base2.listePoints[i].c2d) / 50).estDansPolygone(polygone(this.base1.listePoints2d))
-      this.base2.listePoints[i].visible = !areteVisibleOuPas
+      this.base2.listePoints[i].isVisible = !areteVisibleOuPas
       toutesLesAretesSontVisibles = !areteVisibleOuPas & toutesLesAretesSontVisibles
     }
     // On trace les arêtes de this.base2
@@ -1288,7 +1288,7 @@ export class Pyramide3d extends ObjetMathalea2D {
       }
       if (sommetCache) {
         if (sommet.z > this.base.listePoints[0].z) { // Si le sommet est au-dessus de la base
-          this.aretesSommet[i].visible = false
+          this.aretesSommet[i].isVisible = false
           this.aretesSommet[i].c2d.pointilles = 2
           aretesBase[i].c2d.pointilles = 2
           aretesBase[(this.base.listePoints.length + i - 1) % this.base.listePoints.length].c2d.pointilles = 2
@@ -1466,13 +1466,13 @@ export class PyramideTronquee3d extends ObjetMathalea2D {
     const sommetsBase2 = []
     for (let i = 0, pointSection; i < this.base.listePoints.length; i++) {
       pointSection = homothetie3d(sommet, base.listePoints[i], coeff)
-      pointSection.visible = true
+      pointSection.isVisible = true
       sommetsBase2.push(pointSection)
     }
     this.base2 = polygone3d(...sommetsBase2)
     this.c2d.push(...this.base.c2d)
     for (let i = 0; i < base.listePoints.length; i++) {
-      this.aretes.push(arete3d(base.listePoints[i], this.base2.listePoints[i], this.color, base.listePoints[i].visible))
+      this.aretes.push(arete3d(base.listePoints[i], this.base2.listePoints[i], this.color, base.listePoints[i].isVisible))
       this.c2d.push(this.aretes[i].c2d)
     }
     this.c2d.push(...this.base2.c2d)
@@ -1835,16 +1835,16 @@ export class Pave3d extends ObjetMathalea2D {
       return arrondi((dist1 + dist2 + dist3 + dist4) / 4, 5)
     }
 
-    E.visible = !E.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
-    F.visible = !F.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
-    G.visible = !G.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
-    H.visible = !H.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
-    if (E.visible && F.visible && G.visible && H.visible) {
+    E.isVisible = !E.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
+    F.isVisible = !F.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
+    G.isVisible = !G.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
+    H.isVisible = !H.c2d.estDansQuadrilatere(A.c2d, B.c2d, C.c2d, D.c2d)
+    if (E.isVisible && F.isVisible && G.isVisible && H.isVisible) {
       const minimum = Math.min(distanceMoyenne4points(E), distanceMoyenne4points(F), distanceMoyenne4points(G), distanceMoyenne4points(H))
-      E.visible = minimum !== distanceMoyenne4points(E)
-      F.visible = minimum !== distanceMoyenne4points(F)
-      G.visible = minimum !== distanceMoyenne4points(G)
-      H.visible = minimum !== distanceMoyenne4points(H)
+      E.isVisible = minimum !== distanceMoyenne4points(E)
+      F.isVisible = minimum !== distanceMoyenne4points(F)
+      G.isVisible = minimum !== distanceMoyenne4points(G)
+      H.isVisible = minimum !== distanceMoyenne4points(H)
     }
     // Fin de determination du point caché
 
