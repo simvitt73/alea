@@ -87,7 +87,7 @@ export function point3d (x: number, y: number, z = 0, visible = true, label = ''
  * let w = vecteur(point3d(0,0,0),point3d(1,1,1)) -> définit un vecteur d'origine O et d'extrémité M(1;1;1)
  * let fleche = w.representant(point3d(5,0,0)) -> fleche est un objet 2d qui représente le vecteur w au point (5;0;0)
  */
-class Vecteur3d {
+export class Vecteur3d {
   x: number = 0
   y: number = 0
   z: number = 0
@@ -134,7 +134,7 @@ export function vecteur3d (...args: [Point3d, Point3d] | [number, number, number
  * Si l'un des deux points n'est pas visible (propriété visible à false) alors l'arête aura aussi visible à false
  * sa propriété p2d est un segment en pointillé ou en trait plein suivant sa visibilité.
  */
-class Arete3d {
+export class Arete3d {
   extremite1: Point3d
   extremite2: Point3d
   color: any
