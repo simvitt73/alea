@@ -11,8 +11,8 @@ import { aireTriangle } from './triangle'
 import { lettreDepuisChiffre } from '../outils/outilString'
 import { codageSegments } from './codages'
 import { codageAngleDroit } from './angles'
-import type { PointAbstrait } from './points-abstraits'
-import type { Point3d } from '../../modules/3d'
+import { isPointsAbstraits, PointAbstrait } from './points-abstraits'
+import { Point3d } from '../../modules/3d'
 
 type BinomeXY = { x: number, y: number }
 type BinomesXY = BinomeXY[]
@@ -48,7 +48,7 @@ export function barycentre (p: Polygone, nom = '', positionLabel = 'above') {
  * @author Rémi Angot
  */
 export class Polyline extends ObjetMathalea2D {
-  listePoints: PointAbstrait[]
+  listePoints: (PointAbstrait | Point3d)[]
   nom: string
   stringColor: string
   constructor (...points: (PointAbstrait | Point3d)[] | [(PointAbstrait | Point3d)[], string]) {
@@ -59,10 +59,10 @@ export class Polyline extends ObjetMathalea2D {
     if (Array.isArray(points[0])) {
     // Si le premier argument est un tableau
       this.listePoints = points[0]
-      this.stringColor = points[1] as string
+      this.stringColor = String(points[1]) // alors le deuxième est un string
       this.color = colorToLatexOrHTML(String(points[1]))
-    } else {
-      this.listePoints = points
+    } else { // On n'a que des points
+      this.listePoints = points.filter(el => el instanceof PointAbstrait || el instanceof Point3d)
       this.color = colorToLatexOrHTML('black')
       this.stringColor = 'black'
     }
@@ -82,7 +82,8 @@ export class Polyline extends ObjetMathalea2D {
     if (this.listePoints.length < 15) {
     // Ne nomme pas les lignes brisées trop grandes (pratique pour les courbes de fonction)
       for (const point of this.listePoints) {
-        this.nom += point.nom
+        if (point instanceof PointAbstrait) this.nom += point.nom
+        if (point instanceof Point3d) this.nom += point.label
       }
     };
   }
@@ -114,7 +115,17 @@ export class Polyline extends ObjetMathalea2D {
     }
     let binomeXY = ''
     for (const point of this.listePoints) {
-      binomeXY += `${point.xSVG(coeff)},${point.ySVG(coeff)} `
+      let X = 0
+      let Y = 0
+      if (point instanceof PointAbstrait) {
+        X = point.xSVG(coeff)
+        Y = point.ySVG(coeff)
+      }
+      if (point instanceof Point3d) {
+        X = point.c2d.xSVG(coeff)
+        Y = point.c2d.ySVG(coeff)
+      }
+      binomeXY += `${X},${Y} `
     }
     return `<polyline points="${binomeXY}" fill="none" stroke="${this.color[0]}" ${this.style} id="${this.id}" />`
   }
@@ -254,7 +265,7 @@ export class Polygone extends ObjetMathalea2D {
   _aire: number
   stringColor: string
   readonly perimetre: number
-  constructor (...points: (PointAbstrait | PointAbstrait[] | string)[]) {
+  constructor (...points: PointAbstrait[] | [PointAbstrait[], string?]) {
     super()
     this.epaisseurDesHachures = 1
     this.distanceDesHachures = 10
@@ -293,7 +304,7 @@ export class Polygone extends ObjetMathalea2D {
         this.stringColor = String(points[points.length - 1])
         points.splice(points.length - 1, 1)
       }
-      this.listePoints = points
+      this.listePoints = points.filter(el => el instanceof PointAbstrait)
       this.nom = this.listePoints.map(el => el.nom).join('')
       this.couleurDeRemplissage = colorToLatexOrHTML('none')
       this.couleurDesHachures = colorToLatexOrHTML('none') // Rajout EE du 22/02/2024 pour 6N22 cas 3
@@ -524,7 +535,7 @@ export class Polygone extends ObjetMathalea2D {
  *
  * @author Rémi Angot
  */
-export function polygone (...args: (PointAbstrait | PointAbstrait[] | string)[]) {
+export function polygone (...args: PointAbstrait[] | [PointAbstrait[], string?]) {
   return new Polygone(...args)
 }
 
@@ -541,9 +552,13 @@ export function polygoneAvecNom (...args: (PointAbstrait | number)[]): [Polygone
     k = Number(args[args.length - 1])
     args.splice(args.length - 1, 1)
   }
+  if (!isPointsAbstraits(args)) {
+    window.notify('polygoneAvecNom : les arguments doivent être des objets PointAbstrait', { args })
+    return [polygone(), nommePolygone(polygone())]
+  }
   const p = polygone(...args)
   let nom = ''
-  ;(args).forEach((el: Point) => {
+  args.forEach((el: PointAbstrait) => {
     nom += el.nom + ','
   })
   nom = nom.substring(0, nom.length - 1)
