@@ -212,8 +212,8 @@ export class Segment extends ObjetMathalea2D {
         this.x2 = 0
         this.y2 = 0
       }
-      this.color = colorToLatexOrHTML(String(args[2]) || 'black')
-      this.styleExtremites = String(args[3]) || ''
+      this.color = colorToLatexOrHTML(args[2]?.toString() || 'black')
+      this.styleExtremites = args[3]?.toString() || ''
     } else {
       if (Number.isNaN(args[0]) || Number.isNaN(args[1]) || Number.isNaN(args[2]) || Number.isNaN(args[3])) {
         window.notify('Segment : (attendus : x1, y1, x2, y2 et "couleur") les arguments de sont pas des nombres valides', { ...args })
@@ -222,8 +222,8 @@ export class Segment extends ObjetMathalea2D {
       this.y1 = Number(args[1])
       this.x2 = Number(args[2])
       this.y2 = Number(args[3])
-      this.color = colorToLatexOrHTML(String(args[4]) || 'black')
-      this.styleExtremites = String(args[5]) || ''
+      this.color = colorToLatexOrHTML(args[4] || 'black')
+      this.styleExtremites = args[5] || ''
     }
 
     this.x1 = arrondi(this.x1, 2)
