@@ -1470,10 +1470,10 @@ export function pyramide3d (base: Polygone3d, sommet: Point3d, color = 'black', 
  * un coefficient de 0.5 coupera la pyramide à mi-hauteur (valeur par défaut).
  */
 export class PyramideTronquee3d extends ObjetMathalea2D {
-  constructor (base, sommet, coeff = 0.5, color = 'black') {
+  constructor (base: Polygone3d, sommet: Point3d, coeff = 0.5, color = 'black') {
     super()
-    this.color = color
-    base.color = colorToLatexOrHTML(color)
+    this.color = colorToLatexOrHTML(color)
+    base.color = color
     this.base = base
     this.coeff = coeff
     this.aretes = []
@@ -1488,14 +1488,14 @@ export class PyramideTronquee3d extends ObjetMathalea2D {
     this.base2 = polygone3d(...sommetsBase2)
     this.c2d.push(...this.base.c2d)
     for (let i = 0; i < base.listePoints.length; i++) {
-      this.aretes.push(arete3d(base.listePoints[i], this.base2.listePoints[i], this.color, base.listePoints[i].isVisible))
+      this.aretes.push(arete3d(base.listePoints[i], this.base2.listePoints[i], color, base.listePoints[i].isVisible))
       this.c2d.push(this.aretes[i].c2d)
     }
     this.c2d.push(...this.base2.c2d)
   }
 }
 
-export function pyramideTronquee3d (base, sommet, coeff = 0.5, color = 'black') {
+export function pyramideTronquee3d (base: Polygone3d, sommet: Point3d, coeff = 0.5, color = 'black') {
   return new PyramideTronquee3d(base, sommet, coeff, color)
 }
 
@@ -1520,7 +1520,7 @@ export function pyramideTronquee3d (base, sommet, coeff = 0.5, color = 'black') 
  * @class
  */
 export class Cube3d extends ObjetMathalea2D {
-  constructor (x, y, z, c, color = 'black', colorAV = 'lightgray', colorHautouBas = 'white', colorDr = 'darkgray', aretesCachee = true, affichageNom = false, nom = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) {
+  constructor (x: number, y: number, z:number, c: number, color = 'black', colorAV = 'lightgray', colorHautouBas = 'white', colorDr = 'darkgray', aretesCachee = true, affichageNom = false, nom = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) {
     super()
     this.affichageNom = affichageNom
     const A = point3d(x, y, z)
@@ -1569,7 +1569,7 @@ export class Cube3d extends ObjetMathalea2D {
     // Les 8 sommets sont indispensables pour pouvoir les utiliser ensuite.
 
     if (aretesCachee) {
-      faceAV.couleurDeRemplissage = colorToLatexOrHTML(colorAV)
+      faceAV[0].couleurDeRemplissage = colorToLatexOrHTML(colorAV)
       faceVisibleHautOuBas.couleurDeRemplissage = colorToLatexOrHTML(colorHautouBas)
       faceDr.couleurDeRemplissage = colorToLatexOrHTML(colorDr)
       this.c2d = [faceAV.length === 2 ? faceAV[0] : faceAV, faceAV.length === 2 ? faceAV[1] : vide2d(), faceDr, faceVisibleHautOuBas]
@@ -1605,7 +1605,7 @@ export class Cube3d extends ObjetMathalea2D {
  * @author Jean-Claude Lhote (Amendée par Eric Elter)
  * @return {Cube3d}
  */
-export function cube3d (x, y, z, c, color = 'black', colorAV = 'lightgray', colorHautouBas = 'white', colorDr = 'darkgray', aretesCachee = true, affichageNom = false, nom = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) {
+export function cube3d (x: number, y: number, z: number, c: number, color = 'black', colorAV = 'lightgray', colorHautouBas = 'white', colorDr = 'darkgray', aretesCachee = true, affichageNom = false, nom = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) {
   return new Cube3d(x, y, z, c, color, colorAV, colorHautouBas, colorDr, aretesCachee, affichageNom, nom)
 }
 
@@ -2036,19 +2036,21 @@ export function sensDeRotation3d (axe, rayon, angle, epaisseur, color) {
  * @param {Point3d | Polygone3d} point3D Pour l'instant on ne translate qu'un point3d ou un polygone3d
  * @param {Vecteur3d} vecteur3D
  */
-export function translation3d (point3D, vecteur3D) {
-  if (point3D.constructor === Point3d) {
+export function translation3d<T extends Point3d | Polygone3d> (point3D: T, vecteur3D: Vecteur3d): T {
+  if (point3D instanceof Point3d) {
     const x = point3D.x + vecteur3D.x
     const y = point3D.y + vecteur3D.y
     const z = point3D.z + vecteur3D.z
-    return point3d(x, y, z)
-  } else if (point3D.constructor === Polygone3d) {
+    return point3d(x, y, z) as T
+  } else if (point3D instanceof Polygone3d) {
     const p = []
     for (let i = 0; i < point3D.listePoints.length; i++) {
       p.push(translation3d(point3D.listePoints[i], vecteur3D))
     }
-    return polygone3d(p, point3D.color)
+    return polygone3d(p, point3D.color) as T
   }
+  window.notify('translation3d ne peut être appliqué qu\'à un point3d ou un polygone3d', point3D)
+  return point3D
 }
 
 /**
@@ -2057,31 +2059,29 @@ export function translation3d (point3D, vecteur3D) {
  * La même chose qu'ne 2d, mais en 3d...
  * Pour les points3d les polygones ou les vecteurs (multiplication scalaire par rapport)
  */
-export function homothetie3d (point3D, centre, rapport, color) {
+export function homothetie3d <T extends Point3d | Vecteur3d | Polygone3d> (point3D: T, centre: Point3d, rapport: number, color?: string): T {
   let V
   const p = []
-  if (point3D.constructor === Point3d) {
+  if (point3D instanceof Point3d) {
     V = vecteur3d(centre, point3D)
     V.x *= rapport
     V.y *= rapport
     V.z *= rapport
-    return translation3d(centre, V)
-  } else if (point3D.constructor === Vecteur3d) {
+    return translation3d(centre, V) as T
+  } else if (point3D instanceof Vecteur3d) {
     V = vecteur3d(point3D.x, point3D.y, point3D.z)
     V.x *= rapport
     V.y *= rapport
     V.z *= rapport
-    return V
-  } else if (point3D.constructor === Polygone3d) {
+    return V as T
+  } else if (point3D instanceof Polygone3d) {
     for (let i = 0; i < point3D.listePoints.length; i++) {
       p.push(homothetie3d(point3D.listePoints[i], centre, rapport, color))
     }
-    if (typeof (color) !== 'undefined') {
-      return polygone3d(p, color)
-    } else {
-      return polygone3d(p, point3D.color)
-    }
+    return polygone3d(p, color ?? point3D.color) as T
   }
+  window.notify('homothetie3d ne peut être appliqué qu\'à un point3d, un vecteur3d ou un polygone3d', point3D)
+  return point3D
 }
 
 export class CodageAngleDroit3D extends ObjetMathalea2D {
