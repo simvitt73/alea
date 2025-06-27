@@ -946,7 +946,7 @@ export function cone3d (centre: Point3d, sommet: Point3d, rayon: Vecteur3d, colo
  * @class
  */
 export class Cylindre3d extends ObjetMathalea2D {
-  constructor (centrebase1, centrebase2, rayon1, rayon2, color = 'black', affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
+  constructor (centrebase1: Point3d, centrebase2: Point3d, rayon1: Vecteur3d, rayon2: Vecteur3d, color: string[] = ['black'], affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
     super()
     this.centrebase1 = centrebase1
     this.centrebase2 = centrebase2
@@ -993,13 +993,13 @@ export class Cylindre3d extends ObjetMathalea2D {
     this.angleDepart = angleDepart
     // Description de chaque demi-base en position verticale
     // c1 : cercle bas derrière
-    const c1 = demicercle3d(this.centrebase1, this.normal, this.rayon1, cote1, true, this.color, angleDepart)
+    const c1 = demicercle3d(this.centrebase1, this.normal, this.rayon1, cote1, true, this.color[0], angleDepart)
     // c3 : cercle haut derrière
-    const c3 = demicercle3d(this.centrebase2, this.normal, this.rayon2, cote1, false, this.color, angleDepart)
+    const c3 = demicercle3d(this.centrebase2, this.normal, this.rayon2, cote1, false, this.color[0], angleDepart)
     // c2 : cercle bas devant
-    const c2 = demicercle3d(this.centrebase1, this.normal, this.rayon1, cote2, false, this.color, angleDepart)
+    const c2 = demicercle3d(this.centrebase1, this.normal, this.rayon1, cote2, false, this.color[0], angleDepart)
     // c4 : cercle haut devant
-    const c4 = demicercle3d(this.centrebase2, this.normal, this.rayon2, cote2, false, this.color, angleDepart)
+    const c4 = demicercle3d(this.centrebase2, this.normal, this.rayon2, cote2, false, this.color[0], angleDepart)
     this.pointsBase1 = [...c1.listePoints, ...c2.listePoints]
     this.pointsBase2 = [...c3.listePoints, ...c4.listePoints]
     if (this.cylindreColore) {
@@ -1022,24 +1022,24 @@ export class Cylindre3d extends ObjetMathalea2D {
 
     if (this.affichageGeneratrices) {
       for (let i = 1; i < c1.listePoints.length - 1; i += 2) {
-        s = segment(c3.listePoints[i], c1.listePoints[i], this.color)
+        s = segment(c3.listePoints[i], c1.listePoints[i], this.color[0])
         s.pointilles = 2
         s.opacite = 0.3
         this.c2d.push(s)
       }
     }
 
-    s = segment(c4.listePoints[0], c2.listePoints[0], this.color)
+    s = segment(c4.listePoints[0], c2.listePoints[0], this.color[0])
     this.c2d.push(s)
 
     if (this.affichageGeneratrices) {
       for (let i = 1; i < c2.listePoints.length - 1; i++) {
-        s = segment(c4.listePoints[i], c2.listePoints[i], this.color)
+        s = segment(c4.listePoints[i], c2.listePoints[i], this.color[0])
         this.c2d.push(s)
       }
     }
 
-    s = segment(c4.listePoints[c2.listePoints.length - 1], c2.listePoints[c2.listePoints.length - 1], this.color)
+    s = segment(c4.listePoints[c2.listePoints.length - 1], c2.listePoints[c2.listePoints.length - 1], this.color[0])
     this.c2d.push(s)
 
     this.c2d.push(c1, c2)
@@ -1066,6 +1066,10 @@ export class Cylindre3d extends ObjetMathalea2D {
       // Construction de l'extension de l'axe
       s = droite(pt[i], pt[i - 1])
       const ptAxe1 = pointIntersectionDD(s, axeCylindre)
+      if (!ptAxe1) {
+        window.notify('Axe du cylindre non défini correctement', { s, axeCylindre })
+        return
+      }
       s = segment(this.centrebase1.c2d, ptAxe1, this.colorAxe)
       s.pointilles = 2
       s.opacite = 0.7
@@ -1104,7 +1108,7 @@ export class Cylindre3d extends ObjetMathalea2D {
  * @author Jean-Claude Lhote (optimisé par Eric Elter)
  * @return {Cylindre3d}
  */
-export function cylindre3d (centrebase1, centrebase2, rayon, rayon2, color = 'black', affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
+export function cylindre3d (centrebase1: Point3d, centrebase2: Point3d, rayon: Vecteur3d, rayon2: Vecteur3d, color: string[] = ['black'], affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
   return new Cylindre3d(centrebase1, centrebase2, rayon, rayon2, color, affichageGeneratrices, affichageCentreBases, affichageAxe, colorAxe, cylindreColore, colorCylindre, avecFaceHaut)
 }
 

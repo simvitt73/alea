@@ -299,7 +299,7 @@ export default class CalculPythagoreEspace extends Exercice {
             D = point3d(0, h, 0, true, choisitLettresDifferentes(1, 'OQWX' + A.label)[0], 'left')
           }
           v = vecteur3d(A, B)
-          solideDessine = cylindre3d(A, D, v, v, 'blue', false, true, true, 'black')
+          solideDessine = cylindre3d(A, D, v, v, ['blue'], false, true, true, 'black')
 
           // Pour placer un point sur la base visible mais qui ne soit pas trop près de l'axe et des deux génératrices.
           anglesPossibles = shuffle(rangeMinMax(2, solideDessine.pointsBase2.length - 3, [16, 17, 18, 19, 20]))
