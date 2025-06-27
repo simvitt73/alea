@@ -870,12 +870,12 @@ export function sphere3d (centre: Point3d, rayon: Vecteur3d, colorEquateur = 're
  * @class
  */
 export class Cone3d extends ObjetMathalea2D {
-  constructor (centre: Point3d, sommet: Point3d, rayon: Vecteur3d, color: string[] = ['black'], affichageAxe = true, colorAxe = 'black', colorCone = 'gray', affichageCentre = true, affichageBase = true) {
+  constructor (centre: Point3d, sommet: Point3d, rayon: Vecteur3d, color: string = 'black', affichageAxe = true, colorAxe = 'black', colorCone = 'gray', affichageCentre = true, affichageBase = true) {
     super()
     this.centre = centre
     this.sommet = sommet
     this.rayon = rayon
-    this.color = color
+    this.color = colorToLatexOrHTML(color)
     this.colorAxe = colorAxe
     this.colorCone = colorCone
 
@@ -908,7 +908,7 @@ export class Cone3d extends ObjetMathalea2D {
  * @author Eric Elter
  * @return {Cone3d}
  */
-export function cone3d (centre: Point3d, sommet: Point3d, rayon: Vecteur3d, color: string[] = ['black'], affichageAxe = false, colorAxe = 'black', colorCone = 'gray', affichageCentre = true, affichageBase = true) {
+export function cone3d (centre: Point3d, sommet: Point3d, rayon: Vecteur3d, color: string = 'black', affichageAxe = false, colorAxe = 'black', colorCone = 'gray', affichageCentre = true, affichageBase = true) {
   return new Cone3d(centre, sommet, rayon, color, affichageAxe, colorAxe, colorCone, affichageCentre, affichageBase)
 }
 
@@ -946,13 +946,13 @@ export function cone3d (centre: Point3d, sommet: Point3d, rayon: Vecteur3d, colo
  * @class
  */
 export class Cylindre3d extends ObjetMathalea2D {
-  constructor (centrebase1: Point3d, centrebase2: Point3d, rayon1: Vecteur3d, rayon2: Vecteur3d, color: string[] = ['black'], affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
+  constructor (centrebase1: Point3d, centrebase2: Point3d, rayon1: Vecteur3d, rayon2: Vecteur3d, color: string = 'black', affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
     super()
     this.centrebase1 = centrebase1
     this.centrebase2 = centrebase2
     this.rayon1 = rayon1
     this.rayon2 = rayon2
-    this.color = color
+    this.color = colorToLatexOrHTML(color)
     this.affichageGeneratrices = affichageGeneratrices
     this.affichageCentreBases = affichageCentreBases
     this.affichageAxe = affichageAxe
@@ -1108,7 +1108,7 @@ export class Cylindre3d extends ObjetMathalea2D {
  * @author Jean-Claude Lhote (optimisé par Eric Elter)
  * @return {Cylindre3d}
  */
-export function cylindre3d (centrebase1: Point3d, centrebase2: Point3d, rayon: Vecteur3d, rayon2: Vecteur3d, color: string[] = ['black'], affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
+export function cylindre3d (centrebase1: Point3d, centrebase2: Point3d, rayon: Vecteur3d, rayon2: Vecteur3d, color: string = 'black', affichageGeneratrices = true, affichageCentreBases = false, affichageAxe = false, colorAxe = 'black', cylindreColore = false, colorCylindre = 'lightgray', avecFaceHaut = true) {
   return new Cylindre3d(centrebase1, centrebase2, rayon, rayon2, color, affichageGeneratrices, affichageCentreBases, affichageAxe, colorAxe, cylindreColore, colorCylindre, avecFaceHaut)
 }
 
@@ -1130,10 +1130,10 @@ export function cylindre3d (centrebase1: Point3d, centrebase2: Point3d, rayon: V
  * @class
  */
 export class Prisme3d extends ObjetMathalea2D {
-  constructor (base: Polygone3d, vecteur: Vecteur3d, color: string[] = ['black'], affichageNom = false, nomBase2?: string, positionLabels2?: string[]) {
+  constructor (base: Polygone3d, vecteur: Vecteur3d, color: string = 'black', affichageNom = false, nomBase2?: string, positionLabels2?: string[]) {
     super()
     this.affichageNom = affichageNom
-    this.color = color
+    this.color = colorToLatexOrHTML(color)
     base.color = this.color[0]
     this.vecteur = vecteur
     if (this.vecteur.y === 0 && this.vecteur.x === 0) {
@@ -1215,7 +1215,7 @@ export class Prisme3d extends ObjetMathalea2D {
  * @author Eric Elter (d'après version précédente de Jean-Claude Lhote)
  * @return {Prisme3d}
  */
-export function prisme3d (base: Polygone3d, vecteur: Vecteur3d, color: string[] = ['black'], affichageNom = false, nomBase2?: string, positionLabels2?: string[]) {
+export function prisme3d (base: Polygone3d, vecteur: Vecteur3d, color: string = 'black', affichageNom = false, nomBase2?: string, positionLabels2?: string[]) {
   return new Prisme3d(base, vecteur, color, affichageNom, nomBase2, positionLabels2)
 }
 
