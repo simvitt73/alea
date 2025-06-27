@@ -1,6 +1,6 @@
 import { cross, dot, matrix, multiply, norm } from 'mathjs'
 import { distancePointDroite, Droite, droite } from '../lib/2d/droites'
-import { Point, point, pointIntersectionDD, pointSurSegment, tracePoint } from '../lib/2d/points'
+import { Point, point, pointDepuisPointAbstrait, pointIntersectionDD, pointSurSegment, tracePoint } from '../lib/2d/points'
 import { Polygone, polygone, polygoneAvecNom, polyline, renommePolygone } from '../lib/2d/polygones'
 import { longueur, norme, Segment, segment, Vecteur, vecteur } from '../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../lib/2d/textes'
@@ -1130,11 +1130,11 @@ export function cylindre3d (centrebase1: Point3d, centrebase2: Point3d, rayon: V
  * @class
  */
 export class Prisme3d extends ObjetMathalea2D {
-  constructor (base, vecteur, color, affichageNom = false, nomBase2, positionLabels2) {
+  constructor (base: Polygone3d, vecteur: Vecteur3d, color: string[] = ['black'], affichageNom = false, nomBase2?: string, positionLabels2?: string[]) {
     super()
     this.affichageNom = affichageNom
     this.color = color
-    base.color = colorToLatexOrHTML(this.color)
+    base.color = this.color[0]
     this.vecteur = vecteur
     if (this.vecteur.y === 0 && this.vecteur.x === 0) {
       this.base1 = this.vecteur.z >= 1 ? base : translation3d(base, vecteur3d(this.vecteur.x, this.vecteur.y, -this.vecteur.z))
@@ -1155,24 +1155,24 @@ export class Prisme3d extends ObjetMathalea2D {
     for (let i = 0; i < this.base1.listePoints.length; i++) {
       const areteVisibleOuPas = pointSurSegment(this.base1.listePoints[i].c2d, this.base2.listePoints[i].c2d, longueur(this.base1.listePoints[i].c2d, this.base2.listePoints[i].c2d) / 50).estDansPolygone(polygone(this.base1.listePoints2d))
       this.base2.listePoints[i].isVisible = !areteVisibleOuPas
-      toutesLesAretesSontVisibles = !areteVisibleOuPas & toutesLesAretesSontVisibles
+      toutesLesAretesSontVisibles = !areteVisibleOuPas && toutesLesAretesSontVisibles
     }
     // On trace les arêtes de this.base2
     for (let i = 0; i < this.base2.listePoints.length; i++) {
-      s = arete3d(this.base2.listePoints[i], this.base2.listePoints[i + 1 === this.base2.listePoints.length ? 0 : i + 1], this.color)
+      s = arete3d(this.base2.listePoints[i], this.base2.listePoints[i + 1 === this.base2.listePoints.length ? 0 : i + 1], this.color[0])
       if (toutesLesAretesSontVisibles) { // Cas particulier où aucun sommet de this.base2 n'est caché (cas de certains tétraèdres)
         let areteVisibleOuPas = true
         for (let ee = 0; ee < this.base1.listePoints.length; ee++) {
           const areteLiaison = segment(this.base1.listePoints[ee].c2d, this.base2.listePoints[ee].c2d)
-          areteVisibleOuPas = areteVisibleOuPas && (areteLiaison.estSecant(s.c2d))
+          areteVisibleOuPas = areteVisibleOuPas && !!areteLiaison.estSecant(s.c2d)
         }
-        s = arete3d(this.base2.listePoints[i], this.base2.listePoints[i + 1 === this.base2.listePoints.length ? 0 : i + 1], this.color, !areteVisibleOuPas)
+        s = arete3d(this.base2.listePoints[i], this.base2.listePoints[i + 1 === this.base2.listePoints.length ? 0 : i + 1], this.color[0], !areteVisibleOuPas)
       }
       this.c2d.push(s.c2d)
     }
     // On trace les arêtes de liaison entre les bases
     for (let i = 0; i < this.base1.listePoints.length; i++) {
-      s = arete3d(this.base1.listePoints[i], this.base2.listePoints[i], this.color)
+      s = arete3d(this.base1.listePoints[i], this.base2.listePoints[i], this.color[0])
       this.c2d.push(s.c2d)
     }
 
@@ -1185,15 +1185,15 @@ export class Prisme3d extends ObjetMathalea2D {
       for (let ee = 0; ee < this.base1.listePoints2d.length; ee++) {
         this.base1.listePoints2d[ee].positionLabel = base.listePoints2d[ee].positionLabel ?? 'above'
       }
-      this.c2d.push(labelPoint(...p.listePoints))
+      this.c2d.push(labelPoint(...p.listePoints.map(point => pointDepuisPointAbstrait(point))))
       p = polygone(this.base2.listePoints2d)
       const listeDeLettres2 = choisitLettresDifferentes(this.base1.listePoints.length, 'OQWX' + nomBase1)
       renommePolygone(p, nomBase2 ?? listeDeLettres2)
       for (let ee = 0; ee < this.base2.listePoints2d.length; ee++) {
-        this.base2.listePoints2d[ee].positionLabel = positionLabels2[ee] ?? 'below'
+        this.base2.listePoints2d[ee].positionLabel = positionLabels2?.[ee] ?? 'below'
       }
-      this.c2d.push(labelPoint(...p.listePoints))
-      this.nom = nomBase1 + nomBase2
+      this.c2d.push(labelPoint(...p.listePoints.map(point => pointDepuisPointAbstrait(point))))
+      this.nom = nomBase1 + (nomBase2 ?? '')
     }
   }
 }
@@ -1215,7 +1215,7 @@ export class Prisme3d extends ObjetMathalea2D {
  * @author Eric Elter (d'après version précédente de Jean-Claude Lhote)
  * @return {Prisme3d}
  */
-export function prisme3d (base, vecteur, color = 'black', affichageNom = false, nomBase2, positionLabels2) {
+export function prisme3d (base: Polygone3d, vecteur: Vecteur3d, color: string[] = ['black'], affichageNom = false, nomBase2?: string, positionLabels2?: string[]) {
   return new Prisme3d(base, vecteur, color, affichageNom, nomBase2, positionLabels2)
 }
 
