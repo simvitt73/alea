@@ -110,6 +110,9 @@ export function listeDesDiviseurs (n: number) {
   return diviseurs
 }
 
+export function estPremier (n: number) {
+  return listeDesDiviseurs(n).length === 2 && n > 1
+}
 /**
  * Retourne la liste des nombres premiers inférieurs à N N<300 N exclu
  * @param {number} k On cherchera un multiple de k
