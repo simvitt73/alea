@@ -1569,7 +1569,11 @@ export class Cube3d extends ObjetMathalea2D {
     // Les 8 sommets sont indispensables pour pouvoir les utiliser ensuite.
 
     if (aretesCachee) {
-      faceAV[0].couleurDeRemplissage = colorToLatexOrHTML(colorAV)
+      if (Array.isArray(faceAV)) {
+        faceAV[0].couleurDeRemplissage = colorToLatexOrHTML(colorAV)
+      } else {
+        faceAV.couleurDeRemplissage = colorToLatexOrHTML(colorAV)
+      }
       faceVisibleHautOuBas.couleurDeRemplissage = colorToLatexOrHTML(colorHautouBas)
       faceDr.couleurDeRemplissage = colorToLatexOrHTML(colorDr)
       this.c2d = [faceAV.length === 2 ? faceAV[0] : faceAV, faceAV.length === 2 ? faceAV[1] : vide2d(), faceDr, faceVisibleHautOuBas]
@@ -1615,15 +1619,21 @@ export function cube3d (x: number, y: number, z: number, c: number, color = 'bla
  * La barre est positionnée suivant l'axe x
  */
 export class Barre3d extends ObjetMathalea2D {
-  constructor (x, y, z, c, l, color = 'black') {
+  constructor (x: number, y: number, z: number, c: number, l: number, color = 'black') {
     super()
-    let B, C, D, E, F, G, H, faceAv, faceTop
+    let faceAv, faceTop
     this.c2d = []
     const vx = vecteur3d(c, 0, 0)
     const vy = vecteur3d(0, c, 0)
     const vz = vecteur3d(0, 0, c)
     let A = point3d(x, y, z)
-
+    let B = A
+    let C = A
+    let D = A
+    let E = A
+    let F = A
+    let G = A
+    let H = A
     for (let i = 0; i < l; i++) {
       B = translation3d(A, vx)
       C = translation3d(B, vz)
@@ -1645,7 +1655,7 @@ export class Barre3d extends ObjetMathalea2D {
   }
 }
 
-export function barre3d (x, y, z, c, l, color = 'black') {
+export function barre3d (x: number, y: number, z: number, c: number, l: number, color = 'black') {
   return new Barre3d(x, y, z, c, l, color)
 }
 
@@ -1654,7 +1664,7 @@ export function barre3d (x, y, z, c, l, color = 'black') {
  * Crée une plaque de cubes de côtés c de dimensions l suivant x et p suivant y
  */
 export class Plaque3d extends ObjetMathalea2D {
-  constructor (x, y, z, c, l, p, color = 'black') {
+  constructor (x: number, y: number, z: number, c: number, l: number, p: number, color = 'black') {
     super()
     let A, B, C, D, F, G, H, faceAv, faceTop, faceD
     this.c2d = []
@@ -1689,12 +1699,12 @@ export class Plaque3d extends ObjetMathalea2D {
   }
 }
 
-export function plaque3d (x, y, z, c, l, p, color = 'black') {
+export function plaque3d (x: number, y: number, z: number, c: number, l: number, p: number, color = 'black') {
   return new Plaque3d(x, y, z, c, l, p, color)
 }
 
 export class PaveLPH3d extends ObjetMathalea2D {
-  constructor (x, y, z, c, l, p, h, color = 'black') {
+  constructor (x: number, y: number, z: number, c: number, l: number, p: number, h: number, color = 'black') {
     super()
     let A, B, C, D, F, G, H, faceAv, faceTop, faceD
     this.c2d = []
@@ -1745,7 +1755,7 @@ export class PaveLPH3d extends ObjetMathalea2D {
  * @param {*} color couleur
  * @returns {PaveLPH3d}
  */
-export function paveLPH3d (x, y, z, c, l, p, h, color = 'black') {
+export function paveLPH3d (x: number, y: number, z: number, c: number, l: number, p: number, h: number, color = 'black') {
   return new PaveLPH3d(x, y, z, c, l, p, h, color)
 }
 
@@ -1758,7 +1768,7 @@ export function paveLPH3d (x, y, z, c, l, p, h, color = 'black') {
  * Utilisée par exemple dans 6G43
  */
 export class Cube extends ObjetMathalea2D {
-  constructor (x, y, z, alpha, beta, colorD, colorT, colorG) {
+  constructor (x: number, y: number, z: number, alpha: number, beta: number, colorD: string, colorT: string, colorG: string) {
     super()
     this.x = x
     this.y = y
@@ -1772,7 +1782,7 @@ export class Cube extends ObjetMathalea2D {
     this.lstPoints = []
     this.lstPolygone = []
 
-    function proj (x, y, z, alpha, beta) {
+    function proj (x: number, y: number, z: number, alpha: number, beta: number) {
       const cosa = Math.cos(alpha * Math.PI / 180)
       const sina = Math.sin(alpha * Math.PI / 180)
       const cosb = Math.cos(beta * Math.PI / 180)
@@ -1832,7 +1842,7 @@ export function cube (x = 0, y = 0, z = 0, alpha = 45, beta = -35, {
  * @class
  */
 export class Pave3d extends ObjetMathalea2D {
-  constructor (A, B, D, E, color = 'black', affichageNom = false, nom = 'ABCDEFGH') {
+  constructor (A: Point3d, B: Point3d, D: Point3d, E: Point3d, color = 'black', affichageNom = false, nom = 'ABCDEFGH') {
     super()
     this.affichageNom = affichageNom
     const v1 = vecteur3d(A, B)
@@ -1843,7 +1853,7 @@ export class Pave3d extends ObjetMathalea2D {
     const F = translation3d(B, v2)
 
     // Determination du point caché
-    function distanceMoyenne4points (pt) {
+    function distanceMoyenne4points (pt: Point3d) {
       const dist1 = longueur(pt.c2d, A.c2d, 5)
       const dist2 = longueur(pt.c2d, B.c2d, 5)
       const dist3 = longueur(pt.c2d, C.c2d, 5)
@@ -1865,8 +1875,8 @@ export class Pave3d extends ObjetMathalea2D {
     // Fin de determination du point caché
 
     this.sommets = [A, B, C, D, E, F, G, H]
-    this.color = color
-    this.base = polygone3d([A, B, F, E])
+    this.color = colorToLatexOrHTML(color)
+    this.base = polygone3d(A, B, F, E)
     this.hauteur = vecteur3d(A, D)
     this.c2d = []
     this.aretes = [arete3d(A, B, color), arete3d(A, D, color), arete3d(A, E, color), arete3d(C, B, color), arete3d(F, B, color), arete3d(C, D, color), arete3d(C, G, color), arete3d(F, G, color), arete3d(F, E, color), arete3d(H, G, color), arete3d(H, E, color), arete3d(H, D, color)]
@@ -1908,7 +1918,7 @@ export class Pave3d extends ObjetMathalea2D {
  * @author Jean-Claude Lhote (optimisé par Eric Elter)
  * @return {Pave3d}
  */
-export function pave3d (A, B, D, E, color = 'black', affichageNom = false, nom = 'ABCDEFGH') {
+export function pave3d (A: Point3d, B: Point3d, D: Point3d, E: Point3d, color = 'black', affichageNom = false, nom = 'ABCDEFGH') {
   return new Pave3d(A, B, D, E, color, affichageNom, nom)
 }
 
@@ -1941,14 +1951,14 @@ export function rotationV3d<T extends Point3d | Vecteur3d> (point3D: T, vecteur3
   const s = Math.sin(angle * Math.PI / 180)
   const k = 1 - c
   const matrice = math.matrix([[u * u * k + c, u * v * k - w * s, u * w * k + v * s], [u * v * k + w * s, v * v * k + c, v * w * k - u * s], [u * w * k - v * s, v * w * k + u * s, w * w * k + c]])
-  if (point3D.constructor === Point3d) {
+  if (point3D instanceof Point3d) {
     V = math.matrix([point3D.x, point3D.y, point3D.z])
     p2 = math.multiply(matrice, V)
-    return point3d(p2._data[0], p2._data[1], p2._data[2])
-  } else if (point3D.constructor === Vecteur3d) {
+    return point3d(p2._data[0], p2._data[1], p2._data[2]) as T
+  } else if (point3D instanceof Vecteur3d) {
     V = point3D
     p2 = math.multiply(matrice, V.matrice)
-    return vecteur3d(p2._data[0], p2._data[1], p2._data[2])
+    return vecteur3d(p2._data[0], p2._data[1], p2._data[2]) as T
   }
 }
 
@@ -1993,10 +2003,10 @@ export function rotation3d<T extends Point3d | Vecteur3d | Polygone3d> (point3D:
  * son sens est définit par le vecteur directeur de l'axe (changer le signe de chaque composante de ce vecteur pour changer le sens de rotation)
  */
 export class SensDeRotation3d extends ObjetMathalea2D {
-  constructor (axe, rayon, angle, epaisseur, color) {
+  constructor (axe: Droite3d, rayon: Vecteur3d, angle: number, epaisseur: number, color: string) {
     super()
     this.epaisseur = epaisseur
-    this.color = color
+    this.color = colorToLatexOrHTML(color)
     this.c2d = []
     let M
     let N
@@ -2004,28 +2014,28 @@ export class SensDeRotation3d extends ObjetMathalea2D {
     M = translation3d(axe.origine, rayon)
     for (let i = 0; i < angle; i += 5) {
       N = rotation3d(M, axe, 5)
-      s = segment(M.c2d, N.c2d, this.color)
+      s = segment(M.c2d, N.c2d, color)
       s.epaisseur = this.epaisseur
       this.c2d.push(s)
       M = N
     }
     N = rotation3d(M, axe, 5)
-    s = segment(M.c2d, N.c2d, this.color)
+    s = segment(M.c2d, N.c2d, color)
     s.epaisseur = this.epaisseur
     this.c2d.push(s)
     const d = droite3d(N, axe.directeur)
     const A = rotation3d(M, d, 30)
     const B = rotation3d(M, d, -30)
-    s = segment(N.c2d, A.c2d, this.color)
+    s = segment(N.c2d, A.c2d, color)
     s.epaisseur = this.epaisseur
     this.c2d.push(s)
-    s = segment(N.c2d, B.c2d, this.color)
+    s = segment(N.c2d, B.c2d, color)
     s.epaisseur = this.epaisseur
     this.c2d.push(s)
   }
 }
 
-export function sensDeRotation3d (axe, rayon, angle, epaisseur, color) {
+export function sensDeRotation3d (axe: Droite3d, rayon: Vecteur3d, angle: number, epaisseur: number, color: string) {
   return new SensDeRotation3d(axe, rayon, angle, epaisseur, color)
 }
 
@@ -2085,7 +2095,7 @@ export function homothetie3d <T extends Point3d | Vecteur3d | Polygone3d> (point
 }
 
 export class CodageAngleDroit3D extends ObjetMathalea2D {
-  constructor (A, B, C, color = 'black', taille = 1) {
+  constructor (A: Point3d, B: Point3d, C: Point3d, color = 'black', taille = 1) {
     super()
     const BA = vecteur3d(B, A)
     const BC = vecteur3d(B, C)
