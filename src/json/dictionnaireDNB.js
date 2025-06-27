@@ -6062,4 +6062,45 @@ export const dictionnaireDNB = {
     tags: ['']
   },
 
+  dnb_2025_06_metropole_1: {
+    annee: '2025',
+    lieu: 'Métropole',
+    mois: 'Juin',
+    numeroInitial: '1',
+    typeExercice: 'dnb',
+    tags: ['']
+  },
+  dnb_2025_06_metropole_2: {
+    annee: '2025',
+    lieu: 'Métropole',
+    mois: 'Juin',
+    numeroInitial: '2',
+    typeExercice: 'dnb',
+    tags: ['']
+  },
+  dnb_2025_06_metropole_3: {
+    annee: '2025',
+    lieu: 'Métropole',
+    mois: 'Juin',
+    numeroInitial: '3',
+    typeExercice: 'dnb',
+    tags: ['']
+  },
+  dnb_2025_06_metropole_4: {
+    annee: '2025',
+    lieu: 'Métropole',
+    mois: 'Juin',
+    numeroInitial: '4',
+    typeExercice: 'dnb',
+    tags: ['']
+  },
+  dnb_2025_06_metropole_5: {
+    annee: '2025',
+    lieu: 'Métropole',
+    mois: 'Juin',
+    numeroInitial: '5',
+    typeExercice: 'dnb',
+    tags: ['']
+  },
+
 }
