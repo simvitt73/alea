@@ -1,7 +1,7 @@
 import Exercice from '../Exercice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
-import { ecritureAlgebriqueSauf1, reduireAxPlusB } from '../../lib/outils/ecritures'
+import { ecritureAlgebriqueSauf1, reduireAxPlusB, rienSi0 } from '../../lib/outils/ecritures'
 import { texteEnCouleurEtGras, texteItalique } from '../../lib/outils/embellissements'
 export const titre = 'Position relative de deux droites'
 
@@ -63,12 +63,12 @@ export default class NomExercice extends Exercice {
           xB = alpha * ux + beta * vx + xA
           yB = alpha * uy + beta * vy + yA
           zB = alpha * uz + beta * vz + zA - 1  // Choisir zB pour que AB non coplanaires avec u et v
-          texte += `$(d):\\begin{cases}x=${xA}  ${ecritureAlgebriqueSauf1(ux)}t\\\\y= ${yA}  ${ecritureAlgebriqueSauf1(uy)}t\\quad(t\\in\\mathbb{R})\\\\z= ${zA} ${ecritureAlgebriqueSauf1(uz)}t\\end{cases}$`
-          texte += `$\\quad\\quad(d'):\\begin{cases}x=${reduireAxPlusB(ux, xB, 's')}\\\\y= ${yB}  ${ecritureAlgebriqueSauf1(vy)}s\\quad(s\\in\\mathbb{R})\\\\z= ${zB} ${ecritureAlgebriqueSauf1(vz)}s\\end{cases}$`
+          texte += `$(d):\\begin{cases}x=${rienSi0(xA)}  ${ecritureAlgebriqueSauf1(ux)}t\\\\y= ${rienSi0(yA)}  ${ecritureAlgebriqueSauf1(uy)}t\\quad(t\\in\\mathbb{R})\\\\z= ${rienSi0(zA)} ${ecritureAlgebriqueSauf1(uz)}t\\end{cases}$`
+          texte += `$\\quad\\quad(d'):\\begin{cases}x=${rienSi0(xB)}${ecritureAlgebriqueSauf1(vx)}s\\\\y= ${rienSi0(yB)}  ${ecritureAlgebriqueSauf1(vy)}s\\quad(s\\in\\mathbb{R})\\\\z= ${rienSi0(zB)} ${ecritureAlgebriqueSauf1(vz)}s\\end{cases}$`
           texte += `<br><br>${texteEnCouleurEtGras('Affirmation :')}  ${affirmation}`
           texteCorr = 'On vérifie que les vecteurs directeurs des deux droites ne sont pas colinéaires :<br>'
           texteCorr += 'On compare pour cela les quotients des composantes de même dimension : <br>'
-          texteCorr +=`Les coordonnées du vecteur directeur de (d) sont :$\\begin{pmatrix} ${ux}\\\\${uy}\\\\${uz}\\end{pmatrix}$<br>`
+          texteCorr += `Les coordonnées du vecteur directeur de (d) sont :$\\begin{pmatrix} ${ux}\\\\${uy}\\\\${uz}\\end{pmatrix}$<br>`
           texteCorr += `$\\frac{${ux}}{${vx}} = \\frac{${uy}}{${vy}} = \\frac{${uz}}{${vz}}$`
           texteCorr += '<br>On trouve que les quotients ne sont pas égaux, donc les droites ne sont pas parallèles.<br>'
           texteCorr += 'On vérifie que les droites ne sont pas sécantes'
