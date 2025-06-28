@@ -92,7 +92,9 @@ export class VisualPattern {
         throw new Error('PatternNumerique: les coordonnées doivent être positives')
       }
         */
+
       const shape2d = listeShapes2D[shape]
+
       if (!shape2d) {
         throw new Error(`PatternNumerique: la forme ${shape} n'existe pas`)
       }
