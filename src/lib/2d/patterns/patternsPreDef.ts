@@ -2088,6 +2088,329 @@ const pattern67: PatternRiche = {
   }
 }
 
+const pattern68: PatternRiche = {
+  visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/90c1a0e4-f515-4f30-9c1c-6f3f9707669b/vp59_2_orig.png?format=2500w',
+  visualId: 59,
+  fonctionNb: (x:number) => (x + 2) ** 2,
+  fonctionRatio: (x:number) => new Ratio([x ** 2, 4 * x + 4]),
+  fonctionFraction: (x:number) => new FractionEtendue(x ** 2, (x + 2) ** 2),
+  formule: '(n+2)^2',
+  type: 'degré2',
+  shapes: ['carré', 'carréBleu'],
+  pattern: new VisualPattern(
+    [
+      [0, 0, 'carré'],
+      [0, 1, 'carré'],
+      [1, 0, 'carré'],
+      [2, 0, 'carré'],
+      [2, 1, 'carré'],
+      [2, 2, 'carré'],
+      [1, 2, 'carré'],
+      [0, 2, 'carré'],
+      [1, 1, 'carréBleu']
+    ]),
+  iterate: function (this: VisualPattern, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < n + 2; i++) {
+      for (let j = 0; j < n + 2; j++) {
+        if (i === 0 || i === n + 1 || j === 0 || j === n + 1) newCells.add(VisualPattern.coordToKey([i, j, this.shapes[0]])) // carré
+        else newCells.add(VisualPattern.coordToKey([i, j, this.shapes[1]])) // carréBleu
+      }
+    }
+    return newCells
+  }
+}
+
+const pattern69: PatternRiche = {
+  fonctionNb: (x:number) => x ** 2,
+  fonctionRatio: (x:number) => new Ratio([2 * x - 1, (x - 1) ** 2]),
+  fonctionFraction: (x:number) => new FractionEtendue(2 * x - 1, x ** 2),
+  formule: 'n^2',
+  type: 'degré2',
+  shapes: ['carréBleu', 'carré'],
+  pattern: new VisualPattern(
+    [
+      [0, 0, 'carré']
+    ]),
+  iterate: function (this: VisualPattern, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i === 0 || j === 0) newCells.add(VisualPattern.coordToKey([i, n - j - 1, this.shapes[0]])) // carré
+        else newCells.add(VisualPattern.coordToKey([i, j - 1, this.shapes[1]])) // carréBleu
+      }
+    }
+    return newCells
+  }
+}
+const pattern70: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
+  visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/ee8ed904-6443-4fb5-ad24-897fcc391710/2023-03-22-10-14-45_orig+%281%29.png?format=2500w',
+  visualId: 39,
+  fonctionNb: (x:number) => x ** 2 * (x + 1) / 2,
+  formule: '\\dfrac{n^2(n+1)}{2}',
+  type: 'degré3',
+  pattern: new VisualPattern3D(
+    [
+      [0, 0, 0]
+    ]),
+  iterate3d: function (this: VisualPattern3D, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < n; i++) {
+      for (let k = n - 1; k >= 0; k--) {
+        for (let j = 0; j < n - i; j++) {
+          newCells.add(VisualPattern3D.coordToKey([i - n / 2, k - n / 2, j]))
+        }
+      }
+    }
+    return newCells
+  }
+}
+
+const pattern71: PatternRiche3D = {
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
+  fonctionNb: (x:number) => x * (x + 1) * (x + 2) / 2,
+  formule: '\\dfrac{n(n+1)(n+2)}{2}',
+  type: 'degré3',
+  pattern: new VisualPattern3D(
+    [
+      [-0.5, -0.5, 0],
+      [0.5, -0.5, 0],
+      [-0.5, -0.5, 1]
+    ]),
+  iterate3d: function (this: VisualPattern3D, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < n + 1; i++) {
+      for (let k = n - 1; k >= 0; k--) {
+        for (let j = 0; j < n + 1 - i; j++) {
+          newCells.add(VisualPattern3D.coordToKey([i - n / 2, k - n / 2, j]))
+        }
+      }
+    }
+    return newCells
+  }
+}
+
+const pattern72: PatternRiche = {
+  fonctionNb: (x:number) => x ** 2,
+  fonctionRatio: (x:number) => new Ratio([(x + 1) * x / 2, x * (x - 1) / 2]),
+  fonctionFraction: (x:number) => new FractionEtendue((x + 1) * x / 2, x ** 2),
+  formule: 'n^2',
+  type: 'degré2',
+  shapes: ['triangle'],
+  pattern: new VisualPattern(
+    [
+      [0, 0, 'triangle']
+    ]),
+  iterate: function (this: VisualPattern, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j <= i; j++) {
+        newCells.add(VisualPattern.coordToKey([i * 0.866 - j * 0.433, j * 0.75, this.shapes[0]])) // triangle
+      }
+    }
+    return newCells
+  }
+}
+
+const pattern73: PatternRiche = {
+  fonctionNb: (x:number) => 3 * x + 5,
+  fonctionRatio: (x:number) => new Ratio([3 * x + 3, 1, 1]),
+  fonctionFraction: (x:number) => new FractionEtendue(3 * x + 3, 3 * x + 5),
+  formule: '3\\times n + 5',
+  type: 'affine',
+  shapes: ['rond', 'carré', 'étoile'],
+  pattern: new VisualPattern(
+    [
+      [0, 1, 'rond'],
+      [1, 0, 'carré'],
+      [1, 1, 'rond'],
+      [2, 1, 'rond'],
+      [0.5, 2, 'rond'],
+      [1.5, 2, 'rond'],
+      [1, 3, 'rond'],
+      [1, 4, 'étoile']
+    ]),
+  iterate: function (this: VisualPattern, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    newCells.add(VisualPattern.coordToKey([0.5 * (1 + n), 0, this.shapes[1]])) // carré
+    newCells.add(VisualPattern.coordToKey([0.5 * (1 + n), n + 3, this.shapes[2]])) // étoile
+    for (let i = 0; i <= n + 1; i++) {
+      newCells.add(VisualPattern.coordToKey([(2 * (n + 1) - i) * 0.5, i + 1, this.shapes[0]])) // rond
+      newCells.add(VisualPattern.coordToKey([i * 0.5, i + 1, this.shapes[0]])) // rond
+    }
+    for (let i = 1; i <= n; i++) {
+      newCells.add(VisualPattern.coordToKey([i, 1, this.shapes[0]])) // carré
+    }
+    return newCells
+  }
+}
+
+const pattern74: PatternRiche3D = {
+  visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/05dbfae2-82ce-4106-a070-1ee0128ee99d/8840270_orig.png?format=2500w',
+  visualId: 156,
+  fonctionNb: (x:number) => 3 * x + 1,
+  formule: '3n+1',
+  type: 'affine',
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
+  pattern: new VisualPattern3D(
+    [
+      [0, -0.5, 0],
+      [1, -0.5, 0],
+      [-1, -0.5, 1],
+      [0, -0.5, 1]
+    ]),
+  iterate3d: function (this: VisualPattern3D, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let k = 0; k <= n; k++) {
+      if (k !== n && k !== 0) {
+        newCells.add(VisualPattern3D.coordToKey([0, -0.5, k + n / 2]))
+        continue
+      }
+      for (let i = 0; i < n + 1; i++) {
+        if (k === 0) newCells.add(VisualPattern3D.coordToKey([i, -0.5, n / 2]))
+        else newCells.add(VisualPattern3D.coordToKey([i - n, -0.5, n + n / 2]))
+      }
+    }
+    return newCells
+  }
+}
+const pattern75: PatternRiche3D = {
+  fonctionNb: (x:number) => 2 * x ** 3 + x,
+  formule: '2n^3+n',
+  type: 'degré3',
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
+  pattern: new VisualPattern3D(
+    [
+      [-1, -0.5, 0],
+      [0, -0.5, 0],
+      [1, -0.5, 0],
+    ]),
+  iterate3d: function (this: VisualPattern3D, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let k = 0; k < n; k++) {
+      for (let j = n - 1; j >= 0; j--) {
+        for (let i = 0; i < n + 1; i++) {
+          if (i !== n && k !== 0) {
+            newCells.add(VisualPattern3D.coordToKey([i - n, j - n / 2, k + n / 2]))
+            newCells.add(VisualPattern3D.coordToKey([i + 1, j - n / 2, k + n / 2]))
+          }
+        }
+        for (let i = -n; i < n + 1; i++) {
+          if (k === 0) {
+            newCells.add(VisualPattern3D.coordToKey([i, j - n / 2, k + n / 2]))
+          }
+        }
+      }
+    }
+    return newCells
+  }
+}
+
+const pattern76: PatternRiche = {
+  fonctionNb: (x:number) => 5 * x + 4,
+  fonctionRatio: (x:number) => new Ratio([x, 4 * x + 4]),
+  fonctionFraction: (x:number) => new FractionEtendue(x, 5 * x + 4),
+  formule: '5\\times n + 4',
+  type: 'affine',
+  shapes: ['licorne', 'soleil'],
+  pattern: new VisualPattern(
+    [
+      [2, 1, 'licorne'],
+      [0, 0, 'soleil'],
+      [1, 0.5, 'soleil'],
+      [1, 1.5, 'soleil'],
+      [2, 0, 'soleil'],
+      [4, 2, 'soleil'],
+      [3, 1.5, 'soleil'],
+      [4, 0, 'soleil'],
+      [3, 0.5, 'soleil']
+    ]),
+  iterate: function (this: VisualPattern, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i <= n; i++) {
+      newCells.add(VisualPattern.coordToKey([i, 0.5 * i, this.shapes[1]]))
+      newCells.add(VisualPattern.coordToKey([i, n + 1 - 0.5 * i, this.shapes[1]]))
+      newCells.add(VisualPattern.coordToKey([2 * n + 2 - i, 0.5 * i, this.shapes[1]]))
+      newCells.add(VisualPattern.coordToKey([2 * n + 2 - i, n + 1 - 0.5 * i, this.shapes[1]]))
+    }
+    newCells.add(VisualPattern.coordToKey([n + 1, n / 2 + 0.5, this.shapes[0]])) // rond
+    return newCells
+  }
+}
+
+const pattern77: PatternRiche = {
+  fonctionNb: (x:number) => (x + 1) * (x + 3),
+  fonctionRatio: (x:number) => new Ratio([x + 2, x ** 2 + 3 * x + 2]),
+  fonctionFraction: (x:number) => new FractionEtendue(x + 2, (x + 1) * (x + 3)),
+  formule: '(n+1)(n+3)',
+  type: 'degré2',
+  shapes: ['rectangleVert', 'rectangleBlanc'],
+  pattern: new VisualPattern(
+    [
+      [0, 1, 'rectangleVert'],
+      [0, 2, 'rectangleVert'],
+      [0, 3, 'rectangleVert'],
+      [0, 0, 'rectangleBlanc'],
+      [1, 0, 'rectangleBlanc'],
+      [1, 1, 'rectangleBlanc'],
+      [1, 2, 'rectangleBlanc'],
+      [1, 3, 'rectangleBlanc'],
+    ]),
+  iterate: function (this: VisualPattern, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < n + 1; i++) {
+      for (let j = 0; j < n + 3; j++) {
+        if (i === 0 && j > 0) newCells.add(VisualPattern.coordToKey([i, j * 0.5, this.shapes[0]])) // rectangleVert
+        else newCells.add(VisualPattern.coordToKey([i, j * 0.5, this.shapes[1]])) // rectangleBlanc
+      }
+    }
+    return newCells
+  }
+}
+
+const pattern78: PatternRiche = {
+  fonctionNb: (x:number) => 1 + x * (x - 1) * 3,
+  formule: '3\\times n^2-3\\times n-2',
+  fonctionRatio: (x:number) => new Ratio([3 * x ** 2 - 3 * x - 2, x]),
+  fonctionFraction: (x:number) => new FractionEtendue(3 * x ** 2 - 3 * x - 2, 1 + x * (x - 1) * 3),
+  type: 'degré2',
+  shapes: ['hexagone', 'hexagoneJaune'],
+  pattern: new VisualPattern(
+    [
+      [0, 0, 'hexagone']
+    ]),
+  iterate: function (this: VisualPattern, n?: number) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    for (let i = 0; i < n; i++) {
+      for (let a = Math.PI / 6; a < 2 * Math.PI; a += Math.PI / 3) {
+        const x = i * Math.cos(a) * 0.866
+        const y = i * Math.sin(a) * 0.866 + n / 2
+        if (i > 1) {
+          const x2 = i * Math.cos(a + Math.PI / 3) * 0.866
+          const y2 = i * Math.sin(a + Math.PI / 3) * 0.866 + n / 2
+          for (let j = 1; j < n - 1; j++) {
+            newCells.add(VisualPattern.coordToKey([x + j * (x2 - x) / i, y + j * (y2 - y) / i, i % 2 === 0 ? this.shapes[0] : this.shapes[1]])) // hexagone
+          }
+        }
+        newCells.add(VisualPattern.coordToKey([x, y, i % 2 === 0 ? this.shapes[0] : this.shapes[1]])) // hexagone
+      }
+    }
+    return newCells
+  }
+}
+
 const listePatternsPreDef: (PatternRiche | PatternRiche3D)[] = [
   pattern1,
   pattern2,
@@ -2155,7 +2478,18 @@ const listePatternsPreDef: (PatternRiche | PatternRiche3D)[] = [
   pattern64,
   pattern65,
   pattern66,
-  pattern67
+  pattern67,
+  pattern68,
+  pattern69,
+  pattern70,
+  pattern71,
+  pattern72,
+  pattern73,
+  pattern74,
+  pattern75,
+  pattern76,
+  pattern77,
+  pattern78
 ]
 /**
  * Liste des patterns prédéfinis, triés par type.
