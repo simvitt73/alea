@@ -17,7 +17,7 @@ import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
  * //rienSi1(-1)+'x' -> -x
  * @author Rémi Angot et Jean-Claude Lhote pour le support des fractions
  */
-export function rienSi1 (a: number | FractionEtendue | Decimal | string) {
+export function rienSi1 (a: number | FractionEtendue | Decimal) {
   if (typeof a === 'number') {
     if (a === 1) return ''
     if (a === -1) return '-'
@@ -51,7 +51,7 @@ export function rienSi1 (a: number | FractionEtendue | Decimal | string) {
  * // rienSi0(2) -> '2'
  * @author Guillaume Valmont
  */
-export function rienSi0 (a: number | FractionEtendue | Decimal | string) {
+export function rienSi0 (a: number | FractionEtendue | Decimal) {
   if (typeof a === 'number') {
     if (a === 0) return ''
     return texNombre(a)
