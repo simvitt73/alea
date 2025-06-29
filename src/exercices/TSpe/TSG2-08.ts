@@ -1,8 +1,11 @@
+/* eslint-disable no-case-declarations */
 import Exercice from '../Exercice'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ecritureAlgebriqueSauf1, reduireAxPlusB, rienSi0 } from '../../lib/outils/ecritures'
 import { texteEnCouleurEtGras, texteItalique } from '../../lib/outils/embellissements'
+import FractionEtendue from '../../modules/FractionEtendue'
+
 export const titre = 'Position relative de deux droites'
 
 export const dateDePublication = '28/06/2025' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
@@ -63,13 +66,24 @@ export default class NomExercice extends Exercice {
           xB = alpha * ux + beta * vx + xA
           yB = alpha * uy + beta * vy + yA
           zB = alpha * uz + beta * vz + zA - 1  // Choisir zB pour que AB non coplanaires avec u et v
+
+          const uxvx = new FractionEtendue(ux, vx)
+
+          const uyvy = new FractionEtendue(uy, vy)
+          const uzvz = new FractionEtendue(uz, vz)
+
           texte += `$(d):\\begin{cases}x=${reduireAxPlusB(ux, xA, 't', { ordreInverse: true })} \\\\y= ${rienSi0(yA)}  ${ecritureAlgebriqueSauf1(uy)}t\\quad(t\\in\\mathbb{R})\\\\z= ${rienSi0(zA)} ${ecritureAlgebriqueSauf1(uz)}t\\end{cases}$`
           texte += `$\\quad\\quad(d'):\\begin{cases}x=${rienSi0(xB)}${ecritureAlgebriqueSauf1(vx)}s\\\\y= ${rienSi0(yB)}  ${ecritureAlgebriqueSauf1(vy)}s\\quad(s\\in\\mathbb{R})\\\\z= ${rienSi0(zB)} ${ecritureAlgebriqueSauf1(vz)}s\\end{cases}$`
           texte += `<br><br>${texteEnCouleurEtGras('Affirmation :')}  ${affirmation}`
-          texteCorr = 'On vérifie que les vecteurs directeurs des deux droites ne sont pas colinéaires :<br>'
-          texteCorr += 'On compare pour cela les quotients des composantes de même dimension : <br>'
-          texteCorr += `Les coordonnées du vecteur directeur de (d) sont :$\\begin{pmatrix} ${ux}\\\\${uy}\\\\${uz}\\end{pmatrix}$<br>`
-          texteCorr += `$\\frac{${ux}}{${vx}} = \\frac{${uy}}{${vy}} = \\frac{${uz}}{${vz}}$`
+          texteCorr = texteEnCouleurEtGras('Étape 1 : Colinéarité des vecteurs directeurs.')
+          texteCorr += '<br>On sait que la représentation paramétrique d\'une droite est de la forme '
+          texteCorr += '$(d):\\begin{cases}x=x_A+at \\\\y= y_A+bt\\quad(t\\in\\mathbb{R})\\\\z= z_A+ct\\end{cases}$'
+          texteCorr += '<br>où le point $A(x_A, y_A, z_A)$ est un point de la droite et $\\vec u\\begin{pmatrix}a\\\\b\\\\c\\end{pmatrix}$ est un vecteur directeur de la droite.<br>'
+          texteCorr += `<br>On en déduit que les coordonnées de $\\vec u$ vecteur directeur de (d) sont $\\vec u\\begin{pmatrix} ${ux}\\\\${uy}\\\\${uz}\\end{pmatrix}$`
+          texteCorr += `et celles de $\\vec v$ vecteur directeur de (d') sont $\\vec v\\begin{pmatrix} ${vx}\\\\${vy}\\\\${vz}\\end{pmatrix}$<br>`
+          texteCorr += 'On compare pour les quotients des composantes de même dimension : <br>'
+          texteCorr += `$\\frac{${ux}}{${vx}} = ${uxvx}.texFraction$`
+          texteCorr += ` \\frac{${uy}}{${vy}} = \\frac{${uz}}{${vz}}$`
           texteCorr += '<br>On trouve que les quotients ne sont pas égaux, donc les droites ne sont pas parallèles.<br>'
           texteCorr += 'On vérifie que les droites ne sont pas sécantes'
           break
