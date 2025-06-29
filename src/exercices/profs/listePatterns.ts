@@ -41,6 +41,7 @@ export default class ListePatternsPreDef extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 1
+    this.listePackages = ['twemojis']
     this.nbQuestionsModifiable = false
     this.besoinFormulaireTexte = ['Choix des patterns à afficher', 'nombres séparés par des tirets\n ou 100 pour la liste complète']
     this.sup = '100' // liste des patterns à afficher
@@ -93,7 +94,7 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
         pattern.iterate = (patternRiche as PatternRiche).iterate
       }
 
-      const angle = Math.PI / 6
+      const angle = Math.PI / 2.5
       let yMax = 0
       let yMin = 0
 
@@ -145,7 +146,7 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
               xmax = Math.max(xmax, obj.x / 20)
             })
           } else {
-            objets = pattern.render(j + 1, 0, 0, Math.PI / 6)
+            objets = [cubeDef(`cubeIsoQ${i}F${j}`), ...pattern.render(j + 1, 0, 0, Math.PI / 6)]
             ;({ xmin, ymin, xmax, ymax } = fixeBordures(objets))
           }
         } else {
@@ -154,7 +155,7 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
         }
         figures[j].push(...objets)
         // const { xmax, ymax, xmin, ymin } = fixeBordures(objets, { rxmin: 0.5, rymin: 0, rxmax: 0.5, rymax: 0 })
-        figures[j].push(texteParPosition(`Motif ${j + 1}`, (xmax + xmin + 1) / 2, -1.5, 0, 'black', 0.8, 'milieu'))
+        figures[j].push(texteParPosition(`Motif ${j + 1}`, (xmax + xmin) / 2, -1.5, 0, 'black', 0.8, 'milieu'))
         const cadre = polygone(point(xmin - 1, -2), point(xmax + 2, -2), point(xmax + 2, ymax + 2), point(xmin - 1, ymax + 2))
         cadre.pointilles = 4
         figures[j].push(cadre)
