@@ -15,91 +15,116 @@ export const refs = {
   'fr-ch': []
 }
 
-/**
- * Stéphane Guyon
- * @author
+function generateur (type: 'secantes' | 'paralleles' | 'nonCoplanaires' = 'secantes', original = false): {
+  xB: number,
+  yB: number,
+  zB: number,
+  vx: number,
+  vy: number,
+  vz: number,
+  ux: number,
+  uy: number,
+  uz: number,
+  xA: number,
+  yA: number,
+  zA: number,
+  lambda: number | null,
+  u1: FractionEtendue,
+  u2: FractionEtendue,
+  u3: FractionEtendue,
+  u4: FractionEtendue,
+  u5: FractionEtendue,
+  u6: FractionEtendue,
+  resultat1: FractionEtendue,
+  resultat2: FractionEtendue,
+  quotient1: FractionEtendue,
+  quotient2: FractionEtendue
+} {
+  if (original) {
+    return ({
+      xA: 15,
+      yA: 8,
+      zA: -6,
+      ux: 1,
+      uy: -1,
+      uz: 2,
+      xB: 1,
+      yB: 2,
+      zB: 1,
+      vx: 4,
+      vy: 4,
+      vz: -6,
+      lambda: null,
+      u1: new FractionEtendue(4, 1),
+      u2: new FractionEtendue(4, -1),
+      u3: new FractionEtendue(-6, 2),
+      u4: new FractionEtendue(1, 1),
+      u5: new FractionEtendue(2, -1),
+      u6: new FractionEtendue(1, 2),
+      resultat1: new FractionEtendue(4, 1),
+      resultat2: new FractionEtendue(2, -1),
+      quotient1: new FractionEtendue(4, 1),
+      quotient2: new FractionEtendue(-6, 1)
+    })
+  } else {
+    const xA = randint(-10, 10, 0) // abscisse du point A
+    const yA = randint(-10, 10, 0) // ordonnée du point A
+    const zA = randint(-10, 10, 0) // cote du point A
+    // On choisit un vecteur directeur u de la droite (d)
+    const ux = randint(-10, 10, 0) // composante x du vecteur directeur u
+    const uy = randint(-10, 10, [yA, 0]) // composante y du vecteur directeur u
+    const uz = randint(-10, 10, [zA, 0]) // composante z du vecteur directeur u
+    // On choisit un vecteur directeur v de la droite (d')
+    let xB = randint(-10, 10, [xA, 0]) // abscisse du point B
+    let yB = randint(-10, 10, [yA, 0]) // ordonnée du point B
+    let zB = randint(-10, 10, [zA, 0]) // cote du point B
+    let vx = 0 // composante x du vecteur directeur v
+    let vy = 0 // composante y du vecteur directeur v
+    let vz = 0 // composante z du vecteur directeur v
+    let lambda: number | null = null // Pour les droites parallèles, on utilise un lambda pour la colinéarité
+    if (type === 'paralleles') {
+      lambda = randint(-4, 4, [0, 1, -1]) // Pour éviter les droites parallèles
+      vx = lambda * ux // On choisit un vecteur directeur v de la droite (d') parallèle à u
+      vy = lambda * uy // On choisit un vecteur directeur v de la droite (d') parallèle à u
+      vz = lambda * uz // On choisit un vecteur directeur v de la droite (d') parallèle
+    } else { // sécant ou non coplanaire
+      vx = randint(-10, 10, [ux, xA, 0]) // composante x du vecteur directeur v
+      vy = randint(-10, 10, [uy, yA, 0]) // composante y du vecteur directeur v
+      vz = randint(-10, 10, [uz, zA, 0]) // composante z du vecteur directeur v
+      if (vx / ux === vy / uy && vy / uy === vz / uz) { vz = vz + 1 } // On s'assure que les droites ne sont pas parallèles
+      if (type === 'secantes') {
+        // vecteur AB = (xB-xA, yB-yA, zB-zA) colinéaire avec u et v
+        const alpha = randint(-3, 3, 0) // Pour éviter les droites parallèles
+        const beta = randint(-3, 3, 0) // Pour éviter les droites parallèles
+        xB = alpha * ux + beta * vx + xA // Choisir xB pour que AB colinéaire avec u et v
+        yB = alpha * uy + beta * vy + yA // Choisir yB pour que AB colinéaire avec u et v
+        zB = alpha * uz + beta * vz + zA // Choisir zB pour que AB colinéaire avec u et v
+      } else {
+        zB -= 1 // Pour s'assurer que les droites ne sont pas coplanaires, on décale zB
+      }
+    }
+    const u1 = new FractionEtendue(vx, ux)  // On crée les fractions étendues pour les vecteurs directeurs
+    const u2 = new FractionEtendue(vy, uy)  // On crée les fractions étendues pour les vecteurs directeurs
+    const u3 = new FractionEtendue(vz, uz)  // On crée les fractions étendues pour les vecteurs directeurs
+    const u4 = new FractionEtendue(xB - xA, ux)  // On crée les fractions étendues pour les vecteurs directeurs
+    const u5 = new FractionEtendue(yB - yA, uy)  // On crée les fractions étendues pour les vecteurs directeurs
+    const u6 = new FractionEtendue(zB - zA, uz)  // On crée les fractions étendues pour les vecteurs directeurs
+    const det0 = ux * vz - uz * vx // On calcule le dénominateur pour les vecteurs directeurs
+    const det1 = vx * uy - ux * vy // On calcule le déterminant pour les vecteurs directeurs
+    const det2 = vx * uz - ux * vz // On calcule le déterminant pour les vecteurs directeurs
+    const resultat1 = new FractionEtendue(ux * (yB - yA) - uy * (xB - xA), det0 !== 0 ? det0 : 1) // Pour le calcul de colinéarité si den === 0, alors on évite la division par 0
+    const resultat2 = new FractionEtendue(ux * (zB - zA) - uz * (xB - xA), det2 !== 0 ? det2 : 1) // Pour le calcul de colinéarité si den === 0, alors on évite la division par 0
+    const quotient1 = new FractionEtendue(ux * uy, det1 !== 0 ? det1 : 1) // Pour la dernière ligne de calcul du quotient de la colinéarité
+    const quotient2 = new FractionEtendue(ux * uz, det2 !== 0 ? det2 : 1) // Pour la dernière ligne de calcul du quotient de la colinéarité
 
-*/
-export default class NomExercice extends Exercice {
-  constructor () {
-    super()
-    this.consigne = texteItalique('Préciser si l\'affirmation suivante est vraie ou fausse, puis justifier la réponse donnée.<br> Une réponse non argumentée ne sera pas prise en compte.')
-    this.consigne += '<br> Dans un repère orthonormé de l\'espace, on considère les représentations paramétriques des droites $(d)$ et $(d~\')$'
-    this.nbQuestions = 1 // Nombre de questions à générer
-    this.correctionDetaillee = false
-    this.correctionDetailleeDisponible = true
+    return {
+      xA, yA, zA, ux, uy, uz, xB, yB, zB, vx, vy, vz, lambda: lambda ?? null, u1, u2, u3, u4, u5, u6, resultat1, resultat2, quotient1, quotient2
+    }
   }
+}
 
-  nouvelleVersion () {
-    const typeQuestionsDisponibles = ['secantes', 'paralleles', 'nonCoplanaires'] // Liste des types de questions disponibles
-
-    const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
-    for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      let texte = ''
-      let texteCorr = ''
-      const xA = randint(-10, 10, 0)// abscisse du point A
-      const yA = randint(-10, 10, 0)  // ordonnée du point A
-      const zA = randint(-10, 10, 0)  // cote du point A
-      // On choisit un vecteur directeur u de la droite (d)
-      const ux = randint(-10, 10, 0)  // composante x du vecteur directeur u
-      const uy = randint(-10, 10, [yA, 0])  // composante y du vecteur directeur u
-      const uz = randint(-10, 10, [zA, 0])  // composante z du vecteur directeur u
-      // On choisit un vecteur directeur v de la droite (d')
-      let xB = 0  // abscisse du point B
-      let yB = 0 // ordonnée du point B
-      let zB = 0
-      let vx = 0 // composante x du vecteur directeur v
-      let vy = 0 // composante y du vecteur directeur v
-      let vz = 0  // composante z du vecteur directeur v
-
-      let lambda = 0 // coefficient de colinéarité en cas de parallélisme
-      const alpha = randint(-3, 3, 0) // Pour éviter les droites parallèles
-      const beta = randint(-3, 3, 0) // Pour éviter les droites parallèles
-      const affirmation = choice(['Les droites $(d)$ et $(d~\')$ sont parallèles.',
-        'Les droites $(d)$ et $(d~\')$ sont sécantes.',
-        'Les droites $(d)$ et $(d~\')$ sont non coplanaires.']) // On choisit une affirmation aléatoire parmi les trois possibles
-
-      if (listeTypeQuestions[i] === 'paralleles') {
-        lambda = randint(-4, 4, [0, 1, -1]) // Pour éviter les droites parallèles
-        vx = lambda * ux  // On choisit un vecteur directeur v de la droite (d') parallèle à u
-        vy = lambda * uy  // On choisit un vecteur directeur v de la droite (d') parallèle à u
-        vz = lambda * uz  // On choisit un vecteur directeur v de la droite (d') parallèle à u
-        // On s'assure que le point B n'est pas confondu avec le point A
-        xB = randint(-10, 10, [xA, 0])  // abscisse du point B
-        yB = randint(-10, 10, [yA, 0])  // ordonnée du point B
-        zB = randint(-10, 10, [zA, 0])  // ordonnée du point B
-      }
-      if (listeTypeQuestions[i] === 'secantes') {
-        vx = randint(-10, 10, [ux, xA, 0])
-        vy = randint(-10, 10, [uy, yA, 0])
-        vz = randint(-10, 10, [uz, zA, 0])
-        if (vx / ux === vy / uy && vy / uy === vz / uz) { vz = vz + 1 } // On s'assure que les droites ne sont pas parallèles
-        // vecteur AB = (xB-xA, yB-yA, zB-zA) ne soit pas coplanaire avec u et v
-        xB = alpha * ux + beta * vx + xA  //  xB pour que vect AB colinéaire avec u et v
-        yB = alpha * uy + beta * vy + yA  //  yB pour que vect AB colinéaire avec u et v
-        zB = alpha * uz + beta * vz + zA   //  zB pour que vect AB colinéaire avec u et v
-      }
-      if (listeTypeQuestions[i] === 'nonCoplanaires') {
-        vx = randint(-10, 10, [ux, xA, 0])
-        vy = randint(-10, 10, [uy, yA, 0])
-        vz = randint(-10, 10, [uz, zA, 0])
-        if (vx / ux === vy / uy && vy / uy === vz / uz) { vz = vz + 1 } // On s'assure que les droites ne sont pas parallèles
-        // vecteur AB = (xB-xA, yB-yA, zB-zA) ne soit pas coplanaire avec u et v
-        xB = alpha * ux + beta * vx + xA  // Choisir xB pour que AB non coplanaire avec u et v
-        yB = alpha * uy + beta * vy + yA  // Choisir yB pour que AB non coplanaire avec u et v
-        zB = alpha * uz + beta * vz + zA - 1  // Choisir zB pour que AB non coplanaires avec u et v
-      }
-      const u1 = new FractionEtendue(vx, ux)  // On crée les fractions étendues pour les vecteurs directeurs
-      const u2 = new FractionEtendue(vy, uy)  // On crée les fractions étendues pour les vecteurs directeurs
-      const u3 = new FractionEtendue(vz, uz)  // On crée les fractions étendues pour les vecteurs directeurs
-      const u4 = new FractionEtendue(xB - xA, ux)  // On crée les fractions étendues pour les vecteurs directeurs
-      const u5 = new FractionEtendue(yB - yA, uy)  // On crée les fractions étendues pour les vecteurs directeurs
-      const u6 = new FractionEtendue(zB - zA, uz)  // On crée les fractions étendues pour les vecteurs directeurs
-      const resultat1 = new FractionEtendue(ux * (yB - yA) - uy * (xB - xA), uy * vx - ux * vy) // Pour le calcul de colinéarité
-      const resultat2 = new FractionEtendue(ux * (zB - zA) - uz * (xB - xA), uz * vx - ux * vz) // Pour le calcul de colinéarité
-      const quotient1 = new FractionEtendue(ux * uy, (vx * uy) - (vy * ux)) // Pour la dernière ligne de calcul du quotient de la colinéarité
-      const quotient2 = new FractionEtendue(ux * uz, (vx * uz) - (vz * ux)) // Pour la dernière ligne de calcul du quotient de la colinéarité
-      const bloc1 = ` <br>$\\begin{cases}
+function bloc1Alea ({ xA, yA, zA, ux, uy, uz, xB, yB, zB, vx, vy, vz, u1, u2, u3, u4, u5, u6 }: { xA: number, yA: number, zA: number, ux: number, uy: number, uz: number, xB: number, yB: number, zB: number, vx: number, vy: number, vz: number, u1: FractionEtendue, u2: FractionEtendue, u3: FractionEtendue, u4: FractionEtendue, u5: FractionEtendue, u6: FractionEtendue }): string {
+  return ` <br>$\\begin{cases}
             ${reduireAxPlusB(ux, xA, 't', { ordreInverse: true })} = ${reduireAxPlusB(vx, xB, 's', { ordreInverse: true })} \\\\
             ${reduireAxPlusB(uy, yA, 't', { ordreInverse: true })} = ${reduireAxPlusB(vy, yB, 's', { ordreInverse: true })} \\\\
             ${reduireAxPlusB(uz, zA, 't', { ordreInverse: true })} = ${reduireAxPlusB(vz, zB, 's', { ordreInverse: true })}
@@ -114,11 +139,49 @@ export default class NomExercice extends Exercice {
             t= ${rienSi1(u2.simplifie())}s ${u5.simplifie().ecritureAlgebrique} \\\\
             t = ${rienSi1(u3.simplifie())}s ${u6.simplifie().ecritureAlgebrique}
             \\end{cases}$`
-      const bloc2 = `On cherche si les coordonnées des vecteurs sont proportionnelles  c'est à dire s'il existe un réel $\\lambda$ tel que $\\vec u=\\lambda \\vec v$.<br>
+}
+function bloc2Alea ({ ux, vx, uy, vy, uz, vz, u1, u2, u3 }:{ ux: number, uy: number, uz: number, vx: number, vy: number, vz: number, u1: FractionEtendue, u2: FractionEtendue, u3: FractionEtendue }): string {
+  return `On cherche si les coordonnées des vecteurs sont proportionnelles  c'est à dire s'il existe un réel $\\lambda$ tel que $\\vec u=\\lambda \\vec v$.<br>
          $\\phantom{\\iff}\\vec u=\\lambda \\vec v$
           $\\quad\\iff \\begin{cases}${ux}= ${rienSi1(vx)}\\lambda\\\\${uy}= ${rienSi1(vy)}\\lambda\\\\${uz}=${rienSi1(vz)}\\lambda\\end{cases}$
           $\\quad\\iff \\begin{cases}\\lambda =${u1.simplifie().texFractionSimplifiee}\\\\\\lambda =${u2.simplifie().texFractionSimplifiee}\\\\
            \\lambda =${u3.texFractionSimplifiee}\\end{cases}$`
+}
+/**
+ * Stéphane Guyon
+ * @author
+
+*/
+export default class NomExercice extends Exercice {
+  constructor () {
+    super()
+    this.consigne = texteItalique('Préciser si l\'affirmation suivante est vraie ou fausse, puis justifier la réponse donnée.<br> Une réponse non argumentée ne sera pas prise en compte.')
+    this.consigne += '<br> Dans un repère orthonormé de l\'espace, on considère les représentations paramétriques des droites $(d)$ et $(d~\')$'
+    this.nbQuestions = 1 // Nombre de questions à générer
+    this.correctionDetaillee = false
+    this.correctionDetailleeDisponible = true
+    this.besoinFormulaireCaseACocher = ['Sujet original', false]
+    this.sup = false
+  }
+
+  nouvelleVersion () {
+    const typeQuestionsDisponibles: Array<'secantes' | 'paralleles' | 'nonCoplanaires'> = ['secantes', 'paralleles', 'nonCoplanaires'] // Liste des types de questions disponibles
+
+    const listeTypeQuestions: Array<'secantes' | 'paralleles' | 'nonCoplanaires'> = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions) as Array<'secantes' | 'paralleles' | 'nonCoplanaires'> // On génère la liste des types de questions à poser
+    for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      let texte = ''
+      let texteCorr = ''
+      const alpha = randint(-3, 3, 0) // Pour éviter les droites parallèles
+      const beta = randint(-3, 3, 0) // Pour éviter les droites parallèles
+      const affirmation = this.sup
+        ? 'Les droites $(d)$ et $(d~\')$ sont non coplanaires.'
+        : choice(['Les droites $(d)$ et $(d~\')$ sont parallèles.',
+          'Les droites $(d)$ et $(d~\')$ sont sécantes.',
+          'Les droites $(d)$ et $(d~\')$ sont non coplanaires.']) // On choisit une affirmation aléatoire parmi les trois possibles
+
+      const { xA, yA, zA, ux, uy, uz, xB, yB, zB, vx, vy, vz, lambda, u1, u2, u3, u4, u5, u6, resultat1, resultat2, quotient1, quotient2 } = generateur(listeTypeQuestions[i], this.sup) // On génère les coordonnées des points A et B et les vecteurs directeurs u et v
+      const bloc1 = bloc1Alea({ xA, yA, zA, ux, uy, uz, xB, yB, zB, vx, vy, vz, u1, u2, u3, u4, u5, u6 }) // On génère le bloc 1 avec les coordonnées des points A et B et les vecteurs directeurs u et v
+      const bloc2 = bloc2Alea({ ux, uy, uz, vx, vy, vz, u1, u2, u3 }) // On génère le bloc 2 avec les coordonnées des vecteurs directeurs u et v
 
       switch (listeTypeQuestions[i]) {
         //* ****************************************************************************
@@ -263,7 +326,7 @@ export default class NomExercice extends Exercice {
           texteCorr += `et que $\\vec v$ de coordonnées $\\vec v\\begin{pmatrix} ${vx}\\\\${vy}\\\\${vz}\\end{pmatrix}$ est un vecteur directeur de (d'). <br>`
           // On teste la colinéarité des vecteurs directeurs
           texteCorr += bloc2
-          texteCorr += `<br>On peut conclure que $\\vec u =  ${lambda} \\vec v$, les vecteurs sont alors colinéaires. <br>`
+          texteCorr += `<br>On peut conclure que $\\vec u =  ${lambda ?? ''} \\vec v$, les vecteurs sont alors colinéaires. <br>`
           texteCorr += `<br>${texteGras('Les droites $(d)$ et $(d~\')$ sont donc portées par des vecteurs de même direction.')}`
           // On teste si les droites sont sécantes ou non-coplanaires
           texteCorr += texteEnCouleurEtGras('<br>Étape 2 : Droites parallèles ou confondues ?')
