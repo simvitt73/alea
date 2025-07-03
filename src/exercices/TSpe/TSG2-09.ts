@@ -46,7 +46,7 @@ export default class NomExercice extends Exercice {
         case 'favorable':
           texte += `<br>On note A$(${xA}~;~${yA}~;~${zA})$ et B$(${xB}~;~${yB}~;~${zB})$ deux points de l'espace.<br>`
           texte += `${texteGras('Affirmation')} : Une représentation paramétrique de la droite $(AB)$ est `
-          texte += `$ \\begin{cases} x = ${reduireAxPlusB(ux, xA, 'false')} \\\\ y = ${yB} + ${uy}t \\\\ z = ${zB} + ${uz}t \\end{cases}$`
+          texte += `$ \\begin{cases} x =  ${reduireAxPlusB(ux, xA, 't', { ordreInverse: true })} \\\\ y = ${yB} + ${uy}t \\\\ z = ${zB} + ${uz}t \\end{cases}$`
           texteCorr = 'En prenant $t=0$ dans la représentation paramétrique, on obtient les cooronnées du point B.'
           texteCorr += ' On en déduit que le point $B$ est un point de la droite proposée.<br>'
           texteCorr += 'Il y a principalement deux méthodes pour conclure :'
