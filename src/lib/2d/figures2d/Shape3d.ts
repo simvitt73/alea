@@ -43,7 +43,7 @@ export class Shape3D extends ObjetMathalea2D {
   x: number
   y: number
   angle: number
-  scale: { x: number, y: number }
+  scale: number
   width: number // laargeur en cm
   height: number // hauteur en cm
   pixelsParCm: number
@@ -56,7 +56,7 @@ export class Shape3D extends ObjetMathalea2D {
     x = 0,
     y = 0,
     angle = 0,
-    scale = { x: 1, y: 1 },
+    scale = 1,
     width,
     height,
     pixelsParCm = context.pixelsParCm,
@@ -70,7 +70,7 @@ export class Shape3D extends ObjetMathalea2D {
     x?: number,
     y?: number,
     angle?: number,
-    scale?: { x: number, y: number },
+    scale?: number,
     width: number,
     height: number,
     pixelsParCm?: number,
@@ -102,13 +102,13 @@ export class Shape3D extends ObjetMathalea2D {
   }
 
   svg (coeff: number) {
-    return `<g opacity=${this.opacite} transform="translate(${this.x * coeff}, ${-this.y * coeff}) ${this.scale.x !== 1 || this.scale.y !== 1 || coeff !== 20 ? `scale(${this.scale.x * coeff / 20},${this.scale.y * coeff / 20})` : ''} ${this.angle !== 0 ? `rotate(${-this.angle})` : ''}">${this.codeSvg}</g>`
+    return `<g opacity=${this.opacite} transform="translate(${this.x * coeff}, ${-this.y * coeff}) ${this.scale !== 1 || this.scale !== 1 || coeff !== 20 ? `scale(${this.scale * coeff / 20},${this.scale * coeff / 20})` : ''} ${this.angle !== 0 ? `rotate(${-this.angle})` : ''}">${this.codeSvg}</g>`
   }
 
   tikz () {
     // const tikzCenterX = this.width / 2
     // const tikzCenterY = this.height / 2
-    return `\\begin{scope}[fill opacity=${this.opacite}, shift={(${(this.x).toFixed(3)},${(this.y).toFixed(3)})}${this.scale.x !== 1 ? `, xscale=${this.scale.x}` : ''}${this.scale.y !== 1 ? `, yscale=${this.scale.y}` : ''}${this.angle !== 0 ? `, rotate around={${this.angle}:(0,0)}` : ''}]
+    return `\\begin{scope}[fill opacity=${this.opacite}, shift={(${(this.x).toFixed(3)},${(this.y).toFixed(3)})}${this.scale !== 1 ? `, xscale=${this.scale}` : ''}${this.scale !== 1 ? `, yscale=${this.scale}` : ''}${this.angle !== 0 ? `, rotate around={${this.angle}:(0,0)}` : ''}]
     ${this.codeTikz}
     \\end{scope}`
   }
@@ -125,11 +125,18 @@ export class Shape3D extends ObjetMathalea2D {
     }
   }
 
+  dilate (factor: number) {
+    const lastScale = this.scale
+    this.scale = lastScale
+    this.width *= factor
+    this.heigth *= factor
+  }
+
   clone (x:number, y:number, z:number, angle: number): Shape3D {
     const codeTikz = String(this.codeTikz)
     const codeSvg = String(this.codeSvg)
     const [px, py] = project3dIso(x, y, z, angle ?? Math.PI / 6).map(n => n / 20)
-    const scale = { x: this.scale.x, y: this.scale.y }
+    const scale = this.scale
     const width = Number(this.width)
     const height = Number(this.height)
     const pixelsParCm = Number(this.pixelsParCm)
@@ -185,13 +192,13 @@ export function faceRight (angle: number): string {
   return `<polygon points="${rightPoints.map(p => p.join(',')).join(' ')}" fill="red" stroke="black" stroke-width="1" />`
 }
 
-export function cubeDef (shapeId?:string) {
+export function cubeDef (shapeId?:string, scale?: number): ObjetMathalea2D {
   const cube = new ObjetMathalea2D()
   cube.bordures = [0, -0.5, 1, 1]
   cube.svg = function (coeff: number): string {
     return `
   <defs>
-    <g id="${shapeId ?? 'cubeIso'}">
+    <g id="${shapeId ?? 'cubeIso'}" transform="scale(${scale ?? 1},${scale ?? 1})">
       ${faceTop(Math.PI / 6)}
       ${faceLeft(Math.PI / 6)}
       ${faceRight(Math.PI / 6)}
@@ -227,6 +234,7 @@ export function shapeCubeIso (
     strokeStyle?: string;
     lineWidth?: number;
     opacite?: number;
+    scale?: number;
   }
 ): Shape3D {
   const codeSvg = `<use href="#${shapeId}" transform="translate(${x ?? 0},${y ?? 0})"></use>`
@@ -237,11 +245,12 @@ export function shapeCubeIso (
     width: 1.732,
     height: 2,
     opacite: 1,
-    name: 'cube'
+    name: 'cube',
+    scale: options?.scale ?? 1,
   })
 }
 
-export function updateCubeIso (pattern: VisualPattern3D, i: number, j:number, angle: number): void {
+export function updateCubeIso (pattern: VisualPattern3D, i: number, j:number, angle: number, newScale?:number): void {
   if (pattern instanceof VisualPattern) return
   setTimeout(() => {
     let dragging = false
@@ -284,7 +293,7 @@ export function updateCubeIso (pattern: VisualPattern3D, i: number, j:number, an
       // Ajouter les SVG générés par svg() de chaque objet
       cells.forEach(cell => {
         const [px, py] = project3dIso(cell[0], cell[1], cell[2], angle)
-        const obj = shapeCubeIso(`cubeIsoQ${i}F${j}`, px, py)
+        const obj = shapeCubeIso(`cubeIsoQ${i}F${j}`, px, py, { scale: cell[3]?.scale ?? newScale ?? 1 })
         if (typeof obj.svg === 'function') {
           const temp = document.createElementNS('http://www.w3.org/2000/svg', 'g')
           // temp.setAttribute('transform', `translate(${px}, ${py})`)

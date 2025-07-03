@@ -65,7 +65,7 @@ export default class PaternNum1 extends Exercice {
         continue
       }
       const pat = popped
-      const pattern = pat.pattern
+      const pattern = new VisualPattern([])
       pattern.iterate = pat.iterate
       pattern.shapes = pat.shapes
 
@@ -94,7 +94,7 @@ export default class PaternNum1 extends Exercice {
         figures[j].push(...pattern.render(j + 1, 0, 0))
         ;({ xmin, ymin, xmax, ymax } = fixeBordures(figures[j]))
         figures[j].push(texteParPosition(`Motif ${j + 1}`, (xmax + xmin + 1) / 2, ymin - 1.5, 0, 'black', 0.8, 'milieu'))
-        const cadre = polygone(point(xmin - 1, ymin - 2), point(xmax + 2, ymin - 2), point(xmax + 2, ymax + 2), point(xmin - 1, ymax + 2))
+        const cadre = polygone(point(xmin - 2, ymin - 2), point(xmax + 2, ymin - 2), point(xmax + 2, ymax + 2), point(xmin - 2, ymax + 2))
         cadre.pointilles = 4
         figures[j].push(cadre)
         yMax = Math.max(yMax, ymax)

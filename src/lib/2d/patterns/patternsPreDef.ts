@@ -7,27 +7,27 @@ import { Ratio } from '../../mathFonctions/Ratio'
 export type PatternRiche = {
   visualImg?: string,
   visualId?: number,
-  numero?: number,
+  numero: number,
   shapes: ShapeName[],
 
   fonctionNb: (x: number) => number,
   fonctionFraction?: (x: number) => FractionEtendue,
   fonctionRatio?: (x: number) => Ratio,
   formule: string,
-  type: 'linéaire' | 'affine' | 'degré2' | 'degré3' | 'autre',
+  type: 'linéaire' | 'affine' | 'degré2' | 'degré3' | 'autre' | 'fractal',
   pattern?: VisualPattern,
   iterate: (this: VisualPattern, n?:number) => Set<string>
 }
 export type PatternRiche3D = {
   visualImg?: string,
   visualId?: number,
-  numero?: number,
+  numero: number,
   shapeDefault: Shape3D,
   fonctionNb: (x: number) => number,
   fonctionFraction?: (x: number) => FractionEtendue,
   fonctionRatio?: (x: number) => Ratio,
   formule: string,
-  type: 'linéaire' | 'affine' | 'degré2' | 'degré3' | 'autre',
+  type: 'linéaire' | 'affine' | 'degré2' | 'degré3' | 'autre' | 'fractal',
   pattern?: VisualPattern3D,
   iterate3d: (this: VisualPattern3D, angle: number) => Set<string>
 }
@@ -50,24 +50,28 @@ export type PatternRicheRepetition = {
  * On trie d'abord par z croissant (du bas vers le haut), puis par y croissant (de gauche à droite),
  * puis par x croissant (de l'arrière vers l'avant).
  */
-const rangeCubes = function (coords: [number, number, number][]): [number, number, number][] {
+const rangeCubes = function (coords: [number, number, number, number?][]): [number, number, number, number ?][] {
   // Regrouper par z croissant
-  const byZ = new Map<number, [number, number, number][]>()
+  const byZ = new Map<number, [number, number, number, number][]>()
   for (const coord of coords) {
     const z = coord[2]
     if (!byZ.has(z)) byZ.set(z, [])
-    byZ.get(z)!.push(coord)
+    const [x, y, zCoord, w] = coord
+    byZ.get(z)!.push([x, y, zCoord, w !== undefined ? w : 1]) // On ne garde que les 3 premières coordonnées, w est forcé à number
   }
-  const result: [number, number, number][] = []
+  const result: [number, number, number, number][] = []
   const zs = Array.from(byZ.keys()).sort((a, b) => a - b)
   for (const z of zs) {
     const groupZ = byZ.get(z)!
     // Regrouper par y décroissant dans chaque z
-    const byY = new Map<number, [number, number, number][]>()
+    const byY = new Map<number, [number, number, number, number][]>()
     for (const coord of groupZ) {
       const y = coord[1]
-      if (!byY.has(y)) byY.set(y, [])
-      byY.get(y)!.push(coord)
+      if (!byY.has(y)) {
+        byY.set(y, [])
+      }
+      const w = coord[3] !== undefined ? coord[3] : 1 // On force w à number
+      byY.get(y)!.push([coord[0], y, z, w]) // On garde les 3 premières coordonnées, w est forcé à number
     }
     const ys = Array.from(byY.keys()).sort((a, b) => b - a)
     for (const y of ys) {
@@ -2423,9 +2427,9 @@ const pattern98: PatternRiche = {
   visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/863acf91-20a3-4821-9e33-0dd6ceb3e3f0/vp52_2_orig.png?format=2500w',
   visualId: 53,
   shapes: ['allumetteV'],
-  type: 'autre',
+  type: 'affine',
   fonctionNb: (x:number) => 3 * x + 3,
-  formule: '3\\times + 3',
+  formule: '3\\times n+ 3',
   pattern: new VisualPattern([]),
   iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
@@ -2448,9 +2452,9 @@ const pattern99: PatternRiche = {
   visualId: 55,
   numero: 99,
   shapes: ['allumetteV'],
-  type: 'autre',
+  type: 'affine',
   fonctionNb: (x:number) => 3 * x + 5,
-  formule: '3\\times + 5',
+  formule: '3\\times n+ 5',
   pattern: new VisualPattern([]),
   iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
@@ -2494,7 +2498,7 @@ const pattern101: PatternRiche = {
   formule: '\\dfrac{3^n-1}{2}',
   fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 3 ** (x - 1)]),
   fonctionFraction: (x:number) => new FractionEtendue((3 ** (x - 1) - 1) / 2, (3 ** x - 1) / 2),
-  type: 'autre',
+  type: 'fractal',
   pattern: new VisualPattern([]),
   iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
@@ -2521,7 +2525,7 @@ const pattern102: PatternRiche = {
   formule: '\\dfrac{3^n-1}{2}',
   fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 3 ** (x - 1)]),
   fonctionFraction: (x:number) => new FractionEtendue((3 ** (x - 1) - 1) / 2, (3 ** x - 1) / 2),
-  type: 'autre',
+  type: 'fractal',
   pattern: new VisualPattern([]),
   iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
@@ -2551,7 +2555,7 @@ const pattern103: PatternRiche = {
   formule: '\\dfrac{3^n-1}{2}',
   fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 3 ** (x - 1)]),
   fonctionFraction: (x:number) => new FractionEtendue((3 ** (x - 1) - 1) / 2, (3 ** x - 1) / 2),
-  type: 'autre',
+  type: 'fractal',
   pattern: new VisualPattern([]),
   iterate: function (this: VisualPattern, n) {
     if (n === undefined) n = 1
@@ -2577,6 +2581,91 @@ const pattern103: PatternRiche = {
   }
 }
 
+const pattern104: PatternRiche = {
+  shapes: ['allumetteH'],
+  numero: 104,
+  type: 'fractal',
+  formule: '2\\times n+1',
+  fonctionNb: (x:number) => 2 * x + 1,
+  iterate: function (this: VisualPattern, n) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    function casseSegment (n: number, x1: number, y1: number, x2: number, y2: number, depth: number) {
+      if (depth === 0) {
+        // Calcul de l'angle du segment pour l'orientation du dessin
+        const angle = Math.atan2(y2 - y1, x2 - x1)
+        const scale = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+        // Le segmentHorizontal est centré en (0,0) et de longueur 1, donc on centre à [(x1+x2)/2, (y1+y2)/2]
+        newCells.add(VisualPattern.coordToKey([(x1 + x2) / 2, (y1 + y2) / 2, 'allumetteH', { scale, rotate: angle * 180 / Math.PI }]))
+      } else {
+        // Découpe le segment en 4 parties selon la géométrie du flocon de Koch
+        const dx = (x2 - x1) / 3
+        const dy = (y2 - y1) / 3
+        const xA = x1 + dx
+        const yA = y1 + dy
+        const xB = x1 + 2 * dx
+        const yB = y1 + 2 * dy
+        // Calcul du sommet du "pic"
+        const angle = Math.atan2(y2 - y1, x2 - x1) + Math.PI / 3
+        const xC = xA + Math.cos(angle) * Math.sqrt(dx * dx + dy * dy)
+        const yC = yA + Math.sin(angle) * Math.sqrt(dx * dx + dy * dy)
+        casseSegment(n, x1, y1, xA, yA, depth - 1)
+        casseSegment(n, xA, yA, xC, yC, depth - 1)
+        casseSegment(n, xC, yC, xB, yB, depth - 1)
+        casseSegment(n, xB, yB, x2, y2, depth - 1)
+      }
+    }
+    // Exemple : segment horizontal de longueur 3, profondeur n
+    casseSegment(n, 0, 0, 5, 0, n)
+    return newCells
+  }
+}
+
+// problème avec mes cubes iso qui n'étaient pas prévus pour être rétrécis.
+// Il faut sans doute que je crée un nouveau type de cube pour les fractals non dynamique, sans rotation.
+// sans intéraction, mais scalable.
+/*
+const pattern105: PatternRiche3D = {
+  numero: 105,
+  shapeDefault: shapeCubeIso('cubeIso', 0, 0),
+  fonctionNb: (x:number) => 2 ** x,
+  formule: '2^n',
+  type: 'fractal',
+
+  iterate3d: function (this: VisualPattern3D, n) {
+    if (n === undefined) n = 1
+    const newCells = new Set<string>()
+    const cubes: [number, number, number, number][] = [] // Commence avec un cube à l'origine
+    function casseCube (n: number, x: number, y: number, z: number, scale: number) {
+      if (n === 1) {
+        cubes.push([x, y, z, scale])
+      } else {
+        const newScale = scale / 3
+        // Les 8 sommets du cube, chaque sommet est à une distance newScale de x, y, z
+        for (const dx of [-1, 1]) {
+          for (const dy of [-1, 1]) {
+            for (const dz of [-1, 1]) {
+              casseCube(n - 1, x + dx * newScale, y + dy * newScale, z + dz * newScale, newScale)
+            }
+          }
+        }
+      }
+    }
+    casseCube(n, 0, 1, 0, 3)
+
+    const sortedCubes = rangeCubes(cubes)
+    for (const [x, y, z, scale] of sortedCubes) {
+      const key = VisualPattern3D.coordToKey([x, y, z, { scale: scale ?? 1 }])
+      if (newCells.has(key)) {
+        newCells.delete(key) // Supprimer la cellule si elle existe déjà car en 3d il peut y avoir des superpositions et c'est la dernière qui doit être dessinée.
+      }
+      newCells.add(VisualPattern3D.coordToKey([x, y, z, { scale: scale ?? 1 }]))
+    }
+    return newCells
+  }
+
+}
+*/
 export const patternsRepetition: PatternRicheRepetition[] = [
   pattern83,
   pattern84,
@@ -2683,7 +2772,9 @@ const listePatternsPreDef: (PatternRiche | PatternRiche3D)[] = [
   pattern99,
   pattern101,
   pattern102,
-  pattern103
+  pattern103,
+  pattern104
+
 ]
 /**
  * Liste des patterns prédéfinis, triés par type.

@@ -114,6 +114,34 @@ allumetteDef.tikz = function (): string {
   }`.trim()
 }
 
+export const shapeSegmentHorizontal = new Shape2D({
+  codeSvg: '<use href="#segment-horizontal"></use>',
+  codeTikz: '\\pic at (0,0) {segment-horizontal};',
+  width: 1,
+  height: 0,
+  opacite: 1,
+  name: 'segment horizontal'
+})
+
+export const segmentHorizontalDef = new ObjetMathalea2D()
+segmentHorizontalDef.bordures = [0, 0, 1, 0]
+segmentHorizontalDef.svg = function (coeff: number): string {
+  return `
+  <!-- Segment horizontal de (0,0) à (1,0) -->
+  <defs>
+      <line id="segment-horizontal" x1="-10" y1="0" x2="10" y2="0" stroke="black" stroke-width="2" />
+  </defs>`
+}
+
+segmentHorizontalDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   segment-horizontal/.pic = {
+    \\draw[thick] (-0.5,0) -- (0.5,0);
+   }
+  }`.trim()
+}
+
 export const shapeRectangleBlanc = new Shape2D({
   codeSvg: '<use href="#rectangle-blanc"></use>',
   codeTikz: '\\pic at (0,0) {rectangle-blanc};',
@@ -506,7 +534,8 @@ export const shapeNames: string[] = [
   'allumetteV',
   'allumetteH',
   'allumette60',
-  'allumette120'
+  'allumette120',
+  'segmentHorizontal'
 ]
 
 export type ShapeName = (typeof shapeNames)[number]
@@ -528,7 +557,8 @@ export const listeShapesDef: Record<ShapeName, ObjetMathalea2D > = {
   allumetteV: allumetteDef,
   allumetteH: allumetteDef,
   allumette60: allumetteDef,
-  allumette120: allumetteDef
+  allumette120: allumetteDef,
+  segmentHorizontal: segmentHorizontalDef
 }
 
 export const listeShapes2D: Record<ShapeName, Shape2D > = {
@@ -548,6 +578,7 @@ export const listeShapes2D: Record<ShapeName, Shape2D > = {
   allumetteV: shapeAllumette,
   allumetteH: shapeAllumetteHorizontale,
   allumette60: shapeAllumette60,
-  allumette120: shapeAllumette120
+  allumette120: shapeAllumette120,
+  segmentHorizontal: shapeSegmentHorizontal
 }
 export const listeShapes2DNames: ShapeName[] = Object.keys(listeShapes2D) as ShapeName[]
