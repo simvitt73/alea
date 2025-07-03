@@ -18,7 +18,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 
 export const titre = 'Diviser un nombre décimal par 10, 100 ou 1 000'
-export const dateDePublication = '02/07/025'
+export const dateDePublication = '02/07/2025'
 
 /**
  * Division d'un nombre décimal dans différentes écritures par 10, 100, 1000
@@ -124,7 +124,6 @@ export default class MultiplierDecimauxPar101001000 extends Exercice {
     this.comment += 'Le cinquième paramètre permet de choisir si cet exercice propose une correction sèche ou une correction détaillée.'
     this.correctionDetaillee = false
     this.correctionDetailleeDisponible = true
-    this.consigne = 'Compléter.'
   }
 
   nouvelleVersion () {
@@ -154,11 +153,12 @@ export default class MultiplierDecimauxPar101001000 extends Exercice {
       nbQuestions: this.nbQuestions
     })
 
+    this.consigne = 'Compléter.'
     if (context.isHtml && this.sup4) {
       this.consigne += '<br>Un glisse-nombre est à disposition pour répondre '
       this.consigne += this.nbQuestions === 1 ? 'à la question.' : 'aux questions.'
       this.consigne += `<glisse-nombre number="${texNombre(20.25)}"/>`
-    }
+    } else { this.consigne = 'Compléter.' }
 
     const puissances = combinaisonListes(
       [1, 2, 3],
@@ -228,11 +228,11 @@ export default class MultiplierDecimauxPar101001000 extends Exercice {
             texteCorr = `Quand on divise par $${texNombre(Math.pow(10, b))}$, tous les chiffres prennent une position $${texNombre(Math.pow(10, b))}$ fois plus petite.<br>`
             if (chiffreAPositionDecimale(a / Math.pow(10, b), 1) === 0) {
               texteCorr += `Notamment, le chiffre des unités devient le chiffre des ${choixClasseDecimale}.<br>`
-              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, Math.pow(10, -b))}$ (le résultat du calcul), le chiffre des ${choixClasseDecimale} est $${miseEnEvidence(chiffreDesUnites, bleuMathalea)}$`
+              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, Math.pow(10, -b))}$ (le résultat de la division), le chiffre des ${choixClasseDecimale} est $${miseEnEvidence(chiffreDesUnites, bleuMathalea)}$`
               texteCorr += ` donc le chiffre des unités du nombre recherché est $${miseEnEvidence(chiffreDesUnites, bleuMathalea)}$.<br>`
             } else {
               texteCorr += `Notamment, le chiffre des ${choixClasseEntiere} devient le chiffre des unités.<br>`
-              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, 1)}$ (le résultat du calcul), le chiffre des unités est $${miseEnEvidence(chiffrePartieDecimale, bleuMathalea)}$`
+              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, 1)}$ (le résultat de la division), le chiffre des unités est $${miseEnEvidence(chiffrePartieDecimale, bleuMathalea)}$`
               texteCorr += ` donc le chiffre des ${choixClasseEntiere} du nombre recherché est $${miseEnEvidence(chiffrePartieDecimale, bleuMathalea)}$.<br>`
             }
           }
@@ -253,18 +253,18 @@ export default class MultiplierDecimauxPar101001000 extends Exercice {
             texteCorr = `Quand on divise par $${texNombre(Math.pow(10, b))}$, tous les chiffres prennent une position $${texNombre(Math.pow(10, b))}$ fois plus petite.<br>`
             if (chiffreAPositionDecimale(a / Math.pow(10, b), 1) === 0) {
               texteCorr += `Notamment, le chiffre des unités devient le chiffre des ${choixClasseDecimale}.<br>`
-              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, Math.pow(10, -b))}$ (le résultat du calcul), le chiffre des ${choixClasseDecimale} est $${miseEnEvidence(chiffreDesUnites, bleuMathalea)}$`
+              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, Math.pow(10, -b))}$ (le résultat de la division), le chiffre des ${choixClasseDecimale} est $${miseEnEvidence(chiffreDesUnites, bleuMathalea)}$`
               texteCorr += ` donc le chiffre des unités du nombre recherché est $${miseEnEvidence(chiffreDesUnites, bleuMathalea)}$.<br>`
             } else {
               texteCorr += `Notamment, le chiffre des ${choixClasseEntiere} devient le chiffre des unités.<br>`
-              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, 1)}$ (le résultat du calcul), le chiffre des unités est $${miseEnEvidence(chiffrePartieDecimale, bleuMathalea)}$`
+              texteCorr += `Dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, 1)}$ (le résultat de la division), le chiffre des unités est $${miseEnEvidence(chiffrePartieDecimale, bleuMathalea)}$`
               texteCorr += ` donc le chiffre des ${choixClasseEntiere} du nombre recherché est $${miseEnEvidence(chiffrePartieDecimale, bleuMathalea)}$.<br>`
             }
           }
           if (this.correctionDetaillee) {
             texteCorr = a / Math.pow(10, b) < 1
               ? `Le chiffre des unités de $${texNombre(a)}$ (${analyserNombre(arrondi(a)).doublonUnites ? 'ce ' : ''}chiffre $${miseEnEvidence(chiffreDesUnites, bleuMathalea)}$ dans $${coloreUnSeulChiffre(texNombre(a), bleuMathalea, 1)}$` +
-                       `) devient le chiffre des ${choixClasseDecimale} (dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, Math.pow(10, -b))}$).<br>`
+                       `) devient le chiffre des ${choixClasseDecimale} (dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b), b, true, true), bleuMathalea, Math.pow(10, -b))}$).<br>`
               : `Le chiffre des ${choixClasseEntiere} de $${texNombre(a)}$ (${analyserNombre(arrondi(a / Math.pow(10, b))).doublonUnites ? 'ce ' : ''}chiffre $${miseEnEvidence(chiffrePartieDecimale, bleuMathalea)}$ dans $${coloreUnSeulChiffre(texNombre(a), bleuMathalea, Math.pow(10, b))}$` +
                        `) devient le chiffre des unités (dans $${coloreUnSeulChiffre(texNombre(a / Math.pow(10, b)), bleuMathalea, 1)}$).<br>`
             texteCorr += `Tous les chiffres prennent donc une position $${texNombre(Math.pow(10, b))}$ fois plus petite.<br>`
