@@ -11,7 +11,7 @@ import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embelliss
 import { sp } from '../../lib/outils/outilString'
 import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { gestionnaireFormulaireTexte, randint } from '../../modules/outils'
+import { randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 import { choice } from '../../lib/outils/arrayOutils'
 import Decimal from 'decimal.js'
@@ -25,7 +25,6 @@ export const refs = {
 }
 export const uuid = '4c9ca'
 const listeOfAll = [...listePatternsPreDef, ...patternsRepetition].sort((a, b) => Number(a.numero) - Number(b.numero))
-const nbPatterns = listeOfAll.length
 
 /**
  * Dans le dossier src/lib/2d/patterns, on trouve un fichier patternsPreDef.ts
@@ -47,12 +46,8 @@ export default class ListePatternsPreDef extends Exercice {
     this.nbQuestions = 1
     this.listePackages = ['twemojis']
     this.nbQuestionsModifiable = false
-    this.besoinFormulaireTexte = ['Choix des patterns à afficher', 'nombres séparés par des tirets\n ou 0 pour la liste complète']
-    this.sup = String(listeOfAll.length) // liste des patterns à afficher
-    this.besoinFormulaire2Numerique = ['Nombre de patterns à afficher (0 pour toutes la liste)', nbPatterns]
-    this.sup2 = nbPatterns
     this.besoinFormulaire3Numerique = ['Nombre de motifs par pattern', 6]
-    this.sup3 = 3
+    this.sup3 = 4
     this.comment = `Affiche la liste des patterns stockés dans Mathaléa avec leurs numéros de référence.<br>
 Vous pouvez choisir d'afficher un ou plusieurs patterns en indiquant leur numéro de référence dans le formulaire.<br>
 Le nombre de motifs par pattern (3 par défaut) est aussi modifiable dans le formulaire.<br>
@@ -62,21 +57,16 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
   }
 
   nouvelleVersion () {
-    if (this.sup2 === 0) {
-      this.sup2 = nbPatterns
-      this.sup = String(listeOfAll.length + 1)
-    }
-    const liste = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: nbPatterns + 1, defaut: 1, melange: nbPatterns + 1, nbQuestions: 0, shuffle: false }).map(Number)
     let texte = ''
     if (!context.isHtml) {
       texte += `${Object.values(listeShapesDef).map(shape => shape.tikz()).join('\n')}\n`
       texte += `${Object.entries(emojis).map(([nom, unicode]) => emoji(nom, unicode).shapeDef.tikz()).join('\n')}\n`
     }
-    if (liste == null || liste.length === 0) return
-    for (let i = 0; i < liste.length; i++) {
-      const pat = listeOfAll[liste[i] - 1]
+    if (listeOfAll == null || listeOfAll.length === 0) return
+    for (let i = 0; i < listeOfAll.length; i++) {
+      const pat = listeOfAll[i]
       if (pat == null) {
-        texte += `\n${texteEnCouleurEtGras(`Pattern ${liste[i]}`, 'red')}: ${texteEnCouleurEtGras('Pattern inexistant', 'red')}`
+        texte += `\n${texteEnCouleurEtGras(`Pattern ${i + 1}`, 'red')}: ${texteEnCouleurEtGras('Pattern inexistant', 'red')}`
         continue
       }
       if ('nbMotifMin' in pat) {
@@ -96,7 +86,7 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
           pattern.iterate = pat.iterate
           objets.push(pattern.render(j, j + 1, 0))
         }
-        texte += `\n${texteEnCouleurEtGras(`Pattern ${liste[i]}`, 'blue')}:  <br>`
+        texte += `\n${texteEnCouleurEtGras(`Pattern ${i + 1}`, 'blue')}:  <br>`
         texte += mathalea2d(Object.assign(fixeBordures(objets, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { pixelsParCm: 20, scale: 0.4, optionsTikz: 'transform shape' }), objets)
       } else {
         const n43 = !('nbMotifMin' in pat)
@@ -113,7 +103,7 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
             : null
           : null
 
-        texte += `\n${texteEnCouleurEtGras(`Pattern ${liste[i]}`, 'blue')}: Motif 43 : $\\left(${n43}\\right)$ ${n43F ? `; fraction : $${n43F}$ ` : ''} ${n43R ? `; ratio : $${n43R}$` : ''} ; formule : ${sp(6)}$\\left[${miseEnEvidence(pat.formule ?? '')}\\right]$ <br>`
+        texte += `\n${texteEnCouleurEtGras(`Pattern ${i + 1}`, 'blue')}: Motif 43 : $\\left(${n43}\\right)$ ${n43F ? `; fraction : $${n43F}$ ` : ''} ${n43R ? `; ratio : $${n43R}$` : ''} ; formule : ${sp(6)}$\\left[${miseEnEvidence(pat.formule ?? '')}\\right]$ <br>`
 
         const patternRiche = pat
         if (context.isHtml) texte += patternRiche.visualImg != null ? `<a href="${patternRiche.visualImg}" target="_blank">Image</a><br><br>` : ''
@@ -154,7 +144,7 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
                 if (Object.keys(emojis).includes(name)) {
                   figures[j].push(emoji(name, emojis[name]))
                 } else if (name === 'cube') {
-                  const cubeIsoDef = cubeDef(`cubeIsoQ${i}F${j}`)
+                  const cubeIsoDef = cubeDef(`cubeIsoQ${i}F${j}`, (pattern as VisualPattern3D).shape.scale ?? 1)
                   cubeIsoDef.svg = function (coeff: number): string {
                     return `
           <defs>
@@ -179,15 +169,16 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
               const cells = (pattern as VisualPattern3D).render3d(j + 1)
               // Ajouter les SVG générés par svg() de chaque objet
               cells.forEach(cell => {
+                const scale = cell[3]?.scale ?? 1
                 const [px, py] = project3dIso(cell[0], cell[1], cell[2], angle)
-                const obj = shapeCubeIso(`cubeIsoQ${i}F${j}`, px, py)
-                obj.x = px
-                obj.y = -py
+                const obj = shapeCubeIso(`cubeIsoQ${i}F${j}`, px, py, { scale })
+                obj.x = px / 20
+                obj.y = -py / 20
                 objets.push(obj)
-                ymin = Math.min(ymin, obj.y / 20)
-                ymax = Math.max(ymax, obj.y / 20)
-                xmin = Math.min(xmin, obj.x / 20)
-                xmax = Math.max(xmax, obj.x / 20)
+                ymin = Math.min(ymin, obj.y * scale)
+                ymax = Math.max(ymax, (obj.y + 1) * scale)
+                xmin = Math.min(xmin, obj.x * scale)
+                xmax = Math.max(xmax, (obj.x + 1) * scale)
               })
             } else {
               objets = [cubeDef(`cubeIsoQ${i}F${j}`), ...pattern.render(j + 1, 0, 0, Math.PI / 6)]

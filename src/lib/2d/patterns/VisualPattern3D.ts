@@ -3,7 +3,7 @@ import { Shape2D } from '../Figures2D'
 import { Shape3D, shapeCubeIso } from '../figures2d/Shape3d'
 import type { ShapeName } from '../figures2d/shapes2d'
 
-type Coord3d = [number, number, number]
+type Coord3d = [number, number, number, options?: { scale: number }]
 /**
  * @author Jean-Claude Lhote
  *
@@ -44,7 +44,7 @@ export class VisualPattern3D {
       if (typeof initialCells[0] === 'string') {
       // si initialCells est déjà un tableau de chaînes de caractères, on le convertit en Set directement
         this.cells = new Set(initialCells as string[])
-      } else if (Array.isArray(initialCells[0]) && initialCells[0].length === 3) {
+      } else if (Array.isArray(initialCells[0]) && initialCells[0].length > 2) {
       // si initialCells est un tableau de coordonnées, on les convertit en chaînes de caractères
       // en utilisant la méthode coordToKey
         this.cells = new Set((initialCells as Coord3d[]).map(VisualPattern3D.coordToKey))
@@ -66,8 +66,8 @@ export class VisualPattern3D {
     }
   }
 
-  hasCell (x: number, y: number, z:number): boolean {
-    return this.cells.has(VisualPattern3D.coordToKey([x, y, z]))
+  hasCell (x: number, y: number, z:number, scale?:number): boolean {
+    return this.cells.has(VisualPattern3D.coordToKey([x, y, z, { scale: scale ?? 1 }]))
   }
 
   iterate3d (this: VisualPattern3D, n:number): Set<string> {
@@ -75,12 +75,12 @@ export class VisualPattern3D {
   }
 
   static coordToKey (coord: Coord3d): string {
-    return `${coord[0]};${coord[1]};${coord[2]}`
+    return `${coord[0]};${coord[1]};${coord[2]};${coord[3]?.scale ?? 1}`
   }
 
   static keyToCoord (key: string): Coord3d {
-    const [x, y, z] = key.split(';').map(Number)
-    return [x, y, z]
+    const [x, y, z, scale] = key.split(';').map(Number)
+    return [x, y, z, { scale: scale ?? 1 }] as Coord3d
   }
 
   render3d (n: number) {
@@ -112,9 +112,11 @@ export class VisualPattern3D {
     }
     const objets: NestedObjetMathalea2dArray = []
     for (const cell of filterCells(cells)) {
-      const [x, y, z] = VisualPattern3D.keyToCoord(cell)
+      const [x, y, z, options] = VisualPattern3D.keyToCoord(cell)
+      const scale = options?.scale ?? 1
 
       const newShape = this.shape.clone(x, y, z, angle ?? Math.PI / 6)
+      newShape.scale = scale
       newShape.updateBordures()
       objets.push(newShape)
     }

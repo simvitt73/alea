@@ -119,12 +119,11 @@ export class VisualPattern {
       }
       const newShape = (shape2d as Shape2D).clone()
       const scale = options?.scale ?? 1 // on utilise l'échelle spécifiée ou 1 par défaut
-      const rotate = options?.rotate ?? 0 // on utilise l'angle de rotation spécifié ou 0 par défaut
+      newShape.angle = options?.rotate ?? 0 // on utilise l'angle de rotation spécifié ou 0 par défaut
       const translate = options?.translate ?? [0, 0] // on utilise la translation
       newShape.y = y + dy + translate[1]
       newShape.x = x + dx + translate[0]
       newShape.scale = { x: scale, y: scale }
-      newShape.angle = rotate // on utilise l'angle de rotation spécifié ou 0 par défaut
 
       newShape.updateBordures()
       objets.push(newShape)
