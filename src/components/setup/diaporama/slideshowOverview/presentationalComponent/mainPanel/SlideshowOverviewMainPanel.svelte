@@ -2,12 +2,23 @@
   import type { Serie } from '../../../types'
   import SlideshowOverviewSeries from './SlideshowOverviewSerie.svelte'
 
-  export let isQuestionsVisible: boolean | undefined
-  export let isCorrectionVisible: boolean | undefined
-  export let currentSeriesIndex: number
-  export let order: number[]
-  export let series: Serie[]
-  export let correctionsSteps: number[]
+  interface Props {
+    isQuestionsVisible: boolean | undefined;
+    isCorrectionVisible: boolean | undefined;
+    currentSeriesIndex: number;
+    order: number[];
+    series: Serie[];
+    correctionsSteps: number[];
+  }
+
+  let {
+    isQuestionsVisible,
+    isCorrectionVisible,
+    currentSeriesIndex,
+    order,
+    series,
+    correctionsSteps
+  }: Props = $props();
 
 </script>
 

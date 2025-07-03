@@ -7,11 +7,21 @@
   import { notify } from '../../../bugsnag'
   import { mathaleaGenerateSeed } from '../../../lib/mathalea'
 
-  export let url: string
-  export let icon: string = 'bx-qr text-2xl'
-  export let cornerIcon: string = ''
-  export let cornerIconClass: string = ''
-  export let tooltip: string = ''
+  interface Props {
+    url: string;
+    icon?: string;
+    cornerIcon?: string;
+    cornerIconClass?: string;
+    tooltip?: string;
+  }
+
+  let {
+    url,
+    icon = 'bx-qr text-2xl',
+    cornerIcon = '',
+    cornerIconClass = '',
+    tooltip = ''
+  }: Props = $props();
 
   const imageId: string = mathaleaGenerateSeed()
 
@@ -28,8 +38,8 @@
     }
   }
 
-  let isDisplayed = false
-  let QRCodeCopyState: 'success' | 'error' | 'none' = 'none'
+  let isDisplayed = $state(false)
+  let QRCodeCopyState: 'success' | 'error' | 'none' = $state('none')
 
   async function updateQRCodeImage () {
     QRCode.toDataURL(url, QRCodeOptions, (error: Error, url: string) => {
@@ -119,30 +129,36 @@
 />
 
 <BasicClassicModal bind:isDisplayed={isDisplayed}>
-  <h3 slot="header">
-    QR-Code
-  </h3>
-  <div slot="content" class="flex flex-col items-center">
-    <div class="flex flex-col justify-center">
-      <div class="flex flex-row justify-center p-4">
-        <img id={imageId} alt="QR-Code" width="200px" />
+  {#snippet header()}
+    <h3 >
+      QR-Code
+    </h3>
+  {/snippet}
+  {#snippet content()}
+    <div  class="flex flex-col items-center">
+      <div class="flex flex-col justify-center">
+        <div class="flex flex-row justify-center p-4">
+          <img id={imageId} alt="QR-Code" width="200px" />
+        </div>
       </div>
     </div>
-  </div>
-  <div slot="footer">
-    <div class="flex flex-row justify-center">
-      <ButtonIconTooltip
-        icon="bx-copy-alt text-[30px] mx-3"
-        tooltip="Copier le QR-Code"
-        on:click={copyQRCodeImageToClipboard}
-      />
-      <ButtonIconTooltip
-        icon="bx-download text-[30px] mx-3"
-        tooltip="Télécharger le QR-Code"
-        on:click={downloadQRCodeImage}
-      />
+  {/snippet}
+  {#snippet footer()}
+    <div >
+      <div class="flex flex-row justify-center">
+        <ButtonIconTooltip
+          icon="bx-copy-alt text-[30px] mx-3"
+          tooltip="Copier le QR-Code"
+          on:click={copyQRCodeImageToClipboard}
+        />
+        <ButtonIconTooltip
+          icon="bx-download text-[30px] mx-3"
+          tooltip="Télécharger le QR-Code"
+          on:click={downloadQRCodeImage}
+        />
+      </div>
     </div>
-  </div>
+  {/snippet}
 </BasicClassicModal>
 
 <BasicInfoModal

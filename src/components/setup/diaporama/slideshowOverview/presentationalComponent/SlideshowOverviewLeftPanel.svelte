@@ -1,14 +1,29 @@
 <script lang="ts">
-  export let isQuestionsVisible: boolean | undefined
-  export let isCorrectionVisible: boolean | undefined
-  export let currentVue: number
-  export let nbOfVues: 0 | 1 | 2 | 3 | 4
-  export let setCurrentVue: (value: number) => void
-  export let setQuestionsVisible: (value: boolean) => void
-  export let setCorrectionVisible: (value: boolean) => void
-  export let handleCorrectionsStepsClick: (button: 'backward' | 'forward') => void
-  export let newDataForAll: () => void
-  export let backToSettings: () => void
+  interface Props {
+    isQuestionsVisible: boolean | undefined;
+    isCorrectionVisible: boolean | undefined;
+    currentVue: number;
+    nbOfVues: 0 | 1 | 2 | 3 | 4;
+    setCurrentVue: (value: number) => void;
+    setQuestionsVisible: (value: boolean) => void;
+    setCorrectionVisible: (value: boolean) => void;
+    handleCorrectionsStepsClick: (button: 'backward' | 'forward') => void;
+    newDataForAll: () => void;
+    backToSettings: () => void;
+  }
+
+  let {
+    isQuestionsVisible,
+    isCorrectionVisible,
+    currentVue = $bindable(),
+    nbOfVues,
+    setCurrentVue,
+    setQuestionsVisible,
+    setCorrectionVisible,
+    handleCorrectionsStepsClick,
+    newDataForAll,
+    backToSettings
+  }: Props = $props();
 
 </script>
 
@@ -21,18 +36,18 @@
     class="pb-8
       text-coopmaths-action dark:text-coopmathsdark-action
       hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest"
-    on:click={backToSettings}
+    onclick={backToSettings}
   >
-    <i class="bx bx-sm bx-arrow-back" />
+    <i class="bx bx-sm bx-arrow-back"></i>
   </button>
   <button
     type="button"
     class="pb-8
       text-coopmaths-action dark:text-coopmathsdark-action
       hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest"
-    on:click={newDataForAll}
+    onclick={newDataForAll}
   >
-    <i class="bx bx-sm bx-refresh" />
+    <i class="bx bx-sm bx-refresh"></i>
   </button>
 
   <span
@@ -44,14 +59,14 @@
   </span>
   <button
     type="button"
-    on:click={() => setQuestionsVisible(!isQuestionsVisible)}
+    onclick={() => setQuestionsVisible(!isQuestionsVisible)}
   >
     <i
       class="bx bx-sm cursor-pointer
       {isQuestionsVisible ? 'bx-toggle-right' : 'bx-toggle-left'}
       text-coopmaths-action dark:text-coopmathsdark-action
       hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest"
-    />
+></i>
   </button>
   <span
     class="text-xs pt-2
@@ -62,13 +77,13 @@
   </span>
   <button
     type="button"
-    on:click={() => setCorrectionVisible(!isCorrectionVisible)}
+    onclick={() => setCorrectionVisible(!isCorrectionVisible)}
   >
     <i class="mb-8 bx bx-sm cursor-pointer
       {isCorrectionVisible ? 'bx-toggle-right' : 'bx-toggle-left'}
       text-coopmaths-action dark:text-coopmathsdark-action
       hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest"
-    />
+></i>
   </button>
   <span class="text-xs font-bold pt-2
     text-coopmaths-struct dark:text-coopmathsdark-struct"
@@ -81,15 +96,15 @@
   >
     <button
       type="button"
-      on:click={() => handleCorrectionsStepsClick('backward')}
+      onclick={() => handleCorrectionsStepsClick('backward')}
     >
-      <i class="bx bxs-left-arrow mr-2 cursor-pointer" />
+      <i class="bx bxs-left-arrow mr-2 cursor-pointer"></i>
     </button>
     <button
       type="button"
-      on:click={() => handleCorrectionsStepsClick('forward')}
+      onclick={() => handleCorrectionsStepsClick('forward')}
     >
-      <i class="bx bxs-right-arrow cursor-pointer" />
+      <i class="bx bxs-right-arrow cursor-pointer"></i>
     </button>
   </div>
 
@@ -101,7 +116,7 @@
         id="tab{i + 1}"
         value={i}
         bind:group={currentVue}
-        on:change={() => setCurrentVue(i)}
+        onchange={() => setCurrentVue(i)}
         class="peer/tab{i + 1} items-center justify-center hidden"
       />
       <label
@@ -124,7 +139,7 @@
       id="tab5"
       value={4}
       bind:group={currentVue}
-      on:change={() => setCurrentVue(4)}
+      onchange={() => setCurrentVue(4)}
       class="hidden peer/tab5 items-center justify-center"
     />
     <label

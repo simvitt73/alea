@@ -2,9 +2,13 @@
   import ButtonTextAction from '../../../shared/forms/ButtonTextAction.svelte'
   import { canOptions } from '../../../../lib/stores/canStore'
   import type { CanState } from '../../../../lib/types/can'
-  export let state: CanState
-  export let score: string
-  export let time: string
+  interface Props {
+    state: CanState;
+    score: string;
+    time: string;
+  }
+
+  let { state = $bindable(), score, time }: Props = $props();
 </script>
 
 <div

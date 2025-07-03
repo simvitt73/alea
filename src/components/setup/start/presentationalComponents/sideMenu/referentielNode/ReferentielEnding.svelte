@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { onDestroy } from 'svelte'
   import {
     isExerciceItemInReferentiel,
@@ -17,11 +19,16 @@
   import QcmCamIcon from '../../../../../shared/icons/QcmCamIcon.svelte'
   import { mathaleaGenerateSeed } from '../../../../../../lib/mathalea'
 
-  export let ending: JSONReferentielEnding
-  export let nestedLevelCount: number
+  interface Props {
+    ending: JSONReferentielEnding;
+    nestedLevelCount: number;
+    [key: string]: any
+  }
 
-  let nomDeExercice: HTMLDivElement
-  let selectedCount: number
+  let { ...props }: Props = $props();
+
+  let nomDeExercice: HTMLDivElement = $state()
+  let selectedCount: number = $state()
   /* --------------------------------------------------------------
     Gestions des exercices via la liste
    --------------------------------------------------------------- */
@@ -31,7 +38,7 @@
    * @returns {boolean} `true` si les deux chaînes sont égales
    */
   const compareCodes = (code: string): boolean => {
-    return code === ending.uuid
+    return code === props.ending.uuid
   }
   /**
    * Compte le nombre de fois où la ressource a été sélectionnée
@@ -46,11 +53,11 @@
     selectedCount = countOccurences()
   })
 
-  let endingTitre = ''
+  let endingTitre = $state('')
 
-  $: {
-    if (isExerciceItemInReferentiel(ending)) {
-      endingTitre = ending.titre
+  run(() => {
+    if (isExerciceItemInReferentiel(props.ending)) {
+      endingTitre = props.ending.titre
       if (endingTitre.includes('$')) {
         const regexp = /(['$])(.*?)\1/g
         const matchs = endingTitre.match(regexp)
@@ -60,7 +67,7 @@
       }
     }
     selectedCount = countOccurences()
-  }
+  });
 
   onDestroy(unsubscribeToExerciceParams)
 
@@ -69,12 +76,12 @@
    */
   function addToList () {
     const newExercise = {
-      uuid: ending.uuid,
+      uuid: props.ending.uuid,
       alea: mathaleaGenerateSeed(),
-      interactif: isGeoDynamic(ending) ? '1' : '0'
+      interactif: isGeoDynamic(props.ending) ? '1' : '0'
     } as InterfaceParams
-    if (isExerciceItemInReferentiel(ending) || isTool(ending)) {
-      newExercise.id = ending.id
+    if (isExerciceItemInReferentiel(props.ending) || isTool(props.ending)) {
+      newExercise.id = props.ending.id
     }
     if ($globalOptions.recorder === 'capytale' || $globalOptions.setInteractive === '1') {
       newExercise.interactif = '1'
@@ -100,9 +107,9 @@
   /* --------------------------------------------------------------
     Gestions des icônes en début de ligne
    --------------------------------------------------------------- */
-  let icon = 'bxs-message-alt'
-  let rotation = '-rotate-90'
-  let mouseIsOut = true
+  let icon = $state('bxs-message-alt')
+  let rotation = $state('-rotate-90')
+  let mouseIsOut = $state(true)
   function handleMouseOver () {
     icon = 'bx-trash'
     rotation = 'rotate-0'
@@ -124,29 +131,29 @@
   **nestedLevelCount** (_number_) : compteur du niveau d'imbrication (utilisé pour la mise en page)
  -->
 <div
-  class={`${$$props.class || ''} w-full flex flex-row mr-4 text-start items-start text-sm text-coopmaths-corpus dark:text-coopmathsdark-corpus bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark`}
-  style="padding-left: {(nestedLevelCount * 2) / 6}rem"
+  class={`${props.class || ''} w-full flex flex-row mr-4 text-start items-start text-sm text-coopmaths-corpus dark:text-coopmathsdark-corpus bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark`}
+  style="padding-left: {(props.nestedLevelCount * 2) / 6}rem"
 >
   <div
     class="w-full relative inline-flex text-start justify-start items-start hover:bg-coopmaths-action-light dark:hover:bg-coopmathsdark-action-light dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas-darkest cursor-pointer"
   >
     <button
       type="button"
-      on:click={addToList}
+      onclick={addToList}
       class="ml-[3px] pl-2 pr-4 bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark hover:bg-coopmaths-canvas dark:hover:bg-coopmathsdark-canvas-darkest flex-1"
     >
       <div bind:this={nomDeExercice} class="flex flex-row justify-start">
-        {#if isExerciceItemInReferentiel(ending)}
+        {#if isExerciceItemInReferentiel(props.ending)}
           <!-- Exercice MathALÉA -->
           <div
             class="text-start text-coopmaths-corpus dark:text-coopmathsdark-corpus bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark hover:bg-coopmaths-canvas dark:hover:bg-coopmathsdark-canvas-darkest"
           >
-            <span class="font-bold">{ending.id} - </span>{@html endingTitre}
-            {#if isLessThanAMonth(ending.datePublication)}
+            <span class="font-bold">{props.ending.id} - </span>{@html endingTitre}
+            {#if isLessThanAMonth(props.ending.datePublication)}
               &nbsp;
               <span
                 class="tooltip tooltip-bottom tooltip-neutral"
-                data-tip="{ending.datePublication}"
+                data-tip="{props.ending.datePublication}"
               >
                 <span
                   class="inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-warn-dark dark:bg-coopmathsdark-warn-dark text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 ml-2 font-semibold leading-normal"
@@ -155,11 +162,11 @@
                 </span>
               </span>
             {/if}
-            {#if isLessThanAMonth(ending.dateModification)}
+            {#if isLessThanAMonth(props.ending.dateModification)}
               &nbsp;
               <span
                 class="tooltip tooltip-bottom tooltip-neutral"
-                data-tip="{ending.dateModification}"
+                data-tip="{props.ending.dateModification}"
               >
                 <span
                 class="tooltip tooltip-bottom tooltip-neutral
@@ -169,7 +176,7 @@
                 </span>
               </span>
             {/if}
-            {#if ending.features.qcmcam}
+            {#if props.ending.features.qcmcam}
               &nbsp;
               <span
                 class="tooltip tooltip-bottom tooltip-neutral"
@@ -180,7 +187,7 @@
                 />
               </span>
             {/if}
-            {#if !ending.features.interactif?.isActive}
+            {#if !props.ending.features.interactif?.isActive}
               &nbsp;<span
                 class="tooltip tooltip-bottom tooltip-neutral"
                 data-tip="Pas d'interactivité"
@@ -191,22 +198,22 @@
               </span>
             {/if}
           </div>
-        {:else if resourceHasPlace(ending)}
+        {:else if resourceHasPlace(props.ending)}
           <!-- Exercices d'annales -->
           <div class="text-start">
             <span class="font-bold">
-              {ending.typeExercice.toUpperCase()}
-              {#if resourceHasMonth(ending)}
-                {ending.mois}
+              {props.ending.typeExercice.toUpperCase()}
+              {#if resourceHasMonth(props.ending)}
+                {props.ending.mois}
               {/if}
-              {ending.annee} {ending.lieu}
-              {#if ending.jour !== undefined}
-                [{ending.jour === 'J1' ? 'Sujet 1' : 'Sujet 2'}]
+              {props.ending.annee} {props.ending.lieu}
+              {#if props.ending.jour !== undefined}
+                [{props.ending.jour === 'J1' ? 'Sujet 1' : 'Sujet 2'}]
               {/if}
-              - {ending.numeroInitial}
+              - {props.ending.numeroInitial}
             </span>
             <div class="pl-2">
-              {#each ending.tags as tag}
+              {#each props.ending.tags as tag}
                 <span
                   class="inline-flex flex-wrap items-center justify-center rounded-full bg-coopmaths-struct-light dark:bg-coopmathsdark-struct-light text-coopmaths-canvas dark:text-coopmathsdark-canvas text-[0.6rem] px-2 py-px leading-snug font-semibold mr-1"
                 >
@@ -215,19 +222,19 @@
               {/each}
             </div>
           </div>
-        {:else if isTool(ending)}
+        {:else if isTool(props.ending)}
           <!-- Outils -->
           <div
             class="text-start text-coopmaths-corpus dark:text-coopmathsdark-corpus bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark hover:bg-coopmaths-canvas dark:hover:bg-coopmathsdark-canvas-darkest"
           >
-            <span class="font-bold">{ending.id} - </span>{ending.titre}
+            <span class="font-bold">{props.ending.id} - </span>{props.ending.titre}
           </div>
         {:else}
           <!-- Exercice de la bibliothèque -->
           <div
             class="text-start text-coopmaths-corpus dark:text-coopmathsdark-corpus"
           >
-            <span class="font-bold">{ending.uuid}</span>
+            <span class="font-bold">{props.ending.uuid}</span>
           </div>
         {/if}
       </div>
@@ -239,16 +246,16 @@
       <button
         type="button"
         class="absolute -left-4 -top-[0.15rem]"
-        on:mouseover={handleMouseOver}
-        on:focus={handleMouseOver}
-        on:mouseout={handleMouseOut}
-        on:blur={handleMouseOut}
-        on:click={removeFromList}
-        on:keydown={removeFromList}
+        onmouseover={handleMouseOver}
+        onfocus={handleMouseOver}
+        onmouseout={handleMouseOut}
+        onblur={handleMouseOut}
+        onclick={removeFromList}
+        onkeydown={removeFromList}
       >
         <i
           class="text-coopmaths-action-light dark:text-coopmathsdark-action-light text-base bx {icon} {rotation}"
-        />
+></i>
       </button>
     {/if}
     {#if selectedCount >= 2 && mouseIsOut}

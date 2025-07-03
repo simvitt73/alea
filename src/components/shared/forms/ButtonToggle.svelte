@@ -2,13 +2,25 @@
   import { createEventDispatcher } from 'svelte'
   import { getUniqueStringBasedOnTimeStamp } from '../../../lib/components/time'
 
-  export let titles: string[] = ['', '']
-  export let value: boolean = true
-  export let isDisabled: boolean = false
-  export let classAddenda: string = ''
-  export let textSize: string = 'sm'
-  export let buttonSize: string = 'sm'
-  export let id:string = 'toggle-' + getUniqueStringBasedOnTimeStamp()
+  interface Props {
+    titles?: string[];
+    value?: boolean;
+    isDisabled?: boolean;
+    classAddenda?: string;
+    textSize?: string;
+    buttonSize?: string;
+    id?: string;
+  }
+
+  let {
+    titles = ['', ''],
+    value = $bindable(true),
+    isDisabled = false,
+    classAddenda = '',
+    textSize = 'sm',
+    buttonSize = 'sm',
+    id = 'toggle-' + getUniqueStringBasedOnTimeStamp()
+  }: Props = $props();
 
   const dispatch = createEventDispatcher()
 
@@ -44,7 +56,7 @@
     type="button"
     {id}
     class="flex justify-center items-center"
-    on:click={toggle}
+    onclick={toggle}
     disabled={isDisabled}
   >
     <i
@@ -53,7 +65,7 @@
         : 'bx-toggle-left'}
         {isDisabled ? 'text-opacity-10' : ''}"
       aria-describedby="{value ? titles[0] : titles[1]}"
-    />
+></i>
   </button>
   <div
     class="{textSize === 'xs'

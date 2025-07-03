@@ -6,12 +6,23 @@
   import TrashButton from './TrashButton.svelte'
   import FullscreenButton from './FullscreenButton.svelte'
 
-  export let reorderModalDisplayed: boolean
-  export let zoomUpdate: (plusMinus: ('+' | '-')) => void
-  export let setAllInteractive: (isAllInteractive: boolean) => void
-  export let newDataForAll: () => void
-  export let trash: () => void
-  export let setFullScreen: (isFullScreen: boolean) => void
+  interface Props {
+    reorderModalDisplayed: boolean;
+    zoomUpdate: (plusMinus: ('+' | '-')) => void;
+    setAllInteractive: (isAllInteractive: boolean) => void;
+    newDataForAll: () => void;
+    trash: () => void;
+    setFullScreen: (isFullScreen: boolean) => void;
+  }
+
+  let {
+    reorderModalDisplayed = $bindable(),
+    zoomUpdate,
+    setAllInteractive,
+    newDataForAll,
+    trash,
+    setFullScreen
+  }: Props = $props();
 
 </script>
 

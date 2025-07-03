@@ -1,8 +1,12 @@
 <script lang="ts">
   import CheckboxWithLabel from '../../../../shared/forms/CheckboxWithLabel.svelte'
 
-  export let isQuestionsOrdered: boolean
-  export let updateQuestionsOrder: (isQuestionsOrdered: boolean) => void
+  interface Props {
+    isQuestionsOrdered: boolean;
+    updateQuestionsOrder: (isQuestionsOrdered: boolean) => void;
+  }
+
+  let { isQuestionsOrdered, updateQuestionsOrder }: Props = $props();
 
 </script>
 

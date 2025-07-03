@@ -1,14 +1,18 @@
 <script lang="ts">
   import TwoStatesIcon from '../../../../../../../components/shared/icons/TwoStatesIcon.svelte'
 
-  export let setAllInteractive: (isAllInteractive: boolean) => void
-  let isAllInteractive: boolean = false
+  interface Props {
+    setAllInteractive: (isAllInteractive: boolean) => void;
+  }
+
+  let { setAllInteractive }: Props = $props();
+  let isAllInteractive: boolean = $state(false)
 
 </script>
 
 <button
   type="button"
-  on:click={() => {
+  onclick={() => {
     isAllInteractive = !isAllInteractive
     setAllInteractive(isAllInteractive)
   }}

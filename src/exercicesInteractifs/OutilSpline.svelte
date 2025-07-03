@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import HeaderExerciceVueProf from '../components/shared/exercice/shared/headerExerciceVueProf/HeaderExerciceVueProf.svelte'
   import { repere } from '../lib/2d/reperes'
   import { spline, trieNoeuds } from '../lib/mathFonctions/Spline'
@@ -12,8 +12,7 @@
   }
   export const uuid = 'spline'
 
-  export let indiceExercice
-  export let indiceLastExercice
+  let { indiceExercice, indiceLastExercice } = $props();
   const headerExerciceProps = {
     title: '',
     isInteractif: false,
@@ -22,14 +21,14 @@
     randomReady: false,
     correctionReady: false
   }
-  let noeuds = [
+  let noeuds = $state([
     { x: -3, y: -2, deriveeGauche: 2, deriveeDroit: 2, isVisible: true },
     { x: -1, y: 0, deriveeGauche: 0, deriveeDroit: 0, isVisible: true },
     { x: 1, y: -3, deriveeGauche: 0, deriveeDroit: 0, isVisible: true },
     { x: 3, y: 4, deriveeGauche: 1, deriveeDroit: 1, isVisible: true }
-  ]
+  ])
 
-  let contenu = ''
+  let contenu = $state('')
 
   function refreshCourb () {
     if (trieNoeuds(noeuds)) {
@@ -110,7 +109,7 @@
           min={-10}
           max={10}
           step={0.1}
-          on:change={refreshCourb}
+          onchange={refreshCourb}
         />
         <input
           type="number"
@@ -118,7 +117,7 @@
           min={-10}
           max={10}
           step={0.1}
-          on:change={refreshCourb}
+          onchange={refreshCourb}
         />
         <input
           type="number"
@@ -126,7 +125,7 @@
           min={-10}
           max={10}
           step={0.1}
-          on:change={refreshCourb}
+          onchange={refreshCourb}
         />
         <input
           type="number"
@@ -134,20 +133,20 @@
           min={-10}
           max={10}
           step={0.1}
-          on:change={refreshCourb}
+          onchange={refreshCourb}
         />
         <input
           type="checkbox"
           bind:checked={isVisible}
-          on:change={refreshCourb}
+          onchange={refreshCourb}
         />
       {/each}
-      <button on:click={removeNoeud}
-      ><i class="bx bx-lg bx-minus-circle"/></button
+      <button onclick={removeNoeud}
+      ><i class="bx bx-lg bx-minus-circle"></i></button
       >
-      <button on:click={addNoeud}><i class="bx bx-lg bx-plus-circle"/></button>
-      <button on:click={copy}><i class="bx bx-lg bx-clipboard"/></button>
-      <button on:click={paste}><i class="bx bx-lg bx-download"/></button>
+      <button onclick={addNoeud}><i class="bx bx-lg bx-plus-circle"></i></button>
+      <button onclick={copy}><i class="bx bx-lg bx-clipboard"></i></button>
+      <button onclick={paste}><i class="bx bx-lg bx-download"></i></button>
     </div>
   </div>
 

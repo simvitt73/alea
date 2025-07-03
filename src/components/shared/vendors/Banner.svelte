@@ -2,11 +2,13 @@
   import { mathaleaGoToView } from "../../../lib/mathalea"
   import ButtonIconTooltip from "../forms/ButtonIconTooltip.svelte"
 
-  export let brandImagePath: string | null =
-    null
-  export let productImagePath: string | null =
-    "assets/images/vendors/bordas/myriade-bordas-logo.png"
-  export let icon: string = "bxs-cog"
+  interface Props {
+    brandImagePath?: string | null;
+    productImagePath?: string | null;
+    icon?: string;
+  }
+
+  let { brandImagePath = null, productImagePath = "assets/images/vendors/bordas/myriade-bordas-logo.png", icon = "bxs-cog" }: Props = $props();
 
   function goToVueProf() {
     window.history.replaceState({}, "", window.location.href)

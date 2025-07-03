@@ -1,34 +1,31 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type Exercice from '../../../../../exercices/Exercice'
   import NumberInput from '../../../../shared/forms/InputNumber.svelte'
   import { formattedTimeStamp } from '../../../../../lib/components/time'
   import { exercicesParams } from '../../../../../lib/stores/generalStore'
 
-  export let exercises: Exercice[]
-  export let selectedExercisesIndexes: number[]
-  export let isManualModeActive: boolean
-  export let updateExercises: (updateSlidesContent?: boolean) => void
-  export let durationGlobal: number | undefined
-  export let remove: (exerciseIndex: number) => void
-  let stringDureeTotale = '0'
-
-  $: getTotalNbOfQuestions = () => {
-    let sum = 0
-    for (const [i, exercice] of exercises.entries()) {
-      if (selectedExercisesIndexes.length > 0) {
-        if (selectedExercisesIndexes.includes(i)) {
-          sum += exercice.nbQuestions
-        }
-      } else {
-        sum += exercice.nbQuestions
-      }
-    }
-    return sum
+  interface Props {
+    exercises: Exercice[];
+    selectedExercisesIndexes: number[];
+    isManualModeActive: boolean;
+    updateExercises: (updateSlidesContent?: boolean) => void;
+    durationGlobal: number | undefined;
+    remove: (exerciseIndex: number) => void;
   }
 
-  $: if (exercises && exercises.length > 0) {
-    stringDureeTotale = formattedTimeStamp(getTotalDuration())
-  }
+  let {
+    exercises = $bindable(),
+    selectedExercisesIndexes,
+    isManualModeActive,
+    updateExercises,
+    durationGlobal,
+    remove
+  }: Props = $props();
+  let stringDureeTotale = $state('0')
+
+
 
   function getTotalDuration () {
     let sum = 0
@@ -62,6 +59,24 @@
     updateExercises()
   }
 
+  let getTotalNbOfQuestions = $derived(() => {
+    let sum = 0
+    for (const [i, exercice] of exercises.entries()) {
+      if (selectedExercisesIndexes.length > 0) {
+        if (selectedExercisesIndexes.includes(i)) {
+          sum += exercice.nbQuestions
+        }
+      } else {
+        sum += exercice.nbQuestions
+      }
+    }
+    return sum
+  })
+  run(() => {
+    if (exercises && exercises.length > 0) {
+      stringDureeTotale = formattedTimeStamp(getTotalDuration())
+    }
+  });
 </script>
 
 <div class="table-wrp block shadow ring-1 rounded-lg
@@ -107,7 +122,7 @@
             {#if !isManualModeActive}
               Durée diapo :<span class="font-light ml-1">{stringDureeTotale}</span>
             {:else}
-              <span class="font-light ml-1" />
+              <span class="font-light ml-1"></span>
             {/if}
           </div>
         </th>
@@ -137,7 +152,7 @@
                 ? ''
                 : 'invisible'} pr-2"
             >
-              <i class="bx text-xs bxs-circle text-coopmaths-warn-lightest dark:text-coopmathsdark-warn-lightest"/>
+              <i class="bx text-xs bxs-circle text-coopmaths-warn-lightest dark:text-coopmathsdark-warn-lightest"></i>
             </span>
             {exercise.id} - {exercise.titre}
           </td>
@@ -167,11 +182,11 @@
               class="mx-2 tooltip tooltip-left tooltip-neutral"
               data-tip="Supprimer l'exercice"
               type="button"
-              on:click={() => remove(i)}
+              onclick={() => remove(i)}
             >
               <i
                 class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx bx-trash"
-              />
+></i>
             </button>
           </td>
         </tr>

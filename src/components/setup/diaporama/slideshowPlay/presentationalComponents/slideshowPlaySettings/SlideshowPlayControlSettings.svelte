@@ -1,12 +1,23 @@
 <script lang="ts">
   import ButtonIcon from '../../../../../shared/forms/ButtonIcon.svelte'
 
-  export let isPause: boolean
-  export let isManualModeActive: boolean | undefined
-  export let prevQuestion: () => void
-  export let nextQuestion: () => void
-  export let switchPause: (isUserAction?: boolean) => void
-  export let BUTTONS_CLASS: string
+  interface Props {
+    isPause: boolean;
+    isManualModeActive: boolean | undefined;
+    prevQuestion: () => void;
+    nextQuestion: () => void;
+    switchPause: (isUserAction?: boolean) => void;
+    BUTTONS_CLASS: string;
+  }
+
+  let {
+    isPause,
+    isManualModeActive,
+    prevQuestion,
+    nextQuestion,
+    switchPause,
+    BUTTONS_CLASS
+  }: Props = $props();
 
 </script>
 

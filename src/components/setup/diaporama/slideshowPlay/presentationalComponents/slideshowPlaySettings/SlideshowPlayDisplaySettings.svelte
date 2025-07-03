@@ -2,9 +2,13 @@
   import ButtonIcon from '../../../../../shared/forms/ButtonIcon.svelte'
   import FullscreenButton from '../../../../start/presentationalComponents/header/headerButtons/setupButtons/FullscreenButton.svelte'
 
-  export let zoomPlus: () => void
-  export let zoomMinus: () => void
-  export let BUTTONS_CLASS: string
+  interface Props {
+    zoomPlus: () => void;
+    zoomMinus: () => void;
+    BUTTONS_CLASS: string;
+  }
+
+  let { zoomPlus, zoomMinus, BUTTONS_CLASS }: Props = $props();
 
 </script>
 

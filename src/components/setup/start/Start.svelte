@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   //
   //
   // /!\ Il reste à traiter ReferentielEnding.svelte qui contient encore des accès au generalStore
@@ -48,15 +50,15 @@
   import { qcmCamExportAll } from '../../../lib/amc/qcmCam'
   import { downloadFile } from '../../../lib/files'
   
-  let isNavBarVisible: boolean = true
-  let innerWidth = 0
-  let isBackToTopButtonVisible = false
-  let selectedThirdApps: string[]
+  let isNavBarVisible: boolean = $state(true)
+  let innerWidth = $state(0)
+  let isBackToTopButtonVisible = $state(false)
+  let selectedThirdApps: string[] = $state()
   let thirdAppsChoiceModal: BasicClassicModal
-  let showThirdAppsChoiceDialog = false
-  let isMd: boolean
-  let localeValue: Language = get(referentielLocale)
-  let isSidenavOpened: boolean = true
+  let showThirdAppsChoiceDialog = $state(false)
+  let isMd: boolean = $state()
+  let localeValue: Language = $state(get(referentielLocale))
+  let isSidenavOpened: boolean = $state(true)
 
   const unsubscribeToReferentielLocale = referentielLocale.subscribe(
     (value) => {
@@ -87,7 +89,7 @@
   })
 
   // Spécifique à Capytale
-  let isSettingsDialogDisplayed = false
+  let isSettingsDialogDisplayed = $state(false)
   // Gestion de la graine
   function buildUrlAndOpenItInNewTab (status: 'eleve' | 'usual') {
     const url = new URL('https://coopmaths.fr/alea/')
@@ -192,11 +194,6 @@
     mathaleaUpdateUrlFromExercicesParams()
   }
 
-  $: {
-    isNavBarVisible = $globalOptions.v !== 'l'
-    updateSelectedThirdApps()
-    isMd = innerWidth >= SM_BREAKPOINT
-  }
 
   function addScrollListener () {
     function updateBackToTopButtonVisibility () {
@@ -370,6 +367,11 @@
     }
     downloadFile(content, 'questions.txt') // @todo Si possible, il faudrait l'nvoyer directement à travers l'ouverture d'un nouvel onglet qcmcam.net avec le lien vers ce fichier en argument.
   }
+  run(() => {
+    isNavBarVisible = $globalOptions.v !== 'l'
+    updateSelectedThirdApps()
+    isMd = innerWidth >= SM_BREAKPOINT
+  });
 </script>
 
 <svelte:window bind:innerWidth />
@@ -482,7 +484,7 @@
               </div>
               <i
                 class="bx bxs-up-arrow rotate-0 group-[[data-te-collapse-collapsed]]:rotate-180 text-lg text-coopmaths-action dark:text-coopmathsdark-action hover:text-coopmaths-action-lightest hover:dark:text-coopmathsdark-action-lightest"
-              />
+></i>
             </button>
             <div
               id="choiceMenuWrapper"

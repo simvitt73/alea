@@ -1,22 +1,28 @@
 <script lang='ts'>
+  import { run } from 'svelte/legacy';
+
   import type { StaticItemInreferentiel } from '../../../lib/types/referentiels'
   import StarIcon from '../icons/StarIcon.svelte'
   import { exercicesParams } from '../../../lib/stores/generalStore'
 
-  export let exercise: StaticItemInreferentiel
-  export let reversed: boolean = false
-  export let selected: boolean = false
+  interface Props {
+    exercise: StaticItemInreferentiel;
+    reversed?: boolean;
+    selected?: boolean;
+  }
 
-  let listeCodes: string[]
+  let { exercise, reversed = false, selected = $bindable(false) }: Props = $props();
+
+  let listeCodes: string[] = $state()
   // on compte réactivement le nombre d'occurences
   // de la ressource dans la liste des sélectionnés
-  $: {
+  run(() => {
     listeCodes = []
     for (const entry of $exercicesParams) {
       listeCodes.push(entry.uuid)
     }
     listeCodes = listeCodes
-  }
+  });
 
   function addExerciseToList () {
     exercicesParams.update((list) => [...list, { uuid: exercise.uuid }])
@@ -41,7 +47,7 @@
 <button
   type="button"
   class="block relative w-full rounded-lg bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark shadow-lg border border-coopmaths-canvas-darkest dark:border-coopmathsdark-canvas-darkest"
-  on:click={handelSelection}
+  onclick={handelSelection}
 >
   <div class="{reversed ? 'hide' : 'block'} ">
     <img src={exercise.png} alt="{exercise.uuid} image" class="object-fill rounded-t-lg" />
@@ -51,13 +57,13 @@
   </div>
   <div class="absolute -bottom-4 left-1/2 -translate-x-1/2">
     <div class="rounded-full h-8 w-8 bg-coopmaths-action text-coopmaths-canvas flex justify-center items-center hover:animate-pulse">
-      <i class="bx bx-sm {selected ? 'bx-minus' : 'bx-plus'}" />
+      <i class="bx bx-sm {selected ? 'bx-minus' : 'bx-plus'}"></i>
     </div>
   </div>
   <div class="absolute top-3 right-3 rotate-frac">
     <div class="relative">
       <StarIcon class="{selected ? 'container' : 'hidden'} top-0 left-0 h-12 w-12 text-coopmaths-warn-800 dark:text-coopmathsdark-warn" />
-      <i class="{selected ? 'container' : 'hidden'} absolute top-1 left-[0.1rem] bx bx-check bx-md text-coopmaths-canvas dark:text-coopmathsdark-canvas" />
+      <i class="{selected ? 'container' : 'hidden'} absolute top-1 left-[0.1rem] bx bx-check bx-md text-coopmaths-canvas dark:text-coopmathsdark-canvas"></i>
     </div>
   </div>
 </button>

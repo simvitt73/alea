@@ -2,10 +2,19 @@
   import ButtonToggle from '../../../../shared/forms/ButtonToggle.svelte'
   import FormRadio from '../../../../shared/forms/FormRadio.svelte'
 
-  export let setInteractive: string = '2'
-  export let oneShot: boolean = false
-  export let isDisabled: boolean
-  export let setInteractivity: (value: string) => void
+  interface Props {
+    setInteractive?: string;
+    oneShot?: boolean;
+    isDisabled: boolean;
+    setInteractivity: (value: string) => void;
+  }
+
+  let {
+    setInteractive = $bindable('2'),
+    oneShot = $bindable(false),
+    isDisabled,
+    setInteractivity
+  }: Props = $props();
 
 </script>
 

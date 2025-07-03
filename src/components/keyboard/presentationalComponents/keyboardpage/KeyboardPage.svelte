@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: Can't migrate code with afterUpdate and beforeUpdate. Please migrate by hand. -->
 <script lang="ts">
   import BlockOfKeyCaps from './keyboardblock/BlockOfKeycaps.svelte'
   import type { KeyboardBlock } from '../../types/keyboardContent'

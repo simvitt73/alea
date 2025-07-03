@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { creerDocumentAmc } from '../../../lib/amc/creerDocumentAmc.js'
   import { context } from '../../../modules/context.js'
   import {
@@ -21,27 +23,27 @@
   import BasicClassicModal from '../../shared/modal/BasicClassicModal.svelte'
 
   const isSettingsVisible: boolean[] = []
-  let exercices: TypeExercice[] = []
-  let content = ''
-  let entete = 'AMCcodeGrid'
-  let format = 'A4'
-  let matiere = ''
-  let titre = ''
-  const nbQuestionsModif: number[] = []
+  let exercices: TypeExercice[] = $state([])
+  let content = $state('')
+  let entete = $state('AMCcodeGrid')
+  let format = $state('A4')
+  let matiere = $state('')
+  let titre = $state('')
+  const nbQuestionsModif: number[] = $state([])
   const exercicesARetirer: string[] = []
-  let refsExercicesARetirer: string[]
-  $: refsExercicesARetirer = []
+  let refsExercicesARetirer: string[] = $state([])
+  
 
   type NbQuestionsIndexees = {
     indexExercice: number
     nombre: number
   }
 
-  let nbQuestions: Array<NbQuestionsIndexees> = []
-  let nbExemplaires = 1
-  let textForOverleaf: HTMLInputElement
-  let isNonAMCModaleDisplayed = false
-  let isOverleafModalDisplayed = false
+  let nbQuestions: Array<NbQuestionsIndexees> = $state([])
+  let nbExemplaires = $state(1)
+  let textForOverleaf: HTMLInputElement = $state()
+  let isNonAMCModaleDisplayed = $state(false)
+  let isOverleafModalDisplayed = $state(false)
 
   async function initExercices () {
     exercicesARetirer.length = 0
@@ -80,7 +82,7 @@
 
   initExercices()
 
-  $: {
+  run(() => {
     // ToDo vérifier la saisie utilisateur
     // Si les copies sont préremplies, c'est un seul exemplaire pour ne pas avoir plusieurs sujets avec le même nom
     if (entete === 'AMCassociation') nbExemplaires = 1
@@ -123,7 +125,7 @@
       nbQuestions: nbQuestions.map((elt) => elt.nombre),
       nbExemplaires
     })
-  }
+  });
 
   /* =======================================================
    *
@@ -247,7 +249,7 @@
               data-tip="Nouvel énoncé"
               id="amc-export-new-enonce-button"
               type="button"
-              on:click={() => {
+              onclick={() => {
                 exercice.seed = mathaleaGenerateSeed()
                 seedrandom(exercice.seed, { global: true })
                 if (exercice.nouvelleVersionWrapper != null) exercice.nouvelleVersionWrapper()
@@ -256,7 +258,7 @@
               }}
               ><i
                 class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx bx-refresh"
-              />
+></i>
             </button>
             <!-- <button
                class="tooltip tooltip-left tooltip-neutral"
@@ -283,16 +285,20 @@
             bind:isDisplayed={isNonAMCModaleDisplayed}
             icon="bxs-error"
           >
-            <span slot="header" />
-            <div slot="content" class="text-justify">
-              Les exercices suivants n'ayant pas de version AMC, ils ont été
-              retirés de la liste.
-              <ul class="list-inside list-disc text-left text-base mt-1">
-                {#each refsExercicesARetirer as reference}
-                  <li>{reference}</li>
-                {/each}
-              </ul>
-            </div>
+            {#snippet header()}
+                        <span >
+                      {/snippet}</span>
+            {#snippet content()}
+                        <div  class="text-justify">
+                Les exercices suivants n'ayant pas de version AMC, ils ont été
+                retirés de la liste.
+                <ul class="list-inside list-disc text-left text-base mt-1">
+                  {#each refsExercicesARetirer as reference}
+                    <li>{reference}</li>
+                  {/each}
+                </ul>
+              </div>
+                      {/snippet}
           </BasicClassicModal>
         </div>
       </div>
@@ -344,20 +350,26 @@
     bind:isDisplayed={isOverleafModalDisplayed}
     icon="bxs-error"
   >
-    <span slot="header">Attention !</span>
-    <ul class="list-inside list-disc text-left text-base" slot="content">
-      <li>Le fichier sorti d'Overleaf ne constitue qu'un aperçu.</li>
-      <li>
-        Le fichier doit être compilé sous AMC impérativement pour que le fichier
-        soit fonctionnel.
-      </li>
-    </ul>
-    <div slot="footer">
-      <ButtonTextAction
-        text="Compiler sur OverLeaf"
-        on:click={handleOverLeaf}
-      />
-    </div>
+    {#snippet header()}
+        <span >Attention !</span>
+      {/snippet}
+    {#snippet content()}
+        <ul class="list-inside list-disc text-left text-base" >
+        <li>Le fichier sorti d'Overleaf ne constitue qu'un aperçu.</li>
+        <li>
+          Le fichier doit être compilé sous AMC impérativement pour que le fichier
+          soit fonctionnel.
+        </li>
+      </ul>
+      {/snippet}
+    {#snippet footer()}
+        <div >
+        <ButtonTextAction
+          text="Compiler sur OverLeaf"
+          on:click={handleOverLeaf}
+        />
+      </div>
+      {/snippet}
   </BasicClassicModal>
   <!-- Formulaire pour Overleaf -->
   <form

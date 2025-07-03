@@ -106,7 +106,7 @@
       class="w-full p-2 border rounded mb-5"
       rows="10"
       placeholder=""
-      on:keydown={handleKeyDownUserInput}
+      onkeydown={handleKeyDownUserInput}
     ></textarea>
 
     <ButtonTextAction text="Valider" on:click={handleValidate} />

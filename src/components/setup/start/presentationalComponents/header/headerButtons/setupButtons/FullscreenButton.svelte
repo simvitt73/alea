@@ -3,7 +3,11 @@
   import TwoStatesIcon from '../../../../../../../components/shared/icons/TwoStatesIcon.svelte'
   import { onMount, onDestroy } from 'svelte'
 
-  export let callback: ((isFullScreen: boolean) => void) = () => {}
+  interface Props {
+    callback?: ((isFullScreen: boolean) => void);
+  }
+
+  let { callback = () => {} }: Props = $props();
 
   type FullscreenRequestEnabled = {
     requestFullscreen?(): Promise<void>;
@@ -38,7 +42,7 @@
   }
 
   const appId = 'appComponent'
-  let isFullScreen = false
+  let isFullScreen = $state(false)
 
   onMount(() => {
     document.addEventListener('fullscreenchange', handleFullscreenChange)
@@ -130,22 +134,26 @@
   type="button"
   class="tooltip tooltip-bottom tooltip-neutral"
   data-tip={isFullScreen ? 'Quitter le plein écran' : 'Plein écran'}
-  on:click={switchFullScreen}
+  onclick={switchFullScreen}
 >
   <div class="px-2">
     <TwoStatesIcon isOnStateActive={isFullScreen}>
-      <i
-        slot="icon_to_switch_on"
-        class="bx bx-fullscreen text-3xl
+      {#snippet icon_to_switch_on()}
+            <i
+          
+          class="bx bx-fullscreen text-3xl
+            text-coopmaths-action dark:text-coopmathsdark-action
+            hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest"
+>
+          {/snippet}</i>
+      {#snippet icon_to_switch_off()}
+            <i
+          
+          class="bx bx-exit-fullscreen text-3xl
           text-coopmaths-action dark:text-coopmathsdark-action
           hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest"
-      />
-      <i
-        slot="icon_to_switch_off"
-        class="bx bx-exit-fullscreen text-3xl
-        text-coopmaths-action dark:text-coopmathsdark-action
-        hover:text-coopmaths-action-lightest dark:hover:text-coopmathsdark-action-lightest"
-      />
+>
+          {/snippet}</i>
     </TwoStatesIcon>
   </div>
 </button>

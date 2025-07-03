@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let widthFactor: number
-  export let displayedTime: string
+  interface Props {
+    widthFactor: number;
+    displayedTime: string;
+  }
+
+  let { widthFactor, displayedTime }: Props = $props();
 </script>
 
 <div

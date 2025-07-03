@@ -3,12 +3,16 @@
   import CheckboxWithLabel from '../../../../shared/forms/CheckboxWithLabel.svelte'
   import NumberInput from '../../../../shared/forms/InputNumber.svelte'
 
-  export let exercises: Exercice[]
-  export let selectedExercisesIndexes: number[]
-  export let applyRandomSelectionOfExercises: (numberOfSelectedExercises: number) => void
+  interface Props {
+    exercises: Exercice[];
+    selectedExercisesIndexes: number[];
+    applyRandomSelectionOfExercises: (numberOfSelectedExercises: number) => void;
+  }
+
+  let { exercises, selectedExercisesIndexes, applyRandomSelectionOfExercises }: Props = $props();
 
   const isSelectedExercises: boolean = selectedExercisesIndexes.length > 0
-  let selectedExercisesCount: number = selectedExercisesIndexes.length
+  let selectedExercisesCount: number = $state(selectedExercisesIndexes.length)
 
 </script>
 

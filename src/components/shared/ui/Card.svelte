@@ -1,27 +1,33 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { AppTierce } from '../../../lib/types/referentiels'
   import StarIcon from '../icons/StarIcon.svelte'
   import { exercicesParams } from '../../../lib/stores/generalStore'
 
-  export let application: AppTierce = {
+  interface Props {
+    application?: AppTierce;
+    reversed?: boolean;
+    selected?: boolean;
+  }
+
+  let { application = {
     title: 'Titre',
     presentation: ' blabla',
     imgPath: 'images/apps/appDefault.png',
     uuid: 'theUuid'
-  }
-  export let reversed: boolean = false
-  export let selected: boolean = false
+  }, reversed = false, selected = $bindable(false) }: Props = $props();
 
-  let listeCodes: string[]
+  let listeCodes: string[] = $state()
   // on compte réactivement le nombre d'occurences
   // de la ressource dans la liste des sélectionnés
-  $: {
+  run(() => {
     listeCodes = []
     for (const entry of $exercicesParams) {
       listeCodes.push(entry.uuid)
     }
     listeCodes = listeCodes
-  }
+  });
 
   function addAppToList () {
     exercicesParams.update((list) => [...list, { uuid: application.uuid }])
@@ -49,7 +55,7 @@
 <button
   type="button"
   class="relative block w-full rounded-lg bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark shadow-lg border border-coopmaths-canvas-darkest dark:border-coopmathsdark-canvas-darkest"
-  on:click={handelSelection}
+  onclick={handelSelection}
 >
   <div class="{reversed ? 'hide' : 'block'} ">
     <img
@@ -74,7 +80,7 @@
     <div
       class="rounded-full h-8 w-8 bg-coopmaths-action text-coopmaths-canvas flex justify-center items-center hover:animate-pulse"
     >
-      <i class="bx bx-sm {selected ? 'bx-minus' : 'bx-plus'}" />
+      <i class="bx bx-sm {selected ? 'bx-minus' : 'bx-plus'}"></i>
     </div>
   </div>
   <div class="absolute top-3 right-3 rotate-frac">
@@ -88,7 +94,7 @@
         class="{selected
           ? 'container'
           : 'hidden'} absolute top-1 left-[0.1rem] bx bx-check bx-md text-coopmaths-canvas dark:text-coopmathsdark-canvas"
-      />
+></i>
     </div>
   </div>
 </button>

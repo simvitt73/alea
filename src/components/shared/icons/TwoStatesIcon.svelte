@@ -1,6 +1,17 @@
 <script lang="ts">
-  export let isOnStateActive: boolean = false
-  export let size: number = 5
+  interface Props {
+    isOnStateActive?: boolean;
+    size?: number;
+    icon_to_switch_on?: import('svelte').Snippet;
+    icon_to_switch_off?: import('svelte').Snippet;
+  }
+
+  let {
+    isOnStateActive = false,
+    size = 5,
+    icon_to_switch_on,
+    icon_to_switch_off
+  }: Props = $props();
 </script>
 
 <!--
@@ -22,7 +33,7 @@
   ```
  -->
 <div class={isOnStateActive ? 'hidden' : 'block'}>
-  <slot name="icon_to_switch_on">
+  {#if icon_to_switch_on}{@render icon_to_switch_on()}{:else}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 8.467 8.467"
@@ -88,10 +99,10 @@
         style="fill:none;stroke-width:.747516;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#b)"
       />
     </svg>
-  </slot>
+  {/if}
 </div>
 <div class=" {isOnStateActive ? 'block' : 'hidden'}">
-  <slot name="icon_to_switch_off">
+  {#if icon_to_switch_off}{@render icon_to_switch_off()}{:else}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 8.467 8.467"
@@ -162,5 +173,5 @@
         style="fill:none;stroke-width:.79375;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
       />
     </svg>
-  </slot>
+  {/if}
 </div>

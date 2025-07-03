@@ -2,16 +2,27 @@
   import { createEventDispatcher } from 'svelte'
   type FlexOrientation = 'col' | 'row'
 
-  export let title: string
-  export let valueSelected: string|number
-  export let labelsValues: {
+  interface Props {
+    title: string;
+    valueSelected: string|number;
+    labelsValues?: {
     label: string
     value: string|number
     isDisabled?: boolean
-  }[] = []
-  export let isDisabled: boolean = false
-  export let orientation: FlexOrientation = 'col'
-  export let bgColor: string = 'bg-coopmaths-canvas'
+  }[];
+    isDisabled?: boolean;
+    orientation?: FlexOrientation;
+    bgColor?: string;
+  }
+
+  let {
+    title,
+    valueSelected = $bindable(),
+    labelsValues = [],
+    isDisabled = false,
+    orientation = 'col',
+    bgColor = 'bg-coopmaths-canvas'
+  }: Props = $props();
 
   const name =
     title !== undefined
@@ -81,7 +92,7 @@
         bind:group={valueSelected}
         value={labelValue.value}
         disabled={isDisabled || labelValue.isDisabled}
-        on:change={valueHasChanged}
+        onchange={valueHasChanged}
       />
       <label
         class="form-check-label inline-block text-sm

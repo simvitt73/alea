@@ -2,7 +2,11 @@
   import ChipsList from '../../../../shared/ui/ChipsList.svelte'
   import { fly, blur } from 'svelte/transition'
 
-  export let reorderModalDisplayed: boolean
+  interface Props {
+    reorderModalDisplayed: boolean;
+  }
+
+  let { reorderModalDisplayed = $bindable() }: Props = $props();
 
 </script>
 

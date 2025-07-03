@@ -1,19 +1,32 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { onMount } from 'svelte'
 
-  export let isManualModeActive: boolean | undefined
-  export let currentQuestionNumber: number
-  export let totalQuestionsNumber: number
-  export let goToQuestion: (index: number) => void
-  export let ratioTime: number
-  export let currentSlideDuration: number
+  interface Props {
+    isManualModeActive: boolean | undefined;
+    currentQuestionNumber: number;
+    totalQuestionsNumber: number;
+    goToQuestion: (index: number) => void;
+    ratioTime: number;
+    currentSlideDuration: number;
+  }
 
-  let stepsUl: HTMLElement | null
+  let {
+    isManualModeActive,
+    currentQuestionNumber,
+    totalQuestionsNumber,
+    goToQuestion,
+    ratioTime,
+    currentSlideDuration
+  }: Props = $props();
+
+  let stepsUl: HTMLElement | null = $state()
   onMount(() => {
     stepsUl = document.getElementById('stepsUl')
   })
 
-  $: {
+  run(() => {
     if (stepsUl) {
       const steps = stepsUl.querySelectorAll('button')
       if (steps[currentQuestionNumber]) steps[currentQuestionNumber].scrollIntoView()
@@ -22,7 +35,7 @@
       const diapoProgressContainer = document.getElementById('diapoProgressContainer')
       if (diapoProgressContainer) diapoProgressContainer.scrollIntoView()
     }
-  }
+  });
 
 </script>
 
@@ -35,12 +48,12 @@
   <div
     class="bg-coopmaths-warn dark:bg-coopmathsdark-warn"
     style="width: {ratioTime}%; transition: width {currentSlideDuration / 100}s linear"
-  />
+></div>
 </div>
 <ul id="stepsUl" class="steps w-full mt-3">
   {#each [...Array(totalQuestionsNumber).keys()] as i}
     <button
-      on:click={() => goToQuestion(i)}
+      onclick={() => goToQuestion(i)}
       class="cursor-pointer
         step dark:step-info
         {currentQuestionNumber === i ? 'step-current' : ''}

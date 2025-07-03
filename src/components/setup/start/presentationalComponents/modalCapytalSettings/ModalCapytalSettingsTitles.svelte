@@ -2,7 +2,11 @@
   import type { InterfaceGlobalOptions } from '../../../../../lib/types'
   import ButtonToggle from '../../../../shared/forms/ButtonToggle.svelte'
 
-  export let globalOptions: InterfaceGlobalOptions
+  interface Props {
+    globalOptions: InterfaceGlobalOptions;
+  }
+
+  let { globalOptions = $bindable() }: Props = $props();
 </script>
 
 <div class="pl-2 pb-2 font-light text-2xl

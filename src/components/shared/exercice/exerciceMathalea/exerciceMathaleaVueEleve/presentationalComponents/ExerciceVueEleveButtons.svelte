@@ -3,16 +3,31 @@
   import type TypeExercice from '../../../../../../exercices/Exercice'
   import ButtonTextAction from '../../../../forms/ButtonTextAction.svelte'
   import InteractivityIcon from '../../../../icons/TwoStatesIcon.svelte'
-  export let exercise: TypeExercice
-  export let indiceLastExercice: number
-  export let globalOptions: InterfaceGlobalOptions
-  export let newData: () => void
-  export let isCorrectionVisible: boolean
-  export let switchCorrectionVisible: () => void
-  export let isInteractif: boolean
-  export let switchInteractif: () => void
-  export let columnsCount: number
-  export let columnsCountUpdate: (plusMinus: ('+' | '-')) => void
+  interface Props {
+    exercise: TypeExercice;
+    indiceLastExercice: number;
+    globalOptions: InterfaceGlobalOptions;
+    newData: () => void;
+    isCorrectionVisible: boolean;
+    switchCorrectionVisible: () => void;
+    isInteractif: boolean;
+    switchInteractif: () => void;
+    columnsCount: number;
+    columnsCountUpdate: (plusMinus: ('+' | '-')) => void;
+  }
+
+  let {
+    exercise,
+    indiceLastExercice,
+    globalOptions,
+    newData,
+    isCorrectionVisible,
+    switchCorrectionVisible,
+    isInteractif,
+    switchInteractif,
+    columnsCount,
+    columnsCountUpdate
+  }: Props = $props();
 
 </script>
 
@@ -41,7 +56,7 @@
     class={globalOptions.isInteractiveFree && exercise?.interactifReady ? 'w-5 ml-2 tooltip tooltip-right tooltip-neutral ' : 'hidden'}
     data-tip={isInteractif ? "Désactiver l'interactivité" : 'Rendre interactif'}
     type="button"
-    on:click={switchInteractif}
+    onclick={switchInteractif}
   >
     <InteractivityIcon isOnStateActive={isInteractif} size={4} />
   </button>
@@ -50,16 +65,16 @@
       <button
         class={(columnsCount > 1 && window.innerWidth > 1000) ? 'visible' : 'invisible'}
         type="button"
-        on:click={() => columnsCountUpdate('-')}
+        onclick={() => columnsCountUpdate('-')}
       >
-        <i class="text-coopmaths-action hover:text-coopmaths-action-darkest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-darkest bx ml-2 bx-xs bx-minus" />
+        <i class="text-coopmaths-action hover:text-coopmaths-action-darkest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-darkest bx ml-2 bx-xs bx-minus"></i>
       </button>
-      <i class="bx ml-1 bx-xs bx-columns" />
+      <i class="bx ml-1 bx-xs bx-columns"></i>
       <button
         type="button"
-        on:click={() => columnsCountUpdate('+')}
+        onclick={() => columnsCountUpdate('+')}
       >
-        <i class="text-coopmaths-action hover:text-coopmaths-action-darkest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-darkest bx ml-1 bx-xs bx-plus" />
+        <i class="text-coopmaths-action hover:text-coopmaths-action-darkest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-darkest bx ml-1 bx-xs bx-plus"></i>
       </button>
     </div>
   {/if}

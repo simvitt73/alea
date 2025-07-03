@@ -1,3 +1,11 @@
+<script lang="ts">
+  interface Props {
+    [key: string]: any
+  }
+
+  let { ...props }: Props = $props();
+</script>
+
 <svg
   width="31.999998"
   height="31.999998"
@@ -6,7 +14,7 @@
   id="svg2697"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:svg="http://www.w3.org/2000/svg"
-  class={$$props.class}
+  class={props.class}
   stroke="currentColor"
 >
 <g fill="none" stroke="currentColor">

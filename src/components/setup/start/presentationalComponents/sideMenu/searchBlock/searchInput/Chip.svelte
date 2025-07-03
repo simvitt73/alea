@@ -1,10 +1,19 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import type { CoopmathsColor } from '../../../../../../../lib/types'
-  export let text = ''
-  export let bgColor: CoopmathsColor = 'warn'
-  export let textColor: CoopmathsColor = 'corpus'
-  export let isVisible: boolean = true
+  interface Props {
+    text?: string;
+    bgColor?: CoopmathsColor;
+    textColor?: CoopmathsColor;
+    isVisible?: boolean;
+  }
+
+  let {
+    text = '',
+    bgColor = 'warn',
+    textColor = 'corpus',
+    isVisible = true
+  }: Props = $props();
 
   // Au clic sur le bouton, on diffuse _action_
   const dispatch = createEventDispatcher()
@@ -53,10 +62,10 @@
   {text}
   <button
     class="ml-1 bg-transparent hover focus:outline-none cursor-pointer"
-    on:click={triggerAction}
+    onclick={triggerAction}
   >
     <i
       class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx bx-x font-semibold text-base"
-    />
+></i>
   </button>
 </div>

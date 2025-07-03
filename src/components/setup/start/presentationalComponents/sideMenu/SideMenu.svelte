@@ -27,12 +27,16 @@
     triggerUpdateFromSearchBlock: () => void
   }
 
-  export let excludedReferentiels: ActivationName[] = []
-  export let addExercise: (uuid: string, id: string) => void
+  interface Props {
+    excludedReferentiels?: ActivationName[];
+    addExercise: (uuid: string, id: string) => void;
+  }
 
-  let searchBlock: SearchBlockType
+  let { excludedReferentiels = [], addExercise }: Props = $props();
 
-  let referentielsForMenu: ReferentielInMenu[] = []
+  let searchBlock: SearchBlockType = $state()
+
+  let referentielsForMenu: ReferentielInMenu[] = $state([])
 
   let localeValue: Language = get(referentielLocale)
 

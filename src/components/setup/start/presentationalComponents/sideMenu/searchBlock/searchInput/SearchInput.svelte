@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte'
   import { stringToCriterion } from '../../../../../../../lib/components/filters'
   import {
@@ -30,16 +32,25 @@
   import type { Unsubscriber } from 'svelte/store'
   import ButtonIcon from '../../../../../../shared/forms/ButtonIcon.svelte'
   import { sortArrayOfResourcesBasedOnProp, sortArrayOfResourcesBasedOnYearAndMonth } from '../../../../../../../lib/components/sorting'
-  export let origin: ResourceAndItsPath[]
-  export let results: ResourceAndItsPath[] = []
-  export let addExercise: (uuid: string, id: string) => void
-  export let inputSearch: string = ''
+  interface Props {
+    origin: ResourceAndItsPath[];
+    results?: ResourceAndItsPath[];
+    addExercise: (uuid: string, id: string) => void;
+    inputSearch?: string;
+  }
 
-  let searchField: HTMLInputElement
-  let isFiltersVisible: boolean = false
-  let selectedFilters: FilterObject<string | Level>[] = []
+  let {
+    origin,
+    results = $bindable([]),
+    addExercise,
+    inputSearch = $bindable('')
+  }: Props = $props();
+
+  let searchField: HTMLInputElement = $state()
+  let isFiltersVisible: boolean = $state(false)
+  let selectedFilters: FilterObject<string | Level>[] = $state([])
   let lastInput: string = ''
-  let isInputFocused = false
+  let isInputFocused = $state(false)
   let isCtrlDown: boolean = false
   let isKDown: boolean = false
   let isEnterDown: boolean = false
@@ -67,11 +78,6 @@
     if (unsubscribeToFiltersStore) unsubscribeToFiltersStore()
   })
 
-  $: if (inputSearch != null && inputSearch.length !== 0) {
-    handleInput(inputSearch)
-  } else {
-    results.length = 0
-  }
 
   // ===================================================================================
   //
@@ -348,6 +354,13 @@
       }
     }
   }
+  run(() => {
+    if (inputSearch != null && inputSearch.length !== 0) {
+      handleInput(inputSearch)
+    } else {
+      results.length = 0
+    }
+  });
 </script>
 
 <!--
@@ -357,7 +370,7 @@
   - **origin** (_ResourceAndItsPath[]_) : le référentiel à rechercher (déplier dans un tableau)
   - **result** (_ResourceAndItsPath[]_) : la liste des entrées correspondant au texte dans le champ de recherche
  -->
-<svelte:window on:keydown={onKeyDown} on:keyup={onKeyUp} />
+<svelte:window onkeydown={onKeyDown} onkeyup={onKeyUp} />
 <div class="flex flex-col justify-start items-center">
   <div class="relative flex flex-col w-full">
     <input
@@ -367,8 +380,8 @@
       placeholder="🔍 Thème, identifiant..."
       bind:value={inputSearch}
       bind:this={searchField}
-      on:focus={onFocusInput}
-      on:blur={onBlurInput}
+      onfocus={onFocusInput}
+      onblur={onBlurInput}
       autocomplete="off"
       autocorrect="off"
       name="”notASearchField”"
@@ -395,11 +408,11 @@
     <button
       type="button"
       class="absolute right-2 -bottom-6 text-sm text-coopmaths-action dark:text-coopmathsdark-action hover:text-coopmaths-action-lightest hover:dark:text-coopmathsdark-action-lightest"
-      on:click={() => {
+      onclick={() => {
         isFiltersVisible = !isFiltersVisible
       }}
     >
-      Filtrer les exercices <i class="bx bx-filter-alt" />
+      Filtrer les exercices <i class="bx bx-filter-alt"></i>
     </button>
   </div>
   <!-- Chips des filtres -->

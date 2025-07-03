@@ -4,10 +4,15 @@
   import { keys } from '../../lib/keycaps'
   import type { AlphanumericPages, Keys } from '../../types/keyboardContent'
   import type { KeyCap } from '../../types/keycap'
-  // import type { KeyCap } from '../../types/keycap'
-  export let pageType: AlphanumericPages
-  $: rows = alphanumericLayouts[pageType]
-  export let clickKeycap: (data: KeyCap, event: MouseEvent, value?: Keys) => void
+  
+  interface Props {
+    // import type { KeyCap } from '../../types/keycap'
+    pageType: AlphanumericPages;
+    clickKeycap: (data: KeyCap, event: MouseEvent, value?: Keys) => void;
+  }
+
+  let { pageType, clickKeycap }: Props = $props();
+  let rows = $derived(alphanumericLayouts[pageType])
 </script>
 
 <div class="flex justify-center">
@@ -23,7 +28,7 @@
             {isSpecialKey(key)
               ? 'bg-coopmaths-canvas-moredark dark:bg-coopmathsdark-canvas-moredark'
               : 'bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas-darkest'}  py-1.5 px-2 md:py-2 md:px-4 text-center rounded-md font-mono"
-            on:click={(e) => {
+            onclick={(e) => {
               clickKeycap(keys[key], e, key)
             }}
           >

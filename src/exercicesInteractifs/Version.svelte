@@ -1,11 +1,10 @@
-<script>
+<script lang="ts">
     import Exercice from '../exercices/Exercice'
     import HeaderExerciceVueProf from '../components/shared/exercice/shared/headerExerciceVueProf/HeaderExerciceVueProf.svelte'
-    import { afterUpdate } from 'svelte'
+    
     import { fetchServerVersion, checkForServerUpdate, getLocalVersion, forceLocalVersion } from '../lib/components/version';
 
-    export let indiceExercice
-    export let indiceLastExercice
+  let { indiceExercice, indiceLastExercice } = $props();
 
     export const titre = 'Version du serveur'
    // Cette ressource n'a pas d'uuid ou de ref
@@ -24,9 +23,9 @@
     exercice.id = 'Version'
     exercice.numeroExercice = indiceExercice
     exercice.interactif = false
-    let promise = fetchServerVersion()
-    let localeVersion = getLocalVersion()
-    let compare = checkForServerUpdate()
+    let promise = $state(fetchServerVersion())
+    let localeVersion = $state(getLocalVersion())
+    let compare = $state(checkForServerUpdate())
     function update(){
         forceLocalVersion()
         localeVersion = getLocalVersion()
@@ -64,8 +63,8 @@
   {/await}
 <br><br>
   
-  <button class="inline-flex px-6 py-2.5 ml-6 bg-coopmaths-action dark:bg-coopmathsdark-action text-coopmaths-canvas dark:text-coopmathsdark-canvas font-medium text-xs leading-tight uppercase rounded shadow-md transform hover:bg-coopmaths-action-lightest dark:hover:bg-coopmathsdark-action-lightest hover:shadow-lg focus:bg-coopmaths-action-lightest dark:focus:bg-coopmathsdark-action-lightest focus:shadow-lg focus:outline-none focus:ring-0 active:bg-coopmaths-action-lightest dark:active:bg-coopmathsdark-action-lightest active:shadow-lg transition duration-150 ease-in-out" on:click="{() => {promise = fetchServerVersion()}}">Rafraîchir</button>
+  <button class="inline-flex px-6 py-2.5 ml-6 bg-coopmaths-action dark:bg-coopmathsdark-action text-coopmaths-canvas dark:text-coopmathsdark-canvas font-medium text-xs leading-tight uppercase rounded shadow-md transform hover:bg-coopmaths-action-lightest dark:hover:bg-coopmathsdark-action-lightest hover:shadow-lg focus:bg-coopmaths-action-lightest dark:focus:bg-coopmathsdark-action-lightest focus:shadow-lg focus:outline-none focus:ring-0 active:bg-coopmaths-action-lightest dark:active:bg-coopmathsdark-action-lightest active:shadow-lg transition duration-150 ease-in-out" onclick={() => {promise = fetchServerVersion()}}>Rafraîchir</button>
   <br><br>
-  <button class="inline-flex px-6 py-2.5 ml-6 bg-coopmaths-action dark:bg-coopmathsdark-action text-coopmaths-canvas dark:text-coopmathsdark-canvas font-medium text-xs leading-tight uppercase rounded shadow-md transform hover:bg-coopmaths-action-lightest dark:hover:bg-coopmathsdark-action-lightest hover:shadow-lg focus:bg-coopmaths-action-lightest dark:focus:bg-coopmathsdark-action-lightest focus:shadow-lg focus:outline-none focus:ring-0 active:bg-coopmaths-action-lightest dark:active:bg-coopmathsdark-action-lightest active:shadow-lg transition duration-150 ease-in-out" on:click="{() => {update()}}">Force la version locale</button>
+  <button class="inline-flex px-6 py-2.5 ml-6 bg-coopmaths-action dark:bg-coopmathsdark-action text-coopmaths-canvas dark:text-coopmathsdark-canvas font-medium text-xs leading-tight uppercase rounded shadow-md transform hover:bg-coopmaths-action-lightest dark:hover:bg-coopmathsdark-action-lightest hover:shadow-lg focus:bg-coopmaths-action-lightest dark:focus:bg-coopmathsdark-action-lightest focus:shadow-lg focus:outline-none focus:ring-0 active:bg-coopmaths-action-lightest dark:active:bg-coopmathsdark-action-lightest active:shadow-lg transition duration-150 ease-in-out" onclick={() => {update()}}>Force la version locale</button>
 
 

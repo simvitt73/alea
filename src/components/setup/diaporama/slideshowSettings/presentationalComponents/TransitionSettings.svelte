@@ -1,18 +1,35 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { isIntegerInRange0to3 } from '../../../../../lib/types/integerInRange'
   import CheckboxWithLabel from '../../../../shared/forms/CheckboxWithLabel.svelte'
   import FormRadio from '../../../../shared/forms/FormRadio.svelte'
 
-  export let transitionSounds: { 0: HTMLAudioElement; 1: HTMLAudioElement; 2: HTMLAudioElement; 3: HTMLAudioElement; }
-  export let screenBetweenSlides: boolean
-  export let sound: 0 | 1 | 2 | 3 | 4
-  export let updateFlow: (flow: 0 | 1 | 2) => void
-  export let updateScreenBetweenSlides: (screenBetweenSlides: boolean) => void
-  export let updateTune: (tune: -1 | 0 | 1 | 2 | 3) => void
-  export let updatePauseAfterEachQuestion: (pauseAfterEachQuestion: boolean) => void
-  export let questionThenCorrectionToggle: boolean
-  export let questionWithCorrectionToggle: boolean
-  export let pauseAfterEachQuestion: boolean
+  interface Props {
+    transitionSounds: { 0: HTMLAudioElement; 1: HTMLAudioElement; 2: HTMLAudioElement; 3: HTMLAudioElement; };
+    screenBetweenSlides: boolean;
+    sound: 0 | 1 | 2 | 3 | 4;
+    updateFlow: (flow: 0 | 1 | 2) => void;
+    updateScreenBetweenSlides: (screenBetweenSlides: boolean) => void;
+    updateTune: (tune: -1 | 0 | 1 | 2 | 3) => void;
+    updatePauseAfterEachQuestion: (pauseAfterEachQuestion: boolean) => void;
+    questionThenCorrectionToggle: boolean;
+    questionWithCorrectionToggle: boolean;
+    pauseAfterEachQuestion: boolean;
+  }
+
+  let {
+    transitionSounds,
+    screenBetweenSlides,
+    sound,
+    updateFlow,
+    updateScreenBetweenSlides,
+    updateTune,
+    updatePauseAfterEachQuestion,
+    questionThenCorrectionToggle,
+    questionWithCorrectionToggle,
+    pauseAfterEachQuestion
+  }: Props = $props();
 
   const labelsForSounds = [
     { label: 'Son 1', value: 0 },
@@ -21,11 +38,13 @@
     { label: 'Son 4', value: 3 }
   ]
 
-  let soundToggle = sound > 0
-  $: soundToggle = sound > 0
+  let soundToggle = $state(sound > 0)
+  run(() => {
+    soundToggle = sound > 0
+  });
 
   const tuneCandidate = Math.max(sound - 1, 0)
-  let tune: 0 | 1 | 2 | 3 = isIntegerInRange0to3(tuneCandidate) ? tuneCandidate : 0
+  let tune: 0 | 1 | 2 | 3 = $state(isIntegerInRange0to3(tuneCandidate) ? tuneCandidate : 0)
 
 </script>
 

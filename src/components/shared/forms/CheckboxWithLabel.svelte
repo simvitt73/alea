@@ -1,9 +1,18 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  export let id: string
-  export let isChecked: boolean
-  export let isDisabled: boolean = false
-  export let label: string
+  interface Props {
+    id: string;
+    isChecked: boolean;
+    isDisabled?: boolean;
+    label: string;
+  }
+
+  let {
+    id,
+    isChecked = $bindable(),
+    isDisabled = false,
+    label
+  }: Props = $props();
 
   const dispatch = createEventDispatcher()
 </script>
@@ -21,7 +30,7 @@
       focus:ring-3
       focus:ring-coopmaths-action dark:focus:ring-coopmathsdark-action"
     bind:checked={isChecked}
-    on:change={() => dispatch('change', isChecked)}
+    onchange={() => dispatch('change', isChecked)}
     disabled={isDisabled}
   />
   <label

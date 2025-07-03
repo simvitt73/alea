@@ -1,13 +1,25 @@
 <script lang="ts">
   import { mathaleaGenerateSeed } from '../../../lib/mathalea'
 
-  export let title: string = ''
-  export let placeholder: string = ''
-  export let showTitle: boolean = true
-  export let value: string = ''
-  export let isDisabled: boolean = false
-  export let inputID: string = mathaleaGenerateSeed()
-  export let classAddenda: string = ''
+  interface Props {
+    title?: string;
+    placeholder?: string;
+    showTitle?: boolean;
+    value?: string;
+    isDisabled?: boolean;
+    inputID?: string;
+    classAddenda?: string;
+  }
+
+  let {
+    title = '',
+    placeholder = '',
+    showTitle = true,
+    value = $bindable(''),
+    isDisabled = false,
+    inputID = mathaleaGenerateSeed(),
+    classAddenda = ''
+  }: Props = $props();
 </script>
 
 <!--

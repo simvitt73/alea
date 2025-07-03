@@ -3,10 +3,19 @@
   import CheckboxWithLabel from '../../../../shared/forms/CheckboxWithLabel.svelte'
   import FormRadio from '../../../../shared/forms/FormRadio.svelte'
 
-  export let nbOfViews: NumberRange<1, 4>
-  export let updateNbOfViews: (nbOfViews: NumberRange<1, 4>) => void
-  export let isImagesOnSides: boolean
-  export let updateIsImagesOnSides: (isImagesOnSides: boolean) => void
+  interface Props {
+    nbOfViews: NumberRange<1, 4>;
+    updateNbOfViews: (nbOfViews: NumberRange<1, 4>) => void;
+    isImagesOnSides: boolean;
+    updateIsImagesOnSides: (isImagesOnSides: boolean) => void;
+  }
+
+  let {
+    nbOfViews = $bindable(),
+    updateNbOfViews,
+    isImagesOnSides,
+    updateIsImagesOnSides
+  }: Props = $props();
 
   const labelsForMultivue = [
     { label: 'Pas de multivue', value: 1 },

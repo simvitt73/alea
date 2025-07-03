@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import {
     exercicesParams,
     darkMode,
@@ -58,16 +60,18 @@
       isEncrypted: true
     }
   }
-  $: $canOptions.isInteractive = $globalOptions.setInteractive === '1'
+  run(() => {
+    $canOptions.isInteractive = $globalOptions.setInteractive === '1'
+  });
   type LinkFormat = keyof typeof availableLinkFormats
-  let currentLinkFormat: LinkFormat = 'clear'
-  let setInteractive: string = $globalOptions.setInteractive ?? '2'
+  let currentLinkFormat: LinkFormat = $state('clear')
+  let setInteractive: string = $state($globalOptions.setInteractive ?? '2')
   let presMode:
     | 'liste_exos'
     | 'un_exo_par_page'
     | 'une_question_par_page'
     | 'recto'
-    | 'verso' = $globalOptions.presMode ?? 'liste_exos'
+    | 'verso' = $state($globalOptions.presMode ?? 'liste_exos')
 
   /**
    * Construit l'URL correspondant aux choix de la page de configuration et bascule sur cette page
@@ -83,7 +87,7 @@
   }
 
   // Gestion de la graine
-  let isDataRandom: boolean = false
+  let isDataRandom: boolean = $state(false)
   function handleSeed () {
     for (const param of $exercicesParams) {
       if (!isDataRandom && param.alea === undefined) {
@@ -142,7 +146,7 @@
             role="tab"
             aria-controls="tabs-pres-classic"
             aria-selected="true"
-            on:click={() => {
+            onclick={() => {
               $canOptions.isChoosen = false
             }}
           >
@@ -162,7 +166,7 @@
             role="tab"
             aria-controls="tabs-pres-can"
             aria-selected="false"
-            on:click={() => {
+            onclick={() => {
               $canOptions.isChoosen = true
               toggleCan()
             }}

@@ -3,8 +3,12 @@
   import { mathaleaUpdateUrlFromExercicesParams } from '../../../lib/mathalea'
   import { exercicesParams, globalOptions } from '../../../lib/stores/generalStore'
 
-  export let size: 'xs' | 'sm' | 'md' | 'lg' | 'bx-sm md:bx-md' = 'sm'
-  export let isBorderTransparent: boolean = false
+  interface Props {
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'bx-sm md:bx-md';
+    isBorderTransparent?: boolean;
+  }
+
+  let { size = 'sm', isBorderTransparent = false }: Props = $props();
 
   const urlParams = new URLSearchParams(window.location.search)
   const z = urlParams.get('z')
@@ -45,15 +49,15 @@
   }
 </script>
 
-<button type="button" on:click={zoomMinus} class="tooltip tooltip-left tooltip-neutral" data-tip="Réduire la taille du texte">
+<button type="button" onclick={zoomMinus} class="tooltip tooltip-left tooltip-neutral" data-tip="Réduire la taille du texte">
   <i
     class="bx {size} rounded-full p-1 bx-minus border border-coopmaths-action hover:border-coopmaths-action-lightest bg-coopmaths-canvas dark:bg-coopmathsdark-canvas text-coopmaths-action dark:text-coopmathsdark-action hover:text-coopmaths-action-lightest dark:hover:text-coopmaths-action-lightest
     {isBorderTransparent ? 'lg:border-transparent' : ''}"
-  />
+></i>
 </button>
-<button type="button" on:click={zoomPlus} class="tooltip tooltip-left tooltip-neutral" data-tip="Augmenter la taille du texte">
+<button type="button" onclick={zoomPlus} class="tooltip tooltip-left tooltip-neutral" data-tip="Augmenter la taille du texte">
   <i
     class="bx {size} rounded-full p-1 bx-plus border border-coopmaths-action hover:border-coopmaths-action-lightest bg-coopmaths-canvas dark:bg-coopmathsdark-canvas text-coopmaths-action dark:text-coopmathsdark-action hover:text-coopmaths-action-lightest dark:hover:text-coopmaths-action-lightest
     {isBorderTransparent ? 'lg:border-transparent' : ''}"
-  />
+></i>
 </button>

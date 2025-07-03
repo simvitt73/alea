@@ -4,9 +4,13 @@
   import ButtonActionInfo from '../../../../shared/forms/ButtonActionInfo.svelte'
   import ButtonIconTooltip from '../../../../shared/forms/ButtonIconTooltip.svelte'
 
-  export let returnToStart: () => void
-  export let backToSettings: () => void
-  export let goToOverview: () => void
+  interface Props {
+    returnToStart: () => void;
+    backToSettings: () => void;
+    goToOverview: () => void;
+  }
+
+  let { returnToStart, backToSettings, goToOverview }: Props = $props();
 
 </script>
 

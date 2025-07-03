@@ -8,8 +8,12 @@
   import ButtonIconTooltip from '../../../../../../shared/forms/ButtonIconTooltip.svelte'
   import QcmCamIcon from '../../../../../../shared/icons/QcmCamIcon.svelte'
 
-  export let handleExport: (vue: VueType) => void
-  export let exportQcmCam: () => Promise<void>
+  interface Props {
+    handleExport: (vue: VueType) => void;
+    exportQcmCam: () => Promise<void>;
+  }
+
+  let { handleExport, exportQcmCam }: Props = $props();
 
 </script>
 
@@ -28,7 +32,7 @@
 <button
   class="tooltip tooltip-bottom tooltip-neutral"
   data-tip="LaTeX"
-  on:click={() => handleExport('latex')}
+  onclick={() => handleExport('latex')}
 >
   <PdfTextIcon
     class="w-7 h-7 hover:fill-coopmaths-action-lightest fill-coopmaths-action dark:fill-coopmathsdark-action dark:hover:fill-coopmathsdark-action-lightest"
@@ -37,7 +41,7 @@
 <button
   class="tooltip tooltip-bottom tooltip-neutral"
   data-tip="AMC"
-  on:click={() => handleExport('amc')}
+  onclick={() => handleExport('amc')}
 >
   <AmcIcon
     class="w-7 h-7 hover:text-coopmaths-action-lightest text-coopmaths-action dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest"
@@ -46,7 +50,7 @@
 <button
   class="tooltip tooltip-bottom tooltip-neutral"
   data-tip="Anki"
-  on:click={() => handleExport('anki')}
+  onclick={() => handleExport('anki')}
 >
   <AnkiIcon
     class="w-7 h-7 hover:text-coopmaths-action-lightest text-coopmaths-action dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest"
@@ -55,7 +59,7 @@
 <button
   class="tooltip tooltip-bottom tooltip-neutral"
   data-tip="Moodle"
-  on:click={() => handleExport('moodle')}
+  onclick={() => handleExport('moodle')}
 >
   <MoodleIcon
     class="w-7 h-7 hover:text-coopmaths-action-lightest text-coopmaths-action dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest"
@@ -64,7 +68,7 @@
 <button
   class="tooltip tooltip-bottom tooltip-neutral"
   data-tip="QCM Cam"
-  on:click={exportQcmCam}
+  onclick={exportQcmCam}
 >
   <QcmCamIcon
     class="w-7 h-7 hover:text-coopmaths-action-lightest text-coopmaths-action dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest"

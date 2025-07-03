@@ -17,7 +17,7 @@
   const notes: TypeNote[] = []
   let exercices: TypeExercice[]
 
-  let chargement = true
+  let chargement = $state(true)
 
   async function initExercices () {
     mathaleaUpdateExercicesParamsFromUrl()
@@ -55,7 +55,7 @@
 
   initExercices()
 
-  let logs = ''
+  let logs = $state('')
 
   const ANKI_API_URL = new URL('http://127.0.0.1:8765')
   // hostname // port
@@ -165,10 +165,10 @@
       {#if !chargement}
         <button
         type="submit"
-        on:click={importer}
+        onclick={importer}
         class="p-2 rounded-xl text-coopmaths-canvas dark:text-coopmathsdark-canvas bg-coopmaths-action hover:bg-coopmaths-action-lightest dark:bg-coopmathsdark-action dark:hover:bg-coopmathsdark-action-lightest"
         >
-          <i class="bx bx-download mr-2" />Importer les exercices dans Anki
+          <i class="bx bx-download mr-2"></i>Importer les exercices dans Anki
         </button>
       {/if}
     </div>

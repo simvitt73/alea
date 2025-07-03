@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type Exercice from '../../../../exercices/Exercice'
   import type { InterfaceParams } from '../../../../lib/types'
   import type { Serie, Slideshow } from '../types'
@@ -10,33 +12,42 @@
   import { globalOptions, darkMode, exercicesParams } from '../../../../lib/stores/generalStore'
   import { isIntegerInRange0to4 } from '../../../../lib/types/integerInRange'
 
-  export let exercises: Exercice[] = []
-  export let slideshow: Slideshow
-  export let updateExercises: (updateSlidesContent?: boolean, updateParamsFromUrl?: boolean) => void
-  export let backToSettings: () => void
+  interface Props {
+    exercises?: Exercice[];
+    slideshow: Slideshow;
+    updateExercises: (updateSlidesContent?: boolean, updateParamsFromUrl?: boolean) => void;
+    backToSettings: () => void;
+  }
 
-  let currentSeriesIndex: 0 | 1 | 2 | 3 | 4 = 0
-  let isCorrectionVisible = false
-  let isQuestionsVisible = true
-  let divExercice: HTMLElement
-  let correctionsSteps: number[] = []
+  let {
+    exercises = [],
+    slideshow,
+    updateExercises,
+    backToSettings
+  }: Props = $props();
 
-  let nbVues: 0 | 1 | 2 | 3 | 4
-  $: {
+  let currentSeriesIndex: 0 | 1 | 2 | 3 | 4 = $state(0)
+  let isCorrectionVisible = $state(false)
+  let isQuestionsVisible = $state(true)
+  let divExercice: HTMLElement = $state()
+  let correctionsSteps: number[] = $state([])
+
+  let nbVues: 0 | 1 | 2 | 3 | 4 = $state()
+  run(() => {
     const nbVuesCandidate = slideshow.slides[0].vues.length
     if (isIntegerInRange0to4(nbVuesCandidate)) {
       nbVues = nbVuesCandidate
     }
-  }
+  });
 
-  let order: number[]
-  $: {
+  let order: number[] = $state()
+  run(() => {
     const questionsNb = slideshow.selectedQuestionsNumber || slideshow.slides.length
     order = $globalOptions.order === undefined || $globalOptions.order.length === 0 ? [...Array(questionsNb).keys()] : $globalOptions.order
-  }
+  });
 
-  let series: Serie[] = []
-  $: {
+  let series: Serie[] = $state([])
+  run(() => {
     series = []
     for (let i = 0; i < nbVues; i++) {
       const serie: Serie = {
@@ -51,11 +62,13 @@
       }
       series.push(serie)
     }
-  }
+  });
 
-  $: if ((isQuestionsVisible || isCorrectionVisible || correctionsSteps.length > 0) && currentSeriesIndex !== undefined) {
-    tick().then(() => mathaleaRenderDiv(divExercice))
-  }
+  run(() => {
+    if ((isQuestionsVisible || isCorrectionVisible || correctionsSteps.length > 0) && currentSeriesIndex !== undefined) {
+      tick().then(() => mathaleaRenderDiv(divExercice))
+    }
+  });
 
   function setCorrectionVisible (correctionVisibility: boolean) {
     isCorrectionVisible = correctionVisibility

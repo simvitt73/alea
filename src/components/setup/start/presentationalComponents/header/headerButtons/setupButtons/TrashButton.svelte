@@ -1,7 +1,11 @@
 <script lang="ts">
   import ButtonIconTooltip from '../../../../../../shared/forms/ButtonIconTooltip.svelte'
 
-  export let trash: () => void
+  interface Props {
+    trash: () => void;
+  }
+
+  let { trash }: Props = $props();
 </script>
 
 <ButtonIconTooltip

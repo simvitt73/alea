@@ -7,28 +7,53 @@
   import type { Language } from '../../../../../lib/types/languages'
   import NavBarRecorder from '../../capytale/NavBarRecorder.svelte'
 
-  export let isExerciseDisplayed: boolean
-  export let isNavBarVisible: boolean
-  export let zoomUpdate: (plusMinus: ('+' | '-')) => void
-  export let setAllInteractive: (isAllInteractive: boolean) => void
-  export let newDataForAll: () => void
-  export let trash: () => void
-  export let setFullScreen: (isFullScreen: boolean) => void
-  export let handleExport: (vue: VueType) => void
-  export let handleRecorder: () => void
-  export let locale: Language
-  export let handleLanguage: (lang: string) => void
-  export let isCapytale: boolean
-  export let isRecorder: boolean
-  export let buildUrlAndOpenItInNewTab: (type: 'usual' | 'eleve') => void
-  export let showSettingsDialog: () => void
-  export let importExercises: (urlFeuilleEleve: string) => void
-  export let isExercisesListEmpty: boolean
-  export let isSidenavOpened: boolean
-  export let toggleSidenav: (test: boolean) => void
-  export let exportQcmCam: () => Promise<void>
+  interface Props {
+    isExerciseDisplayed: boolean;
+    isNavBarVisible: boolean;
+    zoomUpdate: (plusMinus: ('+' | '-')) => void;
+    setAllInteractive: (isAllInteractive: boolean) => void;
+    newDataForAll: () => void;
+    trash: () => void;
+    setFullScreen: (isFullScreen: boolean) => void;
+    handleExport: (vue: VueType) => void;
+    handleRecorder: () => void;
+    locale: Language;
+    handleLanguage: (lang: string) => void;
+    isCapytale: boolean;
+    isRecorder: boolean;
+    buildUrlAndOpenItInNewTab: (type: 'usual' | 'eleve') => void;
+    showSettingsDialog: () => void;
+    importExercises: (urlFeuilleEleve: string) => void;
+    isExercisesListEmpty: boolean;
+    isSidenavOpened: boolean;
+    toggleSidenav: (test: boolean) => void;
+    exportQcmCam: () => Promise<void>;
+  }
 
-  let reorderModalDisplayed: boolean
+  let {
+    isExerciseDisplayed,
+    isNavBarVisible,
+    zoomUpdate,
+    setAllInteractive,
+    newDataForAll,
+    trash,
+    setFullScreen,
+    handleExport,
+    handleRecorder,
+    locale,
+    handleLanguage,
+    isCapytale,
+    isRecorder,
+    buildUrlAndOpenItInNewTab,
+    showSettingsDialog,
+    importExercises,
+    isExercisesListEmpty,
+    isSidenavOpened,
+    toggleSidenav,
+    exportQcmCam
+  }: Props = $props();
+
+  let reorderModalDisplayed: boolean = $state()
 
 </script>
 

@@ -6,11 +6,16 @@
   interface SearchInputType extends SvelteComponent {
     triggerUpdate: () => void
   }
-  export let resourcesSet: ResourceAndItsPath[]
-  export let addExercise: (uuid: string, id: string) => void
-  let foundResources: ResourceAndItsPath[] = []
-  let inputSearch: string = ''
-  let searchInput: SearchInputType
+  interface Props {
+    resourcesSet: ResourceAndItsPath[];
+    addExercise: (uuid: string, id: string) => void;
+    [key: string]: any
+  }
+
+  let { ...props }: Props = $props();
+  let foundResources: ResourceAndItsPath[] = $state([])
+  let inputSearch: string = $state('')
+  let searchInput: SearchInputType = $state()
   export const triggerUpdateFromSearchBlock = (): void => searchInput.triggerUpdate()
 </script>
 
@@ -23,15 +28,15 @@
   - `resourcesSet` : l'ensemble des resources à chercher sous la forme
   d'une liste d'objets de type `ResourceAndItsPath`
  -->
-<div class={`${$$props.class || ''}`}>
+<div class={`${props.class || ''}`}>
   <div class="p-4">
     <SearchInput
       bind:this={searchInput}
-      origin={resourcesSet}
+      origin={props.resourcesSet}
       bind:results={foundResources}
       bind:inputSearch
       on:filters-change
-      {addExercise}
+      {props.addExercise}
     />
   </div>
   <ul

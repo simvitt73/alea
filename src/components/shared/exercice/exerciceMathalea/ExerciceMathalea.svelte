@@ -3,11 +3,21 @@
   import ExerciceMathaleaVueProf from './exerciceMathaleaVueProf/ExerciceMathaleaVueProf.svelte'
   import type TypeExercice from '../../../../exercices/Exercice'
 
-  export let vue: ('prof' | 'eleve')
-  export let exercise: TypeExercice
-  export let exerciseIndex: number
-  export let indiceLastExercice: number
-  export let isCorrectionVisible: boolean = false
+  interface Props {
+    vue: ('prof' | 'eleve');
+    exercise: TypeExercice;
+    exerciseIndex: number;
+    indiceLastExercice: number;
+    isCorrectionVisible?: boolean;
+  }
+
+  let {
+    vue,
+    exercise,
+    exerciseIndex,
+    indiceLastExercice,
+    isCorrectionVisible = false
+  }: Props = $props();
 
 </script>
 

@@ -2,10 +2,10 @@
   import { createEventDispatcher } from 'svelte'
   import { setPhraseDuree } from '../../../lib/components/time'
 
-  let cursorTimeValue = 10
+  let cursorTimeValue = $state(10)
 
-  let messageDuree: string
-  $: messageDuree = setPhraseDuree(cursorTimeValue)
+  let messageDuree: string = $derived(setPhraseDuree(cursorTimeValue))
+  
 
   const dispatch = createEventDispatcher()
 </script>
@@ -19,7 +19,7 @@
     name="duration"
     id="duration"
     bind:value={cursorTimeValue}
-    on:change={() => dispatch('change', cursorTimeValue)}
+    onchange={() => dispatch('change', cursorTimeValue)}
   />
   <label
     class="

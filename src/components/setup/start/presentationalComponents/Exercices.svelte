@@ -4,7 +4,11 @@
   import type { InterfaceParams } from 'src/lib/types'
   import { flip } from 'svelte/animate'
 
-  export let exercicesParams: InterfaceParams[]
+  interface Props {
+    exercicesParams: InterfaceParams[];
+  }
+
+  let { exercicesParams }: Props = $props();
 
 </script>
 

@@ -3,14 +3,24 @@
   import CheckboxWithLabel from '../../../../shared/forms/CheckboxWithLabel.svelte'
   import NumberInput from '../../../../shared/forms/InputNumber.svelte'
 
-  export let exercises: Exercice[]
-  export let isManualModeActive: boolean
-  export let updateManualMode: (isManualModeActive: boolean) => void
-  export let durationGlobal: number | undefined
-  export let updateDurationGlobal: (durationGlobal: number | undefined) => void
+  interface Props {
+    exercises: Exercice[];
+    isManualModeActive: boolean;
+    updateManualMode: (isManualModeActive: boolean) => void;
+    durationGlobal: number | undefined;
+    updateDurationGlobal: (durationGlobal: number | undefined) => void;
+  }
 
-  let previousDurationGlobal = durationGlobal || 10
-  let isSameDurationForAll = !!durationGlobal
+  let {
+    exercises,
+    isManualModeActive,
+    updateManualMode,
+    durationGlobal,
+    updateDurationGlobal
+  }: Props = $props();
+
+  let previousDurationGlobal = $state(durationGlobal || 10)
+  let isSameDurationForAll = $state(!!durationGlobal)
   function handleChangeIsSameDurationForAll (newIsSameDurationForAll: boolean) {
     isSameDurationForAll = newIsSameDurationForAll
     if (isSameDurationForAll) {

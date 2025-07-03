@@ -2,10 +2,19 @@
   import { canOptions } from '../../../../lib/stores/canStore'
   import type { CanState } from '../../../../lib/types/can'
 
-  export let current: number
-  export let numberOfQuestions: number
-  export let state: CanState
-  export let resultsByQuestion: boolean[]
+  interface Props {
+    current: number;
+    numberOfQuestions: number;
+    state: CanState;
+    resultsByQuestion: boolean[];
+  }
+
+  let {
+    current = $bindable(),
+    numberOfQuestions,
+    state,
+    resultsByQuestion
+  }: Props = $props();
 </script>
 
 <nav
@@ -26,7 +35,7 @@
         {i === current
           ? 'text-coopmaths-canvas dark:text-coopmathsdark-canvas bg-coopmaths-struct dark:bg-coopmathsdark-struct'
           : 'bg-transparent text-coopmaths-action hover:bg-coopmaths-action-lightest hover:bg-opacity-20  dark:text-coopmathsdark-action dark:hover:bg-coopmathsdark-action-lightest dark:hover:bg-opacity-20'}"
-          on:click={() => {
+          onclick={() => {
             current = i
           }}
         >
@@ -46,7 +55,7 @@
               class="bx {resultsByQuestion[i]
                 ? 'bxs-check-square text-coopmaths-warn-800 dark:text-green-500'
                 : 'bxs-x-square text-red-500 dark:text-coopmathsdark-warn'}"
-            />
+></i>
           </div>
         {/if}
       </li>

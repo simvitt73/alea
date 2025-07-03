@@ -3,8 +3,12 @@
   import type { CanOptions } from '../../../../../lib/types/can'
   import ButtonToggle from '../../../../shared/forms/ButtonToggle.svelte'
 
-  export let globalOptions: InterfaceGlobalOptions
-  export let canOptions: CanOptions
+  interface Props {
+    globalOptions: InterfaceGlobalOptions;
+    canOptions: CanOptions;
+  }
+
+  let { globalOptions = $bindable(), canOptions }: Props = $props();
 </script>
 
 <div class="pl-2 pb-2 font-light text-2xl

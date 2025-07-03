@@ -5,8 +5,12 @@
   import InputNumber from '../../../../shared/forms/InputNumber.svelte'
   import InputText from '../../../../shared/forms/InputText.svelte'
 
-  export let canOptions: CanOptions
-  export let toggleCan: () => void
+  interface Props {
+    canOptions: CanOptions;
+    toggleCan: () => void;
+  }
+
+  let { canOptions = $bindable(), toggleCan }: Props = $props();
 
 </script>
 

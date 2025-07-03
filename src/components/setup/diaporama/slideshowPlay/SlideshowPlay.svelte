@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Slide, Slideshow } from '../types'
   import SlideshowPlayQuestion from './presentationalComponents/slideshowPlayQuestion/SlideshowPlayQuestion.svelte'
   import SlideshowPlaySettings from './presentationalComponents/slideshowPlaySettings/SlideshowPlaySettings.svelte'
@@ -9,55 +11,41 @@
   import { mathaleaRenderDiv } from '../../../../lib/mathalea'
   import { globalOptions } from '../../../../lib/stores/generalStore'
 
-  export let slideshow: Slideshow
-  export let transitionSounds: Record<string, HTMLAudioElement>
-  export let backToSettings: () => void
-  export let goToOverview: () => void
+  interface Props {
+    slideshow: Slideshow;
+    transitionSounds: Record<string, HTMLAudioElement>;
+    backToSettings: () => void;
+    goToOverview: () => void;
+  }
+
+  let {
+    slideshow = $bindable(),
+    transitionSounds,
+    backToSettings,
+    goToOverview
+  }: Props = $props();
 
   const divQuestion: HTMLDivElement[] = []
   const exercicesAffiches = new window.Event('exercicesAffiches', { bubbles: true })
-  let isCorrectionVisible = false
-  let isPause = false
+  let isCorrectionVisible = $state(false)
+  let isPause = $state(false)
   let isManualPause = false
-  let isQuestionVisible = true
+  let isQuestionVisible = $state(true)
   let advanceRatioTimeInterval: number
-  let ratioTime = 0 // Pourcentage du temps écoulé (entre 1 et 100)
+  let ratioTime = $state(0) // Pourcentage du temps écoulé (entre 1 et 100)
   let userZoom = 1
   let optimalZoom = 1
 
-  let flow: 'Q->Q' | 'Q->R->Q' | 'Q->(Q+R)->Q'
-  $: {
-    switch ($globalOptions.flow) {
-      case 0:
-        flow = 'Q->Q'
-        break
-      case 1:
-        flow = 'Q->R->Q'
-        break
-      case 2:
-        flow = 'Q->(Q+R)->Q'
-        break
-    }
-  }
+  let flow: 'Q->Q' | 'Q->R->Q' | 'Q->(Q+R)->Q' = $state()
 
-  let order: number[] = []
-  $: {
-    const questionsNb = slideshow.selectedQuestionsNumber || slideshow.slides.length
-    order = $globalOptions.order || [...Array(questionsNb).keys()]
-  }
+  let order: number[] = $state([])
 
-  let nbVues: 1 | 2 | 3 | 4
-  $: nbVues = $globalOptions.nbVues ?? 1
+  let nbVues: 1 | 2 | 3 | 4 = $derived($globalOptions.nbVues ?? 1)
 
-  let currentSlide: Slide
-  $: currentSlide = slideshow.slides[order[slideshow.currentQuestion]]
+  let currentSlide: Slide = $derived(slideshow.slides[order[slideshow.currentQuestion]])
 
-  let currentSlideDuration: number
-  $: currentSlideDuration = $globalOptions.durationGlobal || (currentSlide && currentSlide.exercise.duration) || 10
+  let currentSlideDuration: number = $state()
 
-  $: if (slideshow.currentQuestion > -1) {
-    playCurrentQuestion()
-  }
 
   onDestroy(() => {
     pause()
@@ -318,9 +306,36 @@
     pause(true)
     goToQuestion(0)
   }
+  run(() => {
+    switch ($globalOptions.flow) {
+      case 0:
+        flow = 'Q->Q'
+        break
+      case 1:
+        flow = 'Q->R->Q'
+        break
+      case 2:
+        flow = 'Q->(Q+R)->Q'
+        break
+    }
+  });
+  run(() => {
+    const questionsNb = slideshow.selectedQuestionsNumber || slideshow.slides.length
+    order = $globalOptions.order || [...Array(questionsNb).keys()]
+  });
+  
+  
+  run(() => {
+    currentSlideDuration = $globalOptions.durationGlobal || (currentSlide && currentSlide.exercise.duration) || 10
+  });
+  run(() => {
+    if (slideshow.currentQuestion > -1) {
+      playCurrentQuestion()
+    }
+  });
 </script>
 
-<svelte:window on:keydown={handleShortcut} />
+<svelte:window onkeydown={handleShortcut} />
 
 {#if slideshow.currentQuestion < slideshow.selectedQuestionsNumber && slideshow.currentQuestion > -1}
   <div

@@ -1,7 +1,15 @@
+<script lang="ts">
+  interface Props {
+    [key: string]: any
+  }
+
+  let { ...props }: Props = $props();
+</script>
+
 <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 8.467 8.467"
-  class={$$props.class}
+  class={props.class}
 >
   <defs>
     <marker

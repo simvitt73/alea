@@ -5,16 +5,28 @@
   import QuestionWithImagesInside from './QuestionWithImagesInside.svelte'
   import QuestionWithImagesOnSides from './QuestionWithImagesOnSides.svelte'
 
-  export let divQuestion: HTMLDivElement[]
-  export let isQuestionVisible: boolean
-  export let isCorrectionVisible: boolean
-  export let currentSlide: Slide
-  export let currentQuestion: number
-  export let selectedQuestionsNumber: number
-  export let isImagesOnSides: boolean
+  interface Props {
+    divQuestion: HTMLDivElement[];
+    isQuestionVisible: boolean;
+    isCorrectionVisible: boolean;
+    currentSlide: Slide;
+    currentQuestion: number;
+    selectedQuestionsNumber: number;
+    isImagesOnSides: boolean;
+  }
 
-  let nbVues
-  $: nbVues = currentSlide.vues.length
+  let {
+    divQuestion = $bindable(),
+    isQuestionVisible,
+    isCorrectionVisible,
+    currentSlide,
+    currentQuestion,
+    selectedQuestionsNumber,
+    isImagesOnSides
+  }: Props = $props();
+
+  let nbVues = $derived(currentSlide.vues.length)
+  
 
 </script>
 

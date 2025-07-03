@@ -2,12 +2,23 @@
   import type { Serie } from '../../../types'
   import { mathaleaFormatExercice } from '../../../../../../lib/mathalea'
 
-  export let isQuestionsVisible: boolean | undefined
-  export let isCorrectionVisible: boolean | undefined
-  export let seriesIndex: number
-  export let order: number[]
-  export let series: Serie[]
-  export let correctionsSteps: number[]
+  interface Props {
+    isQuestionsVisible: boolean | undefined;
+    isCorrectionVisible: boolean | undefined;
+    seriesIndex: number;
+    order: number[];
+    series: Serie[];
+    correctionsSteps: number[];
+  }
+
+  let {
+    isQuestionsVisible,
+    isCorrectionVisible,
+    seriesIndex,
+    order,
+    series,
+    correctionsSteps
+  }: Props = $props();
 
 </script>
 
@@ -62,7 +73,7 @@
             <div
               class="absolute bottom-0 left-0 border-b-[3px] w-4
                 border-coopmaths-struct dark:border-coopmathsdark-struct"
-            />
+></div>
           </div>
         {/if}
       </div>

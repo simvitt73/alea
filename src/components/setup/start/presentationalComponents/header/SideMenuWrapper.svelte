@@ -1,7 +1,11 @@
 <script lang="ts">
-  export let isSidenavOpened: boolean
-  export let isRecorder: boolean
-  export let toggleSidenav: (test: boolean) => void
+  interface Props {
+    isSidenavOpened: boolean;
+    isRecorder: boolean;
+    toggleSidenav: (test: boolean) => void;
+  }
+
+  let { isSidenavOpened, isRecorder, toggleSidenav }: Props = $props();
 </script>
 
 <div
@@ -19,7 +23,7 @@
     data-te-target="#choiceSideMenuWrapper"
     aria-controls="#choiceSideMenuWrapper"
     aria-haspopup="true"
-    on:click={() => {
+    onclick={() => {
       toggleSidenav(false)
     }}
   >
@@ -29,6 +33,6 @@
         {isSidenavOpened ? 'bx-x' : 'bx-right-arrow-alt'}
         text-coopmaths-action dark:text-coopmathsdark-action
         hover:text-coopmaths-action-lightest hover:dark:text-coopmathsdark-action-lightest"
-    />
+></i>
   </button>
 </div>

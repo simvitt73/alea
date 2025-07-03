@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Sortable from 'sortablejs'
   import ChipExo from './ChipExo.svelte'
   import { exercicesParams, moveExercice } from '../../../lib/stores/generalStore'
@@ -6,9 +8,13 @@
   import { uuidCount, exercisesUuidRanking } from '../../../lib/components/counts'
   import { getUniqueStringBasedOnTimeStamp } from '../../../lib/components/time'
   import type { ChipContentType } from '../../../lib/types'
-  export let chipsListDisplayed: boolean
-  let listIdsForChips: ChipContentType[] = []
-  $: {
+  interface Props {
+    chipsListDisplayed: boolean;
+  }
+
+  let { chipsListDisplayed = $bindable() }: Props = $props();
+  let listIdsForChips: ChipContentType[] = $state([])
+  run(() => {
     const lIFC: ChipContentType[] = []
     let ranks: number[]
     let counts: Record<string, number>
@@ -27,7 +33,7 @@
       lIFC.push(obj)
     }
     listIdsForChips = lIFC
-  }
+  });
   onMount(() => {
     Sortable.create(document.getElementById('chips-list'), {
       animation: 150,
@@ -48,13 +54,13 @@
     <button
       class="absolute -right-3 -top-3"
       type="button"
-      on:click={() => {
+      onclick={() => {
         chipsListDisplayed = false
       }}
     >
       <i
         class="bx bx-x text-2xl text-coopmaths-action hover:text-coopmaths-action-lightest"
-      />
+></i>
     </button>
     <div class="text-coopmaths-struct font-semibold text-lg">
       Réorganisation des exercices

@@ -4,17 +4,31 @@
   import InputText from '../../../shared/forms/InputText.svelte'
   import ButtonsDeck from '../../../shared/ui/ButtonsDeck.svelte'
 
-  export let zoomUpdate: (plusMinus: ('+' | '-')) => void
-  export let newDataForAll: () => void
-  export let trash: () => void
-  export let buildUrlAndOpenItInNewTab: (type: 'usual' | 'eleve') => void
-  export let showSettingsDialog: () => void
-  export let importExercises: (urlFeuilleEleve: string) => void
-  export let isExercisesListEmpty: boolean
-  export let isCapytale: boolean
-  export let handleRecorder: () => void
+  interface Props {
+    zoomUpdate: (plusMinus: ('+' | '-')) => void;
+    newDataForAll: () => void;
+    trash: () => void;
+    buildUrlAndOpenItInNewTab: (type: 'usual' | 'eleve') => void;
+    showSettingsDialog: () => void;
+    importExercises: (urlFeuilleEleve: string) => void;
+    isExercisesListEmpty: boolean;
+    isCapytale: boolean;
+    handleRecorder: () => void;
+  }
 
-  let urlFeuilleEleve: string = ''
+  let {
+    zoomUpdate,
+    newDataForAll,
+    trash,
+    buildUrlAndOpenItInNewTab,
+    showSettingsDialog,
+    importExercises,
+    isExercisesListEmpty,
+    isCapytale,
+    handleRecorder
+  }: Props = $props();
+
+  let urlFeuilleEleve: string = $state('')
 
 </script>
 
@@ -53,7 +67,8 @@
   </div>
   <div class="w-full flex flex-row">
     <ButtonsDeck class="mt-4 md:mt-0">
-      <div
+      <!-- @migration-task: migrate this slot by hand, `setup-buttons` is an invalid identifier -->
+  <div
         slot="setup-buttons"
         class="flex flex-row justify-center items-center space-x-4"
       >
@@ -78,21 +93,24 @@
           on:click={trash}
         />
       </div>
-      <div slot="input" class="flex flex-row items-center space-x-4">
-        <InputText
-          title="Importer les exercices d'une feuille élève"
-          placeholder="Lien"
-          bind:value={urlFeuilleEleve}
-          classAddenda="w-50"
-        />
-        <ButtonTextAction
-          class="text-sm py-1 px-2 rounded-md h-7"
-          text="Ajouter"
-          disabled={urlFeuilleEleve === ''}
-          on:click={() => importExercises(urlFeuilleEleve)}
-        />
-      </div>
-      <div
+      {#snippet input()}
+            <div  class="flex flex-row items-center space-x-4">
+          <InputText
+            title="Importer les exercices d'une feuille élève"
+            placeholder="Lien"
+            bind:value={urlFeuilleEleve}
+            classAddenda="w-50"
+          />
+          <ButtonTextAction
+            class="text-sm py-1 px-2 rounded-md h-7"
+            text="Ajouter"
+            disabled={urlFeuilleEleve === ''}
+            on:click={() => importExercises(urlFeuilleEleve)}
+          />
+        </div>
+          {/snippet}
+      <!-- @migration-task: migrate this slot by hand, `export-buttons` is an invalid identifier -->
+  <div
         slot="export-buttons"
         class="flex flex-row justify-center items-center space-x-4"
       >

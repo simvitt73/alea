@@ -15,13 +15,23 @@
   import LanguageIcon from '../ui/LanguageIcon.svelte'
   import ModalLanguageChoice from '../modal/ModalLanguageChoice.svelte'
 
-  export let title: string = 'MathALÉA'
-  export let subtitle: string = ''
-  export let subtitleType: 'export' | 'design' = 'export'
-  export let locale: Language
-  export let handleLanguage: (lang: string) => void
+  interface Props {
+    title?: string;
+    subtitle?: string;
+    subtitleType?: 'export' | 'design';
+    locale: Language;
+    handleLanguage: (lang: string) => void;
+  }
 
-  let showLanguageChoiceModal: boolean = false
+  let {
+    title = 'MathALÉA',
+    subtitle = '',
+    subtitleType = 'export',
+    locale,
+    handleLanguage
+  }: Props = $props();
+
+  let showLanguageChoiceModal: boolean = $state(false)
 
 </script>
 
@@ -60,8 +70,8 @@
         flex-col md:flex-row">
         <div>
           <div
-            on:click={() => mathaleaGoToView('')}
-            on:keydown={() => mathaleaGoToView('')}
+            onclick={() => mathaleaGoToView('')}
+            onkeydown={() => mathaleaGoToView('')}
             role="link"
             tabindex="0"
             class="relative inline-flex font-logo9 tracking-tighter font-black
@@ -107,7 +117,7 @@
         <div class="md:hidden">
           <button
             type="button"
-            on:click={() => {
+            onclick={() => {
               showLanguageChoiceModal = !showLanguageChoiceModal
             }}
           >
@@ -127,8 +137,8 @@
           class="invisible"
           bind:checked={$darkMode.isActive}
         />
-        <div class="swap-on"><i class="bx bx-sm bx-sun" /></div>
-        <div class="swap-off"><i class="bx bx-sm bx-moon" /></div>
+        <div class="swap-on"><i class="bx bx-sm bx-sun"></i></div>
+        <div class="swap-off"><i class="bx bx-sm bx-moon"></i></div>
       </label>
       <ButtonIcon
         icon="bx-x {subtitleType === 'design' ? 'hidden' : ''}"

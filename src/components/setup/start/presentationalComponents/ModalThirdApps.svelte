@@ -4,9 +4,13 @@
   import appsTierce from '../../../../json/referentielAppsTierce.json'
   import type { AppTierceGroup } from 'src/lib/types/referentiels'
 
-  export let thirdAppsChoiceModal: BasicClassicModal
-  export let showThirdAppsChoiceDialog: boolean
-  export let appsTierceInExercisesList: string[]
+  interface Props {
+    thirdAppsChoiceModal: BasicClassicModal;
+    showThirdAppsChoiceDialog: boolean;
+    appsTierceInExercisesList: string[];
+  }
+
+  let { thirdAppsChoiceModal = $bindable(), showThirdAppsChoiceDialog = $bindable(), appsTierceInExercisesList }: Props = $props();
 
   const appsTierceReferentielArray: AppTierceGroup[] = Object.values(appsTierce)
 </script>
@@ -16,24 +20,28 @@
   bind:this={thirdAppsChoiceModal}
   bind:isDisplayed={showThirdAppsChoiceDialog}
 >
-  <div slot="header">Applications</div>
-  <div slot="content">
-    <div class="p2">
-      {#each appsTierceReferentielArray as group}
-        <div class="mx-2 pt-8">
-          <div class="font-bold text-2xl text-coopmaths-struct py-4">
-            {group.rubrique}
+  {#snippet header()}
+    <div >Applications</div>
+  {/snippet}
+  {#snippet content()}
+    <div >
+      <div class="p2">
+        {#each appsTierceReferentielArray as group}
+          <div class="mx-2 pt-8">
+            <div class="font-bold text-2xl text-coopmaths-struct py-4">
+              {group.rubrique}
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+              {#each group.liste as app}
+                <Card
+                  application={app}
+                  selected={appsTierceInExercisesList.includes(app.uuid)}
+                />
+              {/each}
+            </div>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {#each group.liste as app}
-              <Card
-                application={app}
-                selected={appsTierceInExercisesList.includes(app.uuid)}
-              />
-            {/each}
-          </div>
-        </div>
-      {/each}
+        {/each}
+      </div>
     </div>
-  </div>
+  {/snippet}
 </BasicClassicModal>

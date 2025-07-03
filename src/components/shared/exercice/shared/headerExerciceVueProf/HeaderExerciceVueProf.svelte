@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { createEventDispatcher } from 'svelte'
   import BoutonMonter from './BoutonMonter.svelte'
   import BoutonDescendre from './BoutonDescendre.svelte'
@@ -9,32 +11,53 @@
   import { toMap } from '../../../../../lib/components/toMap'
   import { mathaleaGenerateSeed } from '../../../../../lib/mathalea'
 
-  // paramètres obligatoires
-  export let title: string | undefined
-  export let id: string
-  export let indiceExercice: number
-  export let indiceLastExercice: number
-  export let interactifReady: boolean
-  // paramètres optionnels
-  export let randomReady = true
-  export let settingsReady = true
-  export let correctionReady = true
-  export let correctionExists = true
-  export let isInteractif: boolean = false
-  export let isSortable: boolean = true
-  export let isDeletable: boolean = true
-  export let isHidable: boolean = true
-  let isVisible = true
-  export let isSettingsVisible = true
+  
+  
+  let isVisible = $state(true)
+  interface Props {
+    // paramètres obligatoires
+    title: string | undefined;
+    id: string;
+    indiceExercice: number;
+    indiceLastExercice: number;
+    interactifReady: boolean;
+    // paramètres optionnels
+    randomReady?: boolean;
+    settingsReady?: boolean;
+    correctionReady?: boolean;
+    correctionExists?: boolean;
+    isInteractif?: boolean;
+    isSortable?: boolean;
+    isDeletable?: boolean;
+    isHidable?: boolean;
+    isSettingsVisible?: boolean;
+  }
+
+  let {
+    title,
+    id,
+    indiceExercice,
+    indiceLastExercice,
+    interactifReady,
+    randomReady = true,
+    settingsReady = true,
+    correctionReady = true,
+    correctionExists = true,
+    isInteractif = $bindable(false),
+    isSortable = true,
+    isDeletable = true,
+    isHidable = true,
+    isSettingsVisible = $bindable(true)
+  }: Props = $props();
   const isContentVisible = true
-  let isCorrectionVisible = false
+  let isCorrectionVisible = $state(false)
   // redéfinition du titre lorsqu'un exercice apparait plusieurs fois :
   // si le titre contient le caractère | (ajouté lors de la création de l'exercice)
   // on coupe le titre en deux et on distingue le titre de base de l'addendum
   // afin de pouvoir décorer cet addendum
-  let titleAddendum: string
-  let titleBase: string
-  $: {
+  let titleAddendum: string = $state()
+  let titleBase: string = $state()
+  run(() => {
     if (title?.includes('|')) {
       const decompo = title.split('|')
       titleBase = decompo[0]
@@ -43,13 +66,13 @@
       titleBase = (title || '')
       titleAddendum = ''
     }
-  }
+  });
   // Éttablissement de la catégorie
   const ressourcesUuids = Object.keys({ ...uuidsRessources })
   const profsUuids = Array.from(toMap({ ...refProfs }).values()).map((e) =>
     e.get('uuid')
   )
-  let category: string
+  let category: string = $state()
   if (ressourcesUuids.includes($exercicesParams[indiceExercice]?.uuid)) {
     category = 'Ressource'
   } else if (profsUuids.includes($exercicesParams[indiceExercice]?.uuid)) {
@@ -173,7 +196,7 @@
             ? 'Masquer la correction'
             : 'Montrer la correction'}
           type="button"
-          on:click={() => {
+          onclick={() => {
             isCorrectionVisible = !isCorrectionVisible
             dispatch('clickCorrection', {
               isCorrectionVisible,
@@ -185,7 +208,7 @@
             class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx {isCorrectionVisible
               ? 'bxs-check-circle'
               : 'bx-check-circle'}"
-          />
+></i>
         </button>
         <button
           class="mx-2 tooltip tooltip-left tooltip-neutral {$globalOptions.isInteractiveFree &&
@@ -196,7 +219,7 @@
             ? "Désactiver l'interactivité"
             : 'Rendre interactif'}
           type="button"
-          on:click={switchInteractif}
+          onclick={switchInteractif}
         >
           <InteractivityIcon isOnStateActive={isInteractif} />
         </button>
@@ -204,18 +227,18 @@
           class="mx-2 tooltip tooltip-left"
           data-tip="Nouvel énoncé"
           type="button"
-          on:click={newData}
+          onclick={newData}
         >
           <i
             class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx bx-refresh {randomReady
               ? ''
               : 'hidden'}"
-          />
+></i>
         </button>
         {#if isHidable}
           <button
             type="button"
-            on:click={() => {
+            onclick={() => {
               isVisible = !isVisible
               dispatch('clickVisible', { isVisible })
             }}
@@ -226,29 +249,29 @@
               class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx {isVisible
                 ? 'bx-hide'
                 : 'bx-show'}"
-            />
+></i>
           </button>
         {/if}
         <button
           class="mx-2 tooltip tooltip-left tooltip-neutral"
           data-tip="Dupliquer l'exercice"
           type="button"
-          on:click={duplicate}
+          onclick={duplicate}
         >
           <i
             class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx bx-duplicate"
-          />
+></i>
         </button>
         {#if isDeletable}
           <button
             class="mx-2 tooltip tooltip-left tooltip-neutral"
             data-tip="Supprimer l'exercice"
             type="button"
-            on:click={remove}
+            onclick={remove}
           >
             <i
               class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx bx-trash"
-            />
+></i>
           </button>
         {/if}
         <button
@@ -257,14 +280,14 @@
             : 'hidden'} "
           data-tip="Changer les paramètres de l'exercice"
           type="button"
-          on:click={() => {
+          onclick={() => {
             isSettingsVisible = !isSettingsVisible
             dispatch('clickSettings', { isSettingsVisible })
           }}
         >
           <i
             class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest bx bx-slider"
-          />
+></i>
         </button>
       </div>
       <div

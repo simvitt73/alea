@@ -2,7 +2,11 @@
   import ButtonIconTooltip from '../../../../shared/forms/ButtonIconTooltip.svelte'
   import FullscreenButton from '../../../start/presentationalComponents/header/headerButtons/setupButtons/FullscreenButton.svelte'
 
-  export let goToOverview: () => void
+  interface Props {
+    goToOverview: () => void;
+  }
+
+  let { goToOverview }: Props = $props();
 
 </script>
 

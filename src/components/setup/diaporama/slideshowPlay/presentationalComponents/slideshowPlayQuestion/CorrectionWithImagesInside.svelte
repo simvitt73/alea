@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { Vue } from '../../../types'
 
-  export let slideView: Vue
+  interface Props {
+    slideView: Vue;
+  }
+
+  let { slideView }: Props = $props();
 
 </script>
 

@@ -3,13 +3,13 @@
   import ElapsedTime from './ElapsedTime.svelte'
   import { millisecondToMinSec } from '../../../../lib/components/time'
 
-  export let durationInMilliSeconds
+  let { durationInMilliSeconds } = $props();
   const dispatch = createEventDispatcher()
 
   let elapsed = 0
   const duration = durationInMilliSeconds // 1min
-  let displayedTime = ''
-  let widthFactor = 1
+  let displayedTime = $state('')
+  let widthFactor = $state(1)
 
   let lastTime = window.performance.now()
   let frame: number | undefined

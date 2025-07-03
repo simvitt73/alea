@@ -2,7 +2,11 @@
   import Footer from '../../../Footer.svelte'
   import Advertising from './Advertising.svelte'
 
-  export let text: string
+  interface Props {
+    text: string;
+  }
+
+  let { text }: Props = $props();
 
 </script>
 
@@ -21,10 +25,10 @@
     >
       <div class="mt-[10px]">
         <div class="hidden md:inline-flex">
-          <i class="bx bx-chevron-left text-[50px]" />
+          <i class="bx bx-chevron-left text-[50px]"></i>
         </div>
         <div class="inline-flex md:hidden">
-          <i class="bx bx-chevron-up text-[50px]" />
+          <i class="bx bx-chevron-up text-[50px]"></i>
         </div>
       </div>
       <div class="font-extralight text-[50px]">

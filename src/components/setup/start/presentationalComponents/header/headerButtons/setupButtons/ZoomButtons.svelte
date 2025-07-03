@@ -1,7 +1,11 @@
 <script lang="ts">
   import ButtonIconTooltip from '../../../../../../shared/forms/ButtonIconTooltip.svelte'
 
-  export let zoomUpdate: (plusMinus: ('+' | '-')) => void
+  interface Props {
+    zoomUpdate: (plusMinus: ('+' | '-')) => void;
+  }
+
+  let { zoomUpdate }: Props = $props();
 
 </script>
 

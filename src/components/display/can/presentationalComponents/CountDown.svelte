@@ -2,8 +2,12 @@
   import { onMount } from "svelte"
   import type { CanState } from "../../../../lib/types/can"
   import { canOptions } from "../../../../lib/stores/canStore"
-  export let state: CanState
-  export let count: number = 6
+  interface Props {
+    state: CanState;
+    count?: number;
+  }
+
+  let { state = $bindable(), count = $bindable(6) }: Props = $props();
   onMount(() => {
     const counter = document.getElementById("counter")
     if (counter) {

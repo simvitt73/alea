@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { exercicesParams, darkMode } from "../../../lib/stores/generalStore";
   import Footer from "../../Footer.svelte";
   import NavBar from "../../shared/header/NavBar.svelte";
@@ -76,8 +78,8 @@
     });
   }
 
-  let contentGift = "";
-  let contentScorm = "";
+  let contentGift = $state("");
+  let contentScorm = $state("");
   /*
     <organizations default="coopmaths.fr">
         <organization identifier="coopmaths.fr" structure="hierarchical">
@@ -246,17 +248,17 @@
     contentScorm = '<?xml version="1.0" encoding="UTF-8"?>\n' + contentScorm;
   }
 
-  let aleaType = "alea"; // 'alea' | 'moodle' | 'graine'
-  let useAlea = true;
-  let showTitle = true;
-  $: {
+  let aleaType = $state("alea"); // 'alea' | 'moodle' | 'graine'
+  let useAlea = $state(true);
+  let showTitle = $state(true);
+  run(() => {
     aleaType;
     useAlea;
     showTitle;
     initExercices();
-  }
+  });
 
-  let tab = "gift";
+  let tab = $state("gift");
 </script>
 
 <main
@@ -305,7 +307,7 @@
             aria-controls="tabs-gift"
             aria-selected="true"
             data-te-nav-active=""
-            on:click={() => {
+            onclick={() => {
               tab = "gift";
             }}
           >
@@ -323,7 +325,7 @@
             role="tab"
             aria-controls="tabs-scorm"
             aria-selected="false"
-            on:click={() => {
+            onclick={() => {
               tab = "scorm";
             }}
           >
@@ -343,7 +345,7 @@
             role="tab"
             aria-controls="tabs-bookmarklet"
             aria-selected="false"
-            on:click={() => {
+            onclick={() => {
               tab = "bookmarklet";
             }}
           >
@@ -436,10 +438,10 @@
                 </div>
                 <button
                   type="submit"
-                  on:click={downloadGift}
+                  onclick={downloadGift}
                   class="p-2 rounded-xl text-coopmaths-canvas dark:text-coopmathsdark-canvas bg-coopmaths-action hover:bg-coopmaths-action-lightest dark:bg-coopmathsdark-action dark:hover:bg-coopmathsdark-action-lightest"
                 >
-                  <i class="bx bx-download mr-2" />Télécharger le fichier gift
+                  <i class="bx bx-download mr-2"></i>Télécharger le fichier gift
                 </button>
               </div>
               <!-- <button
@@ -513,10 +515,10 @@
 
                 <button
                   type="submit"
-                  on:click={downloadScorm}
+                  onclick={downloadScorm}
                   class="p-2 rounded-xl text-coopmaths-canvas dark:text-coopmathsdark-canvas bg-coopmaths-action hover:bg-coopmaths-action-lightest dark:bg-coopmathsdark-action dark:hover:bg-coopmathsdark-action-lightest"
                 >
-                  <i class="bx bx-download mr-2" />Télécharger le fichier SCORM
+                  <i class="bx bx-download mr-2"></i>Télécharger le fichier SCORM
                 </button>
               </div>
               <h1
@@ -563,7 +565,7 @@
               </h1>
               Glissez déposez le lien ci-dessous dans votre barre de favoris / marque
               page :<br />
-              <!-- svelte-ignore a11y-invalid-attribute -->
+              <!-- svelte-ignore a11y_invalid_attribute -->
               <a
                 href="javascript:var MathAleaBookmarkletScript = document.createElement('script');MathAleaBookmarkletScript.type='text/javascript';MathAleaBookmarkletScript.src='https://coopmaths.fr/alea/assets/externalJs/moodle-bookmarklet.js';document.body.appendChild(MathAleaBookmarkletScript);void(0);"
                 style="color:blue;text-decoration:underline;"

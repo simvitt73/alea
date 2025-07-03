@@ -1,7 +1,6 @@
-<script>
+<script lang="ts">
   import HeaderExerciceVueProf from '../components/shared/exercice/shared/headerExerciceVueProf/HeaderExerciceVueProf.svelte'
-  export let indiceExercice
-  export let indiceLastExercice
+  let { indiceExercice, indiceLastExercice } = $props();
   const headerExerciceProps = {
     title: '',
     isInteractif: false,

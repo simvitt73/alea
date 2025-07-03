@@ -1,31 +1,48 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import BasicClassicModal from './BasicClassicModal.svelte'
 
-  export let contentDisplayed: 'success' | 'error' | 'none' // à bind avec le parent
-  export let successMessage: string
-  export let errorMessage: string
-  export let displayDuration: number = 3000
-
-  let isSuccessDisplayed: boolean
-  $: if (contentDisplayed === 'success') {
-    isSuccessDisplayed = true
-    setTimeout(() => {
-      contentDisplayed = 'none'
-    }, displayDuration)
+  interface Props {
+    contentDisplayed: 'success' | 'error' | 'none'; // à bind avec le parent
+    successMessage: string;
+    errorMessage: string;
+    displayDuration?: number;
   }
 
-  let isErrorDisplayed: boolean
-  $: if (contentDisplayed === 'error') {
-    isErrorDisplayed = true
-    setTimeout(() => {
-      contentDisplayed = 'none'
-    }, displayDuration)
-  }
+  let {
+    contentDisplayed = $bindable(),
+    successMessage,
+    errorMessage,
+    displayDuration = 3000
+  }: Props = $props();
 
-  $: if (contentDisplayed === 'none') {
-    isSuccessDisplayed = false
-    isErrorDisplayed = false
-  }
+  let isSuccessDisplayed: boolean = $state()
+  run(() => {
+    if (contentDisplayed === 'success') {
+      isSuccessDisplayed = true
+      setTimeout(() => {
+        contentDisplayed = 'none'
+      }, displayDuration)
+    }
+  });
+
+  let isErrorDisplayed: boolean = $state()
+  run(() => {
+    if (contentDisplayed === 'error') {
+      isErrorDisplayed = true
+      setTimeout(() => {
+        contentDisplayed = 'none'
+      }, displayDuration)
+    }
+  });
+
+  run(() => {
+    if (contentDisplayed === 'none') {
+      isSuccessDisplayed = false
+      isErrorDisplayed = false
+    }
+  });
 
 </script>
 
@@ -34,10 +51,12 @@
   bind:isDisplayed={isSuccessDisplayed}
   on:close={() => (contentDisplayed = 'none')}
 >
-  <div slot="content">
-    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-    {@html successMessage}
-  </div>
+  {#snippet content()}
+    <div >
+      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+      {@html successMessage}
+    </div>
+  {/snippet}
 </BasicClassicModal>
 
 <BasicClassicModal
@@ -45,8 +64,10 @@
   bind:isDisplayed={isErrorDisplayed}
   on:close={() => (contentDisplayed = 'none')}
 >
-  <div slot="content">
-    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-    {@html errorMessage}
-  </div>
+  {#snippet content()}
+    <div >
+      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+      {@html errorMessage}
+    </div>
+  {/snippet}
 </BasicClassicModal>

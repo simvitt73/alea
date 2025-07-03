@@ -17,6 +17,6 @@
     class="flex flex-row items-center justify-start pr-6 font-thin text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest"
     href="mailto:contact@coopmaths.fr"
   >
-    <i class="bx bx-sm bx-envelope" />
+    <i class="bx bx-sm bx-envelope"></i>
   </a>
 </footer>

@@ -1,6 +1,19 @@
 <script lang="ts">
-  export let title = 'Mon titre'
-  export let icon = 'bxs-file-pdf'
+  interface Props {
+    title?: string;
+    icon?: string;
+    children?: import('svelte').Snippet;
+    button1?: import('svelte').Snippet;
+    button2?: import('svelte').Snippet;
+  }
+
+  let {
+    title = 'Mon titre',
+    icon = 'bxs-file-pdf',
+    children,
+    button1,
+    button2
+  }: Props = $props();
 </script>
 
 <div
@@ -22,31 +35,31 @@
     <p
       class="flex flex-col space-y-2 w-full mb-4 text-base font-light text-coopmaths-corpus dark:text-coopmathsdark-corpus"
     >
-      <slot>
+      {#if children}{@render children()}{:else}
         Un texte devrait s'afficher ici. Celui-ci est le texte par défaut.
-      </slot>
+      {/if}
     </p>
 
     <div class="flex flex-col justify-center items-center space-y-2">
-      {#if $$slots.button1}
-        <slot name="button1">
+      {#if button1}
+        {#if button1}{@render button1()}{:else}
           <button
             type="button"
             class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
           >
             Go somewhere
           </button>
-        </slot>
+        {/if}
       {/if}
-      {#if $$slots.button2}
-        <slot name="button2">
+      {#if button2}
+        {#if button2}{@render button2()}{:else}
           <button
             type="button"
             class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
           >
             Go somewhere
           </button>
-        </slot>
+        {/if}
       {/if}
     </div>
   </div>

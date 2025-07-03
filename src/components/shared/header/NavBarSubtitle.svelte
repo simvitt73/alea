@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let subtitle: string = ''
-  export let type: 'export' | 'design' = 'export'
+  interface Props {
+    subtitle?: string;
+    type?: 'export' | 'design';
+  }
+
+  let { subtitle = '', type = 'export' }: Props = $props();
 </script>
 
 <!--
@@ -29,8 +33,8 @@
     pl-0 md:pl-10
     text-coopmaths-corpus-lightest dark:text-coopmathsdark-corpus-lightest"
   >
-    <i class={type === 'export' ? 'bx bx-export rotate-90 md:translate-y-1' : 'hidden'} />
-    <i class={type === 'design' ? 'bx bx-chevron-right md:translate-y-1' : 'hidden'} />
+    <i class={type === 'export' ? 'bx bx-export rotate-90 md:translate-y-1' : 'hidden'}></i>
+    <i class={type === 'design' ? 'bx bx-chevron-right md:translate-y-1' : 'hidden'}></i>
   </div>
   <div class="font-black
     ml-1 md:ml-3 xl:ml-5

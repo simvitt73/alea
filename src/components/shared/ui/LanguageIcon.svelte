@@ -4,7 +4,11 @@
     languages
   } from '../../../lib/components/languagesUtils'
   import type { Language } from '../../../lib/types/languages'
-  export let locale: Language
+  interface Props {
+    locale: Language;
+  }
+
+  let { locale }: Props = $props();
 </script>
 
 <img

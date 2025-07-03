@@ -2,9 +2,19 @@
   import { assignmentDataFromCapytale } from "../../../../lib/handleCapytale"
   import type { CanState } from "../../../../lib/types/can"
   import ButtonTextAction from "../../../shared/forms/ButtonTextAction.svelte"
-  export let state: CanState
-  export let title = "Course aux Nombres"
-  export let subTitle = "2023"
+  interface Props {
+    state: CanState;
+    title?: string;
+    subTitle?: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    state = $bindable(),
+    title = "Course aux Nombres",
+    subTitle = "2023",
+    children
+  }: Props = $props();
 
   /**
    * Construit la chaîne qui sera affichée pour le score
@@ -56,5 +66,5 @@
     />
     {/if}
   </div>
-  <slot />
+  {@render children?.()}
 </div>

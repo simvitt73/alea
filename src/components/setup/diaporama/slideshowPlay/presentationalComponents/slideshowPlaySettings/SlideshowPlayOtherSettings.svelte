@@ -1,21 +1,38 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import ButtonIcon from '../../../../../shared/forms/ButtonIcon.svelte'
   import SlideshowPlayTimerSettingsModal from './SlideshowPlayTimerSettingsModal.svelte'
 
-  export let handleTimerChange: (cursorTimeValue: number) => void
-  export let switchDisplayMode: () => void
-  export let backToSettings: (event: Event) => void
-  export let pause: () => void
-  export let play: (isUserAction: boolean) => void
-  export let isManualModeActive: boolean | undefined
-  export let isQuestionVisible: boolean
-  export let isCorrectionVisible: boolean
-  export let currentSlideDuration: number
-  export let BUTTONS_CLASS: string
+  interface Props {
+    handleTimerChange: (cursorTimeValue: number) => void;
+    switchDisplayMode: () => void;
+    backToSettings: (event: Event) => void;
+    pause: () => void;
+    play: (isUserAction: boolean) => void;
+    isManualModeActive: boolean | undefined;
+    isQuestionVisible: boolean;
+    isCorrectionVisible: boolean;
+    currentSlideDuration: number;
+    BUTTONS_CLASS: string;
+  }
 
-  let isTimerSettingsModalDisplayedOnce = false
+  let {
+    handleTimerChange,
+    switchDisplayMode,
+    backToSettings,
+    pause,
+    play,
+    isManualModeActive,
+    isQuestionVisible,
+    isCorrectionVisible,
+    currentSlideDuration,
+    BUTTONS_CLASS
+  }: Props = $props();
 
-  $: getDisplayMode = () => {
+  let isTimerSettingsModalDisplayedOnce = $state(false)
+
+  let getDisplayMode = $derived(() => {
     if (isQuestionVisible && !isCorrectionVisible) {
       return 'Q'
     }
@@ -26,19 +43,21 @@
       return 'C'
     }
     return ''
-  }
+  })
 
-  let isTimerSettingsModalDisplayed = false
+  let isTimerSettingsModalDisplayed = $state(false)
   function displayTimerSettingsModal () {
     isTimerSettingsModalDisplayed = true
   }
 
-  $: if (isTimerSettingsModalDisplayed) {
-    pause()
-    isTimerSettingsModalDisplayedOnce = true
-  } else if (isTimerSettingsModalDisplayedOnce) {
-    play(true)
-  }
+  run(() => {
+    if (isTimerSettingsModalDisplayed) {
+      pause()
+      isTimerSettingsModalDisplayedOnce = true
+    } else if (isTimerSettingsModalDisplayedOnce) {
+      play(true)
+    }
+  });
 
 </script>
 

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from 'svelte/legacy';
+
   import * as ace from 'brace'
   import 'brace/mode/latex'
   import 'brace/theme/monokai'
@@ -15,10 +17,15 @@
   import ButtonTextAction from './ButtonTextAction.svelte'
   import { onDestroy, onMount, tick } from 'svelte'
 
-  export let latex: Latex
-  export let latexFileInfos: LatexFileInfos
+  interface Props {
+    latex: Latex;
+    latexFileInfos: LatexFileInfos;
+    [key: string]: any
+  }
 
-  let clockAbled: boolean = false
+  let { ...props }: Props = $props();
+
+  let clockAbled: boolean = $state(false)
 
   const original = 1 * 60 // TYPE NUMBER OF SECONDS HERE
   const timer: Tweened<number> = tweened(original)
@@ -112,9 +119,9 @@
     formData.append('engine', defaultengine)
     formData.append('return', defaultreturn)
 
-    const contents = await latex.getContents(latexFileInfos)
+    const contents = await props.latex.getContents(props.latexFileInfos)
     const picsWanted = doesLatexNeedsPics(contents)
-    const exosContentList = getExosContentList(latex.exercices)
+    const exosContentList = getExosContentList(props.latex.exercices)
     const picsNames = getPicsNames(exosContentList)
     const imagesUrls : string[] = picsWanted
       ? buildImagesUrlsList(exosContentList, picsNames)
@@ -157,15 +164,15 @@
       clockAbled = false
       dialog.close()
     } else {
-      const contents = await latex.getContents(latexFileInfos)
+      const contents = await props.latex.getContents(props.latexFileInfos)
       const picsWanted = doesLatexNeedsPics(contents)
-      const exosContentList = getExosContentList(latex.exercices)
+      const exosContentList = getExosContentList(props.latex.exercices)
       const picsNames = getPicsNames(exosContentList)
       const imagesUrls : string[] = picsWanted
         ? buildImagesUrlsList(exosContentList, picsNames)
         : []
 
-      const { latexWithPreamble } = await latex.getFile(latexFileInfos)
+      const { latexWithPreamble } = await props.latex.getFile(props.latexFileInfos)
 
       const editor = ace.edit('editor')
       editor.getSession().setMode('ace/mode/latex')
@@ -207,12 +214,12 @@
   ```
  -->
 
-  <form class={`${$$props.class || 'flex flex-col md:flex-row mx-4 pb-4 md:pb-8 md:space-x-4 space-y-3 justify-center md:justify-start items-center'}`} target="_blank">
+  <form class={`${props.class || 'flex flex-col md:flex-row mx-4 pb-4 md:pb-8 md:space-x-4 space-y-3 justify-center md:justify-start items-center'}`} target="_blank">
 
     <button
       id="btn_overleaf"
       type="submit"
-      on:click|preventDefault={dialogToDisplayToggle}
+      onclick={preventDefault(dialogToDisplayToggle)}
       class= 'px-2 py-1 rounded-md text-coopmaths-canvas dark:text-coopmathsdark-canvas bg-coopmaths-action hover:bg-coopmaths-action-lightest dark:bg-coopmathsdark-action dark:hover:bg-coopmathsdark-action-lightest'
     >
       Compiler et obtenir le PDF
@@ -227,12 +234,12 @@
       <div class="text-3xl font-medium text-coopmaths-warn-dark">
         <span class="header">
             <div class="absolute top-2 right-3">
-                <button type="button" on:click={() => {
+                <button type="button" onclick={() => {
                   dialogToDisplayToggle()
                 }} >
                 <i
                     class="text-coopmaths-action hover:text-coopmaths-action-lightest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-lightest text-xl bx bx-x"
-                />
+></i>
                 </button>
             </div>
         </span>

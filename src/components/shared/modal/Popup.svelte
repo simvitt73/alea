@@ -1,7 +1,11 @@
 <script lang="ts">
-    export let message : string = ''
-    export let visible = false
-    export let onClose = () => {} // Callback pour la fermeture du popup
+  interface Props {
+    message?: string;
+    visible?: boolean;
+    onClose?: any; // Callback pour la fermeture du popup
+  }
+
+  let { message = '', visible = $bindable(false), onClose = () => {} }: Props = $props();
   
     function closePopup() {
       visible = false
@@ -49,10 +53,10 @@
   </style>
   
   {#if visible}
-    <button class="overlay" on:click={closePopup} aria-label="Close popup"></button>
+    <button class="overlay" onclick={closePopup} aria-label="Close popup"></button>
     <div class="popup">
       <p>{@html message}</p>
-      <button class="button" on:click={closePopup}>Fermer</button>
+      <button class="button" onclick={closePopup}>Fermer</button>
     </div>
   {/if}
   

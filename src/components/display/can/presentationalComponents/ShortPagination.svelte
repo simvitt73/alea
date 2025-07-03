@@ -2,9 +2,13 @@
   import { canOptions } from '../../../../lib/stores/canStore'
   import type { CanState } from '../../../../lib/types/can'
 
-  export let current: number
-  export let state: CanState
-  export let resultsByQuestion: boolean[]
+  interface Props {
+    current: number;
+    state: CanState;
+    resultsByQuestion: boolean[];
+  }
+
+  let { current, state, resultsByQuestion }: Props = $props();
 </script>
 
 <div
@@ -31,7 +35,7 @@
           class="bx {resultsByQuestion[current]
             ? 'bxs-check-square text-coopmaths-warn-800 dark:text-green-500'
             : 'bxs-x-square text-red-500 dark:text-coopmathsdark-warn'}"
-        />
+></i>
       </div>
     {/if}
   </div>

@@ -4,12 +4,21 @@
   import type { KeyboardBlock } from '../../../types/keyboardContent'
   import { keys } from '../../../lib/keycaps'
   import { type KeyCap, isSpecialKey } from '../../../types/keycap'
-  export let innerWidth: number
-  export let block: KeyboardBlock
-  export let isInLine: boolean = false
-  export let clickKeycap: (data: KeyCap, event: MouseEvent) => void
+  interface Props {
+    innerWidth: number;
+    block: KeyboardBlock;
+    isInLine?: boolean;
+    clickKeycap: (data: KeyCap, event: MouseEvent) => void;
+  }
 
-  $: gapsize = GAP_BETWEEN_KEYS[getMode(innerWidth, isInLine)]
+  let {
+    innerWidth,
+    block,
+    isInLine = false,
+    clickKeycap
+  }: Props = $props();
+
+  let gapsize = $derived(GAP_BETWEEN_KEYS[getMode(innerWidth, isInLine)])
 
 </script>
 

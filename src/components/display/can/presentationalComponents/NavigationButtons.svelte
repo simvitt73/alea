@@ -5,11 +5,21 @@
   import { Modal, initTE } from 'tw-elements'
   import ShortPagination from './ShortPagination.svelte'
 
-  export let current: number
-  export let numberOfQuestions: number
-  export let handleEndOfRace: () => void
-  export let state: CanState
-  export let resultsByQuestion: boolean[]
+  interface Props {
+    current: number;
+    numberOfQuestions: number;
+    handleEndOfRace: () => void;
+    state: CanState;
+    resultsByQuestion: boolean[];
+  }
+
+  let {
+    current = $bindable(),
+    numberOfQuestions,
+    handleEndOfRace,
+    state,
+    resultsByQuestion
+  }: Props = $props();
 
   onMount(() => {
     initTE({ Modal })
@@ -36,7 +46,7 @@
 
 <div
   use:swipe={{ timeframe: 300, minSwipeDistance: 60 }}
-  on:swipe={handleSwipe}
+  onswipe={handleSwipe}
   class="w-full pb-8 md:pb-10 px-10 space-y-4 flex flex-col md:flex-row justify-start md:justify-between items-center"
 >
   <div></div>
@@ -44,7 +54,7 @@
     <button
       class="md:hidden flex justify-center items-center"
       type="button"
-      on:click={() => {
+      onclick={() => {
         if (current >= 10) {
           current -= 10
         }
@@ -59,7 +69,7 @@
     </button>
     <button
       type="button"
-      on:click={() => {
+      onclick={() => {
         if (current > 0) {
           current -= 1
         }
@@ -75,7 +85,7 @@
     <ShortPagination {current} {state} {resultsByQuestion} />
     <button
       type="button"
-      on:click={() => {
+      onclick={() => {
         if (current < numberOfQuestions - 1) {
           current += 1
         }
@@ -91,7 +101,7 @@
     <button
       class="md:hidden flex justify-center items-center"
       type="button"
-      on:click={() => {
+      onclick={() => {
         if (current + 10 <= numberOfQuestions - 1) {
           current += 10
         }
@@ -205,7 +215,7 @@
         <button
           type="button"
           class="ml-1 inline-block rounded bg-coopmaths-action dark:bg-coopmathsdark-action px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-coopmaths-canvas dark:text-coopmathsdark-canvas transition duration-150 ease-in-out hover:bg-coopmaths-action-dark focus:bg-coopmaths-action-dark dark:hover:bg-coopmathsdark-action-dark dark:focus:bg-coopmathsdark-action-dark focus:outline-none focus:ring-0 dark:active:bg-coopmathsdark-action-dark"
-          on:click={() => {
+          onclick={() => {
             handleEndOfRace()
           }}
           data-te-modal-dismiss

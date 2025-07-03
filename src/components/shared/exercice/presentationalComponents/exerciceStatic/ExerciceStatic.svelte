@@ -24,11 +24,21 @@
   delete allStaticReferentiels['E3C par thème - APMEP']
   delete allStaticReferentiels['EVACOM par thème']
 
-  export let uuid: string
-  export let indiceExercice: number
-  export let indiceLastExercice: number
-  export let zoomFactor: string
-  export let isSolutionAccessible: boolean
+  interface Props {
+    uuid: string;
+    indiceExercice: number;
+    indiceLastExercice: number;
+    zoomFactor: string;
+    isSolutionAccessible: boolean;
+  }
+
+  let {
+    uuid,
+    indiceExercice,
+    indiceLastExercice,
+    zoomFactor,
+    isSolutionAccessible
+  }: Props = $props();
   const foundResource = retrieveResourceFromUuid(allStaticReferentiels, uuid)
   if (isStaticWithoutPngUrl(foundResource)) {
     const examen = foundResource.uuid.split('_')[0]
@@ -45,9 +55,9 @@
           png: typeof resourceToDisplay.png === 'string' ? [resourceToDisplay.png] : resourceToDisplay.png,
           pngCor: typeof resourceToDisplay.pngCor === 'string' ? [resourceToDisplay.pngCor] : resourceToDisplay.pngCor
         }
-  let isCorrectionVisible = false
-  let isContentVisible = true
-  let headerExerciceProps: HeaderProps
+  let isCorrectionVisible = $state(false)
+  let isContentVisible = $state(true)
+  let headerExerciceProps: HeaderProps = $state()
   if (resourceToDisplay !== null) {
     headerExerciceProps = {
       title: '',
@@ -70,7 +80,7 @@
     }
   }
 
-  let noCorrectionAvailable = false
+  let noCorrectionAvailable = $state(false)
 
   function handleNoCorrectionAvailable () {
     noCorrectionAvailable = true
@@ -114,7 +124,7 @@
               class="p-2"
               style="width: calc(100% * {zoomFactor}"
               alt="correction"
-              on:error={handleNoCorrectionAvailable}
+              onerror={handleNoCorrectionAvailable}
               />
               {/if}
           {/each}
@@ -128,7 +138,7 @@
       </div>
       <div
         class="absolute border-coopmaths-struct dark:border-coopmathsdark-struct bottom-0 left-0 border-b-[3px] w-4"
-      />
+></div>
     </div>
   {/if}
 </div>

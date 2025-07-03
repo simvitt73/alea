@@ -3,21 +3,41 @@
   import SlideshowPlayControlSettings from './SlideshowPlayControlSettings.svelte'
   import SlideshowPlayOtherSettings from './SlideshowPlayOtherSettings.svelte'
 
-  export let isManualModeActive: boolean | undefined
-  export let isQuestionVisible: boolean
-  export let isCorrectionVisible: boolean
-  export let handleTimerChange: (cursorTimeValue: number) => void
-  export let backToSettings: (event: Event) => void
-  export let isPause: boolean
-  export let nextQuestion: () => void
-  export let prevQuestion: () => void
-  export let switchDisplayMode: () => void
-  export let switchPause: (isUserAction?: boolean) => void
-  export let zoomMinus: () => void
-  export let zoomPlus: () => void
-  export let pause: () => void
-  export let play: (isUserAction?: boolean) => void
-  export let currentSlideDuration: number
+  interface Props {
+    isManualModeActive: boolean | undefined;
+    isQuestionVisible: boolean;
+    isCorrectionVisible: boolean;
+    handleTimerChange: (cursorTimeValue: number) => void;
+    backToSettings: (event: Event) => void;
+    isPause: boolean;
+    nextQuestion: () => void;
+    prevQuestion: () => void;
+    switchDisplayMode: () => void;
+    switchPause: (isUserAction?: boolean) => void;
+    zoomMinus: () => void;
+    zoomPlus: () => void;
+    pause: () => void;
+    play: (isUserAction?: boolean) => void;
+    currentSlideDuration: number;
+  }
+
+  let {
+    isManualModeActive,
+    isQuestionVisible,
+    isCorrectionVisible,
+    handleTimerChange,
+    backToSettings,
+    isPause,
+    nextQuestion,
+    prevQuestion,
+    switchDisplayMode,
+    switchPause,
+    zoomMinus,
+    zoomPlus,
+    pause,
+    play,
+    currentSlideDuration
+  }: Props = $props();
 
   const BUTTONS_CLASS = 'mx-1.5 bx-sm md:bx-lg'
 

@@ -2,17 +2,28 @@
   import type { KeyCap } from '../../../../types/keycap'
   import { KEYCAP_HEIGHT, KEYCAP_WIDTH, SM_BREAKPOINT, MD_BREAKPOINT, LG_BREAKPOINT, getMode } from '../../../../lib/sizes'
   import type { Keys } from '../../../../types/keyboardContent'
-  export let innerWidth: number
-  export let keyName: Keys
-  export let key: KeyCap
-  export let isInLine: boolean
-  export let isSpecial: boolean = false
-  export let clickKeycap: (data: KeyCap, event: MouseEvent) => void
-  let button: HTMLButtonElement
-  $: keycapwidth = KEYCAP_WIDTH[getMode(innerWidth, isInLine)]
+  interface Props {
+    innerWidth: number;
+    keyName: Keys;
+    key: KeyCap;
+    isInLine: boolean;
+    isSpecial?: boolean;
+    clickKeycap: (data: KeyCap, event: MouseEvent) => void;
+  }
 
-  $: keycapheight =
-    innerWidth <= SM_BREAKPOINT ? KEYCAP_HEIGHT.sm : KEYCAP_HEIGHT.md
+  let {
+    innerWidth,
+    keyName,
+    key,
+    isInLine,
+    isSpecial = false,
+    clickKeycap
+  }: Props = $props();
+  let button: HTMLButtonElement = $state()
+  let keycapwidth = $derived(KEYCAP_WIDTH[getMode(innerWidth, isInLine)])
+
+  let keycapheight =
+    $derived(innerWidth <= SM_BREAKPOINT ? KEYCAP_HEIGHT.sm : KEYCAP_HEIGHT.md)
 </script>
 
 <button
@@ -21,11 +32,11 @@
     ? 'bg-coopmaths-canvas-moredark dark:bg-coopmathsdark-canvas-moredark'
     : 'bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas'}  py-1 px-1 md:py-2 md:px-4 text-center rounded-md font-mono touch-none"
   style="--keycapwidth:{keycapwidth}; --keycapheight:{keycapheight};"
-  on:mousedown={(e) => {
+  onmousedown={(e) => {
     e.preventDefault()
     e.stopPropagation()
   }}
-  on:click={(e) => {
+  onclick={(e) => {
     clickKeycap(key, e)
   }}
 >

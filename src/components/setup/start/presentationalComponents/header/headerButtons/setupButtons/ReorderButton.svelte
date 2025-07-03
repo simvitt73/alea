@@ -1,6 +1,10 @@
 <script lang="ts">
   import ButtonIconTooltip from '../../../../../../shared/forms/ButtonIconTooltip.svelte'
-  export let reorderModalDisplayed: boolean
+  interface Props {
+    reorderModalDisplayed: boolean;
+  }
+
+  let { reorderModalDisplayed = $bindable() }: Props = $props();
 
 </script>
 

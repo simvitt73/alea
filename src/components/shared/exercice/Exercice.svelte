@@ -14,16 +14,25 @@
   import ExerciceMathalea from './exerciceMathalea/ExerciceMathalea.svelte'
   import { isStatic } from '../../../lib/components/exercisesUtils'
 
-  export let paramsExercice: InterfaceParams
-  export let indiceExercice: number
-  export let indiceLastExercice: number
-  export let isCorrectionVisible = false
+  interface Props {
+    paramsExercice: InterfaceParams;
+    indiceExercice: number;
+    indiceLastExercice: number;
+    isCorrectionVisible?: boolean;
+  }
+
+  let {
+    paramsExercice,
+    indiceExercice,
+    indiceLastExercice,
+    isCorrectionVisible = false
+  }: Props = $props();
 
   type ExerciseType = 'mathaleaVueProf' | 'mathaleaVueEleve' | 'static' | 'html' | 'svelte'
 
-  let exercise: Exercice
-  let exerciseType: ExerciseType
-  let ComponentExercice: typeof SvelteComponent<any>
+  let exercise: Exercice = $state()
+  let exerciseType: ExerciseType = $state()
+  let ComponentExercice: typeof SvelteComponent<any> = $state()
 
   onMount(async () => {
     if (isStatic(paramsExercice.uuid)) {
@@ -84,7 +93,7 @@
     on:exerciseRemoved
   />
 {:else if exerciseType === 'svelte'}
-  <svelte:component this={ComponentExercice} {indiceExercice} {indiceLastExercice} />
+  <ComponentExercice {indiceExercice} {indiceLastExercice} />
 {:else if exerciseType === 'mathaleaVueEleve'}
   <ExerciceMathalea
     vue="eleve"

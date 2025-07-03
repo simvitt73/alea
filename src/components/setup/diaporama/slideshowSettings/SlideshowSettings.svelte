@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type Exercice from '../../../../exercices/Exercice'
   import { type NumberRange } from '../../../../lib/types'
   import DisplaySettings from './presentationalComponents/DisplaySettings.svelte'
@@ -16,19 +18,32 @@
   import { isIntegerInRange0to4 } from '../../../../lib/types/integerInRange'
   import { listOfRandomIndexes } from '../../../../lib/components/shuffle'
 
-  export let exercises: Exercice[]
-  export let updateExercises: (updateSlidesContent?: boolean) => void
-  export let transitionSounds: { 0: HTMLAudioElement; 1: HTMLAudioElement; 2: HTMLAudioElement; 3: HTMLAudioElement; }
-  export let startSlideshow: () => void
-  export let goToOverview: () => void
-  export let goToHome: () => void
+  interface Props {
+    exercises: Exercice[];
+    updateExercises: (updateSlidesContent?: boolean) => void;
+    transitionSounds: { 0: HTMLAudioElement; 1: HTMLAudioElement; 2: HTMLAudioElement; 3: HTMLAudioElement; };
+    startSlideshow: () => void;
+    goToOverview: () => void;
+    goToHome: () => void;
+  }
 
-  let divTableDurationsQuestions: HTMLDivElement
+  let {
+    exercises = $bindable(),
+    updateExercises,
+    transitionSounds,
+    startSlideshow,
+    goToOverview,
+    goToHome
+  }: Props = $props();
+
+  let divTableDurationsQuestions: HTMLDivElement = $state()
   let previousNumberOfSelectedExercises: number
 
-  $: if (divTableDurationsQuestions) {
-    mathaleaRenderDiv(divTableDurationsQuestions)
-  }
+  run(() => {
+    if (divTableDurationsQuestions) {
+      mathaleaRenderDiv(divTableDurationsQuestions)
+    }
+  });
 
   function applyRandomSelectionOfExercises (numberOfSelectedExercises: number) {
     let selection: number[] | undefined
@@ -178,10 +193,10 @@
               bg-coopmaths-action dark:bg-coopmathsdark-action
               hover:bg-coopmaths-action-lightest dark:hover:bg-coopmathsdark-action-lightest
               text-coopmaths-canvas dark:text-coopmathsdark-canvas"
-            on:click={startSlideshow}
-            on:keydown={startSlideshow}
+            onclick={startSlideshow}
+            onkeydown={startSlideshow}
           >
-            Play<i class="bx bx-play" />
+            Play<i class="bx bx-play"></i>
           </button>
         </div>
       </div>

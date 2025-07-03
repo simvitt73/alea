@@ -1,9 +1,19 @@
 <script lang="ts">
-  export let isMenuNeededForExercises: boolean
-  export let presMode: string
-  export let title: string
-  export let indiceExercice: number
-  export let showNumber = true
+  interface Props {
+    isMenuNeededForExercises: boolean;
+    presMode: string;
+    title: string;
+    indiceExercice: number;
+    showNumber?: boolean;
+  }
+
+  let {
+    isMenuNeededForExercises,
+    presMode,
+    title,
+    indiceExercice,
+    showNumber = true
+  }: Props = $props();
 </script>
 
 <!--

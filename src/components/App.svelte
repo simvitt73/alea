@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Diaporama from './setup/diaporama/Diaporama.svelte'
   import Eleve from './display/eleve/Eleve.svelte'
   import ConfigEleve from './setup/configEleve/ConfigEleve.svelte'
@@ -35,10 +37,10 @@
   import { vendor } from '../lib/stores/vendorStore'
   import { convertVueType } from '../lib/types'
 
-  let isInitialUrlHandled = false
+  let isInitialUrlHandled = $state(false)
 
-  let showPopup = false
-  let popupMessage = ''
+  let showPopup = $state(false)
+  let popupMessage = $state('')
 
   function handlePopupClose() {
     // console.log('Popup has been closed');
@@ -107,7 +109,7 @@
     $canOptions.isInteractive = canIsInteractive === 'true'
   }
 
-  $: {
+  run(() => {
     if (isInitialUrlHandled) {
       mathaleaUpdateUrlFromExercicesParams($exercicesParams)
     }
@@ -148,7 +150,7 @@
     if ($globalOptions.v === 'can') context.vue = 'can' // for compatibility
     // lorsque l'éditeur sera intégré à la v3, il faudra mettre à true cette propriété pour l'editeur
     context.isInEditor = false
-  }
+  });
 
   function handleInitialUrl() {
     updateReferentielLocaleFromURL()

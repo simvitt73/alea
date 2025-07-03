@@ -2,10 +2,19 @@
   import type TypeExercice from '../../../../../../exercices/Exercice'
   import { mathaleaFormatExercice } from '../../../../../../lib/mathalea'
 
-  export let exercise: TypeExercice
-  export let exerciseIndex: number
-  export let questionIndex:number
-  export let isCorrectionVisible: boolean
+  interface Props {
+    exercise: TypeExercice;
+    exerciseIndex: number;
+    questionIndex: number;
+    isCorrectionVisible: boolean;
+  }
+
+  let {
+    exercise,
+    exerciseIndex,
+    questionIndex,
+    isCorrectionVisible
+  }: Props = $props();
 
 </script>
 
@@ -23,7 +32,7 @@
         class={exercise.consigneCorrection.length !== 0 ? 'container max-w-full text-justify bg-coopmaths-canvas dark:bg-coopmathsdark-canvas-dark px-4 py-2 mr-2 ml-6 mb-2 font-light relative w-2/3' : 'hidden'}
       >
         <div class="{exercise.consigneCorrection.length !== 0 ? 'container max-w-full text-justify absolute top-4 -left-4' : 'hidden'} ">
-          <i class="bx bx-bulb scale-200 text-coopmaths-warn-dark dark:text-coopmathsdark-warn-dark" />
+          <i class="bx bx-bulb scale-200 text-coopmaths-warn-dark dark:text-coopmathsdark-warn-dark"></i>
         </div>
         <div class="">
           <!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -39,7 +48,7 @@
       >
         Correction
       </div>
-      <div class="absolute border-coopmaths-struct dark:border-coopmathsdark-struct bottom-0 left-0 border-b-[3px] w-4" />
+      <div class="absolute border-coopmaths-struct dark:border-coopmathsdark-struct bottom-0 left-0 border-b-[3px] w-4"></div>
     </div>
   {/if}
 </div>
