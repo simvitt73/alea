@@ -333,6 +333,7 @@ export function loadPackagesFromContent (contents: contentsType) {
   testIfLoaded(['\\tkz', '\\pic['], '\\usepackage{tkz-euclide}', contents)
   testIfLoaded(['\\pstEllipse[linewidth='], '\\providecommand\\pstEllipse{}\n\\renewcommand{\\pstEllipse}[5][]{%\n\\psset{#1}\n\\parametricplot{#4}{#5}{#2\\space t cos mul #3\\space t sin mul}\n}', contents, '\\pstEllipse')
   testIfLoaded(['\\makecell'], '\\usepackage{makecell}', contents)
+  testIfLoaded(['\\glissenombre'], GLISSE_NOMBRE_IN_PREAMBLE, contents)
 
   if (contents.content.includes('\\begin{forest}') || contents.contentCorr.includes('\\begin{forest}')) {
     logPDF(`usepackage{forest} : ${window.location.href}`)
@@ -343,10 +344,6 @@ export function loadPackagesFromContent (contents: contentsType) {
 % Structure servant à avoir l'événement et la probabilité.
 \\def\\getEvene#1/#2\\endget{$#1$}
 \\def\\getProba#1/#2\\endget{$#2$}`
-  }
-  if (contents.content.includes('\\glissenombre')) {
-    const latexCodeForGlisseNombre = processLatexFile('glissenombre.tex')
-    contents.preamble += latexCodeForGlisseNombre
   }
 }
 
@@ -550,25 +547,149 @@ function squareO () {
   }%`
 }
 
-/**
- * Get a LaTeX file content and replace all backslashes with double backslashes.
- * @param fileUrl - The URL of the LaTeX file to process.
- * @returns  - The string with all backslashes replaced with double backslashes.
- */
-async function processLatexFile (fileUrl: string): Promise<string> {
-  try {
-    const response = await fetch(fileUrl)
-    if (!response.ok) {
-      throw new Error(`Failed to fetch file: ${response.status} ${response.statusText}`)
-    }
-    const latexContent = await response.text()
-    const processedContent = latexContent.replace(/\\/g, '\\\\')
-    return processedContent
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Error processing LaTeX file: ${error.message}`)
-    } else {
-      throw new Error('Unknown error occurred while processing LaTeX file')
-    }
+const GLISSE_NOMBRE_IN_PREAMBLE = `
+\\usepackage{tikz}
+\\usetikzlibrary{calc,math}
+\\usepackage{tabularray}
+\\usepackage{rotating}
+\\usepackage{makecell}
+\\usepackage{luacode}
+\\UseTblrLibrary{tikz,varwidth}
+\\usepackage{expkv-def}
+\\usepackage{siunitx}
+\\usepackage{xstring}
+\\begin{luacode}
+  function numberToArray(nb, animation)
+  local result = {}
+
+  -- Initialize array with spaces
+  for i = 1, 10 do
+  result[i] = " "
+  end
+
+  -- Replace comma with dot for easier processing
+  local cleanNb = nb:gsub(",", ".")
+
+  -- Apply animation transformation
+  local number = tonumber(cleanNb)
+  if animation > 0 then
+  -- Multiply by 10^animation
+  number = number * (10 ^ animation)
+  elseif animation < 0 then
+  -- Divide by 10^(-animation)
+  number = number / (10 ^ (-animation))
+  end
+
+  -- Convert back to string and clean up
+  local processedNb = tostring(number)
+
+  -- Remove trailing .0 if present (for whole numbers)
+  processedNb = processedNb:gsub("%.0$", "")
+
+  -- Find the decimal point position
+  local decimalPos = processedNb:find("%.")
+  local integerPart, decimalPart
+
+  if decimalPos then
+  integerPart = processedNb:sub(1, decimalPos - 1)
+  decimalPart = processedNb:sub(decimalPos + 1)
+  else
+  integerPart = processedNb
+  decimalPart = ""
+  end
+
+  -- Place integer part (units digit at position 7)
+  local unitsPos = 7
+  for i = #integerPart, 1, -1 do
+  local digit = integerPart:sub(i, i)
+  local pos = unitsPos - (#integerPart - i)
+  if pos >= 1 and pos <= 10 then
+  result[pos] = digit
+  end
+  end
+
+  -- Place decimal part (starting from position 8)
+  for i = 1, #decimalPart do
+  local pos = 7 + i
+  if pos <= 10 then
+  result[pos] = decimalPart:sub(i, i)
+  end
+  end
+
+  return result, decimalPos
+  end
+
+  function operation(nb)
+  local op = {
+  "\\\\times \\\\num{1000000}",
+  "\\\\times \\\\num{100000}",
+  "\\\\times \\\\num{10000}",
+  "\\\\times \\\\num{1000}",
+  "\\\\times 100",
+  "\\\\times 10",
+  "",
+  "\\\\div 10",
+  "\\\\div 100",
+  "\\\\div \\\\num{1000}"
   }
-}
+  return op[7-nb]
+  end
+\\end{luacode}
+\\makeatletter%
+% définition des clés pour la commande \\glissenombre
+\\ekvdefinekeys{glissenombre}%
+{%
+  ,store  animation = \\glissenombre@animation%
+  ,initial animation = none%
+  ,store  color = \\glissenombre@color%
+  ,initial color = black!20%
+  ,invboolTF nocomma = \\ifglissenombre@nocomma%
+  ,boolTF calcul = \\ifglissenombre@calcul%
+  ,boolTF zeros = \\ifglissenombre@zeros%
+}%
+\\NewDocumentCommand{\\glissenombre}{ O{} m }{%
+  \\begingroup%
+  \\ekvset{glissenombre}{#1}%
+  \\luadirect{firstnb,firstcomma = numberToArray(\\luastring{#2},0)}%
+  \\IfInteger{\\glissenombre@animation}{%
+    \\luadirect{secondnb,secondcomma = numberToArray(\\luastring{#2},\\glissenombre@animation)}%
+  }{}%
+  \\begin{tblrtikzbelow}%
+    \\IfInteger{\\glissenombre@animation}{%
+      \\tikzmath{%
+        integer \\x;%
+        \\x = 7 - \\glissenombre@animation;}%
+      \\fill[\\glissenombre@color] (1-\\x.north west) rectangle (1-\\x.south east);%
+      \\fill[\\glissenombre@color] (3-\\x.north west) rectangle (3-\\x.south east);%
+    }{}%
+  \\end{tblrtikzbelow}%
+  \\begin{tblrtikzabove}%
+    \\foreach \\x in {1,...,10} \\node at (2-\\x) {\\luadirect{tex.sprint(firstnb[\\x])}};%
+    \\IfInteger{\\glissenombre@animation}{%
+      \\foreach \\x in {1,...,10} \\node at (3-\\x) {\\luadirect{tex.sprint(secondnb[\\x])}};%
+    }{}%
+    \\ifglissenombre@nocomma{%
+      \\luadirect{if firstcomma then tex.sprint("\\\\node at ([xshift=-5pt,yshift=8pt]2-7.south east) {\\\\Large,};") end}%
+      \\IfInteger{\\glissenombre@animation}{%
+        \\luadirect{if secondcomma then tex.sprint("\\\\node at ([xshift=-5pt,yshift=8pt]3-7.south east) {\\\\Large,};") end}%
+      }{}%
+    }{}%
+    \\IfInteger{\\glissenombre@animation}{%
+      \\ifglissenombre@calcul{%
+        \\luaexec{tex.sprint(string.format("\\\\node[above,font=\\\\tiny] at (1-\\\\%d.north) {$\\\\%s$};",7 - \\glissenombre@animation, operation(\\glissenombre@animation)))}%
+      }{}%
+    }{}%
+  \\end{tblrtikzabove}%
+  \\renewcommand\\cellrotangle{90}%
+  \\settowidth\\rotheadsize{centaine mille}%
+  \\begin{tblr}{width=\\linewidth,colspec={*{10}{X[c,1]}},hlines,vlines,stretch=2%
+      ,measure=vbox%
+      ,row{1}={cmd={\\rotcell},font={\\bfseries\\footnotesize}}%
+    }%
+    Millions & Centaines de milliers & Dizaines de milliers & Milliers & Centaines & Dizaines & Unités & Dixièmes & Centièmes & Millièmes \\\\%
+             &                       &                      &          &           &          &        &          &           &           \\\\%
+             &                       &                      &          &           &          &        &          &           &           \\\\%
+  \\end{tblr}%
+  \\endgroup%
+}%
+\\makeatother`
