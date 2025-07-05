@@ -64,7 +64,7 @@ export interface ReponseParams {
 export type clickFigures = { id: string; solution: boolean }[]
 
 export type AnswerType = {
-  value: string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Hms | Grandeur[] | Hms[] | Decimal[] | FractionEtendue[]
+  value: AnswerValueType
   compare?: CompareFunction
   options?: OptionsComparaisonType
 }
@@ -153,6 +153,10 @@ export interface ValeurNormalized {
     score: { nbBonnesReponses: number, nbReponses: number }
   }
 }
+
+export type AnswerValueType = string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Hms | Grandeur[] | Hms[] | Decimal[] | FractionEtendue[]
+
+export type ReponseComplexe = AnswerValueType | Valeur
 export type UneProposition = {
   texte?: string
   statut?: number | boolean | string

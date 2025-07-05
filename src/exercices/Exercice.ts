@@ -1,19 +1,10 @@
 import type Grandeur from '../modules/Grandeur'
 import { exportedApplyNewSeed, exportedNouvelleVersionWrapper, exportedQuestionJamaisPosee, exportedReinit } from './exerciseMethods'
-import type { AutoCorrection, clickFigures, Valeur } from '../lib/interactif/gestionInteractif'
+import type { AutoCorrection, clickFigures, ReponseComplexe } from '../lib/interactif/gestionInteractif'
 import type { OptionsComparaisonType } from '../lib/interactif/comparisonFunctions'
 import type DragAndDrop from '../lib/interactif/DragAndDrop'
 import type Figure from 'apigeom/src/Figure'
 import { KeyboardType, type PartialKbType } from '../lib/interactif/claviers/keyboard'
-import type FractionEtendue from '../modules/FractionEtendue'
-import type Decimal from 'decimal.js'
-import type Hms from '../modules/Hms'
-
-type Reponse = string | string[] | number | number[] | FractionEtendue | Decimal | Grandeur | Hms | Grandeur[] | Hms[] | Decimal[] | FractionEtendue[]
-// Ces types ne sont plus utiles car sont dans le type Valeur
-// type Bareme = (listePoints: number[]) => [number, number]
-// type CallbackReponse = (exercice: Exercice, question: number) => { isOk: boolean, feedback: string, score: { nbBonnesReponses: number, nbReponses: number } }
-type ReponseComplexe = Reponse | Valeur // | { champ1?: { value: Reponse }, champ2?: { value: Reponse }, bareme?: Bareme, callback?: CallbackReponse }
 
 /**
  *
@@ -49,6 +40,9 @@ export default class Exercice {
   question?: string // Seulement pour les exercices de type simple
   reponse?: ReponseComplexe // Seulement pour les exercices de type simple
   correction?: string // Seulement pour les exercices de type simple
+  distracteurs: (string | number)[] // Seulement pour les exercices de type simple
+  versionQcmDisponible?: boolean // Pour les exercices de type simple, si des distracteurs sont définis, on peut proposer une version QCM
+  versionQcm?: boolean // Seulement pour les exercices de type simple, version QCM activée si 'true'
   canOfficielle?: boolean = false
   canEnonce?: string // Seulement pour les exercices de type simple ??? NON ! NOTE de Jena-claude Lhote du 2/02/2025 : et pourquoi ça ???
   // On peut être amené à utiliser un Exercice non simple à une seule question dans une can, parce qu'il a 3 champs et une correction custom.
@@ -145,6 +139,7 @@ export default class Exercice {
     this.contenuCorrection = '' // Idem avec la correction
     this.autoCorrection = [] // Liste des objets par question pour correction interactive || export AMC.
     this.tableauSolutionsDuQcm = [] // Pour sauvegarder les solutions des QCM.
+    this.distracteurs = [] // Liste des distracteurs pour les exercices de type simple.
 
     // ///////////////////////////////////////////////
     // Mise en forme de l'exercice
