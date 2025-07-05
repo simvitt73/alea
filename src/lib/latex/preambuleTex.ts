@@ -344,6 +344,10 @@ export function loadPackagesFromContent (contents: contentsType) {
 \\def\\getEvene#1/#2\\endget{$#1$}
 \\def\\getProba#1/#2\\endget{$#2$}`
   }
+  if (contents.content.includes('\\glissenombre')) {
+    const latexCodeForGlisseNombre = processLatexFile('glissenombre.tex')
+    contents.preamble += latexCodeForGlisseNombre
+  }
 }
 
 function decompDNB () {
@@ -544,4 +548,27 @@ function squareO () {
       endfor;
     \\end{mplibcode}
   }%`
+}
+
+/**
+ * Get a LaTeX file content and replace all backslashes with double backslashes.
+ * @param fileUrl - The URL of the LaTeX file to process.
+ * @returns  - The string with all backslashes replaced with double backslashes.
+ */
+async function processLatexFile (fileUrl: string): Promise<string> {
+  try {
+    const response = await fetch(fileUrl)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch file: ${response.status} ${response.statusText}`)
+    }
+    const latexContent = await response.text()
+    const processedContent = latexContent.replace(/\\/g, '\\\\')
+    return processedContent
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error processing LaTeX file: ${error.message}`)
+    } else {
+      throw new Error('Unknown error occurred while processing LaTeX file')
+    }
+  }
 }
