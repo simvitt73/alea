@@ -49,6 +49,7 @@ export default class MultiplierParPuissanceDixNeg extends Exercice {
     const typeQuestion = choice(typeQuestionsDisponibles)
     const d = choice([0.1, 0.01, 0.001])
     this.reponse = arrondi(facteur * d)
+    this.distracteurs = [arrondi(facteur / d), arrondi(facteur * 10 * d), arrondi(facteur * 10 / d)]
     let operateurLaTeX = '\\times'
     let operateurLateXContraire = '\\div'
     let verbeOperation = 'multipli'
@@ -57,6 +58,7 @@ export default class MultiplierParPuissanceDixNeg extends Exercice {
     let petitOuGrand = 'petit'
     if (typeQuestion === 'diviser') {
       this.reponse = arrondi(facteur / d)
+      this.distracteurs = [arrondi(facteur * d), arrondi(facteur * 10 * d), arrondi(facteur * 10 / d)]
       operateurLaTeX = '\\div'
       verbeOperation = 'divis'
       verbeOperationContraire = 'multipli'
