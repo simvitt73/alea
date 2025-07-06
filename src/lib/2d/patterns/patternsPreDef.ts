@@ -9,10 +9,10 @@ export type PatternRiche = {
   visualId?: number,
   numero: number,
   shapes: ShapeName[],
-
   fonctionNb: (x: number) => number,
   fonctionFraction?: (x: number) => FractionEtendue,
   fonctionRatio?: (x: number) => Ratio,
+  texRatio?: string,
   formule: string,
   type: 'linéaire' | 'affine' | 'degré2' | 'degré3' | 'autre' | 'fractal',
   pattern?: VisualPattern,
@@ -1503,6 +1503,7 @@ const pattern59: PatternRiche = {
   fonctionFraction: (x:number) => new FractionEtendue(x, 4 * x + 2),
   // ratio: new Ratio([2 * x,
   fonctionRatio: (x:number) => new Ratio([x, x + 1, 2 * x + 1]),
+  texRatio: 'soleils : étoiles : hexagones',
   formule: 'n : n+1 : 2n+1',
   type: 'affine',
   shapes: ['soleil', 'étoile', 'hexagone'],
@@ -1527,6 +1528,7 @@ const pattern60: PatternRiche = {
   fonctionNb: (x:number) => 2 * x + 2,
   fonctionRatio: (x:number) => new Ratio([x, x + 2]),
   fonctionFraction: (x:number) => new FractionEtendue(x, 2 * x + 2),
+  texRatio: 'tortues : chats',
   formule: '\\dfrac{n}{2n+2}',
   type: 'affine',
   shapes: ['tortue', 'chat'],
@@ -1548,6 +1550,7 @@ const pattern61: PatternRiche = {
   fonctionNb: (x:number) => x ** 2 + 4 * x + 2,
   fonctionFraction: (x:number) => new FractionEtendue(x ** 2 + 2 * x + 1, x ** 2 + 4 * x + 2),
   fonctionRatio: (x:number) => new Ratio([x ** 2 + 2 * x + 1, 2 * x + 1]),
+  texRatio: 'carrés : hexagones',
   formule: 'n^2+4n+2',
   type: 'degré2',
   shapes: ['carréBleu', 'hexagone'],
@@ -1572,6 +1575,7 @@ const pattern62: PatternRiche = {
   numero: 62,
   fonctionNb: (x:number) => 3 * x,
   fonctionRatio: (x:number) => new Ratio([x, 2 * x]),
+  texRatio: 'ronds : croix rouges',
   fonctionFraction: (x:number) => new FractionEtendue(x, 3 * x),
   formule: '3\\times n',
   type: 'linéaire',
@@ -1591,6 +1595,7 @@ const pattern63: PatternRiche = {
   numero: 63,
   fonctionNb: (x:number) => 2 * x + 1,
   fonctionRatio: (x:number) => new Ratio([x + 1, x]),
+  texRatio: 'hexagones : étoiles',
   fonctionFraction: (x:number) => new FractionEtendue(x + 1, 2 * x + 1),
   formule: '2\\times n + 1',
   type: 'affine',
@@ -1614,6 +1619,7 @@ const pattern64:PatternRiche = {
   shapes: ['carréRond', 'rond'],
   fonctionNb: (n:number) => 4 * n + 1,
   fonctionRatio: (x:number) => new Ratio([x, 3 * x + 1]),
+  texRatio: 'carrés : ronds',
   fonctionFraction: (x:number) => new FractionEtendue(x, 4 * x + 1),
   formule: '4\\times n + 1',
   type: 'affine',
@@ -1641,6 +1647,7 @@ const pattern65: PatternRiche = {
   formule: '5\\times n + 2',
   fonctionNb: (x:number) => 5 * x + 2,
   fonctionRatio: (x:number) => new Ratio([4 * x + 2, x]),
+  texRatio: 'hexagones bleus : hexagones jaunes',
   fonctionFraction: (x:number) => new FractionEtendue(4 * x + 2, 5 * x + 2),
   iterate: function (this: VisualPattern, n: number = 1): Set<string> {
     if (n === undefined) n = 1
@@ -1663,6 +1670,7 @@ const pattern66: PatternRiche = {
   fonctionNb: (x:number) => 1 + 3 * (x + 1) * x,
   formule: '1+3\\times n(n+1)',
   fonctionRatio: (x:number) => new Ratio([1 + 3 * (x - 1) * x, 6 * x]),
+  texRatio: 'hexagones bleux : hexagones jaunes',
   fonctionFraction: (x:number) => new FractionEtendue(1 + 3 * (x - 1) * x, 1 + 3 * (x + 1) * x),
   type: 'degré2',
   shapes: ['hexagone', 'hexagoneJaune'],
@@ -1694,6 +1702,7 @@ const pattern67: PatternRiche = {
   formule: '\\dfrac{n\\times(n+1)}{2}',
   type: 'degré2',
   shapes: ['cloche', 'fleur'],
+  texRatio: 'cloches : fleurs',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -1716,6 +1725,7 @@ const pattern68: PatternRiche = {
   formule: '(n+2)^2',
   type: 'degré2',
   shapes: ['carré', 'carréBleu'],
+  texRatio: 'carrés gris : carrés bleus',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -1737,6 +1747,7 @@ const pattern69: PatternRiche = {
   formule: 'n^2',
   type: 'degré2',
   shapes: ['carréBleu', 'carré'],
+  texRatio: 'carrés bleus : carrés',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -1817,6 +1828,7 @@ const pattern72: PatternRiche = {
   formule: 'n^2',
   type: 'degré2',
   shapes: ['triangle'],
+  texRatio: 'triangles blancs : triangles verts ',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -1837,6 +1849,7 @@ const pattern73: PatternRiche = {
   formule: '3\\times n + 5',
   type: 'affine',
   shapes: ['rond', 'carré', 'étoile'],
+  texRatio: 'ronds : carrés : étoiles',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -1938,6 +1951,7 @@ const pattern76: PatternRiche = {
   formule: '5\\times n + 4',
   type: 'affine',
   shapes: ['licorne', 'dragon'],
+  texRatio: 'licornes : dragons',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -1960,6 +1974,7 @@ const pattern77: PatternRiche = {
   formule: '(n+1)(n+3)',
   type: 'degré2',
   shapes: ['rectangleVert', 'rectangleBlanc'],
+  texRatio: 'rectangles verts : rectangles blancs',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -1981,6 +1996,7 @@ const pattern78: PatternRiche = {
   fonctionFraction: (x:number) => new FractionEtendue(3 * x ** 2 - 3 * x - 2, 1 + x * (x - 1) * 3),
   type: 'degré2',
   shapes: ['hexagone', 'hexagoneJaune'],
+  texRatio: 'hexagones bleus : hexagones jaunes',
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
     const newCells = new Set<string>()
@@ -2245,6 +2261,7 @@ const pattern90: PatternRiche = {
   fonctionNb: (x:number) => (3 ** x - 1) / 2,
   formule: '\\dfrac{3^n-1}{2}',
   fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 3 ** (x - 1)]),
+  texRatio: 'triangles blancs : triangles verts',
   fonctionFraction: (x:number) => new FractionEtendue((3 ** (x - 1) - 1) / 2, (3 ** x - 1) / 2),
   type: 'autre',
   pattern: new VisualPattern([
@@ -2494,10 +2511,11 @@ const pattern100: PatternRicheRepetition = {
 const pattern101: PatternRiche = {
   shapes: ['carré'],
   numero: 101,
-  fonctionNb: (x:number) => (3 ** x - 1) / 2,
+  fonctionNb: (x:number) => (3 ** x - 2) * 2,
   formule: '\\dfrac{3^n-1}{2}',
-  fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 3 ** (x - 1)]),
-  fonctionFraction: (x:number) => new FractionEtendue((3 ** (x - 1) - 1) / 2, (3 ** x - 1) / 2),
+  fonctionRatio: (x:number) => new Ratio([3 ** (x - 2), 3 ** (x - 1)]),
+  texRatio: 'carrés blancs : carrés gris',
+  fonctionFraction: (x:number) => new FractionEtendue(3 ** (x - 1), 2 * (3 ** (x - 2))),
   type: 'fractal',
   pattern: new VisualPattern([]),
   iterate: function (this: VisualPattern, n) {
@@ -2523,7 +2541,8 @@ const pattern102: PatternRiche = {
   numero: 101,
   fonctionNb: (x:number) => (3 ** x - 1) / 2,
   formule: '\\dfrac{3^n-1}{2}',
-  fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 3 ** (x - 1)]),
+  fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 8 ** (x - 1)]),
+  texRatio: 'carrés blancs : carrés bleus',
   fonctionFraction: (x:number) => new FractionEtendue((3 ** (x - 1) - 1) / 2, (3 ** x - 1) / 2),
   type: 'fractal',
   pattern: new VisualPattern([]),
@@ -2553,8 +2572,6 @@ const pattern103: PatternRiche = {
   numero: 101,
   fonctionNb: (x:number) => (3 ** x - 1) / 2,
   formule: '\\dfrac{3^n-1}{2}',
-  fonctionRatio: (x:number) => new Ratio([(3 ** (x - 1) - 1) / 2, 3 ** (x - 1)]),
-  fonctionFraction: (x:number) => new FractionEtendue((3 ** (x - 1) - 1) / 2, (3 ** x - 1) / 2),
   type: 'fractal',
   pattern: new VisualPattern([]),
   iterate: function (this: VisualPattern, n) {
