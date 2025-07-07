@@ -1,7 +1,7 @@
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texRacineCarree } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Déterminer le nombre de solutions d’une équation se ramenant à $x^2=a$'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -19,7 +19,7 @@ export const refs = {
   'fr-fr': ['can2L01'],
   'fr-ch': []
 }
-export default class EquationPlusMoinsX2PlusAEgalB extends Exercice {
+export default class EquationPlusMoinsX2PlusAEgalB extends ExerciceSimple {
   constructor () {
     super()
 
