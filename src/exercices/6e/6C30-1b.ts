@@ -205,8 +205,8 @@ export default class MultiplierDecimauxPar101001000V2 extends Exercice {
       const produitFinal = arrondi(a * Math.pow(10, b))
       const choixOrdreMultiplication = choice([true, false])
       const fractionFinale = new FractionEtendue(produitFinal, 1).texFraction
-      let showComma1 = true
-      let showComma2 = true
+      const showComma1 = typesDeFacteurs[i] < 3 // Si facteur fractionnaire ou entier, pas de virgule sur ligne 1
+      const showComma2 = typesDeResultats[i] !== 3// Si produit fractionnaire, pas de virgule sur ligne 1
       switch (typesDeNombreCherche[i]) {
         case 1 :
           reponse = produitFinal
@@ -299,9 +299,7 @@ export default class MultiplierDecimauxPar101001000V2 extends Exercice {
            Math.pow(10, b)
                    )} \\times ${miseEnEvidence(typesDeFacteurs[i] < 3 ? texNombre(a) : aSousFraction)} = ${typesDeResultats[i] !== 3 ? texNombre(reponse) : fractionFinale}$`
           }
-          // showComma1 = !(typesDeFacteurs[i] > 2 && new FractionEtendue(a, 1).den !== 1)
-          showComma1 = !(typesDeFacteurs[i] > 2)
-          showComma2 = !(typesDeResultats[i] > 1)
+
           handleAnswers(this, i, { reponse: { value: reponse, options: { fractionEgale: true, nombreDecimalSeulement: true } } })
           break
         }
