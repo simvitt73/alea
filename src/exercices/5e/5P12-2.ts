@@ -60,7 +60,13 @@ export default class PaternNum1 extends Exercice {
       //  patterns.push(pattern)
 
       for (const name of pat.shapes) {
-        objetsCorr.push(listeShapesDef[name])
+        if (name in listeShapesDef) {
+          objetsCorr.push(listeShapesDef[name])
+        } else if (name in emojis) {
+          objetsCorr.push(emoji(name, emojis[name]).shapeDef)
+        } else {
+          throw new Error(`Le nom de la forme "${name}" n'est pas reconnu dans les formes prédéfinies.`)
+        }
       }
       const rendered = pattern.render(nbFigures + 1, 0, 0)
       objetsCorr.push(...rendered)
