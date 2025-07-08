@@ -33,6 +33,8 @@ export const refs = {
 
 export function donneNomClasse (valeur: number): string[] {
   switch (valeur) {
+    case 1:
+      return ['unités', 'unités']
     case 10:
       return ['dizaines', 'dixièmes']
     case 100:
@@ -40,7 +42,7 @@ export function donneNomClasse (valeur: number): string[] {
     case 1000:
       return ['milliers', 'millièmes']
     default:
-      throw new Error('Valeur non prise en charge. Utilise 10, 100 ou 1000.')
+      throw new Error(valeur + ' : Valeur non prise en charge. Utilise 10, 100 ou 1000.')
   }
 }
 
