@@ -82,9 +82,11 @@ export default class PaternRepetitif extends Exercice {
         if (forme in listeShapesDef) {
           objetsCorr.push(listeShapesDef[forme])
           objets.push(listeShapesDef[forme])
-        } else {
+        } else if (forme in emojis) {
           objetsCorr.push(emoji(forme, emojis[forme]).shapeDef)
           objets.push(emoji(forme, emojis[forme]).shapeDef)
+        } else {
+          throw new Error(`Le nom de la forme "${forme}" n'est pas reconnu dans les formes prédéfinies.`)
         }
       }
       for (let j = 1; j <= nbFigures; j++) {

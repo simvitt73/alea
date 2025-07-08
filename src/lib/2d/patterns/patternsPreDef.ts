@@ -90,7 +90,7 @@ const pattern1:PatternRiche = {
   numero: 1,
   visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/5da32a25-8bdd-4072-bd76-5e94635ba57d/vp11_2.png?format=2500w',
   visualId: 11,
-  shapes: ['carré'],
+  shapes: ['soleil'],
   fonctionNb: (x:number) => 2 * x + 1,
   formule: '2\\times n + 1',
   type: 'affine',
@@ -128,9 +128,9 @@ const pattern2:PatternRiche = {
 }
 
 const pattern3:PatternRiche = {
+  numero: 3,
   visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/bae949b2-d658-41ad-a0ab-ff08226865f3/vp10_2_orig.png?format=2500w',
   visualId: 10,
-  numero: 3,
   shapes: ['carré'],
   fonctionNb: (x:number) => 2 * x - 1,
   formule: '2\\times n -1',
@@ -2465,9 +2465,9 @@ const pattern98: PatternRiche = {
 
 // flèche en allumettes
 const pattern99: PatternRiche = {
+  numero: 99,
   visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/38a70e2e-75f6-4395-b2d5-15b83aa73771/vp55_2.png?format=2500w',
   visualId: 55,
-  numero: 99,
   shapes: ['allumetteV'],
   type: 'affine',
   fonctionNb: (x:number) => 3 * x + 5,
@@ -2491,7 +2491,6 @@ const pattern99: PatternRiche = {
 }
 
 const pattern100: PatternRicheRepetition = {
-
   shapes: ['cadeau', 'explosion'],
   nbMotifMin: 10,
   numero: 100,
@@ -2802,7 +2801,7 @@ const listePatternsPreDef: (PatternRiche | PatternRiche3D)[] = [
  * - listePatternDegre2 : tous les patterns de degré 2
  * - listePatternDegre3 : tous les patterns de degré 3
  */
-const listePattern2d: (PatternRiche)[] = listePatternsPreDef.filter((p) => p instanceof VisualPattern) as PatternRiche[]
+const listePattern2d: PatternRiche[] = listePatternsPreDef.filter((p) => p instanceof VisualPattern) as PatternRiche[]
 const listePattern3d: PatternRiche3D[] = listePatternsPreDef.filter((p) => p instanceof VisualPattern3D) as PatternRiche3D[]
 const listePatternAffine: (PatternRiche | PatternRiche3D)[] = listePatternsPreDef.filter((p) => p.type === 'affine')
 const listePatternLineaire: (PatternRiche | PatternRiche3D)[] = listePatternsPreDef.filter((p) => p.type === 'linéaire')
@@ -2812,6 +2811,7 @@ const listePattern2dAffine: PatternRiche[] = listePattern2d.filter((p) => p inst
 const listePattern2dLineaire: PatternRiche[] = listePattern2d.filter((p) => p instanceof VisualPattern && p.type === 'linéaire')
 const listePatternAutres: (PatternRiche | PatternRiche3D)[] = listePattern2d.filter((p) => p.type === 'autre')
 const listePatternRatio: (PatternRiche | PatternRiche3D)[] = listePatternsPreDef.filter((p) => p.fonctionRatio != null)
-const listePatternFraction: (PatternRiche | PatternRiche3D)[] = listePatternsPreDef.filter((p) => p.fonctionFraction != null)
+const listePatternFraction: PatternRiche[] = listePattern2d.filter((p) => p.fonctionFraction != null)
+const listePatternAffineOuLineaire: (PatternRiche | PatternRiche3D)[] = listePatternsPreDef.filter((p) => p.type === 'affine' || p.type === 'linéaire')
 
-export { listePatternsPreDef, listePatternAutres, listePattern2d, listePattern3d, listePatternAffine, listePatternLineaire, listePatternDegre2, listePatternDegre3, listePattern2dAffine, listePattern2dLineaire, listePatternRatio, listePatternFraction }
+export { listePatternAffineOuLineaire, listePatternsPreDef, listePatternAutres, listePattern2d, listePattern3d, listePatternAffine, listePatternLineaire, listePatternDegre2, listePatternDegre3, listePattern2dAffine, listePattern2dLineaire, listePatternRatio, listePatternFraction }

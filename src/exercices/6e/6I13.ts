@@ -5,8 +5,8 @@ import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../..
 import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { gestionnaireFormulaireTexte, randint } from '../../modules/outils'
-import { balleDef, carreDef, carreRondDef, hexagoneDef, listeShapes2DNames, listeShapesDef, losangeDef, redCrossDef, rondDef, triangleEquilateralDef } from '../../lib/2d/figures2d/shapes2d'
-import { listePatternsPreDef, type PatternRiche, type PatternRiche3D } from '../../lib/2d/patterns/patternsPreDef'
+import { listeShapesDef } from '../../lib/2d/figures2d/shapes2d'
+import { listePatternAffineOuLineaire, type PatternRiche, type PatternRiche3D } from '../../lib/2d/patterns/patternsPreDef'
 import { createList } from '../../lib/format/lists'
 import { texNombre } from '../../lib/outils/texNombre'
 import { texteParPosition } from '../../lib/2d/textes'
@@ -48,30 +48,26 @@ export default class PaternNum0 extends Exercice {
  Cet exercice contient des patterns issus de l'excellent site : https://www.visualpatterns.org/`
     this.besoinFormulaireNumerique = ['Nombre de figures par question', 4]
     this.sup = 3
-    this.besoinFormulaire3Texte = ['formes', 'Nombres séparés par des tirets\n1: Carrés\n2 : Étoile\n3 : Carrés arrondis\n4: Chat\n5 : Soleil\n6 : Losange\n7 : Hexagone\n8: Cercle\n9: Balle de tennis\n10 : tortue\n11 : triangle\n12 : croix rouge\n13 : Mélange']
-    this.sup3 = '13'
-    this.besoinFormulaire4Texte = ['Types de questions', 'Nombres séparés par des tirets\n1: Motif suivant à dessiner\n2 : Motif suivant (nombre)\n3 : Motif 10 (nombre)\n4 : Motif 42 (nombre)\n5 : Motif 100 (nombre)\n6 : Question au hasard parmi les 5 précédentes']
+    this.besoinFormulaire4Texte = ['Types de questions', 'Nombres séparés par des tirets\n1: Motif suivant à dessiner\n2 : Motif suivant (nombre)\n3 : Motif 10 (nombre)\n4 : Numéro du motif\n5 : Motif 100 (nombre)\n6 : Question au hasard parmi les 5 précédentes']
     this.sup4 = '6'
     this.besoinFormulaire5Numerique = ['Numéro de pattern (uniquement si 1 seule question)', 100,]
     this.sup5 = 1
   }
 
   nouvelleVersion (): void {
-    if (this.sup5 > listePatternsPreDef.length) {
-      this.sup5 = listePatternsPreDef.length
+    if (this.sup5 > listePatternAffineOuLineaire.length) {
+      this.sup5 = listePatternAffineOuLineaire.length
     }
     if (this.sup5 < 1) {
       this.sup5 = 1
     }
+    if (this.nbQuestions > 25) this.nbQuestions = 25
     // on ne conserve que les linéaires et les affines.
     const listePreDef = (this.nbQuestions === 1
-      ? [listePatternsPreDef[Number(this.sup5) - 1]]
-      : shuffle(listePatternsPreDef.slice(0, this.sup2 ?? listePatternsPreDef.length)))
-      .filter(p => p.fonctionRatio == null && p.fonctionFraction == null && p.type !== 'autre' && p.type !== 'degré3' && p.type !== 'degré2')
+      ? [listePatternAffineOuLineaire[Number(this.sup5) - 1]]
+      : shuffle(listePatternAffineOuLineaire.slice(0, this.sup2 ?? listePatternAffineOuLineaire.length)))
+      .filter(p => p.fonctionRatio == null && p.fonctionFraction == null && p.type !== 'autre' && p.type !== 'degré3' && p.type !== 'degré2' && p.type !== 'fractal')
     const nbFigures = Math.max(2, this.sup)
-    // const typesMotifs = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 2, defaut: 3, melange: 3, nbQuestions: this.nbQuestions }).map(Number)
-    const formes = gestionnaireFormulaireTexte({ saisie: this.sup3, min: 1, max: 12, defaut: 13, melange: 13, nbQuestions: this.nbQuestions }).map(Number)
-    // const patterns : (VisualPattern | VisualPattern3D)[] = []
     const typesQuestions = Array.from(new Set(gestionnaireFormulaireTexte({ saisie: this.sup4, min: 1, max: 5, defaut: 1, melange: 6, nbQuestions: 5, shuffle: false }).map(Number)))
     let indexInteractif = 0
     for (let i = 0; i < this.nbQuestions;) {
@@ -99,75 +95,15 @@ export default class PaternNum0 extends Exercice {
       } else {
         const pat2D = pat as PatternRiche
         pattern.iterate = (pat as PatternRiche).iterate
-        if (pat2D.shapes[0] === pat2D.shapes[1] || !pat2D.shapes[1]) {
-          pattern.shapes = [listeShapes2DNames[formes[i]]]
-          switch (formes[i]) {
-            case 2:
-              pattern.shapes[0] = 'étoile'
-              pattern.shapes[1] = 'étoile'
-              objetsCorr.push(emoji('étoile', emojis['étoile']).shapeDef)
-              break
-            case 3:
-              pattern.shapes[0] = 'carréRond'
-              pattern.shapes[1] = 'carréRond'
-              objetsCorr.push(carreRondDef)
-              break
-            case 4:
-              pattern.shapes[0] = 'chat'
-              pattern.shapes[1] = 'chat'
-              objetsCorr.push(emoji('chat', emojis['chat']).shapeDef)
-              break
-            case 5:
-              pattern.shapes[0] = 'soleil'
-              pattern.shapes[1] = 'soleil'
-              objetsCorr.push(emoji('soleil', emojis['soleil']).shapeDef)
-              break
-            case 6:
-              pattern.shapes[0] = 'losange'
-              pattern.shapes[1] = 'losange'
-              objetsCorr.push(losangeDef)
-              break
-            case 7:
-              pattern.shapes[0] = 'hexagone'
-              pattern.shapes[1] = 'hexagone'
-              objetsCorr.push(hexagoneDef)
-              break
-            case 8:
-              pattern.shapes[0] = 'rond'
-              pattern.shapes[1] = 'rond'
-              objetsCorr.push(rondDef)
-              break
-            case 9:
-              pattern.shapes[0] = 'balle'
-              pattern.shapes[1] = 'balle'
-              objetsCorr.push(balleDef)
-              break
-            case 10:
-              pattern.shapes[0] = 'tortue'
-              pattern.shapes[1] = 'tortue'
-              objetsCorr.push(emoji('tortue', emojis['tortue']).shapeDef)
-              break
-            case 11:
-              pattern.shapes[0] = 'triangle'
-              pattern.shapes[1] = 'triangle'
-              objetsCorr.push(triangleEquilateralDef)
-              break
-            case 12:
-              pattern.shapes[0] = 'redCross'
-              pattern.shapes[1] = 'redCross'
-              objetsCorr.push(redCrossDef)
-              break
-            case 1:
-            default:
-              pattern.shapes[0] = pat2D.shapes[0] || 'carré'
-              pattern.shapes[1] = pat2D.shapes[1] || 'carré'
-              objetsCorr.push(listeShapesDef[pat2D.shapes[0]] || carreDef)
-              objetsCorr.push(listeShapesDef[pat2D.shapes[1]] || carreDef)
-              break
+        pattern.shapes = pat2D.shapes || ['carré', 'carré']
+        for (const shape of pattern.shapes) {
+          if (shape in listeShapesDef) {
+            objetsCorr.push(listeShapesDef[shape])
+          } else if (shape in emojis) {
+            objetsCorr.push(emoji(shape, emojis[shape]).shapeDef)
+          } else {
+            throw new Error(`Shape ${shape} not found in listeShapesDef or emojis.`)
           }
-        } else {
-          objetsCorr.push(listeShapesDef[pat2D.shapes[0]])
-          if (pat2D.shapes[1] !== pat2D.shapes[0]) objetsCorr.push(listeShapesDef[pat2D.shapes[1]])
         }
       }
 
@@ -183,51 +119,14 @@ export default class PaternNum0 extends Exercice {
         if (pattern instanceof VisualPattern3D) {
           figures[j].push(cubeDef(`cubeIsoQ${i}F${j}`))
         } else {
-          const pat2D = pat as PatternRiche
-          if (pat2D.shapes[0] === pat2D.shapes[1] || !pat2D.shapes[1]) {
-            switch (formes[i]) {
-              case 2:
-                figures[j].push(emoji('étoile', emojis['étoile']).shapeDef)
-                break
-              case 3:
-                figures[j].push(carreRondDef)
-                break
-              case 4:
-                figures[j].push(emoji('chat', emojis['chat']).shapeDef)
-                break
-              case 5:
-                figures[j].push(emoji('soleil', emojis['soleil']).shapeDef)
-                break
-              case 6:
-                figures[j].push(losangeDef)
-                break
-              case 7:
-                figures[j].push(hexagoneDef)
-                break
-              case 8:
-                figures[j].push(rondDef)
-                break
-              case 9:
-                figures[j].push(balleDef)
-                break
-              case 10:
-                figures[j].push(emoji('tortue', emojis['tortue']).shapeDef)
-                break
-              case 11:
-                figures[j].push(triangleEquilateralDef)
-                break
-              case 12:
-                figures[j].push(redCrossDef)
-                break
-              case 1:
-              default:
-                figures[i].push(listeShapesDef[pat2D.shapes[0]] || carreDef)
-                figures[i].push(listeShapesDef[pat2D.shapes[1]] || carreDef)
-                break
+          for (const shape of pattern.shapes) {
+            if (shape in listeShapesDef) {
+              figures[j].push(listeShapesDef[shape])
+            } else if (shape in emojis) {
+              figures[j].push(emoji(shape, emojis[shape]).shapeDef)
+            } else {
+              throw new Error(`Shape ${shape} not found in listeShapesDef or emojis.`)
             }
-          } else {
-            figures[j].push(listeShapesDef[pat2D.shapes[0]])
-            if (pat2D.shapes[1] !== pat2D.shapes[0]) figures[j].push(listeShapesDef[pat2D.shapes[1]])
           }
         }
 
