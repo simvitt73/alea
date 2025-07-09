@@ -29,6 +29,7 @@ export default class ValeursDefPourcentage extends ExerciceSimple {
     this.formatChampTexte = KeyboardType.clavierDeBase
     this.spacing = 1.5
     this.spacingCorr = 1.5
+    this.versionQcmDisponible = true
   }
 
   nouvelleVersion () {
@@ -36,9 +37,12 @@ export default class ValeursDefPourcentage extends ExerciceSimple {
       [10, randint(5, 20) * 10, 10], [20, randint(1, 9) * 10, 5], [50, randint(10, 30), 2], [25, randint(1, 10) * 10, 4]]// le pourcentage, N, coeff mul-->100
     const choix = choice(listeValeurs)
     const valeur = new Decimal(choix[0]).mul(choix[1]).div(100)
-    this.reponse = texNombre(choix[1], 0)
-    this.question = `$${choix[0]}\\,\\%$ de $N$ est égal à $${texNombre(valeur, 2)}$.<br> 
-    Quelle est la valeur de $N$ ?`
+    this.distracteurs = [`$N=${texNombre(valeur.mul(1 - choix[0] / 100), 2)}$`,
+         `$N=${texNombre(choix[1] * 10, 0)}$`,
+         `$N=${texNombre(choix[1] / 100, 2)}$`]
+    this.reponse = this.versionQcm ? `$N=${texNombre(choix[1], 0)}$` : texNombre(choix[1], 0)
+    this.question = `$${choix[0]}\\,\\%$ de $N$ est égal à $${texNombre(valeur, 2)}$.<br> `
+    if (!this.versionQcm) { this.question += ' Quelle est la valeur de $N$ ?' } else { this.question += ' On a :' }
 
     this.canEnonce = this.question
     this.canReponseACompleter = '$N=\\ldots$'
@@ -56,6 +60,6 @@ export default class ValeursDefPourcentage extends ExerciceSimple {
                 `
     }
 
-    if (this.interactif) { this.question += '<br> $N=$' }
+    if (this.interactif && !this.versionQcm) { this.question += '<br> $N=$' }
   }
 }
