@@ -25,6 +25,7 @@ export default class DeveloppementNiveau1 extends ExerciceSimple {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBaseAvecVariable
+    this.versionQcmDisponible = true
   }
 
   nouvelleVersion () {
@@ -37,13 +38,15 @@ export default class DeveloppementNiveau1 extends ExerciceSimple {
         inconnue = choice(['x', 'y'])
         if (a === 1) {
           // ne pas écrire 1x
-          this.question = `Développer $A=(${inconnue}${ecritureAlgebrique(b)})\\times${ecritureParentheseSiNegatif(k)}$.`
+          this.question = `Développer totoche $A=(${inconnue}${ecritureAlgebrique(b)})\\times${ecritureParentheseSiNegatif(k)}$.`
           this.correction = ` $A=(${inconnue}${ecritureAlgebrique(b)})\\times${ecritureParentheseSiNegatif(k)}=${k}\\times ${inconnue}+${ecritureParentheseSiNegatif(k)}\\times${ecritureParentheseSiNegatif(b)}=${k * a}${inconnue}${ecritureAlgebrique(k * b)}$`
-          this.reponse = `${k * a}${inconnue}${ecritureAlgebrique(k * b)}`
+          this.reponse = `$${k * a}${inconnue}${ecritureAlgebrique(k * b)}$`
+          this.distracteurs = [`$${k * a}${inconnue}${ecritureAlgebrique(b)}$`, `$${k * a}${inconnue}${ecritureAlgebrique(k + b)}$`, `$${inconnue}${ecritureAlgebrique(k * b)}$`]
         } else {
           this.question = `Développer $A=(${a}${inconnue}${ecritureAlgebrique(b)})\\times${ecritureParentheseSiNegatif(k)}$.`
           this.correction = `$A=(${a}${inconnue}${ecritureAlgebrique(b)})\\times${ecritureParentheseSiNegatif(k)}=${k}\\times ${a}${inconnue}+${ecritureParentheseSiNegatif(k)}\\times${ecritureParentheseSiNegatif(b)}=${k * a}${inconnue}${ecritureAlgebrique(k * b)}$`
-          this.reponse = `${k * a}${inconnue}${ecritureAlgebrique(k * b)}`
+          this.reponse = `$${k * a}${inconnue}${ecritureAlgebrique(k * b)}$`
+          this.distracteurs = [`$${k * a}${inconnue}${ecritureAlgebrique(b)}$`, `$${k * a}${inconnue}${ecritureAlgebrique(k + b)}$`, `$${inconnue}${ecritureAlgebrique(k * b)}$`]
         }
         break
 
@@ -56,15 +59,18 @@ export default class DeveloppementNiveau1 extends ExerciceSimple {
           // ne pas écrire 1x
           this.question = `Développer $A=${k}${inconnue}(${inconnue}${ecritureAlgebrique(b)})$.`
           this.correction = `$A=${k}${inconnue}(${inconnue}${ecritureAlgebrique(b)})=${k}${inconnue}\\times ${inconnue} ${signe(k * b)}${k}${inconnue}\\times ${Math.abs(b)}=${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
-          this.reponse = `${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}`
+          this.reponse = `$${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
+          this.distracteurs = [`$${k * a}${inconnue}^2${ecritureAlgebrique(b)}$`, `$${k * a}${inconnue}^2${ecritureAlgebrique(k + b)}${inconnue}$`, `$${k * a}${inconnue}${ecritureAlgebrique(k + b)}$`]
         } else {
           this.question = `Développer $A=${k}${inconnue}(${a}${inconnue}${ecritureAlgebrique(b)})$.`
           if (k > 0) {
             this.correction = `$A=${k}${inconnue}(${a}${inconnue}${ecritureAlgebrique(b)})=${k}${inconnue}\\times ${a}${inconnue} + ${k}${inconnue}\\times ${ecritureParentheseSiNegatif(b)}=${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
-            this.reponse = `${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}`
+            this.reponse = `$${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
+            this.distracteurs = [`$${k * a}${inconnue}^2${ecritureAlgebrique(b*k)}$`, `$${k * a}${inconnue}^2${ecritureAlgebrique(-k * b)}${inconnue}$`, `$${a*k}${inconnue}${ecritureAlgebrique(k * b)}$`]
           } else {
             this.correction = `$A=${k}${inconnue}(${a}${inconnue}${ecritureAlgebrique(b)})=${k}${inconnue}\\times ${a}${inconnue} + (${k}${inconnue})\\times ${ecritureParentheseSiNegatif(b)}=${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
-            this.reponse = `${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}`
+            this.reponse = `$${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
+              this.distracteurs = [`$${k * a}${inconnue}^2${ecritureAlgebrique(b*k)}$`, `$${k * a}${inconnue}^2${ecritureAlgebrique(-k * b)}${inconnue}$`, `$${-k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`]
           }
         }
         break
