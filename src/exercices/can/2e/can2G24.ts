@@ -65,7 +65,7 @@ export default class TrouverpDroite extends ExerciceSimple {
       } else {
         this.distracteurs = [`$${new FractionEtendue(xA - xB, yB - yA).texFractionSimplifiee}$`,
          `$${m.oppose().texFractionSimplifiee}$`,
-         `$${new FractionEtendue(xB - xA, yB - yA).texFractionSimplifiee}$`]
+         `$${new FractionEtendue(yB + yA, xB + xA).texFractionSimplifiee}$`]
       }
     }
 
