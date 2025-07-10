@@ -16,7 +16,7 @@ export const amcType = 'AMCNum'
 export const uuid = '56a2d'
 
 export const refs = {
-  'fr-fr': ['can4L05'],
+  'fr-fr': ['can4L05', '1AC-25'],
   'fr-ch': []
 }
 export default class DeveloppementNiveau1 extends ExerciceSimple {
@@ -66,11 +66,11 @@ export default class DeveloppementNiveau1 extends ExerciceSimple {
           if (k > 0) {
             this.correction = `$A=${k}${inconnue}(${a}${inconnue}${ecritureAlgebrique(b)})=${k}${inconnue}\\times ${a}${inconnue} + ${k}${inconnue}\\times ${ecritureParentheseSiNegatif(b)}=${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
             this.reponse = `$${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
-            this.distracteurs = [`$${k * a}${inconnue}^2${ecritureAlgebrique(b*k)}$`, `$${k * a}${inconnue}^2${ecritureAlgebrique(-k * b)}${inconnue}$`, `$${a*k}${inconnue}${ecritureAlgebrique(k * b)}$`]
+            this.distracteurs = [`$${k * a}${inconnue}^2${ecritureAlgebrique(b * k)}$`, `$${k * a}${inconnue}^2${ecritureAlgebrique(-k * b)}${inconnue}$`, `$${a * k}${inconnue}${ecritureAlgebrique(k * b)}$`]
           } else {
             this.correction = `$A=${k}${inconnue}(${a}${inconnue}${ecritureAlgebrique(b)})=${k}${inconnue}\\times ${a}${inconnue} + (${k}${inconnue})\\times ${ecritureParentheseSiNegatif(b)}=${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
             this.reponse = `$${k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`
-              this.distracteurs = [`$${k * a}${inconnue}^2${ecritureAlgebrique(b*k)}$`, `$${k * a}${inconnue}^2${ecritureAlgebrique(-k * b)}${inconnue}$`, `$${-k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`]
+            this.distracteurs = [`$${k * a}${inconnue}^2${ecritureAlgebrique(b * k)}$`, `$${k * a}${inconnue}^2${ecritureAlgebrique(-k * b)}${inconnue}$`, `$${-k * a}${inconnue}^2${ecritureAlgebrique(k * b)}${inconnue}$`]
           }
         }
         break
