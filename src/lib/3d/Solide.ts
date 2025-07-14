@@ -1,49 +1,52 @@
 import 'aframe'
+import type * as THREE from 'three'  // Import type seulement
+
 export class Solide {
-  mesh: typeof AFRAME.THREE.Mesh
+  mesh: THREE.Mesh
 
   constructor (type: 'tetraedre' | 'cube' | 'sphere' = 'tetraedre', color = 0xff6600) {
-    // Utiliser AFRAME.THREE au lieu de THREE
-
-    let geometry: (typeof AFRAME.THREE.BufferGeometry) | (typeof AFRAME.THREE.Geometry)
+    const THREELib = AFRAME.THREE  // Utiliser AFRAME.THREE au runtime
+    let geometry: THREE.BufferGeometry
 
     switch (type) {
       case 'tetraedre':
-        geometry = new AFRAME.THREE.TetrahedronGeometry(2, 0)
+        geometry = new THREELib.TetrahedronGeometry(2, 0)
         break
       case 'cube':
-        geometry = new AFRAME.THREE.BoxGeometry(1, 1, 1)
+        geometry = new THREELib.BoxGeometry(1, 1, 1)
         break
       case 'sphere':
-        geometry = new AFRAME.THREE.SphereGeometry(1, 16, 16)
+        geometry = new THREELib.SphereGeometry(1, 16, 16)
         break
+
       default:
         throw new Error(`Type de solide inconnu : ${type}`)
     }
 
-    const material = new AFRAME.THREE.MeshPhongMaterial({
+    const material = new THREELib.MeshPhongMaterial({
       color,
       flatShading: true,
     })
     material.needsUpdate = true
     geometry.computeVertexNormals()
-    this.mesh = new AFRAME.THREE.Mesh(geometry, material)
+    this.mesh = new THREELib.Mesh(geometry, material)
   }
 
-  setPosition (x: number, y: number, z: number) {
+  setPosition (x: number, y: number, z: number): void {
     this.mesh.position.set(x, y, z)
   }
 
-  setRotation (x: number, y: number, z: number) {
+  setRotation (x: number, y: number, z: number): void {
     this.mesh.rotation.set(x, y, z)
   }
 }
 
 AFRAME.registerComponent('zoom-controls', {
   init: function () {
+    const THREE = AFRAME.THREE
     const sceneEl = this.el.sceneEl
-    const cameraRig = sceneEl.querySelector('#cameraRig')
-    const camera = sceneEl.querySelector('[camera]')
+    const cameraRig = sceneEl?.querySelector('#cameraRig') as any
+    const camera = sceneEl?.querySelector('[camera]') as any
 
     if (!cameraRig || !camera) return
 
@@ -61,14 +64,27 @@ AFRAME.registerComponent('zoom-controls', {
       const currentPos = camera.getAttribute('position')
       if (!currentPos) return
 
-      // Parse the position string (e.g., "0 1 2") into numbers
-      const [x, y, z] = (typeof currentPos === 'string'
-        ? currentPos.split(' ').map(Number)
-        : [currentPos.x, currentPos.y, currentPos.z])
-      const direction = new AFRAME.THREE.Vector3(x, y, z).normalize()
+      // CORRIGÉ : Meilleur typage pour la position
+      let x: number, y: number, z: number
+
+      if (typeof currentPos === 'string') {
+        [x, y, z] = currentPos.split(' ').map(Number)
+      } else if (currentPos && typeof currentPos === 'object') {
+        x = currentPos.x || 0
+        y = currentPos.y || 0
+        z = currentPos.z || 0
+      } else {
+        return
+      }
+
+      const direction = new THREE.Vector3(x, y, z).normalize()
       const newPos = direction.multiplyScalar(currentDistance)
 
-      camera.setAttribute('position', { x: newPos.x, y: newPos.y, z: newPos.z })
+      camera.setAttribute('position', {
+        x: newPos.x,
+        y: newPos.y,
+        z: newPos.z
+      })
     }
 
     // Attacher au document avec vérification de focus
@@ -76,7 +92,25 @@ AFRAME.registerComponent('zoom-controls', {
   }
 })
 
-// Composant A-Frame pour créer une sphère filaire avec parallèles et méridiens
+// CORRIGÉ : Meilleur typage pour le composant custom-wire-sphere
+
+interface WireSphereSchema {
+  radius: { type: 'number', default: number }
+  parallels: { type: 'number', default: number }
+  meridians: { type: 'number', default: number }
+  segments: { type: 'number', default: number }
+  parallelColor: { type: 'color', default: string }
+  meridianColor: { type: 'color', default: string }
+  showParallels: { type: 'boolean', default: boolean }
+  showMeridians: { type: 'boolean', default: boolean }
+  showEquator: { type: 'boolean', default: boolean }
+  equatorColor: { type: 'color', default: string }
+  equatorThickness: { type: 'number', default: number }
+  showGreenwich: { type: 'boolean', default: boolean }
+  greenwichColor: { type: 'color', default: string }
+  greenwichThickness: { type: 'number', default: number }
+}
+
 export const customWireSphere = AFRAME.registerComponent('custom-wire-sphere', {
   schema: {
     radius: { type: 'number', default: 1 },
@@ -93,18 +127,20 @@ export const customWireSphere = AFRAME.registerComponent('custom-wire-sphere', {
     showGreenwich: { type: 'boolean', default: false },
     greenwichColor: { type: 'color', default: '#00ffff' },
     greenwichThickness: { type: 'number', default: 0.01 }
-  },
+  } as WireSphereSchema,
 
   init: function () {
-    const THREE = AFRAME.THREE  // CHANGÉ : Utiliser AFRAME.THREE
+    const THREE = AFRAME.THREE
     const group = new THREE.Group()
+    const data = this.data as any  // Cast pour éviter les erreurs de type
+
     const {
       radius, parallels, meridians, segments,
       parallelColor, meridianColor,
       showParallels, showMeridians,
       showEquator, equatorColor, equatorThickness,
       showGreenwich, greenwichColor, greenwichThickness
-    } = this.data
+    } = data
 
     // Parallèles (latitudes) - CORRIGÉ pour inclure l'équateur
     if (showParallels) {
@@ -230,11 +266,10 @@ export const customWireSphere = AFRAME.registerComponent('custom-wire-sphere', {
 AFRAME.registerComponent('billboard', {
   tick: function () {
     const THREE = AFRAME.THREE
-    const camera = this.el.sceneEl.camera
+    const camera = this.el.sceneEl?.camera
 
     if (camera) {
-      // Faire face à la caméra à chaque frame
-      const cameraPosition = new AFRAME.THREE.Vector3()
+      const cameraPosition = new THREE.Vector3()
       camera.getWorldPosition(cameraPosition)
       this.el.object3D.lookAt(cameraPosition)
     }
@@ -243,6 +278,18 @@ AFRAME.registerComponent('billboard', {
 /**
  * Composant A-Frame pour afficher des étiquettes géographiques
  */
+interface GeographicLabelSchema {
+  text: { type: 'string', default: string }
+  color: { type: 'color', default: string }
+  size: { type: 'number', default: number }
+  width: { type: 'number', default: number }
+  align: { type: 'string', default: string }
+  baseline: { type: 'string', default: string }
+  font: { type: 'string', default: string }
+  orientation: { type: 'string', default: string }
+  customRotation: { type: 'vec3', default: { x: number, y: number, z: number } }
+}
+
 export const geographicLabel = AFRAME.registerComponent('geographic-label', {
   schema: {
     text: { type: 'string', default: 'Label' },
@@ -251,31 +298,31 @@ export const geographicLabel = AFRAME.registerComponent('geographic-label', {
     width: { type: 'number', default: 8 },
     align: { type: 'string', default: 'center' },
     baseline: { type: 'string', default: 'center' },
-    font: { type: 'string', default: 'dejavu' },        // NOUVEAU : Police paramétrable
+    font: { type: 'string', default: 'dejavu' },
     orientation: { type: 'string', default: 'billboard' },
     customRotation: { type: 'vec3', default: { x: 0, y: 0, z: 0 } }
-  },
+  } as GeographicLabelSchema,
 
   init: function () {
-    // Configurer le texte avec la police choisie
+    const data = this.data as any  // Cast pour éviter les erreurs de type
+
     this.el.setAttribute('text', {
-      value: this.data.text,
-      color: this.data.color || '#000000',
-      align: this.data.align,
-      baseline: this.data.baseline,
-      width: this.data.width,
-      font: this.data.font  // MODIFIÉ : Utiliser la police paramétrable
+      value: data.text,
+      color: data.color || '#000000',
+      align: data.align,
+      baseline: data.baseline,
+      width: data.width,
+      font: data.font
     })
 
-    // Appliquer l'orientation
     this.applyOrientation()
   },
 
   applyOrientation: function () {
-    const { orientation, customRotation } = this.data
+    const data = this.data as any
+    const { orientation, customRotation } = data
 
     if (orientation === 'custom') {
-      // Retirer le billboard et appliquer rotation personnalisée
       this.el.removeAttribute('billboard')
       this.el.setAttribute('rotation', {
         x: customRotation.x,
@@ -283,19 +330,121 @@ export const geographicLabel = AFRAME.registerComponent('geographic-label', {
         z: customRotation.z
       })
     } else {
-      // NOUVEAU : Utiliser le composant billboard intégré
       this.el.removeAttribute('rotation')
       this.el.setAttribute('billboard', '')
     }
   },
 
   update: function () {
-    this.el.setAttribute('text', 'value', this.data.text)
-    this.el.setAttribute('text', 'color', this.data.color || '#000000')
-    this.el.setAttribute('text', 'width', this.data.width)
-    this.el.setAttribute('text', 'font', this.data.font)  // NOUVEAU
+    const data = this.data as any
 
-    // Réappliquer l'orientation
+    this.el.setAttribute('text', 'value', data.text)
+    this.el.setAttribute('text', 'color', data.color || '#000000')
+    this.el.setAttribute('text', 'width', data.width)
+    this.el.setAttribute('text', 'font', data.font)
+
     this.applyOrientation()
+  }
+})
+
+AFRAME.registerComponent('cube-trois-couleurs', {
+  schema: {
+    size: { type: 'number', default: 1 },
+    color1: { type: 'color', default: '#ff0000' },
+    color2: { type: 'color', default: '#00ff00' },
+    color3: { type: 'color', default: '#0000ff' }
+  },
+  init: function () {
+    const THREE = AFRAME.THREE
+    const data = this.data
+    const geometry = new THREE.BoxGeometry(data.size, data.size, data.size)
+    // 6 faces : [right, left, top, bottom, front, back]
+    const materials = [
+      new THREE.MeshStandardMaterial({ color: data.color1 }), // +X
+      new THREE.MeshStandardMaterial({ color: data.color1 }), // -X
+      new THREE.MeshStandardMaterial({ color: data.color2 }), // +Y
+      new THREE.MeshStandardMaterial({ color: data.color2 }), // -Y
+      new THREE.MeshStandardMaterial({ color: data.color3 }), // +Z
+      new THREE.MeshStandardMaterial({ color: data.color3 })  // -Z
+    ]
+    const mesh = new THREE.Mesh(geometry, materials)
+    this.el.setObject3D('mesh', mesh)
+  },
+  update: function () {
+    this.remove()
+    this.init()
+  },
+  remove: function () {
+    this.el.removeObject3D('mesh')
+  }
+})
+
+AFRAME.registerComponent('cube-edges', {
+  schema: {
+    size: { type: 'number', default: 1 },
+    color: { type: 'color', default: '#000' }
+  },
+  init: function () {
+    const THREE = AFRAME.THREE
+    const geometry = new THREE.BoxGeometry(this.data.size, this.data.size, this.data.size)
+    const edges = new THREE.EdgesGeometry(geometry)
+    const material = new THREE.LineBasicMaterial({ color: this.data.color })
+    const line = new THREE.LineSegments(edges, material)
+    this.el.setObject3D('edges', line)
+  },
+  remove: function () {
+    this.el.removeObject3D('edges')
+  }
+})
+
+AFRAME.registerComponent('cube-tube-edges', {
+  schema: {
+    size: { type: 'number', default: 1 },
+    color: { type: 'color', default: '#000' },
+    thickness: { type: 'number', default: 0.03 }
+  },
+  init: function () {
+    const THREE = AFRAME.THREE
+    const { size, color, thickness } = this.data
+    const group = new THREE.Group()
+    const s = size / 2
+
+    // Les 8 sommets du cube
+    const vertices = [
+      [s, s, s], [s, s, -s], [s, -s, s], [s, -s, -s],
+      [-s, s, s], [-s, s, -s], [-s, -s, s], [-s, -s, -s]
+    ]
+
+    // Les 12 arêtes (paires d'indices dans vertices)
+    const edges = [
+      [0, 1], [0, 2], [0, 4],
+      [1, 3], [1, 5],
+      [2, 3], [2, 6],
+      [3, 7],
+      [4, 5], [4, 6],
+      [5, 7],
+      [6, 7]
+    ]
+
+    for (const [i1, i2] of edges) {
+      const start = new THREE.Vector3(...vertices[i1])
+      const end = new THREE.Vector3(...vertices[i2])
+      const direction = new THREE.Vector3().subVectors(end, start)
+      const length = direction.length()
+      const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5)
+      const axis = new THREE.Vector3(0, 1, 0)
+      const quaternion = new THREE.Quaternion().setFromUnitVectors(axis, direction.clone().normalize())
+      const geometry = new THREE.CylinderGeometry(thickness, thickness, length, 8)
+      const material = new THREE.MeshBasicMaterial({ color })
+      const cylinder = new THREE.Mesh(geometry, material)
+      cylinder.position.copy(mid)
+      cylinder.quaternion.copy(quaternion)
+      group.add(cylinder)
+    }
+
+    this.el.setObject3D('tubeEdges', group)
+  },
+  remove: function () {
+    this.el.removeObject3D('tubeEdges')
   }
 })
