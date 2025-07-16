@@ -1,33 +1,110 @@
+import { cleanup } from '@testing-library/svelte'
 import './Solide'
-const cameraRigPosition = [0, 2, 0]
-const initialCameraPosition = [0, 2, 8]
+const defaultRigPosition: [number, number, number] = [0, 0, 0]
+const defaultCameraDistance = 8
+const defaultWidth = 600
+const defaultHeight = 400
+const defaultFov = 60
+const defaultZoomLimits = { min: 2, max: 20 }
+
+function ensureSceneViewerStyle () {
+  if (!document.getElementById('scene-viewer-style')) {
+    const style = document.createElement('style')
+    style.id = 'scene-viewer-style'
+    style.textContent = `
+       [data-scene-viewer] {
+    cursor: grab;
+    user-select: none;
+    position: relative;
+    width: 600px;
+    height: 400px;
+  }
+  [data-scene-viewer] a-scene, [data-scene-viewer] canvas {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 400px !important;
+  }
+  [data-scene-viewer]:active {
+    cursor: grabbing;
+  }`
+    document.head.appendChild(style)
+  }
+}
 export class SceneViewer {
   private sceneElements: string[] = []
   private camera: string | null = null
-  private width: number = 600
-  private height: number = 400
+  private width: number
+  private height: number
+  public id: string
+  private zoomLimits
+  private rigPosition: [number, number, number]
+  private cameraDistance: number
+  private rigRotation: [number, number, number]
+  private fov: number = 60
+  private withEarth: boolean = false
+  private withSky: boolean = false
 
-  constructor (options: { width?: number; height?: number } = {}) {
-    this.width = options.width || this.width
-    this.height = options.height || this.height
+  // Ajoute ces propriétés d'instance :
+  private rigRotationY = 0
+  private rigRotationX = 0
+  private currentDistance = 8 // valeur par défaut, ou initialisée dans le constructeur
+  private containerElement: HTMLElement | null = null
+
+  constructor (options: {
+    width?: number,
+    height?: number,
+    id?: string,
+    zoomLimits?: { min: number, max: number },
+    rigPosition?: [number, number, number],
+    cameraDistance?: number,
+    fov?: number,
+    rigRotation?: [number, number, number],
+    withEarth?: boolean,
+    withSky?: boolean
+  } = {}) {
+    this.width = options?.width || defaultWidth
+    this.height = options?.height || defaultHeight
+    this.id = `scene-${options?.id || Math.random().toString(36).substring(2, 9)}`
+    this.zoomLimits = options?.zoomLimits || defaultZoomLimits
+    this.rigPosition = options?.rigPosition || defaultRigPosition
+    this.cameraDistance = options?.cameraDistance || defaultCameraDistance
+    this.rigRotation = options?.rigRotation || [this.rigRotationX ?? 0, this.rigRotationY ?? 0, this.currentDistance ?? 8]
+    this.fov = options?.fov || defaultFov
+    this.withEarth = options?.withEarth ?? false
+    this.withSky = options?.withSky ?? false
+    this.currentDistance = Math.sqrt(
+      this.rigPosition[0] ** 2 +
+       this.rigPosition[1] ** 2 +
+      (this.cameraDistance - this.rigPosition[2]) ** 2
+    )
+    ensureSceneViewerStyle()
+
+    // Création du container DOM caché    <div id="${this.id}" style="width: ${this.width}px; height: ${this.height}px;" class="scene-container" data-scene-viewer>
+    this.containerElement = document.createElement('div')
+    this.containerElement.id = this.id
+    this.containerElement.className = 'scene-container'
+    this.containerElement.setAttribute('data-scene-viewer', '')
+    this.containerElement.style.width = `${this.width}px`
+    this.containerElement.style.height = `${this.height}px`
+    this.containerElement.style.display = 'none'
+    this.containerElement.innerHTML = ''
+    document.body.appendChild(this.containerElement)
+  }
+
+  public initializeScene (): void {
+    const container = this.containerElement
+    if (!container) return
+    const aScene = container.querySelector('a-scene')
+    if (aScene) {
+      this.setupCameraRigControls(container as HTMLElement, aScene)
+    }
   }
 
   // MÉTHODE PRINCIPALE : Générer le HTML avec camera rig
-  public generateHTML ({ withEarth = false, withSky = false }): string {
+  public generateHTML (): string {
     const sceneContent = this.sceneElements.join('\n')
 
     return `
-      <style>
-      [data-scene-viewer] {
-        cursor: grab;
-        user-select: none;
-        position: relative;
-      }
-      [data-scene-viewer]:active {
-        cursor: grabbing;
-      }
-      </style>
-      <div style="width: ${this.width}px; height: ${this.height}px;" class="scene-container" data-scene-viewer>
       <a-scene embedded 
            style="width: 100%; height: 100%;" 
            vr-mode-ui="enabled: false"
@@ -38,13 +115,13 @@ export class SceneViewer {
         <a-mixin id="text-style" 
              text="font: roboto; align: center; baseline: center; width: 8"
              material="transparent: true"></a-mixin>
-      ${withEarth
+      ${this.withEarth
 ? `
         <!-- Textures de mappemonde -->
         <img id="earthTexture" src="images/earth_day_4096.jpg">
         <img id="earthNormalMap" src="images/earth_normal_2048.jpg"> `
 : ''}
-        ${withSky
+        ${this.withSky
 ? `
         <!-- SKY TEXTURE -->
         <img id="sky" src="images/2k_stars_milky_way.jpg">
@@ -53,63 +130,44 @@ export class SceneViewer {
 : ''}
       </a-assets>
 
-      ${this.camera ??
-        `
-        <a-entity id="cameraRig" position="${cameraRigPosition.join(' ')}" rotation="0 0 0">
-        <a-entity camera 
-              position="${initialCameraPosition.join(' ')}" 
-              fov="60"
-              rotation="0 0 0"
-              look-controls="enabled: false"
-              wasd-controls="enabled: false">
-        </a-entity>
-        </a-entity>`}
+     
 
-        ${withSky
+        ${this.withSky
 ? `    <!-- SKY ELEMENT -->
       <a-sky src="#sky"></a-sky>`
 : '<a-sky color="#ECECEC"></a-sky>'}
-      }
+
+   <a-entity id="cameraRig-${this.id}" position="${this.rigPosition.join(' ')}" rotation="0 0 0">
+        <a-camera 
+              position="0 0 ${this.cameraDistance}" 
+              fov="${this.fov}"
+              look-controls="enabled: false"
+              wasd-controls="enabled: false">
+        </a-entity>
+        </a-entity>
+
       ${sceneContent}
       </a-scene>
-    </div>
     `
   }
 
-  // MÉTHODE STATIQUE pour initialiser les contrôles du camera rig
-  static initializeScenes (): void {
-    const waitForAFrame = () => {
-      if (!(window as any).AFRAME) {
-        setTimeout(waitForAFrame, 100)
-        return
-      }
-
-      setTimeout(() => {
-        const sceneContainers = document.querySelectorAll(
-          '[data-scene-viewer]'
-        )
-        sceneContainers.forEach((container, index) => {
-          const aScene = container.querySelector('a-scene')
-          if (aScene) {
-            SceneViewer.setupCameraRigControls(
-              container as HTMLElement,
-              aScene
-            )
-          }
-        })
-      }, 300)
+  private updateCameraRig (cameraRig: any, camera: any): void {
+    cameraRig.setAttribute('rotation', `${this.rigRotationX} ${this.rigRotationY} 0`)
+    camera.setAttribute('position', `0 0 ${this.currentDistance}`)
+    if (camera.object3D && camera.object3D.position) {
+      camera.object3D.position.set(0, 0, this.currentDistance)
+    } else {
+      console.warn('Camera object3D not found or position not settable')
     }
-
-    waitForAFrame()
   }
 
   // CONTRÔLES DU CAMERA RIG
-  private static setupCameraRigControls (
+  private setupCameraRigControls (
     container: HTMLElement,
     aScene: Element
   ): void {
-    const cameraRig = aScene.querySelector('#cameraRig') as any
-    const camera = aScene.querySelector('a-entity[camera]') as any
+    const cameraRig = aScene.querySelector(`#cameraRig-${this.id}`) as any
+    const camera = aScene.querySelector('a-camera') as any
 
     if (!cameraRig || !camera) {
       console.warn('Camera rig or camera not found')
@@ -126,39 +184,20 @@ export class SceneViewer {
     let lastTouchDistance = 0
     let touchStartedInContainer = false
 
-    // Configuration initiale de la caméra (code existant inchangé)
-    const initialCameraPos = camera.getAttribute('position')
-    let initialX = initialCameraPosition[0]
-    let initialY = initialCameraPosition[1]
-    let initialZ = initialCameraPosition[2]
-
-    if (initialCameraPos && typeof initialCameraPos === 'object') {
-      initialX = initialCameraPos.x || initialCameraPos[0] || 0
-      initialY = initialCameraPos.y || initialCameraPos[1] || 3
-      initialZ = initialCameraPos.z || initialCameraPos[2] || 4
-    }
+    const initialX = 0
+    const initialY = 0
+    const initialZ = this.cameraDistance
 
     const initialDistance = Math.sqrt(
-      (initialX - cameraRigPosition[0]) ** 2 +
-      (initialY - cameraRigPosition[1]) ** 2 +
-      (initialZ - cameraRigPosition[2]) ** 2
+      (initialX - this.rigPosition[0]) ** 2 +
+      (initialY - this.rigPosition[1]) ** 2 +
+      (initialZ - this.rigPosition[2]) ** 2
     )
 
-    const directionX = initialX / initialDistance
-    const directionY = initialY / initialDistance
-    const directionZ = initialZ / initialDistance
-
-    let currentDistance = initialDistance
-    let rigRotationY = 0
-    let rigRotationX = 0
-
-    const updateCameraRig = () => {
-      cameraRig.setAttribute('rotation', `${rigRotationX} ${rigRotationY} 0`)
-      const newX = directionX * currentDistance
-      const newY = directionY * currentDistance
-      const newZ = directionZ * currentDistance
-      camera.setAttribute('position', `${newX} ${newY} ${newZ}`)
-    }
+    // Remplace les variables locales par les propriétés d'instance :
+    this.rigRotationY = 0
+    this.rigRotationX = 0
+    this.currentDistance = initialDistance
 
     // NOUVEAU : Détecter le plein écran
     const checkFullscreen = (): boolean => {
@@ -247,11 +286,12 @@ export class SceneViewer {
       const deltaY = previousMousePosition.y - e.clientY
       const sensitivity = 0.5
 
-      rigRotationY += deltaX * sensitivity
-      rigRotationX += deltaY * sensitivity
-      rigRotationX = Math.max(-80, Math.min(80, rigRotationX))
+      // Remplace les variables locales par les propriétés d'instance :
+      this.rigRotationY += deltaX * sensitivity
+      this.rigRotationX += deltaY * sensitivity
+      this.rigRotationX = Math.max(-80, Math.min(80, this.rigRotationX))
 
-      updateCameraRig()
+      this.updateCameraRig(cameraRig, camera)
       previousMousePosition = { x: e.clientX, y: e.clientY }
       e.preventDefault()
     }
@@ -265,15 +305,20 @@ export class SceneViewer {
     }
 
     // Wheel - SIMPLIFIÉ car déjà sur le container
-    const handleWheel = (e: WheelEvent) => {
+    const handleWheel: (e: WheelEvent) => void = (e: WheelEvent) => {
+      const min = this.zoomLimits.min ?? 2
+      const max = this.zoomLimits.max ?? 20
       // Plus besoin de vérifier isMouseInContainer car l'événement vient du container
       e.preventDefault()
       e.stopPropagation()
 
-      const zoomSpeed = 0.2
-      currentDistance += e.deltaY * zoomSpeed
-      currentDistance = Math.max(2, Math.min(20, currentDistance))
-      updateCameraRig()
+      const zoomSpeed = 0.01
+      // Remplace les variables locales par les propriétés d'instance :
+      this.currentDistance += e.deltaY * zoomSpeed
+      this.currentDistance = Math.max(min, Math.min(max, this.currentDistance))
+      this.updateCameraRig(cameraRig, camera)
+
+      console.log('Wheel event on', this.id)
     }
 
     // === GESTION TACTILE CORRIGÉE ===
@@ -318,11 +363,12 @@ export class SceneViewer {
         const deltaY = previousMousePosition.y - touch.clientY
         const sensitivity = 0.5
 
-        rigRotationY += deltaX * sensitivity
-        rigRotationX -= deltaY * sensitivity
-        rigRotationX = Math.max(-80, Math.min(80, rigRotationX))
+        // Remplace les variables locales par les propriétés d'instance :
+        this.rigRotationY += deltaX * sensitivity
+        this.rigRotationX -= deltaY * sensitivity
+        this.rigRotationX = Math.max(-80, Math.min(80, this.rigRotationX))
 
-        updateCameraRig()
+        this.updateCameraRig(cameraRig, camera)
         previousMousePosition = { x: touch.clientX, y: touch.clientY }
       } else if (e.touches.length === 2) {
         const touch1 = e.touches[0]
@@ -335,9 +381,10 @@ export class SceneViewer {
         if (lastTouchDistance > 0) {
           const zoomSpeed = 0.01
           const deltaDistance = currentTouchDistance - lastTouchDistance
-          currentDistance -= deltaDistance * zoomSpeed
-          currentDistance = Math.max(2, Math.min(20, currentDistance))
-          updateCameraRig()
+          // Remplace les variables locales par les propriétés d'instance :
+          this.currentDistance -= deltaDistance * zoomSpeed
+          this.currentDistance = Math.max(2, Math.min(20, this.currentDistance))
+          this.updateCameraRig(cameraRig, camera)
         }
 
         lastTouchDistance = currentTouchDistance
@@ -364,12 +411,28 @@ export class SceneViewer {
     container.addEventListener('mousedown', handleMouseDown)
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
-    container.addEventListener('wheel', handleWheel, { passive: false })
 
     // Attacher les événements tactiles sur le container
     container.addEventListener('touchstart', handleTouchStart, { passive: false })
     container.addEventListener('touchmove', handleTouchMove, { passive: false })
     container.addEventListener('touchend', handleTouchEnd, { passive: false })
+
+    // Fonction pour attacher le handler wheel au canvas de la scène
+    function attachWheelToCanvas () {
+      const canvas = aScene.querySelector('canvas')
+      if (canvas) {
+        canvas.addEventListener('wheel', handleWheel, { passive: false })
+        ;(container as any).__sceneCleanup = () => {
+          canvas.removeEventListener('wheel', handleWheel)
+        }
+      } else {
+        // Utilise un MutationObserver pour attendre le
+        setTimeout(attachWheelToCanvas, 100)
+      }
+    }
+
+    // Appel initial
+    attachWheelToCanvas()
 
     // === NETTOYAGE ===
     const cleanup = () => {
@@ -388,32 +451,6 @@ export class SceneViewer {
 
     // Optionnel : Exposer la fonction de nettoyage
     ;(container as any).__sceneCleanup = cleanup
-  }
-
-  public setCamera ({
-    position = [0, 2, 0], // Par défaut : cameraRigPosition
-    rotation = [0, 0, 0],
-    cameraDistance = 8,   // Par défaut : distance sur Z de initialCameraPosition
-    fov = 60,             // Par défaut : fov
-  }: {
-    position?: [number, number, number];
-    rotation?: [number, number, number];
-    cameraDistance?: number;
-    fov?: number;
-  }): void {
-    const rigPos = position.join(' ')
-    const rigRot = rotation.join(' ')
-    this.camera = `
-    <a-entity id="cameraRig" position="${rigPos}" rotation="${rigRot}">
-      <a-entity camera 
-                position="0 2 ${cameraDistance}" 
-                fov="${fov}"
-                rotation="0 0 0"
-                look-controls="enabled: false"
-                wasd-controls="enabled: false">
-      </a-entity>
-    </a-entity>
-  `
   }
 
   public addBox ({
@@ -1344,5 +1381,36 @@ export class SceneViewer {
          cube-tube-edges="size:1; color:#000; thickness:0.02">
       </a-entity>
     `)
+  }
+
+  public showSceneAt (parent: HTMLElement) {
+    if (this.containerElement) {
+      parent.appendChild(this.containerElement)
+      this.renderScene()
+      this.containerElement.style.display = 'block'
+    }
+  }
+
+  public renderScene (): void {
+    if (this.containerElement) {
+    // Nettoyage : retire l'ancienne scène si présente
+      const oldScene = this.containerElement.querySelector('a-scene')
+      if (oldScene) {
+        oldScene.parentNode?.removeChild(oldScene)
+      }
+      // this.initializeScene()
+      this.containerElement.innerHTML = this.generateHTML()
+      const aScene = this.containerElement.querySelector('a-scene')
+      if (aScene) {
+        this.setupCameraRigControls(this.containerElement as HTMLElement, aScene)
+      }
+    }
+  }
+
+  public destroy () {
+    cleanup()
+    if (this.containerElement && this.containerElement.parentNode) {
+      this.containerElement.parentNode.removeChild(this.containerElement)
+    }
   }
 }
