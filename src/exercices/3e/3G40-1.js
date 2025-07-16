@@ -1,8 +1,10 @@
 import { SceneViewer } from '../../lib/3d/SceneViewer'
 import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
-import { choice, shuffle } from '../../lib/outils/arrayOutils'
+import { choice } from '../../lib/outils/arrayOutils'
 import { arcenciel } from '../../lib/outils/embellissements'
 import { rangeMinMax } from '../../lib/outils/nombres'
+import { texNombre } from '../../lib/outils/texNombre'
+import { context } from '../../modules/context'
 import { randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 
@@ -127,11 +129,38 @@ const listeVilles = [
   { latitude: 34.6937, longitude: 135.5023, label: 'Osaka' },
   { latitude: 23.8103, longitude: 90.4125, label: 'Dacca' },
   { latitude: 21.0285, longitude: 105.8542, label: 'Hanoï' },
-  { latitude: 10.762622, longitude: 106.660172, label: 'Hô Chi Minh-Ville' },
+  { latitude: 10.762622, longitude: 106.660172, label: 'Ho Chi Minh' },
   { latitude: 24.7136, longitude: 46.6753, label: 'Riyad' },
   { latitude: 29.3759, longitude: 47.9774, label: 'Koweït City' },
   { latitude: 39.9334, longitude: 32.8597, label: 'Ankara' },
   { latitude: 33.6844, longitude: 73.0479, label: 'Islamabad' },
+  { latitude: 45.5017, longitude: -73.5673, label: 'Montréal' },
+  { latitude: 29.7604, longitude: -95.3698, label: 'Houston' },
+  { latitude: 32.7767, longitude: -96.7970, label: 'Dallas' },
+  { latitude: 25.7617, longitude: -80.1918, label: 'Miami' },
+  { latitude: 39.9526, longitude: -75.1652, label: 'Philadelphie' },
+  { latitude: 38.9072, longitude: -77.0369, label: 'Washington' },
+  { latitude: 45.4215, longitude: -75.6997, label: 'Ottawa' },
+  { latitude: 49.2827, longitude: -123.1207, label: 'Vancouver' },
+  { latitude: 20.6597, longitude: -103.3496, label: 'Guadalajara' },
+  { latitude: 21.1619, longitude: -86.8515, label: 'Cancún' },
+  { latitude: 29.4241, longitude: -98.4936, label: 'San Antonio' },
+  { latitude: 33.4484, longitude: -112.0740, label: 'Phoenix' },
+  { latitude: -34.6037, longitude: -58.3816, label: 'Buenos Aires' },
+  { latitude: -12.0464, longitude: -77.0428, label: 'Lima' },
+  { latitude: -0.1807, longitude: -78.4678, label: 'Quito' },
+  { latitude: -16.5000, longitude: -68.1500, label: 'La Paz' },
+  { latitude: -34.9011, longitude: -56.1645, label: 'Montevideo' },
+  { latitude: -33.4489, longitude: -70.6693, label: 'Santiago' },
+  { latitude: -25.2637, longitude: -57.5759, label: 'Asuncion' },
+  { latitude: -2.170998, longitude: -79.922359, label: 'Guayaquil' },
+  { latitude: -17.7833, longitude: -63.1821, label: 'Santa Cruz' },
+  { latitude: -3.1190, longitude: -60.0217, label: 'Manaus' },
+  { latitude: -12.9777, longitude: -38.5016, label: 'Salvador' },
+  { latitude: -15.7801, longitude: -47.9292, label: 'Brasilia' },
+  { latitude: -8.0543, longitude: -34.8813, label: 'Recife' },
+  { latitude: -3.7319, longitude: -38.5267, label: 'Fortaleza' },
+  { latitude: -27.5954, longitude: -48.5480, label: 'Florianopolis' },
 ]
 
 // Ajout des propriétés communes à toutes les villes
@@ -140,132 +169,181 @@ listeVilles.forEach(ville => {
   ville.pointRadius = 0.02
   ville.labelColor = arcenciel(randint(0, 10))
   ville.labelSize = 0.5
-  ville.font = 'images/Arial Bold-msdf.json'
+  ville.font = 'sourcecodepro'
   ville.transparent = true
 })
 
+function choisirNVillesAssezLointaines (n) {
+  const villes = []
+  let cpt = 0
+  for (let i = 0; i < n && cpt < 100;) {
+    const ville = choice(listeVilles)
+    if (!villes.some(v => Math.abs(v.latitude - ville.latitude) < 10 && Math.abs(v.longitude - ville.longitude) < 10)) {
+      villes.push(ville)
+      i++
+    } else {
+      cpt++
+    }
+  }
+  return villes
+}
 export default class ReperageSurLaTerre extends Exercice {
   constructor () {
     super()
-
+    this.besoinFormulaireCaseACocher = ['3D dynamique', true]
+    this.sup = true
     this.nbQuestions = 4
   }
 
   nouvelleVersion () {
-    const villes = shuffle(listeVilles).slice(0, this.nbQuestions)
-    const sceneBuilder = new SceneViewer({ width: 400, height: 400 })
-    // Création de la scène 3D
-    sceneBuilder.addCustomWireSphere({
-      position: [0, 3, 0],
-      radius: 4.02,
-      parallels: 18,
-      meridians: 72,
-      /* parallelColor: 'black', // Parallèles bleu ciel
+    const correctionTexte = (choix, ville) => `   En effet, la ${choix === 'latitude' ? 'latitude' : 'longitude'} est la ${choix === 'latitude' ? 'première' : 'deuxième'} coordonnée GPS, soit $${choix === 'latitude'
+        ? `${texNombre(ville.latitude, 3)}\\approx ${texNombre(ville.latitude, 0)}`
+        : `${texNombre(ville.longitude, 3)}\\approx ${texNombre(ville.longitude, 0)}`}$.<br>
+        De plus, la ${choix === 'latitude' ? 'latitude' : 'longitude'} est ${choix === 'latitude'
+        ? ville.latitude >= 0 ? 'positive' : 'négative'
+        : ville.longitude >= 0 ? 'positive' : 'négative'
+        }, ce qui signifie que ${ville.label} est située ${choix === 'latitude'
+        ? ville.latitude >= 0 ? 'au nord' : 'au sud'
+        : ville.longitude >= 0 ? 'à l\'est' : 'à l\'ouest'
+        }.`
+
+    const villes = choisirNVillesAssezLointaines(this.nbQuestions)
+    if (this.sup && context.isHtml) {
+      const sceneBuilder = new SceneViewer({ width: 400, height: 400, id: `Ex${this.numeroExercice}Q0`, withEarth: true, withSky: true, rigPosition: [0, 3, 0], zoomLimits: { min: 8, max: 12 }, cameraDistance: 10, fov: 60, rigRotation: [0, 0, 0] }) // Même si il y a plusieurs question, il n'y a qu'une seule scène
+      // Création de la scène 3D
+      sceneBuilder.addCustomWireSphere({
+        position: [0, 3, 0],
+        radius: 4.02,
+        parallels: 18,
+        meridians: 72,
+        /* parallelColor: 'black', // Parallèles bleu ciel
           meridianColor: 'purple', // Méridiens gris-ble */
-      showEquator: true,
-      equatorColor: '#DC143C',
-      equatorThickness: 0.01,       // Équateur plus épais
-      showGreenwich: true,
-      greenwichColor: '#008000',
-      greenwichThickness: 0.01     // Greenwich épais
+        showEquator: true,
+        equatorColor: '#DC143C',
+        equatorThickness: 0.01,       // Équateur plus épais
+        showGreenwich: true,
+        greenwichColor: '#008000',
+        greenwichThickness: 0.01     // Greenwich épais
 
-    })
-    // Les longitudes
-    const points = rangeMinMax(-17, 18, [0]).map(el => Object.assign({
-      latitude: 0,
-      longitude: el * 10,
-      label: `${el >= 0 ? `${el * 10}°E` : `${-el * 10}°O`}`,
-      pointColor: '#FF0000'
-    }, {
-      pointColor: '#FF0000',
-      pointRadius: 0.02,
-      font: 'images/Arial Bold-msdf.json',
-      labelColor: '#FFFFFF',
-      transparent: true  // NOUVEAU : Forcer la transparence
-    }))
-
-    sceneBuilder.addGeographicPoints({
-      spherePosition: [0, 3, 0],
-      sphereRadius: 4,
-      defaultLabelSize: 0.3,
-      points,
-      transparent: true  // NOUVEAU : Transparence globale
-    })
-
-    // Les latitudes
-    const points2 = rangeMinMax(-8, 8, [0]).map(el => [Object.assign({
-      latitude: el * 10,
-      longitude: 0,
-      label: `${el >= 0 ? `${el * 10}°N` : `${-el * 10}°S`}`
-    }, {
-      pointColor: '#FF0000',
-      pointRadius: 0.02,
-      labelColor: '#FFFFFF',
-      labelSize: 0.3,
-      font: 'images/Arial Bold-msdf.json',
-      transparent: true  // NOUVEAU : Transparence pour chaque point
-    }),
-    Object.assign({
-      latitude: el * 10,
-      longitude: 180,
-      label: `${el >= 0 ? `${el * 10}°N` : `${-el * 10}°S`}`
-    }, {
-      pointColor: '#FF0000',
-      pointRadius: 0.02,
-      labelColor: '#FFFFFF',
-      labelSize: 0.3,
-      font: 'images/Arial Bold-msdf.json',
-      transparent: true  // NOUVEAU : Transparence pour chaque point
-    })]
-    ).flat(1)
-
-    sceneBuilder.addGeographicPoints({
-      spherePosition: [0, 3, 0],
-      sphereRadius: 4,
-      points: points2,
-      defaultLabelSize: 0.3,
-      transparent: true  // NOUVEAU : Transparence globale
-    })
-
-    // Villes avec transparence
-
-    sceneBuilder.addGeographicPoints({
-      spherePosition: [0, 3, 0],
-      sphereRadius: 4,
-      points: villes,
-      defaultLabelSize: 0.3,
-      transparent: true  // NOUVEAU : Transparence globale
-    })
-
-    sceneBuilder.addRealisticEarthSphere({
-      position: [0, 3, 0],
-      radius: 4,
-      greenwichAlignment: -90,
-    })
-
-    const vue = sceneBuilder.generateHTML({ withEarth: true, withSky: true })
-    this.consigne = vue
-
-    for (let i = 0; i < this.nbQuestions; i++) {
-      const ville = villes[i]
-      const choix = choice(['latitude', 'longitude'])
-      const question = `Quelle est la ${choix} de ${ville.label} ?` + ajouteQuestionMathlive({
-        exercice: this,
-        question: i,
-        typeInteractivite: 'mathlive',
-        objetReponse: {
-          reponse: { value: `${choix === 'latitude' ? Math.round(Math.abs(ville.latitude)) : Math.round(Math.abs(ville.longitude))}°${choix === 'latitude' ? (ville.latitude >= 0 ? 'N' : 'S') : (ville.longitude >= 0 ? 'E' : 'O')}` },
-        }
       })
-      const correction = `La ${choix} de ${ville.label} est d'environ ${choix === 'latitude'
-       ? `${Math.round(Math.abs(ville.latitude))}°${ville.latitude >= 0 ? 'N' : 'S'}`
-       : `${Math.round(Math.abs(ville.longitude))}°${ville.longitude >= 0 ? 'E' : 'O'
-      }`}.`
-      this.listeQuestions.push(question)
-      this.listeCorrections.push(correction)
+      // Les longitudes
+      const points = rangeMinMax(-17, 18, [0]).map(el => Object.assign({
+        latitude: 0,
+        longitude: el * 10,
+        label: `${el >= 0 ? `${el * 10}°E` : `${-el * 10}°O`}`,
+        pointColor: '#FF0000'
+      }, {
+        pointColor: '#FF0000',
+        pointRadius: 0.02,
+        font: 'images/Arial Bold-msdf.json',
+        labelColor: '#FFFFFF',
+        transparent: true  // NOUVEAU : Forcer la transparence
+      }))
+
+      sceneBuilder.addGeographicPoints({
+        spherePosition: [0, 3, 0],
+        sphereRadius: 4,
+        defaultLabelSize: 0.3,
+        points,
+        transparent: true  // NOUVEAU : Transparence globale
+      })
+
+      // Les latitudes
+      const points2 = rangeMinMax(-8, 8, [0]).map(el => [Object.assign({
+        latitude: el * 10,
+        longitude: 0,
+        label: `${el >= 0 ? `${el * 10}°N` : `${-el * 10}°S`}`
+      }, {
+        pointColor: '#FF0000',
+        pointRadius: 0.02,
+        labelColor: '#FFFFFF',
+        labelSize: 0.3,
+        font: 'images/Arial Bold-msdf.json',
+        transparent: true  // NOUVEAU : Transparence pour chaque point
+      }),
+      Object.assign({
+        latitude: el * 10,
+        longitude: 180,
+        label: `${el >= 0 ? `${el * 10}°N` : `${-el * 10}°S`}`
+      }, {
+        pointColor: '#FF0000',
+        pointRadius: 0.02,
+        labelColor: '#FFFFFF',
+        labelSize: 0.3,
+        font: 'images/Arial Bold-msdf.json',
+        transparent: true  // NOUVEAU : Transparence pour chaque point
+      })]
+      ).flat(1)
+
+      sceneBuilder.addGeographicPoints({
+        spherePosition: [0, 3, 0],
+        sphereRadius: 4,
+        points: points2,
+        defaultLabelSize: 0.3,
+        transparent: true  // NOUVEAU : Transparence globale
+      })
+
+      // Villes avec transparence
+
+      sceneBuilder.addGeographicPoints({
+        spherePosition: [0, 3, 0],
+        sphereRadius: 4,
+        points: villes,
+        defaultLabelSize: 0.2,
+        defaultFont: 'monoid',
+        transparent: true  // NOUVEAU : Transparence globale
+      })
+
+      sceneBuilder.addRealisticEarthSphere({
+        position: [0, 3, 0],
+        radius: 4,
+        greenwichAlignment: -90,
+      })
+
+      const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
+
+      this.consigne = vue
+
+      for (let i = 0; i < this.nbQuestions; i++) {
+        const ville = villes[i]
+        const choix = choice(['latitude', 'longitude'])
+        const question = `Quelle est la ${choix} de ${ville.label} ?` + ajouteQuestionMathlive({
+          exercice: this,
+          question: i,
+          typeInteractivite: 'mathlive',
+          objetReponse: {
+            reponse: { value: `${choix === 'latitude' ? Math.round(Math.abs(ville.latitude)) : Math.round(Math.abs(ville.longitude))}°${choix === 'latitude' ? (ville.latitude >= 0 ? 'N' : 'S') : (ville.longitude >= 0 ? 'E' : 'O')}` },
+          }
+        })
+        const correction = `La ${choix} de ${ville.label} est d'environ ${choix === 'latitude'
+        ? `${Math.round(Math.abs(ville.latitude))}°${ville.latitude >= 0 ? 'N' : 'S'}`
+        : `${Math.round(Math.abs(ville.longitude))}°${ville.longitude >= 0 ? 'E' : 'O'
+      }`}.<br>
+       ${correctionTexte(choix, ville)}`
+        this.listeQuestions.push(question)
+        this.listeCorrections.push(correction)
+      }
+      document.addEventListener('exercicesAffiches', () => {
+        const parent = document.getElementById(`emplacementPourSceneViewer${sceneBuilder.id}`)
+        if (parent !== null) {
+          sceneBuilder.showSceneAt(parent)
+        }
+      }, { once: true })
+    } else {
+      this.consigne = 'Cet exercice est interactif et nécessite un affichage HTML. (version modifiée pour la version pdf)'
+      for (let i = 0; i < this.nbQuestions; i++) {
+        const ville = villes[i]
+        const choix = choice(['latitude', 'longitude'])
+        const question = `Quelle est la ${choix} de ${ville.label} dont les coordonnées GPS sont $(~${texNombre(ville.latitude, 3)}~;~${texNombre(ville.longitude, 3)}~)$ ?<br>
+         On donnera la réponse arrondie à l'unité, sous la forme d'un angle positif avec son orientation (N, S, E ou O).`
+        const correction = `La ${choix} de ${ville.label} est d'environ ${choix === 'latitude'
+          ? `${Math.round(Math.abs(ville.latitude))}°${ville.latitude >= 0 ? 'N' : 'S'}`
+          : `${Math.round(Math.abs(ville.longitude))}°${ville.longitude >= 0 ? 'E' : 'O'
+        }`}.<br>
+         ${correctionTexte(choix, ville)}`
+        this.listeQuestions.push(question)
+        this.listeCorrections.push(correction)
+      }
     }
-    document.addEventListener('exercicesAffiches', () => {
-      SceneViewer.initializeScenes()
-    }, { once: true })
   }
 }

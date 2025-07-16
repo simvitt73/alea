@@ -27,8 +27,8 @@ export default class BetaThreeJs extends Exercice {
     this.listeQuestions = []
     this.listeCorrections = []
 
-    const sceneBuilder = new SceneViewer({ width: 400, height: 400 })
-
+    const sceneBuilder = new SceneViewer(
+      { width: 400, height: 400, id: `Ex${this.numeroExercice}Q0`, zoomLimits: { min: 5, max: 20 }, rigPosition: [0, 0, 0], cameraDistance: 8, fov: 60, withEarth: true, withSky: true })
     sceneBuilder.addAmbientLight({
       color: '#ffffff',
       intensity: 0.8  // Augmenter l'intensité de la lumière ambiante
@@ -50,7 +50,7 @@ export default class BetaThreeJs extends Exercice {
     // Sphère avec beaucoup de détails
     // Sphère détaillée pour cours de géographie
     sceneBuilder.addCustomWireSphere({
-      position: [0, 3, 0],
+      position: [0, 0, 0],
       radius: 4.02,
       parallels: 18,
       meridians: 72,
@@ -65,7 +65,7 @@ export default class BetaThreeJs extends Exercice {
 
     })
     sceneBuilder.addRealisticEarthSphere({
-      position: [0, 3, 0],
+      position: [0, 0, 0],
       radius: 4,
       greenwichAlignment: -90,
     })
@@ -85,7 +85,7 @@ export default class BetaThreeJs extends Exercice {
     }))
 
     sceneBuilder.addGeographicPoints({
-      spherePosition: [0, 3, 0],
+      spherePosition: [0, 0, 0],
       sphereRadius: 4,
       defaultLabelSize: 0.3,
       points,
@@ -107,7 +107,7 @@ export default class BetaThreeJs extends Exercice {
     }))
 
     sceneBuilder.addGeographicPoints({
-      spherePosition: [0, 3, 0],
+      spherePosition: [0, 0, 0],
       sphereRadius: 4,
       points: points2,
       defaultLabelSize: 0.3,
@@ -185,14 +185,14 @@ export default class BetaThreeJs extends Exercice {
     ]
 
     sceneBuilder.addGeographicPoints({
-      spherePosition: [0, 3, 0],
+      spherePosition: [0, 0, 0],
       sphereRadius: 4,
       points: villes,
       defaultLabelSize: 0.3,
       transparent: true  // NOUVEAU : Transparence globale
     })
 
-    const vue = sceneBuilder.generateHTML({ withEarth: true, withSky: true })
+    const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
 
     this.listeQuestions.push(vue)
     this.listeCorrections.push('Explorez la fractale avec la souris (glisser pour tourner, molette pour zoomer).')
@@ -201,7 +201,10 @@ export default class BetaThreeJs extends Exercice {
 
     // AJOUTER CET ÉVÉNEMENT for initialiser A-Frame après l'affichage
     document.addEventListener('exercicesAffiches', () => {
-      SceneViewer.initializeScenes()
+      const parent = document.getElementById(`emplacementPourSceneViewer${sceneBuilder.id}`)
+      if (parent !== null) {
+        sceneBuilder.showSceneAt(parent)
+      }
     }, { once: true })
   }
 }
