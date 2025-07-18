@@ -81,7 +81,6 @@
     "@types/aframe": "^1.2.8",
     "@types/crypto-js": "^4.2.2",
     "@types/three": "^0.178.0",
-    "a-frame": "^0.0.0",
     "aframe": "^1.7.1",
     "apigeom": "git+https://forge.apps.education.fr/coopmaths/apigeom.git",
     "blockly": "11.1.1",
