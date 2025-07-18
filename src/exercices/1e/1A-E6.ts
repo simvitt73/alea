@@ -22,11 +22,10 @@ export default class TauxEvolution extends ExerciceQcmA {
     const taux = ((valeurFinale - valeurInitiale) / valeurInitiale) * 100
     const tauxInverse = ((valeurInitiale - valeurFinale) / valeurFinale) * 100
     const diffBrute = valeurFinale - valeurInitiale
-    let distracteur = taux + choice([-10,-5,5,10]) // Distracteur pour éviter les réponses trop évidentes
+    let distracteur = taux + choice([-10, -5, 5, 10]) // Distracteur pour éviter les réponses trop évidentes
     do {
-      distracteur = taux + choice([-10, -5, 5, 10]);
-    } while (distracteur === taux || distracteur === tauxInverse || distracteur === diffBrute|| distracteur === 0);
-    
+      distracteur = taux + choice([-10, -5, 5, 10])
+    } while (distracteur === taux || distracteur === tauxInverse || distracteur === diffBrute || distracteur === 0)
 
     this.reponses = [
       `Une ${evo} de $${texNombre(Math.round(abs(taux)))}\\ \\%$`,
@@ -65,8 +64,7 @@ export default class TauxEvolution extends ExerciceQcmA {
       let valeurFinale = valeurInitiale + randint(-1, 1, 0) * base * randint(1, 5) * 10
       do { valeurFinale = valeurInitiale + randint(-1, 1, 0) * base * randint(1, 5) * 10 } while (valeurFinale === valeurInitiale || valeurFinale <= 0)
       const evo = valeurFinale < valeurInitiale ? 'diminution' : 'augmentation'
-       this.appliquerLesValeurs(valeurInitiale, valeurFinale, evo, base, coeff)
-      console.log(this.reponses)
+      this.appliquerLesValeurs(valeurInitiale, valeurFinale, evo, base, coeff)
     } while (nombreElementsDifferents(this.reponses) < n)
   }
 
