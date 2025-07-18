@@ -1,31 +1,31 @@
-import { choice, combinaisonListes } from '../../../lib/outils/arrayOutils'
-import Exercice from '../../Exercice'
-import FractionEtendue from '../../../modules/FractionEtendue'
-import { remplisLesBlancs } from '../../../lib/interactif/questionMathLive'
-import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
-import { listeQuestionsToContenu } from '../../../modules/outils'
-import { context } from '../../../modules/context'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
+import Exercice from '../Exercice'
+import FractionEtendue from '../../modules/FractionEtendue'
+import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { listeQuestionsToContenu } from '../../modules/outils'
+import { context } from '../../modules/context'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 export const titre = 'Comparer des fractions de même dénominateur/numérateur'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const dateDePublication = '04/11/2022'
+export const dateDePublication = '17/07/2025'
 /**
- * @author Gilles Mora
+ * @author Eric Elter (sur la base du can6C41 de Gilles Mora)
  */
 
-export const uuid = '99b96'
+export const uuid = '87514'
 
 export const refs = {
-  'fr-fr': ['can6C41'],
+  'fr-fr': ['6N20-4'],
   'fr-ch': []
 }
 export default class ComparerFraction extends Exercice {
   constructor () {
     super()
-    this.nbQuestions = 1
+    this.nbQuestions = 4
     this.besoinFormulaireNumerique = [
       'Choix du dénominateur', 3, [
         '1 : Même dénominateur',
@@ -34,6 +34,7 @@ export default class ComparerFraction extends Exercice {
       ].join('\n')
     ]
     this.spacingCorr = 1.5
+    this.sup = 3
   }
 
   nouvelleVersion () {
@@ -106,7 +107,7 @@ export default class ComparerFraction extends Exercice {
               }
             )
             this.correction = `Les deux fractions ont le même numérateur, la plus grande est celle qui a le plus petit dénominateur.<br>
-         Ainsi, $${a.texFraction} ${miseEnEvidence('>')} ${b.texFraction}$.`
+          Ainsi, $${a.texFraction} ${miseEnEvidence('>')} ${b.texFraction}$.`
             this.reponse = '>'
             this.canEnonce = 'Compléter avec $>$ ou $<$.'
             this.canReponseACompleter = `$${a.texFraction}$ $\\ldots$ $${b.texFraction}$`
