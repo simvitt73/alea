@@ -1,5 +1,5 @@
 import Exercice from '../Exercice'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
+import { contraindreValeur, gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { choice } from '../../lib/outils/arrayOutils'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
@@ -28,12 +28,16 @@ export default class nomExercice extends Exercice {
     this.nbQuestions = 6 // nombre de questions
     this.besoinFormulaireTexte = ['Types d\'expression', 'Nombres séparés par des tirets\n1 : Deux Parenthèses séparées\n2 : Deux parenthèses imbriquées\n3: Une seule parenthèse']
     this.sup = '1-2-3'
+    this.besoinFormulaire2Numerique = ['Résulat maximum', 10000] // 10000 car listeNombresPremiersStrictJusqua renvoie un tableau de premiers inférieurs à 10000
+    this.sup2 = 200
+    this.comment = 'Résultat maximum : Il s\'agit de produire des expressions dont le résulat est inférieur au maximum. Si ce maximum est trop petit il sera fixé à 50.'
   }
 
   nouvelleVersion () {
     const typeQuestionsDisponibles = ['deuxParenthesesseparees', 'deuxParenthesesimbriquees', 'UneParenthese']
     const listeTypeQuestions = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 3, melange: 4, defaut: 4, listeOfCase: typeQuestionsDisponibles, nbQuestions: this.nbQuestions })
     // const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
+    const ResultatMmax = contraindreValeur(50, 10000, this.sup2, 200)
     const avecDivision = false // pas de division pour le moment
     this.consigne = 'Calculer'
     this.consigne += this.nbQuestions < 2 ? ' l\'expression suivante' : '  les expressions suivantes'
@@ -117,7 +121,7 @@ export default class nomExercice extends Exercice {
       }
       texte += ajouteChampTexteMathLive(this, i, 'inline largeur01 college6eme', { texteAvant: `<br>$${lettre} = $` })
       handleAnswers(this, i, { reponse: { value: resultat, options: { resultatSeulementEtNonOperation: true } } })
-      if (this.questionJamaisPosee(i, texte)) {
+      if (resultat < ResultatMmax && this.questionJamaisPosee(i, texte)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++
@@ -275,6 +279,9 @@ function braceLArbre (node: TreeNode | null): boolean {
 function verifiePositif (node: TreeNode | null): boolean {
   if (node === null) { return false }
   const stop = false
+
+  verifiePositif(node.left)
+  verifiePositif(node.right)
   if ((node !== null) && (typeof node.value !== 'number')) {
     if (node.value === '-') {
       const rsltGauche = evalueArbre(node.left)
@@ -286,8 +293,6 @@ function verifiePositif (node: TreeNode | null): boolean {
       }
     }
   }
-  verifiePositif(node.left)
-  verifiePositif(node.right)
   return stop
 }
 
