@@ -1,138 +1,15 @@
 import 'aframe'
-import type * as THREE from 'three'  // Import type seulement
-
-export class Solide {
-  mesh: THREE.Mesh
-
-  constructor (type: 'tetraedre' | 'cube' | 'sphere' = 'tetraedre', color = 0xff6600) {
-    const THREELib = AFRAME.THREE  // Utiliser AFRAME.THREE au runtime
-    let geometry: THREE.BufferGeometry
-
-    switch (type) {
-      case 'tetraedre':
-        geometry = new THREELib.TetrahedronGeometry(2, 0)
-        break
-      case 'cube':
-        geometry = new THREELib.BoxGeometry(1, 1, 1)
-        break
-      case 'sphere':
-        geometry = new THREELib.SphereGeometry(1, 16, 16)
-        break
-
-      default:
-        throw new Error(`Type de solide inconnu : ${type}`)
-    }
-
-    const material = new THREELib.MeshPhongMaterial({
-      color,
-      flatShading: true,
-    })
-    material.needsUpdate = true
-    geometry.computeVertexNormals()
-    this.mesh = new THREELib.Mesh(geometry, material)
-  }
-
-  setPosition (x: number, y: number, z: number): void {
-    this.mesh.position.set(x, y, z)
-  }
-
-  setRotation (x: number, y: number, z: number): void {
-    this.mesh.rotation.set(x, y, z)
-  }
-
-  static prismePyramides ({
-    rayon = 1,
-    n = 6,
-    hauteurPrisme = 1,
-    hauteurTop = 1,
-    hauteurBottom = 1,
-    colorPrisme = '#4CC3D9',
-    colorTop = '#FFC65D',
-    colorBottom = '#7BC8A4',
-    position = [0, 0, 0],
-    wireframe = true
-  }: {
-    rayon?: number,
-    n?: number,
-    hauteurPrisme?: number,
-    hauteurTop?: number,
-    hauteurBottom?: number,
-    colorPrisme?: string,
-    colorTop?: string,
-    colorBottom?: string,
-    position?: [number, number, number]
-    wireframe?: boolean
-  }) {
-    // Génère les sommets du polygone de base
-    const baseTopPoints = Array.from({ length: n + 1 }, (_, i) => {
-      const angle = (2 * Math.PI * i) / n
-      return [
-        position[0] + rayon * Math.sin(angle),
-        position[1] + hauteurPrisme / 2,
-        position[2] + rayon * Math.cos(angle)
-      ]
-    })
-    const baseBottomPoints = Array.from({ length: n + 1 }, (_, i) => {
-      const angle = (2 * Math.PI * i) / n
-      return [
-        position[0] + rayon * Math.sin(angle),
-        position[1] - hauteurPrisme / 2,
-        position[2] + rayon * Math.cos(angle)
-      ]
-    })
-
-    // Génère les faces du prisme (simplifié, à adapter selon ton moteur)
-    // Ici, on utilise des a-entity ou a-mesh-line pour illustrer
-    // Pour un vrai mesh, il faudrait un composant custom ou loader un modèle
-
-    // Prisme
-    const prisme = `
-      <a-cylinder
-        position="${position.join(' ')}"
-        segments-height=1
-        radius="${rayon}"
-        height="${hauteurPrisme}"
-        material="color: ${colorPrisme}; wireframe: ${wireframe ? 'edges' : 'false'}"
-        segments-radial="${n}"
-        >
-      </a-cylinder>
-    `
-
-    // Pyramide top
-    const topApex = [position[0], position[1] + hauteurPrisme / 2 + hauteurTop, position[2]]
-    const topFaces = baseTopPoints.map((pt, i) => {
-      const nextPt = baseTopPoints[(i + 1) % n]
-      return `
-        <a-triangle
-          vertex-a="${pt.join(' ')}"
-          vertex-b="${nextPt.join(' ')}"
-          vertex-c="${topApex.join(' ')}"
-            material="color: ${colorTop}; wireframe: ${wireframe ? 'edges' : 'false'}">
-        </a-triangle>
-      `
-    }).join('\n')
-
-    // Pyramide bottom
-    const bottomApex = [position[0], position[1] - hauteurPrisme / 2 - hauteurBottom, position[2]]
-    const bottomFaces = baseBottomPoints.reverse().map((pt, i) => {
-      const nextPt = baseBottomPoints[(i + 1) % n]
-      return `
-        <a-triangle
-          vertex-a="${pt.join(' ')}"
-          vertex-b="${nextPt.join(' ')}"
-          vertex-c="${bottomApex.join(' ')}"
-            material="color: ${colorBottom}; wireframe: ${wireframe ? 'edges' : 'false'}">
-        </a-triangle>
-      `
-    }).join('\n')
-
-    return prisme + topFaces + bottomFaces
-  }
-}
-
+import type * as THREEType from 'three'
+const THREE = (window as any).AFRAME.THREE
+export { THREE }
+export type { THREEType }
+/**
+ * Ce fichier contient des définitions de solides prêts à être utilisés avec SceneViewer (AFRAME version) ou SceneViewerThreeJs (pur Three.js version = rendu bas niveau)
+ * @author Jean-claude Lhote
+ */
+// Components custom pour AFRAME.
 AFRAME.registerComponent('zoom-controls', {
   init: function () {
-    const THREE = AFRAME.THREE
     const sceneEl = this.el.sceneEl
     const cameraRig = sceneEl?.querySelector('#cameraRig') as any
     const camera = sceneEl?.querySelector('[camera]') as any
@@ -202,7 +79,6 @@ export const customWirePyramid = AFRAME.registerComponent('custom-wire-pyramid',
     color: { type: 'string', default: 'black' },
   } as WirePyramidSchema,
   init: function () {
-    const THREE = AFRAME.THREE
     const group = new THREE.Group()
     const data = this.data as any  // Cast pour éviter les erreurs de type
 
@@ -243,6 +119,7 @@ export const customWirePyramid = AFRAME.registerComponent('custom-wire-pyramid',
     this.el.removeObject3D('tubeEdges')
   }
 })
+
 export const customWirePrism = AFRAME.registerComponent('custom-wire-prism', {
   schema: {
     radius: { type: 'number', default: 1 },
@@ -253,7 +130,6 @@ export const customWirePrism = AFRAME.registerComponent('custom-wire-prism', {
     color: { type: 'string', default: 'black' },
   } as WirePyramidSchema,
   init: function () {
-    const THREE = AFRAME.THREE
     const group = new THREE.Group()
     const data = this.data as any  // Cast pour éviter les erreurs de type
 
@@ -315,7 +191,6 @@ export const customWireTruncatedPyramid = AFRAME.registerComponent('custom-wire-
     color: { type: 'string', default: 'black' },
   } as WireTrucatedPyramidSchema,
   init: function () {
-    const THREE = AFRAME.THREE
     const group = new THREE.Group()
     const data = this.data as any  // Cast pour éviter les erreurs de type
 
@@ -392,7 +267,6 @@ export const customWireSphere = AFRAME.registerComponent('custom-wire-sphere', {
   } as WireSphereSchema,
 
   init: function () {
-    const THREE = AFRAME.THREE
     const group = new THREE.Group()
     const data = this.data as any  // Cast pour éviter les erreurs de type
 
@@ -527,7 +401,6 @@ export const customWireSphere = AFRAME.registerComponent('custom-wire-sphere', {
 // Composant billboard personnalisé
 AFRAME.registerComponent('billboard', {
   tick: function () {
-    const THREE = AFRAME.THREE
     const camera = this.el.sceneEl?.camera
 
     if (camera) {
@@ -617,7 +490,6 @@ AFRAME.registerComponent('cube-trois-couleurs', {
     color3: { type: 'color', default: '#0000ff' }
   },
   init: function () {
-    const THREE = AFRAME.THREE
     const data = this.data
     const geometry = new THREE.BoxGeometry(data.size, data.size, data.size)
     // 6 faces : [right, left, top, bottom, front, back]
@@ -647,7 +519,6 @@ AFRAME.registerComponent('cube-edges', {
     color: { type: 'color', default: '#000' }
   },
   init: function () {
-    const THREE = AFRAME.THREE
     const geometry = new THREE.BoxGeometry(this.data.size, this.data.size, this.data.size)
     const edges = new THREE.EdgesGeometry(geometry)
     const material = new THREE.LineBasicMaterial({ color: this.data.color })
@@ -666,7 +537,6 @@ AFRAME.registerComponent('cube-tube-edges', {
     thickness: { type: 'number', default: 0.03 }
   },
   init: function () {
-    const THREE = AFRAME.THREE
     const { size, color, thickness } = this.data
     const group = new THREE.Group()
     const s = size / 2
@@ -710,3 +580,237 @@ AFRAME.registerComponent('cube-tube-edges', {
     this.el.removeObject3D('tubeEdges')
   }
 })
+
+// Three.js pur pour créer un prisme polygonal utilisable dans une scène Three.js en perspective avec arêtes cachées en pointillés.
+
+export function createPrismGeometry (
+  sides: number,
+  radius: number,
+  bottom: number,
+  top: number,
+  withBottomBase = false,
+  withTopBase = false
+): THREEType.BufferGeometry {
+  const geometry = new THREE.BufferGeometry()
+  const vertices: number[] = []
+  const base: THREEType.Vector3[] = []
+  const topBase: THREEType.Vector3[] = []
+
+  // Sommets des deux bases
+  for (let i = 0; i < sides; i++) {
+    const theta = (i / sides) * Math.PI * 2
+    const x = radius * Math.cos(theta)
+    const z = radius * Math.sin(theta)
+    base.push(new THREE.Vector3(x, bottom, z))
+    topBase.push(new THREE.Vector3(x, top, z))
+  }
+
+  // Triangulation de la base inférieure
+  if (withBottomBase) {
+    for (let i = 1; i < sides - 1; i++) {
+      vertices.push(
+        base[0].x, base[0].y, base[0].z,
+        base[i].x, base[i].y, base[i].z,
+        base[i + 1].x, base[i + 1].y, base[i + 1].z
+      )
+    }
+  }
+
+  // Triangulation de la base supérieure
+  if (withTopBase) {
+    for (let i = 1; i < sides - 1; i++) {
+      vertices.push(
+        topBase[0].x, topBase[0].y, topBase[0].z,
+        topBase[i + 1].x, topBase[i + 1].y, topBase[i + 1].z,
+        topBase[i].x, topBase[i].y, topBase[i].z
+      )
+    }
+  }
+
+  // Side faces (un seul rectangle par côté, découpé en 2 triangles)
+  for (let i = 0; i < sides; i++) {
+    const a = base[i]
+    const b = base[(i + 1) % sides]
+    const c = topBase[(i + 1) % sides]
+    const d = topBase[i]
+
+    // Premier triangle
+    vertices.push(
+      a.x, a.y, a.z,
+      b.x, b.y, b.z,
+      d.x, d.y, d.z
+    )
+    // Second triangle
+    vertices.push(
+      b.x, b.y, b.z,
+      c.x, c.y, c.z,
+      d.x, d.y, d.z
+    )
+  }
+
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
+  geometry.computeVertexNormals()
+  return geometry
+}
+
+export function createPyramidGeometry (
+  sides: number,
+  radius: number,
+  bottom: number,
+  top: number,
+  withBase = false // <-- nouveau paramètre, false par défaut
+): THREEType.BufferGeometry {
+  const geometry = new THREE.BufferGeometry()
+  const vertices: number[] = []
+  const apex = new THREE.Vector3(0, top, 0)
+  const base: THREEType.Vector3[] = []
+
+  for (let i = 0; i < sides; i++) {
+    const theta = (i / sides) * Math.PI * 2
+    const x = radius * Math.cos(theta)
+    const z = radius * Math.sin(theta)
+    base.push(new THREE.Vector3(x, bottom, z))
+  }
+
+  // Base face (triangulation) si demandé
+  if (withBase) {
+    for (let i = 1; i < sides - 1; i++) {
+      vertices.push(
+        base[0].x, base[0].y, base[0].z,
+        base[i].x, base[i].y, base[i].z,
+        base[i + 1].x, base[i + 1].y, base[i + 1].z
+      )
+    }
+  }
+
+  // Side faces
+  for (let i = 0; i < sides; i++) {
+    const a = base[i]
+    const b = base[(i + 1) % sides]
+    vertices.push(
+      a.x, a.y, a.z,
+      b.x, b.y, b.z,
+      apex.x, apex.y, apex.z
+    )
+  }
+
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
+  geometry.computeVertexNormals()
+  return geometry
+}
+
+export function createTruncatedPyramidGeometry (
+  sides: number,
+  bottomRadius: number,
+  topRadius: number,
+  bottom: number,
+  top: number,
+  withBottomBase = false,
+  withTopBase = false
+): THREEType.BufferGeometry {
+  const geometry = new THREE.BufferGeometry()
+  const vertices: number[] = []
+  const bottomVerts: THREEType.Vector3[] = []
+  const topVerts: THREEType.Vector3[] = []
+
+  for (let i = 0; i < sides; i++) {
+    const theta = (i / sides) * Math.PI * 2
+    bottomVerts.push(new THREE.Vector3(
+      bottomRadius * Math.cos(theta),
+      bottom,
+      bottomRadius * Math.sin(theta)
+    ))
+    topVerts.push(new THREE.Vector3(
+      topRadius * Math.cos(theta),
+      top,
+      topRadius * Math.sin(theta)
+    ))
+  }
+
+  // Bottom face (triangulation) si demandé
+  if (withBottomBase) {
+    for (let i = 1; i < sides - 1; i++) {
+      vertices.push(
+        bottomVerts[0].x, bottomVerts[0].y, bottomVerts[0].z,
+        bottomVerts[i].x, bottomVerts[i].y, bottomVerts[i].z,
+        bottomVerts[i + 1].x, bottomVerts[i + 1].y, bottomVerts[i + 1].z
+      )
+    }
+  }
+
+  // Top face (triangulation) si demandé
+  if (withTopBase) {
+    for (let i = 1; i < sides - 1; i++) {
+      vertices.push(
+        topVerts[0].x, topVerts[0].y, topVerts[0].z,
+        topVerts[i + 1].x, topVerts[i + 1].y, topVerts[i + 1].z,
+        topVerts[i].x, topVerts[i].y, topVerts[i].z
+      )
+    }
+  }
+
+  // Side faces (un seul rectangle par côté, découpé en 2 triangles)
+  for (let i = 0; i < sides; i++) {
+    const a = bottomVerts[i]
+    const b = bottomVerts[(i + 1) % sides]
+    const c = topVerts[(i + 1) % sides]
+    const d = topVerts[i]
+
+    // Premier triangle
+    vertices.push(
+      a.x, a.y, a.z,
+      b.x, b.y, b.z,
+      d.x, d.y, d.z
+    )
+    // Second triangle
+    vertices.push(
+      b.x, b.y, b.z,
+      c.x, c.y, c.z,
+      d.x, d.y, d.z
+    )
+  }
+
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
+  geometry.computeVertexNormals()
+  return geometry
+}
+export function createMeshFromGeometry (
+  geometry: THREEType.BufferGeometry,
+  material?: THREEType.Material
+): THREEType.Mesh {
+  const mat = material || new THREE.MeshLambertMaterial({
+    color: 0xcccccc,
+    transparent: true,
+    opacity: 0.5,
+    side: THREE.DoubleSide
+  })
+  return new THREE.Mesh(geometry, mat)
+}
+
+export function createEdgesFromGeometry (
+  geometry: THREEType.BufferGeometry,
+  dashed = false
+): THREEType.LineSegments {
+  const edges = new THREE.EdgesGeometry(geometry)
+  let material: THREEType.Material
+  if (dashed) {
+    material = new THREE.LineDashedMaterial({
+      color: 0x000000,
+      dashSize: 0.05,
+      gapSize: 0.025,
+      depthTest: false,
+      transparent: true,
+      opacity: 0.5 // ou 0.5 si tu veux atténuer les pointillés
+    })
+  } else {
+    material = new THREE.LineBasicMaterial({
+      color: 0x000000,
+      depthTest: true,
+      transparent: true,
+      opacity: 1
+    })
+  }
+  const line = new THREE.LineSegments(edges, material)
+  if (dashed && line.computeLineDistances) line.computeLineDistances()
+  return line
+}

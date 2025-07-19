@@ -1,5 +1,6 @@
 import { cleanup } from '@testing-library/svelte'
-import './Solide'
+import './solidesThreeJs'
+
 const defaultRigPosition: [number, number, number] = [0, 0, 0]
 const defaultCameraDistance = 8
 const defaultWidth = 600
@@ -30,6 +31,10 @@ function ensureSceneViewerStyle () {
     document.head.appendChild(style)
   }
 }
+/**
+ * Classe pour visualiser une scène 3D avec AFRAME
+ * @author Jean-Claude LHOTE
+ */
 export class SceneViewer {
   private sceneElements: string[] = []
   private camera: string | null = null
