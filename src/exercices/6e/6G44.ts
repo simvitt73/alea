@@ -19,7 +19,7 @@ import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils
 import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
-import { SceneViewer } from '../../lib/3d/SceneViewer'
+import { SceneViewerThreeJs } from '../../lib/3d/SceneViewerThreeJs'
 
 export const titre = 'Trouver le nombre de faces ou d\'arêtes d\'un solide'
 export const dateDePublication = '7/11/2021'
@@ -53,7 +53,7 @@ export default class NombreDeFacesEtDAretes extends Exercice {
   }
 
   nouvelleVersion () {
-    const sceneBuilders: SceneViewer[] = []
+    const sceneBuilders: SceneViewerThreeJs[] = []
     if (this.version === 3) {
       this.sup = 3
     }
@@ -106,44 +106,10 @@ export default class NombreDeFacesEtDAretes extends Exercice {
       switch (choix) {
         case 1: // Prisme + 2 pyramides -> faces ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-prism',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: 0.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0.5,
-                altitudeSommet: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5)
+            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
+            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -168,44 +134,10 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 2: // Prisme + 2 pyramides -> arêtes ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-prism',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: 0.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0.5,
-                altitudeSommet: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5)
+            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
+            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -224,37 +156,16 @@ export default class NombreDeFacesEtDAretes extends Exercice {
               style: 'margin: auto'
             }, objets)
           }
-          this.reponse = 5 * n
-          this.correction = `Comme chacune des pyramides possède une base à $${n}$ sommets, alors elles ont aussi $${n}$ arêtes latérales auxquelles on ajoute les $${n}$ arêtes latérales du prisme.<br>Si on ajoute les $${n}$ arêtes de chacune des bases des pyramides, on obtient donc $5\\times ${n}$ arêtes, soit $${5 * n}$ arêtes.`
+          this.reponse = 3 * n
+          this.correction = `Comme chacune des pyramides possède une base à $${n}$ sommets, alors le prisme et les deux pyramides possèdent aussi $${n}$ faces.<br>Ce solide est donc constitué de $3\\times ${n}$ faces, soit $${3 * n}$ faces.`
+
           break
+
         case 3: // Prisme + 1 pyramide au dessus -> faces ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-prism',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: 0.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0.5,
-                altitudeSommet: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, true, false)
+            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -278,32 +189,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 4: // Prisme + 1 pyramide au dessus -> arêtes ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-prism',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: 0.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0.5,
-                altitudeSommet: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, true, false)
+            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -327,32 +215,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 5: // Prisme + 1 pyramide en dessous -> faces ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-prism',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: 0.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, false, true)
+            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -373,32 +238,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 6: // Prisme + 1 pyramide en dessous -> arêtes ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-prism',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: 0.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: -0.5,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, false, true)
+            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -418,33 +260,10 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 7: // 2 pyramides -> faces ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
+            const sceneBuilder = new SceneViewerThreeJs()
 
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            sceneBuilder.addWireframePyramid(n, 3, 0, 3)
+            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -467,33 +286,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 8: // 2 pyramides -> arêtes ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePyramid(n, 3, 0, 3)
+            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -513,35 +308,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 9: // 2 tronc de pyramides -> faces ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 1.5, false, true)
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -1, false, true)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -569,35 +338,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 10: // 2 tronc de pyramides -> arêtes ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 1.5, false, true)
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -1, false, true)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -624,33 +367,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 11: // 1 tronc de pyramides au dessus et 1 pyramide en dessous -> faces ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 2, false, true)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -677,33 +396,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 12: // 1 tronc de pyramide au dessus et 1 pyramide en dessous -> arêtes ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: -2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: 2,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 2, false, true)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -729,33 +424,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         case 13: // 1 tronc de pyramides en dessous et 1 pyramide au dessus -> faces ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: 3,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: -1.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePyramid(n, 3, 0, 2)
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -2, false, true)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -783,33 +454,9 @@ export default class NombreDeFacesEtDAretes extends Exercice {
           break
         default: // 1 tronc de pyramide en dessous et 1 pyramide au dessus -> arêtes ?
           if (this.sup2 && context.isHtml) {
-            const sceneBuilder = new SceneViewer({ width: 400, height: 400, rigPosition: [0, 0, 0], rigRotation: [0, 30, 0] })
-
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-pyramid',
-              componentProps: {
-                radius: 3,
-                altitudeBase: 0,
-                altitudeSommet: 3,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
-            sceneBuilder.addCustomComponent({
-              position: [0, 0, 0],
-              componentName: 'custom-wire-truncated-pyramid',
-              componentProps: {
-                radiusBase: 3,
-                radiusTop: 1,
-                altitudeBase: 0,
-                altitudeTop: -1.5,
-                baseNb: n,
-                thickness: 0.04,
-                color: 'black',
-              }
-            })
+            const sceneBuilder = new SceneViewerThreeJs()
+            sceneBuilder.addWireframePyramid(n, 3, 0, 2, false)
+            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -2, false, true)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
