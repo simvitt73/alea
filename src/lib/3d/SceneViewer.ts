@@ -54,6 +54,7 @@ export class SceneViewer {
   private rigRotationX = 0
   private currentDistance = 8 // valeur par défaut, ou initialisée dans le constructeur
   private containerElement: HTMLElement | null = null
+  private detectCollision = false
 
   constructor (options: {
     width?: number,
@@ -65,8 +66,10 @@ export class SceneViewer {
     fov?: number,
     rigRotation?: [number, number, number],
     withEarth?: boolean,
-    withSky?: boolean
+    withSky?: boolean,
+    detectCollision?: boolean,
   } = {}) {
+    this.detectCollision = options.detectCollision ?? false
     this.width = options?.width || defaultWidth
     this.height = options?.height || defaultHeight
     this.id = `scene-${options?.id || Math.random().toString(36).substring(2, 9)}`
@@ -89,6 +92,7 @@ export class SceneViewer {
     this.containerElement.id = this.id
     this.containerElement.className = 'scene-container'
     this.containerElement.setAttribute('data-scene-viewer', '')
+    this.containerElement.style.position = 'relative'
     this.containerElement.style.width = `${this.width}px`
     this.containerElement.style.height = `${this.height}px`
     this.containerElement.style.display = 'none'
@@ -114,7 +118,7 @@ export class SceneViewer {
            style="width: 100%; height: 100%;" 
            vr-mode-ui="enabled: false"
            device-orientation-permission-ui="enabled: false">
-      
+
       <!-- ASSETS : Préchargement des textures et polices -->
       <a-assets>
         <a-mixin id="text-style" 
@@ -322,8 +326,6 @@ export class SceneViewer {
       this.currentDistance += e.deltaY * zoomSpeed
       this.currentDistance = Math.max(min, Math.min(max, this.currentDistance))
       this.updateCameraRig(cameraRig, camera)
-
-      console.log('Wheel event on', this.id)
     }
 
     // === GESTION TACTILE CORRIGÉE ===
@@ -1417,5 +1419,54 @@ export class SceneViewer {
     if (this.containerElement && this.containerElement.parentNode) {
       this.containerElement.parentNode.removeChild(this.containerElement)
     }
+  }
+
+  public addHtmlButton ({
+    id,
+    text = 'Bouton',
+    onClick,
+    style = {}
+  }: {
+    id: string,
+    text?: string,
+    onClick?: (ev: MouseEvent) => void,
+    style?: Partial<CSSStyleDeclaration>
+  }) {
+    // S'assure que la scène est déjà rendue
+    if (!this.containerElement) return
+    let overlay = this.containerElement.querySelector('.scene-viewer-overlay') as HTMLDivElement
+    if (!overlay) {
+      overlay = document.createElement('div')
+      overlay.className = 'scene-viewer-overlay'
+      overlay.style.position = 'absolute'
+      overlay.style.top = '0'
+      overlay.style.left = '0'
+      overlay.style.width = '100%'
+      overlay.style.height = '100%'
+      overlay.style.pointerEvents = 'none'
+      overlay.style.zIndex = '10'
+      this.containerElement.appendChild(overlay)
+    }
+    const btn = document.createElement('button')
+    btn.id = id
+    btn.innerText = text
+    btn.type = 'button'
+    btn.style.pointerEvents = 'auto'
+    btn.style.position = 'absolute'
+    btn.style.bottom = '5px'
+    btn.style.left = '20px'
+    btn.style.zIndex = '20'
+    btn.style.padding = '8px 16px'
+    btn.style.fontSize = '1rem'
+    btn.style.borderRadius = '6px'
+    btn.style.border = '1px solid #888'
+    btn.style.background = '#fff'
+    btn.style.cursor = 'pointer'
+    btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'
+    if (style) {
+      Object.assign(btn.style, style)
+    }
+    if (onClick) btn.addEventListener('click', onClick)
+    overlay.appendChild(btn)
   }
 }
