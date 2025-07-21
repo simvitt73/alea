@@ -3,6 +3,7 @@ import { texNombre } from '../../../lib/outils/texNombre'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import ExerciceSimple from '../../ExerciceSimple'
 import { randint } from '../../../modules/outils'
+import FractionEtendue from '../../../modules/FractionEtendue'
 export const titre = 'Calculer le tout connaissant une partie'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -64,12 +65,14 @@ export default class CalculToutAvecPartie extends ExerciceSimple {
     }
 
     // Parties communes
+    const fracTaux = new FractionEtendue(taux, 100)
     const multiplicateur = texNombre(100 / taux, 1)
     const total = partie * 100 / taux
 
     const correctionCommune = `En notant $N$ le nombre total d'élèves, 
     $${taux}\\,\\%$ de $N$ est égal à $${partie}$ élèves.<br>
-    Puisque $${taux} \\times ${multiplicateur}=100$, alors $100\\,\\%$ de $N$ est égal à $${partie}\\times ${multiplicateur}$ élèves soit 
+Puisque $${taux}\\,\\% =\\dfrac{${taux}}{100}${taux === 1 ? '' : `=${fracTaux.texFractionSimplifiee}`}$, alors $N$ est $${fracTaux.d}$ plus grand que $${partie}$.<br>
+Ainsi,  $N=${multiplicateur}\\times ${partie}$ élèves soit 
     $${miseEnEvidence(`${texNombre(total, 0)}`)}$ élèves au total.`
 
     const distracteursCommuns = [

@@ -75,10 +75,10 @@ export default class TrouverEgalite extends ExerciceQcmA {
     \\dfrac{${a}^{${n}}}{${a}^{${p}}}&=${a}^{${n}-${p}}\\\\
       &=${a}^{${n - p}}
       \\end{aligned}$<br>
-    Les égalités corrigées (et donc correctes) pour les autres égalités, sont :  <br>
-     $${calc2}$<br>
-  $${calc3}$<br>
-       $${calc4}$`
+    Concernant les autres propositions  :  <br>
+     $${calc2}\\neq ${a1}^{${n1 - 1}}$<br>
+  $${calc3}\\neq ${a2}^{${n2 + p2}}$<br>
+       $${calc4}\\neq ${a3 * b3}^{${2 * n3}}$`
         this.reponses = [
           `$${calc1}$`,
           `$${calc2F}$`,
@@ -96,10 +96,10 @@ export default class TrouverEgalite extends ExerciceQcmA {
     &=${a1}^{1-${n1}}\\\\
       &=${a1}^{${1 - n1}}
       \\end{aligned}$<br>
-    Les égalités corrigées (et donc correctes) pour les autres égalités, sont :  <br>
-    $${calc1}$<br>
-  $${calc3}$<br>
-       $${calc4}$`
+     Concernant les autres propositions  :  <br>
+    $${calc1}\\neq ${a}^{${n + p}}$<br>
+  $${calc3}\\neq ${a2}^{${n2 + p2}}$<br>
+       $${calc4}\\neq ${a3 * b3}^{${2 * n3}}$`
         this.reponses = [
             `$${calc2}$`,
           `$${calc1F}$`,
@@ -116,10 +116,10 @@ export default class TrouverEgalite extends ExerciceQcmA {
     \\left(${a2}^{${n2}}\\right)^${p2}&=${a2}^{${n2} \\times ${p2}}\\\\
     &=${a2}^{${n2 * p2}}
       \\end{aligned}$<br>
-     Les égalités corrigées (et donc correctes) pour les autres égalités, sont :  <br>
-     $${calc1}$<br>
-  $${calc2}$<br>
-       $${calc4}$`
+     Concernant les autres propositions  :  <br>
+     $${calc1}\\neq ${a}^{${n + p}}$<br>
+  $${calc2}\\neq ${a1}^{${n1 - 1}}$<br>
+       $${calc4}\\neq ${a3 * b3}^{${2 * n3}}$`
         this.reponses = [
                `$${calc3}$`,
           `$${calc2F}$`,
@@ -136,10 +136,10 @@ export default class TrouverEgalite extends ExerciceQcmA {
       ${a3}^{${n3}}\\times ${b3}^{${n3}}&=(${a3}\\times  ${b3})^{${n3}}\\\\
     &=${a3 * b3}^{${n3}}
       \\end{aligned}$<br>
-     Les égalités corrigées (et donc correctes) pour les autres égalités, sont :  <br>
-    $${calc1}$<br>
-  $${calc2}$<br>
-       $${calc3}}$`
+     Concernant les autres propositions  :  <br>
+    $${calc1}\\neq ${a}^{${n + p}}$<br>
+  $${calc2}\\neq ${a1}^{${n1 - 1}}$<br>
+       $${calc3}\\neq ${a2}^{${n2 + p2}}$`
         this.reponses = [
              `$${calc4}$`,
           `$${calc1F}$`,

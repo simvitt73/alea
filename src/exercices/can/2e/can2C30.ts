@@ -12,7 +12,7 @@ export const dateDePublication = '16/07/2025' // La date de publication initiale
 
 /**
  * Modèle d'exercice très simple pour la course aux nombres
- * @author Gilles Mora
+ * @author Gilles Mora (factorisée par ia)
 
 */
 export const uuid = '7d3d1'
@@ -32,47 +32,36 @@ export default class EvolSuccessives extends ExerciceSimple {
   }
 
   nouvelleVersion () {
-    let CM, taux
+    const estAugmentation = choice([true, false, false])
+    const taux = estAugmentation ? choice([10, 20, 30]) : randint(1, 9) * 10
+    const CM = estAugmentation ? 1 + taux / 100 : 1 - taux / 100
+    const CM2 = CM * CM
+    const variation = CM2 - 1
+    const variationPourcent = (CM2 - 1) * 100
 
-    switch (choice([1, 2, 2])) { //
-      case 1:
-        taux = choice([10, 20, 30])
-        CM = 1 + taux / 100
+    const typeTexte = estAugmentation ? 'augmentations' : 'baisses'
 
-        this.question = ` Le prix d’un article  connait deux augmentations successives de $${taux}\\,\\%$. <br>
-         Le taux d'évolution global associé est :   `
-        this.correction = `  Le coefficient multiplicateur associé à une augmentatioin de $${taux}\\,\\%$ est $${texNombre(CM, 2)}$.<br>
-        Le coefficient multiplicateur associé à deux augmentations successives de $${taux}\\,\\%$ est donc $${texNombre(CM, 2)}\\times ${texNombre(CM, 2)}=${texNombre(CM * CM, 2)}$.<br>
-        L'évolution globale est donnée par  $${texNombre(CM * CM, 2)}-1=${texNombre(CM * CM - 1, 2)}=${miseEnEvidence(texNombre((CM * CM - 1) * 100, 2))}\\,\\%$.
-        `
+    this.question = `Le prix d’un article connait deux ${typeTexte} successives de $${taux}\\,\\%$. <br>
+      Le taux d'évolution global associé est :`
 
-        this.reponse = this.versionQcm ? `$${texNombre((CM * CM - 1) * 100, 2)}\\,\\%$` : `${texNombre((CM * CM - 1) * 100, 2)}`
+    this.correction = `Le coefficient multiplicateur associé à une ${estAugmentation ? 'augmentation' : 'baisse'} de $${taux}\\,\\%$ est $${texNombre(CM, 2)}$.<br>
+      Le coefficient multiplicateur associé à deux ${typeTexte} successives de $${taux}\\,\\%$ est le produit des coefficients multiplicateurs, soit $${texNombre(CM, 2)}\\times ${texNombre(CM, 2)}=${texNombre(CM2, 2)}$.<br>
+      L'évolution globale est donnée par $${texNombre(CM2, 2)}-1=${texNombre(variation, 2)}=${miseEnEvidence(texNombre(variationPourcent, 2))}\\,\\%$.`
 
-        this.distracteurs = [`$${texNombre(2 * taux, 2)}\\,\\%$`, `$${texNombre(taux, 2)}\\,\\%$`, `$${texNombre((CM * CM - 1) * 100 + 5, 2)}\\,\\%$`]
-        this.canEnonce = `Le prix d’un article  connait deux augmentations successives de $${taux}\\,\\%$.`
-        this.canReponseACompleter = 'L\'évolution globale est :  $\\ldots\\,\\%$'
-        break
-      case 2:
-      default:
-        taux = randint(1, 9) * 10
-        CM = 1 - taux / 100
+    this.reponse = this.versionQcm
+      ? `$${texNombre(variationPourcent, 2)}\\,\\%$`
+      : `${texNombre(variationPourcent, 2)}`
 
-        this.question = ` Le prix d’un article  connait deux baisses successives de $${taux}\\,\\%$. <br>
-         Le taux d'évolution global associé est :   `
-        this.correction = `  Le coefficient multiplicateur associé à une baisse de $${taux}\\,\\%$ est $${texNombre(CM, 2)}$.<br>
-        Le coefficient multiplicateur associé à deux baisses successives de $${taux}\\,\\%$ est donc $${texNombre(CM, 2)}\\times ${texNombre(CM, 2)}=${texNombre(CM * CM, 2)}$.<br>
-        L'évolution globale est donnée par  $${texNombre(CM * CM, 2)}-1=${texNombre(CM * CM - 1, 2)}=${miseEnEvidence(texNombre((CM * CM - 1) * 100, 2))}\\,\\%$.
-        `
+    this.distracteurs = [
+      `$${texNombre(2 * taux, 2)}\\,\\%$`,
+      `$${texNombre(taux, 2)}\\,\\%$`,
+      `$${texNombre(variationPourcent + 5, 2)}\\,\\%$`
+    ]
 
-        this.reponse = this.versionQcm ? `$${texNombre((CM * CM - 1) * 100, 2)}\\,\\%$` : `${texNombre((CM * CM - 1) * 100, 2)}`
-
-        this.distracteurs = [`$${texNombre(-2 * taux, 2)}\\,\\%$`, `$${texNombre(-taux, 2)}\\,\\%$`, `$${texNombre((CM * CM - 1) * 100 + 5, 2)}\\,\\%$`]
-        this.canEnonce = `Le prix d’un article  connait deux augmentations successives de $${taux}\\,\\%$.`
-        this.canReponseACompleter = 'L\'évolution globale est :  $\\ldots\\,\\%$'
-        break
-    }
+    this.canEnonce = `Le prix d’un article connait deux ${typeTexte} successives de $${taux}\\,\\%$.`
+    this.canReponseACompleter = 'L\'évolution globale est :  $\\ldots\\,\\%$'
     if (!this.interactif && !this.versionQcm) {
-      this.question += ' $\\ldots\\,\\%$'
+      this.question += ' $\\ldots$'
     }
   }
 }
