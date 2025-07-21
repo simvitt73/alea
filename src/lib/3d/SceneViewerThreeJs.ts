@@ -9,6 +9,8 @@ import {
   createTruncatedPyramidGeometry,
   THREE, type THREEType
 } from './solidesThreeJs'
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+// ↑ Assurez-vous que ce module est bien installé et importé
 
 /**
  * Classe pour visualiser une scène 3D avec Three.js
@@ -224,6 +226,31 @@ export class SceneViewerThreeJs {
     this.applyPolygonOffset(mesh)
     const edgesDashed = createEdgesFromGeometry(geometry, true)
     const edgesSolid = createEdgesFromGeometry(geometry, false)
+
+    mesh.renderOrder = 0
+    edgesDashed.renderOrder = 1
+    edgesSolid.renderOrder = 2
+
+    this.scene.add(mesh)
+    this.scene.add(edgesDashed)
+    this.scene.add(edgesSolid)
+  }
+
+  /**
+   * Ajoute à la scène un solide wireframe composé de plusieurs géométries fusionnées,
+   * en supprimant les doublons de sommets et d'arêtes.
+   */
+  addWireframeUnion (
+    geometries: THREEType.BufferGeometry[],
+    material?: THREEType.Material
+  ) {
+    // Fusionne les géométries (suppression des sommets dupliqués)
+    const mergedGeometry = BufferGeometryUtils.mergeGeometries(geometries, true)
+    // Génère le mesh et les arêtes à partir de la géométrie fusionnée
+    const mesh = createMeshFromGeometry(mergedGeometry, material)
+    this.applyPolygonOffset(mesh)
+    const edgesDashed = createEdgesFromGeometry(mergedGeometry, true)
+    const edgesSolid = createEdgesFromGeometry(mergedGeometry, false)
 
     mesh.renderOrder = 0
     edgesDashed.renderOrder = 1
