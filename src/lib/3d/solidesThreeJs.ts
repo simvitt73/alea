@@ -1,5 +1,6 @@
 import 'aframe'
 import type * as THREEType from 'three'
+
 const THREE = (window as any).AFRAME.THREE
 export { THREE }
 export type { THREEType }
