@@ -140,7 +140,7 @@ export default class choixPatron extends Exercice {
             }
             if (context.isHtml && this.sup2) {
               texteCorr = `<div id="emplacementPourSceneViewerEx${this.numeroExercice}Q${i}Correction" style="width: 400px; height: 400px;"></div>`
-              // sceneBuildersCorrection[i] = this.affichePatron3D(choice([patron1, patron2, patron3, patron4]).matrice)
+              sceneBuildersCorrection[i] = this.affichePatron3D(figPatrons[0].matrice)
             } else {
               texteCorr = 'Procédons par élimination:<br>'
               texteCorr += `- Le dessin ${OrdrepatronAffiche[3] + 1} contient ${taillePatronAuPif} faces au lieu de 6 faces.<br>`
@@ -586,7 +586,7 @@ function getVoisins (matrice: objetFace[][], x: number, y: number) {
     { dx: 1, dy: 0, dir: 'R' }
   ] as const
   return dirs
-    .filter(({ dx, dy }) => matrice[y + dy]?.[x + dx].isFace)
+    .filter(({ dx, dy }) => matrice[y + dy]?.[x + dx]?.isFace)
     .map(({ dx, dy, dir }) => ({ x: x + dx, y: y + dy, dir }))
 }
 
