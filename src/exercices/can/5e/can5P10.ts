@@ -22,7 +22,7 @@ export const refs = {
   'fr-fr': ['can5P10'],
   'fr-ch': []
 }
-export default class PoucentageE extends ExerciceSimple {
+export default class PoucentageE2 extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

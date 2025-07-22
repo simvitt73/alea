@@ -1,142 +1,90 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { ecritureAlgebrique } from '../../../lib/outils/ecritures'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { abs } from '../../../lib/outils/nombres'
-import { texNombre } from '../../../lib/outils/texNombre'
+import { texNombre, texPrix } from '../../../lib/outils/texNombre'
+import { miseEnEvidence, texteGras } from '../../../lib/outils/embellissements'
+import ExerciceSimple from '../../ExerciceSimple'
 import { randint } from '../../../modules/outils'
-import ExerciceQcmA from '../../ExerciceQcmA'
-export const dateDePublication = '06/07/2025'
-export const uuid = 'e1e6d'
+import Decimal from 'decimal.js'
+import FractionEtendue from '../../../modules/FractionEtendue'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+export const titre = 'Calculer un coefficient multiplicateur'
+export const interactifReady = true
+export const interactifType = 'mathLive'
+
+// Les exports suivants sont optionnels mais au moins la date de publication semble essentielle
+export const dateDePublication = '15/07/2025' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
+
+/**
+ * Modèle d'exercice très simple pour la course aux nombres
+ * @author Gilles Mora
+
+*/
+export const uuid = 'e4a1f'
 
 export const refs = {
   'fr-fr': ['can2C24'],
   'fr-ch': []
 }
-export const interactifReady = true
-export const interactifType = 'qcm'
-export const amcReady = 'true'
-export const amcType = 'qcmMono'
-export const titre = 'Résoudre une équation du type $x^2=a$'
-export default class Puissances extends ExerciceQcmA {
-  versionOriginale: () => void = () => {
-    this.enonce = 'On note $S$ l’ensemble des solutions de l’équation $x^2=10$ sur $\\mathbb{R}$ . On a : '
-    this.correction = `On reconnaît une équation du type $x^2=k$ avec $k=10$.<br>
-    Puisque $10$  est strictement positif, l'équation a deux solutions :
-    $-\\sqrt{10}$ et $\\sqrt{10}$.<br>
-        Ainsi, $S=${miseEnEvidence('\\{-\\sqrt{10}\\,;\\,\\sqrt{10}\\}')}$.`
-
-    this.reponses = [
-      '$S=\\{-\\sqrt{10}\\,;\\,\\sqrt{10}\\}$',
-      '$S=\\{-\\sqrt{5}\\,;\\,\\sqrt{5}\\}$',
-      '$S=\\emptyset$',
-      '$S=\\{-5\\,;\\,5\\}$'
-    ]
-  }
-
-  versionAleatoire = () => {
-    const CorrCarre = `On isole le carré pour se ramener à une équation du type $x^2=k$.<br>
-        Résoudre l'équation revient à résoudre `
-
-    const CorrNegatif = ` est strictement négatif, l'équation n'a pas de solution.<br>
-          Ainsi, $S=${miseEnEvidence('\\emptyset')}$.`
-
-    const CorrPositif = ' est strictement positif, l\'équation a deux solutions : '
-    const choix = choice([true, false])
-    switch (choice([1, 1, 2, 3, 3, 4, 4])) {
-      case 1: {
-        const a = randint(1, 9)
-        this.enonce = `On note $S$ l’ensemble des solutions de l’équation ${choix ? `$x^{2}-${a * a}=0$` : `$${a * a}-x^2=0$`} sur $\\mathbb{R}$ . On a : `
-        this.correction = CorrCarre + ` $x^2=${a * a}$.<br>  
-        Puisque $${a * a}$` + CorrPositif
-        this.correction += `$-\\sqrt{${a * a}}=-${a}$ et $\\sqrt{${a * a}}=${a}$.<br>`
-        this.correction += `Ainsi, $S=${miseEnEvidence(`\\{-${a}\\,;\\,${a}\\}`)}$.`
-        this.reponses = [
-      `$S=\\{-${a}\\,;\\,${a}\\}$`,
-      `$S=\\{-\\sqrt{${a}}\\,;\\,\\sqrt{${a}}\\}$`,
-      '$S=\\emptyset$',
-      `$S=\\{${a}\\}$`
-        ]
-      }
-        break
-      case 2:
-        {
-          const a = randint(1, 9)
-          this.enonce = `On note $S$ l’ensemble des solutions de l’équation $x^{2}+${a * a}=0$ sur $\\mathbb{R}$ . On a : `
-
-          this.correction = `On isole le carré. L'équation s'écrit $x^{2}=-${a * a}$.<br>
-          Comme  $-${a * a}$` + CorrNegatif
-          this.reponses = [
-            '$S=\\emptyset$',
-      `$S=\\{-${a}\\,;\\,${a}\\}$`,
-      `$S=\\{-\\sqrt{${a}}\\,;\\,\\sqrt{${a}}\\}$`,
-      `$S=\\{${a}\\}$`
-          ]
-        }
-        break
-
-      case 3:
-        {
-          const b = randint(1, 12)
-          const a = b ** 2 * choice([-1, 1])
-          this.enonce = `On note $S$ l’ensemble des solutions de l’équation $x^{2}=${a}$ sur $\\mathbb{R}$ . On a : `
-
-          this.correction = ` On reconnaît une équation du type $x^2=k$ avec $k=${a}$.<br>`
-          if (a > 0) {
-            this.correction += `Puisque $${a}$ ` + CorrPositif
-            this.correction += ` $-\\sqrt{${a}}=-${b}$ et $\\sqrt{${a}}=${b}$.<br>`
-            this.correction += `Ainsi, $S=${miseEnEvidence(`\\{-${b}\\,;\\,${b}\\}`)}$.`
-            this.reponses = [
-                     `$S=\\{-${b}\\,;\\,${b}\\}$`,
-                     '$S=\\emptyset$',
-      `$S=\\{${texNombre(-a / 2, 2)}\\,;\\,${texNombre(a / 2, 2)}\\}$`,
-      `$S=\\{${b}\\}$`
-            ]
-          } else {
-            this.correction += `Puisque $${a}$ ` + CorrNegatif
-            this.reponses = [
-              '$S=\\emptyset$',
-      `$S=\\{-${b}\\,;\\,${b}\\}$`,
-      `$S=\\{\\sqrt{${-a}}\\}$`,
-      `$S=\\{-${b}\\}$`
-            ]
-          }
-        }
-        break
-
-      case 4:
-      default:
-        {
-          const a = randint(2, 9)
-          const k = randint(-7, 13, [0, 1, 4, 9])
-          const b = a * k
-          this.enonce = `On note $S$ l’ensemble des solutions de l’équation ${choix ? `$${a}x^{2}${ecritureAlgebrique(-b)}=0$` : `$${-b}${ecritureAlgebrique(a)}x^{2}=0$`} sur $\\mathbb{R}$ . On a : `
-          this.correction = '' + CorrCarre + ` $x^2=${k}$.<br>  `
-          if (k < 0) {
-            this.correction += `Puisque $${k}$ ` + CorrNegatif
-            this.reponses = [
-              '$S=\\emptyset$',
-      `$S=\\{-\\sqrt{${abs(b)}}\\,;\\,\\sqrt{${abs(b)}}\\}$`,
-      `$S=\\{-\\sqrt{${abs(k)}}\\,;\\,\\sqrt{${abs(k)}}\\}$`,
-      `$S=\\{\\sqrt{${abs(k)}}\\}$`
-            ]
-          } else {
-            this.correction += `Puisque $${k}$ ` + CorrPositif
-            this.correction += ` $-\\sqrt{${k}}$ et $\\sqrt{${k}}$.<br>`
-            this.correction += `Ainsi, $S=${miseEnEvidence(`\\{-\\sqrt{${k}}\\,;\\,\\sqrt{${k}}\\}`)}$.`
-            this.reponses = [
-            `$S=\\{-\\sqrt{${abs(k)}}\\,;\\,\\sqrt{${abs(k)}}\\}$`,
-      `$S=\\{\\sqrt{${abs(k)}}\\}$`,
-      `$S=\\{-${texNombre(abs(k) / 2, 2)}\\,;\\,${texNombre(abs(k) / 2, 2)}\\}$`,
-      '$S=\\emptyset$'
-            ]
-          }
-        }
-        break
-    }
-  }
-
+export default class CoeffMul extends ExerciceSimple {
   constructor () {
     super()
-    this.versionAleatoire()
+    this.optionsChampTexte = { texteApres: '.' }
+    this.typeExercice = 'simple'
+    this.nbQuestions = 1
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
+    this.versionQcmDisponible = true
+  }
+
+  nouvelleVersion () {
+    let prix1, prix2, CM, choix
+
+    switch (choice([1, 2])) { //
+      case 1:
+        choix = choice([true, true, true, false])
+        prix1 = choix ? randint(3, 20) * 10 : randint(3, 20) * 4
+
+        CM = choix ? new Decimal(choice([0.95, 0.8, 0.9, 0.7, 0.6])) : new Decimal(choice([0.75]))
+        prix2 = CM.mul(prix1)
+        this.question = `Le prix d’un article a baissé : il est passé de $${texPrix(prix1)}$ euros à $${texPrix(prix2)}$ euros.<br>
+          Cela signifie que ce prix a été multiplié par : `
+        this.correction = `${texteGras('Correction 1 :')}<br>
+On cherche le nombre $k$ tel que $ k \\times ${texPrix(prix1)}=${texPrix(prix2)} $.<br>
+On obtient $k=\\dfrac{${texPrix(prix2)}}{${texPrix(prix1)}} = ${new FractionEtendue(prix2.toNumber(), prix1).texFractionSimplifiee}=${miseEnEvidence(texNombre(CM, 2))}$.<br><br>
+        ${texteGras('Correction 2 :')}<br>
+        Le prix a diminué de $${texNombre(prix2.sub(prix1).mul(-1), 2)}$ euros, ce qui représente $${texNombre(CM.sub(1).mul(-1).mul(100), 2)}\\,\\%$ de $${texPrix(prix1)}$ euros.<br>
+        Le coefficient multiplicateur associé à cette baisse est $${texNombre(CM, 2)}$.<br>
+        On peut dire que le prix a été multiplié par $${miseEnEvidence(texNombre(CM, 2))}$.`
+
+        this.reponse = this.versionQcm ? `$${texNombre(CM, 2)}$` : `${texNombre(CM, 2)}`
+
+        this.distracteurs = [`$${texNombre(CM.sub(1).mul(-1), 2)}$`, `$${texNombre(CM.sub(1).mul(-1).add(1), 2)}$`, `$${texNombre(CM.add(1), 2)}$`]
+        this.canEnonce = `Le prix d’un article a baissé : il est passé de $${texPrix(prix1)}$ euros à $${texPrix(prix2)}$ euros.`
+        this.canReponseACompleter = 'Ce prix a été multiplié par : $\\ldots$'
+        break
+      case 2:
+      default:
+        choix = choice([true, true, true, false])
+        prix1 = choix ? randint(3, 20) * 10 : randint(3, 20) * 4
+        CM = choix ? new Decimal(choice([1.05, 1.2, 1.1, 1.3, 1.4])) : new Decimal(choice([1.25]))
+
+        prix2 = CM.mul(prix1)
+        this.question = `Le prix d’un article a augmenté : il est passé de $${texPrix(prix1)}$ euros à $${texPrix(prix2)}$ euros.<br>
+          Cela signifie que ce prix a été multiplié par : `
+        this.correction = `${texteGras('Correction 1 :')}<br>
+On cherche le nombre $k$ tel que $ k \\times ${texPrix(prix1)}=${texPrix(prix2)} $.<br>
+On obtient $k=\\dfrac{${texPrix(prix2)}}{${texPrix(prix1)}} = ${new FractionEtendue(prix2.toNumber(), prix1).texFractionSimplifiee}=${miseEnEvidence(texNombre(CM, 2))}$.<br><br>
+        ${texteGras('Correction 2 :')}<br>Le prix a augmenté de $${texNombre(prix2.sub(prix1), 2)}$ euros, ce qui représente $${texNombre(CM.sub(1).mul(100), 2)}\\,\\%$ de $${texPrix(prix1)}$ euros.<br>
+        Le coefficient multiplicateur associé à cette hausse est $${texNombre(CM, 2)}$.<br>
+        On peut dire que le prix a été multiplié par $${miseEnEvidence(texNombre(CM, 2))}$.`
+
+        this.reponse = this.versionQcm ? `$${texNombre(CM, 2)}$` : `${texNombre(CM, 2)}`
+
+        this.distracteurs = [`$${texNombre(CM.sub(2).mul(-1), 2)}$`, `$${texNombre(CM.add(0.1), 2)}$`, `$${texNombre(CM.sub(1), 2)}$`]
+        this.canEnonce = `Le prix d’un article a augmenté : il est passé de $${texPrix(prix1)}$ euros à $${texPrix(prix2)}$ euros.`
+        this.canReponseACompleter = 'Ce prix a été multiplié par : $\\ldots$'
+        break
+    }
+    if (!this.interactif && !this.versionQcm) {
+      this.question += ' .... '
+    }
   }
 }

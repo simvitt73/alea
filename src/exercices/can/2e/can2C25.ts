@@ -1,147 +1,67 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import ExerciceQcmA from '../../ExerciceQcmA'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import ExerciceSimple from '../../ExerciceSimple'
+import { randint } from '../../../modules/outils'
+export const titre = 'Déterminer une évolution globale'
+export const interactifReady = true
+export const interactifType = 'mathLive'
 
-export const dateDePublication = '08/07/2025'
-export const uuid = 'b41f1'
+// Les exports suivants sont optionnels mais au moins la date de publication semble essentielle
+export const dateDePublication = '16/07/2025' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
+
+/**
+ * Modèle d'exercice très simple pour la course aux nombres
+ * @author Gilles Mora (factorisée par ia)
+
+*/
+export const uuid = '7d3d1'
 
 export const refs = {
   'fr-fr': ['can2C25'],
   'fr-ch': []
 }
-export const interactifReady = true
-export const interactifType = 'qcm'
-export const amcReady = 'true'
-export const amcType = 'qcmMono'
-export const titre = 'Calculer un pourcentage (opération)'
-
-export default class Pourcentages extends ExerciceQcmA {
-  versionOriginale: () => void = () => {
-    this.enonce = 'L\'opération qui permet de calculer $25\\,\\%$ de $480$ est :'
-    this.correction = `Pour calculer $25$\\,% de $480$, on peut utiliser la formule :<br>
-    $\\text{Pourcentage} = \\dfrac{\\text{taux}}{100} \\times \\text{nombre}$<br><br>
-    Donc : $25\\,\\% \\text{ de } 480 = \\dfrac{25}{100} \\times 480 = ${miseEnEvidence('\\dfrac{25 \\times 480}{100}')}$<br><br>
-    On peut aussi écrire : $25\\,\\% = \\dfrac{25}{100} = \\dfrac{1}{4}$<br>
-    Donc : $25\\,\\% \\text{ de } 480 = \\dfrac{1}{4} \\times 480 = ${miseEnEvidence('120')}$`
-
-    this.reponses = [
-      '$\\dfrac{480}{25\\times 100}$',
-      '$25 \\times 480 \\times 0,1$',
-      '$\\dfrac{480\\times 100}{25}$',
-      '$\\dfrac{1}{4} \\times 480$'
-    ]
-  }
-
-  versionAleatoire = () => {
-    // Génération d'un pourcentage multiple de 5 ou 10
-    const pourcentagesMultiples = [5, 10, 15, 20, 25, 30, 35, 40, 45, 55, 60, 65, 70, 75, 80, 90]
-    const pourcentage = choice(pourcentagesMultiples)
-
-    // Génération d'un nombre multiple de 10
-    const multiples10 = [120, 140, 160, 180, 200, 240, 260, 280, 300, 320, 340, 360, 380, 400, 420, 440, 460, 480, 500, 520, 540, 560, 580, 600]
-    const nombre = choice(multiples10)
-
-    // Calcul de la fraction simplifiée si possible
-    const pgcd = (a: number, b: number): number => {
-      while (b !== 0) {
-        const temp = b
-        b = a % b
-        a = temp
-      }
-      return a
-    }
-
-    const diviseur = pgcd(pourcentage, 100)
-    const numSimp = pourcentage / diviseur
-    const denSimp = 100 / diviseur
-
-    this.enonce = `L'opération qui permet de calculer $${pourcentage}\\,\\%$ de $${texNombre(nombre)}$ est :`
-
-    // Tableau des bonnes réponses possibles
-    const bonnesReponses = [
-      `$\\dfrac{${pourcentage} \\times ${texNombre(nombre)}}{100}$`,
-      `$\\dfrac{${pourcentage}}{100} \\times ${texNombre(nombre)}$`,
-      `$${texNombre(pourcentage / 100, 2)} \\times ${texNombre(nombre)}$`
-    ]
-
-    // Ajouter la fraction simplifiée si elle existe
-    if (denSimp !== 100) {
-      bonnesReponses.push(`$\\dfrac{${numSimp}}{${denSimp}} \\times ${texNombre(nombre)}$`)
-    }
-
-    // Ajouter d'autres formes équivalentes selon le pourcentage
-    if (pourcentage === 25) {
-      bonnesReponses.push(`$\\dfrac{${texNombre(nombre)}}{4}$`)
-    } else if (pourcentage === 20) {
-      bonnesReponses.push(`$\\dfrac{${texNombre(nombre)}}{5}$`)
-    } else if (pourcentage === 10) {
-      bonnesReponses.push(`$\\dfrac{${texNombre(nombre)}}{10}$`)
-    } else if (pourcentage === 5) {
-      bonnesReponses.push(`$\\dfrac{${texNombre(nombre)}}{20}$`)
-    } else if (pourcentage === 40) {
-      bonnesReponses.push(`$\\dfrac{2 \\times ${texNombre(nombre)}}{5}$`)
-    } else if (pourcentage === 35) {
-      bonnesReponses.push(`$\\dfrac{7 \\times ${texNombre(nombre)}}{20}$`)
-    } else if (pourcentage === 30) {
-      bonnesReponses.push(`$\\dfrac{3 \\times ${texNombre(nombre)}}{10}$`)
-    } else if (pourcentage === 15) {
-      bonnesReponses.push(`$\\dfrac{3 \\times ${texNombre(nombre)}}{20}$`)
-    } else if (pourcentage === 60) {
-      bonnesReponses.push(`$\\dfrac{3 \\times ${texNombre(nombre)}}{5}$`)
-    } else if (pourcentage === 70) {
-      bonnesReponses.push(`$\\dfrac{7 \\times ${texNombre(nombre)}}{10}$`)
-    } else if (pourcentage === 75) {
-      bonnesReponses.push(`$\\dfrac{3 \\times ${texNombre(nombre)}}{4}$`)
-    } else if (pourcentage === 80) {
-      bonnesReponses.push(`$\\dfrac{4 \\times ${texNombre(nombre)}}{5}$`)
-    } else if (pourcentage === 90) {
-      bonnesReponses.push(`$\\dfrac{9 \\times ${texNombre(nombre)}}{10}$`)
-    } else if (pourcentage === 45) {
-      bonnesReponses.push(`$\\dfrac{9 \\times ${texNombre(nombre)}}{20}$`)
-    } else if (pourcentage === 55) {
-      bonnesReponses.push(`$\\dfrac{11 \\times ${texNombre(nombre)}}{20}$`)
-    } else if (pourcentage === 65) {
-      bonnesReponses.push(`$\\dfrac{13 \\times ${texNombre(nombre)}}{20}$`)
-    }
-
-    // Tableau des mauvaises réponses possibles
-    const mauvaisesReponses = [
-      `$\\dfrac{${texNombre(nombre)}}{${pourcentage} \\times 100}$`, // Division au lieu de multiplication
-      `$\\dfrac{${texNombre(nombre)} \\times 100}{${pourcentage}}$`, // Formule inversée
-      `$${pourcentage} \\times ${texNombre(nombre)} \\times 0,1$`, // Multiplication par 0,1 au lieu de division par 100
-      `$${pourcentage} \\times ${texNombre(nombre)} \\times 0,01$`, // Multiplication par 0,01 (confusion avec décimal)
-      `$\\dfrac{${texNombre(nombre)}}{${pourcentage}}$`, // Oubli du facteur 100
-      `$${texNombre(nombre)} \\times ${texNombre(pourcentage / 1000)}$`, // Confusion avec les millièmes
-      `$\\dfrac{${pourcentage}}{${texNombre(nombre)}} \\times 100$`, // Ordre inversé
-      `$${texNombre(nombre)} \\times ${pourcentage} \\times 0,001$` // Facteur complètement faux
-    ]
-
-    // Sélection d'une bonne réponse
-    const bonneReponse = choice(bonnesReponses)
-
-    // Sélection de 3 mauvaises réponses distinctes
-    const mauvaisesReponsesFiltrees = mauvaisesReponses.filter(rep => rep !== bonneReponse)
-    const troisMauvaisesReponses: string[] = []
-
-    while (troisMauvaisesReponses.length < 3 && mauvaisesReponsesFiltrees.length > 0) {
-      const mauvaise = choice(mauvaisesReponsesFiltrees)
-      if (!troisMauvaisesReponses.includes(mauvaise)) {
-        troisMauvaisesReponses.push(mauvaise)
-      }
-      // Retirer la réponse sélectionnée pour éviter les doublons
-      const index = mauvaisesReponsesFiltrees.indexOf(mauvaise)
-      mauvaisesReponsesFiltrees.splice(index, 1)
-    }
-
-    this.correction = `Pour calculer $${pourcentage}\\,\\%$ de $${texNombre(nombre)}$ on effectue le calcul $${texNombre(pourcentage / 100, 2)} \\times ${texNombre(nombre)}$ soit encore $${miseEnEvidence(bonneReponse.replace(/\$/g, ''))}$.`
-
-    // Construction du tableau final avec exactement 4 réponses
-    this.reponses = [bonneReponse, ...troisMauvaisesReponses]
-  }
-
+export default class EvolSuccessives extends ExerciceSimple {
   constructor () {
     super()
-    this.versionAleatoire()
+    this.optionsChampTexte = { texteApres: '$\\%$' }
+    this.typeExercice = 'simple'
+    this.nbQuestions = 1
+    this.optionsDeComparaison = { nombreDecimalSeulement: true }
+    this.versionQcmDisponible = true
+  }
+
+  nouvelleVersion () {
+    const estAugmentation = choice([true, false, false])
+    const taux = estAugmentation ? choice([10, 20, 30]) : randint(1, 9) * 10
+    const CM = estAugmentation ? 1 + taux / 100 : 1 - taux / 100
+    const CM2 = CM * CM
+    const variation = CM2 - 1
+    const variationPourcent = (CM2 - 1) * 100
+
+    const typeTexte = estAugmentation ? 'augmentations' : 'baisses'
+
+    this.question = `Le prix d’un article connait deux ${typeTexte} successives de $${taux}\\,\\%$. <br>
+      Le taux d'évolution global associé est :`
+
+    this.correction = `Le coefficient multiplicateur associé à une ${estAugmentation ? 'augmentation' : 'baisse'} de $${taux}\\,\\%$ est $${texNombre(CM, 2)}$.<br>
+      Le coefficient multiplicateur associé à deux ${typeTexte} successives de $${taux}\\,\\%$ est le produit des coefficients multiplicateurs, soit $${texNombre(CM, 2)}\\times ${texNombre(CM, 2)}=${texNombre(CM2, 2)}$.<br>
+      L'évolution globale est donnée par $${texNombre(CM2, 2)}-1=${texNombre(variation, 2)}=${miseEnEvidence(texNombre(variationPourcent, 2))}\\,\\%$.`
+
+    this.reponse = this.versionQcm
+      ? `$${texNombre(variationPourcent, 2)}\\,\\%$`
+      : `${texNombre(variationPourcent, 2)}`
+
+    this.distracteurs = [
+      `$${texNombre(2 * taux, 2)}\\,\\%$`,
+      `$${texNombre(taux, 2)}\\,\\%$`,
+      `$${texNombre(variationPourcent + 5, 2)}\\,\\%$`
+    ]
+
+    this.canEnonce = `Le prix d’un article connait deux ${typeTexte} successives de $${taux}\\,\\%$.`
+    this.canReponseACompleter = 'L\'évolution globale est :  $\\ldots\\,\\%$'
+    if (!this.interactif && !this.versionQcm) {
+      this.question += ' $\\ldots$'
+    }
   }
 }

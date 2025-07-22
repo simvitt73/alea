@@ -1,5 +1,5 @@
-import EvolSuccessives from '../can/2e/can2C25'
-export const titre = 'Déterminer une évolution globale'
+import CalculToutAvecPartie from '../can/2e/can2C23'
+export const titre = 'Calculer le tout connaissant une partie'
 export const dateDePublication = '22/07/2025'
 export const amcReady = true
 export const amcType = 'AMCNum'
@@ -7,17 +7,17 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 
 /**
- * Clone de can5P01 pour les auto 1er
+ * Clone de can5P11 pour les auto 1er
  * @author Gilles Mora
  */
 
-export const uuid = 'a7d80'
+export const uuid = 'c8a75'
 
 export const refs = {
-  'fr-fr': ['1A-E4-1'],
+  'fr-fr': ['1A-R5-1'],
   'fr-ch': []
 }
-export default class Auto1AE4a extends EvolSuccessives {
+export default class Auto1AR5a extends CalculToutAvecPartie {
   constructor () {
     super()
     this.versionQcm = true

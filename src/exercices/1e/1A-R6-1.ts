@@ -14,7 +14,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'Calculer une proportion de proportion'
+export const titre = 'Calculer une proportion de proportion (2)'
 export const dateDePublication = '17/07/2025'
 // Ceci est un exemple de QCM avec version originale et version aléatoire
 /**

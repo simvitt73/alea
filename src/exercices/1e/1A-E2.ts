@@ -1,5 +1,5 @@
-import EvolSuccessives from '../can/2e/can2C25'
-export const titre = 'Déterminer une évolution globale'
+import PoucentageE from '../can/5e/can5P01'
+export const titre = 'Calculer un prix après une évolution en pourcentage'
 export const dateDePublication = '22/07/2025'
 export const amcReady = true
 export const amcType = 'AMCNum'
@@ -11,13 +11,13 @@ export const interactifType = 'mathLive'
  * @author Gilles Mora
  */
 
-export const uuid = 'a7d80'
+export const uuid = '2132c'
 
 export const refs = {
-  'fr-fr': ['1A-E4-1'],
+  'fr-fr': ['1A-E2'],
   'fr-ch': []
 }
-export default class Auto1AE4a extends EvolSuccessives {
+export default class Auto1AE2 extends PoucentageE {
   constructor () {
     super()
     this.versionQcm = true

@@ -1,87 +1,102 @@
 import { choice } from '../../../lib/outils/arrayOutils'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import ExerciceSimple from '../../ExerciceSimple'
 import { randint } from '../../../modules/outils'
-import ExerciceQcmA from '../../ExerciceQcmA'
-export const dateDePublication = '06/07/2025'
-export const uuid = '6682b'
+import FractionEtendue from '../../../modules/FractionEtendue'
+export const titre = 'Calculer le tout connaissant une partie'
+export const interactifReady = true
+export const interactifType = 'mathLive'
+
+// Les exports suivants sont optionnels mais au moins la date de publication semble essentielle
+export const dateDePublication = '19/07/2025' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
+
+/**
+ * Modèle d'exercice très simple pour la course aux nombres
+ * @author Gilles Mora +IA pour la factorisation
+
+*/
+export const uuid = 'eaf63'
 
 export const refs = {
   'fr-fr': ['can2C23'],
   'fr-ch': []
 }
-export const interactifReady = true
-export const interactifType = 'qcm'
-export const amcReady = 'true'
-export const amcType = 'qcmMono'
-export const titre = 'Calculer avec des puissances'
-export default class Puissances extends ExerciceQcmA {
-  versionOriginale: () => void = () => {
-    this.enonce = 'On considère le nombre $N=\\dfrac{10^7}{5^2}$. On a :'
-    this.correction = `$\\begin{aligned}
-    N&=\\dfrac{10^7}{5^2}\\\\
-    &=\\dfrac{2^7\\times 5^7}{5^2}\\\\
-    &=2^7\\times 5^{7-2}\\\\
-    &=2^7\\times 5^5\\\\
-    &=(2\\times 5)^5\\times 2^2\\\\
-    &=${miseEnEvidence('4\\times 10^5')}
-    \\end{aligned}$`
-
-    this.reponses = [
-      '$N=4\\times 10^5$',
-      '$N= 2^5$',
-      `$N=${texNombre(20000)}$`,
-      '$N=\\dfrac{1}{10^5}$'
-    ]
-  }
-
-  versionAleatoire = () => {
-    switch (choice([1, 2])) {
-      case 1: {
-        const a = choice([[5, 2], [2, 5]])
-        const n = randint(2, 4)
-        const k = randint(2, 3)
-        this.enonce = `
-        On considère le nombre $N=\\dfrac{${(a[0] * a[1])}^${n + k}}{${a[0]}^${n}}$. On a :<br>`
-        this.correction = `$\\begin{aligned}
-    N&=\\dfrac{${(a[0] * a[1])}^${n + k}}{${a[0]}^${n}}\\\\
-    &=\\dfrac{${a[0]}^${n + k}\\times ${a[1]}^${n + k} }{${a[0]}^${n}}\\\\
-    &=${a[1]}^${n + k}\\times ${a[0]}^{${k}}\\\\
-    &=${a[1] * a[0]}^${k}\\times ${a[1]}^{${n}}\\\\
-    &=${miseEnEvidence(`${a[1] ** n}\\times ${a[0] * a[1]}^{${k}}`)}
-    \\end{aligned}$`
-        this.reponses = [` $N=${a[1] ** n}\\times ${a[0] * a[1]}^{${k}}$`,
-      `$N=${a[1]}^{${k}}$`,
-      `$N=10^{${k}}$`,
-       `$N=${a[0] ** n}\\times ${a[0] * a[1]}^{${k}}$`
-        ]
-      }
-        break
-      case 2:
-      default: {
-        const a = randint(2, 3)
-        const k = randint(2, 3)
-        const n = randint(2, 4)
-        const p = randint(6, 8)
-        this.enonce = `On considère le nombre $N=\\dfrac{${a ** k}^{${n + p}}}{${a}^${n}}$. On a :<br>`
-        this.correction = `$\\begin{aligned}
-   N&=\\dfrac{${a ** k}^{${n + p}}}{${a}^${n}}\\\\
-    &=\\dfrac{\\left(${a}^${k}\\right)^{${n + p}}}{${a}^${n}}\\\\
-    &=\\dfrac{${a}^{${k * (n + p)}}}{${a}^${n}}\\\\
-      &=${miseEnEvidence(`${a}^{${k * (n + p) - n}}`)}
-    \\end{aligned}$`
-        this.reponses = [` $N=${a}^{${k * (n + p) - n}}$`,
-      `$N=${a ** k}^${p}$`,
-      `$N=${texNombre(a ** p)}$`,
-       `$N=${a ** (k - 1)}^${p}$`
-        ]
-      }
-        break
-    }
-  }
-
+export default class CalculToutAvecPartie extends ExerciceSimple {
   constructor () {
     super()
-    this.versionAleatoire()
+    this.typeExercice = 'simple'
+    this.nbQuestions = 1
+    this.optionsDeComparaison = { nombreDecimalSeulement: true }
+    this.versionQcmDisponible = true
+  }
+
+  nouvelleVersion () {
+    let taux, partie, matiere
+
+    switch (randint(1, 2)) {
+      case 1:
+        taux = choice([1, 2, 4, 5, 10])
+        if (taux === 1) {
+          partie = randint(1, 2) * 10  // 10 ou 20 → total 1000 ou 2000
+        } else if (taux === 2) {
+          partie = randint(1, 4) * 10  // 10, 20, 30 ou 40 → total 500 à 2000
+        } else if (taux === 4) {
+          partie = randint(4, 6) * 10  // 40 à 60 → total 1000 à 1500
+        } else if (taux === 5) {
+          partie = randint(4, 6) * 10  // 40 à 60 → total 800 à 1200
+        } else { // taux === 10
+          partie = randint(4, 6) * 10  // 40 à 60 → total 400 à 600
+        }
+        matiere = 'le Grec'
+        break
+      case 2:
+      default:
+        taux = choice([20, 25, 50])
+        if (taux === 20) {
+          partie = randint(15, 20) * 10  // 150 à 200 → total 750 à 1000
+        } else if (taux === 25) {
+          partie = randint(15, 20) * 10  // 150 à 200 → total 600 à 800
+        } else { // taux === 50
+          partie = randint(15, 20) * 10  // 150 à 200 → total 300 à 400
+        }
+        matiere = "l'Espagnol"
+        break
+    }
+
+    // Parties communes
+    const fracTaux = new FractionEtendue(taux, 100)
+    const multiplicateur = texNombre(100 / taux, 1)
+    const total = partie * 100 / taux
+
+    const correctionCommune = `En notant $N$ le nombre total d'élèves, 
+    $${taux}\\,\\%$ de $N$ est égal à $${partie}$ élèves.<br>
+Puisque $${taux}\\,\\% =\\dfrac{${taux}}{100}${taux === 1 ? '' : `=${fracTaux.texFractionSimplifiee}`}$, alors $N$ est $${fracTaux.d}$ plus grand que $${partie}$.<br>
+Ainsi,  $N=${multiplicateur}\\times ${partie}$ élèves soit 
+    $${miseEnEvidence(`${texNombre(total, 0)}`)}$ élèves au total.`
+
+    const distracteursCommuns = [
+      `$${texNombre(partie * 10 / taux, 0)}$`,
+      `${taux === 10 ? `$${texNombre(partie * taux + 10, 0)}$` : `$${texNombre(partie * taux, 0)}$`}`,
+      `$${texNombre(total + 100, 1)}$`,
+      `$${texNombre(total - 100, 1)}$`
+    ]
+
+    this.question = `Dans un lycée, $${partie}$ élèves étudient ${matiere}, ce qui représente $${taux}\\,\\%$ du nombre d'élèves inscrits dans ce lycée.<br>
+      Le nombre d'élèves inscrits dans ce lycée est égal à :`
+
+    this.correction = correctionCommune
+
+    this.reponse = this.versionQcm ? `$${texNombre(total, 1)}$` : `${total}`
+
+    this.distracteurs = distracteursCommuns
+
+    this.canEnonce = `Dans un lycée, $${partie}$ élèves étudient ${matiere}, ce qui représente $${taux}\\,\\%$ du nombre d'élèves inscrits dans ce lycée.<br>`
+
+    this.canReponseACompleter = 'Le nombre d\'élèves inscrits dans ce lycée est égal à : $\\ldots$'
+
+    if (!this.interactif && !this.versionQcm) {
+      this.question += ' $\\ldots$'
+    }
   }
 }
