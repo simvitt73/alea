@@ -20,6 +20,7 @@ import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { SceneViewerThreeJs } from '../../lib/3d/SceneViewerThreeJs'
+import { createPrismGeometry, createPyramidGeometry, createTruncatedPyramidGeometry } from '../../lib/3d/solidesThreeJs'
 
 export const titre = 'Trouver le nombre de faces ou d\'arêtes d\'un solide'
 export const dateDePublication = '7/11/2021'
@@ -107,9 +108,12 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 1: // Prisme + 2 pyramides -> faces ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5)
-            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
-            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
+            const geometries = [
+              createPrismGeometry(n, 3, -0.5, 0.5, false, false),
+              createPyramidGeometry(n, 3, 0.5, 2, false),
+              createPyramidGeometry(n, 3, -0.5, -2, false)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -135,9 +139,12 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 2: // Prisme + 2 pyramides -> arêtes ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5)
-            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
-            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
+            const geometries = [
+              createPrismGeometry(n, 3, -0.5, 0.5, false, false),
+              createPyramidGeometry(n, 3, 0.5, 2, false),
+              createPyramidGeometry(n, 3, -0.5, -2, false)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -164,8 +171,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 3: // Prisme + 1 pyramide au dessus -> faces ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, true, false)
-            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
+            const geometries = [
+              createPrismGeometry(n, 3, -0.5, 0.5, true, false),
+              createPyramidGeometry(n, 3, 0.5, 2),
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -190,8 +200,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 4: // Prisme + 1 pyramide au dessus -> arêtes ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, true, false)
-            sceneBuilder.addWireframePyramid(n, 3, 0.5, 2)
+            const geometries = [
+              createPrismGeometry(n, 3, -0.5, 0.5, true, false),
+              createPyramidGeometry(n, 3, 0.5, 2)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -216,8 +229,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 5: // Prisme + 1 pyramide en dessous -> faces ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, false, true)
-            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
+            const geometries = [
+              createPrismGeometry(n, 3, -0.5, 0.5, false, true),
+              createPyramidGeometry(n, 3, -0.5, -2)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -239,8 +255,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 6: // Prisme + 1 pyramide en dessous -> arêtes ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePrism(n, 3, -0.5, 0.5, false, true)
-            sceneBuilder.addWireframePyramid(n, 3, -0.5, -2)
+            const geometries = [
+              createPrismGeometry(n, 3, -0.5, 0.5, false, true),
+              createPyramidGeometry(n, 3, -0.5, -2)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -261,9 +280,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 7: // 2 pyramides -> faces ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-
-            sceneBuilder.addWireframePyramid(n, 3, 0, 3)
-            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
+            const geometries = [
+              createPyramidGeometry(n, 3, 0, 3),
+              createPyramidGeometry(n, 3, 0, -2)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -287,8 +308,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 8: // 2 pyramides -> arêtes ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePyramid(n, 3, 0, 3)
-            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
+            const geometries = [
+              createPyramidGeometry(n, 3, 0, 3),
+              createPyramidGeometry(n, 3, 0, -2)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -309,8 +333,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 9: // 2 tronc de pyramides -> faces ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 1.5, false, true)
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -1, false, true)
+            const geometries = [
+              createPyramidGeometry(n, 3, 0, 1.5, false),
+              createPyramidGeometry(n, 3, 0, -1, false)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -339,8 +366,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 10: // 2 tronc de pyramides -> arêtes ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 1.5, false, true)
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -1, false, true)
+            const geometries = [
+              createPyramidGeometry(n, 3, 0, 1.5, false),
+              createPyramidGeometry(n, 3, 0, -1, false)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -368,8 +398,12 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 11: // 1 tronc de pyramides au dessus et 1 pyramide en dessous -> faces ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 2, false, true)
+            const geometries = [
+              createPyramidGeometry(n, 3, 0, 2, false),
+              createTruncatedPyramidGeometry(n, 3, 1, 0, -1, false, true)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
+
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -397,8 +431,12 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 12: // 1 tronc de pyramide au dessus et 1 pyramide en dessous -> arêtes ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePyramid(n, 3, 0, -2)
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, 2, false, true)
+            const geometries = [
+              createPyramidGeometry(n, 3, 0, 2, false),
+              createTruncatedPyramidGeometry(n, 3, 1, 0, -1, false, true)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
+
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -425,8 +463,12 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         case 13: // 1 tronc de pyramides en dessous et 1 pyramide au dessus -> faces ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePyramid(n, 3, 0, 2)
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -2, false, true)
+            const geometries = [
+              createTruncatedPyramidGeometry(n, 3, 1, 0, -2, false, true),
+              createPyramidGeometry(n, 3, 0, 2)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
+
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
@@ -455,8 +497,11 @@ export default class NombreDeFacesEtDAretes extends Exercice {
         default: // 1 tronc de pyramide en dessous et 1 pyramide au dessus -> arêtes ?
           if (this.sup2 && context.isHtml) {
             const sceneBuilder = new SceneViewerThreeJs()
-            sceneBuilder.addWireframePyramid(n, 3, 0, 2, false)
-            sceneBuilder.addWireframeTruncatedPyramid(n, 3, 1, 0, -2, false, true)
+            const geometries = [
+              createTruncatedPyramidGeometry(n, 3, 1, 0, -2, false, true),
+              createPyramidGeometry(n, 3, 0, 2)
+            ]
+            sceneBuilder.addWireframeUnion(geometries)
             sceneBuilders.push(sceneBuilder)
             const vue = `<div id="emplacementPourSceneViewer${sceneBuilder.id}" style="width: 400px; height: 400px;"></div>`
             this.question = `${vue}<br>`
