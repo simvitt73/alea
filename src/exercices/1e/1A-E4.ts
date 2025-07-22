@@ -1,11 +1,11 @@
-import { choice } from '../../lib/outils/arrayOutils'
-import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { abs } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
 import { randint } from '../../modules/outils'
+import { nombreElementsDifferents } from '../ExerciceQcm'
 // import ExerciceQcmA from '../../ExerciceQcmA'
 import ExerciceQcmA from '../ExerciceQcmA'
 
-export const uuid = '406b1'
+export const uuid = 'c8369'
 export const refs = {
   'fr-fr': ['1A-E4'],
   'fr-ch': []
@@ -14,72 +14,75 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'Calculer un taux réciproque'
-export const dateDePublication = '15/07/2025'
+export const titre = 'Déterminer une évolution globale (1)'
+export const dateDePublication = '10/07/2025'
 // Ceci est un exemple de QCM avec version originale et version aléatoire
 /**
  *
- * @author Gilles Mora
+ * @author Stéphane Guyon
  *
  */
-export default class TauxReciproque extends ExerciceQcmA {
+export default class Automatismes extends ExerciceQcmA {
+  // Ceci est la fonction qui s'occupe d'écrire l'énoncé, la correction et les réponses
+  // Elle factorise le code qui serait dupliqué dans versionAleatoire et versionOriginale
+  private appliquerLesValeurs (p1: number, p2: number):
+  void {
+    const c1 = 1 + p1 / 100
+    const c2 = 1 + p2 / 100
+    const c = c1 * c2
+    const p = (c - 1) * 100
+    const evo = p > 0 ? 'augmentation' : 'diminution'
+    const alea = randint(-2, 2, 0)
+    const alea2 = randint(-3, 3, [0, alea])
+    let evo1: string
+    let evo2: string
+    if (p1 >= 0) { evo1 = 'augmentation' } else { evo1 = 'diminution' }
+    if (p2 >= 0) { evo2 = 'augmentation' } else { evo2 = 'diminution' }
+
+    this.reponses = [
+     `une ${evo} de $${texNombre(abs(p))}$ %`,
+     (p1 + p2) > 0 ? `une augmentation de $${texNombre(p1 + p2)}$ %,` : `une diminution de $${texNombre(abs(p1 + p2))}$ %`,
+      `une ${evo} de $${texNombre(abs(p + alea))}$ %`,
+       `une ${evo} de $${texNombre(abs(p + alea2))}$ %.`
+    ]
+
+    this.enonce = `Une ${evo1} de $${abs(p1)}$ % suivie d'une ${evo2} de $${abs(p2)}$ % équivaut à `
+    this.correction = 'A partir des évolutions en pourcentage, on déduit les coefficients multiplicateurs : <br>'
+    if (p1 > 0) { this.correction += `On note $CM_1 = 1 + \\dfrac{${p1}}{100}=${texNombre((100 + p1) / 100)}$` } else { this.correction += `et $CM_1  = 1 - \\dfrac{${abs(p1)}}{100}=${texNombre((100 + p1) / 100)}$.` }
+    if (p2 > 0) { this.correction += `<br>On note $CM_2 = 1 + \\dfrac{${p2}}{100}=${texNombre((100 + p2) / 100)}$` } else { this.correction += ` et $CM_2 = 1 - \\dfrac{${abs(p2)}}{100}=${texNombre((100 + p2) / 100)}$.<br>` }
+    this.correction += ` Le coefficient multiplicateur global est :  $CM = CM_1 \\times CM_2 = ${texNombre((100 + p1) / 100)} \\times ${texNombre((100 + p2) / 100)} = ${texNombre((100 + p) / 100)}$<br>`
+    this.correction += `qui correspond au coefficient multiplicateur global. <br>Or, multiplier par $${texNombre((100 + p) / 100)}$ revient à avoir une ${evo} de $${texNombre(abs(p))}\\%$<br>`
+    this.correction += `L'évolution globale est donc de $${texNombre(p)}$ %.<br>`
+    this.reponse = ` ${p} %`
+  }
+
   // S'occupe de passser les données originales à la fonction appliquerLesValeurs
 
   versionOriginale: () => void = () => {
-    const bonneReponse1 = '\\dfrac{1}{1,27}-1'
-    const bonneReponse2 = '\\dfrac{-0,27}{1,27}'
-    const bonneReponseRetenue = choice([bonneReponse1, bonneReponse2])
-    this.enonce = `Le prix d’un article a subi une augmentation de $27\\,\\%$.<br>
-  Le taux à appliquer pour que cet article retrouve son prix initial est donné par  :`
-    this.correction = `Le coefficient multiplicateur associé à une augmentation de $27\\,\\%$ est $1+0,27=1,27$.<br>
-      Le coefficient multiplicateur réciproque est donc : $\\dfrac{1}{1,27}$.<br>
-      On en déduit que le taux réciproque  est $\\dfrac{1}{1,27}-1$ ou $\\dfrac{-0,27}{1,27}$.<br>
-      Le taux réciproque est donc $${miseEnEvidence(bonneReponseRetenue)}$.`
-
-    this.reponses = [`$${bonneReponseRetenue}$`, '$\\dfrac{1}{1,27}$', '$1-\\dfrac{1}{1,27}$', '$\\dfrac{0,27}{1,27}$']
+    this.appliquerLesValeurs(-50, 50) // valeurs originales
+    this.reponses = [
+      'L\'évolution est de - 25 %,',
+      'L\'évolution est de - 50 %,',
+      'L\'évolution est de + 25 %,',
+      'L\'évolution est de + 75 %.']
   }
 
+  // s'occupe d'aléatoiriser les valeurs à passer à la fonction appliquerLesValeurs en vérifiant qu'on a bien 3 réponses différentes
+  // Pour un qcm à n réponses, il faudrait vérifier que nombreElementsDifferents(this.reponses) < n
   versionAleatoire: () => void = () => {
-    switch (choice([1, 2])) {
-      case 1: {
-        const taux = randint(5, 49, [10, 20, 30, 40])
-        const bonneReponse1 = `\\dfrac{1}{${texNombre(1 + taux / 100, 4)}}-1`
-        const bonneReponse2 = `\\dfrac{${texNombre(-taux / 100, 4)}}{${texNombre(1 + taux / 100, 4)}}`
-        const bonneReponseRetenue = choice([bonneReponse1, bonneReponse2])
-        this.enonce = `Le prix d’un article a subi une augmentation de $${taux}\\,\\%$.<br>
-  Le taux à appliquer pour que cet article retrouve son prix initial est donné par  :`
-        this.correction = `Le coefficient multiplicateur associé à une augmentation de $${taux}\\,\\%$ est $1+${texNombre(taux / 100, 2)}=${texNombre(1 + taux / 100, 4)}$.<br>
-      Le coefficient multiplicateur réciproque est donc  $\\dfrac{1}{${texNombre(1 + taux / 100, 4)}}$.<br>
-      On en déduit que le taux réciproque  est  $\\dfrac{1}{${texNombre(1 + taux / 100, 4)}}-1$ ou $\\dfrac{-${texNombre(taux / 100, 4)}}{${texNombre(1 + taux / 100, 4)}}$.<br>
-      Le taux réciproque est donc $${miseEnEvidence(bonneReponseRetenue)}$.`
+    const n = 4 // nombre de réponses différentes voulues (on rappelle que la première réponse est la bonne)
+    do {
+      const p1 = randint(-6, 6, 0) * 10
+      const p2 = randint(-6, 6, 0) * 10// On génère un polynôme de degré 2 ax^2+c
 
-        this.reponses = [`$${bonneReponseRetenue}$`, `$\\dfrac{1}{${texNombre(taux / 100, 4)}}$`, `$1-\\dfrac{1}{${texNombre(taux / 100, 4)}}$`, `$\\dfrac{1}{${texNombre(1 - taux / 100, 4)}}-1$`]
-      }
-        break
-
-      case 2:
-      default:{
-        const taux = randint(5, 49, [10, 20, 30, 40])
-        const bonneReponse1 = `\\dfrac{1}{${texNombre(1 - taux / 100, 4)}}-1`
-        const bonneReponse2 = `\\dfrac{${texNombre(taux / 100, 4)}}{${texNombre(1 - taux / 100, 4)}}`
-        const bonneReponseRetenue = choice([bonneReponse1, bonneReponse2])
-        this.enonce = `Le prix d’un article a subi une baisse de $${taux}\\,\\%$.<br>
-  Le taux à appliquer pour que cet article retrouve son prix initial est donné par  :`
-        this.correction = `Le coefficient multiplicateur associé à une baisse de $${taux}\\,\\%$ est $1-${texNombre(taux / 100, 2)}=${texNombre(1 - taux / 100, 4)}$.<br>
-      Le coefficient multiplicateur réciproque est donc  $\\dfrac{1}{${texNombre(1 - taux / 100, 4)}}$.<br>
-      On en déduit que le taux réciproque  est  $\\dfrac{1}{${texNombre(1 - taux / 100, 4)}}-1$ ou $\\dfrac{${texNombre(taux / 100, 4)}}{${texNombre(1 - taux / 100, 4)}}$.<br>
-      Le taux réciproque est donc $${miseEnEvidence(bonneReponseRetenue)}$.`
-
-        this.reponses = [`$${bonneReponseRetenue}$`, `$\\dfrac{1}{${texNombre(taux / 100, 4)}}$`, `$1-\\dfrac{1}{${texNombre(1 - taux / 100, 4)}}$`, `$\\dfrac{${texNombre(-taux / 100, 4)}}{${texNombre(1 - taux / 100, 4)}}$`]
-      }
-        break
-    }
+      this.appliquerLesValeurs(p1, p2)
+    } while (nombreElementsDifferents(this.reponses) < n)
   }
 
   // Ici il n'y a rien à faire, on appelle juste la version aleatoire (pour un qcm aleatoirisé, c'est le fonctionnement par défaut)
   constructor () {
     super()
-    // this.options = { vertical: true, ordered: false }
+    this.options = { vertical: true, ordered: false }
     this.versionAleatoire()
   }
 }

@@ -1,13 +1,13 @@
-import { choice } from '../../../lib/outils/arrayOutils'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
-import ExerciceQcmA from '../../ExerciceQcmA'
+import { choice } from '../../lib/outils/arrayOutils'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { texNombre } from '../../lib/outils/texNombre'
+import ExerciceQcmA from '../ExerciceQcmA'
 
-export const dateDePublication = '09/07/2025'
+export const dateDePublication = '22/07/2025'
 export const uuid = 'a3828'
 
 export const refs = {
-  'fr-fr': ['can2C26'],
+  'fr-fr': ['1A-E2-1'],
   'fr-ch': []
 }
 /**
@@ -19,7 +19,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'Calculer avec un taux d\'évolution'
+export const titre = 'Calculer avec un taux d\'évolution (1)'
 
 export default class BaissePrix extends ExerciceQcmA {
   versionOriginale: () => void = () => {

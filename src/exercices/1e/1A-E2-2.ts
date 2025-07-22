@@ -1,14 +1,14 @@
-import { choice } from '../../../lib/outils/arrayOutils'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
-import FractionEtendue from '../../../modules/FractionEtendue'
-import ExerciceQcmA from '../../ExerciceQcmA'
+import { choice } from '../../lib/outils/arrayOutils'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { texNombre } from '../../lib/outils/texNombre'
+import FractionEtendue from '../../modules/FractionEtendue'
+import ExerciceQcmA from '../ExerciceQcmA'
 
-export const dateDePublication = '09/07/2025'
+export const dateDePublication = '22/07/2025'
 export const uuid = '6201b'
 
 export const refs = {
-  'fr-fr': ['can2C27'],
+  'fr-fr': ['1A-E2-2'],
   'fr-ch': []
 }
 /**
@@ -20,7 +20,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'Calculer avec un taux d\'évolution'
+export const titre = 'Calculer avec un taux d\'évolution (2)'
 
 export default class AugmentationsSuccessives extends ExerciceQcmA {
   versionOriginale: () => void = () => {

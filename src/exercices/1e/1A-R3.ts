@@ -1,24 +1,24 @@
-import { choice } from '../../../lib/outils/arrayOutils'
-import { miseEnEvidence, texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
-import FractionEtendue from '../../../modules/FractionEtendue'
-import { randint } from '../../../modules/outils'
-import ExerciceQcmA from '../../ExerciceQcmA'
+import { choice } from '../../lib/outils/arrayOutils'
+import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
+import FractionEtendue from '../../modules/FractionEtendue'
+import { randint } from '../../modules/outils'
+import ExerciceQcmA from '../ExerciceQcmA'
 
-export const dateDePublication = '15/07/2025'
+export const dateDePublication = '22/07/2025'
 export const uuid = '28d47'
 /**
  * @author Gilles Mora (avec IA)
  *
  */
 export const refs = {
-  'fr-fr': ['can2C28'],
+  'fr-fr': ['1A-R3'],
   'fr-ch': []
 }
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'Comparer des proportions (élection)'
+export const titre = 'Comparer des proportions (sous différentes formes)'
 
 export default class ElectionPourcentages extends ExerciceQcmA {
   versionOriginale: () => void = () => {
