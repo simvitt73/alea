@@ -32,6 +32,7 @@ export default class PoucentageProportion extends ExerciceSimple {
     this.nbQuestions = 1
     this.spacing = 1.5
     this.spacingCorr = 1.5
+    this.versionQcmDisponible = true
   }
 
   nouvelleVersion () {
@@ -41,47 +42,67 @@ export default class PoucentageProportion extends ExerciceSimple {
       case 1:
         if (choice([true, false])) {
           a = choice([20, 40])
-          b = choice([4, 8, 16])
+          b = a === 20 ? choice([4, 8, 16, 5]) : choice([4, 8, 16, 10])
           carac = choice(listeCarac)
           n = carac[0]
           d = carac[1]
-          this.question = ` Dans un groupe de $${a}$ enfants, $${b}$  sont des ${n}.<br>
-      ${d} représentent ..... $\\%$ du groupe.`
+          this.question = ` Dans un groupe de $${a}$ enfants, $${b}$  sont des ${n}.<br>`
+          this.question += this.versionQcm ? `Le pourcentage de ${n} dans ce groupe est : ` : `${d} représentent ..... $\\%$ du groupe.`
+
           this.optionsChampTexte = { texteAvant: '<br>', texteApres: '$\\%$' }
           this.correction = `La proportion de ${n} est donnée par $\\dfrac{${b}}{${a}}=${texFractionReduite(b, a)}=${texNombre(b / a)}$, soit $${miseEnEvidence(texNombre((b / a) * 100))}$ $\\%$.`
-          this.reponse = arrondi((b / a) * 100)
         } else {
           a = choice([30, 60])
-          b = choice([6, 12, 18, 24])
+          b = a === 30 ? choice([6, 12, 18, 24]) : choice([6, 12, 15, 18, 24])
           carac = choice(listeCarac)
           n = carac[0]
           d = carac[1]
-          this.question = ` Dans un groupe de $${a}$ enfants, $${b}$  sont des ${n}.<br>
-          ${d} représentent ..... $\\%$ du groupe.`
+          this.question = ` Dans un groupe de $${a}$ enfants, $${b}$  sont des ${n}.<br>`
+          this.question += this.versionQcm ? `Le pourcentage de ${n} dans ce groupe est : ` : `${d} représentent ..... $\\%$ du groupe.`
           this.optionsChampTexte = { texteAvant: '<br>', texteApres: '$\\%$' }
           this.correction = `La proportion de ${n} est donnée par $\\dfrac{${b}}{${a}}=${texFractionReduite(b, a)}=${texNombre(b / a)}$, soit $${miseEnEvidence(texNombre((b / a) * 100))}$ $\\%$.`
-          this.reponse = arrondi((b / a) * 100)
         }
+        this.reponse = this.versionQcm ? `$${texNombre((b / a) * 100, 2)}\\,\\%$` : arrondi((b / a) * 100)
         this.canEnonce = 'Compléter.'
         this.canReponseACompleter = this.question//
+        this.distracteurs = a === arrondi((b / a) * 100)
+          ? [`$${a + b}\\,\\%$`,
+          `$${b}\\,\\%$`,
+          `$${a - b}\\,\\%$`
+            ]
+          : [`$${a}\\,\\%$`,
+          `$${b}\\,\\%$`,
+          `$${a - b}\\,\\%$`
+            ]
         break
 
       case 2:
 
-        a = arrondi(randint(1, 12) * 10)
-        b = arrondi(a * randint(1, 6) / 10)
+        a = arrondi(randint(1, 12, 10) * 10)
+        b = arrondi(a * randint(1, 7, 5) / 10)
         c = (b / a) * 100
         choix = choice([true, false])
-        this.question = `Le prix d'un article coûtant $${a}$ euros ${choix ? 'baisse' : 'augmente'} de $${b}$ euros.<br>
-          Quel est le pourcentage ${choix ? 'de réduction' : 'd’augmentation'} de ce prix ?`
+        this.question = `Le prix d'un article coûtant $${a}$ euros ${choix ? 'baisse' : 'augmente'} de $${b}$ euros.<br>`
+        this.question += this.versionQcm ? `Le pourcentage ${choix ? 'de réduction' : 'd’augmentation'} de ce prix est :` : ` Quel est le pourcentage ${choix ? 'de réduction' : 'd’augmentation'} de ce prix ?`
+
         this.optionsChampTexte = { texteAvant: '<br>', texteApres: '$\\%$' }
         this.correction = `${choix ? 'La réduction' : 'L’augmentation'} est $${b}$ euros sur un total de $${a}$ euros.<br>
           Le pourcentage  ${choix ? 'de baisse' : 'd’augmentation'} est donné par le quotient : $\\dfrac{${b}}{${a}}${simplificationDeFractionAvecEtapes(b, a)}=${texNombre(b / a)}= ${miseEnEvidence(texNombre((b / a) * 100))}\\,\\%$.
           `
         this.correction += texteEnCouleur(`<br> Mentalement : <br>
-        Calculez $10 \\%$ du prix. <br>${choix ? 'La réduction' : 'L’augmentation'} est un multiple de $10 \\%$.
+        Calculez $10\\, \\%$ du prix. <br>${choix ? 'La réduction' : 'L’augmentation'} est un multiple de $10\\, \\%$.
              `)
-        this.reponse = c
+        this.reponse = this.versionQcm ? `$${texNombre(c, 2)}\\,\\%$` : c
+
+        this.distracteurs = b === c
+          ? [`$${a + b}\\,\\%$`,
+          `$${a}\\,\\%$`,
+          `$${a - b}\\,\\%$`
+            ]
+          : [`$${a}\\,\\%$`,
+          `$${b}\\,\\%$`,
+          `$${a - b}\\,\\%$`
+            ]
         this.canEnonce = this.question// 'Compléter'
         this.canReponseACompleter = '$\\ldots$ $\\%$'
         break

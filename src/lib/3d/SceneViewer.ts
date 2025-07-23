@@ -1,15 +1,112 @@
-import './Solide'
-const cameraRigPosition = [0, 2, 0]
-const initialCameraPosition = [0, 2, 8]
+import { cleanup } from '@testing-library/svelte'
+import './solidesThreeJs'
+
+const defaultRigPosition: [number, number, number] = [0, 0, 0]
+const defaultCameraDistance = 8
+const defaultWidth = 600
+const defaultHeight = 400
+const defaultFov = 60
+const defaultZoomLimits = { min: 2, max: 20 }
+
+function ensureSceneViewerStyle () {
+  if (!document.getElementById('scene-viewer-style')) {
+    const style = document.createElement('style')
+    style.id = 'scene-viewer-style'
+    style.textContent = `
+       [data-scene-viewer] {
+    cursor: grab;
+    user-select: none;
+    position: relative;
+    width: 600px;
+    height: 400px;
+  }
+  [data-scene-viewer] a-scene, [data-scene-viewer] canvas {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 400px !important;
+  }
+  [data-scene-viewer]:active {
+    cursor: grabbing;
+  }`
+    document.head.appendChild(style)
+  }
+}
+/**
+ * Classe pour visualiser une scène 3D avec AFRAME
+ * @author Jean-Claude LHOTE
+ */
 export class SceneViewer {
   private sceneElements: string[] = []
   private camera: string | null = null
-  private width: number = 600
-  private height: number = 400
+  private width: number
+  private height: number
+  public id: string
+  private zoomLimits
+  private rigPosition: [number, number, number]
+  private cameraDistance: number
+  private rigRotation: [number, number, number]
+  private fov: number = 60
+  private withEarth: boolean = false
+  private withSky: boolean = false
 
-  constructor (options: { width?: number; height?: number } = {}) {
-    this.width = options.width || this.width
-    this.height = options.height || this.height
+  // Ajoute ces propriétés d'instance :
+  private rigRotationY = 0
+  private rigRotationX = 0
+  private currentDistance = 8 // valeur par défaut, ou initialisée dans le constructeur
+  private containerElement: HTMLElement | null = null
+  private detectCollision = false
+
+  constructor (options: {
+    width?: number,
+    height?: number,
+    id?: string,
+    zoomLimits?: { min: number, max: number },
+    rigPosition?: [number, number, number],
+    cameraDistance?: number,
+    fov?: number,
+    rigRotation?: [number, number, number],
+    withEarth?: boolean,
+    withSky?: boolean,
+    detectCollision?: boolean,
+  } = {}) {
+    this.detectCollision = options.detectCollision ?? false
+    this.width = options?.width || defaultWidth
+    this.height = options?.height || defaultHeight
+    this.id = `scene-${options?.id || Math.random().toString(36).substring(2, 9)}`
+    this.zoomLimits = options?.zoomLimits || defaultZoomLimits
+    this.rigPosition = options?.rigPosition || defaultRigPosition
+    this.cameraDistance = options?.cameraDistance || defaultCameraDistance
+    this.rigRotation = options?.rigRotation || [this.rigRotationX ?? 0, this.rigRotationY ?? 0, this.currentDistance ?? 8]
+    this.fov = options?.fov || defaultFov
+    this.withEarth = options?.withEarth ?? false
+    this.withSky = options?.withSky ?? false
+    this.currentDistance = Math.sqrt(
+      this.rigPosition[0] ** 2 +
+       this.rigPosition[1] ** 2 +
+      (this.cameraDistance - this.rigPosition[2]) ** 2
+    )
+    ensureSceneViewerStyle()
+
+    // Création du container DOM caché    <div id="${this.id}" style="width: ${this.width}px; height: ${this.height}px;" class="scene-container" data-scene-viewer>
+    this.containerElement = document.createElement('div')
+    this.containerElement.id = this.id
+    this.containerElement.className = 'scene-container'
+    this.containerElement.setAttribute('data-scene-viewer', '')
+    this.containerElement.style.position = 'relative'
+    this.containerElement.style.width = `${this.width}px`
+    this.containerElement.style.height = `${this.height}px`
+    this.containerElement.style.display = 'none'
+    this.containerElement.innerHTML = ''
+    document.body.appendChild(this.containerElement)
+  }
+
+  public initializeScene (): void {
+    const container = this.containerElement
+    if (!container) return
+    const aScene = container.querySelector('a-scene')
+    if (aScene) {
+      this.setupCameraRigControls(container as HTMLElement, aScene)
+    }
   }
 
   // MÉTHODE PRINCIPALE : Générer le HTML avec camera rig
@@ -17,86 +114,69 @@ export class SceneViewer {
     const sceneContent = this.sceneElements.join('\n')
 
     return `
-      <style>
-      [data-scene-viewer] {
-        cursor: grab;
-        user-select: none;
-        touch-action: none;
-        position: relative;
-      }
-      [data-scene-viewer]:active {
-        cursor: grabbing;
-      }
-      </style>
-      <div style="width: ${this.width}px; height: ${this.height}px;" class="scene-container" data-scene-viewer>
       <a-scene embedded 
            style="width: 100%; height: 100%;" 
            vr-mode-ui="enabled: false"
            device-orientation-permission-ui="enabled: false">
-           <!-- CONTROLS : Zoom et rotation -->
-      <a-entity id="zoomController" zoom-controls></a-entity>
-      
+
       <!-- ASSETS : Préchargement des textures et polices -->
       <a-assets>
         <a-mixin id="text-style" 
              text="font: roboto; align: center; baseline: center; width: 8"
              material="transparent: true"></a-mixin>
-      
+      ${this.withEarth
+? `
         <!-- Textures de mappemonde -->
-        <img id="earthTexture" src="public/images/earth_day_4096.jpg">
-        <img id="earthNormalMap" src="public/images/earth_normal_2048.jpg">
-        
+        <img id="earthTexture" src="images/earth_day_4096.jpg">
+        <img id="earthNormalMap" src="images/earth_normal_2048.jpg"> `
+: ''}
+        ${this.withSky
+? `
         <!-- SKY TEXTURE -->
-        <img id="sky" src="public/images/2k_stars_milky_way.jpg">
+        <img id="sky" src="images/2k_stars_milky_way.jpg">
+        
+        `
+: ''}
       </a-assets>
 
-      <!-- SKY ELEMENT -->
-      <a-sky src="#sky"></a-sky>
+     
 
-      ${this.camera ?? `
-        <a-entity id="cameraRig" position="${cameraRigPosition.join(' ')}" rotation="0 0 0">
-        <a-entity camera 
-              position="${initialCameraPosition.join(' ')}" 
-              fov="60"
-              rotation="0 0 0"
+        ${this.withSky
+? `    <!-- SKY ELEMENT -->
+      <a-sky src="#sky"></a-sky>`
+: '<a-sky color="#ECECEC"></a-sky>'}
+
+   <a-entity id="cameraRig-${this.id}" position="${this.rigPosition.join(' ')}" rotation="0 0 0">
+        <a-camera 
+              position="0 0 ${this.cameraDistance}" 
+              fov="${this.fov}"
               look-controls="enabled: false"
               wasd-controls="enabled: false">
         </a-entity>
         </a-entity>
-      `}
+
       ${sceneContent}
       </a-scene>
-    </div>
     `
   }
 
-  // MÉTHODE STATIQUE pour initialiser les contrôles du camera rig
-  static initializeScenes (): void {
-    const waitForAFrame = () => {
-      if (!(window as any).AFRAME) {
-        setTimeout(waitForAFrame, 100)
-        return
-      }
-
-      setTimeout(() => {
-        const sceneContainers = document.querySelectorAll('[data-scene-viewer]')
-
-        sceneContainers.forEach((container, index) => {
-          const aScene = container.querySelector('a-scene')
-          if (aScene) {
-            SceneViewer.setupCameraRigControls(container as HTMLElement, aScene)
-          }
-        })
-      }, 300)
+  private updateCameraRig (cameraRig: any, camera: any): void {
+    cameraRig.setAttribute('rotation', `${this.rigRotationX} ${this.rigRotationY} 0`)
+    camera.setAttribute('position', `0 0 ${this.currentDistance}`)
+    if (camera.object3D && camera.object3D.position) {
+      camera.object3D.position.set(0, 0, this.currentDistance)
+    } else {
+      console.warn('Camera object3D not found or position not settable')
     }
-
-    waitForAFrame()
   }
 
   // CONTRÔLES DU CAMERA RIG
-  private static setupCameraRigControls (container: HTMLElement, aScene: Element): void {
-    const cameraRig = aScene.querySelector('#cameraRig') as any
-    const camera = aScene.querySelector('a-entity[camera]') as any
+  private setupCameraRigControls (
+    container: HTMLElement,
+    aScene: Element
+  ): void {
+    const cameraRig = aScene.querySelector(`#cameraRig-${this.id}`) as any
+    const camera = aScene.querySelector('a-camera') as any
 
     if (!cameraRig || !camera) {
       console.warn('Camera rig or camera not found')
@@ -106,103 +186,164 @@ export class SceneViewer {
     // Variables de contrôle
     let isDragging = false
     let previousMousePosition = { x: 0, y: 0 }
+    let isMouseOverContainer = false
+    let isFullscreen = false
 
-    // RÉCUPÉRER LA POSITION INITIALE RÉELLE DE LA CAMÉRA
-    const initialCameraPos = camera.getAttribute('position')
+    // Variables tactiles
+    let lastTouchDistance = 0
+    let touchStartedInContainer = false
 
-    let initialX = initialCameraPosition[0]
-    let initialY = initialCameraPosition[1]
-    let initialZ = initialCameraPosition[2]
+    const initialX = 0
+    const initialY = 0
+    const initialZ = this.cameraDistance
 
-    // Parser la position initiale - maintenant c'est un objet !
-    if (initialCameraPos && typeof initialCameraPos === 'object') {
-      initialX = initialCameraPos.x || initialCameraPos[0] || 0
-      initialY = initialCameraPos.y || initialCameraPos[1] || 3
-      initialZ = initialCameraPos.z || initialCameraPos[2] || 4
+    const initialDistance = Math.sqrt(
+      (initialX - this.rigPosition[0]) ** 2 +
+      (initialY - this.rigPosition[1]) ** 2 +
+      (initialZ - this.rigPosition[2]) ** 2
+    )
+
+    // Remplace les variables locales par les propriétés d'instance :
+    this.rigRotationY = 0
+    this.rigRotationX = 0
+    this.currentDistance = initialDistance
+
+    // NOUVEAU : Détecter le plein écran
+    const checkFullscreen = (): boolean => {
+      return !!(document.fullscreenElement ||
+                (document as any).webkitFullscreenElement ||
+                (document as any).mozFullScreenElement ||
+                (document as any).msFullscreenElement)
     }
 
-    // Calculer la distance initiale et garder les proportions
-    const initialDistance = Math.sqrt((initialX - cameraRigPosition[0]) ** 2 + (initialY - cameraRigPosition[1]) ** 2 + (initialZ - cameraRigPosition[2]) ** 2)
+    // NOUVEAU : Vérifier si la souris est dans le container
+    const isMouseInContainer = (e: MouseEvent): boolean => {
+      if (isFullscreen) return true // En plein écran, toujours intercepter
 
-    // Normaliser la direction initiale
-    const directionX = initialX / initialDistance
-    const directionY = initialY / initialDistance
-    const directionZ = initialZ / initialDistance
-
-    // Distance actuelle (pour le zoom)
-    let currentDistance = initialDistance
-
-    // Rotation du rig (azimuth et élévation)
-    let rigRotationY = 0
-    let rigRotationX = 0
-
-    // Mise à jour de la position et rotation du rig
-    const updateCameraRig = () => {
-      // Appliquer la rotation au rig
-      cameraRig.setAttribute('rotation', `${rigRotationX} ${rigRotationY} 0`)
-
-      // Calculer la nouvelle position de la caméra en gardant les proportions initiales
-      const newX = directionX * currentDistance
-      const newY = directionY * currentDistance
-      const newZ = directionZ * currentDistance
-      // Appliquer la nouvelle position
-      camera.setAttribute('position', `${newX} ${newY} ${newZ}`)
+      const rect = container.getBoundingClientRect()
+      return e.clientX >= rect.left &&
+             e.clientX <= rect.right &&
+             e.clientY >= rect.top &&
+             e.clientY <= rect.bottom
     }
 
-    // Gestionnaires d'événements (inchangés)
+    // NOUVEAU : Vérifier si les touches sont dans le container
+    const areTouchesInContainer = (touches: TouchList): boolean => {
+      if (isFullscreen) return true // En plein écran, toujours intercepter
+
+      const rect = container.getBoundingClientRect()
+      const touchesInContainer = Array.from(touches).every(touch =>
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom
+      )
+      return touchesInContainer
+    }
+
+    // === GESTION DU PLEIN ÉCRAN ===
+    const handleFullscreenChange = () => {
+      isFullscreen = checkFullscreen()
+    }
+
+    // Écouter les changements de plein écran
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange)
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange)
+
+    // === GESTION DE LA SOURIS ===
+
+    // Détecter l'entrée/sortie du container
+    container.addEventListener('mouseenter', () => {
+      isMouseOverContainer = true
+      container.style.cursor = 'grab'
+    })
+
+    container.addEventListener('mouseleave', () => {
+      isMouseOverContainer = false
+      if (isDragging && !isFullscreen) {
+        // Arrêter le drag si on sort du container (sauf en plein écran)
+        isDragging = false
+        container.style.cursor = 'grab'
+      }
+    })
+
+    // MouseDown - Seulement si dans le container ou en plein écran
     const handleMouseDown = (e: MouseEvent) => {
+      if (!isMouseInContainer(e)) return
+
       isDragging = true
       previousMousePosition = { x: e.clientX, y: e.clientY }
       container.style.cursor = 'grabbing'
       e.preventDefault()
     }
 
+    // MouseMove - Gérer le drag avec vérifications
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging) return
 
+      // En mode plein écran, toujours autoriser
+      // Sinon, vérifier que la souris est dans le container
+      if (!isFullscreen && !isMouseInContainer(e)) {
+        isDragging = false
+        container.style.cursor = 'grab'
+        return
+      }
+
       const deltaX = previousMousePosition.x - e.clientX
       const deltaY = previousMousePosition.y - e.clientY
-
-      // Sensibilité de rotation
       const sensitivity = 0.5
 
-      // Mise à jour des rotations du rig
-      rigRotationY += deltaX * sensitivity
-      rigRotationX += deltaY * sensitivity
-      rigRotationX = Math.max(-80, Math.min(80, rigRotationX))
+      // Remplace les variables locales par les propriétés d'instance :
+      this.rigRotationY += deltaX * sensitivity
+      this.rigRotationX += deltaY * sensitivity
+      this.rigRotationX = Math.max(-80, Math.min(80, this.rigRotationX))
 
-      updateCameraRig()
+      this.updateCameraRig(cameraRig, camera)
       previousMousePosition = { x: e.clientX, y: e.clientY }
       e.preventDefault()
     }
 
+    // MouseUp - Arrêter le drag
     const handleMouseUp = () => {
       if (isDragging) {
         isDragging = false
-        container.style.cursor = 'grab'
+        container.style.cursor = isMouseOverContainer ? 'grab' : 'default'
       }
     }
 
-    // Zoom avec la molette - modifier la distance en gardant les proportions
-    const handleWheel = (e: WheelEvent) => {
+    // Wheel - SIMPLIFIÉ car déjà sur le container
+    const handleWheel: (e: WheelEvent) => void = (e: WheelEvent) => {
+      const min = this.zoomLimits.min ?? 2
+      const max = this.zoomLimits.max ?? 20
+      // Plus besoin de vérifier isMouseInContainer car l'événement vient du container
       e.preventDefault()
+      e.stopPropagation()
 
-      const zoomSpeed = 0.2
-      currentDistance += e.deltaY * zoomSpeed
-      currentDistance = Math.max(2, Math.min(20, currentDistance))
-      updateCameraRig()
+      const zoomSpeed = 0.01
+      // Remplace les variables locales par les propriétés d'instance :
+      this.currentDistance += e.deltaY * zoomSpeed
+      this.currentDistance = Math.max(min, Math.min(max, this.currentDistance))
+      this.updateCameraRig(cameraRig, camera)
     }
 
-    // Attacher les événements
-    container.addEventListener('mousedown', handleMouseDown)
-    document.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('mouseup', handleMouseUp)
-    container.addEventListener('wheel', handleWheel)
+    // === GESTION TACTILE CORRIGÉE ===
 
-    // Gestion tactile (mise à jour pour currentDistance)
-    let lastTouchDistance = 0
+    // TouchStart - utiliser areTouchesInContainer pour décider si on capture
+    const handleTouchStart = (e: TouchEvent) => {
+      // En plein écran, toujours intercepter
+      if (isFullscreen) {
+        touchStartedInContainer = true
+      } else {
+        touchStartedInContainer = areTouchesInContainer(e.touches)
+      }
 
-    container.addEventListener('touchstart', (e: TouchEvent) => {
+      if (!touchStartedInContainer) {
+        // Ne pas capturer, laisser le scroll natif
+        return
+      }
+
       if (e.touches.length === 1) {
         isDragging = true
         const touch = e.touches[0]
@@ -215,21 +356,26 @@ export class SceneViewer {
           touch2.clientY - touch1.clientY
         )
       }
-      e.preventDefault()
-    })
 
-    container.addEventListener('touchmove', (e: TouchEvent) => {
+      e.preventDefault()
+    }
+
+    // TouchMove - ne traiter que si le geste a commencé dans le container
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStartedInContainer) return
+
       if (e.touches.length === 1 && isDragging) {
         const touch = e.touches[0]
         const deltaX = previousMousePosition.x - touch.clientX
         const deltaY = previousMousePosition.y - touch.clientY
-
         const sensitivity = 0.5
-        rigRotationY += deltaX * sensitivity
-        rigRotationX -= deltaY * sensitivity
-        rigRotationX = Math.max(-80, Math.min(80, rigRotationX))
 
-        updateCameraRig()
+        // Remplace les variables locales par les propriétés d'instance :
+        this.rigRotationY += deltaX * sensitivity
+        this.rigRotationX -= deltaY * sensitivity
+        this.rigRotationX = Math.max(-80, Math.min(80, this.rigRotationX))
+
+        this.updateCameraRig(cameraRig, camera)
         previousMousePosition = { x: touch.clientX, y: touch.clientY }
       } else if (e.touches.length === 2) {
         const touch1 = e.touches[0]
@@ -242,46 +388,76 @@ export class SceneViewer {
         if (lastTouchDistance > 0) {
           const zoomSpeed = 0.01
           const deltaDistance = currentTouchDistance - lastTouchDistance
-          currentDistance -= deltaDistance * zoomSpeed
-          currentDistance = Math.max(2, Math.min(20, currentDistance))
-          updateCameraRig()
+          // Remplace les variables locales par les propriétés d'instance :
+          this.currentDistance -= deltaDistance * zoomSpeed
+          this.currentDistance = Math.max(2, Math.min(20, this.currentDistance))
+          this.updateCameraRig(cameraRig, camera)
         }
 
         lastTouchDistance = currentTouchDistance
       }
-      e.preventDefault()
-    })
 
-    container.addEventListener('touchend', (e: TouchEvent) => {
+      e.preventDefault()
+    }
+
+    // TouchEnd - idem
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!touchStartedInContainer) return
+
       if (e.touches.length === 0) {
         isDragging = false
         lastTouchDistance = 0
+        touchStartedInContainer = false
       }
       e.preventDefault()
-    })
-  }
+    }
 
-  public setCamera ({
-    position = [0, 6, 8], // Position du rig (centre d'orbite)
-    cameraDistance = 10,   // Distance de la caméra par rapport au rig
-    fov = 80
-  }: {
-    position?: [number, number, number];
-    cameraDistance?: number;
-    fov?: number;
-  }): void {
-    const rigPos = position.join(' ')
+    // === ATTACHER LES ÉVÉNEMENTS ===
 
-    this.camera = `
-      <a-entity id="cameraRig" position="${rigPos}">
-        <a-entity camera 
-                  position="0 0 ${cameraDistance}" 
-                  fov="${fov}"
-                  look-controls="enabled: false"
-                  wasd-controls="enabled: false">
-        </a-entity>
-      </a-entity>
-    `
+    // Événements souris - sur container et document
+    container.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+
+    // Attacher les événements tactiles sur le container
+    container.addEventListener('touchstart', handleTouchStart, { passive: false })
+    container.addEventListener('touchmove', handleTouchMove, { passive: false })
+    container.addEventListener('touchend', handleTouchEnd, { passive: false })
+
+    // Fonction pour attacher le handler wheel au canvas de la scène
+    function attachWheelToCanvas () {
+      const canvas = aScene.querySelector('canvas')
+      if (canvas) {
+        canvas.addEventListener('wheel', handleWheel, { passive: false })
+        ;(container as any).__sceneCleanup = () => {
+          canvas.removeEventListener('wheel', handleWheel)
+        }
+      } else {
+        // Utilise un MutationObserver pour attendre le
+        setTimeout(attachWheelToCanvas, 100)
+      }
+    }
+
+    // Appel initial
+    attachWheelToCanvas()
+
+    // === NETTOYAGE ===
+    const cleanup = () => {
+      container.removeEventListener('mousedown', handleMouseDown)
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+      container.removeEventListener('wheel', handleWheel)           // CHANGÉ : container
+      container.removeEventListener('touchstart', handleTouchStart) // CHANGÉ : container
+      container.removeEventListener('touchmove', handleTouchMove)   // CHANGÉ : container
+      container.removeEventListener('touchend', handleTouchEnd)     // CHANGÉ : container
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange)
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange)
+    }
+
+    // Optionnel : Exposer la fonction de nettoyage
+    ;(container as any).__sceneCleanup = cleanup
   }
 
   public addBox ({
@@ -290,7 +466,7 @@ export class SceneViewer {
     width = 1,
     height = 1,
     depth = 1,
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -309,7 +485,13 @@ export class SceneViewer {
     `)
   }
 
-  public addPlane ({ position = [0, 0, 0], rotation = [0, 0, 0], width = 10, height = 10, color = '#7BC8A4' } = {}): void {
+  public addPlane ({
+    position = [0, 0, 0],
+    rotation = [0, 0, 0],
+    width = 10,
+    height = 10,
+    color = '#7BC8A4',
+  } = {}): void {
     const posStr = Array.isArray(position) ? position.join(' ') : position
     const rotStr = Array.isArray(rotation) ? rotation.join(' ') : rotation
     this.sceneElements.push(`
@@ -320,7 +502,7 @@ export class SceneViewer {
   // SPHÈRE
   public addSphere ({
     position = [0, 0, 0],
-    rotation = [0, 0, 0],        // NOUVEAU
+    rotation = [0, 0, 0], // NOUVEAU
     radius = 1,
     color = '#EF2D5E',
     segmentsWidth = 18,
@@ -328,10 +510,10 @@ export class SceneViewer {
     wireframe = false,
     texture = '',
     textureRepeat = [1, 1],
-    opacity = 1
+    opacity = 1,
   }: {
     position?: [number, number, number] | string;
-    rotation?: [number, number, number] | string;  // NOUVEAU
+    rotation?: [number, number, number] | string; // NOUVEAU
     color?: string;
     radius?: number;
     segmentsWidth?: number;
@@ -342,7 +524,7 @@ export class SceneViewer {
     opacity?: number;
   } = {}): void {
     const posStr = Array.isArray(position) ? position.join(' ') : position
-    const rotStr = Array.isArray(rotation) ? rotation.join(' ') : rotation  // NOUVEAU
+    const rotStr = Array.isArray(rotation) ? rotation.join(' ') : rotation // NOUVEAU
 
     let materialAttr = ''
     if (texture) {
@@ -378,7 +560,7 @@ export class SceneViewer {
     openEnded = false,
     thetaStart = 0,
     thetaLength = 360,
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -421,7 +603,7 @@ export class SceneViewer {
     openEnded = false,
     thetaStart = 0,
     thetaLength = 360,
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -463,7 +645,7 @@ export class SceneViewer {
     segmentsRadial = 36,
     segmentsTubular = 32,
     arc = 360,
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -495,7 +677,7 @@ export class SceneViewer {
     position = [0, 0, 0],
     radius = 1,
     color = '#FF6D00',
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -519,7 +701,7 @@ export class SceneViewer {
     position = [0, 0, 0],
     radius = 1,
     color = '#E91E63',
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -543,7 +725,7 @@ export class SceneViewer {
     position = [0, 0, 0],
     radius = 1,
     color = '#9C27B0',
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -568,7 +750,7 @@ export class SceneViewer {
     rotation = [0, 0, 0],
     radius = 1,
     color = '#3F51B5',
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     rotation?: [number, number, number] | string;
@@ -600,7 +782,7 @@ export class SceneViewer {
     segmentsPhi = 8,
     thetaStart = 0,
     thetaLength = 360,
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -642,7 +824,7 @@ export class SceneViewer {
     segments = 32,
     thetaStart = 0,
     thetaLength = 360,
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -678,7 +860,7 @@ export class SceneViewer {
     vertexB = [-0.5, -0.5, 0],
     vertexC = [0.5, -0.5, 0],
     color = '#795548',
-    wireframe = false
+    wireframe = false,
   }: {
     position?: [number, number, number] | string;
     color?: string;
@@ -719,7 +901,7 @@ export class SceneViewer {
     baseline = 'center',
     width = 5,
     wrapCount = 40,
-    useCustomComponent = false // Option pour utiliser le composant custom
+    useCustomComponent = false, // Option pour utiliser le composant custom
   } = {}): void {
     const posStr = Array.isArray(position) ? position.join(' ') : position
     const rotStr = Array.isArray(rotation) ? rotation.join(' ') : rotation
@@ -757,17 +939,25 @@ export class SceneViewer {
   // COURBE (utilise a-curve et a-curve-point)
   public addCurve ({
     id = 'curve',
-    points = [[0, 0, 0], [1, 1, 1], [2, 0, 2]],
-    type = 'CatmullRom'
+    points = [
+      [0, 0, 0],
+      [1, 1, 1],
+      [2, 0, 2],
+    ],
+    type = 'CatmullRom',
   } = {}): void {
     // Points de la courbe
-    const curvePoints = points.map((point, index) => {
-      const pos = Array.isArray(point) ? point.join(' ') : point
-      return `<a-curve-point id="curve-point-${index}" position="${pos}"></a-curve-point>`
-    }).join('\n')
+    const curvePoints = points
+      .map((point, index) => {
+        const pos = Array.isArray(point) ? point.join(' ') : point
+        return `<a-curve-point id="curve-point-${index}" position="${pos}"></a-curve-point>`
+      })
+      .join('\n')
 
     // IDs des points pour la courbe
-    const pointIds = points.map((_, index) => `#curve-point-${index}`).join(' ')
+    const pointIds = points
+      .map((_, index) => `#curve-point-${index}`)
+      .join(' ')
 
     this.sceneElements.push(`
       ${curvePoints}
@@ -781,14 +971,22 @@ export class SceneViewer {
     `)
   }
 
-  public addDirectionnalLight ({ color = '#ffffff', intensity = 1, position = [0, 1, 0] } = {}): void {
+  public addDirectionnalLight ({
+    color = '#ffffff',
+    intensity = 1,
+    position = [0, 1, 0],
+  } = {}): void {
     const posStr = Array.isArray(position) ? position.join(' ') : position
     this.sceneElements.push(`
       <a-light type="directional" color="${color}" intensity="${intensity}" position="${posStr}"></a-light>
     `)
   }
 
-  public addPointLight ({ color = '#ffffff', intensity = 1, position = [0, 1, 0] } = {}): void {
+  public addPointLight ({
+    color = '#ffffff',
+    intensity = 1,
+    position = [0, 1, 0],
+  } = {}): void {
     const posStr = Array.isArray(position) ? position.join(' ') : position
     this.sceneElements.push(`
       <a-light type="point" color="${color}" intensity="${intensity}" position="${posStr}"></a-light>
@@ -812,22 +1010,22 @@ export class SceneViewer {
     showMeridians = true,
     showEquator = true,
     equatorColor = '#ffff00',
-    equatorThickness = 0.02,      // NOUVEAU
+    equatorThickness = 0.02, // NOUVEAU
     showGreenwich = false,
     greenwichColor = '#00ffff',
-    greenwichThickness = 0.02     // NOUVEAU
+    greenwichThickness = 0.02, // NOUVEAU
   }: {
     position?: [number, number, number] | string;
     radius?: number;
-    parallels?: number;      // Nombre de parallèles (hors équateur)
-    meridians?: number;      // Nombre de méridiens
-    segments?: number;       // Résolution (lissage des courbes)
-    parallelColor?: string;          // Couleur des parallèles
-    meridianColor?: string;  // Couleur des méridiens
+    parallels?: number; // Nombre de parallèles (hors équateur)
+    meridians?: number; // Nombre de méridiens
+    segments?: number; // Résolution (lissage des courbes)
+    parallelColor?: string; // Couleur des parallèles
+    meridianColor?: string; // Couleur des méridiens
     showParallels?: boolean;
     showMeridians?: boolean;
     showEquator?: boolean;
-    equatorColor?: string;   // Couleur de l'équateur
+    equatorColor?: string; // Couleur de l'équateur
     equatorThickness?: number;
     showGreenwich?: boolean; // Afficher le méridien de Greenwich
     greenwichColor?: string; // Couleur du méridien de Greenwich
@@ -866,10 +1064,11 @@ export class SceneViewer {
     pointRadius = 0.03,
     pointColor = '#ff0000',
     label = '',
-    labelColor = '#000000',
+    labelColor = '#FFFFFF',
     labelOffset = 0.2,
     labelSize = 0.5,
-    font = 'dejavu',
+    font = 'images/Arial Bold-msdf.json',
+    transparent = true, // Transparence par défaut pour le label
   }: {
     spherePosition?: [number, number, number] | string;
     sphereRadius?: number;
@@ -883,9 +1082,12 @@ export class SceneViewer {
     labelOffset?: number;
     labelSize?: number;
     font?: string;
+    transparent?: boolean; // Transparence pour le label
   } = {}): void {
     // Convertir la position de la sphère
-    const spherePos = Array.isArray(spherePosition) ? spherePosition : [0, 0, 0]
+    const spherePos = Array.isArray(spherePosition)
+      ? spherePosition
+      : [0, 0, 0]
 
     // Convertir latitude/longitude en radians
     const latRad = (latitude * Math.PI) / 180
@@ -904,16 +1106,18 @@ export class SceneViewer {
       width: pointRadius * 2,
       height: pointRadius * 2,
       depth: pointRadius * 2,
-      color: pointColor
+      color: pointColor,
     })
 
     // Ajouter le label si fourni
     if (label) {
       // Position du texte légèrement décalée
       const labelR = r + labelOffset
-      const labelX = spherePos[0] + labelR * Math.cos(latRad) * Math.sin(lonRad)
+      const labelX =
+        spherePos[0] + labelR * Math.cos(latRad) * Math.sin(lonRad)
       const labelY = spherePos[1] + labelR * Math.sin(latRad)
-      const labelZ = spherePos[2] + labelR * Math.cos(latRad) * Math.cos(lonRad)
+      const labelZ =
+        spherePos[2] + labelR * Math.cos(latRad) * Math.cos(lonRad)
 
       // MODIFIÉ : Transmettre useCustomDegree
       this.addGeographicLabel({
@@ -921,7 +1125,8 @@ export class SceneViewer {
         text: label,
         color: labelColor,
         size: labelSize,
-        font
+        font,
+        transparent
       })
     }
   }
@@ -931,12 +1136,13 @@ export class SceneViewer {
     spherePosition = [0, 0, 0],
     sphereRadius = 1,
     points = [],
-    defaultPointRadius = 0.03,     // VÉRIFIER : pointRadius
+    defaultPointRadius = 0.03,
     defaultPointColor = '#ff0000',
     defaultLabelColor = '#ffffff',
     defaultLabelOffset = 0.2,
     defaultLabelSize = 0.5,
     defaultFont = 'sourcecodepro',
+    transparent = true        // NOUVEAU : Transparence par défaut
   }: {
     spherePosition?: [number, number, number] | string;
     sphereRadius?: number;
@@ -944,13 +1150,14 @@ export class SceneViewer {
       latitude: number;
       longitude: number;
       altitude?: number;
-      pointRadius?: number;        // VÉRIFIER : pointRadius
+      pointRadius?: number; // VÉRIFIER : pointRadius
       pointColor?: string;
       label?: string;
       labelColor?: string;
       labelOffset?: number;
       labelSize?: number;
       font?: string;
+      transparent?: boolean; // Transparence pour le label
     }>;
     defaultPointRadius?: number;
     defaultPointColor?: string;
@@ -958,6 +1165,7 @@ export class SceneViewer {
     defaultLabelOffset?: number;
     defaultLabelSize?: number;
     defaultFont?: string;
+    transparent?: boolean;    // NOUVEAU
   } = {}): void {
     points.forEach(point => {
       this.addGeographicPoint({
@@ -966,13 +1174,14 @@ export class SceneViewer {
         latitude: point.latitude,
         longitude: point.longitude,
         altitude: point.altitude || 0,
-        pointRadius: point.pointRadius || defaultPointRadius,  // VÉRIFIER
+        pointRadius: point.pointRadius || defaultPointRadius,
         pointColor: point.pointColor || defaultPointColor,
         label: point.label || '',
         labelColor: point.labelColor || defaultLabelColor,
         labelOffset: point.labelOffset || defaultLabelOffset,
         labelSize: point.labelSize || defaultLabelSize,
         font: point.font || defaultFont,
+        transparent: point.transparent !== undefined ? point.transparent : transparent  // NOUVEAU
       })
     })
   }
@@ -982,7 +1191,7 @@ export class SceneViewer {
     position = [0, 0, 0],
     rotation = [0, 0, 0],
     componentName,
-    componentProps = {}
+    componentProps = {},
   }: {
     position?: [number, number, number] | string;
     rotation?: [number, number, number] | string;
@@ -1021,6 +1230,8 @@ export class SceneViewer {
     font = 'dejavu',
     orientation = 'billboard',
     customRotation = [0, 0, 0],
+    useCustomDegree = true,
+    transparent = true,        // NOUVEAU : Option de transparence
   }: {
     position?: [number, number, number] | string;
     text?: string;
@@ -1032,37 +1243,43 @@ export class SceneViewer {
     font?: string;
     orientation?: 'billboard' | 'custom';
     customRotation?: [number, number, number];
+    useCustomDegree?: boolean;
+    transparent?: boolean;    // NOUVEAU
   } = {}): void {
     const posStr = Array.isArray(position) ? position.join(' ') : position
     const rotStr = Array.isArray(customRotation) ? `${customRotation[0]} ${customRotation[1]} ${customRotation[2]}` : customRotation
+    // Détecter si c'est une police MSDF
+    // Détecter si c'est une police MSDF
 
-    // Version standard sans symbole degré
     this.sceneElements.push(`
-        <a-entity position="${posStr}" 
-                  ${orientation === 'billboard' ? 'billboard=""' : `rotation="${rotStr}"`}
-                  text="value: ${text}; 
-                        color: ${color}; 
-                        font: ${font};
-                        align: ${align}; 
-                        baseline: ${baseline};
-                        width: ${width}"
-                  scale="${size} ${size} 1"></a-entity>
-      `)
+      <a-text position="${posStr}" 
+              ${orientation === 'billboard' ? 'billboard=""' : `rotation="${rotStr}"`}
+              value="${text}"
+              color="${color}"
+              font="${font}"
+              align="${align}"
+              baseline="${baseline}"
+              width="${width}"
+              shader="msdf"
+              negate="false"
+              ${transparent ? 'material="transparent: true; alphaTest: 0.1; side: double"' : ''}
+              scale="${size} ${size} 1"></a-text>
+    `)
   }
 
   public addRealisticEarthSphere ({
     position = [0, 0, 0],
     radius = 1,
-    diffuseMap = '#earthTexture',      // Texture principale
-    normalMap = '#earthNormalMap',     // Relief
-    bumpMap = '',                      // Alternative à normal map
-    specularMap = '',                  // Réflexion (océans brillants)
-    emissiveMap = '',                  // Lumières des villes (texture night)
+    diffuseMap = '#earthTexture', // Texture principale
+    normalMap = '#earthNormalMap', // Relief
+    bumpMap = '', // Alternative à normal map
+    specularMap = '', // Réflexion (océans brillants)
+    emissiveMap = '', // Lumières des villes (texture night)
     normalScale = 0.5,
     bumpScale = 0.1,
     greenwichAlignment = -90,
     segmentsWidth = 64,
-    segmentsHeight = 32
+    segmentsHeight = 32,
   }: {
     position?: [number, number, number] | string;
     radius?: number;
@@ -1107,5 +1324,149 @@ export class SceneViewer {
                 segments-height="${segmentsHeight}"
                 material="${materialProps}"></a-sphere>
     `)
+  }
+
+  public addCubeTroisCouleurs ({
+    position = [0, 0, 0],
+    rotation = [0, 0, 0],
+    size = 1,
+    color1 = '#ff0000',
+    color2 = '#00ff00',
+    color3 = '#0000ff',
+    wireframe = false,
+  }: {
+    position?: [number, number, number] | string;
+    rotation?: [number, number, number] | string;
+    size?: number;
+    color1?: string;
+    color2?: string;
+    color3?: string;
+    wireframe?: boolean | 'edges';
+  } = {}): void {
+    const posStr = Array.isArray(position) ? position.join(' ') : position
+    const rotStr = Array.isArray(rotation) ? rotation.join(' ') : rotation
+    const s = size / 2
+
+    this.sceneElements.push(`
+      <a-entity position="${posStr}" rotation="${rotStr}">
+        <!-- Faces colorées -->
+        <a-plane position="${s} 0 0" rotation="0 90 0" width="${size}" height="${size}" color="${color1}"></a-plane>
+        <a-plane position="-${s} 0 0" rotation="0 -90 0" width="${size}" height="${size}" color="${color1}"></a-plane>
+        <a-plane position="0 ${s} 0" rotation="-90 0 0" width="${size}" height="${size}" color="${color2}"></a-plane>
+        <a-plane position="0 -${s} 0" rotation="90 0 0" width="${size}" height="${size}" color="${color2}"></a-plane>
+        <a-plane position="0 0 ${s}" rotation="0 0 0" width="${size}" height="${size}" color="${color3}"></a-plane>
+        <a-plane position="0 0 -${s}" rotation="0 180 0" width="${size}" height="${size}" color="${color3}"></a-plane>
+        ${
+          wireframe
+            ? `<a-box width="${size}" height="${size}" depth="${size}" color="#000" material="color: #000; wireframe: false; opacity: 0.5; transparent: true" visible="true"></a-box>`
+            : ''
+        }
+      </a-entity>
+    `)
+  }
+
+  public addCubeTroisCouleursABox ({
+    position = [0, 0, 0],
+    rotation = [0, 0, 0],
+    size = 1,
+    color1 = '#ff0000',
+    color2 = '#00ff00',
+    color3 = '#0000ff',
+  }: {
+    position?: [number, number, number] | string;
+    rotation?: [number, number, number] | string;
+    size?: number;
+    color1?: string;
+    color2?: string;
+    color3?: string;
+  } = {}): void {
+    const posStr = Array.isArray(position) ? position.join(' ') : position
+    const rotStr = Array.isArray(rotation) ? rotation.join(' ') : rotation
+    this.sceneElements.push(`
+      <a-entity position="${posStr}" rotation="${rotStr}"
+        cube-trois-couleurs="size: ${size}; color1: ${color1}; color2: ${color2}; color3: ${color3}"
+         cube-tube-edges="size:1; color:#000; thickness:0.02">
+      </a-entity>
+    `)
+  }
+
+  public showSceneAt (parent: HTMLElement) {
+    if (this.containerElement) {
+      parent.appendChild(this.containerElement)
+      this.renderScene()
+      this.containerElement.style.display = 'block'
+    }
+  }
+
+  public renderScene (): void {
+    if (this.containerElement) {
+    // Nettoyage : retire l'ancienne scène si présente
+      const oldScene = this.containerElement.querySelector('a-scene')
+      if (oldScene) {
+        oldScene.parentNode?.removeChild(oldScene)
+      }
+      // this.initializeScene()
+      this.containerElement.innerHTML = this.generateHTML()
+      const aScene = this.containerElement.querySelector('a-scene')
+      if (aScene) {
+        this.setupCameraRigControls(this.containerElement as HTMLElement, aScene)
+      }
+    }
+  }
+
+  public destroy () {
+    cleanup()
+    if (this.containerElement && this.containerElement.parentNode) {
+      this.containerElement.parentNode.removeChild(this.containerElement)
+    }
+  }
+
+  public addHtmlButton ({
+    id,
+    text = 'Bouton',
+    onClick,
+    style = {}
+  }: {
+    id: string,
+    text?: string,
+    onClick?: (ev: MouseEvent) => void,
+    style?: Partial<CSSStyleDeclaration>
+  }) {
+    // S'assure que la scène est déjà rendue
+    if (!this.containerElement) return
+    let overlay = this.containerElement.querySelector('.scene-viewer-overlay') as HTMLDivElement
+    if (!overlay) {
+      overlay = document.createElement('div')
+      overlay.className = 'scene-viewer-overlay'
+      overlay.style.position = 'absolute'
+      overlay.style.top = '0'
+      overlay.style.left = '0'
+      overlay.style.width = '100%'
+      overlay.style.height = '100%'
+      overlay.style.pointerEvents = 'none'
+      overlay.style.zIndex = '10'
+      this.containerElement.appendChild(overlay)
+    }
+    const btn = document.createElement('button')
+    btn.id = id
+    btn.innerText = text
+    btn.type = 'button'
+    btn.style.pointerEvents = 'auto'
+    btn.style.position = 'absolute'
+    btn.style.bottom = '5px'
+    btn.style.left = '20px'
+    btn.style.zIndex = '20'
+    btn.style.padding = '8px 16px'
+    btn.style.fontSize = '1rem'
+    btn.style.borderRadius = '6px'
+    btn.style.border = '1px solid #888'
+    btn.style.background = '#fff'
+    btn.style.cursor = 'pointer'
+    btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'
+    if (style) {
+      Object.assign(btn.style, style)
+    }
+    if (onClick) btn.addEventListener('click', onClick)
+    overlay.appendChild(btn)
   }
 }
