@@ -1,4 +1,5 @@
 import { SceneViewer } from './SceneViewer'
+import { THREE } from './solidesThreeJs'
 
 export type FaceNode = {
   x: number
@@ -587,4 +588,73 @@ export function affichePatron3D (matrice: objetFace[][], idPrefix = 'patron3d'):
   viewer.addDirectionnalLight({ position: [2, 5, 2], color: '#ffffff', intensity: 0.8 })
   // Retourne aussi l'arbre pour l'animation
   return { viewer, tree }
+}
+
+export function ajouteListeners (numeroExercice: number, i: number, viewer: SceneViewer, tree: FaceNode, immediate = false) {
+  function build () {
+    const emplacementCorrection = document.getElementById(`emplacementPourSceneViewerEx${numeroExercice}Q${i}Correction`)
+    if (emplacementCorrection) {
+      viewer.showSceneAt(emplacementCorrection)
+
+      viewer.addHtmlButton({
+        id: `btnDeplierEx${numeroExercice}Q${i}`,
+        text: 'Déplier',
+        style: { left: '120px' },
+        onClick: () => animeDepliage(
+          tree,
+          numeroExercice,
+          i,
+          () => { stopBlinkers.forEach(stop => stop()) },
+          4000
+        )
+      })
+      viewer.addHtmlButton({
+        id: `btnPlierEx${numeroExercice}Q${i}`,
+        text: 'Plier',
+        onClick: () => {
+          animePliage(tree, numeroExercice, i, () => {
+            const scene = emplacementCorrection.querySelector('a-scene')
+            if (scene) {
+              scene.dispatchEvent(new CustomEvent('pliageTermine', {
+                detail: { numExercice: numeroExercice, numQuestion: i }
+              }))
+            }
+          })
+        }
+      })
+      const scene = emplacementCorrection.querySelector('a-scene')
+
+      if (scene) {
+        scene.addEventListener('pliageTermine', () => {
+          const boxes = Array.from(emplacementCorrection.querySelectorAll('a-box'))
+          for (let i = 0; i < boxes.length; i++) {
+            for (let j = i + 1; j < boxes.length; j++) {
+              const boxA = boxes[i]
+              const boxB = boxes[j]
+              const a = boxA.object3D
+              const b = boxB.object3D
+              const boxA3 = new THREE.Box3().setFromObject(a)
+              const boxB3 = new THREE.Box3().setFromObject(b)
+              const intersection = boxA3.clone().intersect(boxB3)
+              const size = new THREE.Vector3()
+              intersection.getSize(size)
+              const volume = size.x * size.y * size.z
+              if (volume > 0.005) {
+                stopBlinkers.push(blinkABox(boxA, blinkColors[i % blinkColors.length]))
+                stopBlinkers.push(blinkABox(boxB, blinkColors[i % blinkColors.length]))
+              }
+            }
+          }
+        })
+      }
+    }
+  }
+  const stopBlinkers: (() => void)[] = []
+  if (immediate) {
+    build()
+  } else {
+    document.addEventListener('correctionsAffichees', () => {
+      build()
+    })
+  }
 }

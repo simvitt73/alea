@@ -1,5 +1,4 @@
 import Exercice from '../Exercice'
-import { THREE } from '../../lib/3d/solidesThreeJs'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { arrayClone, choice, combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { BoiteBuilder, Polygone } from '../../lib/2d/polygones'
@@ -9,7 +8,7 @@ import { context } from '../../modules/context'
 import { setCliqueFigure, type MathaleaSVG } from '../../lib/interactif/gestionInteractif'
 import { latex2d, Latex2d, LatexParCoordonnees, TexteParPoint } from '../../lib/2d/textes'
 import type { objetFace } from '../../lib/3d/utilsPatrons'
-import { affichePatron3D, animeDepliage, animePliage, blinkABox, blinkColors, cubesObj, fauxCubesObj } from '../../lib/3d/utilsPatrons'
+import { affichePatron3D, ajouteListeners, cubesObj, fauxCubesObj } from '../../lib/3d/utilsPatrons'
 export const amcReady = true
 export const amcType = 'qcmMono'
 export const interactifReady = true
@@ -65,6 +64,9 @@ export default class choixPatron extends Exercice {
         { id: `cliquefigure2Ex${this.numeroExercice}Q${i}`, solution: false },
         { id: `cliquefigure3Ex${this.numeroExercice}Q${i}`, solution: false }
       ]
+      const OrdreAffichage = shuffle([0, 1, 2, 3])
+      const OrdrepatronAffiche = [0, 1, 2, 3]
+
       switch (listeTypeQuestions[i]) {
         case 'type1':{
           texte = ''// `Question ${i + 1} de type 1<br>`
@@ -124,8 +126,6 @@ export default class choixPatron extends Exercice {
 
           // const figures =  [figPatronOkAMC, figPatronFaux1AMC, figPatronFaux2AMC, figPatronFaux3AMC]
           const figuresMelanges = [figPatronOkAMC, figPatronFaux1AMC, figPatronFaux2AMC, figPatronFaux3AMC]
-          const OrdreAffichage = shuffle([0, 1, 2, 3])
-          const OrdrepatronAffiche = [0, 1, 2, 3]
           for (let k = 0; k < 4; k++) {
             figuresMelanges[k] = mathalea2d({ style: 'display: inline-block', xmin: xymin, xmax: xymax, ymin: xymin, scale: zoom, id: `cliquefigure${OrdreAffichage[k]}Ex${this.numeroExercice}Q${i}` },
               figPatrons[OrdreAffichage[k]].dessineMatrice(k + 1))
@@ -174,17 +174,28 @@ export default class choixPatron extends Exercice {
           break
       }
       if (this.questionJamaisPosee(i, texte)) {
-        this.listeQuestions[i] = texte
-        this.listeCorrections[i] = texteCorr ?? ''
-        i++
+        if (!this.interactif) {
+          const exo = this
+          const question = i
+          document.addEventListener('correctionsAffichees', () => {
+            const id = `emplacementPourSceneViewerEx${exo.numeroExercice}Q${question}Correction`
+            const emplacementPourCorrection = document.getElementById(id)
+            if (emplacementPourCorrection) {
+              const { viewer, tree } = affichePatron3D(exo.listeMatrices[OrdreAffichage[0]], `patron3dEx${exo.numeroExercice}Q${question}`)
+              ajouteListeners(exo.numeroExercice ?? 0, question, viewer, tree, true)
+            }
+          })
+          this.listeQuestions[i] = texte
+          this.listeCorrections[i] = texteCorr ?? ''
+          i++
+        }
+        cpt++
       }
-      cpt++
+      listeQuestionsToContenu(this)
     }
-    listeQuestionsToContenu(this)
   }
 
   callback (exercice: Exercice, i: number): void {
-    const stopBlinkers: (() => void)[] = []
     if ('listeMatrices' in exercice && Array.isArray(exercice.listeMatrices) && exercice.listeMatrices.length >= i) {
       // On commence par trouver l'élément cliqué... enfin son index.
       // Trouver tous les SVG dont l'id correspond au format 'cliquefigure{n}Ex{exercice.numeroExercice}Q{i}'
@@ -198,65 +209,7 @@ export default class choixPatron extends Exercice {
 
       const indexClique = Array.from(figElements as MathaleaSVG[]).findIndex((el: MathaleaSVG) => Boolean(el.etat))
       const { viewer, tree } = affichePatron3D(exercice.listeMatrices[indexClique], `patron3dEx${exercice.numeroExercice}Q${i}`)
-
-      document.addEventListener('correctionsAffichees', () => {
-        const emplacementCorrection = document.getElementById(`emplacementPourSceneViewerEx${exercice.numeroExercice}Q${i}Correction`)
-        if (emplacementCorrection) {
-          viewer.showSceneAt(emplacementCorrection)
-
-          viewer.addHtmlButton({
-            id: `btnDeplierEx${exercice.numeroExercice}Q${i}`,
-            text: 'Déplier',
-            style: { left: '120px' },
-            onClick: () => animeDepliage(
-              tree,
-              exercice.numeroExercice,
-              i,
-              () => { stopBlinkers.forEach(stop => stop()) },
-              4000
-            )
-          })
-          viewer.addHtmlButton({
-            id: `btnPlierEx${exercice.numeroExercice}Q${i}`,
-            text: 'Plier',
-            onClick: () => {
-              animePliage(tree, exercice.numeroExercice, i, () => {
-                const scene = emplacementCorrection.querySelector('a-scene')
-                if (scene) {
-                  scene.dispatchEvent(new CustomEvent('pliageTermine', {
-                    detail: { numExercice: exercice.numeroExercice, numQuestion: i }
-                  }))
-                }
-              })
-            }
-          })
-          const scene = emplacementCorrection.querySelector('a-scene')
-
-          if (scene) {
-            scene.addEventListener('pliageTermine', () => {
-              const boxes = Array.from(emplacementCorrection.querySelectorAll('a-box'))
-              for (let i = 0; i < boxes.length; i++) {
-                for (let j = i + 1; j < boxes.length; j++) {
-                  const boxA = boxes[i]
-                  const boxB = boxes[j]
-                  const a = boxA.object3D
-                  const b = boxB.object3D
-                  const boxA3 = new THREE.Box3().setFromObject(a)
-                  const boxB3 = new THREE.Box3().setFromObject(b)
-                  const intersection = boxA3.clone().intersect(boxB3)
-                  const size = new THREE.Vector3()
-                  intersection.getSize(size)
-                  const volume = size.x * size.y * size.z
-                  if (volume > 0.005) {
-                    stopBlinkers.push(blinkABox(boxA, blinkColors[i % blinkColors.length]))
-                    stopBlinkers.push(blinkABox(boxB, blinkColors[i % blinkColors.length]))
-                  }
-                }
-              }
-            })
-          }
-        }
-      })
+      ajouteListeners(exercice.numeroExercice ?? 0, i, viewer, tree)
     }
   }
 }
