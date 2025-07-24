@@ -23,6 +23,29 @@ export const refs = {
   'fr-ch': []
 }
 
+function retrouveMatrices (liste: objetFace[][][]): { indexVraiPatron: number, indexPas6Faces: number, indexFauxPatrons: { index: number, collision: [number, number][] }[] } {
+  const indexVraiPatron = liste.findIndex(matrice => {
+    return matrice.flat().filter(face => face.isFace).length === 6 &&
+      matrice.flat().filter(face => face.collision !== undefined).length === 0
+  })
+  const indexPas6Faces = liste.findIndex(matrice => {
+    return matrice.flat().filter(face => face.isFace).length !== 6
+  })
+  const indexFauxPatrons = liste.map((matrice, index) => {
+    const collisions = matrice.flat().reduce((acc, face) => {
+      if (face.collision !== undefined) {
+        acc.push([index, face.collision])
+      }
+      return acc
+    }, [] as [number, number][])
+    return { index, collision: collisions }
+  }).filter(item => item.collision.length > 0)
+  if (indexFauxPatrons.length === 0) {
+    throw new Error('Aucun faux patron trouvé dans la liste fournie.') // ça ne doit jamais arrivé.
+  }
+  return { indexVraiPatron, indexPas6Faces, indexFauxPatrons }
+}
+
 /**
  * Choisir le bon patron parmi ceux proposés
  * @author Olivier Mimeau
@@ -62,37 +85,33 @@ export default class choixPatron extends Exercice {
         { id: `cliquefigure2Ex${this.numeroExercice}Q${i}`, solution: false },
         { id: `cliquefigure3Ex${this.numeroExercice}Q${i}`, solution: false }
       ]
-      const ordreAffichage = shuffle([0, 1, 2, 3])
-      const indexPatronAffiche: number[] = []
-      for (let i = 0; i < 4; i++) {
-        indexPatronAffiche[i] = ordreAffichage.findIndex((el) => el === i)
-      }
+      const indexMelangés = shuffle([0, 1, 2, 3])
+      const patronsOriginaux:UnPatron[] = []
+      const patronsAffiches:UnPatron[] = []
+      this.listeMatrices[i] = []
 
       switch (listeTypeQuestions[i]) {
         case 'type1':{
           texte = ''// `Question ${i + 1} de type 1<br>`
           // texte += `listeVraisPatrons :  ${listeVraisPatrons.length} <br>`
-          const figPatrons:UnPatron[] = []
-          figPatrons.push(listeVraisPatrons[Number(listeTypeVraiPatrons[i]) - 1])
+          patronsOriginaux.push(listeVraisPatrons[Number(listeTypeVraiPatrons[i]) - 1])
           const numPatron2 = randint(0, listeFauxPatrons.length - 1)
-          figPatrons.push(listeFauxPatrons[randint(0, numPatron2)])
-          figPatrons.push(listeFauxPatrons[randint(0, listeFauxPatrons.length - 1, numPatron2)])
+          patronsOriginaux.push(listeFauxPatrons[randint(0, numPatron2)])
+          patronsOriginaux.push(listeFauxPatrons[randint(0, listeFauxPatrons.length - 1, numPatron2)])
           const taillePatronAuPif = choice([5, 7])
-          figPatrons.push(faitUnPatronAuPif(taillePatronAuPif))
+          patronsOriginaux.push(faitUnPatronAuPif(taillePatronAuPif))
           for (let k = 0; k < 4; k++) {
-            figPatrons[k].braceMatrice()
+            patronsOriginaux[k].braceMatrice()
+            patronsAffiches[k] = patronsOriginaux[indexMelangés[k]]
+            this.listeMatrices[i][k] = patronsOriginaux[indexMelangés[k]].matrice
           }
-          // const figPatronOk = mathalea2d({ style: 'display: inline-block', xmin: xymin, xmax: xymax, ymin: xymin, scale: zoom, id: `cliquefigure0Ex${this.numeroExercice}Q${i}` }, dessin1)
-          // const figPatronFaux1 = mathalea2d({ style: 'display: inline-block', xmin: xymin, xmax: xymax, ymin: xymin, scale: zoom, id: `cliquefigure1Ex${this.numeroExercice}Q${i}` }, dessin2)
-          // const figPatronFaux2 = mathalea2d({ style: 'display: inline-block', xmin: xymin, xmax: xymax, ymin: xymin, scale: zoom, id: `cliquefigure2Ex${this.numeroExercice}Q${i}` }, dessin3)
-          // const figPatronFaux3 = mathalea2d({ style: 'display: inline-block', xmin: xymin, xmax: xymax, ymin: xymin, scale: zoom, id: `cliquefigure3Ex${this.numeroExercice}Q${i}` }, dessin4)
-
-          // amc
-
-          const fig0 = figPatrons[0].dessineMatrice({ numeroterFaces: false, numeroDessin: ordreAffichage[0] })
-          const fig1 = figPatrons[1].dessineMatrice({ numeroterFaces: false, numeroDessin: ordreAffichage[1] })
-          const fig2 = figPatrons[2].dessineMatrice({ numeroterFaces: false, numeroDessin: ordreAffichage[2] })
-          const fig3 = figPatrons[3].dessineMatrice({ numeroterFaces: false, numeroDessin: ordreAffichage[3] })
+          const indexVraiPatron = retrouveMatrices(this.listeMatrices[i]).indexVraiPatron
+          const indexPas6Faces = retrouveMatrices(this.listeMatrices[i]).indexPas6Faces
+          const indexFauxPatrons = retrouveMatrices(this.listeMatrices[i]).indexFauxPatrons
+          const fig0 = patronsAffiches[0].dessineMatrice({ numeroterFaces: false, numeroDessin: 0 })
+          const fig1 = patronsAffiches[1].dessineMatrice({ numeroterFaces: false, numeroDessin: 1 })
+          const fig2 = patronsAffiches[2].dessineMatrice({ numeroterFaces: false, numeroDessin: 2 })
+          const fig3 = patronsAffiches[3].dessineMatrice({ numeroterFaces: false, numeroDessin: 3 })
           const figPatronOkAMC = mathalea2d(Object.assign({ style: 'display: inline-block', scale: zoomAMC, id: `cliquefigure0Ex${this.numeroExercice}Q${i}` }, fixeBordures(fig0)),
             fig0)
           const figPatronFaux1AMC = mathalea2d(Object.assign({ style: 'display: inline-block', scale: zoomAMC, id: `cliquefigure1Ex${this.numeroExercice}Q${i}` }, fixeBordures(fig1)),
@@ -108,55 +127,55 @@ export default class choixPatron extends Exercice {
           this.autoCorrection[i].propositions = [
             {
               texte: figPatronOkAMC,
-              statut: true
+              statut: indexVraiPatron === 0
             },
             {
               texte: figPatronFaux1AMC,
-              statut: false
+              statut: indexVraiPatron === 1
             },
             {
               texte: figPatronFaux2AMC,
-              statut: false
+              statut: indexVraiPatron === 2
             },
             {
               texte: figPatronFaux3AMC,
-              statut: false
+              statut: indexVraiPatron === 3
             }
           ]
           this.autoCorrection[i].options = {
-            ordered: false,
+            ordered: true,
             lastChoice: 4
           }
           setCliqueFigure(this.autoCorrection[i])
 
           // const figures =  [figPatronOkAMC, figPatronFaux1AMC, figPatronFaux2AMC, figPatronFaux3AMC]
-          const figuresMelanges = [figPatronOkAMC, figPatronFaux1AMC, figPatronFaux2AMC, figPatronFaux3AMC]
+          const figuresEnonce = [figPatronOkAMC, figPatronFaux1AMC, figPatronFaux2AMC, figPatronFaux3AMC]
           this.listeMatrices[i] = []
           for (let k = 0; k < 4; k++) {
-            const fig = figPatrons[indexPatronAffiche[k]].dessineMatrice({ numeroterFaces: false, numeroDessin: k })
-            figuresMelanges[k] = mathalea2d(Object.assign({ style: 'display: inline-block', scale: zoom, id: `cliquefigure${indexPatronAffiche[k]}Ex${this.numeroExercice}Q${i}` }, fixeBordures(fig)),
+            const fig = patronsAffiches[k].dessineMatrice({ numeroterFaces: false, numeroDessin: k })
+            figuresEnonce[k] = mathalea2d(Object.assign({ style: 'display: inline-block', scale: zoom, id: `cliquefigure${k}Ex${this.numeroExercice}Q${i}` }, fixeBordures(fig)),
               fig)
-            this.listeMatrices[i].push(figPatrons[indexPatronAffiche[k]].matrice)
+            this.listeMatrices[i][k] = patronsAffiches[k].matrice
           }
 
           if (!context.isAmc) {
-            texte += figuresMelanges.join('') + '<br><br>'
+            texte += figuresEnonce.join('') + '<br><br>'
             if (this.interactif && context.isHtml) {
               texte += `<span id="resultatCheckEx${this.numeroExercice}Q${i}"></span>`
             }
 
             texteCorr = 'Procédons par élimination:<br>'
-            texteCorr += `- Le dessin ${ordreAffichage[3] + 1} contient ${taillePatronAuPif} faces au lieu de 6 faces.<br><br>`
-            texteCorr += `- Le dessin ${ordreAffichage[1] + 1} poséde des faces qui vont se superposer :<br>`
-            const fig1 = figPatrons[indexPatronAffiche[ordreAffichage[1]]].dessineMatrice({ numeroterFaces: true, numeroDessin: ordreAffichage[1] })
+            texteCorr += `- Le dessin ${indexPas6Faces + 1} contient ${taillePatronAuPif} faces au lieu de 6 faces.<br><br>`
+            texteCorr += `- Le dessin ${indexFauxPatrons[0].index + 1} poséde des faces qui vont se superposer :<br>`
+            const fig1 = patronsAffiches[indexFauxPatrons[0].index].dessineMatrice({ numeroterFaces: true, numeroDessin: indexFauxPatrons[0].index })
             texteCorr += mathalea2d(Object.assign({ style: 'display: inline-block', scale: zoom, id: `cliquefigure0Ex${this.numeroExercice}Q${i}` }, fixeBordures(fig1)), fig1) + '<br>'
-            texteCorr += figPatrons[indexPatronAffiche[ordreAffichage[1]]].ecritFacesQuiSeSuperposent() + '<br><br>'
-            texteCorr += `- Le dessin ${ordreAffichage[2] + 1} poséde des faces qui vont se superposer :<br>`
-            const fig2 = figPatrons[indexPatronAffiche[ordreAffichage[2]]].dessineMatrice({ numeroterFaces: true, numeroDessin: ordreAffichage[2] })
+            texteCorr += patronsAffiches[indexFauxPatrons[0].index].ecritFacesQuiSeSuperposent() + '<br><br>'
+            texteCorr += `- Le dessin ${indexFauxPatrons[1].index + 1} poséde des faces qui vont se superposer :<br>`
+            const fig2 = patronsAffiches[indexFauxPatrons[1].index].dessineMatrice({ numeroterFaces: true, numeroDessin: indexFauxPatrons[1].index })
             texteCorr += mathalea2d(Object.assign({ style: 'display: inline-block', scale: zoom, id: `cliquefigure0Ex${this.numeroExercice}Q${i}` }, fixeBordures(fig2)), fig2) + '<br>'
-            texteCorr += figPatrons[indexPatronAffiche[ordreAffichage[2]]].ecritFacesQuiSeSuperposent() + '<br><br>'
-            texteCorr += `Le dessin ${ordreAffichage[0] + 1} posséde 6 faces qui ne vont pas se superposer en le pliant, c'est donc le dessin d'un patron.<br>`
-            const fig3 = figPatrons[indexPatronAffiche[ordreAffichage[0]]].dessineMatrice({ numeroterFaces: true, numeroDessin: ordreAffichage[0] })
+            texteCorr += patronsAffiches[indexFauxPatrons[1].index].ecritFacesQuiSeSuperposent() + '<br><br>'
+            texteCorr += `Le dessin ${indexVraiPatron + 1} posséde 6 faces qui ne vont pas se superposer en le pliant, c'est donc le dessin d'un patron.<br>`
+            const fig3 = patronsAffiches[indexVraiPatron].dessineMatrice({ numeroterFaces: true, numeroDessin: indexVraiPatron })
             texteCorr += mathalea2d(Object.assign({ style: 'display: inline-block', scale: zoom, id: `cliquefigure0Ex${this.numeroExercice}Q${i}` }, fixeBordures(fig3), fig3))
             if (context.isHtml && this.sup2) {
               texteCorr += `<div id="emplacementPourSceneViewerEx${this.numeroExercice}Q${i}Correction" style="width: 400px; height: 400px; display: block;"></div>`
@@ -178,7 +197,7 @@ export default class choixPatron extends Exercice {
         if (!this.interactif) {
           const exo = this
           const question = i
-          const index = indexPatronAffiche[0]
+          const index = retrouveMatrices(this.listeMatrices[i]).indexVraiPatron
           document.addEventListener('correctionsAffichees', () => {
             const id = `emplacementPourSceneViewerEx${exo.numeroExercice}Q${question}Correction`
             const emplacementPourCorrection = document.getElementById(id)
