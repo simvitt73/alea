@@ -1,7 +1,7 @@
 import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { emojis } from '../../lib/2d/figures2d/listeEmojis'
+import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { cubeDef, faceLeft, faceRight, faceTop, project3dIso, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
-import { listeShapesDef, shapeNames, type ShapeName } from '../../lib/2d/figures2d/shapes2d'
+import { listeShapes2DInfos, shapeNames, type ShapeName } from '../../lib/2d/figures2d/shapes2d'
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
 import { listePatternsPreDef, type PatternRiche3D, type PatternRiche, patternsRepetition } from '../../lib/2d/patterns/patternsPreDef'
 import { point } from '../../lib/2d/points'
@@ -59,8 +59,8 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
   nouvelleVersion () {
     let texte = ''
     if (!context.isHtml) {
-      texte += `${Object.values(listeShapesDef).map(shape => shape.tikz()).join('\n')}\n`
-      texte += `${Object.entries(emojis).map(([nom, unicode]) => emoji(nom, unicode).shapeDef.tikz()).join('\n')}\n`
+      texte += `${Object.values(listeShapes2DInfos).map(shape => shape.shapeDef.tikz()).join('\n')}\n`
+      texte += `${Object.entries(listeEmojisInfos).map(([nom, infos]) => emoji(nom, infos.unicode).shapeDef.tikz()).join('\n')}\n`
     }
     if (listeOfAll == null || listeOfAll.length === 0) return
     for (let i = 0; i < listeOfAll.length; i++) {
@@ -73,11 +73,11 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
         // On est en présence d'un motif répétitif
         const objets: NestedObjetMathalea2dArray = []
         for (const shape of pat.shapes) {
-          if (shape in listeShapesDef) {
-            objets.push(listeShapesDef[shape])
+          if (shape in listeShapes2DInfos) {
+            objets.push(listeShapes2DInfos[shape].shapeDef)
           }
-          if (shape in emojis) {
-            objets.push(emoji(shape, emojis[shape]).shapeDef)
+          if (shape in listeEmojisInfos) {
+            objets.push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
           }
         }
         for (let j = 0; j <= pat.nbMotifMin; j++) {
@@ -131,18 +131,18 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
           if (context.isHtml) {
             for (let n = 0; n < pattern.shapes.length; n++) {
               let name = pattern.shapes[n]
-              if (name in listeShapesDef) {
+              if (name in listeShapes2DInfos) {
                 if (name === 'carré') {
-                  const nom = String(choice(Object.keys(emojis)))
+                  const nom = String(choice(Object.keys(listeEmojisInfos)))
                   name = nom
                   pattern.shapes[n] = nom
-                  figures[j].push(emoji(nom, emojis[nom]).shapeDef)
-                } else figures[j].push(listeShapesDef[name])
-              } else if (name in emojis) {
-                figures[j].push(emoji(name, emojis[name]).shapeDef)
+                  figures[j].push(emoji(nom, listeEmojisInfos[nom].unicode).shapeDef)
+                } else figures[j].push(listeShapes2DInfos[name].shapeDef)
+              } else if (name in listeEmojisInfos) {
+                figures[j].push(emoji(name, listeEmojisInfos[name].unicode).shapeDef)
               } else {
-                if (Object.keys(emojis).includes(name)) {
-                  figures[j].push(emoji(name, emojis[name]))
+                if (Object.keys(listeEmojisInfos).includes(name)) {
+                  figures[j].push(emoji(name, listeEmojisInfos[name].unicode))
                 } else if (name === 'cube') {
                   const cubeIsoDef = cubeDef(`cubeIsoQ${i}F${j}`, (pattern as VisualPattern3D).shape.scale ?? 1)
                   cubeIsoDef.svg = function (coeff: number): string {
@@ -164,7 +164,7 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
           }
           if (pattern instanceof VisualPattern3D) {
             if (context.isHtml) {
-              updateCubeIso(pattern, i, j, angle)
+              updateCubeIso({ pattern, i, j, angle, inCorrectionMode: false })
               pattern.shape.codeSvg = `<use href="#cubeIsoQ${i}F${j}"></use>`
               const cells = (pattern as VisualPattern3D).render3d(j + 1)
               // Ajouter les SVG générés par svg() de chaque objet

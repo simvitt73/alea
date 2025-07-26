@@ -1,5 +1,4 @@
 import type { NestedObjetMathalea2dArray } from '../../../modules/2dGeneralites'
-import { Shape2D } from '../Figures2D'
 import { Shape3D, shapeCubeIso } from '../figures2d/Shape3d'
 import type { ShapeName } from '../figures2d/shapes2d'
 
@@ -11,12 +10,12 @@ type Coord3d = [number, number, number, options?: { scale: number }]
 
 function filterCells (cells: Set<string>): Set<string> {
   function hasAllNeightbors (cell: string, cells: Set<string>): boolean {
-    const [x, y, z] = cell.split(',').map(Number)
+    const [x, y, z] = cell.split(';').map(Number)
     // Vérifie si toutes les cellules voisines sont présentes
     return (
-      cells.has(`${x + 1},${y},${z}`) &&
-      cells.has(`${x},${y - 1},${z}`) &&
-      cells.has(`${x},${y},${z + 1}`)
+      cells.has(`${x + 1};${y};${z}`) &&
+      cells.has(`${x};${y - 1};${z}`) &&
+      cells.has(`${x};${y};${z + 1}`)
     )
   }
   const filteredCells = new Set<string>()
@@ -36,7 +35,10 @@ export class VisualPattern3D {
   // on utilise un ensemble pour stocker les cellules, ce qui permet d'éviter les doublons et de faciliter la vérification de la présence d'une cellule
   // et la conversion en chaîne de caractères permet de les stocker efficacement dans un ensemble
 
-  constructor (initialCells: Coord3d[] | string[] | Set<string>, shape?: Shape2D) {
+  constructor (initialCells: Coord3d[] | string[] | Set<string>, shape?: Shape3D) {
+    if (shape === undefined || shape === null) {
+      shape = shapeCubeIso('cubeIso') as Shape3D // forme par défaut si aucune forme n'est spécifiée
+    }
     if (initialCells instanceof Set) {
       // si initialCells est déjà un Set, on l'utilise directement
       this.cells = initialCells
@@ -57,7 +59,7 @@ export class VisualPattern3D {
     } else {
       throw new Error('initialCells must be a Set, an array of coordinates or an array of strings')
     }
-    if (!(shape instanceof Shape3D) || shape !== undefined) {
+    if (!(shape instanceof Shape3D) || shape === undefined) {
       this.shape = shapeCubeIso()
       this.shapes = ['cube']
     } else {

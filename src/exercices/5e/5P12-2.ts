@@ -3,14 +3,14 @@ import { shuffle } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
-import { listeShapesDef } from '../../lib/2d/figures2d/shapes2d'
+import { listeShapes2DInfos } from '../../lib/2d/figures2d/shapes2d'
 import { listePatternRatio, type PatternRiche } from '../../lib/2d/patterns/patternsPreDef'
 import { texteParPosition } from '../../lib/2d/textes'
 import { point } from '../../lib/2d/points'
 // import type { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { emojis } from '../../lib/2d/figures2d/listeEmojis'
+import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { emoji } from '../../lib/2d/figures2d/Emojis'
 
 export const titre = 'Trouver le ratio d\'évolution d\'un motif numérique'
@@ -60,10 +60,10 @@ export default class PaternNum1 extends Exercice {
       //  patterns.push(pattern)
 
       for (const name of pat.shapes) {
-        if (name in listeShapesDef) {
-          objetsCorr.push(listeShapesDef[name])
-        } else if (name in emojis) {
-          objetsCorr.push(emoji(name, emojis[name]).shapeDef)
+        if (name in listeShapes2DInfos) {
+          objetsCorr.push(listeShapes2DInfos[name].shapeDef)
+        } else if (name in listeEmojisInfos) {
+          objetsCorr.push(emoji(name, listeEmojisInfos[name].unicode).shapeDef)
         } else {
           throw new Error(`Le nom de la forme "${name}" n'est pas reconnu dans les formes prédéfinies.`)
         }
@@ -72,15 +72,15 @@ export default class PaternNum1 extends Exercice {
       objetsCorr.push(...rendered)
       let yMax = 0
       let yMin = 0
-      let texte = `Voici les ${nbFigures} premiers motifs d'une série de motifs numériques. Ils évoluent selon des règles définies.<br>`
+      let texte = `Voici les ${nbFigures} premiers motifs d'une série de motifs numériques. Les motifs se succèdent selon une règle bien définie.<br>`
       const figures: NestedObjetMathalea2dArray[] = []
       for (let j = 0; j < nbFigures; j++) {
         figures[j] = []
         for (const name of pat.shapes) {
-          if (name in listeShapesDef) {
-            figures[j].push(listeShapesDef[name])
-          } else if (name in emojis) {
-            figures[j].push(emoji(name, emojis[name]).shapeDef)
+          if (name in listeShapes2DInfos) {
+            figures[j].push(listeShapes2DInfos[name].shapeDef)
+          } else if (name in listeEmojisInfos) {
+            figures[j].push(emoji(name, listeEmojisInfos[name].unicode).shapeDef)
           } else {
             throw new Error(`Le nom de la forme "${name}" n'est pas reconnu dans les formes prédéfinies.`)
           }
