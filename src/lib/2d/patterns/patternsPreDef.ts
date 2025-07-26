@@ -1,9 +1,10 @@
-import { type ShapeName } from '../figures2d/shapes2d'
+import { listeShapes2DInfos, type Shape2DInfo, type ShapeName } from '../figures2d/shapes2d'
 import { Shape3D, shapeCubeIso } from '../figures2d/Shape3d'
 import { VisualPattern } from './VisualPattern'
 import { VisualPattern3D } from './VisualPattern3D'
 import FractionEtendue from '../../../modules/FractionEtendue'
 import { Ratio } from '../../mathFonctions/Ratio'
+import { listeEmojisInfos, type EmojiInfos } from '../figures2d/listeEmojis'
 export type PatternRiche = {
   visualImg?: string,
   visualId?: number,
@@ -38,7 +39,7 @@ export type PatternRicheRepetition = {
   shapes: ShapeName[],
   numero?: number,
   formule?: string,
-  fonctionShape: (x: number) => ShapeName,
+  fonctionShape: (x: number) => Shape2DInfo | EmojiInfos,
   pattern?: VisualPattern,
   iterate: (this: VisualPattern, n?: number) => Set<string>
 
@@ -1871,7 +1872,7 @@ const pattern74: PatternRiche3D = {
   visualImg: 'https://images.squarespace-cdn.com/content/v1/647f8c4916cb6662848ba604/05dbfae2-82ce-4106-a070-1ee0128ee99d/8840270_orig.png?format=2500w',
   visualId: 156,
   fonctionNb: (x:number) => 3 * x + 1,
-  formule: '3n+1',
+  formule: '3\\times n+1',
   type: 'affine',
   shapeDefault: shapeCubeIso('cubeIso', 0, 0),
   iterate3d: function (this: VisualPattern3D, n?: number) {
@@ -2124,9 +2125,9 @@ const pattern83: PatternRicheRepetition = {
   shapes: ['chien', 'chat', 'tortue'],
   nbMotifMin: 6,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 3 === 0) return 'chien'
-    if ((n - 1) % 3 === 1) return 'chat'
-    return 'tortue'
+    if ((n - 1) % 3 === 0) return listeEmojisInfos['chien']
+    if ((n - 1) % 3 === 1) return listeEmojisInfos['chat']
+    return listeEmojisInfos['tortue']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2142,8 +2143,8 @@ const pattern84: PatternRicheRepetition = {
   shapes: ['losange', 'hexagone'],
   nbMotifMin: 4,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 2 === 0) return 'losange'
-    return 'hexagone'
+    if ((n - 1) % 2 === 0) return listeShapes2DInfos['losange']
+    return listeShapes2DInfos['hexagone']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2159,10 +2160,10 @@ const pattern85: PatternRicheRepetition = {
   shapes: ['fraise', 'banane', 'kiwi', 'citron'],
   nbMotifMin: 8,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 4 === 0) return 'fraise'
-    if ((n - 1) % 4 === 1) return 'banane'
-    if ((n - 1) % 4 === 2) return 'kiwi'
-    return 'citron'
+    if ((n - 1) % 4 === 0) return listeEmojisInfos['fraise']
+    if ((n - 1) % 4 === 1) return listeEmojisInfos['banane']
+    if ((n - 1) % 4 === 2) return listeEmojisInfos['kiwi']
+    return listeEmojisInfos['citron']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2178,11 +2179,11 @@ const pattern86: PatternRicheRepetition = {
   shapes: ['rond', 'carré', 'carré', 'triangle', 'losange', 'hexagone'],
   nbMotifMin: 12,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 6 === 0) return 'rond'
-    if ((n - 1) % 6 === 1 || n % 6 === 2) return 'carré'
-    if ((n - 1) % 6 === 3) return 'triangle'
-    if ((n - 1) % 6 === 4) return 'losange'
-    return 'hexagone'
+    if ((n - 1) % 6 === 0) return listeShapes2DInfos['rond']
+    if ((n - 1) % 6 === 1 || n % 6 === 2) return listeShapes2DInfos['carré']
+    if ((n - 1) % 6 === 3) return listeShapes2DInfos['triangle']
+    if ((n - 1) % 6 === 4) return listeShapes2DInfos['losange']
+    return listeShapes2DInfos['hexagone']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2198,11 +2199,11 @@ const pattern87: PatternRicheRepetition = {
   shapes: ['carré', 'triangle', 'hexagone'],
   nbMotifMin: 10,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 5 === 0) return 'carré'
-    if ((n - 1) % 5 === 1) return 'triangle'
-    if ((n - 1) % 5 === 2) return 'hexagone'
-    if ((n - 1) % 5 === 3) return 'triangle'
-    return 'carré'
+    if ((n - 1) % 5 === 0) return listeShapes2DInfos['carré']
+    if ((n - 1) % 5 === 1) return listeShapes2DInfos['triangle']
+    if ((n - 1) % 5 === 2) return listeShapes2DInfos['hexagone']
+    if ((n - 1) % 5 === 3) return listeShapes2DInfos['triangle']
+    return listeShapes2DInfos['carré']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2219,10 +2220,10 @@ const pattern88: PatternRicheRepetition = {
   shapes: ['rond', 'triangle', 'hexagone'],
   nbMotifMin: 8,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 4 === 0) return 'rond'
-    if ((n - 1) % 4 === 1) return 'triangle'
-    if ((n - 1) % 4 === 2) return 'hexagone'
-    return 'rond'
+    if ((n - 1) % 4 === 0) return listeShapes2DInfos['rond']
+    if ((n - 1) % 4 === 1) return listeShapes2DInfos['triangle']
+    if ((n - 1) % 4 === 2) return listeShapes2DInfos['hexagone']
+    return listeShapes2DInfos['rond']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2239,10 +2240,10 @@ const pattern89: PatternRicheRepetition = {
   shapes: ['raisin', 'pomme', 'orange'],
   nbMotifMin: 8,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 4 === 0) return 'raisin'
-    if ((n - 1) % 4 === 1) return 'pomme'
-    if ((n - 1) % 4 === 2) return 'pomme'
-    return 'orange'
+    if ((n - 1) % 4 === 0) return listeEmojisInfos['raisin']
+    if ((n - 1) % 4 === 1) return listeEmojisInfos['pomme']
+    if ((n - 1) % 4 === 2) return listeEmojisInfos['pomme']
+    return listeEmojisInfos['orange']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2495,13 +2496,13 @@ const pattern100: PatternRicheRepetition = {
   nbMotifMin: 10,
   numero: 100,
   fonctionShape: (n:number) => {
-    return ['cadeau', 'explosion'][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]
+    return [listeEmojisInfos['cadeau'], listeEmojisInfos['explosion']][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 0
 
     const newCells = new Set<string>()
-    newCells.add(VisualPattern.coordToKey([0, 0, ['cadeau', 'explosion'][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]])) // explosion ou cadeau
+    newCells.add(VisualPattern.coordToKey([0, 0, [listeEmojisInfos['cadeau'].unicode, listeEmojisInfos['explosion'].unicode][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]])) // explosion ou cadeau
     return newCells
   }
 }

@@ -5,7 +5,7 @@ import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../..
 import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { gestionnaireFormulaireTexte } from '../../modules/outils'
-import { listeShapesDef } from '../../lib/2d/figures2d/shapes2d'
+import { listeShapes2DInfos } from '../../lib/2d/figures2d/shapes2d'
 import { listePatternAffine, listePatternDegre2, listePatternDegre3, listePatternLineaire, listePatternsPreDef, type PatternRiche, type PatternRiche3D } from '../../lib/2d/patterns/patternsPreDef'
 import { texteParPosition } from '../../lib/2d/textes'
 import { point } from '../../lib/2d/points'
@@ -14,10 +14,10 @@ import { cubeDef, project3dIso, Shape3D, shapeCubeIso, updateCubeIso } from '../
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
 import { context } from '../../modules/context'
 import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { emojis } from '../../lib/2d/figures2d/listeEmojis'
+import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 
-export const titre = 'Définir une expression littérale à partir d\'un pattern numérique'
+export const titre = 'Définir une expression littérale à partir d\'un modèle figuratif'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 
@@ -26,8 +26,8 @@ export const dateDePublication = '23/06/2025'
 
 /**
  * Étudier les premiers termes d'une série de motifs afin de donner le nombre de formes du motif de rang n.
- * Les patterns sont des motifs numériques qui évoluent selon des règles définies.
- * Cet exercice contient des patterns issus de l'excellent site : https://www.visualpatterns.org/
+ * Les patterns sont des motifs figuratifs qui évoluent selon des règles définies.
+ * Cet exercice contient des modèles issus de l'excellent site : https://www.visualpatterns.org/
  * @author Jean-Claude Lhote
  */
 export const uuid = '328b4'
@@ -41,12 +41,12 @@ export default class PaternNum1 extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 3
-    this.comment = 'Cet exercice contient des patterns issus de l\'excellent site : https://www.visualpatterns.org/'
+    this.comment = 'Cet exercice contient des modèles issus de l\'excellent site : https://www.visualpatterns.org/'
     this.besoinFormulaireNumerique = ['Nombre de figures par question', 4]
     this.sup = 3
     this.besoinFormulaire2Texte = ['Types de formules au menu (cumulatif)', 'Nombres séparés par des tirets\n1 : Linéaire\n2 : Affine\n3 : Quadratique\n4 : Cubique\n5 : Mélange']
     this.sup2 = '1-2'
-    this.besoinFormulaire5Numerique = ['Numéro de pattern (uniquement si 1 seule question)', 100,]
+    this.besoinFormulaire5Numerique = ['Numéro de modèle (uniquement si 1 seule question)', 100,]
     this.sup5 = 1
   }
 
@@ -83,7 +83,6 @@ export default class PaternNum1 extends Exercice {
       ? [listePatternsPreDef[Number(this.sup5) - 1]]
       : shuffle(listeSelection)
     const nbFigures = Math.max(2, this.sup)
-    // const patterns : (VisualPattern | VisualPattern3D)[] = [] à voir si on le réactive pour apiGeom.
     for (let i = 0; i < this.nbQuestions;) {
       const objetsCorr: NestedObjetMathalea2dArray = []
       const popped = listePreDef.pop()
@@ -102,17 +101,17 @@ export default class PaternNum1 extends Exercice {
         pattern.iterate = (pat as PatternRiche).iterate
         pattern.shapes = pat2D.shapes || ['carré', 'carré']
 
-        if (pat2D.shapes[0] in listeShapesDef) objetsCorr.push(listeShapesDef[pat2D.shapes[0]])
-        else if (Object.keys(emojis).includes(pat2D.shapes[0])) {
-          const code = emojis[pat2D.shapes[0]]
+        if (pat2D.shapes[0] in listeShapes2DInfos) objetsCorr.push(listeShapes2DInfos[pat2D.shapes[0]].shapeDef)
+        else if (Object.keys(listeEmojisInfos).includes(pat2D.shapes[0])) {
+          const code = listeEmojisInfos[pat2D.shapes[0]].unicode
           objetsCorr.push(emoji(pat2D.shapes[0], code).shapeDef)
         } else {
           console.warn(`Shape ${pat2D.shapes[0]} n'est pas dans listeShapesDef ou emojis`)
         }
         if (pat2D.shapes[1] && pat2D.shapes[1] !== pat2D.shapes[0]) {
-          if (pat2D.shapes[1] in listeShapesDef) objetsCorr.push(listeShapesDef[pat2D.shapes[1]])
-          else if (Object.keys(emojis).includes(pat2D.shapes[1])) {
-            const code = emojis[pat2D.shapes[1]]
+          if (pat2D.shapes[1] in listeShapes2DInfos) objetsCorr.push(listeShapes2DInfos[pat2D.shapes[1]].shapeDef)
+          else if (Object.keys(listeEmojisInfos).includes(pat2D.shapes[1])) {
+            const code = listeEmojisInfos[pat2D.shapes[1]].unicode
             objetsCorr.push(emoji(pat2D.shapes[1], code).shapeDef
             )
           } else {
@@ -126,7 +125,7 @@ export default class PaternNum1 extends Exercice {
       let yMax = 0
       let yMin = 0
       const angle = Math.PI / 6
-      let texte = `Voici les ${nbFigures} premiers motifs d'une série de motifs numériques. Ils évoluent selon des règles définies.<br>`
+      let texte = `Voici les ${nbFigures} premiers motifs d'une série de motifs figuratifs. Les motifs se succèdent selon une règle bien définie.<br>`
       const figures: NestedObjetMathalea2dArray[] = []
       for (let j = 0; j < nbFigures; j++) {
         figures[j] = []
@@ -134,21 +133,13 @@ export default class PaternNum1 extends Exercice {
           figures[j].push(cubeDef(`cubeIsoQ${i}F${j}`))
         } else {
           const pat2D = pat as PatternRiche
-          if (pat2D.shapes[0] in listeShapesDef) figures[j].push(listeShapesDef[pat2D.shapes[0]])
-          else if (Object.keys(emojis).includes(pat2D.shapes[0])) {
-            const code = emojis[pat2D.shapes[0]]
-            figures[j].push(emoji(pat2D.shapes[0], code).shapeDef)
-          } else {
-            console.warn(`Shape ${pat2D.shapes[0]} n'est pas dans listeShapesDef ou emojis`)
-          }
-          if (pat2D.shapes[1] && pat2D.shapes[1] !== pat2D.shapes[0]) {
-            if (pat2D.shapes[1] in listeShapesDef) figures[j].push(listeShapesDef[pat2D.shapes[1]])
-            else if (Object.keys(emojis).includes(pat2D.shapes[1])) {
-              const code = emojis[pat2D.shapes[1]]
-              figures[j].push(emoji(pat2D.shapes[1], code).shapeDef
-              )
+          for (const shape of pat2D.shapes) {
+            if (shape in listeShapes2DInfos) figures[j].push(listeShapes2DInfos[shape].shapeDef)
+            else if (Object.keys(listeEmojisInfos).includes(shape)) {
+              const code = listeEmojisInfos[shape].unicode
+              figures[j].push(emoji(shape, code).shapeDef)
             } else {
-              console.warn(`Shape ${pat2D.shapes[1]} n'est pas dans listeShapesDef ou emojis`)
+              console.warn(`Shape ${shape} n'est pas dans listeShapesDef ou emojis.`)
             }
           }
         }
@@ -159,7 +150,7 @@ export default class PaternNum1 extends Exercice {
         let ymax = -Infinity
         if (pattern instanceof VisualPattern3D) {
           if (context.isHtml) {
-            updateCubeIso(pattern, i, j, angle)
+            updateCubeIso({ pattern, i, j, angle, inCorrectionMode: false })
             pattern.shape.codeSvg = `<use href="#cubeIsoQ${i}F${j}"></use>`
             const cells = (pattern as VisualPattern3D).render3d(j + 1)
             // Ajouter les SVG générés par svg() de chaque objet
@@ -191,7 +182,12 @@ export default class PaternNum1 extends Exercice {
       }
       texte += figures.map((fig, index) => mathalea2d(Object.assign(fixeBordures(fig, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { id: `Motif${i}F${index}`, pixelsParCm: 20, yMax, yMin, scale: 0.4, style: 'display: inline-block', optionsTikz: 'transform shape' }), fig)).join('\n')
       let texteCorr = ''
-      texte += `<br>Quel sera le nombre ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shapes[0]) ? 'd\'' : 'de '}${pattern.shapes}s dans le motif au rang $n$ en fonction de $n$ ?<br>${ajouteQuestionMathlive(
+
+      const nbFormes = pat.fonctionNb(nbFigures + 1)
+      const nbTex = miseEnEvidence(nbFormes)
+      texteCorr += `Le motif de rang $n$ contient $${nbTex}$ formes.<br>`
+      texteCorr += `En effet, la formule pour trouver le nombre de formes est : $${miseEnEvidence(pat.formule.replaceAll('n', 'n'))}$.<br>`
+      texte += `<br>Quel sera le nombre de formes dans le motif au rang $n$ en fonction de $n$ ?<br>${ajouteQuestionMathlive(
             {
 exercice: this,
               question: i,
@@ -200,7 +196,6 @@ exercice: this,
             }
           )}`
 
-      texteCorr += `Le motif de rang $n$ contiendra $${miseEnEvidence(pat.formule)}$ formes ${['e', 'a', 'é', 'i', 'o', 'u', 'y', 'è', 'ê'].includes(pattern.shapes[0]) ? 'd\'' : 'de '}${pattern.shapes[0]}s.<br>`
       this.listeQuestions.push(texte)
       this.listeCorrections.push(texteCorr)
       i++
