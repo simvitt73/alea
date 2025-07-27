@@ -4,13 +4,13 @@ import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../..
 import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { gestionnaireFormulaireTexte, randint } from '../../modules/outils'
-import { listeShapesDef } from '../../lib/2d/figures2d/shapes2d'
+import { listeShapes2DInfos } from '../../lib/2d/figures2d/shapes2d'
 import { patternsRepetition, type PatternRicheRepetition } from '../../lib/2d/patterns/patternsPreDef'
 import { createList } from '../../lib/format/lists'
 import { texteParPosition } from '../../lib/2d/textes'
 // import type { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { emojis } from '../../lib/2d/figures2d/listeEmojis'
+import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 
 export const titre = 'Comprendre un algorithme répétitif'
@@ -22,7 +22,7 @@ export const dateDePublication = '29/06/2025'
 
 /**
  * Étudier les premiers termes d'une série de motifs afin de donner le nombre de formes ${['e','a','é','i','o','u','y','è','ê'].includes(pattern.shapes[0][0]) ? 'd\'':'de'}${pattern.shapes[0]} du motif suivant.
- * Les patterns sont des motifs numériques qui évoluent selon des règles définies.
+ * Les patterns sont des motifs figuratifs ou numériques qui évoluent selon des règles définies.\n
  * Cet exercice contient des patterns issus de l'excellent site : https://www.visualpatterns.org/
  * @author Jean-Claude Lhote
  */
@@ -38,8 +38,8 @@ export default class PaternRepetitif extends Exercice {
     super()
     this.nbQuestions = 3
     this.comment = `Étudier les premiers termes d'une série de formes afin de donner une forme de rang quelconque.\n
- Les patterns sont des motifs numériques qui évoluent selon des règles définies.\n
- Cet exercice contient des patterns créés par Jean-Claude Lhote d'après une idée de Sophie Roubin`
+ Les patterns sont des motifs figuratifs ou numériques qui évoluent selon des règles définies.\n
+ Cet exercice contient des patterns figuratifs créés par Jean-Claude Lhote d'après une idée de Sophie Roubin`
     this.besoinFormulaireCaseACocher = ['Nombre de formes augmenté', false]
     this.sup = false
     this.besoinFormulaire4Texte = ['Types de questions', 'Nombres séparés par des tirets\n1:forme suivante dans une liste\n2 : forme de rang pas trop éloigné\n3 : forme de rang important\n4 : 42e forme \n5 Question au hasard parmi les 4 précédentes']
@@ -79,12 +79,12 @@ export default class PaternRepetitif extends Exercice {
       pattern.iterate = (pat as PatternRicheRepetition).iterate
       pattern.shapes = pat.shapes
       for (const forme of new Set(pat2D.shapes)) {
-        if (forme in listeShapesDef) {
-          objetsCorr.push(listeShapesDef[forme])
-          objets.push(listeShapesDef[forme])
-        } else if (forme in emojis) {
-          objetsCorr.push(emoji(forme, emojis[forme]).shapeDef)
-          objets.push(emoji(forme, emojis[forme]).shapeDef)
+        if (forme in listeShapes2DInfos) {
+          objetsCorr.push(listeShapes2DInfos[forme].shapeDef)
+          objets.push(listeShapes2DInfos[forme].shapeDef)
+        } else if (forme in listeEmojisInfos) {
+          objetsCorr.push(emoji(forme, listeEmojisInfos[forme].unicode).shapeDef)
+          objets.push(emoji(forme, listeEmojisInfos[forme].unicode).shapeDef)
         } else {
           throw new Error(`Le nom de la forme "${forme}" n'est pas reconnu dans les formes prédéfinies.`)
         }
@@ -93,12 +93,14 @@ export default class PaternRepetitif extends Exercice {
         objets.push(pattern.render(j, j, 0))
       }
       objetsCorr.push(pattern.render(nbFigures + 1, 0, 0))
-      let texte = `Voici les ${nbFigures} premières formes d'une série. Ils évoluent selon des règles définies.<br>`
+      let texte = `Voici les ${nbFigures} premières formes d'une série. Les formes se succèdent selon une règle bien définie.<br>`
       objets.push(texteParPosition(`Les ${nbFigures} premières formes`, nbFigures / 2, 1.5, 0, 'black', 0.8, 'milieu'))
       texte += mathalea2d(Object.assign(fixeBordures(objets, { rxmin: 0, rymin: -1, rxmax: 0, rymax: 1 }), { pixelsParCm: 20, scale: 0.4, optionsTikz: 'transform shape' }), objets)
       let texteCorr = ''
       const listeQuestions: string[] = []
       const listeCorrections: string[] = []
+      const infosShape = pattern.shapes[0] in listeShapes2DInfos ? listeShapes2DInfos[pattern.shapes[0]] : pattern.shapes[0] in listeEmojisInfos ? listeEmojisInfos[pattern.shapes[0]] : { articleCourt: 'un', nomPluriel: 'formes', articleSingulier: 'une', nomSingulier: pattern.shapes[0] }
+
       for (const q of typesQuestions) {
         switch (q) {
           case 1:
@@ -106,7 +108,7 @@ export default class PaternRepetitif extends Exercice {
             {
 exercice: this,
               question: indexInteractif++,
-              objetReponse: { reponse: { value: pat.fonctionShape(nbFigures + 1) } },
+              objetReponse: { reponse: { value: pat.fonctionShape(nbFigures + 1).nomSingulier } },
               typeInteractivite: 'texte'
             }
           )}`)
@@ -118,22 +120,22 @@ exercice: this,
             {
 exercice: this,
               question: indexInteractif++,
-              objetReponse: { reponse: { value: pat.fonctionShape(numeroPasTropLoin) } },
+              objetReponse: { reponse: { value: pat.fonctionShape(numeroPasTropLoin).nomSingulier } },
               typeInteractivite: 'texte'
             }
           )}`)
-            listeCorrections.push(`La forme numéro $${numeroPasTropLoin}$ est en forme de ${texteEnCouleurEtGras(pat.fonctionShape(numeroPasTropLoin))}.<br>`)
+            listeCorrections.push(`La forme numéro $${numeroPasTropLoin}$ est ${infosShape.articleSingulier} ${texteEnCouleurEtGras(pat.fonctionShape(numeroPasTropLoin).nomSingulier)}.<br>`)
             break
           case 3:
             listeQuestions.push(`\nQuelle sera la forme numéro $${numeroTresLoin}$ de la série (donner juste le nom sans article) ?<br>${ajouteQuestionMathlive(
             {
 exercice: this,
               question: indexInteractif++,
-              objetReponse: { reponse: { value: pat.fonctionShape(numeroTresLoin) } },
+              objetReponse: { reponse: { value: pat.fonctionShape(numeroTresLoin).nomSingulier } },
               typeInteractivite: 'texte'
             }
           )}`)
-            listeCorrections.push(`La forme numéro $${numeroTresLoin}$ est en forme de ${texteEnCouleurEtGras(pat.fonctionShape(numeroTresLoin))}.<br>`)
+            listeCorrections.push(`La forme numéro $${numeroTresLoin}$ est ${infosShape.articleSingulier} ${texteEnCouleurEtGras(pat.fonctionShape(numeroTresLoin).nomSingulier)}.<br>`)
 
             break
           case 4:
@@ -141,11 +143,11 @@ exercice: this,
             {
 exercice: this,
               question: indexInteractif++,
-              objetReponse: { reponse: { value: pat.fonctionShape(42) } },
+              objetReponse: { reponse: { value: pat.fonctionShape(42).nomSingulier } },
               typeInteractivite: 'texte'
             }
           )}`)
-            listeCorrections.push(`La forme numéro $42$ est en forme de ${texteEnCouleurEtGras(pat.fonctionShape(42))}.<br>`)
+            listeCorrections.push(`La forme numéro $42$ est ${infosShape.articleSingulier} ${texteEnCouleurEtGras(pat.fonctionShape(42).nomSingulier)}.<br>`)
 
             break
         }

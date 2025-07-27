@@ -1,5 +1,5 @@
 import EvolSuccessives from '../can/2e/can2C25'
-export const titre = 'Déterminer une évolution globale'
+export const titre = 'Déterminer une évolution globale (2)'
 export const dateDePublication = '22/07/2025'
 export const amcReady = true
 export const amcType = 'AMCNum'

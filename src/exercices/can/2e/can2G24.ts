@@ -44,11 +44,11 @@ export default class TrouverpDroite extends ExerciceSimple {
     this.question = `Le plan est muni d’un repère orthogonal. <br>
     On note $d$ la droite passant par les points $${nomA}(${xA}\\,;\\,${yA})$ et $${nomB}(${xB}\\,;\\,${yB})$.<br>
      Le coefficient directeur $m$ de la droite $(${nomA}${nomB})$ est égal à : `
-    if (!this.interactif) { this.question += '$\\ldots$' }
+
     if (yB === yA) {
       this.distracteurs = ['$1$',
         '$-1$',
-       `$${new FractionEtendue(xB - xA, yB - yA).texFractionSimplifiee}$`]
+       `${xB - xA === 1 || xB - xA === -1 ? `$${yB}$` : `$${xB - xA}$`}`]
       this.correction = `Comme $y_{${nomA}}=y_{${nomB}}$, la droite $(${nomA}${nomB})$ est horizontale, son coefficient directeur est nul.<br>
     Ainsi, $m=${miseEnEvidence('0')}$`
     } else {
@@ -64,12 +64,13 @@ export default class TrouverpDroite extends ExerciceSimple {
           `$${yB - yA}$`]
       } else {
         this.distracteurs = [`$${new FractionEtendue(xA - xB, yB - yA).texFractionSimplifiee}$`,
-         `$${m.oppose().texFractionSimplifiee}$`,
+         `$${m.inverse().texFractionSimplifiee}$`,
          `$${new FractionEtendue(yB + yA, xB + xA).texFractionSimplifiee}$`]
       }
     }
 
     this.canEnonce = this.question
     this.canReponseACompleter = '$m=\\ldots$'
+    if (!this.interactif && !this.versionQcm) { this.question += ' $\\ldots$' }
   }
 }

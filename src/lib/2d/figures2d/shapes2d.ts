@@ -539,46 +539,182 @@ export const shapeNames: string[] = [
 ]
 
 export type ShapeName = (typeof shapeNames)[number]
+export type Shape2DInfo = {
+  shape2D: Shape2D
+  nomSingulier: string
+  nomPluriel: string
+  shapeDef: ObjetMathalea2D
+  articleSingulier: string
+  articlePluriel: string
+  articleCourt: string
+}
+export const listeShapes2DInfos: Record<
+  ShapeName,
+ Shape2DInfo
+> = {
+  carré: {
+    shape2D: shapeCarre,
+    nomSingulier: 'carré',
+    nomPluriel: 'carrés',
+    shapeDef: carreDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de',
+  },
+  carréRond: {
+    shape2D: shapeCarreArrondi,
+    nomSingulier: 'carré arrondi',
+    nomPluriel: 'carrés arrondis',
+    shapeDef: carreRondDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de',
+  },
+  losange: {
+    shape2D: shapeLosange,
+    nomSingulier: 'losange',
+    nomPluriel: 'losanges',
+    shapeDef: losangeDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de',
+  },
+  hexagone: {
+    shape2D: shapeHexagone,
+    nomSingulier: 'hexagone',
+    nomPluriel: 'hexagones',
+    shapeDef: hexagoneDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'd\'',
 
-export const listeShapesDef: Record<ShapeName, ObjetMathalea2D > = {
-  carré: carreDef,
-  carréRond: carreRondDef,
-  losange: losangeDef,
-  hexagone: hexagoneDef,
-  pentagone: pentagoneDef,
-  rond: rondDef,
-  balle: balleDef,
-  triangle: triangleEquilateralDef,
-  redCross: redCrossDef,
-  carréBleu: carreBleuDef,
-  hexagoneJaune: hexagoneJauneDef,
-  rectangleBlanc: rectangleBlancDef,
-  rectangleVert: rectangleDef,
-  allumetteV: allumetteDef,
-  allumetteH: allumetteDef,
-  allumette60: allumetteDef,
-  allumette120: allumetteDef,
-  segmentHorizontal: segmentHorizontalDef
+  },
+  pentagone: {
+    shape2D: shapePentagone,
+    nomSingulier: 'pentagone',
+    nomPluriel: 'pentagones',
+    shapeDef: pentagoneDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  rond: {
+    shape2D: shapeRond,
+    nomSingulier: 'disque',
+    nomPluriel: 'disques',
+    shapeDef: rondDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  balle: {
+    shape2D: shapeBalle,
+    nomSingulier: 'balle',
+    nomPluriel: 'balles',
+    shapeDef: balleDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  triangle: {
+    shape2D: shapeTriangleEquilateral,
+    nomSingulier: 'triangle équilatéral',
+    nomPluriel: 'triangles équilatéraux',
+    shapeDef: triangleEquilateralDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  redCross: {
+    shape2D: shapeRedCross,
+    nomSingulier: 'croix rouge',
+    nomPluriel: 'croix rouges',
+    shapeDef: redCrossDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  carréBleu: {
+    shape2D: shapeCarreBleu,
+    nomSingulier: 'carré bleu',
+    nomPluriel: 'carrés bleus',
+    shapeDef: carreBleuDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  hexagoneJaune: {
+    shape2D: shapeHexagoneJaune,
+    nomSingulier: 'hexagone jaune',
+    nomPluriel: 'hexagones jaunes',
+    shapeDef: hexagoneJauneDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  rectangleBlanc: {
+    shape2D: shapeRectangleBlanc,
+    nomSingulier: 'rectangle blanc',
+    nomPluriel: 'rectangles blancs',
+    shapeDef: rectangleBlancDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  rectangleVert: {
+    shape2D: shapeRectangle,
+    nomSingulier: 'rectangle vert',
+    nomPluriel: 'rectangles verts',
+    shapeDef: rectangleDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  allumetteV: {
+    shape2D: shapeAllumette,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  allumetteH: {
+    shape2D: shapeAllumetteHorizontale,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  allumette60: {
+    shape2D: shapeAllumette60,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  allumette120: {
+    shape2D: shapeAllumette120,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  segmentHorizontal: {
+    shape2D: shapeSegmentHorizontal,
+    nomSingulier: 'segment horizontal',
+    nomPluriel: 'segments horizontaux',
+    shapeDef: segmentHorizontalDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  }
 }
 
-export const listeShapes2D: Record<ShapeName, Shape2D > = {
-  carré: shapeCarre,
-  carréRond: shapeCarreArrondi,
-  losange: shapeLosange,
-  hexagone: shapeHexagone,
-  pentagone: shapePentagone,
-  rond: shapeRond,
-  balle: shapeBalle,
-  triangle: shapeTriangleEquilateral,
-  redCross: shapeRedCross,
-  carréBleu: shapeCarreBleu,
-  hexagoneJaune: shapeHexagoneJaune,
-  rectangleBlanc: shapeRectangleBlanc,
-  rectangleVert: shapeRectangle,
-  allumetteV: shapeAllumette,
-  allumetteH: shapeAllumetteHorizontale,
-  allumette60: shapeAllumette60,
-  allumette120: shapeAllumette120,
-  segmentHorizontal: shapeSegmentHorizontal
-}
-export const listeShapes2DNames: ShapeName[] = Object.keys(listeShapes2D) as ShapeName[]
+export const listeShapes2DNames: ShapeName[] = Object.keys(listeShapes2DInfos) as ShapeName[]
