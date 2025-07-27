@@ -207,8 +207,10 @@ export default class MultiplierDecimauxPar101001000V2 extends Exercice {
       const fractionFinale = new FractionEtendue(produitFinal, 1).texFraction
       const showComma1 = typesDeFacteurs[i] < 3 // Si facteur fractionnaire ou entier, pas de virgule sur ligne 1
       const showComma2 = typesDeResultats[i] !== 3// Si produit fractionnaire, pas de virgule sur ligne 1
+      const initialPower = typesDeFacteurs[i] === 3 ? -Math.log10(new FractionEtendue(a, 1).den) : 0
+
       switch (typesDeNombreCherche[i]) {
-        case 1 :
+        case 1 : // On cherche le produit final
           reponse = produitFinal
           if (choixOrdreMultiplication) {
             texte = `$${typesDeFacteurs[i] < 3 ? texNombre(a) : aSousFraction}\\times${texNombre(Math.pow(10, b))}=$`
@@ -245,7 +247,7 @@ export default class MultiplierDecimauxPar101001000V2 extends Exercice {
 
           handleAnswers(this, i, { reponse: { value: reponse, options: { fractionEgale: true, nombreDecimalSeulement: true } } })
           break
-        case 2 : {
+        case 2 : { // On cherche le facteur autre que la puissance de 10
           reponse = a
 
           if (choixOrdreMultiplication) {
@@ -293,17 +295,17 @@ export default class MultiplierDecimauxPar101001000V2 extends Exercice {
           }
 
           if (choixOrdreMultiplication) {
-            texteCorr += `$${miseEnEvidence(typesDeFacteurs[i] < 3 ? texNombre(a) : aSousFraction)}\\times${texNombre(Math.pow(10, b))} = ${typesDeResultats[i] !== 3 ? texNombre(reponse) : fractionFinale}$`
+            texteCorr += `$${miseEnEvidence(typesDeFacteurs[i] < 3 ? texNombre(reponse) : aSousFraction)}\\times${texNombre(Math.pow(10, b))} = ${typesDeResultats[i] !== 3 ? texNombre(produitFinal) : fractionFinale}$`
           } else {
             texteCorr += `$${texNombre(
            Math.pow(10, b)
-                   )} \\times ${miseEnEvidence(typesDeFacteurs[i] < 3 ? texNombre(a) : aSousFraction)} = ${typesDeResultats[i] !== 3 ? texNombre(reponse) : fractionFinale}$`
+                   )} \\times ${miseEnEvidence(typesDeFacteurs[i] < 3 ? texNombre(reponse) : aSousFraction)} = ${typesDeResultats[i] !== 3 ? texNombre(produitFinal) : fractionFinale}$`
           }
 
           handleAnswers(this, i, { reponse: { value: reponse, options: { fractionEgale: true, nombreDecimalSeulement: true } } })
           break
         }
-        case 3 :
+        case 3 :  // On cherche la puissance de 10
         default :
           reponse = Math.pow(10, b)
 
@@ -327,13 +329,18 @@ export default class MultiplierDecimauxPar101001000V2 extends Exercice {
               `) devient le chiffre des unités (dans $${coloreUnSeulChiffre(texNombre(produitFinal), bleuMathalea, 1)}$).<br>`
             texteCorr += `Tous les chiffres prennent donc une position $${texNombre(Math.pow(10, b))}$ fois plus grande.<br>`
           }
-          texteCorr += `$${typesDeResultats[i] !== 3 ? texNombre(a) : new FractionEtendue(a, 1).texFraction} \\times${miseEnEvidence(texNombre(Math.pow(10, b)))} = `
-          texteCorr += `${typesDeResultats[i] !== 3 ? (texNombre(produitFinal)) : fractionFinale}$`
+          if (choixOrdreMultiplication) {
+            texteCorr += `$${typesDeFacteurs[i] < 3 ? texNombre(a) : new FractionEtendue(a, 1).texFraction} \\times${miseEnEvidence(texNombre(reponse))} = `
+            texteCorr += `${typesDeResultats[i] !== 3 ? (texNombre(produitFinal)) : fractionFinale}$`
+          } else {
+            texteCorr += `$${miseEnEvidence(texNombre(reponse))} \\times ${typesDeFacteurs[i] < 3 ? texNombre(a) : new FractionEtendue(a, 1).texFraction} = `
+            texteCorr += `${typesDeFacteurs[i] < 3 ? (texNombre(produitFinal)) : fractionFinale}$`
+          }
 
           handleAnswers(this, i, { reponse: { value: reponse, options: { fractionEgale: true, nombreDecimalSeulement: true } } })
           break
       }
-      if (this.sup4) texteCorr += glisseNombreInteractif({ number: a, animation: b, addZeros: true, showComma2, showComma1 })
+      if (this.sup4) texteCorr += glisseNombreInteractif({ number: a, animation: b, addZeros: true, showComma2, showComma1, initialPower })
 
       if (context.isAmc) {
         this.autoCorrection[i].enonce = texte

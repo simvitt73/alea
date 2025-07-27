@@ -31,6 +31,23 @@ export const refs = {
   'fr-ch': []
 }
 
+/**
+ * Retourne les noms des classes en fonction de la valeur donnée.
+ *
+ * Cette fonction prend une valeur numérique représentant une puissance de 10
+ * (1, 10, 100 ou 1000) et retourne un tableau de deux chaînes de caractères :
+ * - Le nom de la classe pour les entiers
+ * - Le nom de la classe pour les décimaux
+ *
+ * @param {number} valeur - La puissance de 10 (1, 10, 100 ou 1000).
+ * @returns {string[]} Un tableau contenant deux chaînes :
+ *                     [nom pour les entiers, nom pour les décimaux].
+ * @throws {Error} Si la valeur n'est pas 1, 10, 100 ou 1000.
+ *
+ * @example
+ * donneNomClasse(10); // Retourne ['dizaines', 'dixièmes']
+ * donneNomClasse(1000); // Retourne ['milliers', 'millièmes']
+ */
 export function donneNomClasse (valeur: number): string[] {
   switch (valeur) {
     case 1:
@@ -46,14 +63,54 @@ export function donneNomClasse (valeur: number): string[] {
   }
 }
 
+/**
+ * Retourne le chiffre situé à une certaine position après la virgule d'un nombre.
+ *
+ * Cette fonction extrait le chiffre d'une position décimale spécifique.
+ * La position doit être donnée comme une puissance de 10 :
+ * - position = 10 pour le premier chiffre après la virgule (dixièmes)
+ * - position = 100 pour le deuxième chiffre (centièmes)
+ * - position = 1000 pour le troisième (millièmes), etc.
+ *
+ * @param {number} nombre - Le nombre dont on veut extraire un chiffre décimal.
+ * @param {number} position - La position décimale à extraire (ex: 10, 100, 1000...).
+ * @returns {number} Le chiffre à la position décimale donnée.
+ *
+ * @example
+ * chiffreAPositionDecimale(3.1415, 10); // Retourne 1 (dixièmes)
+ * chiffreAPositionDecimale(3.1415, 100); // Retourne 4 (centièmes)
+ * chiffreAPositionDecimale(-3.1415, 1000); // Retourne 1 (millièmes)
+ */
 export function chiffreAPositionDecimale (nombre: number, position: number): number {
   const partieDecimale = Math.abs(nombre)
   const decale = Math.floor(partieDecimale * position)
   return decale % 10
 }
 
+/**
+ * Analyse un nombre pour déterminer s'il est entier
+ * et si son chiffre des unités apparaît plus d'une fois dans l'ensemble du nombre.
+ *
+ * Cette fonction :
+ * - Vérifie si le nombre est un entier (pas de partie décimale).
+ * - Identifie le chiffre des unités (avant la virgule).
+ * - Vérifie combien de fois ce chiffre apparaît dans l’ensemble du nombre
+ *   (en ignorant le signe et le point décimal).
+ *
+ * @param {number} nombre - Le nombre à analyser.
+ * @returns {{ estEntier: boolean, doublonUnites: boolean }}
+ * Un objet avec deux propriétés :
+ * - `estEntier`: true si le nombre est entier, sinon false.
+ * - `doublonUnites`: true si le chiffre des unités apparaît plus d'une fois dans le nombre.
+ *
+ * @example
+ * analyserNombre(122.5); // { estEntier: false, doublonUnites: true } (le 2 apparaît deux fois)
+ * analyserNombre(47); // { estEntier: true, doublonUnites: false }
+ * analyserNombre(-141.4); // { estEntier: false, doublonUnites: true } (le 1 apparaît deux fois)
+ */
 export function analyserNombre (nombre: number): { estEntier: boolean; doublonUnites: boolean } {
   const estEntier = Math.floor(nombre) === nombre
+
   // Étape 1 : récupérer le chiffre des unités
   const chiffreUnites = Math.abs(Math.floor(nombre)) % 10
 
@@ -63,7 +120,7 @@ export function analyserNombre (nombre: number): { estEntier: boolean; doublonUn
   // Étape 3 : compter combien de fois le chiffre des unités apparaît
   const occurrences = chiffres
     .split('')
-    .filter((chiffre, index, arr) => parseInt(chiffre) === chiffreUnites)
+    .filter((chiffre) => parseInt(chiffre) === chiffreUnites)
 
   // Il y a un doublon si le chiffre des unités apparaît au moins deux fois
   const doublonUnites = occurrences.length > 1
