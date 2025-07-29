@@ -70,6 +70,7 @@ function traduireUnite (symbole: Unite): Traduction {
 
 export default class ExerciceConversions extends Exercice {
   correction_avec_des_fractions: boolean
+  valUnitaire: boolean
   constructor (niveau = 1) {
     super()
     this.sup = niveau // Niveau de difficulté de l'exercice
@@ -79,7 +80,7 @@ export default class ExerciceConversions extends Exercice {
     this.consigne = 'Compléter par un nombre décimal.'
     this.spacing = 2
     this.correction_avec_des_fractions = false
-
+    this.valUnitaire = false
     this.besoinFormulaireNumerique = ['Niveau de difficulté', 5, "1 : De da, h, k vers l'unité de référence\n2 : De d, c, m vers l'unité de référence\n3 : Multiplications ou divisions vers l'unité de référence\n4 : Conversions avec les octets\n5 : Mélange"]
     this.besoinFormulaire2CaseACocher = ['Avec des nombres décimaux']
     this.besoinFormulaire3CaseACocher = ['Qu\'avec des unités de longueurs']
@@ -136,8 +137,9 @@ export default class ExerciceConversions extends Exercice {
           div = false // Il n'y aura pas de division
           break
       }
-      let nbChiffreArrondi
-      if (this.sup2) {
+      let nbChiffreArrondi = 0
+      if (this.valUnitaire) val = new Decimal(1)
+      else if (this.sup2) {
         // Si la case pour les nombres décimaux est cochée
         nbChiffreArrondi = 2
         val = choice([
