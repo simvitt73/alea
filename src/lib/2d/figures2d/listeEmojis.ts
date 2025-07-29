@@ -1,4 +1,4 @@
-export type EmojiInfos = {
+type EmojiInfos = {
   unicode: string;
   nomPluriel: string;
   nomSingulier: string;

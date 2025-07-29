@@ -13,8 +13,6 @@ import { point } from '../../lib/2d/points'
 import { cubeDef, project3dIso, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
 import { context } from '../../modules/context'
-import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 
 export const titre = 'Définir une expression littérale à partir d\'un modèle figuratif'
@@ -102,19 +100,12 @@ export default class PaternNum1 extends Exercice {
         pattern.shapes = pat2D.shapes || ['carré', 'carré']
 
         if (pat2D.shapes[0] in listeShapes2DInfos) objetsCorr.push(listeShapes2DInfos[pat2D.shapes[0]].shapeDef)
-        else if (Object.keys(listeEmojisInfos).includes(pat2D.shapes[0])) {
-          const code = listeEmojisInfos[pat2D.shapes[0]].unicode
-          objetsCorr.push(emoji(pat2D.shapes[0], code).shapeDef)
-        } else {
+        else {
           console.warn(`Shape ${pat2D.shapes[0]} n'est pas dans listeShapesDef ou emojis`)
         }
         if (pat2D.shapes[1] && pat2D.shapes[1] !== pat2D.shapes[0]) {
           if (pat2D.shapes[1] in listeShapes2DInfos) objetsCorr.push(listeShapes2DInfos[pat2D.shapes[1]].shapeDef)
-          else if (Object.keys(listeEmojisInfos).includes(pat2D.shapes[1])) {
-            const code = listeEmojisInfos[pat2D.shapes[1]].unicode
-            objetsCorr.push(emoji(pat2D.shapes[1], code).shapeDef
-            )
-          } else {
+          else {
             console.warn(`Shape ${pat2D.shapes[1]} n'est pas dans listeShapesDef ou emojis`)
           }
         }
@@ -135,10 +126,7 @@ export default class PaternNum1 extends Exercice {
           const pat2D = pat as PatternRiche
           for (const shape of pat2D.shapes) {
             if (shape in listeShapes2DInfos) figures[j].push(listeShapes2DInfos[shape].shapeDef)
-            else if (Object.keys(listeEmojisInfos).includes(shape)) {
-              const code = listeEmojisInfos[shape].unicode
-              figures[j].push(emoji(shape, code).shapeDef)
-            } else {
+            else {
               console.warn(`Shape ${shape} n'est pas dans listeShapesDef ou emojis.`)
             }
           }
