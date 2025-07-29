@@ -10,8 +10,6 @@ import { point } from '../../lib/2d/points'
 // import type { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
-import { emoji } from '../../lib/2d/figures2d/Emojis'
 
 export const titre = 'Trouver le ratio d\'évolution d\'un motif numérique'
 export const interactifReady = true
@@ -62,8 +60,6 @@ export default class PaternNum1 extends Exercice {
       for (const name of pat.shapes) {
         if (name in listeShapes2DInfos) {
           objetsCorr.push(listeShapes2DInfos[name].shapeDef)
-        } else if (name in listeEmojisInfos) {
-          objetsCorr.push(emoji(name, listeEmojisInfos[name].unicode).shapeDef)
         } else {
           throw new Error(`Le nom de la forme "${name}" n'est pas reconnu dans les formes prédéfinies.`)
         }
@@ -79,8 +75,6 @@ export default class PaternNum1 extends Exercice {
         for (const name of pat.shapes) {
           if (name in listeShapes2DInfos) {
             figures[j].push(listeShapes2DInfos[name].shapeDef)
-          } else if (name in listeEmojisInfos) {
-            figures[j].push(emoji(name, listeEmojisInfos[name].unicode).shapeDef)
           } else {
             throw new Error(`Le nom de la forme "${name}" n'est pas reconnu dans les formes prédéfinies.`)
           }

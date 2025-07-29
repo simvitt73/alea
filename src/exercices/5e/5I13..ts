@@ -14,8 +14,6 @@ import { point } from '../../lib/2d/points'
 import { cubeDef, project3dIso, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
 import { context } from '../../modules/context'
-import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { range1 } from '../../lib/outils/nombres'
 
@@ -130,8 +128,6 @@ Si le nombre de questions est supérieur au nombre de patterns choisis, alors l'
         for (const shape of pattern.shapes) {
           if (shape in listeShapes2DInfos) {
             objetsCorr.push(listeShapes2DInfos[shape].shapeDef)
-          } else if (shape in listeEmojisInfos) {
-            objetsCorr.push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
           } else {
             throw new Error(`Shape ${shape} not found in listeShapes2DInfos or emojis.`)
           }
@@ -153,8 +149,6 @@ Si le nombre de questions est supérieur au nombre de patterns choisis, alors l'
           for (const shape of pattern.shapes) {
             if (shape in listeShapes2DInfos) {
               figures[j].push(listeShapes2DInfos[shape].shapeDef)
-            } else if (shape in listeEmojisInfos) {
-              figures[j].push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
             } else {
               throw new Error(`Shape ${shape} not found in listeShapes2DInfos or emojis.`)
             }

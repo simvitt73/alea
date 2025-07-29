@@ -15,8 +15,6 @@ import { point } from '../../lib/2d/points'
 import { cubeDef, project3dIso, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
 import { context } from '../../modules/context'
-import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 
 export const titre = 'Comprendre un algorithme itératif'
@@ -128,8 +126,6 @@ export default class PaternNum0 extends Exercice {
         for (const shape of pattern.shapes) {
           if (shape in listeShapes2DInfos) {
             objetsCorr.push(listeShapes2DInfos[shape].shapeDef)
-          } else if (shape in listeEmojisInfos) {
-            objetsCorr.push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
           } else {
             throw new Error(`Shape ${shape} not found in listeShapes2DInfos or emojis.`)
           }
@@ -155,8 +151,6 @@ export default class PaternNum0 extends Exercice {
           for (const shape of pattern.shapes) {
             if (shape in listeShapes2DInfos) {
               figures[j].push(listeShapes2DInfos[shape].shapeDef)
-            } else if (shape in listeEmojisInfos) {
-              figures[j].push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
             } else {
               throw new Error(`Shape ${shape} not found in listeShapes2DInfos or emojis.`)
             }
@@ -203,7 +197,7 @@ export default class PaternNum0 extends Exercice {
       let texteCorr = ''
       const listeQuestions: string[] = []
       const listeCorrections: string[] = []
-      const infosShape = pattern.shapes[0] in listeShapes2DInfos ? listeShapes2DInfos[pattern.shapes[0]] : pattern.shapes[0] in listeEmojisInfos ? listeEmojisInfos[pattern.shapes[0]] : { articleCourt: 'un', nomPluriel: 'formes' }
+      const infosShape = pattern.shapes[0] in listeShapes2DInfos ? listeShapes2DInfos[pattern.shapes[0]] : pattern.shapes[0] in listeShapes2DInfos ? listeShapes2DInfos[pattern.shapes[0]] : { articleCourt: 'un', nomPluriel: 'formes' }
       for (const q of typesQuestions) {
         switch (q) {
           case 1:

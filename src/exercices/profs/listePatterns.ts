@@ -1,5 +1,3 @@
-import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
 import { cubeDef, faceLeft, faceRight, faceTop, project3dIso, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
 import { listeShapes2DInfos, shapeNames, type ShapeName } from '../../lib/2d/figures2d/shapes2d'
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
@@ -79,10 +77,10 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
         listePatterns = listePatternRatio
         break
     }
+    const listeShapes = Array.from(new Set(listePatterns.map(pat => pat.shapes).flat()))
     let texte = ''
     if (!context.isHtml) {
-      texte += `${Object.values(listeShapes2DInfos).map(shape => shape.shapeDef.tikz()).join('\n')}\n`
-      texte += `${Object.entries(listeEmojisInfos).map(([nom, infos]) => emoji(nom, infos.unicode).shapeDef.tikz()).join('\n')}\n`
+      texte += `${listeShapes.map(shape => listeShapes2DInfos[shape].shapeDef.tikz()).join('\n')}\n`
     }
     if (listePatterns == null || listePatterns.length === 0) return
     for (let i = 0; i < listePatterns.length; i++) {
@@ -97,9 +95,6 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
         for (const shape of pat.shapes) {
           if (shape in listeShapes2DInfos) {
             objets.push(listeShapes2DInfos[shape].shapeDef)
-          }
-          if (shape in listeEmojisInfos) {
-            objets.push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
           }
         }
         for (let j = 0; j <= pat.nbMotifMin; j++) {
@@ -155,23 +150,18 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
               let name = pattern.shapes[n]
               if (name in listeShapes2DInfos) {
                 if (name === 'carré') {
-                  const nom = String(choice(Object.keys(listeEmojisInfos)))
+                  const nom = String(choice(Object.keys(listeShapes2DInfos)))
                   name = nom
                   pattern.shapes[n] = nom
-                  figures[j].push(emoji(nom, listeEmojisInfos[nom].unicode).shapeDef)
-                } else figures[j].push(listeShapes2DInfos[name].shapeDef)
-              } else if (name in listeEmojisInfos) {
-                figures[j].push(emoji(name, listeEmojisInfos[name].unicode).shapeDef)
-              } else {
-                if (Object.keys(listeEmojisInfos).includes(name)) {
-                  figures[j].push(emoji(name, listeEmojisInfos[name].unicode))
-                } else if (name === 'cube') {
-                  if ((pattern as VisualPattern3D).shape == null) {
-                    (pattern as VisualPattern3D).shape = shapeCubeIso()
-                  }
-                  const cubeIsoDef = cubeDef(`cubeIsoQ${i}F${j}`, 1)
-                  cubeIsoDef.svg = function (coeff: number): string {
-                    return `
+                }
+                figures[j].push(listeShapes2DInfos[name].shapeDef)
+              } else if (name === 'cube') {
+                if ((pattern as VisualPattern3D).shape == null) {
+                  (pattern as VisualPattern3D).shape = shapeCubeIso()
+                }
+                const cubeIsoDef = cubeDef(`cubeIsoQ${i}F${j}`, 1)
+                cubeIsoDef.svg = function (coeff: number): string {
+                  return `
           <defs>
             <g id="cubeIsoQ${i}F${j}">
               ${faceTop(angle)}
@@ -179,11 +169,10 @@ L'expression donnée entre crochets est la formule qui permet de calculer le nom
               ${faceRight(angle)}
             </g>
           </defs>`
-                  }
-                  figures[j].push(cubeIsoDef)
-                } else {
-                  console.warn(`Shape ${name} n'est pas dans listeShapesDef ou emojis et n'est pas un cube`)
                 }
+                figures[j].push(cubeIsoDef)
+              } else {
+                console.warn(`Shape ${name} n'est pas dans listeShapesDef ou emojis et n'est pas un cube`)
               }
             }
           }
