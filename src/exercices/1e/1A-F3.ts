@@ -5,7 +5,7 @@ import { texNombre } from '../../lib/outils/texNombre'
 import { randint } from '../../modules/outils'
 import ExerciceQcmA from '../ExerciceQcmA'
 export const dateDePublication = '28/07/2025'
-export const uuid = ''
+export const uuid = '4c3c0'
 
 export const refs = {
   'fr-fr': ['1A-F3'],
@@ -15,7 +15,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'Retrouver une fonction affine'
+export const titre = 'Reconnaître une fonction affine'
 export default class AutoF3 extends ExerciceQcmA {
   versionOriginale: () => void = () => {
     this.enonce = `On considère les trois fonctions définies sur $\\mathbb{R}$ par : <br>
