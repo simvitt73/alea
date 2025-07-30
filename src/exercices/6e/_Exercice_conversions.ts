@@ -31,7 +31,7 @@ export const dateDeModifImportante = '28/07/2025' // Rajout du paramètre this.s
  * Relecture : Novembre 2021 par EE
  */
 
-type Unite = 'm' | 'g' | '€' | 'L' | 'o'
+type Unite = 'm' | 'g' | '€' | 'L' | 'o' | 'octets' | 'ko' | 'Mo' | 'Go' | 'To'
 
 interface Traduction {
   singulier: string;
@@ -117,7 +117,7 @@ export default class ExerciceConversions extends Exercice {
       resultat,
       texte,
       texteCorr,
-      listeUniteInfo,
+      listeUniteInfo:Unite[] = [],
       cpt = 0; i < this.nbQuestions && cpt < 50;) {
       // On limite le nombre d'essais pour chercher des valeurs nouvelles
       k = randint(0, 2) // Choix du préfixe
@@ -243,6 +243,7 @@ export default class ExerciceConversions extends Exercice {
         const ecart = unite2 - unite1 // nombre de multiplication par 1000 pour passer de l'un à l'autre
         if (unite1 === 0 && val.toNumber() % 1 !== 0) val = new Decimal(randint(3, 100)) // Pas de nombre d'octets non entiers
         const uniteOctets = listeUniteInfo[unite1]
+        unite = listeUniteInfo[unite1]
         if (!div) {
           resultat = val.mul(Math.pow(10, 3 * ecart))
           texte =
@@ -289,7 +290,7 @@ export default class ExerciceConversions extends Exercice {
       // EE : Mise en couleur de la réponse interactive
       const aMettreEnCouleur: string = miseEnEvidence((texteCorr.split('=').pop() ?? '').replaceAll('$', '')) + '$'
       texteCorr = texteCorr.replace(String(texteCorr.split('=').pop()), '') + aMettreEnCouleur.replace(texTexte(unite), '') + '$' + texTexte(unite) + '$'
-      if (this.correctionDetaillee) { texteCorr = `Un ${div ? prefixeDiv[k][2] : prefixeMulti[k][2]}${traduireUnite(unite).singulier} est ${div ? prefixeDiv[k][3] : prefixeMulti[k][3]} ${div ? traduireUnite(unite).singulier : traduireUnite(unite).pluriel} donc :<br>` + texteCorr + '.' }
+      if (this.correctionDetaillee && listeDesProblemes[i] !== 4) { texteCorr = `Un ${div ? prefixeDiv[k][2] : prefixeMulti[k][2]}${traduireUnite(unite).singulier} est ${div ? prefixeDiv[k][3] : prefixeMulti[k][3]} ${div ? traduireUnite(unite).singulier : traduireUnite(unite).pluriel} donc :<br>` + texteCorr + '.' }
 
       if (this.questionJamaisPosee(i, val, resultat.toString())) {
         handleAnswers(this, i, { reponse: { value: resultat.toString(), options: { nombreDecimalSeulement: true, fractionDecimale: true } } })
