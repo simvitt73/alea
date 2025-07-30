@@ -45,7 +45,7 @@
     "forceBuild": "npm run makeJson && vite build",
     "build:deploy": "npm run build && tasks/deploy_site.sh",
     "forceBuild:deploy": "npm run forceBuild && tasks/deploy_site.sh",
-    "deploy:site": "tasks/deploy_site.sh",
+    "deploy:site": "tasks/deploy_site.sh && open https://coopmaths.fr/alea",
     "makeJson": "node tasks/dictionnaireToReferentiel.js && node tasks/updateMenuInternational",
     "getNewUuid": "npm run makeJson",
     "updateMenu": "npm run makeJson",
