@@ -81,7 +81,7 @@ export default class AutoF4b extends ExerciceQcmA {
 
     this.correction = `
 
-    $\\bullet$ L\'équation $f(x) = 0$ admet trois solutions dont deux sont opposées<br>
+    $\\bullet$ L'équation $f(x) = 0$ admet trois solutions dont deux sont opposées<br>
 Cette affirmation est correcte : La courbe coupe l'axe des abscisses en trois points : en $x = -4$, en $x =-1$ et $x=4$.<br>
 $-4$ et $4$ sont des nombres opposés. <br>
 
@@ -199,17 +199,17 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
           // Définir toutes les réponses possibles avec leur correction
           const bonnesReponses = [
             {
-              texte: `$f$ est positive sur $[${texNombre(v1, 1)}\\,;\\,${texNombre(v1 + 0.5, 1)}]$`,
+              texte: `$f$ est positive sur $[${texNombre(v1, 1)}\\,;\\,${texNombre(v1 + 0.5, 1)}]$.`,
               correction: AFC + `$f$ est positive sur $[${texNombre(v1, 1)}\\,;\\,${texNombre(v1 + 0.5, 1)}]$ car la courbe se situe au-dessus de l'axe des abscisses sur cet intervalle.`,
               estCorrecte: true
             },
             {
-              texte: 'L\'équation $f(x)=0$ admet deux solutions de même signe',
+              texte: 'L\'équation $f(x)=0$ admet deux solutions de même signe.',
               correction: AFC + 'L\'équation $f(x)=0$ admet effectivement deux solutions de même signe car la courbe coupe deux fois  l\'axe des abscisses pour des valeurs négatives.',
               estCorrecte: true
             },
             {
-              texte: 'Le minimum de $f$ est $-3$',
+              texte: 'Le minimum de $f$ est $-3$.',
               correction: AFC + 'Le point le plus bas de la courbe a pour ordonnée $-3$. C\'est le minimum de $f$.',
               estCorrecte: true
             },
@@ -224,7 +224,7 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
               estCorrecte: false
             },
             {
-              texte: 'L\'inéquation $f(x) < 0$ a pour ensemble de solutions $[-4\\,;\\,-3[\\cup ]-1\\,;\\,5]$',
+              texte: 'L\'inéquation $f(x) < 0$ a pour ensemble de solutions $[-4\\,;\\,-3[\\cup ]-1\\,;\\,5]$.',
               correction: AFC + 'Les solutions de l\'inéquation $f(x) < 0$ sont les abscisses des points de la courbe situés strictement en dessous de l\'axe des abscissses.',
               estCorrecte: true
             }
@@ -237,12 +237,12 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
               estCorrecte: false
             },
             {
-              texte: 'Le minimum de $f$ est $-4$',
+              texte: 'Le minimum de $f$ est $-4$.',
               correction: AFF + ' Le point le plus bas de la courbe a pour ordonnée $-3$, donc le minimum de $f$ est $-3$.',
               estCorrecte: false
             },
             {
-              texte: `L'équation $f(x) = ${texNombre(v4, 1)}$ a une unique solution`,
+              texte: `L'équation $f(x) = ${texNombre(v4, 1)}$ a une unique solution.`,
               correction: AFF + `La droite d'équation $y=${texNombre(v4, 1)}$ coupe plusieurs fois la courbe, donc l'équation n'a pas une unique solution.`,
               estCorrecte: false
             },
@@ -252,28 +252,28 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
               estCorrecte: false
             },
             {
-              texte: `$f$ est négative sur $[${texNombre(v3, 1)}\\,;\\,${texNombre(v3 + 0.5, 1)}]$`,
+              texte: `$f$ est négative sur $[${texNombre(v3, 1)}\\,;\\,${texNombre(v3 + 0.5, 1)}]$.`,
               correction: AFF + `$f$ est positive sur $[-3\\,;\\,-1]$, donc $f$ est positive sur $[${texNombre(v3, 1)}\\,;\\,${texNombre(v3 + 0.5, 1)}]$.`,
               estCorrecte: false
             },
             {
-              texte: 'L\'inéquation $f(x) < 0$ a pour ensemble de solutions $[-4\\,;\\,-3]\\cup [-1\\,;\\,5]$',
+              texte: 'L\'inéquation $f(x) < 0$ a pour ensemble de solutions $[-4\\,;\\,-3]\\cup [-1\\,;\\,5]$.',
               correction: AFF + 'Les solutions de l\'inéquation $f(x) < 0$ sont les abscisses des points situés strictement en dessous de l\'axe des abscissses, ce qui n\'est pas le cas de $-3$ par exemple.',
               estCorrecte: true
             },
             {
-              texte: 'L\'inéquation $f(x) \\geqslant 0$ a pour ensemble de solutions $]-3\\,;\\,-1[$',
+              texte: 'L\'inéquation $f(x) \\geqslant 0$ a pour ensemble de solutions $]-3\\,;\\,-1[$.',
               correction: AFF + `Les solutions de l'inéquation $f(x)\\geqslant 0$ sont les abscisses des points situés strictement au dessus ou sur  l'axe des abscissses.<br>
               $-3$ et $-1$ sont donc solutions de l'inéquation.`,
               estCorrecte: true
             },
             {
-              texte: `Si $${theSpline.x[v5]}\\leqslant x \\leqslant 5$, alors $-1\\leqslant x \\leqslant ${theSpline.y[v5]}$`,
+              texte: `Si $${theSpline.x[v5]}\\leqslant x \\leqslant 5$, alors $-1\\leqslant f(x) \\leqslant ${theSpline.y[v5]}$.`,
               correction: AFF + `Le minimum de $f$ sur $[${theSpline.x[v5]}\\,;\\,5]$ est $-3$ et son maximum est $${theSpline.y[v5]}$, on en déduit l'encadrement $-3\\leqslant x \\leqslant ${theSpline.y[v5]}$.`,
               estCorrecte: true
             },
             {
-              texte: 'Le maximum de $f$ est $5$',
+              texte: 'Le maximum de $f$ est $5$.',
               correction: AFF + 'Le point le plus haut de la courbe a pour ordonnée $1$, donc le maximum de $f$ est $1$.',
               estCorrecte: false
             }
@@ -326,12 +326,12 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
               estCorrecte: true
             },
             {
-              texte: 'L\'équation $f(x)=0$ admet deux solutions opposées',
+              texte: 'L\'équation $f(x)=0$ admet deux solutions opposées.',
               correction: AFC + 'L\'équation $f(x)=0$ admet effectivement deux solutions opposées car la courbe coupe deux fois l\'axe des abscisses pour des valeurs opposées en $-2$ et $2$.',
               estCorrecte: true
             },
             {
-              texte: 'Le minimum de $f$ est $-4$',
+              texte: 'Le minimum de $f$ est $-4$.',
               correction: AFC + 'Le point le plus bas de la courbe a pour ordonnée $-4$. C\'est le minimum de $f$.',
               estCorrecte: true
             },
@@ -346,12 +346,12 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
               estCorrecte: false
             },
             {
-              texte: 'L\'inéquation $f(x) \\leqslant 0$ a pour ensemble de solutions $[-3\\,;\\,2]$',
+              texte: 'L\'inéquation $f(x) \\leqslant 0$ a pour ensemble de solutions $[-3\\,;\\,2]$.',
               correction: AFC + 'Les solutions de l\'inéquation $f(x) \\leqslant 0$ sont les abscisses des points de la courbe situés en dessous ou sur l\'axe des abscissses.',
               estCorrecte: true
             },
             {
-              texte: `Si $${theSpline.x[v13]}\\leqslant x \\leqslant ${theSpline.x[v14]}$, alors $-4\\leqslant f(x) \\leqslant 3$`,
+              texte: `Si $${theSpline.x[v13]}\\leqslant x \\leqslant ${theSpline.x[v14]}$, alors $-4\\leqslant f(x) \\leqslant 3$.`,
               correction: AFC + `Le minimum de $f$ sur $[${theSpline.x[v13]}\\,;\\,${theSpline.x[v14]}]$ est $-4$ et son maximum est $3$, on en déduit l'encadrement $-4\\leqslant x \\leqslant 3$.`,
               estCorrecte: true
             }
@@ -359,22 +359,22 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
 
           const mauvaisesReponses = [
             {
-              texte: `$f$ est négative sur $[${texNombre(v6, 1)}\\,;\\,${texNombre(v7, 1)}]$`,
+              texte: `$f$ est négative sur $[${texNombre(v6, 1)}\\,;\\,${texNombre(v7, 1)}]$.`,
               correction: AFF + `$f$ est positive sur $[${texNombre(v6, 1)}\\,;\\,${texNombre(v7, 1)}]$ car la courbe se situe au-dessus de l'axe des abscisses sur cet intervalle.`,
               estCorrecte: true
             },
             {
-              texte: 'L\'équation $f(x)=0$ admet une unique solution',
+              texte: 'L\'équation $f(x)=0$ admet une unique solution.',
               correction: AFF + 'L\'équation $f(x)=0$ admet  deux solutions car la courbe coupe deux fois l\'axe des abscisses pour des valeurs opposées en $-2$ et $2$.',
               estCorrecte: true
             },
             {
-              texte: `Le minimum de $f$ est ${choix ? '$-3$' : '$0$'}`,
+              texte: `Le minimum de $f$ est ${choix ? '$-3$' : '$0$'}.`,
               correction: AFF + 'Le point le plus bas de la courbe a pour ordonnée $-4$. C\'est le minimum de $f$.',
               estCorrecte: true
             },
             {
-              texte: `Le maximum de $f$ est ${choix ? '$6$' : '$5$'}`,
+              texte: `Le maximum de $f$ est ${choix ? '$6$' : '$5$'}.`,
               correction: AFF + 'Le point le plus haut de la courbe a pour ordonnée $3$. C\'est le maximum de $f$.',
               estCorrecte: true
             },
@@ -389,12 +389,12 @@ Cette affirmation est fausse : Les solutions de l'inéquation $f(x) \\geqslant 0
               estCorrecte: false
             },
             {
-              texte: 'L\'inéquation $f(x) \\leqslant 0$ a pour ensemble de solutions $[-3\\,;\\,-2[\\cup]-2\\,;\\,2]$',
+              texte: 'L\'inéquation $f(x) \\leqslant 0$ a pour ensemble de solutions $[-3\\,;\\,-2[\\cup]-2\\,;\\,2]$.',
               correction: AFF + 'Les solutions de l\'inéquation $f(x) \\leqslant 0$ sont les abscisses des points de la courbe situés en dessous ou sur l\'axe des abscissses.',
               estCorrecte: true
             },
             {
-              texte: `Si $${theSpline.x[v13]}\\leqslant x \\leqslant ${theSpline.x[v14]}$, alors $${theSpline.y[v13]}\\leqslant f(x) \\leqslant ${theSpline.y[v14]}$`,
+              texte: `Si $${theSpline.x[v13]}\\leqslant x \\leqslant ${theSpline.x[v14]}$, alors $${theSpline.y[v13]}\\leqslant f(x) \\leqslant ${theSpline.y[v14]}$.`,
               correction: AFF + `Le minimum de $f$ sur $[${theSpline.x[v13]}\\,;\\,${theSpline.x[v14]}]$ est $-4$ et son maximum est $3$, on en déduit l'encadrement $-4\\leqslant x \\leqslant 3$.`,
               estCorrecte: true
             }
