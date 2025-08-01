@@ -9,7 +9,7 @@ import Exercice from '../Exercice'
 import { colorToLatexOrHTML, mathalea2d, ObjetMathalea2D, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
 import { allerA, angleScratchTo2d, attendre, baisseCrayon, clone, creerLutin, ObjetLutin, orienter } from '../../modules/2dLutin'
-import { noteLaCouleur, plateau2dNLC, testBoucle, testInstruction, testSequence, thePlateau, traducNum } from '../../modules/noteLaCouleur'
+import { noteLaCouleur, plateau2dNLC, testBoucle, testInstruction, testSequence, thePlateau, traducColor, traducNum } from '../../modules/noteLaCouleur'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { scratchblock } from '../../modules/scratchblock'
 import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
@@ -379,12 +379,12 @@ export default class NoteLaCouleur6e extends Exercice {
       if (this.sup % 2 === 0) reponseCouleur[0] = '(' + traducNum(couleurs[0] as unknown as 'Blanc' | 'Bleu' | 'Noir' | 'Rouge' | 'Jaune' | 'Rose' | 'Vert' | 'Orange' | 'Gris') + ') ' + couleurs[0]
       texteCorr = 'On obtient la série de couleurs suivante :<br> '
       texteCorr += `${texteEnCouleurEtGras(reponseCouleur[0])} `
-      texte += !this.interactif ? '' : 'Couleur n°1 : ' + choixDeroulant(this, q * couleurs.length, choixListeDeroulante[(this.sup - 1) % 2], 'une couleur') + '<br>'
+      texte += !this.interactif ? '' : 'Couleur n°1 : ' + choixDeroulant(this, q * couleurs.length, [{ label: 'Choisir une couleur', value: '' }, ...choixListeDeroulante[(this.sup - 1) % 2].map(item => this.sup === 1 ? ({ svg: '<rect x="-10" y="-10" width="20" height="20" stroke="black" fill="' + traducColor(item) + '"/>', value: item }) : ({ label: item, value: item }))]) + '<br>'
       handleAnswers(this, q * couleurs.length, { reponse: { value: couleurs[0] } }, { formatInteractif: 'listeDeroulante' })
       for (let i = 1; i < couleurs.length; i++) {
         if (this.sup % 2 === 0) reponseCouleur[i] = '(' + traducNum(couleurs[i] as unknown as 'Blanc' | 'Bleu' | 'Noir' | 'Rouge' | 'Jaune' | 'Rose' | 'Vert' | 'Orange' | 'Gris') + ') ' + couleurs[i]
         texteCorr += `${texteEnCouleurEtGras(reponseCouleur[i])} `
-        texte += !this.interactif ? '' : 'Couleur n°' + (i + 1) + ' : ' + choixDeroulant(this, q * couleurs.length + i, choixListeDeroulante[(this.sup - 1) % 2], 'une couleur') + '<br>'
+        texte += !this.interactif ? '' : 'Couleur n°' + (i + 1) + ' : ' + choixDeroulant(this, q * couleurs.length + i, [{ label: 'Choisir une couleur', value: '' }, ...choixListeDeroulante[(this.sup - 1) % 2].map(item => this.sup === 1 ? ({ svg: '<rect x="-10" y="-10" width="20" height="20" stroke="black" fill="' + traducColor(item) + '"/>', value: item }) : ({ label: item, value: item }))]) + '<br>'
         handleAnswers(this, q * couleurs.length + i, { reponse: { value: couleurs[i] } }, { formatInteractif: 'listeDeroulante' })
       }
       lutin.animation = `<radialGradient id="Ball" cx="8" cy="-3" r="20" gradientUnits="userSpaceOnUse">

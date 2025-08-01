@@ -1,4 +1,4 @@
-import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
+import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import Exercice from '../Exercice'
 import { listeQuestionsToContenu } from '../../modules/outils'
 import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
@@ -53,27 +53,25 @@ export default class sensDesPrefixes extends Exercice {
     }
 
     let listeDePrefixesDisponibles = [
-      ['milli', '\\div 1~000', '\\times 10^{-3}'],
+      ['milli', '\\div 1\\,000', '\\times 10^{-3}'],
       ['centi', '\\div 100', '\\times 10^{-2}'],
       ['déci', '\\div 10', '\\times 10^{-1}'],
       ['déca', '\\times 10', '\\times 10'],
       ['hecto', '\\times 100', '\\times 10^{2}'],
-      ['kilo', '\\times 1~000', '\\times 10^{3}']
+      ['kilo', '\\times 1\\,000', '\\times 10^{3}']
     ]
     if (this.sup2 === 2) {
       listeDePrefixesDisponibles = [
-        ['nano', '\\div 1~000~000~000', '\\times 10^{-9}'],
-        ['micro', '\\div 1~000~000', '\\times 10^{-6}'],
+        ['nano', '\\div 1\\,000\\,000\\,000', '\\times 10^{-9}'],
+        ['micro', '\\div 1\\,000\\,000', '\\times 10^{-6}'],
         ...listeDePrefixesDisponibles,
-        ['Méga', '\\times 1~000~000', '\\times 10^{6}'],
-        ['Giga', '\\times 1~000~000~000', '\\times 10^{9}'],
-        ['Téra', '\\times 1~000~000~000~000', '\\times 10^{12}']
+        ['Méga', '\\times 1\\,000\\,000', '\\times 10^{6}'],
+        ['Giga', '\\times 1\\,000\\,000\\,000', '\\times 10^{9}'],
+        ['Téra', '\\times 1\\,000\\,000\\,000~000', '\\times 10^{12}']
       ]
     }
     const listeTypeQuestions = combinaisonListes(typeQuestionsDisponibles, this.nbQuestions)
     const listePrefixes = combinaisonListes(listeDePrefixesDisponibles, this.nbQuestions)
-    const choixDeroulantprefixes = listeDePrefixesDisponibles.map(p => p[0])
-    const choixDeroulantCalculs = listeDePrefixesDisponibles.map(p => p[1].replace('\\div', '÷').replace('\\times', '✕').replaceAll('~', ' '))
 
     for (let i = 0, texte, texteCorr, cpt = 0; i < this.nbQuestions && cpt < 50;) { // Boucle principale où i+1 correspond au numéro de la question
       const prefixe = listePrefixes[i][0]
@@ -82,15 +80,25 @@ export default class sensDesPrefixes extends Exercice {
         case 'OnPartDuPrefixe':
           texte = `${prefixe} : $\\dotfill$`
           texteCorr = `${prefixe} : $${miseEnEvidence(calcul)}$`
-          handleAnswers(this, i, { reponse: { value: calcul.replace('\\div', '÷').replace('\\times', '✕').replaceAll('~', ' ') } }, { formatInteractif: 'listeDeroulante' })
-          if (this.interactif) texte = `${prefixe} : ` + choixDeroulant(this, i, choixDeroulantCalculs, 'une réponse')
+          handleAnswers(this, i, { reponse: { value: prefixe } }, { formatInteractif: 'listeDeroulante' })
+          if (this.interactif) {
+            texte = `${prefixe} : ` + choixDeroulant(this, i, [
+              { label: 'Choisit le bon calcul', value: '' },
+              ...listeDePrefixesDisponibles.map(item => ({ latex: item[1], value: item[0] }))
+            ])
+          }
           break
         case 'OnPartDuCalcul':
         default:
           texte = `$${calcul}$ : $\\dotfill$`
           texteCorr = `$${calcul}$ : ${texteEnCouleurEtGras(prefixe)}`
           handleAnswers(this, i, { reponse: { value: prefixe } }, { formatInteractif: 'listeDeroulante' })
-          if (this.interactif) texte = `$${calcul}$ : ` + choixDeroulant(this, i, shuffle(choixDeroulantprefixes), 'une réponse')
+          if (this.interactif) {
+            texte = `$${calcul}$ : ` + choixDeroulant(this, i,
+              [{ label: 'Choisit le bon préfixe', value: '' },
+                ...listeDePrefixesDisponibles.map(item => ({ label: item[0], value: item[0] }))
+              ])
+          }
           break
       }
       if (this.questionJamaisPosee(i, prefixe)) {
