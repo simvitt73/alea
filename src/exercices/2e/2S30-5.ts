@@ -105,7 +105,14 @@ export default class FonctionsProbabilite2 extends Exercice {
             {
               items: [
                   `Combien d'issues possède cette experience aléatoire ?${this.interactif ? ' ' + ajouteChampTexteMathLive(this, iInteractif) : ''} Donner un exemple d'issue.${this.interactif ? ' ' + ajouteChampTexteMathLive(this, iInteractif + 1, '', { texteAvant: `<br>On donnera la réponse sous la forme $(X,Y)$ avec $X,Y$ deux lettres parmi $${Initiale[p]}$, $${Initiale[q]}$ et $${Initiale[r]}$ : ` }) : ''}`,
-                  'Est-ce une expérience en situation d\'équiprobabilité ?' + (!this.interactif ? ' Justifier.' : choixDeroulant(this, iInteractif + 2, ['oui', 'non', 'je sais pas'], 'une réponse')),
+                  'Est-ce une expérience en situation d\'équiprobabilité ?' + (!this.interactif
+                    ? ' Justifier.'
+                    : choixDeroulant(this, iInteractif + 2, [
+                      { label: 'Choisir une des réponses suivantes', value: '' },
+                      { label: 'oui', value: 'oui' },
+                      { label: 'non', value: 'non' },
+                      { label: 'je sais pas', value: 'je sais pas' }
+                    ])),
                   `Calculer la probabilité que ${quidame} et ${quidam} aient choisi tous les deux un yaourt ${qualites[0][p]}.` + (this.interactif ? ajouteChampTexteMathLive(this, iInteractif + 3) : ''),
                   ' Calculer la probabilité qu\'ils aient choisi des yaourts aux parfums identiques.' + (this.interactif ? ajouteChampTexteMathLive(this, iInteractif + 4) : ''),
                   ' Calculer la probabilité qu\'ils aient choisi des yaourts aux parfums différents.' + (this.interactif ? ajouteChampTexteMathLive(this, iInteractif + 5) : '')

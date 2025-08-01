@@ -1,5 +1,5 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { nombreAvecEspace, texNombre } from '../../lib/outils/texNombre'
+import { texNombre } from '../../lib/outils/texNombre'
 import Exercice from '../Exercice'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Operation from '../../modules/operations'
@@ -72,59 +72,131 @@ export default class DivisibleDiviseurMultiple extends Exercice {
       if (listeTypeDeQuestions[i] === 1) {
         texte = '... est divisible par ...'
         if (this.interactif) {
-          texte = choixDeroulant(this, 2 * i, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)]) + 'est divisible par' + choixDeroulant(this, 2 * i + 1, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)])
+          texte = choixDeroulant(this, 2 * i, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ]) + 'est divisible par' + choixDeroulant(this, 2 * i + 1, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ])
         }
-        texteCorr = `$${texNombre(a)}$ est divisible par $${texNombre(b)}$ ou $${texNombre(a)}$ est divisible par $${texNombre(q)}$.`
-        this.setReponse(i, [[nombreAvecEspace(a), nombreAvecEspace(b)], [nombreAvecEspace(a), nombreAvecEspace(q)]])
+        texteCorr = `$${texNombre(a, 0)}$ est divisible par $${texNombre(b, 0)}$ ou $${texNombre(a, 0)}$ est divisible par $${texNombre(q, 0)}$.`
+        this.setReponse(i, [[String(a), String(b)], [String(a), String(q)]])
       } else if (listeTypeDeQuestions[i] === 2) {
         texte = '... est un diviseur de ...'
         if (this.interactif) {
-          texte = choixDeroulant(this, 2 * i, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)]) + 'est un diviseur de' + choixDeroulant(this, 2 * i + 1, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)])
+          texte = choixDeroulant(this, 2 * i, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ]) + 'est un diviseur de' + choixDeroulant(this, 2 * i + 1, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ])
         }
-        texteCorr = `$${texNombre(b)}$ est un diviseur de $${texNombre(a)}$ ou $${texNombre(q)}$ est un diviseur de $${texNombre(a)}$.`
-        this.setReponse(i, [[nombreAvecEspace(b), nombreAvecEspace(a)], [nombreAvecEspace(q), nombreAvecEspace(a)]])
+        texteCorr = `$${texNombre(b, 0)}$ est un diviseur de $${texNombre(a, 0)}$ ou $${texNombre(q, 0)}$ est un diviseur de $${texNombre(a, 0)}$.`
+        this.setReponse(i, [[String(b), String(a)], [String(q), String(a)]])
       } else if (listeTypeDeQuestions[i] === 3) {
         texte = '... est un multiple de ...'
         if (this.interactif) {
-          texte = choixDeroulant(this, 2 * i, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)]) + 'est un multiple de' + choixDeroulant(this, 2 * i + 1, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)])
+          texte = choixDeroulant(this, 2 * i, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ]) + 'est un multiple de' + choixDeroulant(this, 2 * i + 1, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ])
         }
-        texteCorr = `$${texNombre(a)}$ est un multiple de $${texNombre(b)}$ ou $${texNombre(a)}$ est un multiple de $${texNombre(q)}$.`
-        this.setReponse(i, [[nombreAvecEspace(a), nombreAvecEspace(b)], [nombreAvecEspace(a), nombreAvecEspace(q)]])
+        texteCorr = `$${texNombre(a, 0)}$ est un multiple de $${texNombre(b, 0)}$ ou $${texNombre(a, 0)}$ est un multiple de $${texNombre(q, 0)}$.`
+        this.setReponse(i, [[String(a), String(b)], [String(a), String(q)]])
       } else if (listeTypeDeQuestions[i] === 4) {
         texte = '... n\'est pas divisible par ...'
         if (this.interactif) {
-          texte = choixDeroulant(this, 2 * i, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)]) + 'n\'est pas divisible par' + choixDeroulant(this, 2 * i + 1, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)])
+          texte = choixDeroulant(this, 2 * i, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ]) + 'n\'est pas divisible par' + choixDeroulant(this, 2 * i + 1, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ])
         }
-        texteCorr = `$${texNombre(a1)}$ n'est pas divisible par $${texNombre(b)}$ ou $${texNombre(a1)}$ n'est pas divisible par $${texNombre(q)}$.`
-        this.setReponse(i, [[nombreAvecEspace(a1), nombreAvecEspace(b)], [nombreAvecEspace(a1), nombreAvecEspace(q)],
-          [nombreAvecEspace(b), nombreAvecEspace(a1)], // réponses absurdes mais vraies !
-          [nombreAvecEspace(q), nombreAvecEspace(a1)],
-          [nombreAvecEspace(b), nombreAvecEspace(a)], // réponses absurdes mais vraies !
-          [nombreAvecEspace(q), nombreAvecEspace(a)]
+        texteCorr = `$${texNombre(a1, 0)}$ n'est pas divisible par $${texNombre(b, 0)}$ ou $${texNombre(a1, 0)}$ n'est pas divisible par $${texNombre(q, 0)}$.`
+        this.setReponse(i, [[String(a1), String(b)], [String(a1), String(q)],
+          [String(b), String(a1)], // réponses absurdes mais vraies !
+          [String(q), String(a1)],
+          [String(b), String(a)], // réponses absurdes mais vraies !
+          [String(q), String(a)]
         ])
       } else if (listeTypeDeQuestions[i] === 5) {
         texte = '... n\'est pas un diviseur de ...'
         if (this.interactif) {
-          texte = choixDeroulant(this, 2 * i, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)]) + 'n\'est pas un diviseur de' + choixDeroulant(this, 2 * i + 1, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)])
+          texte = choixDeroulant(this, 2 * i, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ]) + 'n\'est pas un diviseur de' + choixDeroulant(this, 2 * i + 1, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ])
         }
-        texteCorr = `$${texNombre(b)}$ n'est pas un diviseur de $${texNombre(a1)}$ ou $${texNombre(q)}$ n'est pas un diviseur de $${texNombre(a1)}$.`
-        this.setReponse(i, [[nombreAvecEspace(b), nombreAvecEspace(a1)], [nombreAvecEspace(q), nombreAvecEspace(a1)],
-          [nombreAvecEspace(a1), nombreAvecEspace(b)],
-          [nombreAvecEspace(a1), nombreAvecEspace(q)],
-          [nombreAvecEspace(a), nombreAvecEspace(b)],
-          [nombreAvecEspace(a), nombreAvecEspace(q)]// réponses absurdes mais vraies
+        texteCorr = `$${texNombre(b, 0)}$ n'est pas un diviseur de $${texNombre(a1, 0)}$ ou $${texNombre(q, 0)}$ n'est pas un diviseur de $${texNombre(a1, 0)}$.`
+        this.setReponse(i, [[String(b), String(a1)], [String(q), String(a1)],
+          [String(a1), String(b)],
+          [String(a1), String(q)],
+          [String(a), String(b)],
+          [String(a), String(q)]// réponses absurdes mais vraies
         ])
       } else {
         texte = '... n\'est pas un multiple de ...'
         if (this.interactif) {
-          texte = choixDeroulant(this, 2 * i, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)]) + 'n\'est pas un multiple de' + choixDeroulant(this, 2 * i + 1, [nombreAvecEspace(a1), nombreAvecEspace(a), nombreAvecEspace(b), nombreAvecEspace(q)])
+          texte = choixDeroulant(this, 2 * i, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ]) + 'n\'est pas un multiple de' + choixDeroulant(this, 2 * i + 1, [
+            { label: 'Choisir un nombre', value: '' },
+            { latex: texNombre(a1, 0), value: String(a1) },
+            { latex: texNombre(a, 0), value: String(a) },
+            { latex: texNombre(b, 0), value: String(b) },
+            { latex: texNombre(q, 0), value: String(q) }
+          ])
         }
-        texteCorr = `$${texNombre(a1)}$ n'est pas un multiple de $${texNombre(b)}$ ou $${texNombre(a1)}$ est n'est pas un multiple de $${texNombre(q)}$.`
-        this.setReponse(i, [[nombreAvecEspace(a1), nombreAvecEspace(b)], [nombreAvecEspace(a1), nombreAvecEspace(q)],
-          [nombreAvecEspace(b), nombreAvecEspace(a1)], // réponses absurdes mais vraies !
-          [nombreAvecEspace(q), nombreAvecEspace(a1)],
-          [nombreAvecEspace(b), nombreAvecEspace(a)], // réponses absurdes mais vraies !
-          [nombreAvecEspace(q), nombreAvecEspace(a)]
+        texteCorr = `$${texNombre(a1, 0)}$ n'est pas un multiple de $${texNombre(b, 0)}$ ou $${texNombre(a1, 0)}$ est n'est pas un multiple de $${texNombre(q, 0)}$.`
+        this.setReponse(i, [[String(a1), String(b)], [String(a1), String(q)],
+          [String(b), String(a1)], // réponses absurdes mais vraies !
+          [String(q), String(a1)],
+          [String(b), String(a)], // réponses absurdes mais vraies !
+          [String(q), String(a)]
         ])
       }
       texte += ajouteFeedback(this, 2 * i + 1)

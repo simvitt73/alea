@@ -7,7 +7,7 @@ import { context } from '../../modules/context'
 import { miseEnEvidence, texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { choixDeroulant } from '../../lib/interactif/questionListeDeroulante'
-import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { range } from '../../lib/outils/nombres'
 import Exercice from '../Exercice'
 
@@ -205,7 +205,6 @@ export default class EcrireUneExpressionNumerique extends Exercice {
               propositions: [
                 {
                   type: 'AMCOpen',
-                  // @ts-expect-error Trop compliqué à typer
                   propositions: [{
                     enonce: texte,
                     texte: texteCorr,
@@ -215,7 +214,6 @@ export default class EcrireUneExpressionNumerique extends Exercice {
                 },
                 {
                   type: 'AMCNum',
-                  // @ts-expect-error Trop compliqué à typer
                   propositions: [{
                     texte: '',
                     statut: '',
@@ -254,7 +252,15 @@ export default class EcrireUneExpressionNumerique extends Exercice {
                 ]
               }
           } else {
-            texte += sp(10) + choixDeroulant(this, i, combinaisonListes(['somme', 'différence', 'produit', 'quotient'], 1), 'une réponse')
+            texte += sp(10) + choixDeroulant(this, i, [
+              { label: 'Ce calcul est ', value: '' },
+              ...shuffle([
+                { label: 'une somme', value: 'somme' },
+                { label: 'une différence', value: 'différence' },
+                { label: 'un produit', value: 'produit' },
+                { label: 'un quotient', value: 'quotient' }
+              ])
+            ])
             handleAnswers(this, i, { reponse: { value: expNom } }, { formatInteractif: 'listeDeroulante' })
           }
         }
