@@ -17,8 +17,8 @@ export const refs = {
 }
 const choix = [
   { label: 'Choisir un élément', value: '' },
-  { label: 'Un texte', value: 'unTexte' },
-  { label: 'Un label', value: 'unLabel' },
+  { label: '<strong>Un texte en gras</strong>', value: 'unTexte' },
+  { label: '<strike>Un label barré</strike>', value: 'unLabel' },
   { latex: '\\dfrac{1+\\sqrt{5}}{2}', value: 'phi' },
   { image: 'images/balancoire_trebuchet.png', value: 'balançoire' },
   { svg: '<circle cx="0" cy="0" r="10"/>', value: 'cercle' },

@@ -53,9 +53,7 @@ function renderLatexToHTMLFragment (li: HTMLLIElement | HTMLSpanElement, latex: 
 function afficheChoice (li: HTMLLIElement | HTMLSpanElement, choice: AllChoiceType | undefined) {
   // Les textes sont naturellement alignés avec li.textAlign, mais pas les images ou les math-field
   if (choice == null) return
-  if (typeof choice === 'string') {
-    li.textContent = choice
-  } else if (typeof choice === 'object') {
+  if (typeof choice === 'object') {
     if ('latex' in choice) {
       renderLatexToHTMLFragment(li, choice.latex ?? '')
     } else if ('image' in choice) {
@@ -65,7 +63,9 @@ function afficheChoice (li: HTMLLIElement | HTMLSpanElement, choice: AllChoiceTy
       image.style.height = '30px'
       li.appendChild(image)
     } else if ('label' in choice) {
-      li.textContent = choice.label ?? choice.value
+      const span = document.createElement('span')
+      span.innerHTML = choice.label ?? choice.value
+      li.appendChild(span)
     } else if ('svg' in choice) {
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
       svg.setAttribute('viewBox', '-10 -10 20 20') // Valeur par défaut, peut être ajustée
