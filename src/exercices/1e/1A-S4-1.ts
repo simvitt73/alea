@@ -26,77 +26,124 @@ export const dateDePublication = '01/08/2025'
 export default class MedianeQCM extends ExerciceQcmA {
   // Ceci est la fonction qui s'occupe d'écrire l'énoncé, la correction et les réponses
   // Elle factorise le code qui serait dupliqué dans versionAleatoire et versionOriginale
-  private appliquerLesValeurs (p1: number, p2: number):
+  private appliquerLesValeurs (effectif: number, valeurs: number[], rang: number, mediane: number, serieClassee: number[]):
   void {
-    const n = randint(5, 10) // nombre de valeurs dans la série
-    const valeurs: number[] = []
-    for (let i = 0; i < n; i++) {
-      valeurs.push(randint(2, 20))
+    let distracteur2:number
+    if (effectif % 2 === 0) { // cas série effectif pair
+      distracteur2 = (valeurs[rang - 1] + valeurs[rang]) / 2
+    } else { // cas série effectif impair
+      distracteur2 = valeurs[rang - 1]
     }
-    const serieClassee = [...valeurs].sort((a, b) => a - b)
-    const rang = n % 2 === 0 ? n / 2 : (n + 1) / 2
-    const mediane = serieClassee[rang - 1]
-    let distracteurIndex = rang
-    while (
-      distracteurIndex >= 0 &&
-        (valeurs[distracteurIndex] === undefined || valeurs[distracteurIndex] === mediane)
-    ) {
-      distracteurIndex--
+    let distracteur3:number
+    let distracteur4:number
+    if (effectif % 2 === 0) { // cas série effectif pair
+      distracteur3 = serieClassee[rang - 1]
+      distracteur4 = serieClassee[rang]
+    } else { // cas série effectif impair
+      distracteur3 = serieClassee[rang - 2]
+      distracteur4 = serieClassee[rang]
     }
-    const distracteur = valeurs[distracteurIndex] !== undefined ? valeurs[distracteurIndex] : mediane + 1
-    let distracteur2Index = rang - 1
-    let distracteur2 = serieClassee[distracteur2Index]
+    function rendreDistracteursDistincts (
+      mediane: number,
+      distracteur2: number,
+      distracteur3: number,
+      distracteur4: number
+    ): { d3: number, d4: number } {
+      const interdits = new Set([mediane, distracteur2])
 
-    // Cherche une valeur distincte de mediane et distracteur
-    while (
-      (distracteur2 === mediane || distracteur2 === distracteur) &&
-        (distracteur2Index < serieClassee.length - 1)
-    ) {
-      distracteur2Index++
-      distracteur2 = serieClassee[distracteur2Index]
-    }
+      const ajustements = [0, 1, -1, 2, -2]
 
-    // Si on n'a toujours pas trouvé, cherche en arrière
-    if (distracteur2 === mediane || distracteur2 === distracteur) {
-      distracteur2Index = rang - 2
-      while (
-        distracteur2Index >= 0 &&
-            (serieClassee[distracteur2Index] === mediane || serieClassee[distracteur2Index] === distracteur)
-      ) {
-        distracteur2Index--
-      }
-      distracteur2 = serieClassee[distracteur2Index]
-    }
+      // Trouver une valeur valide pour distracteur3
+      const d3Valides = ajustements
+        .map(delta => distracteur3 + delta)
+        .filter(val => !interdits.has(val))
 
-    // Si toujours pas trouvé, prend une valeur hors série
-    if (distracteur2 === undefined || distracteur2 === mediane || distracteur2 === distracteur) {
-      distracteur2 = mediane + 2
-    }
+      if (d3Valides.length === 0) throw new Error('Impossible de rendre distracteur3 distinct')
 
+      const d3 = d3Valides[0]
+      interdits.add(d3)
+
+      // Trouver une valeur valide pour distracteur4
+      const d4Valides = ajustements
+        .map(delta => distracteur4 + delta)
+        .filter(val => !interdits.has(val))
+
+      if (d4Valides.length === 0) throw new Error('Impossible de rendre distracteur4 distinct')
+
+      const d4 = d4Valides[0]
+
+      return { d3, d4 }
+    }
+    let d3 = distracteur3
+    let d4 = distracteur4
+    const result = rendreDistracteursDistincts(mediane, distracteur2, distracteur3, distracteur4)
+    d3 = result.d3
+    d4 = result.d4
     this.reponses = [
      `$${texNombre(mediane)}$`,
-    `$${texNombre(mediane + choice([-1, 1]))}$`,
-`$${texNombre(distracteur)}$`,
-      `$${texNombre(distracteur2)}$`,
+` $${texNombre(d3)}$`,
+`$${texNombre(d4)}$`,
+      `$${texNombre(distracteur2)}$`
     ]
 
-    this.enonce = `Déterminer la médiane de la série suivante :<br>
-    ${valeurs.join(' ; ')}`
-    this.correction = `La série triée est :<br>${serieClassee.join(' ; ')}`
+    this.enonce = `On donne la série statistique suivante : 
+    ${valeurs.join(' ; ')}<br>
+    Parmi ces propositions, laquelle peut être la médiane de la série ?`
+    this.correction = `La série triée dans l'ordre croissant est : ${serieClassee.join('  ;  ')}.`
+    this.correction += `<br>La série comporte $${effectif}$ valeurs, qui est `
+    if (effectif % 2 === 0) {
+      this.correction += `un nombre pair, donc la médiane est la moyenne des termes de rang $${rang}$ et $${rang + 1}$.<br>
+       $\\dfrac{${texNombre(serieClassee[rang - 1])} + ${texNombre(serieClassee[rang])}}{2} = ${texNombre(mediane)}$.<br>`
+    } else { this.correction += `un nombre impair,  donc la médiane est le terme de rang $${rang}$.<br>` }
+    this.correction += `La médiane est donc $${texNombre(mediane)}$.`
     this.reponse = `$${texNombre(mediane)}$`
   }
 
-  // S'occupe de passser les données originales à la fonction appliquerLesValeurs
+  versionOriginale: () => void = () => {
+    this.appliquerLesValeurs(4, [3, 8, 5, 2], 2, 4, [2, 3, 5, 8]) // valeurs originales
+    this.reponses = [
+      'L\'évolution est de - 25 %,',
+      'L\'évolution est de - 50 %,',
+      'L\'évolution est de + 25 %,',
+      'L\'évolution est de + 75 %.']
+  }
 
-  // s'occupe d'aléatoiriser les valeurs à passer à la fonction appliquerLesValeurs en vérifiant qu'on a bien 3 réponses différentes
-  // Pour un qcm à n réponses, il faudrait vérifier que nombreElementsDifferents(this.reponses) < n
   versionAleatoire: () => void = () => {
     const n = 4 // nombre de réponses différentes voulues (on rappelle que la première réponse est la bonne)
     do {
-      const p1 = randint(-6, 6, 0) * 10
-      const p2 = randint(-6, 6, 0) * 10// On génère un polynôme de degré 2 ax^2+c
+      const effectif = randint(5, 10) // nombre de valeurs dans la série
+      const valeurs: number[] = []// On ditribue des valeurs distinctes à la série
+      while (valeurs.length < effectif) {
+        const val = randint(2, 20)
+        if (!valeurs.includes(val)) {
+          valeurs.push(val)
+        }
+      }
+      const serieClassee = [...valeurs].sort((a, b) => a - b)
+      const rang = effectif % 2 === 0 ? effectif / 2 : (effectif + 1) / 2
+      // Attention, le rang donne le bon rang dans la série impaire, mais le rang inférieur dans la série paire.
+      let mediane : number
+      if (effectif % 2 === 0) { mediane = (serieClassee[rang - 1] + serieClassee[rang]) / 2 } else {
+        mediane = serieClassee[rang - 1]
+      }
 
-      this.appliquerLesValeurs(p1, p2)
+      // On adapte la série de l'énoncé pour créer un distracteur qui utilise la bonne méthode mais dans la série de l'énoncé :
+      if (effectif % 2 === 0) { // cas série effectif pair
+        if (mediane === (valeurs[rang - 1] + valeurs[rang]) / 2) {
+        // Interchanger les valeurs de valeurs[rang-1] et valeurs[rang-2]
+          const temp = valeurs[rang - 1]
+          valeurs[rang - 1] = valeurs[rang - 2]
+          valeurs[rang - 2] = temp
+        }
+      } else { // cas série effectif impair
+        if (mediane === valeurs[rang - 1]) {
+          const temp = valeurs[rang - 1]
+          valeurs[rang - 1] = valeurs[rang - 2]
+          valeurs[rang - 2] = temp
+        }
+      }
+
+      this.appliquerLesValeurs(effectif, valeurs, rang, mediane, serieClassee)
     } while (nombreElementsDifferents(this.reponses) < n)
   }
 
