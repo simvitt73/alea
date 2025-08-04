@@ -310,7 +310,7 @@ export function loadPackagesFromContent (contents: contentsType) {
   testIfLoaded(['\\EUR{'], '\\usepackage{marvosym}', contents)
   testIfLoaded(['\\hautab'], '\\newcommand\\hautab[1]{\\renewcommand{\\arraystretch}{#1}}', contents)
   testIfLoaded(['|C{', '{C{'], '\\newcolumntype{C}[1]{>{\\centering\\arraybackslash}p{#1cm}}', contents)
-  testIfLoaded(['pattern'], '\\usetikzlibrary{patterns}', contents)
+  testIfLoaded(['pattern'], '\\usetikzlibrary{patterns.meta}', contents)
   testIfLoaded(['framed'], '\\usetikzlibrary{backgrounds}', contents)
   testIfLoaded(['single arrow', 'ellipse,'], '\\usetikzlibrary{shapes}', contents)
   testIfLoaded(['>=triangle 45'], '\\usetikzlibrary{arrows}', contents)
