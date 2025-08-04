@@ -30,15 +30,25 @@ export default class FormulesAireCarreRectangle extends Exercice {
     super()
 
     this.nbQuestions = 2
-    this.besoinFormulaireTexte = ['Nombre de listes déroulantes', [
+    this.besoinFormulaireTexte = ['Nombre de listes déroulantes par question', [
       'Nombres séparés par des tirets  :',
-      '1 : une seule liste déroulante',
-      '2 : deux listes déroulantes',
-      '3 : trois listes déroulantes',
+      '1 : Une seule liste déroulante',
+      '2 : Deux listes déroulantes',
+      '3 : Trois listes déroulantes',
       '4 : Mélange'
     ].join('\n')
     ]
     this.sup = '4'
+
+    this.besoinFormulaire2Texte = ['Unités désirées', [
+      'Nombres séparés par des tirets  :',
+      '1 : cm³',
+      '2 : dm³',
+      '3 : m³',
+      '4 : Mélange'
+    ].join('\n')
+    ]
+    this.sup2 = '4'
 
     this.listeReponses = []
     this.tabIndiceInteractif = []
@@ -55,6 +65,16 @@ export default class FormulesAireCarreRectangle extends Exercice {
     nbDeListesDeroulantes = combinaisonListes(nbDeListesDeroulantes, 50)
 
     const uneSeuleListeDeroulante = enleveDoublonNum([...nbDeListesDeroulantes])
+
+    let unitesChoisies = gestionnaireFormulaireTexte({
+      max: 3,
+      defaut: 4,
+      melange: 4,
+      nbQuestions: this.nbQuestions,
+      saisie: this.sup2,
+      listeOfCase: ['cm', 'dm', 'm']
+    }).map(String)
+    unitesChoisies = combinaisonListes(unitesChoisies, 50)
 
     this.consigne = this.interactif
       ? 'Choisir ' + (uneSeuleListeDeroulante.length === 1 && uneSeuleListeDeroulante[0] === 1
@@ -93,11 +113,11 @@ export default class FormulesAireCarreRectangle extends Exercice {
         { label: '1 m²', value: 'm2' }
       ]
     ]
-    const unites = combinaisonListes(['cm', 'dm', 'm'], 50)
+
     let indiceInteractif = 0
     this.tabIndiceInteractif = [0]
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
-      const unite = unites[cpt]
+      const unite = unitesChoisies[cpt]
 
       let texte = ''
       let texteCorr = ''
