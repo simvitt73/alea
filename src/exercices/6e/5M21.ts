@@ -23,7 +23,7 @@ export const refs = {
   'fr-ch': ['']
 }
 
-export default class FormulesAireCarreRectangle extends Exercice {
+export default class DefinitionUnitesVolumes extends Exercice {
   listeReponses: string[][]
   tabIndiceInteractif: number[]
   constructor () {
