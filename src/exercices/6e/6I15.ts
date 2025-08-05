@@ -733,7 +733,7 @@ ou
         ${delayedCode}
         })()`
 
-        // console.log('Exécution du code :', asyncWrapper)
+        // console.info('Exécution du code :', asyncWrapper)
 
         // eslint-disable-next-line no-eval
         await eval(asyncWrapper)
