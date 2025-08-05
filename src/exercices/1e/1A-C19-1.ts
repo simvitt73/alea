@@ -1,5 +1,5 @@
 import ProblemeFractions from '../can/2e/can2C20'
-export const titre = 'Résoudre un problème avec des fractions'
+export const titre = 'Résoudre un problème avec des fractions (1)'
 export const dateDePublication = '04/08/2025'
 export const amcReady = true
 export const amcType = 'AMCNum'
