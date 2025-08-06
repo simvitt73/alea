@@ -111,8 +111,8 @@ export default class ProprietesMediatrice extends Exercice {
           texteCorr += `Comme tout point équidistant de $${nomDesPoints[0]}$ et de $${nomDesPoints[1]}$ appartient à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$], `
           texteCorr += `alors le point $${nomDesPoints[2]}$ appartient à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$].`
         } else { // Si le point C doit ne pas être sur la médiatrice,
-          texteCorr = `$${nomDesPoints[2]}${nomDesPoints[0]} = ${texNombre(arrondi(longueur(C, A), 1))}$ alors que $${nomDesPoints[2]}${nomDesPoints[1]} = ${texNombre(arrondi(longueur(C, B), 1))}$ donc le point $${nomDesPoints[2]}$ n'est pas équidistant de $${nomDesPoints[0]} et de $${nomDesPoints[1]}.<br>`
-          texteCorr += `Comme tout point qui n'est pas équidistant de $${nomDesPoints[0]} et de $${nomDesPoints[1]} n'appartient pas à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$], `
+          texteCorr = `$${nomDesPoints[2]}${nomDesPoints[0]} = ${texNombre(arrondi(longueur(C, A), 1))}$ alors que $${nomDesPoints[2]}${nomDesPoints[1]} = ${texNombre(arrondi(longueur(C, B), 1))}$ donc le point $${nomDesPoints[2]}$ n'est pas équidistant de $${nomDesPoints[0]}$ et de $${nomDesPoints[1]}$.<br>`
+          texteCorr += `Comme tout point qui n'est pas équidistant de $${nomDesPoints[0]}$ et de $${nomDesPoints[1]}$ n'appartient pas à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$], `
           texteCorr += `alors le point $${nomDesPoints[2]}$ n'appartient pas à la médiatrice du segment [$${nomDesPoints[0]}${nomDesPoints[1]}$].`
         }
       } else {
