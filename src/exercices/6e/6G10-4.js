@@ -318,7 +318,7 @@ export default class VocabulaireDuCercle extends Exercice {
                 reponses = ajouterAlternatives(longueurAlternative, reponses)
                 break
               case 'le diamètre':
-                reponses.push(longueurAlternative(reponses))
+                reponses.push(longueurAlternative(reponses[0]))
                 break
               case 'un rayon':
                 reponses.push('[' + O.nom + B.nom + ']', '[' + O.nom + C.nom + ']', '[' + O.nom + D.nom + ']', '[' + O.nom + E.nom + ']')
