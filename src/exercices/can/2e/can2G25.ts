@@ -44,17 +44,18 @@ export default class ordonneePointDroite extends ExerciceSimple {
       this.question += 'Quelle est l\'ordonnée du point $B$  ?'
     }
 
-    this.correction = `Le point $A$ est le point d'intersection entre la droite $D$ et l'axe des ordonnées, donc l'ordonnée à lorigine de la droite $D$ est $${a}$.<br>
+    this.correction = `Le point $A$ est le point d'intersection entre la droite $D$ et l'axe des ordonnées, donc l'ordonnée à l'origine de la droite $D$ est $${a}$.<br>
     Comme le coeffcient directeur de la droite $D$ est $${texNombre(coeff, 1)}$, l'équation réduite de la droite $D$ est $y=${texNombre(coeff, 1)}x${ecritureAlgebrique(a)}$.<br>
-     L'ordonnée du point $B$ est donnée par $y=${texNombre(coeff, 1)}\\times ${ecritureParentheseSiNegatif(absB)}${ecritureAlgebrique(a)}=${miseEnEvidence(texNombre(coeff * absB + a, 1))}$.<br>
-    .`
+     L'ordonnée du point $B$ est donnée par $y=${texNombre(coeff, 1)}\\times ${ecritureParentheseSiNegatif(absB)}${ecritureAlgebrique(a)}=${miseEnEvidence(texNombre(coeff * absB + a, 1))}$.
+`
     this.reponse = this.versionQcm
       ? `$${texNombre(coeff * absB + a, 1)}$`
       : texNombre(coeff * absB + a, 1)
     this.distracteurs = [
       `$${a + 1}$`,
      `$${texNombre(coeff + 1, 1)}$`,
-     `$${texNombre(coeff * absB - a, 1)}$`]
+     `$${texNombre(coeff * absB - a, 1)}$`,
+    `$${texNombre(coeff * a, 1)}$`]
 
     this.canEnonce = this.question
     this.canReponseACompleter = '$B(1\\,;\\,\\ldots)$'
