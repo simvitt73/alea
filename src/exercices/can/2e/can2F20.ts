@@ -44,7 +44,6 @@ export default class ImageFctAff extends ExerciceSimple {
     const coeff = imx2 - imx1
     const imx2n = imx2 + coeff * n
     const imx1n = imx1 + coeff * n
-
     this.question = `$${nomF}$ est une fonction affine vérifiant $${nomF}(${x1})=${imx1}$ et $${nomF}(${x2})=${imx2}$.<br>`
     if (this.interactif && !this.versionQcm) { this.question += `$${nomF}(${val})=$` } else {
       if (this.versionQcm) { this.question += ` L'image de $${val}$ par $${nomF}$ est égale à :` } else {
@@ -52,7 +51,8 @@ export default class ImageFctAff extends ExerciceSimple {
       }
     }
 
-    this.correction = `Les images données permettent d'établir graphiquement qu'une augmentation d'une unité en abscisse augmentent l'ordonnée de  $${imx2} - ${imx1}=${imx2 - imx1}$ ${imx2 - imx1 === 1 ? 'unité.' : 'unités.'} <br>`
+    this.correction = `Puisque $f$ est une fonction affine, les accroissements des images ($f(x)$) sont  proportionnels aux accroissements des antécédents ($x$). <br>
+Les images données permettent d'établir graphiquement qu'une augmentation d'une unité en abscisse augmentent l'ordonnée de  $${imx2} - ${imx1}=${imx2 - imx1}$ ${imx2 - imx1 === 1 ? 'unité.' : 'unités.'} <br>`
     if (n > 0) {
       this.correction += `On calcule l'image de $${val}$ à partir de l'image de $${x2}$ par $${nomF}$.<br>
       Pour passer de $${x2}$ à $${val}$, on ajoute $${n}$  ${n === 1 ? 'unité' : 'unités'},

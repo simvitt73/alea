@@ -67,7 +67,7 @@ A &= \\dfrac{${a}}{${b}-${frac1.texFraction}} \\\\
     const distracteur2 = denominateur
 
     // Distracteur 3 : erreur de signe
-    const distracteur3 = resultat.oppose()
+    const distracteur3 = denominateur.multiplieEntier(a)
 
     // Distracteur 4 : mauvaise soustraction au dénominateur (b - num/den = (b-num)/den au lieu de (b*den-num)/den)
     const denominateurErreur4 = new FractionEtendue(b - frac1.num, frac1.den)
@@ -76,7 +76,8 @@ A &= \\dfrac{${a}}{${b}-${frac1.texFraction}} \\\\
     this.distracteurs = [
         `$${distracteur2.texFractionSimplifiee}$`,
         `$${distracteur3.texFractionSimplifiee}$`,
-        `$${distracteur4.texFractionSimplifiee}$`
+        `$${distracteur4.texFractionSimplifiee}$`,
+        `$${distracteur3.oppose().texFractionSimplifiee}$`
     ]
     this.canEnonce = `Calculer $A=\\dfrac{${a}}{${b}-${frac1.texFraction}}$.`
     this.canReponseACompleter = '$A=\\ldots$'
