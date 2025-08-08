@@ -36,9 +36,9 @@ export default class CalculComplexeFraction extends ExerciceSimple {
   }
 
   nouvelleVersion () {
-    const a = randint(1, 5)
-    const b = randint(1, 6)
     const frac1 = choice(obtenirListeFractionsIrreductiblesFaciles())
+    const a = randint(1, 5)
+    const b = randint(1, 6, [frac1.num]) // sinon division par zéro avec les distracteurs
 
     this.question = this.versionQcm ? `On considère $A=\\dfrac{${a}}{${b}-${frac1.texFraction}}$. On a :` : `Calculer $A=\\dfrac{${a}}{${b}-${frac1.texFraction}}$.`
 
