@@ -199,8 +199,7 @@ export default class InequationsSecondDegre extends ExerciceQcmA {
 
     this.enonce = `${deuxColonnes(`On a représenté la parabole d'équation $y=x^2$. <br><br>
         On note $(I)$ l'inéquation, sur $\\mathbb{R}$, $x^2${signeInegalité} ${val}$.<br><br>
-        L'inéquation $(I)$ est équivalente à :`, `${graphique}`)}`
-
+        L'inéquation $(I)$ est équivalente à :`, `${graphique}`)}<br>`
     this.correction = this.genererCorrection(val, estInegStrict, typeInequation, graphiqueC, reponses[0])
     this.reponses = reponses
   }
@@ -220,8 +219,7 @@ export default class InequationsSecondDegre extends ExerciceQcmA {
 
     this.enonce = `${deuxColonnes(`On a représenté la parabole d'équation $y=x^2$. <br><br>
         On note $(I)$ l'inéquation, sur $\\mathbb{R}$, $x^2${signeInegalité} ${val}$.<br><br>
-        L'inéquation $(I)$ est équivalente à :`, `${graphique}`)}`
-
+        L'inéquation $(I)$ est équivalente à :`, `${graphique}`)}<br>`
     this.correction = this.genererCorrection(val, estInegStrict, typeInequation, graphiqueC, reponses[0])
     this.reponses = reponses
   }
