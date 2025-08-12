@@ -34,7 +34,7 @@ export default class Puissances extends ExerciceQcmA {
     this.correction = `On applique la propriété du quotient des puissances d'un réel : <br>
     Soit n et p deux entiers et a un réel :  $\\dfrac{a^n}{a^p}=a^{n-p}$<br>
     $\\begin{aligned} \\dfrac{a^{n^{${k}}}}{a^{n}}&=a^{n^{${k}}-n}\\\\
-    &=a^{n(n^{${rienSi1(k - 1)}}-n)}
+    &=a^{n(n^{${rienSi1(k - 1)}}-1)}
     \\end{aligned}$<br>`
     this.reponses = [
       `$a^{n^{${rienSi1(k - 1)}}(n-1)}$`,
