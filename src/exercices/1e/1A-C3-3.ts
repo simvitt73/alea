@@ -36,7 +36,7 @@ export default class Puissances extends ExerciceQcmA {
   versionAleatoire = () => {
     const k = randint(2, 3)
     const a = randint(2, 4)
-    
+
     this.enonce = `Soit $n$ un entier.  A quelle expression est égale $\\left(${a}^{n}\\right)^{${k}}$ ?`
     this.correction = `On applique la propriété des puissances de puissances d'un réel : <br>
     Soit $n\\in \\mathbb{N}$, et $p \\in \\mathbb{N}$, on a : 
