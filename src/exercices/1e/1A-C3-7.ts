@@ -14,7 +14,7 @@ export const amcType = 'qcmMono'
 export const titre = 'Calculer avec des puissances (7)'
 export default class Puissances extends ExerciceQcmA {
   versionOriginale: () => void = () => {
-    this.enonce = 'Soit $a$ un nombre réel non-nul et $n$ un entier non-nul. A quelle expression est égale $a^{3n}(a^n)^2$ ?'
+    this.enonce = 'Soit $a$ un nombre réel non nul et $n$ un entier non nul. A quelle expression est égale $a^{3n}(a^n)^2$ ?'
     this.correction = 'On applique la propriété du quotient des puissances d\'un réel : <br>'
     this.correction += 'Soit n et p deux entiers et a un réel :  $\\dfrac{a^n}{a^p}=a^{n-p}$<br>'
     this.correction += 'On applique la propriété du produit des puissances d\'un réel : <br>'
@@ -33,7 +33,7 @@ export default class Puissances extends ExerciceQcmA {
   versionAleatoire = () => {
     const k = randint(2, 5)
     const p = randint(2, 5, k)
-    this.enonce = `Soit $a$ un nombre réel non-nul et $n$ un entier non-nul. A quelle expression est égale $a^{${k}n}(a^n)^${p}$ ?`
+    this.enonce = `Soit $a$ un nombre réel non nul et $n$ un entier non nul. A quelle expression est égale $a^{${k}n}(a^n)^${p}$ ?`
     this.correction = `On applique la propriété du produit des puissances d'un réel : <br>
     Soient n et p deux entiers et a un réel :  $a^n\\times a^p=a^{n+p}$<br>
     et du produit de puissances : <br>

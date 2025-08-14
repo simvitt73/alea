@@ -14,7 +14,7 @@ export const amcType = 'qcmMono'
 export const titre = 'Calculer avec des puissances (10)'
 export default class Puissances extends ExerciceQcmA {
   versionOriginale: () => void = () => {
-    this.enonce = 'Soit $n$ un entier non-nul. A quelle expression est égale $\\dfrac{1}{\\left(-1\\right)^{n}}$ ?'
+    this.enonce = 'Soit $n$ un entier non nul. A quelle expression est égale $\\dfrac{1}{\\left(-1\\right)^{n}}$ ?'
     this.correction = 'Soit $n\\in \\mathbb{N}$.<br>$\\begin{aligned} \\left(-1\\right)^{n+2}&=\\left(-1\\right)^{2}\\times \\left(-1\\right)^{n} \\\\    &=1\\times \\left(-1\\right)^{n} \\\\    &= \\left(-1\\right)^{n}    \\end{aligned}$<br>'
      this.correction += ' <br>Procédons par disjonction des cas :<br>'
     this.correction += '$~~\\bullet~~$Si $n$ est pair, $\\dfrac{1}{\\left(-1\\right)^{n}}=1$ et $\\left(-1\\right)^{n}=1$<br>'
@@ -33,7 +33,7 @@ export default class Puissances extends ExerciceQcmA {
   versionAleatoire = () => {
     const k = randint(3, 6)
 
-    this.enonce = `Soit $n$ un entier non-nul. A quelle expression est égale $\\dfrac{1}{\\left(-1\\right)^{n+${k}}}$  ?`
+    this.enonce = `Soit $n$ un entier non nul. A quelle expression est égale $\\dfrac{1}{\\left(-1\\right)^{n+${k}}}$  ?`
     if (k === 2 || k === 4 || k === 6) {
       this.correction = `Soit $n\\in \\mathbb{N}.$<br> $\\begin{aligned}\\left(-1\\right)^{n+${k}}&=\\left(-1\\right)^{n}\\times \\left(-1\\right)^${k}\\\\
       &=\\left(-1\\right)^{n}

@@ -15,7 +15,7 @@ export const amcType = 'qcmMono'
 export const titre = 'Calculer avec des puissances (6)'
 export default class Puissances extends ExerciceQcmA {
   versionOriginale: () => void = () => {
-    this.enonce = 'Soit $a$ un nombre réel non-nul et $n$ un entier non-nul. A quelle expression est égale $\\dfrac{a^{n^2}}{a^{n}}$ ?'
+    this.enonce = 'Soit $a$ un nombre réel non nul et $n$ un entier non nul. A quelle expression est égale $\\dfrac{a^{n^2}}{a^{n}}$ ?'
     this.correction = 'On applique la propriété du quotient des puissances d\'un réel : <br>'
     this.correction += 'Soit n et p deux entiers et a un réel :  $\\dfrac{a^n}{a^p}=a^{n-p}$<br>'
     this.correction += '$\\begin{aligned}    \\dfrac{a^{n^2}}{a^{n}}&=a^{n^2-n}\\\\ &=a^{n(n-1)}    \\end{aligned}$<br>'
@@ -30,7 +30,7 @@ export default class Puissances extends ExerciceQcmA {
 
   versionAleatoire = () => {
     const k = randint(2, 5)
-    this.enonce = `Soit $a$ un nombre réel non-nul et $n$ un entier non-nul. A quelle expression est égale $\\dfrac{a^{n^{${k}}}}{a^{n}}$ ?`
+    this.enonce = `Soit $a$ un nombre réel non nul et $n$ un entier non nul. A quelle expression est égale $\\dfrac{a^{n^{${k}}}}{a^{n}}$ ?`
     this.correction = `On applique la propriété du quotient des puissances d'un réel : <br>
     Soit n et p deux entiers et a un réel :  $\\dfrac{a^n}{a^p}=a^{n-p}$<br>
     $\\begin{aligned} \\dfrac{a^{n^{${k}}}}{a^{n}}&=a^{n^{${k}}-n}\\\\
