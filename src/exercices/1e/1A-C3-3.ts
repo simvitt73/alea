@@ -15,7 +15,7 @@ export const amcType = 'qcmMono'
 export const titre = 'Calculer avec des puissances (3)'
 export default class Puissances extends ExerciceQcmA {
   versionOriginale: () => void = () => {
-    this.enonce = 'Soit $n$ un entier non-nul. A quelle expression est égale $\\left(3^n\\right)^{2}$ ?'
+    this.enonce = 'Soit $n$ un entier non nul. A quelle expression est égale $\\left(3^n\\right)^{2}$ ?'
     this.correction = `On applique la propriété des puissances de puissances d'un réel : <br>
     Soit $n\\in \\mathbb{N}$, et $p \\in \\mathbb{N}$, on a : 
      $\\left(a^{n}\\right)^{p}=a^{np}$<br>

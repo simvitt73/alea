@@ -16,8 +16,8 @@ export const amcType = 'qcmMono'
 export const titre = 'Calculer avec des puissances (1)'
 export default class Puissances extends ExerciceQcmA {
   versionOriginale: () => void = () => {
-    this.enonce = 'Soit $a$ un nombre réel non-nul. A quelle expression est égal $a^5\\times a^3$ ?'
-    this.correction = 'On utilise la propriété de cours, qui calcule le produit des puissances d\'un nombre réel non-nul $a$  :<br>' +
+    this.enonce = 'Soit $a$ un nombre réel non nul. A quelle expression est égal $a^5\\times a^3$ ?'
+    this.correction = 'On utilise la propriété de cours, qui calcule le produit des puissances d\'un nombre réel non nul $a$  :<br>' +
     'Soit $n\\in \\mathbb{N}^*$ et $k\\in \\mathbb{N}^*$<br>' +
     'On a alors : $a^n\\times a^k=a^{n+k}$<br>' +
     'Dans notre situation : $a^5\\times a^3=a^{5+3}=a^{8}$<br>' +
@@ -34,8 +34,8 @@ export default class Puissances extends ExerciceQcmA {
   versionAleatoire = () => {
     const n = randint(2, 5)
     const k = randint(2, 5)
-    this.enonce = `Soit $a$ un nombre réel non-nul. A quelle expression est égal $a^${n}\\times a^${k}$ ?`
-    this.correction = `On utilise la propriété de cours, qui calcule le produit des puissances d'un nombre réel non-nul $a$    :<br>
+    this.enonce = `Soit $a$ un nombre réel non nul. A quelle expression est égal $a^${n}\\times a^${k}$ ?`
+    this.correction = `On utilise la propriété de cours, qui calcule le produit des puissances d'un nombre réel non nul $a$    :<br>
     Soit $n\\in \\mathbb{N}$ et $k\\in \\mathbb{N}$<br>
     On a alors : $a^n\\times a^k=a^{n+k}$<br>
     Dans notre situation : $a^{n}\\times a^${k}=a^{${n + k}}$
