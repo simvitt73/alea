@@ -42,7 +42,7 @@ export default class BetaThreeJs extends Exercice {
         multiView.setObjects(3, [new THREE.Mesh(new THREE.PlaneGeometry(), new THREE.MeshStandardMaterial({ color: 0xffff00 }))])
         multiView.render()
       } else {
-        console.log('div1 pas trouvé')
+        console.info('div1 pas trouvé')
       }
     }, { once: true })
   }
