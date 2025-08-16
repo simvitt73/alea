@@ -1,7 +1,6 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { randint } from '../../modules/outils'
-// import ExerciceQcmA from '../../ExerciceQcmA'
 import ExerciceQcmA from '../ExerciceQcmA'
 import { ecritureAlgebrique, rienSi1 } from '../../lib/outils/ecritures'
 import { texFractionFromString } from '../../lib/outils/deprecatedFractions'
@@ -27,8 +26,6 @@ export const dateDePublication = '05/08/2025'
  *
  */
 export default class Auto1C11 extends ExerciceQcmA {
-  // S'occupe de passser les données originales à la fonction appliquerLesValeurs
-
   versionOriginale: () => void = () => {
     this.enonce = 'La solution de l\'équation $4(x-5)=7x+3$ est : '
     this.correction = `On développe, puis on isole l'inconnue dans le membre de gauche :<br>
@@ -108,8 +105,7 @@ export default class Auto1C11 extends ExerciceQcmA {
  ${rienSi1(newA - c)}x${ecritureAlgebrique(newB)}${miseEnEvidence(ecritureAlgebrique(-1 * newB))}&=${d}${miseEnEvidence(ecritureAlgebrique(-1 * newB))}\\\\
  ${rienSi1(newA - c)}x&=${d - newB}\\\\
  x&=${texFractionFromString(d - newB, newA - c)}
- ${pgcd(abs(d - newB), abs(newA - c)) > 1 || (newA - c) < 0 ? `\\\\x&=${new FractionEtendue(d - newB, newA - c).texFractionSimplifiee}` : ''}
-\\end{aligned}$
+ ${pgcd(abs(d - newB), abs(newA - c)) > 1 || (newA - c) < 0 ? `\\\\x&=${new FractionEtendue(d - newB, newA - c).texFractionSimplifiee}\n` : ''}\\end{aligned}$
  `
 
       this.correction += `<br> La solution est $${miseEnEvidence(new FractionEtendue(d - newB, newA - c).texFractionSimplifiee)}$.`
