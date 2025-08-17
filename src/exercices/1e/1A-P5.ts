@@ -1,3 +1,4 @@
+import { texNombre } from '../../lib/outils/texNombre'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { Arbre, texProba } from '../../modules/arbres'
 import { randint } from '../../modules/outils'
@@ -16,13 +17,14 @@ export const refs = {
 
 /**
  * Modèle d'exercice très simple pour la course aux nombres
- * @author Rémi Angot clone de can1P04 de Jean-Claude Lhote
+ * @author Rémi Angot clone de can1P04 de Jean-Claude Lhote, Stéphane Guyon pour le QCM
 
 */
 export default class can1P04 extends ExerciceSimple {
   constructor () {
     super()
     this.nbQuestions = 1
+    this.versionQcm = true
   }
 
   nouvelleVersion () {
@@ -85,20 +87,23 @@ export default class can1P04 extends ExerciceSimple {
     })
 
     omega.setTailles() // On calcule les tailles des arbres.
-    objets = omega.represente(0, 6, 0, rationnel ? 2 : 1.5, true, 1) // On crée l'arbre complet echelle 1.4 feuilles verticales sens gauche-droite
+    objets = omega.represente(0, 6, 0, rationnel ? 2 : 1.5, true, 1, 8) // On crée l'arbre complet echelle 1.4 feuilles verticales sens gauche-droite
     const pC = omega.getProba('C', false) // on calcule P(C) décimale.
     let texte = `On donne l'arbre de probabilités ci-dessous et $P(C)=${texProba(pC)}$.<br><br> 
           `
     texte += mathalea2d(Object.assign({ style: 'inline' }, fixeBordures(objets)), objets)
-    texte += `<br>
+    if (this.versionQcm) { texte += '<br> Quelle est la valeur de $x$ ?' } else {
+      texte += `
           
           $x=$`
+    }
     let texteCorr = 'Comme $A$ et $\\bar A$ forment une partition de l\'univers, d\'après la loi des probabilités totales :<br>'
     texteCorr += '$P(C)=P(A \\cap C)+P(\\bar{A} \\cap C)$.<br>'
     texteCorr += `Or $P(\\bar{A} \\cap C)=P(\\bar{A}) \\times P_{\\bar{A}}(C)=${texProba(pB, false)}x$.<br>`
     texteCorr += `Donc $${texProba(pB, false)}x=P(C)-P(A \\cap C)=${texProba(pC, false)}-${texProba(pA, false)}\\times ${texProba(pAC, false)}=${texProba(pC, false)}-${texProba(pA * pAC, false)}=${texProba(pC - pA * pAC, false)}$.<br>`
     texteCorr += `Donc $x=\\dfrac{${texProba(pC - pA * pAC, false)}}{${texProba(pB, false)}}=${texProba(pBC)}$`
     this.reponse = pBC
+    this.distracteurs = [`$Sol : ${texNombre(pBC)}$`, `$BB=${texNombre(pBC + 0.1)}$`, `$CC=${texNombre(pBC - 0.1)}$`, `$DD=${texNombre(10 * pBC)}$`]
     this.canEnonce = `On donne l'arbre de probabilités ci-dessous et $P(C)=${texProba(pC)}$.<br>
           
           `
