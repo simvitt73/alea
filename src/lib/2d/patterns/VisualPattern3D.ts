@@ -130,7 +130,7 @@ export class VisualPattern3D {
     const content = {
       objects,
       backgroundColor: '#ffffff',
-      autoCenterZoomMargin: -1
+      autoCenterZoomMargin: 1.2
     }
 
     // Utilise la fonction utilitaire pour générer le HTML

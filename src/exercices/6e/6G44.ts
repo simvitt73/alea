@@ -15,7 +15,7 @@ import {
 } from '../../lib/3d/3dProjectionMathalea2d/elements'
 import { context } from '../../modules/context'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'
+import { listeQuestionsToContenu, listeQuestionsToContenuSansNumero, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { createPyramidWithWireframe, createTruncatedPyramidWithWireframe, createWireframeUnion, createPrismWithWireframe } from '../../lib/3d/3d_dynamique/solidesThreeJs'
@@ -49,7 +49,6 @@ export default class NombreDeFacesEtDAretes extends Exercice {
     this.nbQuestions = 4
 
     this.sup = 3
-    this.listeAvecNumerotation = false
     this.version = 6
   }
 
@@ -79,6 +78,7 @@ export default class NombreDeFacesEtDAretes extends Exercice {
     }
     typeDeQuestion = shuffle(typeDeQuestion)
     for (let j = 0, choix; j < this.nbQuestions;) {
+      let question = 'Voici un solide :<br>'
       const objects = []
       choix = typeDeQuestion[j]
       context.anglePerspective = 20
@@ -363,23 +363,23 @@ export default class NombreDeFacesEtDAretes extends Exercice {
 
       if (objects.length > 0) {
         const content = { objects: objects as any, autoCenterZoomMargin: 1 }
-        this.question = ajouteCanvas3d({ id: `canvas3d-Ex${this.numeroExercice}Q${j}`, content, width: 400, height: 400 })
+        question += ajouteCanvas3d({ id: `canvas3d-Ex${this.numeroExercice}Q${j}`, content, width: 250, height: 250 })
       } else {
-        this.question = mathalea2d(Object.assign({}, fixeBordures(objets)), objets)
+        question += mathalea2d(Object.assign({}, fixeBordures(objets)), objets)
       }
       if (choix % 2 === 1) {
-        this.question += '<br>Quel est le nombre de faces de ce solide ?'
+        question += '<br>Quel est le nombre de faces de ce solide ?'
       } else {
-        this.question += '<br>Quel est le nombre d\'arêtes de ce solide ?'
+        question += '<br>Quel est le nombre d\'arêtes de ce solide ?'
       }
       if (this.questionJamaisPosee(j, choix, n)) {
         handleAnswers(this, j, { reponse: { value: this.reponse } })
-        this.question += ajouteChampTexteMathLive(this, j, '')
-        this.listeQuestions[j] = this.question ?? ''
+        question += ajouteChampTexteMathLive(this, j, '')
+        this.listeQuestions[j] = question ?? ''
         this.listeCorrections[j] = this.correction
         j++
       }
     }
-    listeQuestionsToContenuSansNumero(this)
+    listeQuestionsToContenu(this)
   }
 }

@@ -36,7 +36,6 @@ export default class PaternNum0 extends Exercice {
   constructor () {
     super()
     this.nbQuestions = 1
-    this.nbQuestionsModifiable = false // On ne peut pas multiplier les renderer WebGL à l'infini.
     this.comment = `Étudier les premiers termes d'une série de motifs afin de donner le nombre de formes du motif suivant.\n
  Les patterns sont des motifs figuratifs qui évoluent selon des règles définies.\n
  Cet exercice contient des patterns issus de l'excellent site : https://www.visualpatterns.org/`

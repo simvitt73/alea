@@ -365,6 +365,114 @@ class Canvas3dElement extends HTMLElement {
       this._fullscreenBtn.style.display = 'none'
     }
 
+    // Détection mobile simple (largeur < 800px ou userAgent)
+    const isMobile = window.innerWidth < 800 || /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)
+
+    if (isMobile) {
+      // Canvas plein écran natif sur mobile
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      canvas.style.width = '100vw'
+      canvas.style.height = '100vh'
+      canvas.style.position = 'fixed'
+      canvas.style.top = '0'
+      canvas.style.left = '0'
+      canvas.style.zIndex = '5000'
+      document.body.appendChild(canvas)
+
+      // Demande le fullscreen natif
+      if (canvas.requestFullscreen) {
+        canvas.requestFullscreen()
+      } else if ((canvas as any).webkitRequestFullscreen) {
+        (canvas as any).webkitRequestFullscreen()
+      }
+
+      // Ajoute le bouton de sortie
+      const exitBtn = document.createElement('button')
+      exitBtn.type = 'button'
+      exitBtn.style.position = 'fixed'
+      exitBtn.style.top = '20px'
+      exitBtn.style.right = '30px'
+      exitBtn.style.zIndex = '6000'
+      exitBtn.style.background = '#fff'
+      exitBtn.style.border = '1px solid #888'
+      exitBtn.style.borderRadius = '6px'
+      exitBtn.style.width = '48px'
+      exitBtn.style.height = '48px'
+      exitBtn.style.fontSize = '1.8em'
+      exitBtn.style.display = 'flex'
+      exitBtn.style.alignItems = 'center'
+      exitBtn.style.justifyContent = 'center'
+      exitBtn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'
+      exitBtn.style.cursor = 'pointer'
+      exitBtn.innerHTML = '<i class="bx bx-exit-fullscreen text-lg text-gray-700 hover:text-blue-500 transition-colors"></i>'
+      exitBtn.title = 'Quitter le plein écran'
+      document.body.appendChild(exitBtn)
+
+      // Crée le renderer et la scène
+      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
+      if (this.renderer && this.background) {
+        this.setBackground(this.background)
+      }
+      this.scene = new THREE.Scene()
+      this.camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000)
+      this.camera.position.copy(this._cameraPosition)
+      this.camera.lookAt(this._cameraTarget)
+      this.controls = new OrbitControls(this.camera, canvas)
+      this.controls.target.copy(this._cameraTarget)
+      this.controls.update()
+      this._objects.forEach(obj => this.scene!.add(obj))
+      this.renderer.setSize(width, height, false)
+      this.startAnimationLoop()
+
+      // Sortie du fullscreen natif
+      const exit = () => {
+        if (document.body.contains(exitBtn)) {
+          document.body.removeChild(exitBtn)
+        }
+        this.stopAnimationLoop()
+        if (this.renderer) {
+          this.renderer.dispose()
+          if (typeof this.renderer.forceContextLoss === 'function') {
+            this.renderer.forceContextLoss()
+          }
+        }
+        if (document.body.contains(canvas)) {
+          document.body.removeChild(canvas)
+        }
+        this.renderer = null
+        this.scene = null
+        this.camera = null
+        this.controls = null
+        this.renderStaticImage()
+        if (this._fullscreenBtn) {
+          this._fullscreenBtn.style.display = ''
+        }
+        if (this._imgElement) {
+          this._imgElement.style.display = ''
+        }
+        // Quitte le fullscreen natif si actif
+        if (document.fullscreenElement) {
+          document.exitFullscreen?.()
+        }
+      }
+      exitBtn.onclick = exit
+
+      // Quitte le plein écran si l'utilisateur utilise le geste natif
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+          exit()
+        }
+      }, { once: true })
+
+      return
+    }
+
+    // --- Comportement desktop inchangé ---
+    // ...existing code for desktop fullscreen...
     // Ajout du bouton dans enterFullscreen()
     const exitBtn = document.createElement('button')
     exitBtn.type = 'button'
