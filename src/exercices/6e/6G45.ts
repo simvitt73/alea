@@ -215,8 +215,8 @@ export default class choixPatron extends Exercice {
           texteCorr += ajouteCanvas3d({
             id: `canvas3dEx${this.numeroExercice}Q${i}`,
             content: content3d,
-            width: 300,
-            height: 300
+            width: 200,
+            height: 200
           })
         }
         this.listeQuestions[i] = texte
@@ -272,8 +272,8 @@ export default class choixPatron extends Exercice {
       const nouveauCanvas = ajouteCanvas3d({
         id: `canvas3dEx${exercice.numeroExercice}Q${i}`,
         content: content3d, // généré avec la matrice du patron cliqué
-        width: 300,
-        height: 300
+        width: 200,
+        height: 200
       })
       exercice.listeCorrections[i] = exercice.listeCorrections[i].replace(
         /<canvas-3d[^>]*>.*?<\/canvas-3d>/s,

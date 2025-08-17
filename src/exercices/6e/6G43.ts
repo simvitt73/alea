@@ -1,15 +1,14 @@
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 
-import { cube } from '../../lib/3d/3dProjectionMathalea2d/CubeIso'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif'
-import { deuxColonnes } from '../../lib/format/miseEnPage'
-import { context } from '../../modules/context'
 import { ajouteCanvas3d, type Elements3DDescription } from '../../lib/3d/3d_dynamique/Canvas3DElement'
+import { cube } from '../../lib/3d/3dProjectionMathalea2d/CubeIso'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
+import { context } from '../../modules/context'
 
 export const dateDePublication = '03/03/2021'
 export const dateDeModificationImportante = '15/07/2025'
@@ -32,7 +31,7 @@ export const refs = {
   'fr-fr': ['6G43'],
   'fr-ch': ['9ES7-6']
 }
-export function empilementCubes (long: number, larg: number, hmax: number) {
+export function empilementCubes(long: number, larg: number, hmax: number) {
   const tabHauteurs = new Array(larg)
   for (let i = 0; i < larg; i++) {
     tabHauteurs[i] = new Array(long)
@@ -64,7 +63,7 @@ export function empilementCubes (long: number, larg: number, hmax: number) {
   return lstCoordonneesCubes
 }
 
-function cubesToSceneContent (lstCoordonneesCubes: number[][]) {
+export function cubesToSceneContent(lstCoordonneesCubes: number[][]) {
   return lstCoordonneesCubes.map(([x, y, z]) => ({
     type: 'cube' as const,
     pos: [x, z, -y] as [number, number, number],
@@ -72,7 +71,7 @@ function cubesToSceneContent (lstCoordonneesCubes: number[][]) {
     edges: true
   }))
 }
-function cubesToSceneContentCorr (lstCoordonneesCubes: number[][]) {
+export function cubesToSceneContentCorr(lstCoordonneesCubes: number[][]) {
   return lstCoordonneesCubes.map(([x, y, z]) => ({
     type: 'cube' as const,
     pos: [3 * x, z, -y] as [number, number, number],
@@ -81,7 +80,7 @@ function cubesToSceneContentCorr (lstCoordonneesCubes: number[][]) {
   }))
 }
 export default class DenombrerCubes extends Exercice {
-  constructor () {
+  constructor() {
     super()
     this.besoinFormulaireNumerique = ['Type de questions', 3, '1 : Compter les cubes\n2 : Compter les cubes manquants\n3 : Mélange']
     this.besoinFormulaire4Numerique = ['Volume', 2, '1 : Volume en cubes\n2 : Volume en cm³\n']
@@ -92,10 +91,10 @@ export default class DenombrerCubes extends Exercice {
 
     this.sup = 1 // A décommenter : valeur par défaut d'un premier paramètre
     this.sup2 = 1 // A décommenter : valeur par défaut d'un deuxième paramètre
-  // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
+    // c'est ici que commence le code de l'exercice cette fonction crée une copie de l'exercice
   }
 
-  nouvelleVersion () {
+  nouvelleVersion() {
     let typesDeQuestionsDisponibles: number[] = [] // tableau à compléter par valeurs possibles des types de questions
     switch (this.sup) {
       case 1:
@@ -116,68 +115,15 @@ export default class DenombrerCubes extends Exercice {
     const hauteur = longueur // hauteur de l'empilement
 
     for (let q = 0, texte, texteCorr, cpt = 0; q < this.nbQuestions && cpt < 50;) {
+      let figure, figureCorrection
       const L = empilementCubes(longueur, largeur, hauteur) // crée un empilement aléatoire
       texteCorr = '' // Idem pour le texte de la correction.
-      let figure = ''
-      let figureCorrection = ''
 
       if (!this.sup3 || !context.isHtml) {
         texte = 'Un empilement de cubes est représenté ci-dessous sous deux angles différents. <br>' // Nous utilisons souvent cette variable pour construire le texte de la question.
-
-        const objetsCorrection = [] // Idem pour la correction
-        const objetsEnonce = []
-        const objetsEnonce2 = []
-
-        let cosa, cosb, sina, sinb
-        const alpha1 = 10 // choix de la projection
-        const beta1 = -40// choix de la projection
-        const alpha2 = 35// choix de la projection
-        const beta2 = -20 // choix de la projection
-        for (let i = 0; i < L.length; i++) {
-          objetsEnonce.push(...cube(L[i][0], L[i][1], L[i][2], alpha1, beta1, {}).c2d)
-        }
-
-        for (let i = 0; i < L.length; i++) {
-          objetsEnonce2.push(...cube(L[i][0], L[i][1], L[i][2], alpha2, beta2, {}).c2d)
-        }
-        for (let i = 0; i < L.length; i++) {
-          objetsCorrection.push(...cube(3 * L[i][0], L[i][1], L[i][2], alpha2, beta2, {}).c2d)
-        }
-        cosa = Math.cos(alpha1 * Math.PI / 180)
-        sina = Math.sin(alpha1 * Math.PI / 180)
-        cosb = Math.cos(beta1 * Math.PI / 180)
-        sinb = Math.sin(beta1 * Math.PI / 180)
-        const paramsEnonce = Object.assign({
-          pixelsParCm: 20,
-          scale: 0.6,
-          mainlevee: false,
-          style: 'display: inline'
-        }, fixeBordures(objetsEnonce))
-
-        cosa = Math.cos(alpha2 * Math.PI / 180)
-        sina = Math.sin(alpha2 * Math.PI / 180)
-        cosb = Math.cos(beta2 * Math.PI / 180)
-        sinb = Math.sin(beta2 * Math.PI / 180)
-        const paramsEnonce2 = Object.assign({
-          pixelsParCm: 20,
-          scale: 0.6,
-          mainlevee: false,
-          style: 'display: inline'
-        }, fixeBordures(objetsEnonce2))
-        const paramsCorrection = {
-          xmin: -sina * largeur - 0.5,
-          ymin: -0.5,
-          xmax: cosa * longueur * 3 + 0.5,
-          ymax: -sina * sinb * longueur * 1.5 - cosa * sinb * largeur + cosb * hauteur * 1.5 + 0.5,
-          pixelsParCm: 20,
-          scale: 0.6,
-          mainlevee: false,
-          style: 'display: inline'
-        }
-        figure = deuxColonnes(mathalea2d(paramsEnonce, objetsEnonce), mathalea2d(paramsEnonce2, objetsEnonce2))
-        figureCorrection = mathalea2d(paramsCorrection, objetsCorrection)
+          ; ({ figure, figureCorrection } = createCubesProjections(L, largeur, longueur, hauteur))
       } else {
-        texte = 'Un empilement de cubes est représenté ci-dessous (on peut faire tourner l\'empilement). <br>' // Nous utilisons souvent cette variable pour construire le texte de la question.
+        texte = 'Un empilement de cubes est représenté ci-dessous (on peut faire tourner l\'empilement en plein écran). <br>' // Nous utilisons souvent cette variable pour construire le texte de la question.
 
         const objects: Elements3DDescription[] = cubesToSceneContent(L)
         const objectsCorr: Elements3DDescription[] = cubesToSceneContentCorr(L)
@@ -207,7 +153,6 @@ export default class DenombrerCubes extends Exercice {
         }
         const sceneId = `scene3dEx${this.numeroExercice}Q${q}`
         figure = ajouteCanvas3d({ id: sceneId, content, width: 300, height: 300 })
-
         figureCorrection = ajouteCanvas3d({ id: `${sceneId}Correction`, content: contentCorr, width: 400, height: 400 })
       }
       // début de l'exercice
@@ -254,4 +199,48 @@ export default class DenombrerCubes extends Exercice {
 
     listeQuestionsToContenu(this) // On envoie l'exercice à la fonction de mise en page
   }
+}
+export function createCubesProjections(L: number[][], largeur: number, longueur: number, hauteur: number) {
+  // Projection 1
+  const { objets: objetsEnonce, params: paramsEnonce } = ProjectionCubesIso2d(L, 10, -40, false)
+  // Projection 2
+  const { objets: objetsEnonce2, params: paramsEnonce2 } = ProjectionCubesIso2d(L, 35, -20, false)
+  // Correction (projection 2, cubes déplacés)
+  const { objets: objetsCorrection, params: paramsCorrection } = ProjectionCubesIso2d(L, 35, -20, true)
+
+
+  const figure =
+    mathalea2d(paramsEnonce, objetsEnonce) +
+    mathalea2d(paramsEnonce2, objetsEnonce2)
+  const figureCorrection = mathalea2d(paramsCorrection, objetsCorrection)
+  return { figure, figureCorrection }
+}
+
+/**
+ * Génère les objets 2D et les paramètres pour une projection isométrique de cubes.
+ */
+export function ProjectionCubesIso2d(
+  L: number[][],
+  alpha: number,
+  beta: number,
+  eclate: boolean
+) {
+  const objets = []
+  for (let i = 0; i < L.length; i++) {
+    objets.push(...cube(L[i][0] * (eclate ? 3 : 1), L[i][1], L[i][2], alpha, beta, {}).c2d)
+  }
+  const cosa = Math.cos(alpha * Math.PI / 180)
+  const sina = Math.sin(alpha * Math.PI / 180)
+  const cosb = Math.cos(beta * Math.PI / 180)
+  const sinb = Math.sin(beta * Math.PI / 180)
+  const params = Object.assign(
+    {
+      pixelsParCm: 20,
+      scale: 0.6,
+      mainlevee: false,
+      style: 'display: inline-block'
+    },
+    fixeBordures(objets)
+  )
+  return { objets, params }
 }

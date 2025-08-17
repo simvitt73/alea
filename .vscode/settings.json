@@ -7,9 +7,13 @@
     "javascript.preferences.importModuleSpecifier": "relative",
     "typescript.preferences.importModuleSpecifier": "relative",
     "typescript.preferences.importModuleSpecifierEnding": "minimal",
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
     "javascript.preferences.importModuleSpecifierEnding": "minimal",
     "vitest.disableWorkspaceWarning": true,
     "editor.codeActionsOnSave": {
+        "source.organizeImports": "always",
         "source.fixAll.eslint": "always"
     },
     "eslint.validate": [
