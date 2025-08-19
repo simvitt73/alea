@@ -1,5 +1,12 @@
 import { ObjetMathalea2D } from '../../../modules/2dGeneralites'
 import { Shape2D } from '../Figures2D'
+import { emoji } from './Emojis'
+
+export function shapeDefToShapeSvg (shapeName: string): string {
+  const shapeDef = listeShapes2DInfos[shapeName].shapeDef
+  const svg = shapeDef.svg ? String(shapeDef.svg(20)) : ''
+  return svg.replace('<defs>', '').replace('</defs>', '').replaceAll('\n', '')
+}
 
 /*
 La classe Shape2D est définie ddans le fichier Figures2D.ts car elle est une version simplifiée de la classe Figure2D.
@@ -66,8 +73,8 @@ export const shapeAllumette = new Shape2D({
 export const shapeAllumetteHorizontale = new Shape2D({
   codeSvg: '<use href="#allumette-verticale" transform="rotate(90)"></use>',
   codeTikz: '\\pic[rotate=90] at (0,0) {allumette-verticale};',
-  width: 0.2,
-  height: 1,
+  width: 1,
+  height: 0.2,
   opacite: 1,
   name: 'allumetteH'
 })
@@ -75,8 +82,8 @@ export const shapeAllumetteHorizontale = new Shape2D({
 export const shapeAllumette60 = new Shape2D({
   codeSvg: '<use href="#allumette-verticale" transform="rotate(30)"></use>',
   codeTikz: '\\pic[rotate=-30] at (0,0) {allumette-verticale};',
-  width: 0.2,
-  height: 1,
+  width: 0.8,
+  height: 0.8,
   opacite: 1,
   name: 'allumette60'
 })
@@ -84,8 +91,8 @@ export const shapeAllumette60 = new Shape2D({
 export const shapeAllumette120 = new Shape2D({
   codeSvg: '<use href="#allumette-verticale" transform="rotate(-30)"></use>',
   codeTikz: '\\pic[rotate=30] at (0,0) {allumette-verticale};',
-  width: 0.2,
-  height: 1,
+  width: 0.8,
+  height: 0.8,
   opacite: 1,
   name: 'allumette120'
 })
@@ -539,7 +546,8 @@ export const shapeNames: string[] = [
 ]
 
 export type ShapeName = (typeof shapeNames)[number]
-export type Shape2DInfo = {
+
+export type ShapeInfos = {
   shape2D: Shape2D
   nomSingulier: string
   nomPluriel: string
@@ -548,9 +556,10 @@ export type Shape2DInfo = {
   articlePluriel: string
   articleCourt: string
 }
+
 export const listeShapes2DInfos: Record<
-  ShapeName,
- Shape2DInfo
+  string,
+ ShapeInfos
 > = {
   carré: {
     shape2D: shapeCarre,
@@ -714,7 +723,401 @@ export const listeShapes2DInfos: Record<
     articleSingulier: 'un',
     articlePluriel: 'des',
     articleCourt: 'de'
+  },
+  smiley: {
+    shape2D: emoji('smiley', '1f603'),
+    shapeDef: emoji('smiley', '1f603').shapeDef,
+    nomPluriel: 'smileys',
+    nomSingulier: 'smiley',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  heart: {
+    shape2D: emoji('heart', '2764'),
+    shapeDef: emoji('heart', '2764').shapeDef,
+    nomPluriel: 'cœurs',
+    nomSingulier: 'cœur',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  thumbsUp: {
+    shape2D: emoji('thumbsUp', '1f44d'),
+    shapeDef: emoji('thumbsUp', '1f44d').shapeDef,
+    nomPluriel: 'pouces levés',
+    nomSingulier: 'pouce levé',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  étoile: {
+    shape2D: emoji('étoile', '2b50'),
+    shapeDef: emoji('étoile', '2b50').shapeDef,
+    nomPluriel: 'étoiles',
+    nomSingulier: 'étoile',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  pizza: {
+    shape2D: emoji('pizza', '1f355'),
+    shapeDef: emoji('pizza', '1f355').shapeDef,
+    nomPluriel: 'parts de pizza',
+    nomSingulier: 'part de pizza',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  licorne: {
+    shape2D: emoji('licorne', '1f984'),
+    shapeDef: emoji('licorne', '1f984').shapeDef,
+    nomPluriel: 'licornes',
+    nomSingulier: 'licorne',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  chien: {
+    shape2D: emoji('chien', '1f436'),
+    shapeDef: emoji('chien', '1f436').shapeDef,
+    nomPluriel: 'chiens',
+    nomSingulier: 'chien',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  chat: {
+    shape2D: emoji('chat', '1f431'),
+    shapeDef: emoji('chat', '1f431').shapeDef,
+    nomPluriel: 'chats',
+    nomSingulier: 'chat',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  souris: {
+    shape2D: emoji('souris', '1f42d'),
+    shapeDef: emoji('souris', '1f42d').shapeDef,
+    nomPluriel: 'souris',
+    nomSingulier: 'souris',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  tortue: {
+    shape2D: emoji('tortue', '1f422'),
+    shapeDef: emoji('tortue', '1f422').shapeDef,
+    nomPluriel: 'tortues',
+    nomSingulier: 'tortue',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pieuvre: {
+    shape2D: emoji('pieuvre', '1f419'),
+    shapeDef: emoji('pieuvre', '1f419').shapeDef,
+    nomPluriel: 'pieuvres',
+    nomSingulier: 'pieuvre',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  poisson: {
+    shape2D: emoji('poisson', '1f41f'),
+    shapeDef: emoji('poisson', '1f41f').shapeDef,
+    nomPluriel: 'poissons',
+    nomSingulier: 'poisson',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  papillon: {
+    shape2D: emoji('papillon', '1f98b'),
+    shapeDef: emoji('papillon', '1f98b').shapeDef,
+    nomPluriel: 'papillons',
+    nomSingulier: 'papillon',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  fantome: {
+    shape2D: emoji('fantome', '1f47b'),
+    shapeDef: emoji('fantome', '1f47b').shapeDef,
+    nomPluriel: 'fantômes',
+    nomSingulier: 'fantôme',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  dragon: {
+    shape2D: emoji('dragon', '1f409'),
+    shapeDef: emoji('dragon', '1f409').shapeDef,
+    nomPluriel: 'dragons',
+    nomSingulier: 'dragon',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  feu: {
+    shape2D: emoji('feu', '1f525'),
+    shapeDef: emoji('feu', '1f525').shapeDef,
+    nomPluriel: 'feux',
+    nomSingulier: 'feu',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  fleur: {
+    shape2D: emoji('fleur', '1f33c'),
+    shapeDef: emoji('fleur', '1f33c').shapeDef,
+    nomPluriel: 'fleurs',
+    nomSingulier: 'fleur',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  etoileBrillante: {
+    shape2D: emoji('étoileBrillante', '1f31f'),
+    shapeDef: emoji('étoileBrillante', '1f31f').shapeDef,
+    nomPluriel: 'étoiles brillantes',
+    nomSingulier: 'étoile brillante',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  cloche: {
+    shape2D: emoji('cloche', '1f514'),
+    shapeDef: emoji('cloche', '1f514').shapeDef,
+    nomPluriel: 'cloches',
+    nomSingulier: 'cloche',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  crotte: {
+    shape2D: emoji('crotte', '1f4a9'),
+    shapeDef: emoji('crotte', '1f4a9').shapeDef,
+    nomPluriel: 'crottes',
+    nomSingulier: 'crotte',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  fusee: {
+    shape2D: emoji('fusee', '1f680'),
+    shapeDef: emoji('fusee', '1f680').shapeDef,
+    nomPluriel: 'fusées',
+    nomSingulier: 'fusée',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  drapeauDamier: {
+    shape2D: emoji('drapeauDamier', '1f3c1'),
+    shapeDef: emoji('drapeauDamier', '1f3c1').shapeDef,
+    nomPluriel: 'drapeaux à damier',
+    nomSingulier: 'drapeau à damier',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  arcEnCiel: {
+    shape2D: emoji('arcEnCiel', '1f308'),
+    shapeDef: emoji('arcEnCiel', '1f308').shapeDef,
+    nomPluriel: 'arcs-en-ciel',
+    nomSingulier: 'arc-en-ciel',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'd\''
+  },
+  soleil: {
+    shape2D: emoji('soleil', '2600'),
+    shapeDef: emoji('soleil', '2600').shapeDef,
+    nomPluriel: 'soleils',
+    nomSingulier: 'soleil',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  lune: {
+    shape2D: emoji('lune', '1f319'),
+    shapeDef: emoji('lune', '1f319').shapeDef,
+    nomPluriel: 'lunes',
+    nomSingulier: 'lune',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  nuage: {
+    shape2D: emoji('nuage', '2601'),
+    shapeDef: emoji('nuage', '2601').shapeDef,
+    nomPluriel: 'nuages',
+    nomSingulier: 'nuage',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  cerise: {
+    shape2D: emoji('cerise', '1f352'),
+    shapeDef: emoji('cerise', '1f352').shapeDef,
+    nomPluriel: 'paires de cerises',
+    nomSingulier: 'paire de cerises',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pomme: {
+    shape2D: emoji('pomme', '1f34e'),
+    shapeDef: emoji('pomme', '1f34e').shapeDef,
+    nomPluriel: 'pommes',
+    nomSingulier: 'pomme',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  biere: {
+    shape2D: emoji('biere', '1f37a'),
+    shapeDef: emoji('biere', '1f37a').shapeDef,
+    nomPluriel: 'bières',
+    nomSingulier: 'bière',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pingouin: {
+    shape2D: emoji('pingouin', '1f427'),
+    shapeDef: emoji('pingouin', '1f427').shapeDef,
+    nomPluriel: 'pingouins',
+    nomSingulier: 'pingouin',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  banane: {
+    shape2D: emoji('banane', '1f34c'),
+    shapeDef: emoji('banane', '1f34c').shapeDef,
+    nomPluriel: 'bananes',
+    nomSingulier: 'banane',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  fraise: {
+    shape2D: emoji('fraise', '1f353'),
+    shapeDef: emoji('fraise', '1f353').shapeDef,
+    nomPluriel: 'fraises',
+    nomSingulier: 'fraise',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  raisin: {
+    shape2D: emoji('raisin', '1f347'),
+    shapeDef: emoji('raisin', '1f347').shapeDef,
+    nomPluriel: 'grappes de raisin',
+    nomSingulier: 'grappe de raisin',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pasteque: {
+    shape2D: emoji('pasteque', '1f349'),
+    shapeDef: emoji('pasteque', '1f349').shapeDef,
+    nomPluriel: 'parts de pastèque',
+    nomSingulier: 'part de pastèque',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  melon: {
+    shape2D: emoji('melon', '1f348'),
+    shapeDef: emoji('melon', '1f348').shapeDef,
+    nomPluriel: 'melons',
+    nomSingulier: 'melon',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  orange: {
+    shape2D: emoji('orange', '1f34a'),
+    shapeDef: emoji('orange', '1f34a').shapeDef,
+    nomPluriel: 'oranges',
+    nomSingulier: 'orange',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  citron: {
+    shape2D: emoji('citron', '1f34b'),
+    shapeDef: emoji('citron', '1f34b').shapeDef,
+    nomPluriel: 'citrons',
+    nomSingulier: 'citron',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  peche: {
+    shape2D: emoji('peche', '1f351'),
+    shapeDef: emoji('peche', '1f351').shapeDef,
+    nomPluriel: 'pêches',
+    nomSingulier: 'pêche',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  poire: {
+    shape2D: emoji('poire', '1f350'),
+    shapeDef: emoji('poire', '1f350').shapeDef,
+    nomPluriel: 'poires',
+    nomSingulier: 'poire',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  ananas: {
+    shape2D: emoji('ananas', '1f34d'),
+    shapeDef: emoji('ananas', '1f34d').shapeDef,
+    nomPluriel: 'ananas',
+    nomSingulier: 'ananas',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'd\''
+  },
+  kiwi: {
+    shape2D: emoji('kiwi', '1f95d'),
+    shapeDef: emoji('kiwi', '1f95d').shapeDef,
+    nomPluriel: 'kiwis',
+    nomSingulier: 'kiwi',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  mangue: {
+    shape2D: emoji('mangue', '1f96d'),
+    shapeDef: emoji('mangue', '1f96d').shapeDef,
+    nomPluriel: 'mangues',
+    nomSingulier: 'mangue',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  explosion: {
+    shape2D: emoji('explosion', '1f4a5'),
+    shapeDef: emoji('explosion', '1f4a5').shapeDef,
+    nomPluriel: 'explosions',
+    nomSingulier: 'explosion',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  cadeau: {
+    shape2D: emoji('cadeau', '1f381'),
+    shapeDef: emoji('cadeau', '1f381').shapeDef,
+    nomPluriel: 'cadeaux',
+    nomSingulier: 'cadeau',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
   }
 }
-
-export const listeShapes2DNames: ShapeName[] = Object.keys(listeShapes2DInfos) as ShapeName[]

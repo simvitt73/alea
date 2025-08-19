@@ -1,14 +1,15 @@
-import { listeShapes2DInfos, type Shape2DInfo, type ShapeName } from '../figures2d/shapes2d'
+import { listeShapes2DInfos } from '../figures2d/shapes2d'
 import { VisualPattern } from './VisualPattern'
 import { VisualPattern3D } from './VisualPattern3D'
 import FractionEtendue from '../../../modules/FractionEtendue'
 import { Ratio } from '../../mathFonctions/Ratio'
-import { listeEmojisInfos, type EmojiInfos } from '../figures2d/listeEmojis'
+type Shape = keyof typeof listeShapes2DInfos
+type ShapeInfo = typeof listeShapes2DInfos[Shape]
 export type PatternRiche = {
   visualImg?: string,
   visualId?: number,
   numero: number,
-  shapes: ShapeName[],
+  shapes: Shape[],
   fonctionNb: (x: number) => number,
   fonctionFraction?: (x: number) => FractionEtendue,
   fonctionRatio?: (x: number) => Ratio,
@@ -35,10 +36,10 @@ export type PatternRicheRepetition = {
   visualImg?: string,
   visualId?: number,
   nbMotifMin: number,
-  shapes: ShapeName[],
+  shapes: Shape[],
   numero?: number,
   formule?: string,
-  fonctionShape: (x: number) => Shape2DInfo | EmojiInfos,
+  fonctionShape: (x: number) => ShapeInfo,
   pattern?: VisualPattern,
   iterate: (this: VisualPattern, n?: number) => Set<string>
 
@@ -2124,9 +2125,9 @@ const pattern83: PatternRicheRepetition = {
   shapes: ['chien', 'chat', 'tortue'],
   nbMotifMin: 6,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 3 === 0) return listeEmojisInfos['chien']
-    if ((n - 1) % 3 === 1) return listeEmojisInfos['chat']
-    return listeEmojisInfos['tortue']
+    if ((n - 1) % 3 === 0) return listeShapes2DInfos['chien']
+    if ((n - 1) % 3 === 1) return listeShapes2DInfos['chat']
+    return listeShapes2DInfos['tortue']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2159,10 +2160,10 @@ const pattern85: PatternRicheRepetition = {
   shapes: ['fraise', 'banane', 'kiwi', 'citron'],
   nbMotifMin: 8,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 4 === 0) return listeEmojisInfos['fraise']
-    if ((n - 1) % 4 === 1) return listeEmojisInfos['banane']
-    if ((n - 1) % 4 === 2) return listeEmojisInfos['kiwi']
-    return listeEmojisInfos['citron']
+    if ((n - 1) % 4 === 0) return listeShapes2DInfos['fraise']
+    if ((n - 1) % 4 === 1) return listeShapes2DInfos['banane']
+    if ((n - 1) % 4 === 2) return listeShapes2DInfos['kiwi']
+    return listeShapes2DInfos['citron']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2239,10 +2240,10 @@ const pattern89: PatternRicheRepetition = {
   shapes: ['raisin', 'pomme', 'orange'],
   nbMotifMin: 8,
   fonctionShape: (n:number) => {
-    if ((n - 1) % 4 === 0) return listeEmojisInfos['raisin']
-    if ((n - 1) % 4 === 1) return listeEmojisInfos['pomme']
-    if ((n - 1) % 4 === 2) return listeEmojisInfos['pomme']
-    return listeEmojisInfos['orange']
+    if ((n - 1) % 4 === 0) return listeShapes2DInfos['raisin']
+    if ((n - 1) % 4 === 1) return listeShapes2DInfos['pomme']
+    if ((n - 1) % 4 === 2) return listeShapes2DInfos['pomme']
+    return listeShapes2DInfos['orange']
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 1
@@ -2495,13 +2496,13 @@ const pattern100: PatternRicheRepetition = {
   nbMotifMin: 10,
   numero: 100,
   fonctionShape: (n:number) => {
-    return [listeEmojisInfos['cadeau'], listeEmojisInfos['explosion']][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]
+    return [listeShapes2DInfos['cadeau'], listeShapes2DInfos['explosion']][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]
   },
   iterate: function (this: VisualPattern, n?: number) {
     if (n === undefined) n = 0
 
     const newCells = new Set<string>()
-    newCells.add(VisualPattern.coordToKey([0, 0, [listeEmojisInfos['cadeau'].unicode, listeEmojisInfos['explosion'].unicode][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]])) // explosion ou cadeau
+    newCells.add(VisualPattern.coordToKey([0, 0, ['cadeau', 'explosion'][Number.isInteger(Math.sqrt(9 + 8 * n)) ? 0 : 1]])) // explosion ou cadeau
     return newCells
   }
 }

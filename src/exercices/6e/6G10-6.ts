@@ -137,8 +137,12 @@ export default class constructionElementaire extends Exercice {
         if (this.interactif) {
           colonne2 +=
             numAlpha(questind) +
-            `$${points[ind].nom}${sp(3)}$` + choixDeroulant(this, i * this.sup2 + k, ['∈', '∉'], '...') + `$${sp(3)}${lettre[0]}${points[ind1].nom}${points[ind2].nom}${lettre[1]}$<span id="resultatCheckEx${numeroExercice}Q${i * this.sup2 + k}"></span><br>`
-          handleAnswers(this, i * this.sup2 + k, { reponse: { value: sol === '\\notin' ? '∉' : '∈' } }, { formatInteractif: 'listeDeroulante' })
+            `$${points[ind].nom}${sp(3)}$` + choixDeroulant(this, i * this.sup2 + k, [
+              { label: '?', value: '' },
+              { latex: '\\in', value: 'in' },
+              { latex: '\\notin', value: 'notin' }
+            ]) + `$${sp(3)}${lettre[0]}${points[ind1].nom}${points[ind2].nom}${lettre[1]}$<br>`
+          handleAnswers(this, i * this.sup2 + k, { reponse: { value: sol.replace('\\', '') } }, { formatInteractif: 'listeDeroulante' })
         } else {
           const enonce = `$${points[ind].nom}${sp(3)}\\ldots\\ldots\\ldots${sp(3)}${lettre[0]}${points[ind1].nom}${points[ind2].nom}${lettre[1]}$`
           colonne2 += numAlpha(questind) + enonce + '<br>'

@@ -1,23 +1,21 @@
-import { polygone } from '../../lib/2d/polygones'
-import { shuffle } from '../../lib/outils/arrayOutils'
-import Exercice from '../Exercice'
-import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
-import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
-import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { gestionnaireFormulaireTexte, randint } from '../../modules/outils'
 import { listeShapes2DInfos } from '../../lib/2d/figures2d/shapes2d'
 import { listePatternAffineOuLineaire, type PatternRiche, type PatternRiche3D } from '../../lib/2d/patterns/patternsPreDef'
-import { createList } from '../../lib/format/lists'
-import { texNombre } from '../../lib/outils/texNombre'
-import { texteParPosition } from '../../lib/2d/textes'
 import { point } from '../../lib/2d/points'
+import { polygone } from '../../lib/2d/polygones'
+import { texteParPosition } from '../../lib/2d/textes'
+import { createList } from '../../lib/format/lists'
+import { ajouteQuestionMathlive } from '../../lib/interactif/questionMathLive'
+import { shuffle } from '../../lib/outils/arrayOutils'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { texNombre } from '../../lib/outils/texNombre'
+import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
+import { gestionnaireFormulaireTexte, randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 // import type { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { cubeDef, project3dIso, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
+import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
 import { context } from '../../modules/context'
-import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { listeEmojisInfos } from '../../lib/2d/figures2d/listeEmojis'
-import { VisualPattern } from '../../lib/2d/patterns/VisualPattern'
 
 export const titre = 'Comprendre un algorithme itératif'
 export const interactifReady = true
@@ -40,6 +38,8 @@ export const refs = {
 }
 
 export default class PaternNum0 extends Exercice {
+  destroyers: (() => void)[] = []
+
   constructor () {
     super()
     this.nbQuestions = 3
@@ -48,13 +48,22 @@ export default class PaternNum0 extends Exercice {
  Cet exercice contient des patterns issus de l'excellent site : https://www.visualpatterns.org/`
     this.besoinFormulaireNumerique = ['Nombre de figures par question', 4]
     this.sup = 3
-    this.besoinFormulaire4Texte = ['Types de questions', 'Nombres séparés par des tirets\n1: Motif suivant à dessiner\n2 : Motif suivant (nombre)\n3 : Motif 10 (nombre)\n4 : Numéro du motif\n5 : Motif 100 (nombre)\n6 : Question au hasard parmi les 5 précédentes']
+    this.besoinFormulaire4Texte = ['Types de questions', 'Nombres séparés par des tirets :\n1: Motif suivant à dessiner\n2 : Motif suivant (nombre)\n3 : Motif 10 (nombre)\n4 : Numéro du motif\n5 : Motif 100 (nombre)\n6 : Question au hasard parmi les 5 précédentes']
     this.sup4 = '6'
     this.besoinFormulaire5Numerique = ['Numéro de pattern (uniquement si 1 seule question)', 100,]
     this.sup5 = 1
   }
 
+  destroy () {
+    // MGu quan l'exercice est supprimé par svelte : bouton supprimé
+    this.destroyers.forEach(destroy => destroy())
+    this.destroyers.length = 0
+  }
+
   nouvelleVersion (): void {
+    // MGu quand l'exercice est modifié, on détruit les anciens listeners
+    this.destroyers.forEach(destroy => destroy())
+    this.destroyers.length = 0
     if (this.sup5 > listePatternAffineOuLineaire.length) {
       this.sup5 = listePatternAffineOuLineaire.length
     }
@@ -99,7 +108,8 @@ export default class PaternNum0 extends Exercice {
 
         const angle = Math.PI / 6
         if (context.isHtml) {
-          updateCubeIso({ pattern, i, j: nbFigures, angle, inCorrectionMode: true })
+          const listeners = updateCubeIso({ pattern, i, j: nbFigures, angle, inCorrectionMode: true })
+          if (listeners) this.destroyers.push(listeners)
           pattern.shape.codeSvg = `<use href="#cubeIsoQ${i}F${nbFigures}"></use>`
           // Ajouter les SVG générés par svg() de chaque objet
           const cells = (pattern as VisualPattern3D).update3DCells(nbFigures)
@@ -128,8 +138,6 @@ export default class PaternNum0 extends Exercice {
         for (const shape of pattern.shapes) {
           if (shape in listeShapes2DInfos) {
             objetsCorr.push(listeShapes2DInfos[shape].shapeDef)
-          } else if (shape in listeEmojisInfos) {
-            objetsCorr.push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
           } else {
             throw new Error(`Shape ${shape} not found in listeShapes2DInfos or emojis.`)
           }
@@ -155,8 +163,6 @@ export default class PaternNum0 extends Exercice {
           for (const shape of pattern.shapes) {
             if (shape in listeShapes2DInfos) {
               figures[j].push(listeShapes2DInfos[shape].shapeDef)
-            } else if (shape in listeEmojisInfos) {
-              figures[j].push(emoji(shape, listeEmojisInfos[shape].unicode).shapeDef)
             } else {
               throw new Error(`Shape ${shape} not found in listeShapes2DInfos or emojis.`)
             }
@@ -169,7 +175,8 @@ export default class PaternNum0 extends Exercice {
         let ymax = -Infinity
         if (pattern instanceof VisualPattern3D) {
           if (context.isHtml) {
-            updateCubeIso({ pattern, i, j, angle, inCorrectionMode: false })
+            const listeners = updateCubeIso({ pattern, i, j, angle, inCorrectionMode: false })
+            if (listeners) this.destroyers.push(listeners)
             if (pattern.shape) pattern.shape.codeSvg = `<use href="#cubeIsoQ${i}F${j}"></use>`
             const cells = (pattern as VisualPattern3D).update3DCells(j + 1)
             // Ajouter les SVG générés par svg() de chaque objet
@@ -203,7 +210,7 @@ export default class PaternNum0 extends Exercice {
       let texteCorr = ''
       const listeQuestions: string[] = []
       const listeCorrections: string[] = []
-      const infosShape = pattern.shapes[0] in listeShapes2DInfos ? listeShapes2DInfos[pattern.shapes[0]] : pattern.shapes[0] in listeEmojisInfos ? listeEmojisInfos[pattern.shapes[0]] : { articleCourt: 'un', nomPluriel: 'formes' }
+      const infosShape = pattern.shapes[0] in listeShapes2DInfos ? listeShapes2DInfos[pattern.shapes[0]] : pattern.shapes[0] in listeShapes2DInfos ? listeShapes2DInfos[pattern.shapes[0]] : { articleCourt: 'un', nomPluriel: 'formes' }
       for (const q of typesQuestions) {
         switch (q) {
           case 1:
@@ -217,7 +224,7 @@ export default class PaternNum0 extends Exercice {
 
             listeQuestions.push(`\nQuel sera le nombre ${infosShape.articleCourt} ${infosShape.nomPluriel} dans le motif $${nbFigures + 1}$ ?<br>${ajouteQuestionMathlive(
             {
-exercice: this,
+              exercice: this,
               question: indexInteractif++,
               objetReponse: { reponse: { value: nbTex } },
               typeInteractivite: 'mathlive'

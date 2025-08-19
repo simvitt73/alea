@@ -10,6 +10,7 @@ import ExerciceSimple from '../../ExerciceSimple'
 import { codageSegments } from '../../../lib/2d/codages'
 import { mathalea2d } from '../../../modules/2dGeneralites'
 import { pgcd } from '../../../lib/outils/primalite'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 export const titre = 'Calculer le "milieu" entre 1 et une fraction'
 export const interactifReady = true
@@ -33,6 +34,7 @@ export default class MilieuEntre1EtFraction extends ExerciceSimple {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
 
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
     this.optionsDeComparaison = { fractionIrreductible: true }
   }
 

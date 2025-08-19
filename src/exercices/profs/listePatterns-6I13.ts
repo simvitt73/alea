@@ -1,7 +1,5 @@
-import { emoji } from '../../lib/2d/figures2d/Emojis'
-import { emojis } from '../../lib/2d/figures2d/listeEmojis'
 import { cubeDef, faceLeft, faceRight, faceTop, project3dIso, shapeCubeIso, updateCubeIso } from '../../lib/2d/figures2d/Shape3d'
-import { listeShapesDef, shapeNames, type ShapeName } from '../../lib/2d/figures2d/shapes2d'
+import { listeShapes2DInfos, shapeNames, type ShapeName } from '../../lib/2d/figures2d/shapes2d'
 import { VisualPattern3D } from '../../lib/2d/patterns/VisualPattern3D'
 import { type PatternRiche3D, type PatternRiche, listePatternAffineOuLineaire } from '../../lib/2d/patterns/patternsPreDef'
 import { point } from '../../lib/2d/points'
@@ -33,6 +31,8 @@ export const uuid = '71ff5'
 
  */
 export default class ListePatternsPreDef6I13 extends Exercice {
+  destroyers: (() => void)[] = []
+
   constructor () {
     super()
     this.nbQuestions = 1
@@ -44,14 +44,24 @@ export default class ListePatternsPreDef6I13 extends Exercice {
     pour le motif 43 ainsi que le nombre d'éléments au rang n de chaque pattern.<br>`
   }
 
-  nouvelleVersion () {
+  destroy () {
+    // MGu quan l'exercice est supprimé par svelte : bouton supprimé
+    this.destroyers.forEach(destroy => destroy())
+    this.destroyers.length = 0
+  }
+
+  nouvelleVersion (): void {
+    // MGu quand l'exercice est modifié, on détruit les anciens listeners
+    this.destroyers.forEach(destroy => destroy())
+    this.destroyers.length = 0
+    this.sup3 = Math.max(2, this.sup3) // On ne peut pas afficher moins de 2 motifs
     const listePatternReference = listePatternAffineOuLineaire.filter(p => p.fonctionRatio == null && p.fonctionFraction == null && (!('shapes' in p) || p.shapes.length === 1))
     const listeOfAll :(PatternRiche | PatternRiche3D)[] = [...listePatternReference]
 
     let texte = ''
+    // @todo ne pas coller toutes les def dans le fichier tex mais seulement celles utilisées !
     if (!context.isHtml) {
-      texte += `${Object.values(listeShapesDef).map(shape => shape.tikz()).join('\n')}\n`
-      texte += `${Object.entries(emojis).map(([nom, unicode]) => emoji(nom, unicode).shapeDef.tikz()).join('\n')}\n`
+      texte += `${Object.values(listeShapes2DInfos).map(shape => shape.shapeDef.tikz()).join('\n')}\n`
     }
     if (listeOfAll == null || listeOfAll.length === 0) return
     for (let i = 0; i < listeOfAll.length; i++) {
@@ -66,11 +76,8 @@ export default class ListePatternsPreDef6I13 extends Exercice {
         const objets: NestedObjetMathalea2dArray = []
         if ('shapes' in pat) {
           for (const shape of pat.shapes) {
-            if (shape in listeShapesDef) {
-              objets.push(listeShapesDef[shape])
-            }
-            if (shape in emojis) {
-              objets.push(emoji(shape, emojis[shape]).shapeDef)
+            if (shape in listeShapes2DInfos) {
+              objets.push(listeShapes2DInfos[shape].shapeDef)
             }
           }
         }
@@ -104,7 +111,7 @@ export default class ListePatternsPreDef6I13 extends Exercice {
         texte += `Pour le motif $${miseEnEvidence('n', bleuMathalea)}$, il y a $${miseEnEvidence(pat.formule, bleuMathalea)}$ éléments.<br>`
 
         const patternRiche = pat
-        const pattern = ('shapeDefault' in pat && pat.shapeDefault) ? new VisualPattern3D([]) : new VisualPattern([])
+        const pattern = ('iterate3d' in patternRiche) ? new VisualPattern3D({ initialCells: [], type: 'iso', prefixId: `Ex${this.numeroExercice}Q${i}`, shapes: ['cube'] }) : new VisualPattern([])
         if (pattern instanceof VisualPattern3D) {
           pattern.shapes = ['cube']
           pattern.iterate3d = (patternRiche as PatternRiche3D).iterate3d
@@ -128,22 +135,17 @@ export default class ListePatternsPreDef6I13 extends Exercice {
           if (context.isHtml) {
             for (let n = 0; n < pattern.shapes.length; n++) {
               let name = pattern.shapes[n]
-              if (name in listeShapesDef) {
+              if (name in listeShapes2DInfos) {
                 if (name === 'carré') {
-                  const nom = String(choice(Object.keys(emojis)))
+                  const nom = String(choice(Object.keys(listeShapes2DInfos)))
                   name = nom
                   pattern.shapes[n] = nom
-                  figures[j].push(emoji(nom, emojis[nom]).shapeDef)
-                } else figures[j].push(listeShapesDef[name])
-              } else if (name in emojis) {
-                figures[j].push(emoji(name, emojis[name]).shapeDef)
-              } else {
-                if (Object.keys(emojis).includes(name)) {
-                  figures[j].push(emoji(name, emojis[name]))
-                } else if (name === 'cube') {
-                  const cubeIsoDef = cubeDef(`cubeIsoQ${i}F${j}`, (pattern as VisualPattern3D).shape.scale ?? 1)
-                  cubeIsoDef.svg = function (coeff: number): string {
-                    return `
+                  figures[j].push(listeShapes2DInfos[nom].shapeDef)
+                } else figures[j].push(listeShapes2DInfos[name].shapeDef)
+              } else if (name === 'cube') {
+                const cubeIsoDef = cubeDef(`cubeIsoQ${i}F${j}`, 1)
+                cubeIsoDef.svg = function (coeff: number): string {
+                  return `
           <defs>
             <g id="cubeIsoQ${i}F${j}">
               ${faceTop(angle)}
@@ -151,22 +153,25 @@ export default class ListePatternsPreDef6I13 extends Exercice {
               ${faceRight(angle)}
             </g>
           </defs>`
-                  }
-                  figures[j].push(cubeIsoDef)
-                } else {
-                  console.warn(`Shape ${name} n'est pas dans listeShapesDef ou emojis et n'est pas un cube`)
                 }
+                figures[j].push(cubeIsoDef)
+              } else {
+                console.warn(`Shape ${name} n'est pas dans listeShapesDef ou emojis et n'est pas un cube`)
               }
             }
           }
           if (pattern instanceof VisualPattern3D) {
+            if (pattern.shape == null) {
+              pattern.shape = shapeCubeIso(`cubeIsoQ${i}F${j}`, 1, 1, { scale: 1 })
+            }
             if (context.isHtml) {
-              updateCubeIso(pattern, i, j, angle)
+              const listeners = updateCubeIso({ pattern, i, j, angle })
+              if (listeners) this.destroyers.push(listeners)
               pattern.shape.codeSvg = `<use href="#cubeIsoQ${i}F${j}"></use>`
               const cells = (pattern as VisualPattern3D).update3DCells(j + 1)
               // Ajouter les SVG générés par svg() de chaque objet
               cells.forEach(cell => {
-                const scale = cell[3]?.scale ?? 1
+                const scale = 1
                 const [px, py] = project3dIso(cell[0], cell[1], cell[2], angle)
                 const obj = shapeCubeIso(`cubeIsoQ${i}F${j}`, px, py, { scale })
                 obj.x = px / 20

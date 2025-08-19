@@ -60,6 +60,20 @@ interface ExoContent {
   title?: string
 }
 
+function testIfLoaded (values : string[], valuetoSearch :string, valueToPut : string) {
+  let search = false
+  for (const value of values) {
+    if (value.includes(valuetoSearch)) {
+      search = true
+      break
+    }
+  }
+  if (search) {
+    return valueToPut
+  }
+  return ''
+}
+
 class Latex {
   exercices: TypeExercice[]
   constructor () {
@@ -145,6 +159,7 @@ class Latex {
           } else {
             content += `\n% @see : ${getUrlFromExercice(exercice)}`
             content += `\n\\begin{EXO}{${exercice.examen || ''} ${exercice.mois || ''} ${exercice.annee || ''} ${exercice.lieu || ''}}{}\n`
+            content += testIfLoaded([exercice.content ?? ''], '\\anote{', '\n\\resetcustomnotes')
             if (Number(exercice.nbCols) > 1) {
               content += `\\begin{multicols}{${exercice.nbCols}}\n`
             }
@@ -152,13 +167,17 @@ class Latex {
             if (Number(exercice.nbCols) > 1) {
               content += '\n\\end{multicols}\n'
             }
+            content += testIfLoaded([exercice.content ?? ''], '\\anote{', '\n\\printcustomnotes')
             content += '\n\\end{EXO}\n'
             contentCorr += '\n\\begin{EXO}{}{}\n'
+            contentCorr += testIfLoaded([exercice.contentCorr ?? ''], '\\anote{', '\n\\resetcustomnotes')
             contentCorr += exercice.contentCorr
+            contentCorr += testIfLoaded([exercice.contentCorr ?? ''], '\\anote{', '\n\\printcustomnotes')
             contentCorr += '\n\\end{EXO}\n'
           }
         } else {
           contentCorr += '\n\\begin{EXO}{}{}\n'
+          contentCorr += testIfLoaded(exercice.listeCorrections, '\\anote{', '\n\\resetcustomnotes')
           if (Number(exercice.nbColsCorr) > 1) {
             contentCorr += `\\begin{multicols}{${exercice.nbColsCorr}}\n`
           }
@@ -180,11 +199,13 @@ class Latex {
           if (Number(exercice.nbColsCorr) > 1) {
             contentCorr += '\\end{multicols}\n'
           }
+          contentCorr += testIfLoaded(exercice.listeCorrections, '\\anote{', '\n\\printcustomnotes')
           contentCorr += '\n\\end{EXO}\n'
           content += `\n% @see : ${getUrlFromExercice(exercice)}`
-          content += `\n\\begin{EXO}{${format(exercice.consigne, false)}}{${String(exercice.id).replace('.js', '')}}\n`
+          content += `\n\\begin{EXO}{${testIfLoaded([exercice.introduction, exercice.consigne, ...exercice.listeQuestions], '\\anote{', '\n\\resetcustomnotes ')}${format(exercice.consigne, false)}}{${String(exercice.id).replace('.js', '')}}\n`
           content += writeIntroduction(exercice.introduction)
           content += writeInCols(writeQuestions(exercice.listeQuestions, exercice.spacing, Boolean(exercice.listeAvecNumerotation), Number(exercice.nbCols)), Number(exercice.nbCols))
+          content += testIfLoaded([exercice.introduction, exercice.consigne, ...exercice.listeQuestions], '\\anote{', '\n\\printcustomnotes')
           content += '\n\\end{EXO}\n'
         }
       }
@@ -243,6 +264,7 @@ Correction
       } else {
         content += '\n\\needspace{10\\baselineskip}'
         content += '\n\\begin{exercice}\n'
+        content += testIfLoaded([...exercice.listeQuestions, exercice.consigne, exercice.introduction], '\\anote{', '\n\\resetcustomnotes')
         if (withQrcode) {
           content += `\\begin{wrapfigure}{r}{2cm}
 \\centering
@@ -255,9 +277,12 @@ Correction
         content += writeIntroduction(exercice.introduction)
         content += '\n' + format(exercice.consigne)
         content += writeInCols(writeQuestions(exercice.listeQuestions, exercice.spacing, Boolean(exercice.listeAvecNumerotation), Number(exercice.nbCols)), Number(exercice.nbCols))
+        content += testIfLoaded([...exercice.listeQuestions, exercice.consigne, exercice.introduction], '\\anote{', '\n\\printcustomnotes')
         content += '\n\\end{exercice}\n'
         content += '\n\\begin{Solution}'
+        content += testIfLoaded([...exercice.listeCorrections], '\\anote{', '\n\\resetcustomnotes')
         content += writeInCols(writeQuestions(exercice.listeCorrections, exercice.spacingCorr, Boolean(exercice.listeAvecNumerotation), Number(exercice.nbCols)), Number(exercice.nbColsCorr))
+        content += testIfLoaded([...exercice.listeCorrections], '\\anote{', '\n\\printcustomnotes')
         content += '\n\\end{Solution}\n'
       }
     }

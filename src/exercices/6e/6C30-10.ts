@@ -83,18 +83,48 @@ export default class DiviserPar10 extends Exercice {
         let texteCorr = ''
         if (operationsPossibles[i] === 1) {
           texte += `Diviser par $${texNombre(combien)}$ revient à `
-          texte += this.interactif ? choixDeroulant(this, 2 * i, ['ajouter', 'diviser', 'multiplier', 'soustraire'], '...') : '$\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots$'
+          texte += this.interactif
+            ? choixDeroulant(this, 2 * i, [
+              { label: 'Choisir un verbe', value: '' },
+              { label: 'ajouter', value: 'ajouter' },
+              { label: 'diviser', value: 'diviser' },
+              { label: 'multiplier', value: 'multiplier' },
+              { label: 'soustraire', value: 'soustraire' }
+            ])
+            : '$\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots$'
           handleAnswers(this, 2 * i, { reponse: { value: 'multiplier' } }, { formatInteractif: 'listeDeroulante' })
           texte += ' par '
-          texte += this.interactif ? choixDeroulant(this, 2 * i + 1, ['0,1', '0,01', '0,001'], '...') : '$\\ldots\\ldots\\ldots\\ldots$'
+          texte += this.interactif
+            ? choixDeroulant(this, 2 * i + 1, [
+              { label: 'Choisir la bonne valeur', value: '' },
+              { latex: '0,1', value: '0,1' },
+              { latex: '0,01', value: '0,01' },
+              { latex: '0,001', value: '0,001' }
+            ])
+            : '$\\ldots\\ldots\\ldots\\ldots$'
           handleAnswers(this, 2 * i + 1, { reponse: { value: reponse } }, { formatInteractif: 'listeDeroulante' })
           texteCorr = `Diviser par $${texNombre(combien)}$ revient à ${texteEnCouleurEtGras('multiplier')} par $${texteEnCouleurEtGras(reponse)}$.`
         } else {
           texte += `Multiplier par $${reponse}$ revient à `
-          texte += this.interactif ? choixDeroulant(this, 2 * i, ['ajouter', 'diviser', 'multiplier', 'soustraire'], '...') : '$\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots$'
+          texte += this.interactif
+            ? choixDeroulant(this, 2 * i, [
+              { label: 'Choisir un verbe', value: '' },
+              { label: 'ajouter', value: 'ajouter' },
+              { label: 'diviser', value: 'diviser' },
+              { label: 'multiplier', value: 'multiplier' },
+              { label: 'soustraire', value: 'soustraire' }
+            ])
+            : '$\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots\\ldots$'
           handleAnswers(this, 2 * i, { reponse: { value: 'diviser' } }, { formatInteractif: 'listeDeroulante' })
           texte += ' par '
-          texte += this.interactif ? choixDeroulant(this, 2 * i + 1, ['10', '100', '1 000'], '...') : '$\\ldots\\ldots\\ldots\\ldots$'
+          texte += this.interactif
+            ? choixDeroulant(this, 2 * i + 1, [
+              { label: 'Choisir la bonne valeur', value: '' },
+              { latex: '10', value: '10' },
+              { latex: '100', value: '100' },
+              { latex: '1\\,000', value: '1 000' }
+            ])
+            : '$\\ldots\\ldots\\ldots\\ldots$'
           handleAnswers(this, 2 * i + 1, { reponse: { value: combien } }, { formatInteractif: 'listeDeroulante' })
           texteCorr = `Multiplier par $${reponse}$ revient à ${texteEnCouleurEtGras('diviser')} par $${miseEnEvidence(texNombre(combien))}$.`
         }
