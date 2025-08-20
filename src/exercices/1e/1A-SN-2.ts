@@ -18,26 +18,25 @@ export const amcType = 'qcmMono'
 export const titre = 'Calculer avec les suites arithmétiques et géométriques'
 export default class Puissances extends ExerciceQcmA {
   versionOriginale: () => void = () => {
-    this.enonce = 'Soit $a$ un nombre réel non nul et $n$ un entier non nul. A quelle expression est égale $a^{3n}(a^n)^2$ ?'
-    this.correction = 'On applique la propriété du quotient des puissances d\'un réel : <br>'
-    this.correction += 'Soit n et p deux entiers et a un réel :  $\\dfrac{a^n}{a^p}=a^{n-p}$<br>'
-    this.correction += 'On applique la propriété du produit des puissances d\'un réel : <br>'
-    this.correction += 'Soient n et p deux entiers et a un réel :  $a^n\\times a^p=a^{n+p}$<br>'
-    this.correction += 'et du produit de puissances : <br>'
-    this.correction += 'Soient n et p deux entiers et a un réel :  $\\left(a^{n}\\right)^p=a^{np}$<br>'
-    this.correction += '$\\begin{aligned} a^{3n}(a^n)^2&=a^{3n}\\times a^{3n}\\\\    &=a^{5n}    \\end{aligned}$<br>'
+   let a = -2
+   let b = 3
+    this.enonce = `Soit $(u_n)$ la suite définie pour tout entier $n$ par $u_n=${reduireAxPlusB(a,b,'n', { ordreInverse: true })}$.`
+     this.correction = `Soit $n\\in \\mathbb{N}$. On sait que la forme explicite d'une suite arithmétique $(u_n)$, de premier terme $u_0\\in \\mathbb{R}$ et de raison $r\\in \\mathbb{R}$
+    <br> est sous la forme : $u_n=u_0+n\\times r$.<br>
+Avec $u_0=${b}$ et $r=${a}$, on a bien $u_n=${reduireAxPlusB(a,b,'n')}$.<br>
+$${miseEnEvidence(`(u_n)`)}$  ${texteEnCouleur(`est donc une suite arithmétique de raison ${a}`)}. `  
     this.reponses = [
-      '$a^{5n}$',
-      '$a^{6n}$',
-      '$a^{3n^2}$',
-      '$a^{6n^2}$',
-    ]
-  }
+     `$(u_n)$ est une suite arithmétique de raison $${a}$.`,
+     `$(u_n)$ est une suite arithmétique de raison $${b}$.`,
+     `$(u_n)$ est une suite géométrique de raison $${a}$.`,
+     `$(u_n)$ n'est ni une suite arithmétique, ni une suite géométrique.`
+    ]}
+  
 
   versionAleatoire = () => {
-   const cas =randint(4,4)
-   if (cas===1){const a = randint(-5, 5,[0,1])
-    const b = randint(-5, 5,[-1,0,1,a])
+   const cas =randint(6,6)
+   if (cas===1){let a = randint(-5, 5,[0,1])
+    let b = randint(-5, 5,[-1,0,1,a])
     
     this.enonce = `Soit $(u_n)$ la suite définie pour tout entier $n$ par $u_n=${reduireAxPlusB(a,b,'n')}$.`
     this.correction = `Soit $n\\in \\mathbb{N}$. On sait que la forme explicite d'une suite arithmétique $(u_n)$, de premier terme $u_0\\in \\mathbb{R}$ et de raison $r\\in \\mathbb{R}$
@@ -69,8 +68,8 @@ $${miseEnEvidence(`(u_n)`)}$  ${texteEnCouleur(`est donc une suite géométrique
     ]}
  if (cas===3){const a = randint(-5, 5,[0,1])
     const b = randint(-5, 5,[-1,0,1,a,-a])
-    const fraction1 = new FractionEtendue(a+b, a+1)
-    const fraction2 = new FractionEtendue(a+b*b, a+b)
+    let fraction1 = new FractionEtendue(a+b, a+1)
+    let fraction2 = new FractionEtendue(a+b*b, a+b)
     this.enonce = `Soit $(u_n)$ la suite définie pour tout entier $n$ par $u_n=${a}+ ${ecritureParentheseSiNegatif(b)}^n$.`
     this.correction = `Soit $n\\in \\mathbb{N}$.<br>
     On calcule les premiers termes pour savoir si la suite peut être arithmétique ou géométrique : <br>
@@ -99,49 +98,79 @@ $${miseEnEvidence(`(u_n)`)}$  ${texteEnCouleur(`est donc une suite géométrique
      if (cas===4){const a = randint(-5, 5,[0,1])
     const b = randint(-5, 5,[-1,0,1,a])
     const c = randint(-5, 5,[-1,0,1,a])
+     let fraction1 = new FractionEtendue(a*b+c, a+c)
+    let fraction2 = new FractionEtendue(a*b*b+c, a*b+c)
     this.enonce = `Soit $(u_n)$ la suite définie pour tout entier $n$ par $u_n=${a}\\times ${ecritureParentheseSiNegatif(b)}^n${ecritureAlgebrique(c)}$.`
-    this.correction = `Soit $p\\in \\mathbb{N}$ et $r\\in\\mathbb{R}$.<br>
-    On sait que le terme de rang $n$ d'une suite arithmétique $(u_n)$ de premier terme $u_p$ et de rasion $r$ s'écrit $u_n=u_p + (n-p)r$.<br>
-    Il vient donc, en appliquant les valeurs de l'énoncé :<br>
-   `
+   this.correction = `Soit $n\\in \\mathbb{N}$.<br>
+    On calcule les premiers termes pour savoir si la suite peut être arithmétique ou géométrique : <br>
+    $u_0=${a}\\times ${ecritureParentheseSiNegatif(b)}^0${ecritureAlgebrique(c)}=${a}\\times 1${ecritureAlgebrique(c)}=${a+c}.$<br>
+    $u_1=${a}\\times ${ecritureParentheseSiNegatif(b)}^1${ecritureAlgebrique(c)}=${a}\\times ${ecritureParentheseSiNegatif(b)}${ecritureAlgebrique(c)}=${a*b+c}.$<br>
+    $u_2=${a}\\times ${ecritureParentheseSiNegatif(b)}^2${ecritureAlgebrique(c)}=${a}\\times ${ecritureParentheseSiNegatif(b*b)}${ecritureAlgebrique(c)}=${a*b*b+c}.$<br>
+    On observe que $u_2-u_1=${a*b*b+c}${ecritureAlgebrique(-a*b-c)}=${a*b*b-a*b}$.<br>
+    et $u_1-u_0=${a*b+c}${ecritureAlgebrique(-a-c)}=${a*b-a}$.  <br>
+   Comme $u_2-u_1\\neq u_1-u_0$, on en déduit que la suite n'est pas arithmétique.<br>
+   De même, on compare les quotients des termes consécutifs: <br>
+   $\\dfrac{u_1}{u_0} = \\dfrac{${a*b+c}}{${a+c}}$`
+   if (fraction1.estIrreductible){}
+   else{ this.correction +=` =$${fraction1.texFractionSimplifiee}$`}
+   this.correction +=` et $\\dfrac{u_2}{u_1} = \\dfrac{${a*b*b+c}}{${a*b+c}}$`
+    if (fraction2.estIrreductible){}
+    else{ this.correction +=` =$${fraction2.texFractionSimplifiee}$`}
+    this.correction +=`<br>On observe que la suite n'est pas géométrique. <br>
+    $${miseEnEvidence('(u_n)')}$  ${texteEnCouleur('est donc une suite ni arithmétique, ni géométrique ')}. `
    
     this.reponses = [
-      `$(u_n)$ n'est ni une suite arithmétique, ni une suite géométrique`,
-       `$(u_n)$ est une suite géométrique de raison $${a}$`,
-     `$(u_n)$ est une suite arithmétique de raison $${c}$`,
-     `$(u_n)$ est une suite arithmétique de raison $${c}$ et géométrique de raison $${b}$`,
+      `$(u_n)$ n'est ni une suite arithmétique, ni une suite géométrique.`,
+       `$(u_n)$ est une suite géométrique de raison $${a}$.`,
+     `$(u_n)$ est une suite arithmétique de raison $${c}$.`,
+     `$(u_n)$ est une suite arithmétique de raison $${c}$ et géométrique de raison $${b}$.`,
      
     ]}
-     if (cas===5){const a = randint(-5, 5,[0,1])
+     if (cas===5){const a = randint(-5, 5,[-1,0,1])
     const b = randint(-5, 5,[-1,0,1,a])
     const c = randint(-5, 5,[-1,0,1,a])
     this.enonce = `Soit $(u_n)$ la suite définie pour tout entier $n$ par $u_n=${a}n$.`
-    this.correction = `Soit $p\\in \\mathbb{N}$ et $r\\in\\mathbb{R}$.<br>
-    On sait que le terme de rang $n$ d'une suite arithmétique $(u_n)$ de premier terme $u_p$ et de rasion $r$ s'écrit $u_n=u_p + (n-p)r$.<br>
-    Il vient donc, en appliquant les valeurs de l'énoncé :<br>
-   `
+    this.correction = `Soit $n\\in \\mathbb{N}$. On sait que la forme explicite d'une suite arithmétique $(u_n)$, de premier terme $u_0\\in \\mathbb{R}$ et de raison $r\\in \\mathbb{R}$
+    <br> est sous la forme : $u_n=u_0+n\\times r$.<br>
+Avec $u_0=0$ et $r=${a}$, on a bien $u_n=${reduireAxPlusB(a,0,'n')}$.<br>
+$${miseEnEvidence(`(u_n)`)}$  ${texteEnCouleur(`est donc une suite arithmétique de raison ${a}`)}. ` 
    
     this.reponses = [
-      `$(u_n)$ est une suite arithmétique de raison $${a}$`,
-       `$(u_n)$ n'est ni une suite arithmétique, ni une suite géométrique`,
-       `$(u_n)$ est une suite géométrique de raison $${a}$`,
-     `$(u_n)$ est une suite arithmétique et géométriquede de raison $${a}$`,
-     
+      `$(u_n)$ est une suite arithmétique de raison $${a}$.`,
+       `$(u_n)$ n'est ni une suite arithmétique, ni une suite géométrique.`,
+       `$(u_n)$ est une suite géométrique de raison $${a}$.`,
+     `$(u_n)$ est une suite arithmétique et géométrique de raison $${a}$.`,
+
     ]}
      if (cas===6){const a = randint(-5, 5,[0,1])
-    const b = randint(-5, 5,[-1,0,1,a])
+    const b = randint(-5, 5,[-1,0,1,a,-2])
     const c = randint(-5, 5,[-1,0,1,a])
+      let fraction1 = new FractionEtendue(a+b, b)
+    let fraction2 = new FractionEtendue(4*a+b, a+b)
     this.enonce = `Soit $(u_n)$ la suite définie pour tout entier $n$ par $u_n=${a}n^2${ecritureAlgebrique(b)}$.`
-    this.correction = `Soit $p\\in \\mathbb{N}$ et $r\\in\\mathbb{R}$.<br>
-    On sait que le terme de rang $n$ d'une suite arithmétique $(u_n)$ de premier terme $u_p$ et de rasion $r$ s'écrit $u_n=u_p + (n-p)r$.<br>
-    Il vient donc, en appliquant les valeurs de l'énoncé :<br>
-   `
+     this.correction = `Soit $n\\in \\mathbb{N}$.<br>
+    On calcule les premiers termes pour savoir si la suite peut être arithmétique ou géométrique : <br>
+    $u_0=${a}\\times 0^2${ecritureAlgebrique(b)}=${b}$<br>
+    $u_1=${a}\\times 1^2${ecritureAlgebrique(b)}=${a}+${ecritureAlgebrique(b)}=${a+b}$<br>
+    $u_2=${a}\\times 2^2${ecritureAlgebrique(b)}=${a}\\times 4${ecritureAlgebrique(b)}=${4*a+b}.$<br>
+    On observe que $u_2-u_1=${4*a+b}${ecritureAlgebrique(-a-b)}=${3*a}.$<br>
+    et $u_1-u_0=${a+b}${ecritureAlgebrique(-b)}=${a}$.  <br>
+   Comme $u_2-u_1\\neq u_1-u_0$, on en déduit que la suite n'est pas arithmétique.<br>
+   De même, on compare les quotients des termes consécutifs: <br>
+   $\\dfrac{u_1}{u_0} = \\dfrac{${a+b}}{${b}}$`
+   if (fraction1.estIrreductible){}
+   else{ this.correction +=`$ =${fraction1.texFractionSimplifiee}$`}
+   this.correction +=` et $\\dfrac{u_2}{u_1} = \\dfrac{${4*a+b}}{${a+b}}$`
+    if (fraction2.estIrreductible){}
+    else{ this.correction +=` $=${fraction2.texFractionSimplifiee}$`}
+    this.correction +=`<br>On observe que la suite n'est pas géométrique. <br>
+    $${miseEnEvidence('(u_n)')}$  ${texteEnCouleur('est donc une suite ni arithmétique, ni géométrique ')}. `
    
     this.reponses = [
-       `$(u_n)$ n'est ni une suite arithmétique, ni une suite géométrique`,
-       `$(u_n)$ est une suite arithmétique de raison $${a}$`,
-       `$(u_n)$ est une suite géométrique de raison $${a}$`,
-     `$(u_n)$ est une suite arithmétique de raison $${b}$`,
+       `$(u_n)$ n'est ni une suite arithmétique, ni une suite géométrique.`,
+       `$(u_n)$ est une suite arithmétique de raison $${a}$.`,
+       `$(u_n)$ est une suite géométrique de raison $${a}$.`,
+     `$(u_n)$ est une suite arithmétique de raison $${b}$.`,
      
     ]}
   }
