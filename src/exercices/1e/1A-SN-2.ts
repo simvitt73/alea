@@ -1,3 +1,4 @@
+import { miseEnEvidence, texteEnCouleur } from '../../lib/outils/embellissements'
 import { ecritureAlgebrique, ecritureParentheseSiNegatif, reduireAxPlusB } from '../../lib/outils/ecritures'
 import { texNombre } from '../../lib/outils/texNombre'
 import { randint } from '../../modules/outils'
@@ -38,10 +39,11 @@ export default class Puissances extends ExerciceQcmA {
     const b = randint(-5, 5,[-1,0,1,a])
     
     this.enonce = `Soit $(u_n)$ la suite définie pour tout entier $n$ par $u_n=${reduireAxPlusB(a,b,'n')}$`
-    this.correction = `Soit $p\\in \\mathbb{N}$ et $r\\in\\mathbb{R}$.<br>
-    On sait que le terme de rang $n$ d'une suite arithmétique $(u_n)$ de premier terme $u_p$ et de rasion $r$ s'écrit $u_n=u_p + (n-p)r$.<br>
-    Il vient donc, en appliquant les valeurs de l'énoncé :<br>
-   `
+    this.correction = `On sait que la forme explicite d'une suite arithmétique, de premier terme $u_0\\in \\mathbb{R}$ et de raison $r\\in \\mathbb{R}$
+    <br> est sous la forme : $u_n=u_0+n\\times r$.<br>
+Avec $u_0=${b}$ et $r=${a}$, on a bien $u_n=${reduireAxPlusB(a,b,'n')}$.<br>
+$${miseEnEvidence(`(u_n)`)}$  ${texteEnCouleur(`est donc une suite arithmétique de raison ${a}`)}. `  
+
    
     this.reponses = [
      `$(u_n)$ est une suite arithmétique de raison $${a}$`,
