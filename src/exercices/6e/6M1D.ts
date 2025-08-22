@@ -1,4 +1,5 @@
-import PerimetreOuAireDeFiguresComposees from './6M11-2'
+import PerimetreOuAireDeFiguresComposees from '../5e/5M11-5'
+
 export const titre = 'Calculer périmètre de figures composées'
 export const dateDePublication = '27/07/2025'
 export const interactifReady = true

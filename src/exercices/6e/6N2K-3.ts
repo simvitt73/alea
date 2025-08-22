@@ -1,13 +1,13 @@
+import { texteGras } from '../../lib/format/style'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { texteGras } from '../../lib/format/style'
 import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
-import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import Exercice from '../Exercice'
 
 export const titre = "Déterminer reste et quotient d'une division euclidienne à partir d'une égalité"
@@ -112,7 +112,6 @@ export default class DivisionsEuclidiennesEgalite extends Exercice {
           propositions: [
             {
               type: 'AMCNum',
-              // @ts-expect-error Trop compliqué à typer
               propositions: [{
                 texte: '',
                 statut: '',
@@ -130,7 +129,6 @@ export default class DivisionsEuclidiennesEgalite extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error Trop compliqué à typer
               propositions: [{
                 texte: '',
                 statut: '',

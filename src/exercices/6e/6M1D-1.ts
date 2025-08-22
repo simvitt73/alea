@@ -1,4 +1,5 @@
-import PerimetreOuAireDeFiguresComposees from './6M11-2'
+import PerimetreOuAireDeFiguresComposees from '../5e/5M11-5'
+
 export const titre = 'Décomposer une figure complexe en figures simples'
 export const amcReady = true
 export const amcType = 'AMCHybride'

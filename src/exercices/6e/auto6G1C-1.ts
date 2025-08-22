@@ -126,7 +126,8 @@ export default class NbAxesDeSymetrie extends Exercice {
             ordered: true, radio: true
           }
         }
-        const monQcm = propositionsQcm(this, i, { style: 'inline-block', format: 'case', radio: true })
+        // const monQcm = propositionsQcm(this, i, { style: 'inline-block', format: 'case', radio: true })
+        const monQcm = propositionsQcm(this, i, { style: 'inline-block', format: 'case' })
         texte += `${monQcm.texte}`
       }
       const onDirectionChange = (direction = 1) => {

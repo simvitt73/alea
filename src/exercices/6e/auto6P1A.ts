@@ -1,12 +1,12 @@
-import { repere } from '../../lib/2d/reperes'
 import { traceBarre } from '../../lib/2d/diagrammes'
+import { repere } from '../../lib/2d/reperes'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 import { choice } from '../../lib/outils/arrayOutils'
 import { numAlpha, premiereLettreEnMajuscule } from '../../lib/outils/outilString'
-import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d } from '../../modules/2dGeneralites'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { context } from '../../modules/context'
-import { propositionsQcm } from '../../lib/interactif/qcm'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 
 export const titre = 'Lire un diagramme en bâtons'
 export const amcReady = true
@@ -159,7 +159,6 @@ export default class LectureDiagrammeBaton extends Exercice {
         propositions: [
           {
             type: 'qcmMono',
-            // @ts-expect-error
             propositions: propa,
             options: {
               ordered: false
@@ -168,14 +167,12 @@ export default class LectureDiagrammeBaton extends Exercice {
           },
           {
             type: 'qcmMono',
-            // @ts-expect-error
             options: { ordered: false },
             enonce: numAlpha(1) + this.listeQuestions[1],
             propositions: propb
           },
           {
             type: 'qcmMono',
-            // @ts-expect-error
             options: { ordered: false },
             enonce: numAlpha(2) + this.listeQuestions[2],
             propositions: propc

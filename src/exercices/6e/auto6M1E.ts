@@ -1,4 +1,4 @@
-import CompareAireEtPerimetreAvecRectangle from './6M21'
+import CompareAireEtPerimetreAvecRectangle from './auto6M2A'
 
 export const dateDePublication = '28/07/2025'
 export const titre = 'Comparer périmètres de figures'

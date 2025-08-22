@@ -1,4 +1,4 @@
-import AiresCalculMental from './6M25-2'
+import AiresCalculMental from '../5e/5M11-6'
 
 export const titre = 'Calculer l\'aire de carrés et de rectangles (calcul mental)'
 export const dateDePublication = '30/07/2025'

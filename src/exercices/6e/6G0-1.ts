@@ -5,8 +5,8 @@ import { labelPoint } from '../../lib/2d/textes'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { mathalea2d } from '../../modules/2dGeneralites'
-import { listeQuestionsToContenu } from '../../modules/outils'
 import { context } from '../../modules/context'
+import { listeQuestionsToContenu } from '../../modules/outils'
 import Exercice from '../Exercice'
 export const titre = 'Utiliser la notation de droites, segments et demi-droites'
 export const amcReady = true
@@ -93,7 +93,6 @@ export default class NotationSegmentDroiteDemiDroite extends Exercice {
               {
                 texte: texteCorr,
                 statut: 3, // OBLIGATOIRE (ici c'est le nombre de lignes du cadre pour la réponse de l'élève sur AMC)
-                // @ts-expect-error
                 enonce: 'Texte écrit au dessus ou avant les cases à cocher', // EE : ce champ est facultatif et fonctionnel qu'en mode hybride (en mode normal, il n'y a pas d'intérêt)
                 sanscadre: false, // EE : ce champ est facultatif et permet (si true) de cacher le cadre et les lignes acceptant la réponse de l'élève
                 pointilles: true // EE : ce champ est facultatif et permet (si false) d'enlever les pointillés sur chaque ligne.

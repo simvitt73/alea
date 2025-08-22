@@ -1,14 +1,14 @@
+import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
+import type Figure from 'apigeom/src/Figure'
+import { apigeomGraduatedLine } from '../../lib/apigeom/apigeomGraduatedLine'
+import figureApigeom from '../../lib/figureApigeom'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { arrondi } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../Exercice'
 import { context } from '../../modules/context'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
-import type Figure from 'apigeom/src/Figure'
-import { apigeomGraduatedLine } from '../../lib/apigeom/apigeomGraduatedLine'
-import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
-import figureApigeom from '../../lib/figureApigeom'
+import Exercice from '../Exercice'
 
 export const titre = 'Placer un point d\'abscisse décimale'
 export const dateDeModifImportante = '03/05/2024'
@@ -121,7 +121,6 @@ class PlacerPointsSurAxe extends Exercice {
       if (context.isAmc) {
         this.autoCorrection[i] = {
           enonce: texte,
-          // @ts-expect-error typage de AMC
           propositions: [{ texte: texteCorr, statut: 0, feedback: '' }]
         }
       }

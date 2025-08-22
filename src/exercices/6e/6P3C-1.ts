@@ -1,3 +1,6 @@
+import { texPrix } from '../../lib/format/style'
+import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice, combinaisonListes, shuffle2tableaux } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import {
@@ -8,12 +11,9 @@ import {
 } from '../../lib/outils/nombres'
 import { numAlpha, sp } from '../../lib/outils/outilString'
 import { prenom } from '../../lib/outils/Personne'
-import { texPrix } from '../../lib/format/style'
-import Exercice from '../Exercice'
 import { context } from '../../modules/context'
 import { checkSum, listeQuestionsToContenu, randint } from '../../modules/outils'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const titre = 'Résoudre un problème relevant de la proportionnalité avec les propriétés de linéarité'
 export const interactifReady = true
@@ -263,9 +263,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
           this.autoCorrection[i] = {
             enonce: '',
             enonceAvant: false,
-            // @ts-expect-error
             options: { barreseparation: true, multicolsAll: true }, // facultatif. Par défaut, multicols est à false. Ce paramètre provoque un multicolonnage (sur 2 colonnes par défaut) : pratique quand on met plusieurs AMCNum. !!! Attention, cela ne fonctionne pas, nativement, pour AMCOpen. !!!
-            // @ts-expect-error
             propositions: propositionsAMC
           }
         }

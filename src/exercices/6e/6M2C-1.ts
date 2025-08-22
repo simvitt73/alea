@@ -1,4 +1,5 @@
-import PerimetreOuAireDeCarresRectanglesTriangles from './6M11-1'
+import PerimetreOuAireDeCarresRectanglesTriangles from '../5e/5M11-1'
+
 export const titre = 'Calculer périmètre et/ou aire de carrés, rectangles et triangles rectangles'
 export const dateDePublication = '30/07/2025'
 export const interactifReady = true

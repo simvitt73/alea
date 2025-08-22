@@ -24,7 +24,7 @@ export const interactifType = ['qcm', 'mathLive']
 export const uuid = 'ed0ea'
 
 export const refs = {
-  'fr-fr': ['6N0B-5'],
+  'fr-fr': ['6N0B-1'],
   'fr-2016': ['6C13'],
   'fr-ch': ['9FA2-1']
 }

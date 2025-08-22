@@ -1,11 +1,11 @@
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { arrondi, nombreDeChiffresDe } from '../../lib/outils/nombres'
 import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../Exercice'
 import { context } from '../../modules/context'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
+import Exercice from '../Exercice'
 
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 
@@ -179,7 +179,6 @@ export default class EncadrerUnDecimal extends Exercice {
           propositions: [
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [
                 {
                   texte: texteCorr,
@@ -197,7 +196,6 @@ export default class EncadrerUnDecimal extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [
                 {
                   texte: '',

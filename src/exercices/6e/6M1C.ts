@@ -1,4 +1,5 @@
-import PerimetreAireDisques from './6M22-1'
+import PerimetreAireDisques from '../5e/5M11-3'
+
 export const titre = 'Calculer périmètre de disques'
 export const dateDePublication = '27/07/2025'
 export const interactifReady = true

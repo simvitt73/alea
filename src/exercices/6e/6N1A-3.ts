@@ -718,5 +718,6 @@ export default class RecomposerEntierC3 extends Exercice {
       spanResultat.innerHTML += '☹️'
       return 'KO'
     }
+    return 'KO'
   }
 }

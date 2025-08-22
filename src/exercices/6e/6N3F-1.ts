@@ -9,7 +9,7 @@ import { fractionCliquable } from '../../modules/2dinteractif'
 import { context } from '../../modules/context'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, quotientier, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
-import { getDynamicFractionDiagram } from './6N20-2'
+import { getDynamicFractionDiagram } from './6N3F-2'
 
 export const titre = 'Écrire un nombre entier sous la forme d\'une fraction'
 export const interactifReady = true

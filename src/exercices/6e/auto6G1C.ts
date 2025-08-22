@@ -147,7 +147,8 @@ export default class NbAxesDeSymetrie extends Exercice {
               ordered: true
             }
           }
-          const monQcm = propositionsQcm(this, i * nbFigures + j, { style: 'inline-block', format: 'case', radio: true })
+          // const monQcm = propositionsQcm(this, i * nbFigures + j, { style: 'inline-block', format: 'case', radio: true })
+          const monQcm = propositionsQcm(this, i * nbFigures + j, { style: 'inline-block', format: 'case' })
           texte += `figure ${j + 1} : ${monQcm.texte}`
         }
       }

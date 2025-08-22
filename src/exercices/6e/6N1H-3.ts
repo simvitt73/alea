@@ -1,17 +1,17 @@
 import { point } from '../../lib/2d/points'
 import { droiteGraduee } from '../../lib/2d/reperes'
 import { segment } from '../../lib/2d/segmentsVecteurs'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { arrondi, nombreDeChiffresDe } from '../../lib/outils/nombres'
 import { stringNombre, texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import FractionEtendue from '../../modules/FractionEtendue'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif'
-import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 
@@ -590,7 +590,6 @@ export default class LireUneAbscisseAvecZoom extends Exercice {
           propositions: [
             {
               type: 'AMCNum', // on donne le type de la première question-réponse qcmMono, qcmMult, AMCNum, AMCOpen
-              // @ts-expect-error
               propositions: [ // une ou plusieurs (Qcms) 'propositions'
                 {
                   reponse: { // utilisé si type = 'AMCNum'
@@ -608,7 +607,6 @@ export default class LireUneAbscisseAvecZoom extends Exercice {
             },
             {
               type: 'AMCNum', // on donne le type de la deuxième question-réponse qcmMono, qcmMult, AMCNum, AMCOpen
-              // @ts-expect-error
               propositions: [ // une ou plusieurs (Qcms) 'propositions'
                 {
                   reponse: { // utilisé si type = 'AMCNum'

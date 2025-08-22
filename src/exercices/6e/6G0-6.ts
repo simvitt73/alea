@@ -1,13 +1,13 @@
 import { cercle } from '../../lib/2d/cercle'
 import { point, pointSurCercle } from '../../lib/2d/points'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
+import { propositionsQcm } from '../../lib/interactif/qcm'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
-import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
-import { propositionsQcm } from '../../lib/interactif/qcm'
 import { context } from '../../modules/context'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = true
@@ -202,7 +202,6 @@ export default class VocabulaireDeBaseDesPolygones extends Exercice {
             enonceAvant: true, // EE : ce champ est facultatif et permet (si false) de supprimer l'énoncé ci-dessus avant la numérotation de chaque question.
             enonceCentre: true, // EE : ce champ est facultatif et permet (si true) de centrer le champ 'enonce' ci-dessus.
             // options: { ordered: false },
-            // @ts-expect-error
             propositions: propositionsAMC
           }
         }

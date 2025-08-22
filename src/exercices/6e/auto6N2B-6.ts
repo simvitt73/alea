@@ -4,7 +4,7 @@ import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
-import { getDynamicFractionDiagram } from './6N20-2'
+import { getDynamicFractionDiagram } from './6N3F-2'
 
 export const titre = 'Décomposer une fraction (partie entière + fraction inférieure à 1)'
 export const interactifReady = true

@@ -1,14 +1,14 @@
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice } from '../../lib/outils/arrayOutils'
 import { context } from '../../modules/context'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import Hms from '../../modules/Hms'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
-import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
-import { minToHoraire } from '../../lib/outils/dateEtHoraires'
-import { sp } from '../../lib/outils/outilString'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { minToHoraire } from '../../lib/outils/dateEtHoraires'
+import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
+import { sp } from '../../lib/outils/outilString'
 import Exercice from '../Exercice'
 
 export const titre = 'Utiliser les heures décimales'
@@ -74,7 +74,6 @@ export default class HeuresDecimales extends Exercice {
           propositions: [
             {
               type: 'AMCNum',
-              // @ts-expect-error Trop compliqué à typer
               propositions: [{
                 texte: texteCorr,
                 statut: '',
@@ -92,7 +91,6 @@ export default class HeuresDecimales extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error Trop compliqué à typer
               propositions: [{
                 texte: '',
                 statut: '',

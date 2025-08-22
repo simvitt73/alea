@@ -4,7 +4,6 @@ export const interactifReady = false
 
 /**
  * Vocabulaire des triangles
- * 6G20-2
  * @author Sébastien Lozano
  */
 export const uuid = 'b5eaf'

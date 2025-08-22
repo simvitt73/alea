@@ -14,7 +14,7 @@ import { context } from '../../modules/context'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
-import { analyserNombre, chiffreAPositionDecimale, donneNomClasse } from './6C30-1a'
+import { analyserNombre, chiffreAPositionDecimale, donneNomClasse } from './auto6N2D'
 
 export const amcReady = true
 export const amcType = 'AMCNum'

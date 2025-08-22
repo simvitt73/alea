@@ -1,4 +1,5 @@
-import DivisionsEuclidiennesEgaliteFondamentale from './6C11b'
+import DivisionsEuclidiennesEgaliteFondamentale from './6N2J-1'
+
 export const amcReady = true
 export const amcType = 'AMCOpen'
 export const interactifReady = true

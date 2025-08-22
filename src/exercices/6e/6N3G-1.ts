@@ -1,4 +1,5 @@
-import FractionsCalculsSimples from './6N22'
+import FractionsCalculsSimples from './6N3K-1'
+
 export const titre = 'Effectuer des multiplications simples avec des fractions'
 export const dateDePublication = '24/06/25'
 export const interactifReady = true

@@ -1,21 +1,21 @@
 import { droiteGraduee } from '../../lib/2d/reperes'
+import { latex2d } from '../../lib/2d/textes'
+import {
+  handleAnswers
+} from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import { texteGras } from '../../lib/outils/embellissements'
 import { arrondi, nombreDeChiffresDansLaPartieEntiere } from '../../lib/outils/nombres'
 import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
+import { context } from '../../modules/context'
 import {
   listeQuestionsToContenu,
   randint
 } from '../../modules/outils'
-import { context } from '../../modules/context'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import {
-  handleAnswers
-} from '../../lib/interactif/gestionInteractif'
-import { texteGras } from '../../lib/outils/embellissements'
-import { latex2d } from '../../lib/2d/textes'
+import Exercice from '../Exercice'
 
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 
@@ -202,7 +202,6 @@ export default class LireAbscisseEntiere2d extends Exercice {
           propositions: [
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [{
                 texte: '',
                 statut: '',
@@ -222,7 +221,6 @@ export default class LireAbscisseEntiere2d extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [
                 {
                   texte: '',
@@ -242,7 +240,6 @@ export default class LireAbscisseEntiere2d extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [{
                 texte: '',
                 statut: '',

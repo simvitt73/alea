@@ -1,4 +1,5 @@
-import QuestionsMasses from './6C12-1'
+import QuestionsMasses from './6N5-2'
+
 export const titre = 'Résoudre des problèmes de prix avec des objets mettant en jeu des multiplications'
 export const interactifReady = true
 export const interactifType = 'mathLive'

@@ -24,7 +24,7 @@ export const titre = 'Utiliser tables de multiplication pour effectuer produits 
 export const uuid = '23bc8'
 
 export const refs = {
-  'fr-fr': ['6N0-4'],
+  'fr-fr': ['6N0A-4'],
   'fr-2016': ['6C10-2'],
   'fr-ch': ['9NO3-15']
 }

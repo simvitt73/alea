@@ -1,9 +1,9 @@
-import { randint } from '../../modules/outils'
-import Exercice from '../Exercice'
-import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { combinaisonListes } from '../../lib/outils/arrayOutils'
+import { randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 
 export const titre = 'Retrouver le nombre de départ'
 export const dateDePublication = '11/11/2023'
@@ -18,7 +18,7 @@ export const interactifType = 'mathLive'
 export const uuid = '2be1d'
 
 export const refs = {
-  'fr-fr': ['6N0B-8'],
+  'fr-fr': ['6N0B-4'],
   'fr-2016': ['6C13-3'],
   'fr-ch': ['9FA2-2']
 }

@@ -1,6 +1,8 @@
 import { droiteGraduee } from '../../lib/2d/reperes'
-import { shuffle } from '../../lib/outils/arrayOutils'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
+import { shuffle } from '../../lib/outils/arrayOutils'
 import {
   nombreDeChiffresDansLaPartieDecimale,
   nombreDeChiffresDansLaPartieEntiere,
@@ -8,16 +10,14 @@ import {
 } from '../../lib/outils/nombres'
 import { numAlpha, sp } from '../../lib/outils/outilString'
 import { stringNombre, texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../Exercice'
 import { mathalea2d } from '../../modules/2dGeneralites'
 import { context } from '../../modules/context'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import FractionEtendue from '../../modules/FractionEtendue'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 
-import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 export const titre = 'Lire des abscisses décimales sous trois formes'
 export const interactifReady = true
@@ -239,12 +239,11 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
           propositions: [
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [{
-                texteAvant: texteCorr,
+                texte: texteCorr,
                 statut: '',
                 reponse: {
-                  texteAvant: texte1,
+                  texte: texte1,
                   valeur: x1,
                   param: {
                     digits: nombreDeChiffresDe(x1),
@@ -257,12 +256,11 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [{
-                texteAvant: '',
+                texte: '',
                 statut: '',
                 reponse: {
-                  texteAvant: texte3,
+                  texte: texte3,
                   valeur: new FractionEtendue(multiple * x3, multiple),
                   param: {
                     digitsNum: nombreDeChiffresDansLaPartieEntiere(multiple * x3) + 1,
@@ -275,12 +273,11 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [{
-                texteAvant: '',
+                texte: '',
                 statut: '',
                 reponse: {
-                  texteAvant: `${numAlpha(2)} Donner la partie entière de l'abscisse de $${noms[1]}$.`,
+                  texte: `${numAlpha(2)} Donner la partie entière de l'abscisse de $${noms[1]}$.`,
                   valeur: Math.floor(x2),
                   param: {
                     digits: nombreDeChiffresDansLaPartieEntiere(Math.floor(x2)) + 1,
@@ -293,12 +290,11 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
             },
             {
               type: 'AMCNum',
-              // @ts-expect-error
               propositions: [{
-                texteAvant: '',
+                texte: '',
                 statut: '',
                 reponse: {
-                  texteAvant: `${numAlpha(3)} Donner la partie décimale de l'abscisse de $${noms[1]}$.`,
+                  texte: `${numAlpha(3)} Donner la partie décimale de l'abscisse de $${noms[1]}$.`,
                   valeur: new FractionEtendue(multiple * (x2 - Math.floor(x2)), multiple),
                   param: {
                     digitsNum: nombreDeChiffresDansLaPartieEntiere(multiple * (x2 - Math.floor(x2))),

@@ -1,4 +1,4 @@
-import SommeFractionsDecimales from '../../6e/6N0A-5-6'
+import SommeFractionsDecimales from '../../6e/6N1F'
 export const amcReady = true
 export const amcType = 'AMCNum'
 export const interactifReady = true
@@ -15,7 +15,7 @@ export const dateDePublication = '20/01/2022'
 export const uuid = '8f060'
 
 export const refs = {
-  'fr-fr': ['can6N12','auto6N2B-flash3'],
+  'fr-fr': ['can6N12', 'auto6N2B-flash3'],
   'fr-ch': []
 }
 export default class SommeFractionsDecimalesCAN extends SommeFractionsDecimales {

@@ -23,7 +23,7 @@ export const dateDeModifImportante = '22/08/2024'
 export const uuid = 'ace0a'
 
 export const refs = {
-  'fr-fr': ['6N0-1'],
+  'fr-fr': ['6N0A-1'],
   'fr-2016': ['6C10-4'],
   'fr-ch': ['9NO3-16']
 }
@@ -67,7 +67,6 @@ export default class ExerciceTablesAdditions extends Exercice {
 
       if (context.isAmc) {
         this.autoCorrection[i].enonce = texte
-        // @ts-expect-error Trop compliqué à typer
         this.autoCorrection[i].propositions = [{ texte: texteCorr, statut: '' }]
         // @ts-expect-error
         this.autoCorrection[i].reponse.param = {

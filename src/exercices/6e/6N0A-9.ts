@@ -1,213 +1,150 @@
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { texNombre } from '../../lib/outils/texNombre'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
-import { randint, listeQuestionsToContenu } from '../../modules/outils'
-import { propositionsQcm } from '../../lib/interactif/qcm'
-export const titre = 'Comparer deux nombres entiers'
 
-export const dateDePublication = '07/08/2022'
-export const dateDeModifImportante = '14/10/2024'
+export const titre = 'Encadrer un entier'
+export const interactifType = 'mathLive'
 export const interactifReady = true
-export const interactifType = 'qcm'
-
+export const dateDeModifImportante = '30/09/2024'
 /**
- * Comparaison de deux nombres entiers avec deux niveaux de difficulté : avec un nombre de chiffres différents et avec le même nombre de chiffres
- * Dans le cas où les nombres ont le même nombre de chiffres, ils ont entre 1 et (max - 1) chiffres identiques
- * @author Guillaume Valmont
- * Mise en interactif par Jean-Claude Lhote
- */
-export const uuid = 'a7aa7'
+* * Encadrer un nombre entier
+* @author Sébastien Lozano
+*/
+
+export const uuid = '29b40'
 
 export const refs = {
   'fr-fr': ['6N0A-9'],
-  'fr-2016': ['6N11-5'],
-  'fr-ch': ['9NO2-5']
+  'fr-2016': ['6N11-3'],
+  'fr-ch': ['9NO2-3']
 }
-export default class ComparerDeuxNombresEntiers extends Exercice {
+
+// selon la precision on veut certains chiffres plus souvant que d'autres ...
+function myNombres (nbChiffres:number) {
+  let sortie = ''
+  // on fabrique le nombre à partir de ses chiffres et on veut des cas limites
+  let mu, md, mc, mmu, mmd, mmc
+  const N = choice([[randint(0, 9, [0]), 0, 0, 0, 0, 0, 0, 0, 0], [randint(0, 9, [0]), 9, 9, 9, 9, 9, 9, 9, 9], [randint(0, 9, [0]), randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9)]])
+  mmc = N[0]
+  mmd = N[1]
+  mmu = N[2]
+  mc = N[3]
+  md = N[4]
+  mu = N[5]
+  const c = N[6]
+  const d = N[7]
+  const u = N[8]
+  switch (nbChiffres) {
+    case 4:
+      mu = randint(0, 9, [0])
+      sortie = mu.toString() + c.toString() + d.toString() + u.toString()
+      break
+    case 5:
+      md = randint(0, 9, [0])
+      sortie = md.toString() + mu.toString() + c.toString() + d.toString() + u.toString()
+      break
+    case 6:
+      mc = randint(0, 9, [0])
+      sortie = mc.toString() + md.toString() + mu.toString() + c.toString() + d.toString() + u.toString()
+      break
+    case 7:
+      mmu = randint(0, 9, [0])
+      sortie = mmu.toString() + mc.toString() + md.toString() + mu.toString() + c.toString() + d.toString() + u.toString()
+      break
+    case 8:
+      mmd = randint(0, 9, [0])
+      sortie = mmd.toString() + mmu.toString() + mc.toString() + md.toString() + mu.toString() + c.toString() + d.toString() + u.toString()
+      break
+    case 9:
+    default:
+      mmc = randint(0, 9, [0])
+      sortie = mmc.toString() + mmd.toString() + mmu.toString() + mc.toString() + md.toString() + mu.toString() + c.toString() + d.toString() + u.toString()
+      break
+  }
+  return Number(sortie)
+}
+
+// une fonction pour les correction à la precision près
+function encadrementCorr (nb: number, precision: number) {
+  if (precision === 1) {
+    return [Math.trunc(nb / precision) * precision - precision, Math.trunc(nb / precision) * precision + precision]
+  } else {
+    if (nb % precision === 0) {
+      return [Math.trunc(nb / precision) * precision - precision, Math.trunc(nb / precision) * precision + precision]
+    } else {
+      return [Math.trunc(nb / precision) * precision, Math.trunc(nb / precision) * precision + precision]
+    }
+  }
+}
+export default class EncadrerUnEntierParDeuxEntiersConsecutifs extends Exercice {
   constructor () {
     super()
-    this.consigne = 'Comparer :'
-    this.nbQuestions = 5
-
-    this.besoinFormulaireNumerique = [
-      'Difficulté',
-      3,
-      '1 : Avec un nombre de chiffres différents\n2 : Avec le même nombre de chiffres\n3 : Mélange'
-    ]
-    this.sup = 3
-
-    this.correctionDetailleeDisponible = true
-    this.correctionDetaillee = true
-
+    this.sup = 1
+    this.sup2 = 2
+    this.sup3 = 1
+    this.nbQuestions = 3
+    this.spacing = 1.5
     this.spacingCorr = 1.5
+    this.besoinFormulaireTexte = ['Type de question', 'Nombres séparés par des tirets :\n1 : Encadrer entre deux entiers consécutifs\n2 : Encadrer entre deux multiples de 10\n3 : Encadrer entre deux multiples de 100\n4 : Encadrer entre deux multiples de 10, forcément consécutifs\n5 : Encadrer entre deux multiples de 100, forcément consécutifs\n6 : Mélange']
+    this.besoinFormulaire2Texte = ['Difficulté', 'Nombres séparés par des tirets :\n1 : 4 chiffres\n2 : 5 chiffres\n3 : 6 chiffres\n4 : 7 chiffres\n5 : 8 chiffres\n6 : 9 chiffres\n7 : Mélange']
+    this.besoinFormulaire3Numerique = ['Énoncé', 2, '1 : Multiple\n2 : Dizaine, centaine']
   }
 
   nouvelleVersion () {
-    this.consigne = this.interactif ? 'Choisir la bonne comparaison.' : 'Comparer :'
+    const nbChiffres = gestionnaireFormulaireTexte({ saisie: this.sup2, min: 1, max: 7, defaut: 3, nbQuestions: this.nbQuestions, melange: 7 }).map(Number)
+    const typesDeQuestionsDisponibles = gestionnaireFormulaireTexte({ saisie: this.sup, min: 1, max: 5, defaut: 1, nbQuestions: this.nbQuestions, melange: 6 }).map(Number)
+    const listeTypeDeQuestions = combinaisonListes(typesDeQuestionsDisponibles, this.nbQuestions) // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
 
-    let typeDeQuestionsDisponibles
-    switch (this.sup) {
-      case 1:
-        typeDeQuestionsDisponibles = ['differentNbDeChiffres']
-        break
-      case 2:
-        typeDeQuestionsDisponibles = ['memeNbDeChiffres']
-        break
-      default:
-        typeDeQuestionsDisponibles = [
-          'memeNbDeChiffres',
-          'differentNbDeChiffres'
-        ]
-        break
-    }
+    for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50;) {
+      let texte = ''
+      let texteCorr = ''
+      let pDix = 1
+      // pour la précision d'encadrement
+      switch (listeTypeDeQuestions[i]) {
+        case 2 :
+        case 4 :
+          pDix = 10
+          break
+        case 3 :
+        case 5 :
+          pDix = 100
+          break
+        default: pDix = 1
+      }
+      let nombre = myNombres(nbChiffres[i] + 3)
+      if (listeTypeDeQuestions[i] > 3) nombre = myNombres(nbChiffres[i] + 2) * 10 + randint(1, 9)
+      // autant de case que d'elements dans le tableau des situations
+      const [inf, sup] = encadrementCorr(nombre, pDix)
+      switch (pDix) {
+        case 1:
+          texte = 'Compléter avec le nombre entier qui précède et le nombre entier qui suit :'
+          break
+        case 10:
+          if (this.sup3 === 1) {
+            texte = 'Compléter avec le multiple de 10 qui précède et le multiple de 10 qui suit :'
+          } else {
+            texte = 'Compléter avec la dizaine qui précède et la dizaine qui suit :'
+          }
+          break
+        case 100:
+          if (this.sup3 === 1) {
+            texte = 'Compléter avec le multiple de 100 qui précède et le multiple de 100 qui suit :'
+          } else {
+            texte = 'Compléter avec la centaine qui précède et la centaine qui suit :'
+          }
+          break
+      }
+      texte += '<br>'
+      texte += remplisLesBlancs(this, i, `%{champ1}<${texNombre(nombre, 0)}<%{champ2}`, KeyboardType.clavierDeBase)
+      texteCorr = `$${miseEnEvidence(texNombre(inf, 0))}<${texNombre(nombre, 0)}<${miseEnEvidence(texNombre(sup, 0))}$`
+      handleAnswers(this, i, { champ1: { value: String(inf) }, champ2: { value: String(sup) } })
 
-    const typesDeQuestions = combinaisonListes(
-      typeDeQuestionsDisponibles,
-      this.nbQuestions
-    )
-    const nombreDeChiffres = combinaisonListes([3, 4, 5, 8], this.nbQuestions)
-    for (
-      let i = 0, texte: string, texteCorr: string, a, b, cpt = 0;
-      i < this.nbQuestions && cpt < 50;
-    ) {
-      switch (typesDeQuestions[i]) {
-        case 'differentNbDeChiffres': {
-          a = randint(
-            10 ** (nombreDeChiffres[i] - 1),
-            10 ** nombreDeChiffres[i] - 1
-          )
-          b = a
-          const enleveOuAjoute = choice(['enleve', 'ajoute'])
-          const indexEnleveOuAjoute = randint(
-            Math.floor(nombreDeChiffres[i] / 2),
-            nombreDeChiffres[i]
-          )
-          const premiereMoitie = b.toString().slice(0, indexEnleveOuAjoute)
-          const deuxiemeMoitie = b.toString().slice(indexEnleveOuAjoute)
-          const chiffreInsere = (
-            (Number.parseInt(
-              b.toString().slice(indexEnleveOuAjoute - 1, indexEnleveOuAjoute)
-            ) +
-              9) %
-            10
-          ).toString()
-          b = Number.parseInt(premiereMoitie + chiffreInsere + deuxiemeMoitie)
-          if (enleveOuAjoute === 'enleve') {
-            const c = a
-            a = b
-            b = c
-          }
-          break
-        }
-        case 'memeNbDeChiffres':
-        default:{
-          const nbChiffresIdentiques = randint(1, nombreDeChiffres[i] - 1)
-          const partieIdentique = randint(
-            10 ** (nbChiffresIdentiques - 1),
-            10 ** nbChiffresIdentiques - 1
-          )
-          const nbChiffresDifferentsPremierNombre =
-            nombreDeChiffres[i] - nbChiffresIdentiques
-          const nbChiffresDifferentsDeuxiemeNombre =
-            nombreDeChiffres[i] - nbChiffresIdentiques
-          a =
-            partieIdentique * 10 ** nbChiffresDifferentsPremierNombre +
-            randint(
-              10 ** (nbChiffresDifferentsPremierNombre - 1),
-              10 ** nbChiffresDifferentsPremierNombre - 1
-            )
-          b =
-            partieIdentique * 10 ** nbChiffresDifferentsDeuxiemeNombre +
-            randint(
-              10 ** (nbChiffresDifferentsDeuxiemeNombre - 1),
-              10 ** nbChiffresDifferentsDeuxiemeNombre - 1
-            )
-          while (b % 10 === a % 10) {
-            b = b - (b % 10) + randint(0, 9)
-          }
-          break
-        }
-      }
-      texte = `$${texNombre(a, 0)}$ et $${texNombre(b, 0)}$`
-      this.autoCorrection[i] = {
-        propositions: [
-          {
-            texte: `$${texNombre(a)}$ > $${texNombre(b)}$`,
-            statut: a > b
-          },
-          {
-            texte: `$${texNombre(a)}$ < $${texNombre(b)}$`,
-            statut: a < b
-          }
-        ],
-        options: {
-          ordered: true
-        }
-      }
-      const leQcm = propositionsQcm(this, i)
-      if (this.interactif) texte += `<br>${leQcm.texte}`
-      texteCorr = ''
-      switch (typesDeQuestions[i]) {
-        case 'differentNbDeChiffres':
-          if (this.correctionDetaillee) {
-            texteCorr += `$${texNombre(a)}$ compte $${a.toString().length}$ chiffres alors que $${texNombre(b)}$ en compte $${b.toString().length}$.<br>`
-            if (a > b) {
-              texteCorr += `Comme $${texNombre(a)}$ compte plus de chiffres que $${texNombre(b)}$, alors $${texNombre(a)}$ est plus grand que $${texNombre(b)}$.<br>`
-            } else {
-              texteCorr += `Comme $${texNombre(a)}$ compte moins de chiffres que $${texNombre(b)}$, alors $${texNombre(a)}$ est plus petit que $${texNombre(b)}$.<br>`
-            }
-            texteCorr += "On peut l'écrire en langage mathématique :<br>"
-          }
-          break
-        case 'memeNbDeChiffres':
-          if (this.correctionDetaillee) {
-            const miseEnEvidenceDesChiffresEnCommun = (
-              premierChiffre: number,
-              deuxiemeChiffre: number
-            ) => {
-              let dernierChiffreCommunTrouve = false
-              let dernierChiffreCommun
-              for (let j = 0; j < premierChiffre.toString().length; j++) {
-                if (
-                  premierChiffre.toString()[j] ===
-                    deuxiemeChiffre.toString()[j] &&
-                  !dernierChiffreCommunTrouve
-                ) {
-                  texteCorr += `$${miseEnEvidence(premierChiffre.toString()[j])}$`
-                } else {
-                  if (!dernierChiffreCommunTrouve) { dernierChiffreCommun = premierChiffre.toString()[j] }
-                  dernierChiffreCommunTrouve = true
-                  texteCorr += `$${premierChiffre.toString()[j]}$`
-                }
-              }
-              texteCorr += '<br>'
-              return dernierChiffreCommun
-            }
-            texteCorr += `$${texNombre(a)}$ et $${texNombre(b)}$ comptent le même nombre de chiffres.<br>`
-            texteCorr +=
-              'On cherche le premier chiffre différent à partir de la gauche :<br>'
-            const dernierChiffreEnCommunPremierNombre =
-              miseEnEvidenceDesChiffresEnCommun(a, b)
-            const dernierChiffreEnCommunDeuxiemeNombre =
-              miseEnEvidenceDesChiffresEnCommun(b, a)
-            if (a > b) {
-              texteCorr += `Comme $${dernierChiffreEnCommunPremierNombre}$ est plus grand que $${dernierChiffreEnCommunDeuxiemeNombre}$, alors $${texNombre(a)}$ est plus grand que $${texNombre(b)}$.<br>`
-            } else {
-              texteCorr += `Comme $${dernierChiffreEnCommunPremierNombre}$ est plus petit que $${dernierChiffreEnCommunDeuxiemeNombre}$, alors $${texNombre(a)}$ est plus petit que $${texNombre(b)}$.<br>`
-            }
-
-            texteCorr += "On peut l'écrire en langage mathématique :<br>"
-          }
-          break
-      }
-      if (a > b) {
-        texteCorr += `$${texNombre(a)}$ > $${texNombre(b)}$`
-      } else {
-        texteCorr += `$${texNombre(a)}$ < $${texNombre(b)}$`
-      }
-      if (this.correctionDetaillee) texteCorr += '.'
-      if (this.questionJamaisPosee(i, a, b)) {
+      if (this.questionJamaisPosee(i, nombre)) { // Si la question n'a jamais été posée, on en crée une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
         i++

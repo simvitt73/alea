@@ -1,4 +1,5 @@
-import MultiplierUnNombreParPuissanceDeDix from './6C30-6'
+import MultiplierUnNombreParPuissanceDeDix from './6N2B-4'
+
 export const amcReady = true
 export const amcType = 'qcmMono'
 export const interactifReady = true

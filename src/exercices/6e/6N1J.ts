@@ -1,5 +1,4 @@
-import RangerOrdreCroissantDecroissant from './6N11-4'
-
+import RangerOrdreCroissantDecroissant from './6N0A-10'
 export const titre = 'Ranger des nombres décimaux'
 export const dateDePublication = '13/05/2025'
 export const interactifReady = true
@@ -13,7 +12,7 @@ export const interactifType = 'mathLive'
 export const uuid = '15ece'
 
 export const refs = {
-  'fr-fr': ['6NIJ'],
+  'fr-fr': ['6N1J'],
   'fr-2016': ['6N31-7'],
   'fr-ch': ['9NO7-12']
 }

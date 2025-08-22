@@ -207,7 +207,7 @@ function questionAchat (exo: Exercice, i: number) { // questions d'origine du 6P
       propositions: [
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: texteCorr,
             statut: '',
@@ -225,7 +225,7 @@ function questionAchat (exo: Exercice, i: number) { // questions d'origine du 6P
         },
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: '',
             statut: '',
@@ -312,7 +312,7 @@ function questionRecette (exo: Exercice, i:number) { // questions avec des masse
       propositions: [
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: texteCorr,
             statut: '',
@@ -330,7 +330,7 @@ function questionRecette (exo: Exercice, i:number) { // questions avec des masse
         },
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: '',
             statut: '',
@@ -424,7 +424,7 @@ function questionDillution (exo:Exercice, i:number) { // questions de mélange d
       propositions: [
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: texteCorr,
             statut: '',
@@ -527,7 +527,7 @@ function questionDistance (exo:Exercice, i:number) { // questions de distance pa
         propositions: [
           {
             type: 'AMCNum',
-            // @ts-expect-error
+
             propositions: [{
               texte: texteCorr,
               statut: '',
@@ -582,7 +582,7 @@ function questionDistance (exo:Exercice, i:number) { // questions de distance pa
       propositions: [
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: texteCorr,
             statut: '',
@@ -600,7 +600,7 @@ function questionDistance (exo:Exercice, i:number) { // questions de distance pa
         },
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: '',
             statut: '',
@@ -669,7 +669,7 @@ Or ${distanceReel}${sp()}km est représenté par ${texteEnCouleur(String(distanc
       propositions: [
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: texteCorr,
             statut: '',
@@ -687,7 +687,7 @@ Or ${distanceReel}${sp()}km est représenté par ${texteEnCouleur(String(distanc
         },
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: '',
             statut: '',
@@ -759,7 +759,7 @@ function questionRecouvrirSurface (exo:Exercice, i:number) { // peinture, gazon,
         propositions: [
           {
             type: 'AMCNum',
-            // @ts-expect-error
+
             propositions: [{
               texte: texteCorr,
               statut: '',
@@ -821,7 +821,7 @@ fois ${texteEnCouleur(stringNombre(liste[alea1].qtt_surface[alea3]), 'blue')}${s
       propositions: [
         {
           type: 'AMCNum',
-          // @ts-expect-error
+
           propositions: [{
             texte: texteCorr,
             statut: '',
@@ -839,7 +839,7 @@ fois ${texteEnCouleur(stringNombre(liste[alea1].qtt_surface[alea3]), 'blue')}${s
         },
         {
           type: 'AMCOpen',
-          // @ts-expect-error
+
           propositions: [{
             enonce: enonceAMC2,
             statut: 2

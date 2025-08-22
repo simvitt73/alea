@@ -13,7 +13,7 @@ import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { ajouterAide } from '../../lib/outils/enrichissements'
 import { fraction } from '../../modules/fractions'
-import { getDynamicFractionDiagram } from './6N20-2'
+import { getDynamicFractionDiagram } from './6N3F-2'
 
 export const titre = 'Encadrer une fraction entre deux nombres entiers consécutifs'
 export const interactifReady = true
