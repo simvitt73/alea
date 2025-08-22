@@ -1,4 +1,4 @@
-import DenombrerCubes from '../../6e/6G43'
+import DenombrerCubes from '../../6e/6G8A-1'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcType = 'AMCNum'

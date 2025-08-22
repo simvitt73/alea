@@ -1,4 +1,4 @@
-import EcrireEntierSousFormeDeFraction from '../../6e/6N20-0'
+import EcrireEntierSousFormeDeFraction from '../../6e/auto6N2B-6-0'
 
 export const titre = 'Écrire un nombre entier sous la forme d\'une fraction'
 export const interactifReady = true

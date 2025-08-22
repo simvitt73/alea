@@ -1,4 +1,4 @@
-import SommeFractionsDecimales from '../../6e/6N10-6'
+import SommeFractionsDecimales from '../../6e/6N0A-5-6'
 export const amcReady = true
 export const amcType = 'AMCNum'
 export const interactifReady = true

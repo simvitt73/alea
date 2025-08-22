@@ -1,4 +1,4 @@
-import Exercice6N333 from '../6e/6N33-3'
+import Exercice6N3L3 from '../6e/6N3L-3'
 export const titre = 'Résoudre des problèmes avec des calculs de pourcentages'
 export const interactifReady = true
 export const interactifType = 'mathLive'
