@@ -1,20 +1,19 @@
+import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
 import { point, tracePoint } from '../../lib/2d/points'
 import { droiteGraduee } from '../../lib/2d/reperes'
 import { labelPoint, latex2d } from '../../lib/2d/textes'
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { lettreIndiceeDepuisChiffre } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../Exercice'
 import { fixeBordures, mathalea2d, type NestedObjetMathalea2dArray } from '../../modules/2dGeneralites'
-import { listeQuestionsToContenu, randint, egal } from '../../modules/outils'
 import { PointCliquable, pointCliquable } from '../../modules/2dinteractif'
 import { context } from '../../modules/context'
-import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
+import { egal, listeQuestionsToContenu, randint } from '../../modules/outils'
+import Exercice from '../Exercice'
 
 export const dateDeModifImportante = '16/09/2024'
 export const titre = 'Placer un point d\'abscisse entière (grands nombres)'
 export const interactifReady = true
-// remettre interactif_Ready à true qd point_Cliquable sera de nouveau opérationnel
 export const interactifType = 'custom'
 export const amcReady = true
 export const amcType = 'AMCOpen'
@@ -205,7 +204,7 @@ export default class PlacerUnPointAbscisseEntiere2d extends Exercice {
 
   // Gestion de la correction
   correctionInteractive = (i: number) => {
-    let resultat
+    let resultat = ''
     let aucunMauvaisPointsCliques = true
     const spanResultat = document.querySelector(`#resultatCheckEx${this.numeroExercice}Q${i}`)
     this.pointsSolutions[i][0].stopCliquable()

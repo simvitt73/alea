@@ -1,12 +1,12 @@
-import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
-import Exercice from '../Exercice'
-import { gestionnaireFormulaireTexte, listeQuestionsToContenu } from '../../modules/outils'
-import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
-import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import type { MathfieldElement } from 'mathlive'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
-import { context } from '../../modules/context'
+import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
+import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
+import { context } from '../../modules/context'
+import { gestionnaireFormulaireTexte, listeQuestionsToContenu } from '../../modules/outils'
+import Exercice from '../Exercice'
 
 export const titre = 'Connaitre les tables de multiplication « à l\'envers »'
 export const dateDePublication = '4/4/2024'
@@ -14,7 +14,7 @@ export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'ac64a'
 export const refs = {
-  'fr-fr': ['6C10-9', '6C10-10', '6C10-99'],
+  'fr-fr': ['6C10-9'],
   'fr-ch': []
 }
 
