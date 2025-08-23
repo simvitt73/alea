@@ -1,4 +1,4 @@
-import AireCarresRectanglesTriangles from './6M11'
+import AireCarresRectanglesTriangles from '../5e/5M11'
 
 export const titre = 'Calculer l\'aire de carré, rectangle ou triangle rectangle'
 export const dateDePublication = '30/07/2025'

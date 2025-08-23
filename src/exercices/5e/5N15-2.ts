@@ -1,4 +1,4 @@
-import ExerciceConversions from './_Exercice_conversions'
+import ExerciceConversions from '../6e/_Exercice_conversions'
 
 export const titre = 'Convertir des longueurs, masses, capacités, prix ou unités informatiques'
 export const interactifReady = true

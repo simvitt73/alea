@@ -7,7 +7,7 @@ import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { texTexte } from '../../lib/format/texTexte'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { propositionsQcm } from '../../lib/interactif/qcm'
-import { getDigitFromNumber } from './_ExerciceConversionsLongueurs'
+import { getDigitFromNumber } from '../6e/_ExerciceConversionsLongueurs'
 import Decimal from 'decimal.js'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 

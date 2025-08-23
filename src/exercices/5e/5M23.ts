@@ -1,4 +1,4 @@
-import ExerciceConversionsAires from './_Exercice_conversions_aires'
+import ExerciceConversionsAires from '../6e/_Exercice_conversions_aires'
 export const titre = 'Convertir des aires'
 export const amcReady = true
 export const amcType = 'qcmMono'

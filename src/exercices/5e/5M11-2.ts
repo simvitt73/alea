@@ -1,4 +1,4 @@
-import ExercicePerimetresEtAires from './_Exercice_perimetres_et_aires'
+import ExercicePerimetresEtAires from '../6e/_Exercice_perimetres_et_aires'
 
 export const titre = 'Calculer le périmètre et l\'aire de disques ou demi-disques'
 export const interactifReady = true

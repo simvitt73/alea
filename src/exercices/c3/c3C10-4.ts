@@ -1,4 +1,4 @@
-import ExerciceTablesAdditions from '../6e/6N2A-1-4'
+import ExerciceTablesAdditions from '../6e/6N0A-1'
 export const titre = 'Tables d\'addition'
 export const amcReady = true
 export const amcType = 'AMCNum'

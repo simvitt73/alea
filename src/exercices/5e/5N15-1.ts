@@ -1,4 +1,4 @@
-import ExerciceConversions from './_Exercice_conversions'
+import ExerciceConversions from '../6e/_Exercice_conversions'
 export const titre = 'Utiliser les préfixes multiplicateurs et diviseurs (milli à kilo)'
 export const interactifReady = true
 export const interactifType = 'mathLive'

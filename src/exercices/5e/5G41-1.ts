@@ -1,4 +1,4 @@
-import TracerQuadrilatèresParticuliers from './6G13'
+import TracerQuadrilatèresParticuliers from '../CM/CM2G3D-2'
 
 export const interactifReady = false
 export const titre = 'Construire des losanges ou des parallélogrammes et auto-vérification'
