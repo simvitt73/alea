@@ -1,24 +1,25 @@
 <script lang="ts">
+  import { onMount } from 'svelte'
   import { slide } from 'svelte/transition'
+  import codeToLevelList from '../../../../../../json/codeToLevelList.json'
+  import themesList from '../../../../../../json/levelsThemesList.json'
+  import themesListCH from '../../../../../../json/levelsThemesListCH.json'
+  import { monthes } from '../../../../../../lib/components/handleDate'
+  import { codeToLevelTitle } from '../../../../../../lib/components/refUtils'
+  import { toMap } from '../../../../../../lib/components/toMap'
+  import {
+    bibliothequeDisplayedContent,
+    exercicesParams
+  } from '../../../../../../lib/stores/generalStore'
   import {
     isExamItemInReferentiel,
     isJSONReferentielEnding,
     type JSONReferentielObject
   } from '../../../../../../lib/types/referentiels'
-  import { codeToLevelTitle } from '../../../../../../lib/components/refUtils'
-  import codeToLevelList from '../../../../../../json/codeToLevelList.json'
-  import { toMap } from '../../../../../../lib/components/toMap'
-  import themesList from '../../../../../../json/levelsThemesList.json'
-  import themesListCH from '../../../../../../json/levelsThemesListCH.json'
+  import ReferentielEnding from './ReferentielEnding.svelte'
+
   const themes = toMap(themesList)
   const themesCH = toMap(themesListCH)
-  import ReferentielEnding from './ReferentielEnding.svelte'
-  import { onMount } from 'svelte'
-  import {
-    exercicesParams,
-    bibliothequeDisplayedContent
-  } from '../../../../../../lib/stores/generalStore'
-  import { monthes } from '../../../../../../lib/components/handleDate'
 
   export let subset: JSONReferentielObject
   export let unfold: boolean = false
@@ -47,13 +48,28 @@
   }
 
   /**
+   * Teste si le code du niveau correspond à un sous-thème :
+   * sur la base de la syntaxe adoptée pour les codes des thèmes
+   * (à savoir :  <NB><LETTRE><NOMBRE> ou auto<NB><LETTRE><NOMBRE>),
+   * la fonction confronte le code à tester à une expression régulière afin de savoir si
+   * une lettre suit le code de trois caractères.
+   * @param {string} themeCode code du niveau
+   * @param {number} level? niveau optionnel (6 par défaut)
+   * @author Sylvain Chambon
+   */
+  function themeCodeisSubthemeCode(themeCode: string, level = 6): boolean {
+    const regexp = new RegExp(`^(auto)?${level}[A-Z]\\d+[A-Z]$`, 'g')
+    return regexp.test(themeCode)
+  }
+
+  /**
    * Ordonne les entrées d'un sous-menu à l'envers lorsque son titre contient le mot `année`
    * afin de commencer par l'année la plus récente
    */
   function prepareSubset(s: JSONReferentielObject) {
-    console.log('======= referentiel before preparation ====')
-    console.log(pathToThisNode.join('/'))
-    console.log(Object.entries(s))
+    // console.log('======= referentiel before preparation ====')
+    // console.log(pathToThisNode.join('/'))
+    // console.log(Object.entries(s))
     if (pathToThisNode.length !== 0) {
       // console.log('object in prepareSubset (pathToThisNode): ')
       // console.log(pathToThisNode)
@@ -74,19 +90,19 @@
       if (pathToThisNode[pathToThisNode.length - 1].includes('année')) {
         return Object.entries(s).reverse()
       }
-      
+
       // classement des thèmes dans l'ordre alphabétique
       const key2 = pathToThisNode[pathToThisNode.length - 1] as keyof typeof codeToLevelList
-      if (codeToLevelList[key2]?.includes("thème")) {
+      if (codeToLevelList[key2]?.includes('thème')) {
         return Object.entries(s).sort(([keyA, valueA], [keyB, valueB]) => {
-          return keyA.localeCompare(keyB, "fr")
+          return keyA.localeCompare(keyB, 'fr')
         })
       }
 
       // classement des thèmes dans l'ordre alphabétique
-      if (pathToThisNode[pathToThisNode.length - 1].includes("Tags")) {
+      if (pathToThisNode[pathToThisNode.length - 1].includes('Tags')) {
         return Object.entries(s).sort(([keyA, valueA], [keyB, valueB]) => {
-          return keyA.localeCompare(keyB, "fr")
+          return keyA.localeCompare(keyB, 'fr')
         })
       }
 
@@ -97,8 +113,8 @@
           return keyA.localeCompare(keyB, 'fr')
         })
 
-        console.log('======= referentiel after (theme) ====')
-        console.log(e)
+        // console.log('======= referentiel after (theme) ====')
+        // console.log(e)
         return e
       }
       // classement des entrées par années : sujets 1 et 2
@@ -125,9 +141,9 @@
       return Object.entries(s)
     } else {
       // classement dans l'ordre alphabétique
-      if ('Géométrie dynamique' === levelTitle || 'Vos ressources'  === levelTitle) {
+      if ('Géométrie dynamique' === levelTitle || 'Vos ressources' === levelTitle) {
         return Object.entries(s).sort(([keyA, valueA], [keyB, valueB]) => {
-          return keyA.localeCompare(keyB, "fr")
+          return keyA.localeCompare(keyB, 'fr')
         })
       }
       return Object.entries(s)
@@ -155,9 +171,13 @@
   }
 
   onMount(() => {
-    console.log('******** subset ********')
-    console.log(Object.entries(subset))
-    if (nestedLevelCount === 1 && levelTitle === 'Exercices aléatoires') {
+    //   console.log('******** subset ********')
+    //   console.log(Object.entries(subset))
+    console.log(levelTitle + ' : ' + themeCodeisSubthemeCode(levelTitle))
+    if (
+      (nestedLevelCount === 1 && levelTitle === 'Exercices aléatoires') ||
+      themeCodeisSubthemeCode(levelTitle)
+    ) {
       unfold = true
     }
   })
@@ -235,7 +255,7 @@
               <ReferentielEnding
                 ending={obj}
                 nestedLevelCount={nestedLevelCount + 1}
-                class={i === items.length - 1 ? 'pb-6' : ''}
+                class={i === items.length - 1 ? 'pb-7' : ''}
               />
             {:else}
               <svelte:self
