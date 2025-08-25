@@ -1,12 +1,12 @@
+import { texPrix } from '../../../lib/format/style'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { prenomF } from '../../../lib/outils/Personne'
-import { texPrix } from '../../../lib/format/style'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-import { randint } from '../../../modules/outils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../Exercice'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Rechercher un prix unitaire'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -19,10 +19,10 @@ export const dateDePublication = '18/10/2021'
 export const uuid = '81a00'
 
 export const refs = {
-  'fr-fr': ['can6C25'],
+  'fr-fr': ['can6C25', '6N2H-flash2'],
   'fr-ch': []
 }
-export default class RecherchePrix extends Exercice {
+export default class RecherchePrix extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

@@ -1,10 +1,10 @@
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
-import { randint } from '../../../modules/outils'
 import { bleuMathalea } from '../../../lib/colors'
-import Exercice from '../../Exercice'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = 'Résoudre un problème de partage'
 export const interactifReady = true
@@ -20,10 +20,10 @@ export const amcReady = true
 export const uuid = 'c9168'
 
 export const refs = {
-  'fr-fr': ['can6C29'],
+  'fr-fr': ['can6C29', '6N2K-flash2'],
   'fr-ch': []
 }
-export default class Partage extends Exercice {
+export default class Partage extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

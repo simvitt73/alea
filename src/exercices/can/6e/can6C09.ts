@@ -3,7 +3,7 @@ import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Soustraire $10n + 9$'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -17,10 +17,10 @@ export const amcType = 'AMCNum'
 export const uuid = '592c7'
 
 export const refs = {
-  'fr-fr': ['can6C09'],
+  'fr-fr': ['can6C09', 'CM2N3J-flash2'],
   'fr-ch': []
 }
-export default class SoustraireX9 extends Exercice {
+export default class SoustraireX9 extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

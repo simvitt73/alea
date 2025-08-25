@@ -36,7 +36,8 @@ export const dateDeModifImportante = '11/02/2025'
 export const uuid = '2471d'
 
 export const refs = {
-  'fr-fr': ['6C30-1'],
+  'fr-fr': [],
+  'fr-2016': ['6C30-1'],
   'fr-ch': ['9NO1-10', '10NO5-1']
 }
 export default class MultiplierDecimauxPar101001000 extends Exercice {
@@ -98,8 +99,7 @@ export default class MultiplierDecimauxPar101001000 extends Exercice {
       }
     }
     this.consigne = 'Calculer et donner le résultat sous forme d\'un nombre '
-    this.consigne += this.sup === '1' ? 'entier.' : this.sup === '2' ? 'décimal.' : 'fractionnaire.'
-    if (this.sup === '4') this.consigne = 'Calculer.'
+    this.consigne += this.sup === '1' ? 'entier.' : this.sup === '2' ? 'décimal.' : this.sup === '3' ? 'fractionnaire.' : ''
     if (this.sup2 || this.sup.length !== 1) this.consigne = 'Compléter.'
 
     let typesDeQuestions

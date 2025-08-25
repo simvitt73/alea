@@ -1,8 +1,8 @@
-import { choice } from '../../../lib/outils/arrayOutils'
 import { texPrix } from '../../../lib/format/style'
-import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = 'Utiliser une proportionnalité*'
 export const interactifReady = true
@@ -18,10 +18,10 @@ export const amcType = 'AMCNum'
 export const uuid = '5e28d'
 
 export const refs = {
-  'fr-fr': ['can6P02'],
+  'fr-fr': ['can6P02', '6P3C-flash1'],
   'fr-ch': []
 }
-export default class ProportionnaliteCompliquee extends Exercice {
+export default class ProportionnaliteCompliquee extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

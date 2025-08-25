@@ -1,4 +1,5 @@
-import NombreDeFacesEtDAretes from '../../6e/6G44'
+import NombreDeFacesEtDAretes from '../../5e/5G53'
+
 export const titre = 'Compter les arêtes et les faces'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -22,6 +23,6 @@ export default class NombreDeFacesEtDAretesExo extends NombreDeFacesEtDAretes {
     super()
     this.nbQuestions = 1
     this.version = 3
-    this.besoinFormulaireNumerique = []
+    this.besoinFormulaireNumerique = false
   }
 }

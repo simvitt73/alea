@@ -13,7 +13,7 @@ import renderScratch from './renderScratch'
 import { decrypt, isCrypted } from './components/urls'
 import { convertVueType, type InterfaceGlobalOptions, type InterfaceParams, type VueType } from './types'
 import { sendToCapytaleMathaleaHasChanged } from './handleCapytale'
-import { handleAnswers, setReponse, type MathaleaSVG, type Valeur } from './interactif/gestionInteractif'
+import { handleAnswers, isAnswerValueType, setReponse, type AnswerValueType, type MathaleaSVG, type ReponseComplexe, type Valeur } from './interactif/gestionInteractif'
 import { fonctionComparaison } from './interactif/comparisonFunctions'
 import FractionEtendue from '../modules/FractionEtendue'
 import Grandeur from '../modules/Grandeur'
@@ -26,22 +26,28 @@ import { resizeContent } from './components/sizeTools'
 import Decimal from 'decimal.js'
 import { checkForServerUpdate } from './components/version'
 import { showDialogForLimitedTime, showPopupAndWait } from './components/dialogs'
+import { propositionsQcm } from './interactif/qcm'
+import { formaterReponse } from './outils/ecritures'
+import ExerciceSimple from '../exercices/ExerciceSimple'
+import { shuffle } from './outils/arrayOutils'
+import type ListeDeroulanteElement from './interactif/listeDeroulante/ListeDeroulanteElement'
 
 const ERROR_MESSAGE = 'Erreur - Veuillez actualiser la page et nous contacter si le problème persiste.'
 
-function getExerciceByUuid (root: object, targetUUID: string): object | null {
+function getExerciceByUuid (
+  root: { [key: string]: any },
+  targetUUID: string
+): object | null {
   if ('uuid' in root) {
     if (root.uuid === targetUUID) {
       return root
     }
   }
   for (const child in root) {
-    if (child in root) {
-      if (typeof root[child] !== 'object') continue
-      const foundObject = getExerciceByUuid(root[child], targetUUID)
-      if (foundObject) {
-        return foundObject
-      }
+    if (typeof root[child] !== 'object') continue
+    const foundObject = getExerciceByUuid(root[child], targetUUID)
+    if (foundObject) {
+      return foundObject
     }
   }
 
@@ -312,6 +318,7 @@ export function mathaleaHandleParamOfOneExercice (exercice: TypeExercice, param:
   if (param.sup3) exercice.sup3 = mathaleaHandleStringFromUrl(param.sup3)
   if (param.sup4) exercice.sup4 = mathaleaHandleStringFromUrl(param.sup4)
   if (param.sup5) exercice.sup5 = mathaleaHandleStringFromUrl(param.sup5)
+  if (param.versionQcm !== undefined && exercice instanceof ExerciceSimple) exercice.versionQcm = param.versionQcm === '1'
   if (param.interactif) exercice.interactif = param.interactif === '1'
   if (param.alea) exercice.seed = param.alea
   if (param.cols !== undefined && param.cols > 1) exercice.nbCols = param.cols
@@ -397,6 +404,7 @@ export function createURL (params: InterfaceParams[]) {
     if (ex.sup3 != null) url.searchParams.append('s3', ex.sup3)
     if (ex.sup4 != null) url.searchParams.append('s4', ex.sup4)
     if (ex.sup5 != null) url.searchParams.append('s5', ex.sup5)
+    if (ex.versionQcm != null) url.searchParams.append('qcm', ex.versionQcm)
     if (ex.interactif === '1') url.searchParams.append('i', '1')
     if (ex.cd != null) url.searchParams.append('cd', ex.cd)
     if (ex.cols != null) url.searchParams.append('cols', ex.cols.toString())
@@ -510,6 +518,8 @@ export function mathaleaUpdateExercicesParamsFromUrl (urlString = window.locatio
         newExercisesParams[indiceExercice].sup4 = entry[1]
       } else if (entry[0] === 's5') {
         newExercisesParams[indiceExercice].sup5 = entry[1]
+      } else if (entry[0] === 'qcm' && (entry[1] === '0' || entry[1] === '1')) {
+        newExercisesParams[indiceExercice].versionQcm = entry[1]
       } else if (entry[0] === 'alea') {
         newExercisesParams[indiceExercice].alea = entry[1]
       } else if (entry[0] === 'cols') {
@@ -704,12 +714,35 @@ export function mathaleaHandleExerciceSimple (exercice: TypeExercice, isInteract
         if (exercice.formatInteractif !== 'qcm') window.notify('Un exercice simple doit avoir un this.reponse sauf si c\'est un qcm', { exercice: JSON.stringify(exercice) })
       }
       if (exercice.formatInteractif !== 'fillInTheBlank') {
-        if (exercice.formatInteractif !== 'qcm') {
+        if (exercice.formatInteractif === 'qcm' || (exercice instanceof ExerciceSimple && exercice.distracteurs.length > 0 && exercice.versionQcm)) {
+          if (exercice instanceof ExerciceSimple && exercice.distracteurs.length > 0) {
+            exercice.distracteurs = getDistracteurs(exercice)
+            exercice.autoCorrection[i] = {
+              options: { radio: true },
+              enonce: exercice.question,
+              propositions: [
+                {
+                  texte: formaterReponse(exercice.reponse),
+                  statut: true
+                }, ...exercice.distracteurs.map((distracteur) => ({
+                  texte: formaterReponse(distracteur),
+                  statut: false
+                }))
+              ]
+            }
+            const qcm = propositionsQcm(exercice, i)
+            exercice.question += qcm.texte
+          }
+          exercice.listeQuestions.push(exercice.question || '')
+        } else if (exercice.formatInteractif === 'listeDeroulante') {
+          const n = exercice.numeroExercice
+          exercice.question = exercice.question?.replace(`id="ex${n}Q0"`, `id="ex${n}Q${i}"`)
+          exercice.question = exercice.question?.replace(`CheckEx${n}Q0"`, `CheckEx${n}Q${i}"`)
+          exercice.listeQuestions.push(exercice.question ?? '')
+        } else {
           exercice.listeQuestions.push(
             exercice.question + ajouteChampTexteMathLive(exercice, i, String(exercice.formatChampTexte), exercice.optionsChampTexte || {})
           )
-        } else {
-          exercice.listeQuestions.push(exercice.question || '')
         }
       } else {
         // La question doit contenir une unique variable %{champ1} On est en fillInTheBlank
@@ -735,6 +768,39 @@ export function mathaleaHandleExerciceSimple (exercice: TypeExercice, isInteract
       cptSecours++
     }
   }
+}
+
+export function getDistracteurs (exerciceSimple: ExerciceSimple): (string | number)[] {
+  const distracteursUniques = [...new Set(exerciceSimple.distracteurs)]
+  const distracteursNonSolutions = distracteursUniques.filter((distracteur) => {
+    const reponse: ReponseComplexe | undefined = exerciceSimple.reponse
+    if (reponse == null) {
+      return true // Si pas de réponse, on garde tous les distracteurs
+    }
+    let value: AnswerValueType | undefined
+    if (isAnswerValueType(reponse)) {
+      value = reponse
+    } else { // Si reponse n'est pas un AnswerValueType, alors c'est un Valeur dont on va récupérer le AnswerValueType
+      const reponseReponse = reponse.reponse
+      if (reponseReponse !== undefined) value = reponseReponse.value
+    }
+    if (value === undefined) { // Si pas de valeur, on garde tous les distracteurs
+      return true
+    }
+    if (Array.isArray(value)) {
+      return !value.some((v) => {
+        if (v instanceof FractionEtendue) {
+          return v.texFraction !== distracteur.toString()
+        }
+        return distracteur.toString() !== v.toString()
+      })
+    }
+    if (value instanceof FractionEtendue) {
+      return value.texFraction !== distracteur.toString()
+    }
+    return distracteur.toString() !== value.toString()
+  })
+  return shuffle(distracteursNonSolutions).slice(0, 3)
 }
 
 /**
@@ -963,9 +1029,9 @@ export function mathaleaWriteStudentPreviousAnswers (answers?: { [key: string]: 
       const p = new Promise<Boolean>((resolve) => {
         waitForElement(`[id$='${answer}']`).then((eles) => {
           eles.forEach((ele) => {
-            if (ele.tagName === 'SELECT') {
+            if (ele.tagName === 'LISTE-DEROULANTE') {
               // La réponse correspond à un select
-              (ele as HTMLSelectElement).value = answers[answer]
+              (ele as ListeDeroulanteElement).value = answers[answer]
               const time = window.performance.now()
               log(`duration ${answer}: ${(time - starttime)}`)
               resolve(true)

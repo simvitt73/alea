@@ -1,4 +1,4 @@
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
@@ -20,14 +20,14 @@ export const refs = {
  * @author Gilles Mora
 
 */
-export default class ProblemeFractions extends Exercice {
+export default class ProblemeFractions extends ExerciceSimple {
   constructor () {
     super()
 
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
-
+    this.versionQcmDisponible = true
     this.spacing = 1.5
     this.spacingCorr = 1.5
     this.optionsDeComparaison = { fractionEgale: true }
@@ -43,7 +43,7 @@ export default class ProblemeFractions extends Exercice {
     const reste = frac1.entierMoinsFraction(1)
     const reponse = frac2.produitFraction(reste)
     const prenom = prenomF()
-    this.reponse = reponse
+    this.reponse = this.versionQcm ? `$${frac2.produitFraction(reste).texFractionSimplifiee}$` : frac2.produitFraction(reste)
     this.question = `Ce matin, ${prenom} a ouvert une bouteille d’eau.<br>
      Elle a bu $${frac1.texFraction}$ de la bouteille. Puis à midi, elle a bu $${frac2.texFraction}$ du reste.<br> 
 Quelle fraction de la bouteille a-t-elle bu à midi ? `
@@ -55,5 +55,11 @@ Quelle fraction de la bouteille a-t-elle bu à midi ? `
      Comme $${frac2.texFraction}\\times ${reste.texFraction}=${reponse.texFraction}$, elle a bu $${miseEnEvidence(reponse.texFraction)}$ 
      ${pgcd(reponse.num, reponse.den) === 1 ? '' : ` ou $${reponse.simplifie().texFraction}$`} de la bouteille à midi.
           `
+    this.distracteurs = [
+    `$${frac2.ajouteEntier(-1).oppose().texFractionSimplifiee}$`,
+    `$${frac1.sommeFraction(frac2).texFractionSimplifiee}$`,
+    `$${frac1.produitFraction(frac2).texFractionSimplifiee}$`,
+    `$${reste.texFractionSimplifiee}$`
+    ]
   }
 }

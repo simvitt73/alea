@@ -1,9 +1,10 @@
 import Exercice from '../Exercice'
-import { listeQuestionsToContenu, randint, ppcm } from '../../modules/outils'
+import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import { ecritureAlgebrique, ecritureAlgebriqueSauf1, ecritureParentheseSiNegatif, rienSi1 } from '../../lib/outils/ecritures'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { ppcm } from '../../lib/outils/primalite'
 
 export const titre = 'Vecteur normal à deux autre vecteurs'
 export const interactifReady = true
@@ -92,7 +93,7 @@ export default class VecteurNormalADeuxAutresVecteurs extends Exercice {
       }
 
       texteCorr += `<br>Un vecteur normal aux deux vecteurs de l'énoncé est : $\\vec{n} \\begin{pmatrix} ${miseEnEvidence(n1)} \\\\ ${miseEnEvidence(n2)} \\\\ ${miseEnEvidence(n3)} \\end{pmatrix}$.`
-      texteCorr += '<br>Remarque : Tout vecteur non-nul et colinéaire à ce vecteur sera aussi normal au plan.'
+      texteCorr += '<br>Remarque : Tout vecteur non nul et colinéaire à ce vecteur sera aussi normal au plan.'
       if (this.questionJamaisPosee(i, u1, u2, u3, v1, v2, v3)) {
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr

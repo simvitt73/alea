@@ -3,7 +3,7 @@ import { texteEnCouleur } from '../../../lib/outils/embellissements'
 import { sp } from '../../../lib/outils/outilString'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Appliquer un pourcentage'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,10 +18,10 @@ export const amcType = 'AMCNum'
 export const uuid = 'da0c1'
 
 export const refs = {
-  'fr-fr': ['can6P04'],
+  'fr-fr': ['can6P04', '6N3Q-flash1'],
   'fr-ch': []
 }
-export default class AppliquerUnPourcentage extends Exercice {
+export default class AppliquerUnPourcentage extends ExerciceSimple {
   bis: boolean
   constructor () {
     super()

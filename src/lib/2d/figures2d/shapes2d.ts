@@ -1,563 +1,1123 @@
 import { ObjetMathalea2D } from '../../../modules/2dGeneralites'
 import { Shape2D } from '../Figures2D'
+import { emoji } from './Emojis'
 
-/**
- * Génère une figure représentant un carré de taille 1x1.
- * @param options Options pour personnaliser le style du carré.
- * @returns Une instance de Figure2D représentant un carré.
- */
-
-export function shapeCarre (
-  options?: {
-    fillStyle?: string; // Couleur de remplissage du carré (par défaut gris)
-    strokeStyle?: string; // Couleur de la bordure du carré (par défaut noir)
-    lineWidth?: number; // Épaisseur de la bordure
-    opacite?: number; // Opacité de la figure (par défaut 1)
-  }
-): Shape2D {
-  const fillStyle = options?.fillStyle || 'gray'
-  const strokeStyle = options?.strokeStyle || 'black'
-  const lineWidth = options?.lineWidth || 1
-  const opacite = options?.opacite || 1
-
-  const points = [
-    '-10,-10',
-    '10,-10',
-    '10,10',
-    '-10,10'
-  ].join(' ')
-
-  const codeSvg = `
-    <polygon points="${points}" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
-  `.trim()
-
-  const codeTikz = `
-    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt] (-0.5,-0.5) rectangle (0.5,0.5);
-  `.trim()
-
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 1,
-    height: 1,
-    opacite,
-    name: 'carré'
-  })
+export function shapeDefToShapeSvg (shapeName: string): string {
+  const shapeDef = listeShapes2DInfos[shapeName].shapeDef
+  const svg = shapeDef.svg ? String(shapeDef.svg(20)) : ''
+  return svg.replace('<defs>', '').replace('</defs>', '').replaceAll('\n', '')
 }
 
-/**
- * Génère une figure représentant une étoile à 4 branches centrée en (0,0),
- * dont les diagonales font 1.
- * @param options Options pour personnaliser le style de l'étoile.
- * @returns Une instance de Shape2D représentant une étoile à 4 branches.
+/*
+La classe Shape2D est définie ddans le fichier Figures2D.ts car elle est une version simplifiée de la classe Figure2D.
+Elle représente une forme géométrique 2D avec des propriétés de base comme le code SVG, le code TikZ, la largeur, la hauteur, l'opacité et le nom.
+Elle est utilisée pour créer des formes géométriques simples comme des carrés, des ronds, des étoiles, etc.
+Si vous ajoutez une nouvelle forme géométrique, respectez le format 20x20 pixels et pensez à l'ajouter à la liste qui se trouve en fin de fichier.
+Il y a 2 constantes exportées qui sont l'instance de Shape2D et l'instance de ObjetMathalea2D qui définit la forme utilisée dans le code svg et tikz afin de limiter la taille du code nécessaire.
+Voir l'exemple de shapeChat et chatDef.
  */
-export function shapeEtoile4Branches (
-  options?: {
-    fillStyle?: string;
-    strokeStyle?: string;
-    lineWidth?: number;
-    opacite?: number;
-  }
-): Shape2D {
-  const fillStyle = options?.fillStyle || 'gray'
-  const strokeStyle = options?.strokeStyle || 'black'
-  const lineWidth = options?.lineWidth || 1
-  const opacite = options?.opacite || 1
+export const shapeCarre = new Shape2D({
+  codeSvg: '<use href="#carre"></use>',
+  codeTikz: '\\pic at (0,0) {carre};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'carré'
+})
+export const shapeCarreBleu = new Shape2D({
+  codeSvg: '<use href="#carre-bleu"></use>',
+  codeTikz: '\\pic at (0,0) {carre-bleu};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'carré bleu'
+})
 
-  // Points pour une étoile à 4 branches, diagonales de longueur 1, centrée en (0,0)
-  // Branches sur les axes et les diagonales
-  const r = 0.5 // demi-diagonale
-  const r2 = r / 3 / Math.SQRT2 // demi-côté sur les axes diagonaux
-  // Appliquer une rotation de 45 degrés (pi/4) à chaque point
-  const angle = Math.PI / 4
-  function rotate45 (x: number, y: number): [number, number] {
-    const cos = Math.cos(angle)
-    const sin = Math.sin(angle)
-    return [
-      x * cos - y * sin,
-      x * sin + y * cos
-    ]
-  }
-  const points = [
-    `0,${-r}`,
-    `${r2},${-r2}`,
-    `${r},0`,
-    `${r2},${r2}`,
-    `0,${r}`,
-    `${-r2},${r2}`,
-    `${-r},0`,
-    `${-r2},${-r2}`
-  ]
+export const shapeRectangle = new Shape2D({
+  codeSvg: '<use href="#rectangle-vert"></use>',
+  codeTikz: '\\pic at (0,0) {rectangle-vert};',
+  width: 1,
+  height: 0.5,
+  opacite: 1,
+  name: 'rectangle'
+})
 
-  const codeSvg = `
-    <polygon points="${points.map(p => {
-    // Convertir en coordonnées SVG (x*20, y*20)
-    const [x, y] = p.split(',').map(Number)
-    return `${rotate45(x, y).map(el => (el * 20).toFixed(3)).join(',')}`
-  }).join(' ')}" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
-  `.trim()
+export const rectangleDef = new ObjetMathalea2D()
+rectangleDef.bordures = [-0.5, -0.25, 0.5, 0.25]
+rectangleDef.svg = function (coeff: number): string {
+  return `
+  <!-- Rectangle 1x0.5 -->
+  <defs>
+    <g id="rectangle-vert">
+      <rect x="-10" y="-5" width="20" height="10" fill="green" stroke="black" stroke-width="0.5" />
+    </g>
+  </defs>`
+}
+rectangleDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   rectangle-vert/.pic = {
+    \\draw[fill=green, draw=black, line width=0.3pt] (-0.5,-0.25) rectangle (0.5,0.25);
+   }
+  }`.trim()
+}
+export const shapeAllumette = new Shape2D({
+  codeSvg: '<use href="#allumette-verticale"></use>',
+  codeTikz: '\\pic at (0,0) {allumette-verticale};',
+  width: 0.2,
+  height: 1,
+  opacite: 1,
+  name: 'allumetteV'
+})
 
-  // Appliquer la rotation de 45° aux points TikZ
-  const tikzPoints = [
-    [0, -r],
-    [r2, -r2],
-    [r, 0],
-    [r2, r2],
-    [0, r],
-    [-r2, r2],
-    [-r, 0],
-    [-r2, -r2]
-  ].map(([x, y]) => {
-    const [xr, yr] = rotate45(x, y)
-    // Les coordonnées TikZ sont dans [-0.5, 0.5]
-    return `(${xr.toFixed(3)},${yr.toFixed(3)})`
-  }).join(' -- ')
+export const shapeAllumetteHorizontale = new Shape2D({
+  codeSvg: '<use href="#allumette-verticale" transform="rotate(90)"></use>',
+  codeTikz: '\\pic[rotate=90] at (0,0) {allumette-verticale};',
+  width: 1,
+  height: 0.2,
+  opacite: 1,
+  name: 'allumetteH'
+})
 
-  const codeTikz = `
-    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt]
-      ${tikzPoints} -- cycle;
-  `.trim()
+export const shapeAllumette60 = new Shape2D({
+  codeSvg: '<use href="#allumette-verticale" transform="rotate(30)"></use>',
+  codeTikz: '\\pic[rotate=-30] at (0,0) {allumette-verticale};',
+  width: 0.8,
+  height: 0.8,
+  opacite: 1,
+  name: 'allumette60'
+})
 
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 1,
-    height: 1,
-    opacite,
-    name: 'étoile'
-  })
+export const shapeAllumette120 = new Shape2D({
+  codeSvg: '<use href="#allumette-verticale" transform="rotate(-30)"></use>',
+  codeTikz: '\\pic[rotate=30] at (0,0) {allumette-verticale};',
+  width: 0.8,
+  height: 0.8,
+  opacite: 1,
+  name: 'allumette120'
+})
+
+export const allumetteDef = new ObjetMathalea2D()
+allumetteDef.bordures = [-0.1, -0.5, 0.1, 0.5]
+allumetteDef.svg = function (coeff: number): string {
+  return `
+  <!-- Allumette verticale -->
+  <defs>
+    <g id="allumette-verticale">
+      <rect x="-1" y="-8" width="2" height="18" fill="#deb887" stroke="#8b5c2a" stroke-width="0.5"/>
+      <ellipse cx="0" cy="-9" rx="1.5" ry="2" fill="red" stroke="darkred" stroke-width="0.5"/>
+    </g>
+  </defs>`
+}
+allumetteDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   allumette-verticale/.pic = {
+    % Tige
+    \\draw[fill=brown!30!yellow, draw=brown!80!black, line width=0.3pt] (-0.05,-0.5) rectangle (0.05,0.4);
+    % Tête
+    \\draw[fill=red, draw=red!70!black, line width=0.3pt] (0,0.45) ellipse [x radius=0.075, y radius=0.1];
+   }
+  }`.trim()
+}
+
+export const shapeSegmentHorizontal = new Shape2D({
+  codeSvg: '<use href="#segment-horizontal"></use>',
+  codeTikz: '\\pic at (0,0) {segment-horizontal};',
+  width: 1,
+  height: 0,
+  opacite: 1,
+  name: 'segment horizontal'
+})
+
+export const segmentHorizontalDef = new ObjetMathalea2D()
+segmentHorizontalDef.bordures = [0, 0, 1, 0]
+segmentHorizontalDef.svg = function (coeff: number): string {
+  return `
+  <!-- Segment horizontal de (0,0) à (1,0) -->
+  <defs>
+      <line id="segment-horizontal" x1="-10" y1="0" x2="10" y2="0" stroke="black" stroke-width="2" />
+  </defs>`
+}
+
+segmentHorizontalDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   segment-horizontal/.pic = {
+    \\draw[thick] (-0.5,0) -- (0.5,0);
+   }
+  }`.trim()
+}
+
+export const shapeRectangleBlanc = new Shape2D({
+  codeSvg: '<use href="#rectangle-blanc"></use>',
+  codeTikz: '\\pic at (0,0) {rectangle-blanc};',
+  width: 1,
+  height: 0.5,
+  opacite: 1,
+  name: 'rectangle blanc'
+})
+
+export const rectangleBlancDef = new ObjetMathalea2D()
+rectangleBlancDef.bordures = [-0.5, -0.25, 0.5, 0.25]
+rectangleBlancDef.svg = function (coeff: number): string {
+  return `
+  <!-- Rectangle blanc 1x0.5 -->
+  <defs>
+    <g id="rectangle-blanc">
+      <rect x="-10" y="-5" width="20" height="10" fill="white" stroke="black" stroke-width="0.5" />
+    </g>
+  </defs>`
+}
+rectangleBlancDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   rectangle-blanc/.pic = {
+    \\draw[fill=white, draw=black, line width=0.3pt] (-0.5,-0.25) rectangle (0.5,0.25);
+   }
+  }`.trim()
 }
 
 /**
  * Génère une figure représentant un carré aux bords arrondis de côté 0.8 centré en (0,0).
- * @param options Options pour personnaliser le style du carré arrondi.
  * @returns Une instance de Shape2D représentant un carré aux coins arrondis.
  */
-export function shapeCarreArrondi (
-  options?: {
-    fillStyle?: string;
-    strokeStyle?: string;
-    lineWidth?: number;
-    opacite?: number;
-    radius?: number; // Rayon des coins arrondis (par défaut 0.15)
-  }
-): Shape2D {
-  const fillStyle = options?.fillStyle || 'gray'
-  const strokeStyle = options?.strokeStyle || 'black'
-  const lineWidth = options?.lineWidth || 1
-  const opacite = options?.opacite || 1
-  const radius = options?.radius ?? 0.15
+export const shapeCarreArrondi = new Shape2D({
+  codeSvg: '<use href="#carre-arrondi"></use>',
+  codeTikz: '\\pic at (0,0) {carre-arrondi};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'pastille'
+})
 
-  // Côté du carré
-  const size = 0.8
-  // Pour SVG, on multiplie par 20 pour correspondre à l'échelle des autres formes
-  const svgSize = size * 20
-  const svgRadius = radius * 20
-  const svgX = -svgSize / 2
-  const svgY = -svgSize / 2
-
-  const codeSvg = `
-    <rect x="${svgX}" y="${svgY}" width="${svgSize}" height="${svgSize}" rx="${svgRadius}" ry="${svgRadius}"
-      fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
-  `.trim()
-
-  // Pour TikZ, le carré va de (-0.4,-0.4) à (0.4,0.4)
-  // TikZ: rounded corners=<radius>
-  const codeTikz = `
-    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt, rounded corners=${radius}cm]
-      (-0.4,-0.4) rectangle (0.4,0.4);
-  `.trim()
-
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: size,
-    height: size,
-    opacite,
-    name: 'pastille'
-  })
-}
-/**
- * Génère une figure représentant un petit chat stylisé de taille 1x1 centré en (0,0).
- * @param options Options pour personnaliser le style du chat.
- * @returns Une instance de Shape2D représentant un chat.
- */
-export function shapeChat (
-  options?: {
-    fillStyle?: string;
-    strokeStyle?: string;
-    lineWidth?: number;
-    opacite?: number;
-  }
-): Shape2D {
-  const opacite = options?.opacite || 1
-
-  // SVG: centré en (0,0), échelle *20
-  const codeSvg = `
-   <use href="#chat"></use>`
-
-  // TikZ : centré en (0,0), taille 1x1
-  const codeTikz = `
-   \\pic at (0,0) {chat};
-  `.trim()
-
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 1,
-    height: 1,
-    opacite,
-    name: 'chat'
-  })
-}
-/**
- * Génère une figure représentant un soleil stylisé centré en (0,0), taille 1x1.
- * @param options Options pour personnaliser le style du soleil.
- * @returns Une instance de Shape2D représentant un soleil.
- */
-export function shapeSoleil (
-  options?: {
-    fillStyle?: string;
-    strokeStyle?: string;
-    lineWidth?: number;
-    opacite?: number;
-    rayons?: number; // Nombre de rayons (par défaut 8)
-  }
-): Shape2D {
-  const opacite = options?.opacite || 1
-
-  const codeSvg = `
-   <use href="#soleil"></use>`
-
-  // TikZ : centré en (0,0), taille 1x1
-  const codeTikz = `
-   \\pic at (0,0) {soleil};
-  `.trim()
-
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 1,
-    height: 1,
-    opacite,
-    name: 'soleil'
-  })
-}
 /**
  * Génère une figure représentant un losange de taille 1x1 centré en (0,0).
- * @param options Options pour personnaliser le style du losange.
  * @returns Une instance de Shape2D représentant un losange.
  */
-export function shapeLosange (
-  options?: {
-    fillStyle?: string;
-    strokeStyle?: string;
-    lineWidth?: number;
-    opacite?: number;
-  }
-): Shape2D {
-  const fillStyle = options?.fillStyle || 'white'
-  const strokeStyle = options?.strokeStyle || 'black'
-  const lineWidth = options?.lineWidth || 1
-  const opacite = options?.opacite || 1
+export const shapeLosange = new Shape2D({
+  codeSvg: '<use href="#losange"></use>',
+  codeTikz: '\\pic at (0,0) {losange};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'losange'
+})
 
-  // Losange centré en (0,0), diagonales 1 (donc sommets à (0,±0.5) et (±0.5,0))
-  // Pour SVG, on multiplie par 20
-  const points = [
-    [0, -0.5],
-    [0.5, 0],
-    [0, 0.5],
-    [-0.5, 0]
-  ].map(([x, y]) => `${(x * 20).toFixed(3)},${(y * 20).toFixed(3)}`).join(' ')
+export const shapeHexagone = new Shape2D({
+  codeSvg: '<use href="#hexagone"></use>',
+  codeTikz: '\\pic at (0,0) {hexagone};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'hexagone'
+})
 
-  const codeSvg = `
-    <polygon points="${points}" fill="${fillStyle}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />
-  `.trim()
+export const shapeHexagoneJaune = new Shape2D({
+  codeSvg: '<use href="#hexagoneJaune"></use>',
+  codeTikz: '\\pic at (0,0) {hexagoneJaune};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'hexagoneJaune'
+})
 
-  const codeTikz = `
-    \\draw[fill=${fillStyle}, draw=${strokeStyle}, line width=${lineWidth}pt]
-      (0,-0.5) -- (0.5,0) -- (0,0.5) -- (-0.5,0) -- cycle;
-  `.trim()
+export const shapePentagone = new Shape2D({
+  codeSvg: '<use href="#pentagone"></use>',
+  codeTikz: '\\pic at (0,0) {pentagone};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'pentagone'
+})
 
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 1,
-    height: 1,
-    opacite,
-    name: 'losange'
-  })
-}
-/**
- * Génère une figure représentant un cube en projection axonométrique centré en (0,0), taille 1x1.
- * @param options Options pour personnaliser le style du cube.
- * @returns Une instance de Shape2D représentant un cube.
- */
-export function shapeCubeIso (
-  options?: {
-    fillStyle?: string;
-    strokeStyle?: string;
-    lineWidth?: number;
-    opacite?: number;
-  }
-): Shape2D {
-  const strokeStyle = options?.strokeStyle || 'black'
-  const lineWidth = options?.lineWidth || 1
-  const opacite = options?.opacite || 1
-
-  // Axonometric projection (isometric): 120° between axes
-  // Cube of size 1, centered at (0,0)
-  // Vertices in 3D: (±0.5, ±0.5, ±0.5)
-  // Isometric projection: x' = (x - y) * cos(30°), y' = (x + y) * sin(30°) - z
-  const cos30 = Math.cos(Math.PI / 6)
-  const sin30 = Math.sin(Math.PI / 6)
-  function project ([x, y, z]: [number, number, number]): [number, number] {
-    return [
-      (x - y) * cos30,
-      (x + y) * sin30 - z
-    ]
-  }
-  // 8 sommets du cube
-  const vertices3D: [number, number, number][] = [
-    [-0.5, -0.5, -0.5],
-    [0.5, -0.5, -0.5],
-    [0.5, 0.5, -0.5],
-    [-0.5, 0.5, -0.5],
-    [-0.5, -0.5, 0.5],
-    [0.5, -0.5, 0.5],
-    [0.5, 0.5, 0.5],
-    [-0.5, 0.5, 0.5]
-  ]
-  // Projeter et mettre à l'échelle SVG (x20)
-  const vertices2D = vertices3D.map(v => {
-    const [x, y] = project(v)
-    return [x * 20, y * 20]
-  })
-
-  // Faces (avant, droite, dessus)
-  const faces = [
-    [0, 7, 3, 2], // arrière-gauche-bas, avant-droit-bas, avant-droit-haut, arrière-gauche-haut (face du bas)
-    [1, 5, 6, 2], // droite
-    [5, 4, 7, 6]  // dessus
-  ]
-  // Générer les polygones SVG pour chaque face (avec opacité)
-  const faceColors = [
-    'lightgray',
-    'gray',
-    'white'
-  ]
-  const codeSvg = faces.map((face, i) =>
-    `<polygon points="${face.map(idx => vertices2D[idx].map(n => n.toFixed(3)).join(',')).join(' ')}" fill="${faceColors[i]}" fill-opacity="${opacite}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />`
-  ).join('\n').trim()
-
-  // TikZ version
-  // On utilise les mêmes coordonnées projetées, ramenées à [-0.5,0.5]
-  const verticesTikz = vertices3D.map(v => {
-    const [x, y] = project(v)
-    return [x, -y]
-  })
-  function tikzPoint (idx: number) {
-    const [x, y] = verticesTikz[idx]
-    return `(${x.toFixed(3)},${y.toFixed(3)})`
-  }
-  const tikzPolygons = faces.map((face, i) =>
-    `\\filldraw[fill=${faceColors[i]}, fill opacity=${opacite}, draw=${strokeStyle}, line width=${lineWidth}pt] ${face.map(tikzPoint).join(' -- ')} -- cycle;`
-  ).join('\n')
-
-  const codeTikz = `
-    ${tikzPolygons}
-  `.trim()
-
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 0.866 * 2,
-    height: 2,
-    opacite,
-    name: 'cube'
-  })
-}
-/**
- * Génère une figure représentant un cube en projection axonométrique centré en (0,0), taille 1x1,
- * mais tourné de 10 degrés dans le sens horaire autour de l'axe z.
- * @param options Options pour personnaliser le style du cube.
- * @returns Une instance de Shape2D représentant un cube tourné.
- */
-export function shapeCubeIsoRot40 (
-  options?: {
-    fillStyle?: string;
-    strokeStyle?: string;
-    lineWidth?: number;
-    opacite?: number;
-  }
-): Shape2D {
-  const strokeStyle = options?.strokeStyle || 'black'
-  const lineWidth = options?.lineWidth || 1
-  const opacite = options?.opacite || 1
-
-  // Projection isométrique
-  const cos40 = Math.cos(Math.PI * 2 / 9)
-  const sin40 = Math.sin(Math.PI * 2 / 9)
-  function project ([x, y, z]: [number, number, number]): [number, number] {
-    return [
-      (x - y) * cos40,
-      (x + y) * sin40 - z
-    ]
-  }
-
-  // Sommets du cube
-  const vertices3D: [number, number, number][] = [
-    [-0.5, -0.5, -0.5],
-    [0.5, -0.5, -0.5],
-    [0.5, 0.5, -0.5],
-    [-0.5, 0.5, -0.5],
-    [-0.5, -0.5, 0.5],
-    [0.5, -0.5, 0.5],
-    [0.5, 0.5, 0.5],
-    [-0.5, 0.5, 0.5]
-  ]
-  // Appliquer la rotation puis la projection
-  const vertices2D = vertices3D.map(v => {
-    const [x, y] = project(v)
-    return [x * 20, y * 20]
-  })
-
-  // Faces (avant, droite, dessus)
-  const faces = [
-    [0, 7, 3, 2], // bas
-    [1, 5, 6, 2], // droite
-    [5, 4, 7, 6]  // dessus
-  ]
-  const faceColors = [
-    'lightgray',
-    'gray',
-    'white'
-  ]
-  const codeSvg = faces.map((face, i) =>
-    `<polygon points="${face.map(idx => vertices2D[idx].map(n => n.toFixed(3)).join(',')).join(' ')}" fill="${faceColors[i]}" fill-opacity="${opacite}" stroke="${strokeStyle}" stroke-width="${lineWidth}" />`
-  ).join('\n').trim()
-
-  // TikZ version
-  const verticesTikz = vertices3D.map(v => {
-    const [x, y] = project(v)
-    return [x, -y]
-  })
-  function tikzPoint (idx: number) {
-    const [x, y] = verticesTikz[idx]
-    return `(${x.toFixed(3)},${y.toFixed(3)})`
-  }
-  const tikzPolygons = faces.map((face, i) =>
-    `\\filldraw[fill=${faceColors[i]}, fill opacity=${opacite}, draw=${strokeStyle}, line width=${lineWidth}pt] ${face.map(tikzPoint).join(' -- ')} -- cycle;`
-  ).join('\n')
-
-  const codeTikz = `
-    ${tikzPolygons}
-  `.trim()
-
-  return new Shape2D({
-    codeSvg,
-    codeTikz,
-    width: 0.866 * 2,
-    height: 2,
-    opacite,
-    name: 'cube-rot10'
-  })
-}
-
-export const chatDef = new ObjetMathalea2D()
-chatDef.bordures = [-0.5, -0.5, 0.5, 0.5]
-chatDef.svg = function (coeff: number): string {
+export const pentagoneDef = new ObjetMathalea2D()
+pentagoneDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+pentagoneDef.svg = function (coeff: number): string {
   return `
+  <!-- Pentagone régulier -->
   <defs>
- 
-<!-- Un chat stylisé -->
- <g id="chat">
-  <g transform="scale(${coeff})">
-      <!-- Tête -->
-      <ellipse cx="0" cy="-8" rx="7" ry="7" fill="gray" stroke="black" stroke-width="1" />
-      <!-- Oreille gauche -->
-      <polygon points="-6,-13 -2,-13 -4,-19" fill="gray" stroke="black" stroke-width="1" />
-      <!-- Oreille droite -->
-      <polygon points="2,-13 6,-13 4,-19" fill="gray" stroke="black" stroke-width="1" />
-      <!-- Yeux -->
-      <ellipse cx="-2" cy="-9" rx="1" ry="1.5" fill="white" stroke="black" stroke-width="0.5" />
-      <ellipse cx="2" cy="-9" rx="1" ry="1.5" fill="white" stroke="black" stroke-width="0.5" />
-      <ellipse cx="-2" cy="-9" rx="0.4" ry="0.7" fill="black" />
-      <ellipse cx="2" cy="-9" rx="0.4" ry="0.7" fill="black" />
-      <!-- Nez -->
-      <ellipse cx="0" cy="-7" rx="0.7" ry="0.4" fill="pink" stroke="black" stroke-width="0.3" />
-      <!-- Moustaches -->
-      <path d="M-1,-7 Q-4,-7.5 -7,-7" stroke="black" stroke-width="0.5" fill="none" />
-      <path d="M-1,-6.5 Q-4,-6 -7,-6.5" stroke="black" stroke-width="0.5" fill="none" />
-      <path d="M1,-7 Q4,-7.5 7,-7" stroke="black" stroke-width="0.5" fill="none" />
-      <path d="M1,-6.5 Q4,-6 7,-6.5" stroke="black" stroke-width="0.5" fill="none" />
+    <g id="pentagone">
+      <polygon points="0,-10 9.51,-3.09 5.88,8.09 -5.88,8.09 -9.51,-3.09"
+        fill="orange" stroke="black" stroke-width="0.5" />
     </g>
-  </g>
   </defs>`
 }
-chatDef.tikz = function (): string {
+pentagoneDef.tikz = function (): string {
   return `
   \\tikzset{
-   chat/.pic = {
-    % Tête
-    \\draw[fill=gray, draw=black, line width=1pt] (0,0.35) ellipse [x radius=0.35, y radius=0.35];
-    % Oreilles
-    \\draw[fill=gray, draw=black, line width=1pt] (-0.22,0.65) -- (-0.08,0.65) -- (-0.15,0.95) -- cycle;
-    \\draw[fill=gray, draw=black, line width=1pt] (0.08,0.65) -- (0.22,0.65) -- (0.15,0.95) -- cycle;
-    % Yeux
-    \\draw[fill=white, draw=black, line width=0.2pt] (-0.08,0.4) ellipse [x radius=0.05, y radius=0.08];
-    \\draw[fill=white, draw=black, line width=0.2pt] (0.08,0.4) ellipse [x radius=0.05, y radius=0.08];
-    \\fill[black] (-0.08,0.4) ellipse [x radius=0.02, y radius=0.04];
-    \\fill[black] (0.08,0.4) ellipse [x radius=0.02, y radius=0.04];
-    % Nez
-    \\draw[fill=pink, draw=black, line width=0.1pt] (0,0.33) ellipse [x radius=0.035, y radius=0.02];
-    % Moustaches
-    \\draw[draw=black, line width=0.2pt] (-0.03,0.33) .. controls (-0.15,0.36) .. (-0.3,0.33);
-    \\draw[draw=black, line width=0.2pt] (-0.03,0.31) .. controls (-0.15,0.29) .. (-0.3,0.31);
-    \\draw[draw=black, line width=0.2pt] (0.03,0.33) .. controls (0.15,0.36) .. (0.3,0.33);
-    \\draw[draw=black, line width=0.2pt] (0.03,0.31) .. controls (0.15,0.29) .. (0.3,0.31);
-    }
-} 
-  `.trim()
-}
-
-export const soleilDef = new ObjetMathalea2D()
-soleilDef.bordures = [-0.5, -0.5, 0.5, 0.5]
-soleilDef.svg = function (coeff: number): string {
-  return `
-  <defs>
-  <g transform="scale(${coeff})">
-    <g id="soleil">
-      <!-- Cercle central -->
-      <circle cx="0" cy="0" r="6" fill="yellow" stroke="orange" stroke-width="1" />
-      <!-- Rayons -->
-      <line x1="0" y1="-6" x2="0" y2="-10" stroke="orange" stroke-width="1" />
-      <line x1="0" y1="6" x2="0" y2="10" stroke="orange" stroke-width="1" />  
-      <line x1="-6" y1="0" x2="-10" y2="0" stroke="orange" stroke-width="1" />
-      <line x1="6" y1="0" x2="10" y2="0" stroke="orange" stroke-width="1" />
-      <line x1="-4.24" y1="-4.24" x2="-7.07" y2="-7.07" stroke="orange" stroke-width="1" />
-      <line x1="4.24" y1="-4.24" x2="7.07" y2="-7.07" stroke="orange" stroke-width="1" />
-      <line x1="-4.24" y1="4.24" x2="-7.07" y2="7.07" stroke="orange" stroke-width="1" />
-      <line x1="4.24" y1="4.24" x2="7.07" y2="7.07" stroke="orange" stroke-width="1" />
-    </g>
-  </g>
-  </defs>`
-}
-soleilDef.tikz = function (): string {
-  return `
-  \\tikzset{
-   soleil/.pic = {
-    % Cercle central
-    \\draw[fill=yellow, draw=orange, line width=1pt] (0,0) circle (0.3);
-    % Rayons
-    \\draw[draw=orange, line width=1pt] (0,0.3) -- (0,0.5);
-    \\draw[draw=orange, line width=1pt] (0,-0.3) -- (0,-0.5);
-    \\draw[draw=orange, line width=1pt] (-0.3,0) -- (-0.5,0);
-    \\draw[draw=orange, line width=1pt] (0.3,0) -- (0.5,0);
-    \\draw[draw=orange, line width=1pt] (-0.212,-0.212) -- (-0.353,-0.353);
-    \\draw[draw=orange, line width=1pt] (0.212,-0.212) -- (0.353,-0.353);
-    \\draw[draw=orange, line width=1pt] (-0.212,0.212) -- (-0.353,0.353);
-    \\draw[draw=orange, line width=1pt] (0.212,0.212) -- (0.353,0.353);
+   pentagone/.pic = {
+    \\draw[fill=orange, draw=black, line width=0.3pt]
+      (0,0.5) -- (0.475,0.154) -- (0.294,-0.404) -- (-0.294,-0.404) -- (-0.475,0.154) -- cycle;
    }
   }`.trim()
+}
+
+export const carreRondDef = new ObjetMathalea2D()
+carreRondDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+carreRondDef.svg = function (coeff: number): string {
+  return `
+  <!-- Carré arrondi -->
+  <defs>
+    <g id="carre-arrondi">
+      <rect x="-8" y="-8" width="16" height="16" rx="3" ry="3"
+        fill="gray" stroke="black" stroke-width="0.5" />
+    </g>
+  </defs>`
+}
+carreRondDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   carre-arrondi/.pic = {
+    % Carré arrondi
+    \\draw[fill=gray, draw=darkgray, line width=0.3pt, rounded corners=0.07cm]
+      (-0.4,-0.4) rectangle (0.4,0.4);
+   }
+  }`.trim()
+}
+export const losangeDef = new ObjetMathalea2D()
+losangeDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+losangeDef.svg = function (coeff: number): string {
+  return `
+  <!-- Losange -->
+  <defs>
+      <polygon id="losange" points="0,-6 8,0 0,6 -8,0"
+        fill="pink" stroke="black" stroke-width="0.3" />
+  </defs>`
+}
+losangeDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   losange/.pic = {
+    % Losange
+    \\draw[fill=pink, draw=darkgray, line width=0.3pt]
+      (0,-0.3) -- (0.5,0) -- (0,0.3) -- (-0.5,0) -- cycle;
+   }
+  }`.trim()
+}
+
+export const carreDef = new ObjetMathalea2D()
+carreDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+carreDef.svg = function (coeff: number): string {
+  return `
+  <!-- Carré -->
+  <defs>
+      <rect id="carre" x="-10" y="-10" width="20" height="20"
+        fill="gray" stroke="black" stroke-width="0.5" />
+  </defs>`
+}
+carreDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   carre/.pic = {
+    % Carré
+    \\draw[fill=gray, draw=darkgray, line width=0.3pt] (-0.5,-0.5) rectangle (0.5,0.5);
+   }
+  }`.trim()
+}
+
+export const carreBleuDef = new ObjetMathalea2D()
+carreBleuDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+carreBleuDef.svg = function (coeff: number): string {
+  return `
+  <!-- Carré bleu -->
+  <defs>
+      <rect id="carre-bleu" x="-10" y="-10" width="20" height="20"
+        fill="blue" stroke="black" stroke-width="0.5" />
+  </defs>`
+}
+carreBleuDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   carre-bleu/.pic = {
+    % Carré bleu
+    \\draw[fill=blue, draw=darkgray, line width=0.3pt] (-0.5,-0.5) rectangle (0.5,0.5);
+   }
+  }`.trim()
+}
+
+export const hexagoneDef = new ObjetMathalea2D()
+hexagoneDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+hexagoneDef.svg = function (coeff: number): string {
+  return `
+  <!-- Hexagone -->
+  <defs>
+    <g id="hexagone">
+      <polygon points="10,0 5,8.66 -5,8.66 -10,0 -5,-8.66 5,-8.66"
+        fill="lightblue" stroke="black" stroke-width="0.5" />
+    </g>
+  </defs>`
+}
+hexagoneDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   hexagone/.pic = {
+    \\draw[fill=cyan!30, draw=darkgray, line width=0.3pt]
+      (0.5,0) -- (0.25,0.433) -- (-0.25,0.433) -- (-0.5,0) -- (-0.25,-0.433) -- (0.25,-0.433) -- cycle;
+   }
+  }`.trim()
+}
+
+export const hexagoneJauneDef = new ObjetMathalea2D()
+hexagoneJauneDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+hexagoneJauneDef.svg = function (coeff: number): string {
+  return `
+  <!-- Hexagone -->
+  <defs>
+    <g id="hexagoneJaune">
+      <polygon points="10,0 5,8.66 -5,8.66 -10,0 -5,-8.66 5,-8.66"
+        fill="yellow" stroke="black" stroke-width="0.5" />
+    </g>
+  </defs>`
+}
+hexagoneJauneDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   hexagoneJaune/.pic = {
+    \\draw[fill=yellow, draw=darkgray, line width=0.3pt]
+      (0.5,0) -- (0.25,0.433) -- (-0.25,0.433) -- (-0.5,0) -- (-0.25,-0.433) -- (0.25,-0.433) -- cycle;
+   }
+  }`.trim()
+}
+
+export const shapeRond = new Shape2D({
+  codeSvg: '<use href="#rond"></use>',
+  codeTikz: '\\pic at (0,0) {rond};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'rond'
+})
+
+export const rondDef = new ObjetMathalea2D()
+rondDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+rondDef.svg = function (coeff: number): string {
+  return `
+  <!-- Rond -->
+  <defs>
+    <g id="rond">
+      <circle cx="0" cy="0" r="10" fill="lightblue" stroke="blue" stroke-width="0.5" />
+    </g>
+  </defs>`
+}
+rondDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   rond/.pic = {
+    \\draw[fill=cyan!30, draw=blue, line width=0.3pt] (0,0) circle (0.5);
+   }
+  }`.trim()
+}
+export const shapeBalle = new Shape2D({
+  codeSvg: '<use href="#balle"></use>',
+  codeTikz: '\\pic at (0,0) {balle};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'balle'
+})
+
+export const balleDef = new ObjetMathalea2D()
+balleDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+balleDef.svg = function (coeff: number): string {
+  return `
+  <!-- Balle de tennis -->
+ <defs>
+    <g id="balle" transform="scale(0.2) translate(-60, -60)">
+      <!-- Dégradé -->
+      <radialGradient id="grad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+        <stop offset="0%" stop-color="#f7f95a" />
+        <stop offset="100%" stop-color="#b6d100" />
+      </radialGradient>
+
+      <!-- Ombre -->
+      <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.3" />
+      </filter>
+
+      <!-- Corps de la balle -->
+      <circle cx="60" cy="60" r="50" fill="url(#grad)" filter="url(#shadow)" />
+
+      <!-- Couture principale -->
+      <path d="M20,35 C40,30 80,35 100,25" stroke="white" stroke-width="5" fill="none" />
+
+      <!-- Couture secondaire (plus haute et réduite) -->
+      <path d="M35,110 C60,85 85,80 115,70" stroke="white" stroke-width="5" fill="none" />
+    </g>
+  </defs>`
+}
+balleDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   balle/.pic = {
+    % Balle de tennis jaune citron
+    \\shade[ball color=lime, opacity=0.5] 
+      (0,0) circle (0.5);
+    % Couture principale
+    \\draw[white, line width=0.3pt] 
+      plot [smooth, tension=1] coordinates {(-0.45,-0.15) (-0.2,-0.22) (0.1,-0.18) (0.45,-0.25)};
+    % Couture secondaire
+    \\draw[white, line width=0.3pt] 
+      plot [smooth, tension=1] coordinates {(-0.45,0.4) (-0.15,0.25) (0.2,0.28) (0.45,0.15)};
+   }
+  }`.trim()
+}
+export const shapeTriangleEquilateral = new Shape2D({
+  codeSvg: '<use href="#triangle-equilateral"></use>',
+  codeTikz: '\\pic at (0,0) {triangle-equilateral};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'triangle équilatéral'
+})
+
+export const triangleEquilateralDef = new ObjetMathalea2D()
+triangleEquilateralDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+triangleEquilateralDef.svg = function (coeff: number): string {
+  return `
+  <!-- Triangle équilatéral -->
+  <defs>
+    <g id="triangle-equilateral">
+      <polygon points="0,-10 8.666,5 -8.666,5"
+        fill="lightgreen" stroke="darkgreen" stroke-width="0.5" />
+    </g>
+  </defs>`
+}
+triangleEquilateralDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   triangle-equilateral/.pic = {
+    \\draw[fill=green!20, draw=green!50!black, line width=0.3pt]
+      (0,0.5) -- (0.433,-0.25) -- (-0.433,-0.25) -- cycle;
+   }
+  }`.trim()
+}
+export const shapeRedCross = new Shape2D({
+  codeSvg: '<use href="#red-cross"></use>',
+  codeTikz: '\\pic at (0,0) {red-cross};',
+  width: 1,
+  height: 1,
+  opacite: 1,
+  name: 'red cross'
+})
+
+export const redCrossDef = new ObjetMathalea2D()
+redCrossDef.bordures = [-0.5, -0.5, 0.5, 0.5]
+redCrossDef.svg = function (coeff: number): string {
+  return `
+  <!-- Red Cross -->
+  <defs>
+    <g id="red-cross">
+      <rect x="-3" y="-10" width="6" height="20" fill="red" stroke="darkred" stroke-width="0.5"/>
+      <rect x="-10" y="-3" width="20" height="6" fill="red" stroke="darkred" stroke-width="0.5"/>
+    </g>
+  </defs>`
+}
+redCrossDef.tikz = function (): string {
+  return `
+  \\tikzset{
+   red-cross/.pic = {
+    % Red Cross
+    \\draw[fill=red, draw=red!70!black, line width=0.3pt] (-0.15,-0.5) rectangle (0.15,0.5);
+    \\draw[fill=red, draw=red!70!black, line width=0.3pt] (-0.5,-0.15) rectangle (0.5,0.15);
+   }
+  }`.trim()
+}
+
+export const shapeNames: string[] = [
+  'carré',
+  'carréRond',
+  'losange',
+  'hexagone',
+  'pentagone',
+  'rond',
+  'balle',
+  'triangle',
+  'redCross',
+  'carréBleu',
+  'hexagoneJaune',
+  'rectangleBlanc',
+  'rectangleVert',
+  'allumetteV',
+  'allumetteH',
+  'allumette60',
+  'allumette120',
+  'segmentHorizontal'
+]
+
+export type ShapeName = (typeof shapeNames)[number]
+
+export type ShapeInfos = {
+  shape2D: Shape2D
+  nomSingulier: string
+  nomPluriel: string
+  shapeDef: ObjetMathalea2D
+  articleSingulier: string
+  articlePluriel: string
+  articleCourt: string
+}
+
+export const listeShapes2DInfos: Record<
+  string,
+ ShapeInfos
+> = {
+  carré: {
+    shape2D: shapeCarre,
+    nomSingulier: 'carré',
+    nomPluriel: 'carrés',
+    shapeDef: carreDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de',
+  },
+  carréRond: {
+    shape2D: shapeCarreArrondi,
+    nomSingulier: 'carré arrondi',
+    nomPluriel: 'carrés arrondis',
+    shapeDef: carreRondDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de',
+  },
+  losange: {
+    shape2D: shapeLosange,
+    nomSingulier: 'losange',
+    nomPluriel: 'losanges',
+    shapeDef: losangeDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de',
+  },
+  hexagone: {
+    shape2D: shapeHexagone,
+    nomSingulier: 'hexagone',
+    nomPluriel: 'hexagones',
+    shapeDef: hexagoneDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'd\'',
+
+  },
+  pentagone: {
+    shape2D: shapePentagone,
+    nomSingulier: 'pentagone',
+    nomPluriel: 'pentagones',
+    shapeDef: pentagoneDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  rond: {
+    shape2D: shapeRond,
+    nomSingulier: 'disque',
+    nomPluriel: 'disques',
+    shapeDef: rondDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  balle: {
+    shape2D: shapeBalle,
+    nomSingulier: 'balle',
+    nomPluriel: 'balles',
+    shapeDef: balleDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  triangle: {
+    shape2D: shapeTriangleEquilateral,
+    nomSingulier: 'triangle équilatéral',
+    nomPluriel: 'triangles équilatéraux',
+    shapeDef: triangleEquilateralDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  redCross: {
+    shape2D: shapeRedCross,
+    nomSingulier: 'croix rouge',
+    nomPluriel: 'croix rouges',
+    shapeDef: redCrossDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  carréBleu: {
+    shape2D: shapeCarreBleu,
+    nomSingulier: 'carré bleu',
+    nomPluriel: 'carrés bleus',
+    shapeDef: carreBleuDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  hexagoneJaune: {
+    shape2D: shapeHexagoneJaune,
+    nomSingulier: 'hexagone jaune',
+    nomPluriel: 'hexagones jaunes',
+    shapeDef: hexagoneJauneDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  rectangleBlanc: {
+    shape2D: shapeRectangleBlanc,
+    nomSingulier: 'rectangle blanc',
+    nomPluriel: 'rectangles blancs',
+    shapeDef: rectangleBlancDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  rectangleVert: {
+    shape2D: shapeRectangle,
+    nomSingulier: 'rectangle vert',
+    nomPluriel: 'rectangles verts',
+    shapeDef: rectangleDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  allumetteV: {
+    shape2D: shapeAllumette,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  allumetteH: {
+    shape2D: shapeAllumetteHorizontale,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  allumette60: {
+    shape2D: shapeAllumette60,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  allumette120: {
+    shape2D: shapeAllumette120,
+    nomSingulier: 'allumette',
+    nomPluriel: 'allumettes',
+    shapeDef: allumetteDef,
+    articleSingulier: 'une',
+    articlePluriel: 'des',
+    articleCourt: 'd\''
+  },
+  segmentHorizontal: {
+    shape2D: shapeSegmentHorizontal,
+    nomSingulier: 'segment horizontal',
+    nomPluriel: 'segments horizontaux',
+    shapeDef: segmentHorizontalDef,
+    articleSingulier: 'un',
+    articlePluriel: 'des',
+    articleCourt: 'de'
+  },
+  smiley: {
+    shape2D: emoji('smiley', '1f603'),
+    shapeDef: emoji('smiley', '1f603').shapeDef,
+    nomPluriel: 'smileys',
+    nomSingulier: 'smiley',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  heart: {
+    shape2D: emoji('heart', '2764'),
+    shapeDef: emoji('heart', '2764').shapeDef,
+    nomPluriel: 'cœurs',
+    nomSingulier: 'cœur',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  thumbsUp: {
+    shape2D: emoji('thumbsUp', '1f44d'),
+    shapeDef: emoji('thumbsUp', '1f44d').shapeDef,
+    nomPluriel: 'pouces levés',
+    nomSingulier: 'pouce levé',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  étoile: {
+    shape2D: emoji('étoile', '2b50'),
+    shapeDef: emoji('étoile', '2b50').shapeDef,
+    nomPluriel: 'étoiles',
+    nomSingulier: 'étoile',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  pizza: {
+    shape2D: emoji('pizza', '1f355'),
+    shapeDef: emoji('pizza', '1f355').shapeDef,
+    nomPluriel: 'parts de pizza',
+    nomSingulier: 'part de pizza',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  licorne: {
+    shape2D: emoji('licorne', '1f984'),
+    shapeDef: emoji('licorne', '1f984').shapeDef,
+    nomPluriel: 'licornes',
+    nomSingulier: 'licorne',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  chien: {
+    shape2D: emoji('chien', '1f436'),
+    shapeDef: emoji('chien', '1f436').shapeDef,
+    nomPluriel: 'chiens',
+    nomSingulier: 'chien',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  chat: {
+    shape2D: emoji('chat', '1f431'),
+    shapeDef: emoji('chat', '1f431').shapeDef,
+    nomPluriel: 'chats',
+    nomSingulier: 'chat',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  souris: {
+    shape2D: emoji('souris', '1f42d'),
+    shapeDef: emoji('souris', '1f42d').shapeDef,
+    nomPluriel: 'souris',
+    nomSingulier: 'souris',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  tortue: {
+    shape2D: emoji('tortue', '1f422'),
+    shapeDef: emoji('tortue', '1f422').shapeDef,
+    nomPluriel: 'tortues',
+    nomSingulier: 'tortue',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pieuvre: {
+    shape2D: emoji('pieuvre', '1f419'),
+    shapeDef: emoji('pieuvre', '1f419').shapeDef,
+    nomPluriel: 'pieuvres',
+    nomSingulier: 'pieuvre',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  poisson: {
+    shape2D: emoji('poisson', '1f41f'),
+    shapeDef: emoji('poisson', '1f41f').shapeDef,
+    nomPluriel: 'poissons',
+    nomSingulier: 'poisson',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  papillon: {
+    shape2D: emoji('papillon', '1f98b'),
+    shapeDef: emoji('papillon', '1f98b').shapeDef,
+    nomPluriel: 'papillons',
+    nomSingulier: 'papillon',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  fantome: {
+    shape2D: emoji('fantome', '1f47b'),
+    shapeDef: emoji('fantome', '1f47b').shapeDef,
+    nomPluriel: 'fantômes',
+    nomSingulier: 'fantôme',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  dragon: {
+    shape2D: emoji('dragon', '1f409'),
+    shapeDef: emoji('dragon', '1f409').shapeDef,
+    nomPluriel: 'dragons',
+    nomSingulier: 'dragon',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  feu: {
+    shape2D: emoji('feu', '1f525'),
+    shapeDef: emoji('feu', '1f525').shapeDef,
+    nomPluriel: 'feux',
+    nomSingulier: 'feu',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  fleur: {
+    shape2D: emoji('fleur', '1f33c'),
+    shapeDef: emoji('fleur', '1f33c').shapeDef,
+    nomPluriel: 'fleurs',
+    nomSingulier: 'fleur',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  etoileBrillante: {
+    shape2D: emoji('étoileBrillante', '1f31f'),
+    shapeDef: emoji('étoileBrillante', '1f31f').shapeDef,
+    nomPluriel: 'étoiles brillantes',
+    nomSingulier: 'étoile brillante',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  cloche: {
+    shape2D: emoji('cloche', '1f514'),
+    shapeDef: emoji('cloche', '1f514').shapeDef,
+    nomPluriel: 'cloches',
+    nomSingulier: 'cloche',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  crotte: {
+    shape2D: emoji('crotte', '1f4a9'),
+    shapeDef: emoji('crotte', '1f4a9').shapeDef,
+    nomPluriel: 'crottes',
+    nomSingulier: 'crotte',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  fusee: {
+    shape2D: emoji('fusee', '1f680'),
+    shapeDef: emoji('fusee', '1f680').shapeDef,
+    nomPluriel: 'fusées',
+    nomSingulier: 'fusée',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  drapeauDamier: {
+    shape2D: emoji('drapeauDamier', '1f3c1'),
+    shapeDef: emoji('drapeauDamier', '1f3c1').shapeDef,
+    nomPluriel: 'drapeaux à damier',
+    nomSingulier: 'drapeau à damier',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  arcEnCiel: {
+    shape2D: emoji('arcEnCiel', '1f308'),
+    shapeDef: emoji('arcEnCiel', '1f308').shapeDef,
+    nomPluriel: 'arcs-en-ciel',
+    nomSingulier: 'arc-en-ciel',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'd\''
+  },
+  soleil: {
+    shape2D: emoji('soleil', '2600'),
+    shapeDef: emoji('soleil', '2600').shapeDef,
+    nomPluriel: 'soleils',
+    nomSingulier: 'soleil',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  lune: {
+    shape2D: emoji('lune', '1f319'),
+    shapeDef: emoji('lune', '1f319').shapeDef,
+    nomPluriel: 'lunes',
+    nomSingulier: 'lune',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  nuage: {
+    shape2D: emoji('nuage', '2601'),
+    shapeDef: emoji('nuage', '2601').shapeDef,
+    nomPluriel: 'nuages',
+    nomSingulier: 'nuage',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  cerise: {
+    shape2D: emoji('cerise', '1f352'),
+    shapeDef: emoji('cerise', '1f352').shapeDef,
+    nomPluriel: 'paires de cerises',
+    nomSingulier: 'paire de cerises',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pomme: {
+    shape2D: emoji('pomme', '1f34e'),
+    shapeDef: emoji('pomme', '1f34e').shapeDef,
+    nomPluriel: 'pommes',
+    nomSingulier: 'pomme',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  biere: {
+    shape2D: emoji('biere', '1f37a'),
+    shapeDef: emoji('biere', '1f37a').shapeDef,
+    nomPluriel: 'bières',
+    nomSingulier: 'bière',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pingouin: {
+    shape2D: emoji('pingouin', '1f427'),
+    shapeDef: emoji('pingouin', '1f427').shapeDef,
+    nomPluriel: 'pingouins',
+    nomSingulier: 'pingouin',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  banane: {
+    shape2D: emoji('banane', '1f34c'),
+    shapeDef: emoji('banane', '1f34c').shapeDef,
+    nomPluriel: 'bananes',
+    nomSingulier: 'banane',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  fraise: {
+    shape2D: emoji('fraise', '1f353'),
+    shapeDef: emoji('fraise', '1f353').shapeDef,
+    nomPluriel: 'fraises',
+    nomSingulier: 'fraise',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  raisin: {
+    shape2D: emoji('raisin', '1f347'),
+    shapeDef: emoji('raisin', '1f347').shapeDef,
+    nomPluriel: 'grappes de raisin',
+    nomSingulier: 'grappe de raisin',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  pasteque: {
+    shape2D: emoji('pasteque', '1f349'),
+    shapeDef: emoji('pasteque', '1f349').shapeDef,
+    nomPluriel: 'parts de pastèque',
+    nomSingulier: 'part de pastèque',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  melon: {
+    shape2D: emoji('melon', '1f348'),
+    shapeDef: emoji('melon', '1f348').shapeDef,
+    nomPluriel: 'melons',
+    nomSingulier: 'melon',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  orange: {
+    shape2D: emoji('orange', '1f34a'),
+    shapeDef: emoji('orange', '1f34a').shapeDef,
+    nomPluriel: 'oranges',
+    nomSingulier: 'orange',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  citron: {
+    shape2D: emoji('citron', '1f34b'),
+    shapeDef: emoji('citron', '1f34b').shapeDef,
+    nomPluriel: 'citrons',
+    nomSingulier: 'citron',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  peche: {
+    shape2D: emoji('peche', '1f351'),
+    shapeDef: emoji('peche', '1f351').shapeDef,
+    nomPluriel: 'pêches',
+    nomSingulier: 'pêche',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  poire: {
+    shape2D: emoji('poire', '1f350'),
+    shapeDef: emoji('poire', '1f350').shapeDef,
+    nomPluriel: 'poires',
+    nomSingulier: 'poire',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  ananas: {
+    shape2D: emoji('ananas', '1f34d'),
+    shapeDef: emoji('ananas', '1f34d').shapeDef,
+    nomPluriel: 'ananas',
+    nomSingulier: 'ananas',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'd\''
+  },
+  kiwi: {
+    shape2D: emoji('kiwi', '1f95d'),
+    shapeDef: emoji('kiwi', '1f95d').shapeDef,
+    nomPluriel: 'kiwis',
+    nomSingulier: 'kiwi',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  },
+  mangue: {
+    shape2D: emoji('mangue', '1f96d'),
+    shapeDef: emoji('mangue', '1f96d').shapeDef,
+    nomPluriel: 'mangues',
+    nomSingulier: 'mangue',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'de'
+  },
+  explosion: {
+    shape2D: emoji('explosion', '1f4a5'),
+    shapeDef: emoji('explosion', '1f4a5').shapeDef,
+    nomPluriel: 'explosions',
+    nomSingulier: 'explosion',
+    articlePluriel: 'des',
+    articleSingulier: 'une',
+    articleCourt: 'd\''
+  },
+  cadeau: {
+    shape2D: emoji('cadeau', '1f381'),
+    shapeDef: emoji('cadeau', '1f381').shapeDef,
+    nomPluriel: 'cadeaux',
+    nomSingulier: 'cadeau',
+    articlePluriel: 'des',
+    articleSingulier: 'un',
+    articleCourt: 'de'
+  }
 }

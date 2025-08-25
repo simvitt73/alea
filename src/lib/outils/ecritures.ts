@@ -9,6 +9,9 @@ import { lettreDepuisChiffre } from './outilString'
 import { stringNombre, texNombre } from './texNombre'
 import { fraction } from '../../modules/fractions'
 import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
+import Grandeur from '../../modules/Grandeur'
+import Hms from '../../modules/Hms'
+import type { ReponseComplexe } from '../interactif/gestionInteractif'
 
 /**
  * écrit le nombre, mais pas un nombre s'il est égal à 1
@@ -17,26 +20,61 @@ import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
  * //rienSi1(-1)+'x' -> -x
  * @author Rémi Angot et Jean-Claude Lhote pour le support des fractions
  */
-export function rienSi1 (a: number | FractionEtendue | Decimal | string) {
+export function rienSi1 (a: number | FractionEtendue | Decimal) {
+  if (typeof a === 'number') {
+    if (a === 1) return ''
+    if (a === -1) return '-'
+    return texNombre(a)
+  }
   if (a instanceof Decimal) {
     if (a.eq(1)) return ''
     if (a.eq(-1)) return '-'
     return texNombre(a)
   }
   if (a instanceof FractionEtendue && !(a.isEqual(fraction(1, 1)) || a.isEqual(fraction(-1, 1)))) return a.toLatex()
-  if (typeof a === 'string') {
-    window.notify('rienSi1() n\'accepte pas les string.', { argument: a })
-    a = Number(a)
-  }
   if (a instanceof FractionEtendue && (a.isEqual(fraction(1, 1)))) return ''
   if (a instanceof FractionEtendue && (a.isEqual(fraction(-1, 1)))) return '-'
   if (!(a instanceof FractionEtendue)) {
     if (egal(a, 1)) return ''
     if (egal(a, -1)) return '-'
   }
-
-  if (Number(a) || a === 0) return stringNombre(a as number, 7) // on retourne 0, ce ne sera pas joli, mais Number(0) est false !!!
+  if (typeof a === 'string') {
+    window.notify('rienSi1() n\'accepte pas les string.', { argument: a })
+    return texNombre(Number(a), 7)
+  }
+  console.log(typeof a)
   window.notify('rienSi1 : type de valeur non prise en compte : ', { a })
+  return String(a)
+}
+
+/**
+ * @param a Un nombre, une fraction ou une chaîne de caractères
+ * @example
+ * // rienSi0(0) -> ''
+ * // rienSi0(2) -> '2'
+ * @author Guillaume Valmont
+ */
+export function rienSi0 (a: number | FractionEtendue | Decimal) {
+  if (typeof a === 'number') {
+    if (a === 0) return ''
+    return texNombre(a)
+  }
+  if (a instanceof Decimal) {
+    if (a.isZero()) return ''
+    return texNombre(a)
+  }
+  if (a instanceof FractionEtendue && !a.isEqual(fraction(0, 1))) return a.toLatex()
+  if (a instanceof FractionEtendue && a.isEqual(fraction(0, 1))) return ''
+  if (!(a instanceof FractionEtendue)) {
+    if (egal(a, 0)) return ''
+  }
+  if (typeof a === 'string') {
+    window.notify('rienSi0() n\'accepte pas les string.', { argument: a })
+    return texNombre(Number(a), 7)
+  }
+  console.log(typeof a)
+  window.notify('rienSi0 : type de valeur non prise en compte : ', { a })
+  return String(a)
 }
 
 /**
@@ -269,8 +307,8 @@ export function egalOuApprox (a: number | FractionEtendue | Decimal, precision: 
  * @param {number | Decimal | FractionEtendue} b
  * @param {string} [inconnue = 'x'] 'x' par défaut, mais on peut préciser autre chose.
  */
-export function reduireAxPlusB (a: number | Decimal | FractionEtendue, b: number | Decimal | FractionEtendue, inconnue: string = 'x') {
-  return reduireAxPlusByPlusC(a, 0, b, inconnue)
+export function reduireAxPlusB (a: number | Decimal | FractionEtendue, b: number | Decimal | FractionEtendue, inconnue: string = 'x', options: OptionsReduireAxPlusByPlusC = {}) {
+  return reduireAxPlusByPlusC(a, 0, b, inconnue, undefined, options)
 }
 
 /* Ancienne version de Jean-Claude Lhote
@@ -290,6 +328,10 @@ if (!(a instanceof Decimal)) a = new Decimal(a)
   return result
 } */
 
+type OptionsReduireAxPlusByPlusC = {
+  ordreInverse?: boolean // Si true, on inverse l'ordre des termes dans la chaîne de caractères retournée
+}
+
 /**
  * renvoie une chaine correspondant à l'écriture réduite d'ax+by+c selon les valeurs de a, b et c
  * Les lettres par défaut utilisées sont 'x' et y mais peut être tout autre chose.
@@ -307,39 +349,42 @@ if (!(a instanceof Decimal)) a = new Decimal(a)
  * @example reduireAxPlusByPlusC(3,-4,5,'a','b') // renvoie 3a-4b+5
  * @return {string}
  */
-export function reduireAxPlusByPlusC (a: number | Decimal | FractionEtendue, b: number | Decimal | FractionEtendue, c: number | Decimal | FractionEtendue, inconnueX = 'x', inconnueY = 'y') {
+export function reduireAxPlusByPlusC (a: number | Decimal | FractionEtendue, b: number | Decimal | FractionEtendue, c: number | Decimal | FractionEtendue, inconnueX = 'x', inconnueY = 'y', options: OptionsReduireAxPlusByPlusC = {}) {
   if (!(a instanceof Decimal) && !(a instanceof FractionEtendue)) a = new Decimal(a)
   if (!(b instanceof Decimal) && !(b instanceof FractionEtendue)) b = new Decimal(b)
   if (!(c instanceof Decimal) && !(c instanceof FractionEtendue)) c = new Decimal(c)
-  let result = ''
   let valeurDecimaleFraction : number
   let aEgalZero : boolean
   let bEgalZero : boolean
   let cEgalZero : boolean
+  let termeA : string
+  let termeB : string
+  let termeC : string
   if (a instanceof Decimal) {
     aEgalZero = a.isZero()
-    result += aEgalZero ? '' : ((a.eq(1) ? '' : a.eq(-1) ? '-' : (texNombre(a))) + inconnueX)
+    termeA = aEgalZero ? '' : ((a.eq(1) ? (options.ordreInverse ? '+' : '') : a.eq(-1) ? '-' : (options.ordreInverse ? ecritureAlgebriqueSauf1(a) : texNombre(a))) + inconnueX)
   } else {
     valeurDecimaleFraction = a.valeurDecimale
     aEgalZero = valeurDecimaleFraction === 0
-    result += aEgalZero ? '' : ((valeurDecimaleFraction === 1 ? '' : valeurDecimaleFraction === -1 ? '-' : `${a.texFSD}`) + inconnueX)
+    termeA = aEgalZero ? '' : ((valeurDecimaleFraction === 1 ? (options.ordreInverse ? '+' : '') : valeurDecimaleFraction === -1 ? '-' : (options.ordreInverse ? a.texFractionSignee : a.texFSD)) + inconnueX)
   }
   if (b instanceof Decimal) {
     bEgalZero = b.isZero()
-    result += bEgalZero ? '' : ((b.eq(-1) ? '-' : (b.eq(1) && aEgalZero) ? '' : (b.eq(1) && !aEgalZero) ? '+' : aEgalZero ? (texNombre(b)) : (ecritureAlgebrique(b))) + inconnueY)
+    termeB = bEgalZero ? '' : ((b.eq(-1) ? '-' : (b.eq(1) && aEgalZero) ? '' : (b.eq(1) && !aEgalZero) ? '+' : aEgalZero ? (texNombre(b)) : (ecritureAlgebrique(b))) + inconnueY)
   } else {
     valeurDecimaleFraction = b.valeurDecimale
     bEgalZero = valeurDecimaleFraction === 0
-    result += bEgalZero ? '' : ((valeurDecimaleFraction === -1 ? '-' : (valeurDecimaleFraction === 1 && aEgalZero) ? '' : (valeurDecimaleFraction === 1 && !aEgalZero) ? '+' : bEgalZero ? `${b.texFSD}` : `${b.texFractionSignee}`) + inconnueY)
+    termeB = bEgalZero ? '' : ((valeurDecimaleFraction === -1 ? '-' : (valeurDecimaleFraction === 1 && aEgalZero) ? '' : (valeurDecimaleFraction === 1 && !aEgalZero) ? '+' : bEgalZero ? `${b.texFSD}` : `${b.texFractionSignee}`) + inconnueY)
   }
   if (c instanceof Decimal) {
     cEgalZero = c.isZero()
-    result += (aEgalZero && bEgalZero && cEgalZero) ? '0' : cEgalZero ? '' : (aEgalZero && bEgalZero) ? texNombre(c) : (ecritureAlgebrique(c))
+    termeC = (aEgalZero && bEgalZero && cEgalZero) ? '0' : cEgalZero ? '' : ((aEgalZero && bEgalZero) || options.ordreInverse) ? texNombre(c) : (ecritureAlgebrique(c))
   } else {
     valeurDecimaleFraction = c.valeurDecimale
     cEgalZero = valeurDecimaleFraction === 0
-    result += (aEgalZero && bEgalZero && cEgalZero) ? '0' : cEgalZero ? '' : (aEgalZero && bEgalZero) ? `${c.texFSD}` : `${c.texFractionSignee}`
+    termeC = (aEgalZero && bEgalZero && cEgalZero) ? '0' : cEgalZero ? '' : ((aEgalZero && bEgalZero) || options.ordreInverse) ? `${c.texFSD}` : `${c.texFractionSignee}`
   }
+  const result = options.ordreInverse ? `${termeC}${termeB}${termeA}` : `${termeA}${termeB}${termeC}`
   return result
 }
 /*
@@ -591,4 +636,33 @@ export function simpleDeveloppementAvecDoubleX ({ a = 1, b = 1, c = 1, x = 'x', 
       ${ecritureParentheseSiMoins(rienSi1(c) + xSeul)} \\times ${ecritureParentheseSiNegatif(b)}`,
        `${rienSi1(a * c)}${xCarre} + 
       ${ecritureParentheseSiMoins(rienSi1(b * c) + xSeul)}`]
+}
+
+/**
+ * Formate une réponse pour son affichage, par exemple pour formater les différents distracteurs de la version qcm d'un exercice de type simple.
+ * Si la réponse est un tableau, elle formate le premier élément.
+ * @param a La valeur à formater
+ * @returns {string} La valeur formatée pour l'affichage
+ */
+export function formaterReponse (a: ReponseComplexe | undefined) {
+  if (Array.isArray(a)) {
+    return formaterReponse(a[0])
+  }
+  if (typeof a === 'number' || a instanceof Decimal) {
+    return `$${texNombre(a, 7)}$`
+  }
+  if (a instanceof FractionEtendue) {
+    return `$${a.texFraction}$`
+  }
+  if (typeof a === 'string') {
+    return a
+  }
+  if (a instanceof Grandeur) {
+    return `$${a.toTex()}$`
+  }
+  if (a instanceof Hms) {
+    return a.toString()
+  }
+  window.notify('formaterReponse : type de valeur non prise en compte : ', { a })
+  return String(a)
 }

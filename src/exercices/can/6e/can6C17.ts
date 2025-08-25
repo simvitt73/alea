@@ -1,9 +1,9 @@
-import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
 
-import { randint } from '../../../modules/outils'
 import { bleuMathalea } from '../../../lib/colors'
-import Exercice from '../../Exercice'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Calculer la fraction d’une quantité'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -17,10 +17,10 @@ export const amcType = 'AMCNum'
 export const uuid = 'daaa3'
 
 export const refs = {
-  'fr-fr': ['can6C17'],
+  'fr-fr': ['can6C17', 'auto6N3E-flash1'],
   'fr-ch': []
 }
-export default class FractionSimpleDeQuantite extends Exercice {
+export default class FractionSimpleDeQuantite extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

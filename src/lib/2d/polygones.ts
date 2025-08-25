@@ -11,9 +11,8 @@ import { aireTriangle } from './triangle'
 import { lettreDepuisChiffre } from '../outils/outilString'
 import { codageSegments } from './codages'
 import { codageAngleDroit } from './angles'
-import type { PointAbstrait } from './points-abstraits'
-import { Shape2D } from './Figures2D'
-import { shapeCarre } from './figures2d/shapes2d'
+import { isPointsAbstraits, PointAbstrait } from './points-abstraits'
+import { Point3d } from '../3d/3dProjectionMathalea2d/elements'
 
 type BinomeXY = { x: number, y: number }
 type BinomesXY = BinomeXY[]
@@ -50,20 +49,23 @@ export function barycentre (p: Polygone, nom = '', positionLabel = 'above') {
  */
 export class Polyline extends ObjetMathalea2D {
   listePoints: PointAbstrait[]
+  listePoints3d: Point3d[]
   nom: string
   stringColor: string
-  constructor (...points: PointAbstrait[] | (PointAbstrait[] | string)[]) {
+  constructor (...points: (PointAbstrait | Point3d)[] | [(PointAbstrait | Point3d)[], string]) {
     super()
     this.epaisseur = 1
     this.pointilles = 0
     this.opacite = 1
     if (Array.isArray(points[0])) {
     // Si le premier argument est un tableau
-      this.listePoints = points[0]
-      this.stringColor = points[1] as string
+      this.listePoints = points[0].filter(el => el instanceof PointAbstrait)
+      this.listePoints3d = points[0].filter(el => el instanceof Point3d)
+      this.stringColor = String(points[1]) // alors le deuxième est un string
       this.color = colorToLatexOrHTML(String(points[1]))
-    } else {
-      this.listePoints = points
+    } else { // On n'a que des points
+      this.listePoints = points.filter(el => el instanceof PointAbstrait)
+      this.listePoints3d = points.filter(el => el instanceof Point3d)
       this.color = colorToLatexOrHTML('black')
       this.stringColor = 'black'
     }
@@ -84,6 +86,9 @@ export class Polyline extends ObjetMathalea2D {
     // Ne nomme pas les lignes brisées trop grandes (pratique pour les courbes de fonction)
       for (const point of this.listePoints) {
         this.nom += point.nom
+      }
+      for (const point of this.listePoints3d) {
+        this.nom += point.label
       }
     };
   }
@@ -115,7 +120,14 @@ export class Polyline extends ObjetMathalea2D {
     }
     let binomeXY = ''
     for (const point of this.listePoints) {
-      binomeXY += `${point.xSVG(coeff)},${point.ySVG(coeff)} `
+      const X = point.xSVG(coeff)
+      const Y = point.ySVG(coeff)
+      binomeXY += `${X},${Y} `
+    }
+    for (const point of this.listePoints3d) {
+      const X = point.c2d.xSVG(coeff)
+      const Y = point.c2d.ySVG(coeff)
+      binomeXY += `${X},${Y} `
     }
     return `<polyline points="${binomeXY}" fill="none" stroke="${this.color[0]}" ${this.style} id="${this.id}" />`
   }
@@ -208,7 +220,7 @@ export class Polyline extends ObjetMathalea2D {
  * @returns Polyline
  * @author Rémi Angot
  */
-export function polyline (...args: PointAbstrait[] | (PointAbstrait[] | string)[]) {
+export function polyline (...args: (PointAbstrait | Point3d)[] | [(PointAbstrait | Point3d)[], string]) {
   return new Polyline(...args)
 }
 
@@ -255,7 +267,7 @@ export class Polygone extends ObjetMathalea2D {
   _aire: number
   stringColor: string
   readonly perimetre: number
-  constructor (...points: (PointAbstrait | PointAbstrait[] | string)[]) {
+  constructor (...points: PointAbstrait[] | [PointAbstrait[], string?]) {
     super()
     this.epaisseurDesHachures = 1
     this.distanceDesHachures = 10
@@ -294,7 +306,7 @@ export class Polygone extends ObjetMathalea2D {
         this.stringColor = String(points[points.length - 1])
         points.splice(points.length - 1, 1)
       }
-      this.listePoints = points
+      this.listePoints = points.filter(el => el instanceof PointAbstrait)
       this.nom = this.listePoints.map(el => el.nom).join('')
       this.couleurDeRemplissage = colorToLatexOrHTML('none')
       this.couleurDesHachures = colorToLatexOrHTML('none') // Rajout EE du 22/02/2024 pour 6N22 cas 3
@@ -364,6 +376,9 @@ export class Polygone extends ObjetMathalea2D {
   svg (coeff: number) {
     if (this.epaisseur !== 1) {
       this.style += ` stroke-width="${this.epaisseur}" `
+    }
+    if (this.opacite !== 1) {
+      this.style += ` stroke-opacity="${this.opacite}" `
     }
     switch (this.pointilles) {
       case 1:
@@ -442,7 +457,18 @@ export class Polygone extends ObjetMathalea2D {
     if (this.couleurDeRemplissage[1] !== '' && this.couleurDeRemplissage[1] !== 'none') {
       tableauOptions.push(`preaction={fill,color = ${this.couleurDeRemplissage[1]}${this.opaciteDeRemplissage !== 1 ? ', opacity = ' + this.opaciteDeRemplissage : ''}}`)
     }
-
+    if (this.hachures != null && typeof this.hachures === 'string') {
+      tableauOptions.push(
+        pattern({
+          motif: this.hachures,
+          id: String(this.id),
+          distanceDesHachures: this.distanceDesHachures,
+          couleurDesHachures: this.couleurDesHachures[1],
+          couleurDeRemplissage: this.couleurDeRemplissage[1],
+          opaciteDeRemplissage: this.opaciteDeRemplissage
+        })
+      )
+    }
     let optionsDraw = ''
     if (tableauOptions.length > 0) {
       optionsDraw = '[' + tableauOptions.join(',') + ']'
@@ -453,19 +479,7 @@ export class Polygone extends ObjetMathalea2D {
     for (const point of this.listePoints) {
       binomeXY += `(${arrondi(point.x)},${arrondi(point.y)})--`
     }
-    let lines = `\\draw${optionsDraw} ${binomeXY}cycle;`
-
-    if (this.hachures != null && typeof this.hachures === 'string') {
-      lines += patternTikZ({
-        motif: this.hachures,
-        x0: this.listePoints[0].x,
-        y0: this.listePoints[0].y,
-        x1: this.listePoints[2].x,
-        y1: this.listePoints[2].y,
-        distanceDesHachures: this.distanceDesHachures / 10,
-        couleurDesHachures: this.couleurDesHachures[1] === '' ? 'black' : this.couleurDesHachures[1],
-      })
-    }
+    const lines = `\\draw${optionsDraw} ${binomeXY}cycle;`
 
     return lines
   }
@@ -525,7 +539,7 @@ export class Polygone extends ObjetMathalea2D {
  *
  * @author Rémi Angot
  */
-export function polygone (...args: (PointAbstrait | PointAbstrait[] | string)[]) {
+export function polygone (...args: PointAbstrait[] | [PointAbstrait[], string?]) {
   return new Polygone(...args)
 }
 
@@ -542,9 +556,13 @@ export function polygoneAvecNom (...args: (PointAbstrait | number)[]): [Polygone
     k = Number(args[args.length - 1])
     args.splice(args.length - 1, 1)
   }
+  if (!isPointsAbstraits(args)) {
+    window.notify('polygoneAvecNom : les arguments doivent être des objets PointAbstrait', { args })
+    return [polygone(), nommePolygone(polygone())]
+  }
   const p = polygone(...args)
   let nom = ''
-  ;(args).forEach((el: Point) => {
+  args.forEach((el: PointAbstrait) => {
     nom += el.nom + ','
   })
   nom = nom.substring(0, nom.length - 1)
@@ -1064,6 +1082,12 @@ export function motifs (index: number) {
  *
  * @author Eric Elter
  * @returns Une chaîne contenant le code TikZ généré, ou une chaîne vide si le motif est inconnu.
+ *
+ * @deprecated Cette fonction n'est pas recommandée pour créer des motifs au sein d'une surface quelconque en tikz
+ * car elle ne fait qu'une surface rectangulaire et le fait en ajoutant un clip et un code très long.
+ * Le même résultat (hachures, points, étoiles...) peut être obtenu la propriété hachures de l'objet Polygone.
+ * les hachures sont gérées par la fonction pattern() et retourne une option pour la commande draw qui est plus efficace.
+ * Il est donc préférable d'utiliser la propriété hachures des objets Polygone. (Jean-Claude Lhote)
  */
 export function patternTikZ (params: {
   x0: number;
@@ -1137,12 +1161,13 @@ export function patternTikZ (params: {
 
     case 'grid': {
       // Quadrillage = idem crosshatch
-      for (let y = y0; y <= y1; y += distanceDesHachures) {
+      const side = distanceDesHachures / 5
+      for (let y = y0; y <= y1; y += side) {
         lignes.push(
           `\\draw[${couleurDesHachures}] (${x0},${y.toFixed(2)}) -- (${x1},${y.toFixed(2)});`
         )
       }
-      for (let x = x0; x <= x1; x += distanceDesHachures) {
+      for (let x = x0; x <= x1; x += side) {
         lignes.push(
           `\\draw[${couleurDesHachures}] (${x.toFixed(2)},${y0}) -- (${x.toFixed(2)},${y1});`
         )
@@ -1151,7 +1176,7 @@ export function patternTikZ (params: {
     }
 
     case 'checkerboard': {
-      const side = distanceDesHachures
+      const side = distanceDesHachures / 3
       let toggle = false
       for (let y = y0; y < y1; y += side) {
         toggle = !toggle
@@ -1165,8 +1190,9 @@ export function patternTikZ (params: {
     }
 
     case 'fivepointed stars': {
-      for (let x = x0; x <= x1; x += distanceDesHachures) {
-        for (let y = y0; y <= y1; y += distanceDesHachures) {
+      const side = distanceDesHachures / 3
+      for (let x = x0; x <= x1; x += side) {
+        for (let y = y0; y <= y1; y += side) {
           lignes.push(
             `\\node[star,star points=5,star point ratio=2.25,fill=${couleurDesHachures},inner sep=0pt,minimum size=5pt] at (${x.toFixed(2)},${y.toFixed(2)}) {};`
           )
@@ -1176,8 +1202,9 @@ export function patternTikZ (params: {
     }
 
     case 'sixpointed stars': {
-      for (let x = x0; x <= x1; x += distanceDesHachures) {
-        for (let y = y0; y <= y1; y += distanceDesHachures) {
+      const side = distanceDesHachures / 2
+      for (let x = x0; x <= x1; x += side) {
+        for (let y = y0; y <= y1; y += side) {
           lignes.push(
             `\\node[star,star points=6,star point ratio=2.25,fill=${couleurDesHachures},inner sep=0pt,minimum size=5pt] at (${x.toFixed(2)},${y.toFixed(2)}) {};`
           )
@@ -1188,8 +1215,9 @@ export function patternTikZ (params: {
 
     case 'crosshatch dots': {
       // Grille de points
-      for (let x = x0; x <= x1; x += distanceDesHachures) {
-        for (let y = y0; y <= y1; y += distanceDesHachures) {
+      const side = distanceDesHachures / 5
+      for (let x = x0; x <= x1; x += side) {
+        for (let y = y0; y <= y1; y += side) {
           lignes.push(
             `\\fill[${couleurDesHachures}] (${x.toFixed(2)},${y.toFixed(2)}) circle (0.05);`
           )
@@ -1353,13 +1381,13 @@ export function pattern ({
   } else if (context.issortieNB) {
     switch (motif) {
       case 'north east lines':
-        myPattern = `pattern = ${motif}`
+        myPattern = `pattern = {Lines[angle=45, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
       case 'horizontal lines':
-        myPattern = `pattern = ${motif}`
+        myPattern = `pattern = {Lines[angle=0, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
       case 'vertical lines':
-        myPattern = `pattern = ${motif}`
+        myPattern = `pattern = {Lines[angle=90, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
       case 'dots':
         myPattern = `pattern = ${motif}`
@@ -1386,20 +1414,20 @@ export function pattern ({
         myPattern = `pattern = ${motif}`
         break
       default:
-        myPattern = 'pattern = north east lines'
+        myPattern = `pattern = {Lines[angle=45, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
     }
     return myPattern
   } else { // Sortie Latex
     switch (motif) {
       case 'north east lines':
-        myPattern = `pattern color = ${couleurDesHachures} , pattern = ${motif}`
+        myPattern = `pattern color = ${couleurDesHachures} , pattern = {Lines[angle=45, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
       case 'horizontal lines':
-        myPattern = `pattern color = ${couleurDesHachures} , pattern = ${motif}`
+        myPattern = `pattern color = ${couleurDesHachures} , pattern = {Lines[angle=0, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
       case 'vertical lines':
-        myPattern = `pattern color = ${couleurDesHachures} , pattern = ${motif}`
+        myPattern = `pattern color = ${couleurDesHachures} , pattern = {Lines[angle=90, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
       case 'dots':
         myPattern = `pattern color = ${couleurDesHachures} , pattern = ${motif}`
@@ -1426,7 +1454,7 @@ export function pattern ({
         myPattern = `pattern color = ${couleurDesHachures} , pattern = ${motif}`
         break
       default:
-        myPattern = `pattern color = ${couleurDesHachures} , pattern = north east lines`
+        myPattern = `pattern color = ${couleurDesHachures} , pattern = {Lines[angle=45, distance=${distanceDesHachures}pt, line width=0.3pt]}`
         break
     }
     return `${myPattern}`
@@ -1824,100 +1852,4 @@ export function elimineBinomesXYIntermediairesAlignes (binomesXY: BinomesXY) {
     binomesXY.splice(0, 1)
   }
   return binomesXY
-}
-
-type Coord = [number, number]
-/**
- * À l'intention de Christophe Poulain : te prive pas, je sais que tu meurs d'envie de plagier cette classe et t'en attribuer tous le mérite sur le canal Latex de Tchap.
- * @author Jean-Claude Lhote
- *
- */
-
-export class PatternNumerique {
-  shape: Shape2D
-  cells: Set<string> // ce sont des coordonnées sous forme de chaîne de caractères "x,y" car les ensembles ne peuvent pas contenir d'objets complexes comme des tableaux
-  // on utilise un ensemble pour stocker les cellules, ce qui permet d'éviter les doublons et de faciliter la vérification de la présence d'une cellule
-  // et la conversion en chaîne de caractères permet de les stocker efficacement dans un ensemble
-
-  constructor (initialCells: Coord[] | string[] | Set<string>, shape?: Shape2D) {
-    if (initialCells instanceof Set) {
-      // si initialCells est déjà un Set, on l'utilise directement
-      this.cells = initialCells
-    } else if (Array.isArray(initialCells)) {
-      if (typeof initialCells[0] === 'string') {
-      // si initialCells est déjà un tableau de chaînes de caractères, on le convertit en Set directement
-        this.cells = new Set(initialCells as string[])
-      } else if (Array.isArray(initialCells[0]) && initialCells[0].length === 2) {
-      // si initialCells est un tableau de coordonnées, on les convertit en chaînes de caractères
-      // en utilisant la méthode coordToKey
-        this.cells = new Set((initialCells as Coord[]).map(PatternNumerique.coordToKey))
-      } else {
-        throw new Error('initialCells must be an array of coordinates or strings')
-      }
-    // on initialise l'ensemble des cellules avec les coordonnées initiales
-    } else {
-      throw new Error('initialCells must be a Set, an array of coordinates or an array of strings')
-    }
-    if (!(shape instanceof Shape2D) || shape !== undefined) {
-      this.shape = shapeCarre()
-    } else {
-      this.shape = shape
-    }
-  }
-
-  hasCell (x: number, y: number): boolean {
-    return this.cells.has(PatternNumerique.coordToKey([x, y]))
-  }
-
-  iterate (this: PatternNumerique, n?: number): Set<string> {
-    return this.cells // cette méthode doit être modifiée pour créer un motif changeant.
-  }
-
-  static coordToKey (coord: Coord): string {
-    return `${coord[0]},${coord[1]}`
-  }
-
-  static keyToCoord (key: string): Coord {
-    const [x, y] = key.split(',').map(Number)
-    return [x, y]
-  }
-
-  render (n:number, dx: number, dy:number): NestedObjetMathalea2dArray {
-    let cells: Set<string> = this.cells
-    for (let i = 1; i < n; i++) {
-      const newPattern = new PatternNumerique(cells)
-      newPattern.iterate = this.iterate.bind(newPattern)
-      cells = newPattern.iterate(n)
-    }
-    if (cells.size === 0) {
-      return []
-    }
-    if (cells.size > 1000) {
-      console.warn('PatternNumerique: le motif contient plus de 1000 cellules, l\'affichage peut être long')
-    }
-    if (cells.size > 10000) {
-      console.warn('PatternNumerique: le motif contient plus de 10000 cellules, l\'affichage peut être très long')
-    }
-    if (cells.size > 100000) {
-      console.warn('PatternNumerique: le motif contient plus de 100000 cellules, l\'affichage peut être très très long')
-    }
-    const objets: NestedObjetMathalea2dArray = []
-    for (const cell of cells) {
-      const [x, y] = PatternNumerique.keyToCoord(cell)
-      /*  if (x < 0 || y < 0) {
-        throw new Error('PatternNumerique: les coordonnées doivent être positives')
-      }
-        */
-      const newShape = this.shape.clone()
-      newShape.x = x + dx
-      newShape.y = y + dy
-      newShape.updateBordures()
-      objets.push(newShape)
-    }
-    return objets
-  }
-
-  print (): string {
-    return Array.from(this.cells).join(';')
-  }
 }

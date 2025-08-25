@@ -3,7 +3,7 @@ import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { formatMinute } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Ajouter des durées'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -16,10 +16,10 @@ export const dateDePublication = '20/11/2021'
 export const uuid = 'e3b7d'
 
 export const refs = {
-  'fr-fr': ['canc3D03'],
+  'fr-fr': ['canc3D03', '6M4A-flash2'],
   'fr-ch': []
 }
-export default class AjouterDesDurees extends Exercice {
+export default class AjouterDesDurees extends ExerciceSimple {
   constructor () {
     super()
 

@@ -55,6 +55,7 @@ async function readInfos (
           file !== 'deprecatedExercice.js' &&
           file !== 'MetaExerciceCan.ts' &&
           file !== 'Exercice.ts' &&
+          file !== 'ExerciceSimple.ts' &&
           file !== 'exerciseMethods.ts' &&
           file !== 'ExerciceQcm.ts' &&
           file !== 'ExerciceQcmA.ts' &&
@@ -237,6 +238,14 @@ async function readInfos (
                     }
                   }
                 }
+                const versionQcmRegex = /versionQcm(Disponible)*\s*=\s*true/
+                const versionQcmMatch = versionQcmRegex.exec(data)
+                if (versionQcmMatch) {
+                  infos.features.qcm = {
+                    isActive: true,
+                    type: ''
+                  }
+                }
                 infos.typeExercice = 'alea'
                 if (infos.id !== undefined) {
                   exercicesShuffled[infos.id] = { ...infos }
@@ -261,19 +270,6 @@ async function readInfos (
       }
     })
   )
-}
-/**
- * Crée une Uuid de 5 caractères hexadécimaux (1M de possibilités)
- * @returns {string}
- */
-function createUuid () {
-  let dt = new Date().getTime()
-  const uuid = 'xxxxx'.replace(/[xy]/g, (c) => {
-    const r = ((dt + Math.random() * 16) % 16) | 0
-    dt = Math.floor(dt / 16)
-    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
-  })
-  return uuid
 }
 
 // ToDo : automatiser la lecture de exercicesInteractifs
@@ -488,7 +484,19 @@ readInfos(
   .catch((err) => {
     console.error(err)
   })
-
+  /**
+ * Crée une Uuid de 5 caractères hexadécimaux (1M de possibilités)
+ * @returns {string}
+ */
+function createUuid () {
+  let dt = new Date().getTime()
+  const uuid = 'xxxxx'.replace(/[xy]/g, (c) => {
+    const r = ((dt + Math.random() * 16) % 16) | 0
+    dt = Math.floor(dt / 16)
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
+  })
+  return uuid
+}
 // On choisit comme point de comparaison la liste de UUID francais
 let uuid = createUuid()
 while (uuidMapFR.has(uuid)) {

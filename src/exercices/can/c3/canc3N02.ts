@@ -1,10 +1,10 @@
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { droiteGraduee } from '../../../lib/2d/reperes'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
 import { mathalea2d } from '../../../modules/2dGeneralites'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Trouver un nombre sur une droite graduée'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -22,7 +22,7 @@ export const refs = {
   'fr-fr': ['canc3N02'],
   'fr-ch': []
 }
-export default class SuiteSurDroiteGraduee extends Exercice {
+export default class SuiteSurDroiteGraduee extends ExerciceSimple {
   constructor () {
     super()
 

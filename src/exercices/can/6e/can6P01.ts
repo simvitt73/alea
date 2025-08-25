@@ -1,7 +1,7 @@
 import { texPrix } from '../../../lib/format/style'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Utiliser une proportionnalité'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -16,10 +16,10 @@ export const amcType = 'AMCNum'
 export const uuid = '6de10'
 
 export const refs = {
-  'fr-fr': ['can6P01'],
+  'fr-fr': ['can6P01', 'auto6P3A-flash4'],
   'fr-ch': []
 }
-export default class ProportionnaliteSimple extends Exercice {
+export default class ProportionnaliteSimple extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

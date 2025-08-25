@@ -2,7 +2,7 @@ import { choice } from '../../../lib/outils/arrayOutils'
 import { arrondi } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Arrondir au dixième ou au centième'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -17,10 +17,10 @@ export const amcType = 'AMCHybride'
 export const uuid = 'ad44e'
 
 export const refs = {
-  'fr-fr': ['can6N06', 'BP2AutoS9'],
+  'fr-fr': ['can6N06', 'BP2AutoS9', '6N1K-flash1'],
   'fr-ch': []
 }
-export default class ArrondiDixiemeCentieme extends Exercice {
+export default class ArrondiDixiemeCentieme extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

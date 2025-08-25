@@ -1,16 +1,16 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
+import Horloge from '../../../lib/2d/horloge'
 import { texteParPosition } from '../../../lib/2d/textes'
 import { choice } from '../../../lib/outils/arrayOutils'
+import { texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
 import { personne } from '../../../lib/outils/Personne'
+import { formatMinute } from '../../../lib/outils/texNombre'
 import { mathalea2d } from '../../../modules/2dGeneralites'
 import { context } from '../../../modules/context'
-import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
-import Horloge from '../../../lib/2d/horloge'
 import Hms from '../../../modules/Hms'
-import { formatMinute } from '../../../lib/outils/texNombre'
-import { texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Lire une durée'
 export const dateDePublication = '4/11/2021'
 export const interactifReady = true
@@ -24,10 +24,10 @@ export const interactifType = 'mathLive'
 export const uuid = '0861b'
 
 export const refs = {
-  'fr-fr': ['canc3D02'],
+  'fr-fr': ['canc3D02', '6M4B-flash1'],
   'fr-ch': []
 }
-export default class LireUneDuree extends Exercice {
+export default class LireUneDuree extends ExerciceSimple {
   constructor () {
     super()
 
@@ -64,11 +64,11 @@ export default class LireUneDuree extends Exercice {
     const horloge1 = new Horloge(0, 0, 2, new Hms({ hour: h1, minute: m1 }))
     const horloge2 = new Horloge(0, 0, 2, new Hms({ hour: h2, minute: m2 }))
     this.question = enonce + (context.isHtml ? '<table><tr><td>' : '\\begin{multicols}{2}\n') +
-    mathalea2d({ xmin: -3, ymin: -3, xmax: 3, ymax: 3, scale: 0.6, style: 'margin: auto' }, horloge1, texteParPosition('Heure de début', 0, -2.5)) +
-(context.isHtml ? '</td><td>' : '') +
-    mathalea2d({ xmin: -3, ymin: -3, xmax: 3, ymax: 3, scale: 0.6, style: 'margin: auto' }, horloge2, texteParPosition('Heure de fin', 0, -2.5)) +
-    (context.isHtml ? '</td></tr></table>' : '\\end{multicols}\n') +
-          'Combien de temps cela a-t-il duré ?'
+      mathalea2d({ xmin: -3, ymin: -3, xmax: 3, ymax: 3, scale: 0.6, style: 'margin: auto' }, horloge1, texteParPosition('Heure de début', 0, -2.5)) +
+      (context.isHtml ? '</td><td>' : '') +
+      mathalea2d({ xmin: -3, ymin: -3, xmax: 3, ymax: 3, scale: 0.6, style: 'margin: auto' }, horloge2, texteParPosition('Heure de fin', 0, -2.5)) +
+      (context.isHtml ? '</td></tr></table>' : '\\end{multicols}\n') +
+      'Combien de temps cela a-t-il duré ?'
     this.reponse = { reponse: { value: `${h2 - h1}h ${m2 - m1}`, options: { HMS: true } } }
     this.correction = `On regarde de combien de graduations la grande aiguille a avancé : elle a avancé de $${Math.round((m2 - m1) / 5)}$ graduations soit $${m2 - m1}$ minutes.<br>`
     this.correction += 'Ensuite on regarde si la petite aiguille a avancé d\'au moins une graduation.<br>'

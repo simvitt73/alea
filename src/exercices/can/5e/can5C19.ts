@@ -2,7 +2,7 @@ import { texteEnCouleur } from '../../../lib/outils/embellissements'
 import { arrondi } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Soustraire deux décimaux'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -17,10 +17,10 @@ export const dateDePublication = '09/05/2022'
 export const uuid = '1293c'
 
 export const refs = {
-  'fr-fr': ['can5C19'],
+  'fr-fr': ['can5C19','6N2A-flash10'],
   'fr-ch': []
 }
-export default class Soustraire2Decimaux extends Exercice {
+export default class Soustraire2Decimaux extends ExerciceSimple {
   constructor () {
     super()
     this.nbQuestions = 1

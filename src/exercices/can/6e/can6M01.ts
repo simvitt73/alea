@@ -1,6 +1,6 @@
+import { propositionsQcm } from '../../../lib/interactif/qcm'
 import { texteEnCouleur } from '../../../lib/outils/embellissements'
 import { context } from '../../../modules/context'
-import { propositionsQcm } from '../../../lib/interactif/qcm'
 import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 export const titre = 'Comparer des périmètres (V/F)'
@@ -17,7 +17,7 @@ export const amcType = 'qcmMono'
 export const uuid = '79035'
 
 export const refs = {
-  'fr-fr': ['can6M01'],
+  'fr-fr': ['can6M01', 'CM1M1H-flash1'],
   'fr-ch': []
 }
 export default class QuestionDePerimetres extends Exercice {
@@ -31,7 +31,7 @@ export default class QuestionDePerimetres extends Exercice {
       const a = randint(3, 25)
       const b = randint(0, 1)
       const VF = [false, true]
-      let texte = `Est-il vrai qu'un carré de côté $${a}$ cm a le même périmètre qu'un rectangle de largeur $${a - b}$ cm et de longueur $${a + 1}$ cm ? `
+      let texte = `Un carré de côté $${a}$ cm a le même périmètre qu'un rectangle de largeur $${a - b}$ cm et de longueur $${a + 1}$ cm. `
       this.canEnonce = texte
       this.autoCorrection[i] = {
         enonce: texte,

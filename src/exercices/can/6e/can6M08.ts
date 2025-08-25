@@ -1,8 +1,9 @@
+import { propositionsQcm } from '../../../lib/interactif/qcm'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texteExposant } from '../../../lib/outils/ecritures'
+import { texteEnCouleurEtGras } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { context } from '../../../modules/context'
-import { propositionsQcm } from '../../../lib/interactif/qcm'
 import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 export const titre = 'Comparer des aires (V/F)'
@@ -19,7 +20,7 @@ export const amcType = 'qcmMono'
 export const uuid = 'bae27'
 
 export const refs = {
-  'fr-fr': ['can6M08'],
+  'fr-fr': ['can6M08', '6M2C-flash1'],
   'fr-ch': []
 }
 export default class QuestionDAires extends Exercice {
@@ -36,12 +37,12 @@ export default class QuestionDAires extends Exercice {
       let VF
       let texte
       if (choice([true, false])) {
-        texte = `Est-il vrai qu'un carré de côté $${a}$ cm et un rectangle de largeur $${Math.min(a, b)}$ cm et de longueur $${Math.max(a, b)}$ cm ont une aire qui diffère de $${Math.max(a * a, a * b) - Math.min(a * a, a * b)}$ cm${texteExposant(2)} ?`
+        texte = `Un carré de côté $${a}$ cm et un rectangle de largeur $${Math.min(a, b)}$ cm et de longueur $${Math.max(a, b)}$ cm ont une aire qui diffère de $${Math.max(a * a, a * b) - Math.min(a * a, a * b)}$ cm${texteExposant(2)}.`
         this.canEnonce = texte
         VF = 'V'
       } else {
         VF = 'F'
-        texte = `Est-il vrai qu'un carré de côté $${a}$ cm et un rectangle de largeur $${Math.min(a, b)}$ cm et de longueur $${Math.max(a, b)}$ cm ont une aire qui diffère de $${Math.max(a * a, a * b) - Math.min(a * a, a * b) + c}$ cm${texteExposant(2)} ?`
+        texte = `Un carré de côté $${a}$ cm et un rectangle de largeur $${Math.min(a, b)}$ cm et de longueur $${Math.max(a, b)}$ cm ont une aire qui diffère de $${Math.max(a * a, a * b) - Math.min(a * a, a * b) + c}$ cm${texteExposant(2)}.`
         this.canEnonce = texte
       }
       this.autoCorrection[i] = {
@@ -62,8 +63,8 @@ export default class QuestionDAires extends Exercice {
       if (!context.isAmc) {
         texte += monQcm.texte
       }
-      let texteCorr = VF === 'V' ? 'Vrai' : 'Faux'
-      texteCorr += `<br> $\\bullet$  le carré a une aire de $${a}\\times ${a}=${a * a}$ cm${texteExposant(2)}.<br>
+      let texteCorr = texteEnCouleurEtGras(VF === 'V' ? 'Vrai' : 'Faux')
+      texteCorr += `<br> $\\bullet$  Le carré a une aire de $${a}\\times ${a}=${a * a}$ cm${texteExposant(2)}.<br>
     $\\bullet$  Le rectangle a une aire de $${a}\\times ${b}=${a * b}$ cm${texteExposant(2)}.`
       texteCorr += `<br>Ce qui fait ${VF === 'V' ? 'bien ' : ''} une différence de $${Math.max(a * a, a * b)} - ${Math.min(a * a, a * b)}=${Math.max(a * a, a * b) - Math.min(a * a, a * b)}$ cm${texteExposant(2)} ${VF === 'F' ? ' et non pas de ' + texNombre(Math.max(a * a, a * b) - Math.min(a * a, a * b) + c) + ' cm' + texteExposant(2) + '.' : '.'}`
       if (this.questionJamaisPosee(i, a, b, c)) {

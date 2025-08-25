@@ -2,7 +2,7 @@ import Decimal from 'decimal.js'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Déterminer le chiffre des ...'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -17,10 +17,10 @@ export const amcType = 'AMCNum'
 export const uuid = '22f41'
 
 export const refs = {
-  'fr-fr': ['can6N05'],
+  'fr-fr': ['can6N05', '6N1A-flash4'],
   'fr-ch': []
 }
-export default class ChiffreDes extends Exercice {
+export default class ChiffreDes extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'
@@ -37,7 +37,7 @@ export default class ChiffreDes extends Exercice {
     const chiffres = new Decimal(a * 100000 + b * 10000 + c * 1000 + d * 100 + e * 10 + f)
     const n = chiffres.div(1000)
     const m = choice(['centaines', 'dizaines', 'dixièmes', 'centièmes', 'millièmes', 'unités'])
-    this.question = `Dans $${texNombre(n)}$ quel est le chiffre des ${m} ? `
+    this.question = `Quel est le chiffre des ${m} dans $${texNombre(n)}$ ? `
     switch (m) {
       case 'unités':
         this.reponse = c

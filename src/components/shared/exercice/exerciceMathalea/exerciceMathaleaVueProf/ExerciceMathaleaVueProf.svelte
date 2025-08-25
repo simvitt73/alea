@@ -3,13 +3,13 @@
     globalOptions,
     resultsByExercice,
     exercicesParams,
-    changes
+    changes,
   } from '../../../../../lib/stores/generalStore'
   import { afterUpdate, beforeUpdate, onMount, tick, onDestroy } from 'svelte'
   import seedrandom from 'seedrandom'
   import {
     prepareExerciceCliqueFigure,
-    exerciceInteractif
+    exerciceInteractif,
   } from '../../../../../lib/interactif/gestionInteractif'
   import { loadMathLive } from '../../../../../modules/loaders'
   import {
@@ -17,12 +17,12 @@
     mathaleaHandleExerciceSimple,
     mathaleaHandleSup,
     mathaleaRenderDiv,
-    mathaleaUpdateUrlFromExercicesParams
+    mathaleaUpdateUrlFromExercicesParams,
   } from '../../../../../lib/mathalea'
   import Settings from './presentationalComponents/Settings.svelte'
   import {
     exercisesUuidRanking,
-    uuidCount
+    uuidCount,
   } from '../../../../../lib/components/counts'
   import Exercice from '../../../../../exercices/Exercice'
   import type { HeaderProps } from '../../../../../lib/types/ui'
@@ -31,6 +31,8 @@
   import type { InterfaceParams } from '../../../../../lib/types'
   import { get } from 'svelte/store'
   import { countMathField } from '../../countMathField'
+  import ExerciceSimple from '../../../../../exercices/ExerciceSimple'
+  import { handleCorrectionAffichee } from '../../handleCorrection'
 
   export let exercise: Exercice
   export let exerciseIndex: number
@@ -41,20 +43,24 @@
   let divScore: HTMLDivElement
   let buttonScore: HTMLButtonElement
   /*
-  * MGu Attention interfaceParams est un objet qui est une copie du store, 
-  * donc le mettre à jour directement met à jour le store sans le signaler au subscriber
-  * DE PLUS, si on change l'ordre des exercices OU si on supprime un exercice, exerciseIndex
-  * va devenir faux mais cela n'est pas génant car l'exercice va être destroy...
-  * Cependant, avant un DESTROY, il y aura un beforeupdate et un afterupdate, donc cette variable
-  * peut devenir UNDEFINED ou ERRONEE
-  */
-  let interfaceParams: InterfaceParams | undefined = get(exercicesParams)[exerciseIndex]
+   * MGu Attention interfaceParams est un objet qui est une copie du store,
+   * donc le mettre à jour directement met à jour le store sans le signaler au subscriber
+   * DE PLUS, si on change l'ordre des exercices OU si on supprime un exercice, exerciseIndex
+   * va devenir faux mais cela n'est pas génant car l'exercice va être destroy...
+   * Cependant, avant un DESTROY, il y aura un beforeupdate et un afterupdate, donc cette variable
+   * peut devenir UNDEFINED ou ERRONEE
+   */
+  let interfaceParams: InterfaceParams | undefined =
+    get(exercicesParams)[exerciseIndex]
   let exercicesNumber: number = get(exercicesParams).length
 
-  let id : string = (interfaceParams && interfaceParams.id) ? interfaceParams.id : (exercise.id ?? '')
+  let id: string =
+    interfaceParams && interfaceParams.id
+      ? interfaceParams.id
+      : (exercise.id ?? '')
 
-  const subscribeExercicesParamsStore = exercicesParams.subscribe((value) => {   
-    log('new interface') 
+  const subscribeExercicesParamsStore = exercicesParams.subscribe((value) => {
+    log('new interface')
     if (value[exerciseIndex] !== interfaceParams) {
       // MGu c'est une comparaison par référence
       log('new interfaceParams subscribe:' + JSON.stringify(interfaceParams))
@@ -111,7 +117,7 @@
     indiceLastExercice,
     isInteractif,
     interactifReady,
-    isSettingsVisible
+    isSettingsVisible,
   }
 
   $: {
@@ -139,13 +145,13 @@
     headerProps.title = exercise.titre + generateTitleAddendum()
   })
 
-  async function forceUpdate () {
+  async function forceUpdate() {
     if (exercise == null) return
     exercise.numeroExercice = exerciseIndex
     await adjustMathalea2dFiguresWidth()
   }
 
-  function log (str: string) {
+  function log(str: string) {
     const debug = new URL(window.location.href).searchParams.get('log') === '1'
     if (debug) {
       console.info(exerciseIndex, exercise.id)
@@ -155,7 +161,7 @@
 
   beforeUpdate(async () => {
     log('beforeUpdate:' + exercise.id)
-    if (numberOfAnswerFields !== countMathField(exercise)){
+    if (numberOfAnswerFields !== countMathField(exercise)) {
       numberOfAnswerFields = countMathField(exercise)
     }
     if (get(exercicesParams)[exerciseIndex] !== interfaceParams) {
@@ -186,7 +192,10 @@
     document.addEventListener('setAllInteractif', setAllInteractif)
     document.addEventListener('removeAllInteractif', removeAllInteractif)
     document.addEventListener('updateAsyncEx', forceUpdate)
-    document.addEventListener('languageHasChanged', updateExerciceAfterLanguageChange)
+    document.addEventListener(
+      'languageHasChanged',
+      updateExerciceAfterLanguageChange,
+    )
     await updateDisplay()
   })
 
@@ -194,6 +203,7 @@
     log('ondestroy' + exercise.id)
     // Détruit l'objet exercice pour libérer la mémoire
     exercise.reinit() // MGu nécessaire pour supprimer les listeners
+    exercise.destroy()
     for (const prop of Object.keys(exercise)) {
       Reflect.deleteProperty(exercise, prop)
     }
@@ -201,7 +211,10 @@
     document.removeEventListener('setAllInteractif', setAllInteractif)
     document.removeEventListener('removeAllInteractif', removeAllInteractif)
     document.removeEventListener('updateAsyncEx', forceUpdate)
-    document.removeEventListener('languageHasChanged', updateExerciceAfterLanguageChange)
+    document.removeEventListener(
+      'languageHasChanged',
+      updateExerciceAfterLanguageChange,
+    )
     unsubscribeToChangesStore()
     subscribeExercicesParamsStore()
   })
@@ -212,9 +225,12 @@
       await tick()
       if (isInteractif) {
         await loadMathLive()
-        if (exercise?.interactifType === 'cliqueFigure' && !isCorrectionVisible) {
+        if (
+          exercise?.interactifType === 'cliqueFigure' &&
+          !isCorrectionVisible
+        ) {
           prepareExerciceCliqueFigure(exercise)
-        }        
+        }
         // Ne pas être noté sur un exercice dont on a déjà vu la correction
         if (
           isLocalStorageAvailable() &&
@@ -234,12 +250,15 @@
     }
     // Evènement indispensable pour pointCliquable par exemple
     const exercicesAffiches = new window.Event('exercicesAffiches', {
-      bubbles: true
+      bubbles: true,
     })
     document.dispatchEvent(exercicesAffiches)
+    if (isCorrectionVisible) {
+      handleCorrectionAffichee()
+    }
   })
 
-  async function newData () {
+  async function newData() {
     log('newData' + exercise.id)
     if (Object.prototype.hasOwnProperty.call(exercise, 'listeQuestions')) {
       if (isCorrectionVisible && isInteractif) isCorrectionVisible = false
@@ -262,16 +281,16 @@
     }
   }
 
-  async function setAllInteractif () {
+  async function setAllInteractif() {
     if (exercise?.interactifReady) isInteractif = true
     await updateDisplay()
   }
-  async function removeAllInteractif () {
+  async function removeAllInteractif() {
     if (exercise?.interactifReady) isInteractif = false
     await updateDisplay()
   }
 
-  function handleNewSettings (event: CustomEvent) {
+  function handleNewSettings(event: CustomEvent) {
     log('handleNewSettings:' + JSON.stringify(event.detail))
     if (!interfaceParams) {
       return
@@ -304,6 +323,13 @@
       exercise.sup5 = event.detail.sup5
       interfaceParams.sup5 = mathaleaHandleSup(exercise.sup5)
     }
+    if (
+      event.detail.versionQcm !== undefined &&
+      exercise instanceof ExerciceSimple
+    ) {
+      exercise.versionQcm = event.detail.versionQcm
+      interfaceParams.versionQcm = exercise.versionQcm ? '1' : '0'
+    }
     if (event.detail.alea !== undefined) {
       exercise.seed = event.detail.alea
       interfaceParams.alea = exercise.seed
@@ -326,9 +352,14 @@
     }
   }
 
-  async function updateDisplay (withNewVersion = true) {
+  async function updateDisplay(withNewVersion = true) {
     log('updateDisplay:' + exercise.id)
-    if (exercise === null || interfaceParams === undefined || exercise.uuid !== interfaceParams.uuid) return
+    if (
+      exercise === null ||
+      interfaceParams === undefined ||
+      exercise.uuid !== interfaceParams.uuid
+    )
+      return
     if (
       exercise.seed === undefined &&
       typeof exercise.applyNewSeed === 'function'
@@ -351,7 +382,7 @@
     }
     if (interfaceParams.interactif !== (isInteractif ? '1' : '0')) {
       // on met à jour le storer seulement si besoin
-      interfaceParams.interactif = (isInteractif ? '1' : '0')
+      interfaceParams.interactif = isInteractif ? '1' : '0'
       log('interfaceParams.interactif updated' + interfaceParams.interactif)
       exercicesParams.update((list) => {
         // interfaceParams a été mis à jour donc le store est à jour
@@ -377,21 +408,25 @@
       }
     }
     exercise.numeroExercice = exerciseIndex
-    if (exercise.typeExercice !== 'simple' && typeof exercise.nouvelleVersionWrapper === 'function' && withNewVersion) {
+    if (
+      exercise.typeExercice !== 'simple' &&
+      typeof exercise.nouvelleVersionWrapper === 'function' &&
+      withNewVersion
+    ) {
       exercise.nouvelleVersionWrapper(exerciseIndex)
     }
     mathaleaUpdateUrlFromExercicesParams()
     await adjustMathalea2dFiguresWidth()
   }
 
-  function verifExercice () {
+  function verifExercice() {
     isCorrectionVisible = true
     isExerciceChecked = true
     resultsByExercice.update((l) => {
       const indice = exercise.numeroExercice ?? 0
       const result = {
         ...exerciceInteractif(exercise, divScore, buttonScore),
-        indice
+        indice,
       }
       if (result != null) {
         l[indice] = result
@@ -400,7 +435,7 @@
     })
   }
 
-  function initButtonScore () {
+  function initButtonScore() {
     buttonScore.classList.remove(...buttonScore.classList)
     buttonScore.classList.add(
       'inline-flex',
@@ -432,7 +467,7 @@
       'transition',
       'duration-150',
       'ease-in-out',
-      'checkReponses'
+      'checkReponses',
     )
   }
 
@@ -442,8 +477,8 @@
    * @param {boolean} initialDimensionsAreNeeded si `true`, les valeurs initiales sont rechargées ()`false` par défaut)
    * @author sylvain
    */
-  async function adjustMathalea2dFiguresWidth (
-    initialDimensionsAreNeeded: boolean = false
+  async function adjustMathalea2dFiguresWidth(
+    initialDimensionsAreNeeded: boolean = false,
   ) {
     await tick()
     const mathalea2dFigures =
@@ -457,10 +492,10 @@
         if (initialDimensionsAreNeeded) {
           // réinitialisation
           const initialWidth = mathalea2dFigures[k].getAttribute(
-            'data-width-initiale'
+            'data-width-initiale',
           )
           const initialHeight = mathalea2dFigures[k].getAttribute(
-            'data-height-initiale'
+            'data-height-initiale',
           )
           mathalea2dFigures[k].setAttribute('width', initialWidth ?? '0')
           mathalea2dFigures[k].setAttribute('height', initialHeight ?? '0')
@@ -471,7 +506,7 @@
           ) {
             const eltsInFigures =
               mathalea2dFigures[k].parentElement?.querySelectorAll<HTMLElement>(
-                'div.divLatex'
+                'div.divLatex',
               ) || []
             for (const elt of eltsInFigures) {
               const e = elt
@@ -499,13 +534,13 @@
             'height',
             (
               Number(mathalea2dFigures[k].dataset.heightInitiale) * coef
-            ).toString()
+            ).toString(),
           )
           mathalea2dFigures[k].setAttribute(
             'width',
             (
               Number(mathalea2dFigures[k].dataset.widthInitiale) * coef
-            ).toString()
+            ).toString(),
           )
 
           if (
@@ -514,7 +549,7 @@
           ) {
             const eltsInFigures =
               mathalea2dFigures[k].parentElement?.querySelectorAll<HTMLElement>(
-                'div.divLatex'
+                'div.divLatex',
               ) || []
             for (const elt of eltsInFigures) {
               const e = elt
@@ -523,7 +558,7 @@
               e.style.setProperty('top', (initialTop * coef).toString() + 'px')
               e.style.setProperty(
                 'left',
-                (initialLeft * coef).toString() + 'px'
+                (initialLeft * coef).toString() + 'px',
               )
             }
           }
@@ -537,17 +572,18 @@
   }
 </script>
 
-<div class="z-0 flex-1" bind:this={divExercice}>
+<div class="z-0 flex-1" bind:this="{divExercice}">
   <HeaderExerciceVueProf
     {...headerProps}
-    on:clickVisible={(event) => {
+    on:clickVisible="{(event) => {
       isVisible = event.detail.isVisible
-    }}
-    on:clickSettings={(event) =>
-      (isSettingsVisible = event.detail.isSettingsVisible)}
-    on:clickCorrection={async (event) => {
+    }}"
+    on:clickSettings="{(event) =>
+      (isSettingsVisible = event.detail.isSettingsVisible)}"
+    on:clickCorrection="{async (event) => {
       isContentVisible = event.detail.isContentVisible
       isCorrectionVisible = event.detail.isCorrectionVisible
+
       if (
         isLocalStorageAvailable() &&
         exercise.id !== undefined &&
@@ -561,8 +597,8 @@
         await updateDisplay()
       }
       await adjustMathalea2dFiguresWidth()
-    }}
-    on:clickInteractif={async (event) => {
+    }}"
+    on:clickInteractif="{async (event) => {
       isInteractif = event.detail.isInteractif
       exercise.interactif = isInteractif
       exercicesParams.update((params) => {
@@ -570,13 +606,13 @@
         return params
       })
       await updateDisplay()
-    }}
-    on:clickNewData={newData}
-    interactifReady={Boolean(
+    }}"
+    on:clickNewData="{newData}"
+    interactifReady="{Boolean(
       exercise?.interactifReady &&
         !isCorrectionVisible &&
-        headerProps?.interactifReady
-    )}
+        headerProps?.interactifReady,
+    )}"
     on:exerciseRemoved
   />
 
@@ -592,28 +628,28 @@
           class="print-hidden hidden md:flex flex-row justify-start text-coopmaths-struct dark:text-coopmathsdark-struct text-xs mt-2 pl-0 md:pl-2"
         >
           <button
-            class={columnsCount > 1 ? 'visible' : 'invisible'}
+            class="{columnsCount > 1 ? 'visible' : 'invisible'}"
             type="button"
-            on:click={() => {
+            on:click="{() => {
               columnsCount--
               updateDisplay(false)
-            }}
+            }}"
           >
             <i
               class=" text-coopmaths-action hover:text-coopmaths-action-darkest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-darkest bx ml-2 bx-xs bx-minus"
-            />
+            ></i>
           </button>
-          <i class="bx ml-1 bx-xs bx-columns" />
+          <i class="bx ml-1 bx-xs bx-columns"></i>
           <button
             type="button"
-            on:click={() => {
+            on:click="{() => {
               columnsCount++
               updateDisplay(false)
-            }}
+            }}"
           >
             <i
               class="text-coopmaths-action hover:text-coopmaths-action-darkest dark:text-coopmathsdark-action dark:hover:text-coopmathsdark-action-darkest bx ml-1 bx-xs bx-plus"
-            />
+            ></i>
           </button>
         </div>
         <article
@@ -644,7 +680,10 @@
               </div>
             {/if}
           </div>
-          <div style="columns: {columnsCount.toString()}" class="mt-4 lg:mt-6 mb-5">
+          <div
+            style="columns: {columnsCount.toString()}"
+            class="mt-4 lg:mt-6 mb-5"
+          >
             <ul
               class="{exercise.listeQuestions.length === 1 ||
               !exercise.listeAvecNumerotation
@@ -665,15 +704,15 @@
                     {@html mathaleaFormatExercice(item)}
                   </li>
                   {#if isCorrectionVisible}
-                  <!-- EE : remplacement de ce class pour celui du dessous class="relative border-l-coopmaths-struct dark:border-l-coopmathsdark-struct border-l-[3px] text-coopmaths-corpus dark:text-coopmathsdark-corpus mt-6 lg:mt-2 mb-6 py-2 pl-4"  -->
-                  <div
+                    <!-- EE : remplacement de ce class pour celui du dessous class="relative border-l-coopmaths-struct dark:border-l-coopmathsdark-struct border-l-[3px] text-coopmaths-corpus dark:text-coopmathsdark-corpus mt-6 lg:mt-2 mb-6 py-2 pl-4"  -->
+                    <div
                       class="relative border-l-coopmaths-struct dark:border-l-coopmathsdark-struct border-l-[3px] text-coopmaths-corpus dark:text-coopmathsdark-corpus py-2 pl-4 mt-6 md:mt-4"
                       id="correction-exo{exerciseIndex}-Q{i}"
                     >
                       <div
-                        class={exercise.consigneCorrection.length !== 0
+                        class="{exercise.consigneCorrection.length !== 0
                           ? 'container bg-coopmaths-canvas dark:bg-coopmathsdark-canvas-dark px-4 py-2 mr-2 ml-6 mb-2 font-light relative w-2/3'
-                          : 'hidden'}
+                          : 'hidden'}"
                       >
                         <div
                           class="{exercise.consigneCorrection.length !== 0
@@ -682,7 +721,7 @@
                         >
                           <i
                             class="bx bx-bulb scale-200 text-coopmaths-warn-dark dark:text-coopmathsdark-warn-dark"
-                          />
+                          ></i>
                         </div>
                         <div class="">
                           <!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -696,7 +735,7 @@
                       >
                         <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                         {@html mathaleaFormatExercice(
-                          exercise.listeCorrections[i]
+                          exercise.listeCorrections[i],
                         )}
                       </div>
                       <!-- Avant le commit du 28/03/23, il y avait une mise en page plus complexe
@@ -709,7 +748,7 @@
                       </div>
                       <div
                         class="absolute border-coopmaths-struct dark:border-coopmathsdark-struct bottom-0 left-0 border-b-[3px] w-4"
-                      />
+                      ></div>
                     </div>
                   {/if}
                 </div>
@@ -717,24 +756,25 @@
             </ul>
           </div>
         </article>
+
         {#if isInteractif && interactifReady && !isCorrectionVisible && isContentVisible}
           <button
             id="verif{exerciseIndex}"
             type="submit"
-            on:click={verifExercice}
-            bind:this={buttonScore}
+            on:click="{verifExercice}"
+            bind:this="{buttonScore}"
             >Vérifier {numberOfAnswerFields > 1
               ? 'les réponses'
               : 'la réponse'}</button
           >
         {/if}
-        <div bind:this={divScore} />
+        <div bind:this="{divScore}"></div>
       </div>
       <Settings
-        exercice={exercise}
-        bind:isVisible={isSettingsVisible}
-        exerciceIndex={exerciseIndex}
-        on:settings={handleNewSettings}
+        exercice="{exercise}"
+        bind:isVisible="{isSettingsVisible}"
+        exerciceIndex="{exerciseIndex}"
+        on:settings="{handleNewSettings}"
       />
     </div>
   {/if}

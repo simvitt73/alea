@@ -2,7 +2,7 @@ import Decimal from 'decimal.js'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = 'Passer d’un calcul de fractions décimales à une écriture décimale'
 export const interactifReady = true
@@ -17,10 +17,10 @@ export const dateDeModifImportante = '16/01/2025'
 export const uuid = '93bb5'
 
 export const refs = {
-  'fr-fr': ['can6N10'],
+  'fr-fr': ['can6N10', 'auto6N2B-flash1'],
   'fr-ch': []
 }
-export default class FractionDecimaleEcritureDecimale1 extends Exercice {
+export default class FractionDecimaleEcritureDecimale1 extends ExerciceSimple {
   constructor () {
     super()
     this.nbQuestions = 1

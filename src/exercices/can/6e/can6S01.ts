@@ -1,9 +1,9 @@
-import { repere } from '../../../lib/2d/reperes'
 import { traceBarreHorizontale } from '../../../lib/2d/diagrammes'
+import { repere } from '../../../lib/2d/reperes'
 import { prenom } from '../../../lib/outils/Personne'
-import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
 import { mathalea2d } from '../../../modules/2dGeneralites'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Lire un diagramme en barres'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,10 +18,10 @@ export const amcType = 'AMCNum'
 export const uuid = '1957a'
 
 export const refs = {
-  'fr-fr': ['can6S01'],
+  'fr-fr': ['can6S01', 'auto6P1A-flash1'],
   'fr-ch': []
 }
-export default class LectureDiagrammeBarre extends Exercice {
+export default class LectureDiagrammeBarre extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'
@@ -43,7 +43,7 @@ export default class LectureDiagrammeBarre extends Exercice {
       grilleX: 'pointilles',
       grilleY: false,
       yThickListe: false,
-      yLabelListe: valeurs[n][2].map((v: string, index:number) => Object.assign({}, { valeur: 1.5 * index + 1, texte: `\\text{${v}}` })),
+      yLabelListe: valeurs[n][2].map((v: string, index: number) => Object.assign({}, { valeur: 1.5 * index + 1, texte: `\\text{${v}}` })),
       yLabelEcart: 2,
       xUnite: 1,
       xThickDistance: 1,

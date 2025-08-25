@@ -5,7 +5,7 @@ import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { bleuMathalea } from '../../../lib/colors'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Trouver le complément à 1*'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,10 +18,10 @@ export const amcType = 'AMCNum'
 export const uuid = '89135'
 
 export const refs = {
-  'fr-fr': ['can6C21'],
+  'fr-fr': ['can6C21', '6N2A-flash3'],
   'fr-ch': []
 }
-export default class ComplementAUn extends Exercice {
+export default class ComplementAUn extends ExerciceSimple {
   constructor () {
     super()
     this.nbQuestions = 1

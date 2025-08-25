@@ -6,7 +6,7 @@ import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellisseme
 import { arrondi } from '../../../lib/outils/nombres'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = 'Soustraire un décimal d’un entier'
 export const interactifReady = true
@@ -20,10 +20,10 @@ export const dateDePublication = '09/05/2022'
 export const uuid = '5b443'
 
 export const refs = {
-  'fr-fr': ['can6C31'],
+  'fr-fr': ['can6C31', '6N2A-flash5'],
   'fr-ch': []
 }
-export default class SoustraireEntierDecimal extends Exercice {
+export default class SoustraireEntierDecimal extends ExerciceSimple {
   constructor () {
     super()
     this.nbQuestions = 1

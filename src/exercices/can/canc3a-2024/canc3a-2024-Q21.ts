@@ -1,4 +1,4 @@
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 import { randint } from '../../../modules/outils'
 import { DroiteGraduee } from '../../../lib/2d/reperes'
 import { fixeBordures, mathalea2d } from '../../../modules/2dGeneralites'
@@ -14,7 +14,7 @@ export const uuid = '36031'
  * @author Gilles Mora (reprise du fichier de Jean-Claude Lhote 6ième)
 
 */
-export default class AbscisseEnDemisCM2 extends Exercice {
+export default class AbscisseEnDemisCM2 extends ExerciceSimple {
   constructor () {
     super()
 
@@ -40,10 +40,10 @@ export default class AbscisseEnDemisCM2 extends Exercice {
     this.reponse = { reponse: { value: `\\frac{${2 * a2 + 1}}{2}` } } // this.reponse = String(x)
     const drGrad = new DroiteGraduee({ Unite: 2, Min: a1, Max: a2 + 2, thickSec: true, thickSecDist: 0.5, labelsPrincipaux: false, labelListe: [[a2, String(a2)], [a2 + 1, String(a2 + 1)]], pointListe: [[x, 'A']] })
     const objets = [drGrad]
-    this.question = 'Quelle est l\'abscisse du point A ?<br>'
+    this.question = 'Donner le nombre qui repère le point A.<br>'
     this.question += mathalea2d(Object.assign({ scale: 0.5 }, fixeBordures(objets)), objets)
     this.canEnonce = this.question
     this.canReponseACompleter = ''
-    this.correction = `L'abscisse du point A est $${miseEnEvidence(texNombre(x, 1))}$.`
+    this.correction = `Le nombre qui repère le point A est : $${miseEnEvidence(texNombre(x, 1))}$.`
   }
 }

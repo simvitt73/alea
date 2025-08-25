@@ -4,7 +4,7 @@ import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = 'Multiplier astucieusement'
 export const interactifReady = true
@@ -19,11 +19,11 @@ export const amcType = 'AMCNum'
 export const uuid = 'c8078'
 
 export const refs = {
-  'fr-fr': ['can6C05'],
+  'fr-fr': ['can6C05', 'auto6N2D-flash1'],
   'fr-ch': []
 }
 
-export default class MultiplierAstucieusement extends Exercice {
+export default class MultiplierAstucieusement extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

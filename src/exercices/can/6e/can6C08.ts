@@ -3,7 +3,7 @@ import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence, texteEnCouleur } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = 'Calculer le quart ou le tiers'
 export const interactifReady = true
@@ -18,11 +18,11 @@ export const amcType = 'AMCNum'
 export const uuid = 'fc2fd'
 
 export const refs = {
-  'fr-fr': ['can6C08'],
+  'fr-fr': ['can6C08', 'auto6P3A-flash1'],
   'fr-ch': []
 }
 
-export default class QuartOuTiers extends Exercice {
+export default class QuartOuTiers extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

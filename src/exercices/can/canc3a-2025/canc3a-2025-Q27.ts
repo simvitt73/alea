@@ -1,12 +1,8 @@
-import Exercice from '../../Exercice'
-import { texNombre } from '../../../lib/outils/texNombre'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-import { randint } from '../../../modules/outils'
-import Hms from '../../../modules/Hms'
-import { remplisLesBlancs } from '../../../lib/interactif/questionMathLive'
-import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
 import { toutPourUnPoint } from '../../../lib/interactif/mathLive'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { texNombre } from '../../../lib/outils/texNombre'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Convertir des minutes en heures/minutes'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -19,7 +15,7 @@ export const refs = {
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Gilles Mora
 */
-export default class Can2025CM2Q27 extends Exercice {
+export default class Can2025CM2Q27 extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

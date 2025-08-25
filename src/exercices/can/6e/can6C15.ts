@@ -1,11 +1,11 @@
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { pgcd } from '../../../lib/outils/primalite'
 import { context } from '../../../modules/context'
 import FractionEtendue from '../../../modules/FractionEtendue'
 import { randint } from '../../../modules/outils'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Trouver la fraction (définition)'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -19,10 +19,10 @@ export const amcType = 'AMCHybride'
 export const uuid = '84b48'
 
 export const refs = {
-  'fr-fr': ['can6C15'],
+  'fr-fr': ['can6C15', '6N3C-flash1'],
   'fr-ch': []
 }
-export default class FractionCommeFacteurManquant extends Exercice {
+export default class FractionCommeFacteurManquant extends ExerciceSimple {
   constructor () {
     super()
     this.typeExercice = 'simple'

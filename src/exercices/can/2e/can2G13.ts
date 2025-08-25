@@ -2,7 +2,7 @@ import { choice } from '../../../lib/outils/arrayOutils'
 import { texteEnCouleur, miseEnEvidence } from '../../../lib/outils/embellissements'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
 import { lettreMinusculeDepuisChiffre } from '../../../lib/outils/outilString'
-import Exercice from '../../Exercice'
+import ExerciceSimple from '../../ExerciceSimple'
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 export const titre = 'Calculer la norme d’un vecteur'
@@ -23,7 +23,7 @@ export const refs = {
   'fr-fr': ['can2G13'],
   'fr-ch': []
 }
-export default class NormeVecteur extends Exercice {
+export default class NormeVecteur extends ExerciceSimple {
   constructor () {
     super()
     this.formatChampTexte = KeyboardType.clavierFullOperations
@@ -51,7 +51,7 @@ export default class NormeVecteur extends Exercice {
           \\sqrt{${a ** 2}+ ${b ** 2}}=
           \\sqrt{${a ** 2 + b ** 2}}=
           ${miseEnEvidence(`${Math.sqrt(a ** 2 + b ** 2)}`)}$.<br><br>`
-          this.correction += texteEnCouleur(`Comme $${a ** 2 + b ** 2}$ est un carré parfait, on simplie la racine carrée.`, 'blue')
+          this.correction += texteEnCouleur(`Comme $${a ** 2 + b ** 2}$ est un carré parfait, on simplifie la racine carrée.`, 'blue')
           this.reponse = Math.sqrt(a ** 2 + b ** 2)
         } else {
           this.question = `Dans un repère orthonormé du plan, on donne $\\overrightarrow{${nom}}(${a};${b})$.<br>
