@@ -20,7 +20,7 @@ const VueTypeArray = <const>[
   'overview',
   'myriade',
   'indices',
-  ''
+  '',
 ]
 type VueTypeArrayType = typeof VueTypeArray
 export type VueType = VueTypeArrayType[number] // equiv to diaporama' | 'can' | 'eleve' | 'latex' | 'confeleve' | 'amc' | 'anki' | 'moodle' | 'l' | 'l2' | 'overview'
@@ -81,7 +81,8 @@ export interface InterfaceGlobalOptions {
   lang?: Language
 }
 
-export interface InterfaceParams extends Partial<Record<string, string | number>> {
+export interface InterfaceParams
+  extends Partial<Record<string, string | number>> {
   uuid: string
   id?: string
   alea?: string
@@ -208,17 +209,22 @@ export type NumericRange<
   start extends number,
   end extends number,
   arr extends unknown[] = [],
-  acc extends number = never
+  acc extends number = never,
 > = arr['length'] extends end
   ? acc | start | end
-  : NumericRange<start, end, [...arr, 1], arr[start] extends undefined ? acc : acc | arr['length']>
+  : NumericRange<
+      start,
+      end,
+      [...arr, 1],
+      arr[start] extends undefined ? acc : acc | arr['length']
+    >
 // autre type pour intervalle de nombre
 // source : https://github.com/type-challenges/type-challenges/issues/9230
 export type NumberRange<
   L extends number,
   H extends number,
   Out extends number[] = [],
-  Flag extends boolean = false
+  Flag extends boolean = false,
 > = Out['length'] extends L
   ? NumberRange<L, H, [...Out, L], true>
   : Flag extends true
@@ -248,7 +254,7 @@ export type FilterSectionNameType = { [key in FilterType]: string }
 export const FILTER_SECTIONS_TITLES: FilterSectionNameType = {
   levels: 'Niveaux',
   specs: 'Fonctionnalités',
-  types: 'Types'
+  types: 'Types',
 }
 
 export type interactivityType =

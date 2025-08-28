@@ -13,7 +13,7 @@
   import { context } from '../modules/context'
   import {
     ElementButtonInstrumenpoche,
-    ElementInstrumenpoche
+    ElementInstrumenpoche,
   } from '../modules/ElementInstrumenpoche'
   import Amc from './setup/amc/Amc.svelte'
   import Anki from './setup/anki/Anki.svelte'
@@ -22,7 +22,7 @@
   import { onMount } from 'svelte'
   import {
     mathaleaUpdateExercicesParamsFromUrl,
-    mathaleaUpdateUrlFromExercicesParams
+    mathaleaUpdateUrlFromExercicesParams,
   } from '../lib/mathalea'
   import Can from './display/can/Can.svelte'
   import { canOptions } from '../lib/stores/canStore'
@@ -57,13 +57,14 @@
 
   if (customElements.get('alea-instrumenpoche') === undefined) {
     customElements.define('alea-instrumenpoche', ElementInstrumenpoche)
-    customElements.define('alea-buttoninstrumenpoche', ElementButtonInstrumenpoche)
+    customElements.define(
+      'alea-buttoninstrumenpoche',
+      ElementButtonInstrumenpoche,
+    )
   }
 
   // charge le numéro de version du serveur
   fetchServerVersion()
-
-  
 
   // Gestion des recorders (Moodle, Capytale, etc. )
   // Lorsque la page d'accueil est dans un iFrame, l'URL est bloquée et les boutons d'exports cachés
@@ -83,7 +84,6 @@
   //   options.v = v
   //   return options
   // })
-
 
   // Gestion des paramètres de la CAN
   const canDuration = url.searchParams.get('canD')
@@ -133,13 +133,13 @@
     if ($globalOptions.v === 'myriade') {
       $vendor.product = {
         name: 'indices',
-        logoPath: 'assets/images/vendors/bordas/myriade-bordas-logo.png'
+        logoPath: 'assets/images/vendors/bordas/myriade-bordas-logo.png',
       }
     }
     if ($globalOptions.v === 'indices') {
       $vendor.product = {
         name: 'indices',
-        logoPath: 'assets/images/vendors/bordas/indices-bordas-logo.png'
+        logoPath: 'assets/images/vendors/bordas/indices-bordas-logo.png',
       }
     }
     context.vue = ''
@@ -171,7 +171,11 @@
   id="appComponent"
 >
   {#if showPopup}
-    <Popup message={popupMessage} visible={showPopup} onClose={handlePopupClose} />
+    <Popup
+      message="{popupMessage}"
+      visible="{showPopup}"
+      onClose="{handlePopupClose}"
+    />
   {:else if $globalOptions.v === 'diaporama' || $globalOptions.v === 'overview'}
     <Diaporama />
   {:else if $globalOptions.v === 'can'}

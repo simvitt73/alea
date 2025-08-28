@@ -5,7 +5,7 @@ import './bugsnag'
 import './modules/stats'
 
 const app = new App({
-  target: document.getElementById('appMathalea') as HTMLElement
+  target: document.getElementById('appMathalea') as HTMLElement,
 })
 
 export default app
