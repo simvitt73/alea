@@ -6,6 +6,8 @@ export function loadFonts(latexFileInfos: LatexFileInfos) {
 \\setbool{dys}{${latexFileInfos.fontOption === 'DysFont' ? 'true' : 'false'}}          
 \\ifbool{dys}{
 % POLICE DYS
+% ===== VARIABLE =====
+\\def\\FontChoisie{Fira} % valeurs possibles : Fira, lmodern, tgheros
 \\newcommand{\\choiceFontsDys}[1]{
 \\ifstrequal{#1}{Fira}{%
   % Fira Sans + Fira Math
@@ -35,7 +37,7 @@ export function loadFonts(latexFileInfos: LatexFileInfos) {
 }{}
 }
 % Fira ou lmodern ou tgheros
-\\choiceFontsDys{Fira}
+\\choiceFontsDys{\\FontChoisie}
 
 %\\usepackage{unicode-math}
 %\\usepackage{fontspec}

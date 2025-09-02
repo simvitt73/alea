@@ -1,3 +1,5 @@
+import seedrandom from 'seedrandom'
+import TypeExercice from '../exercices/Exercice'
 import genericPreamble from '../lib/latex/preambule.tex?raw'
 import {
   loadFonts,
@@ -6,9 +8,7 @@ import {
   loadProfCollegeIfNeed,
   logPDF,
 } from '../lib/latex/preambuleTex'
-import TypeExercice from '../exercices/Exercice'
 import { mathaleaHandleExerciceSimple } from './mathalea.js'
-import seedrandom from 'seedrandom'
 import { getLang } from './stores/languagesStore'
 // printPrettier pose problème avec begin{aligned}[t] en ajoutant un saut de ligne problématique
 // import { printPrettier } from 'prettier-plugin-latex/standalone.js'
@@ -45,6 +45,7 @@ export type LatexFileInfos = {
   fontOption: 'StandardFont' | 'DysFont'
   correctionOption: 'AvecCorrection' | 'SansCorrection'
   qrcodeOption: 'AvecQrcode' | 'SansQrcode'
+  typeFiche: 'Fiche' | 'Eval'
   signal?: AbortSignal | undefined
 }
 
@@ -353,7 +354,7 @@ class Latex {
           content += "% Cet exercice n'est pas disponible au format LaTeX"
         } else {
           content += '\n\\needspace{10\\baselineskip}'
-          content += '\n\\begin{exercice}\n'
+          content += '\n\\begin{exercice}[Lignes=0,Interieur]\n'
           if (withQrcode) {
             content += `\\begin{wrapfigure}{r}{2cm}
 \\centering
@@ -371,7 +372,7 @@ Correction
         }
       } else {
         content += '\n\\needspace{10\\baselineskip}'
-        content += '\n\\begin{exercice}\n'
+        content += '\n\\begin{exercice}[Lignes=0,Interieur]\n'
         content += testIfLoaded(
           [
             ...exercice.listeQuestions,
@@ -460,8 +461,9 @@ Correction
             i,
             latexFileInfos.qrcodeOption === 'AvecQrcode',
           )
-          contents.content += `\n\\begin{Maquette}[Fiche=true,IE=false]{Niveau=${latexFileInfos.subtitle || ' '},Classe=${latexFileInfos.reference || ' '},Date= ${latexFileInfos.nbVersions > 1 ? 'v' + i : ' '} ,Theme=${latexFileInfos.title || 'Exercices'},Code= ,Calculatrice=true}\n`
+          contents.content += `\n\\begin{Maquette}[Fiche=${latexFileInfos.typeFiche === 'Fiche' ? 'true' : 'false'},IE=${latexFileInfos.typeFiche === 'Fiche' ? 'false' : 'true'}]{Niveau=${latexFileInfos.subtitle || ' '},Classe=${latexFileInfos.reference || ' '},Date= ${latexFileInfos.nbVersions > 1 ? 'v' + i : ' '} ,Theme=${latexFileInfos.title || 'Exercices'},Code= ,Calculatrice=false}\n`
           contents.content += contentVersion
+
           contents.content += '\n\\end{Maquette}'
           contents.content += '\n\\clearpage'
           contents.contentCorr = ''
@@ -548,7 +550,12 @@ Correction
     contents: contentsType,
     latexFileInfos: LatexFileInfos,
   ) {
-    contents.preamble = `% @see : ${window.location.href}`
+    const currentUrl = new URL(window.location.href)
+    currentUrl.hostname = 'www.coopmaths.fr'
+    currentUrl.port = ''
+    currentUrl.protocol = 'https:'
+    currentUrl.searchParams.set('v', 'eleve')
+    contents.preamble = `% @see : ${currentUrl.href.replaceAll('%','\\%')}`
     contents.preamble += '\n\\documentclass[a4paper,11pt,fleqn]{article}'
     loadProfCollegeIfNeed(contents) // avant profmaquette sinon ça plante
     contents.preamble += '\n\\usepackage{xcolor}'
@@ -556,7 +563,6 @@ Correction
     contents.preamble += `\n\\setKVdefault[Boulot]{CorrigeFin=${latexFileInfos.correctionOption === 'AvecCorrection' ? 'true' : 'false'}}`
     contents.preamble +=
       '\n\\setKVdefault[ClesExercices]{BaremeTotal=false,BaremeDetaille=false}'
-    contents.preamble += loadFonts(latexFileInfos)
     contents.preamble +=
       '\n\\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}'
     contents.preamble += '\n\\usepackage[luatex]{hyperref}'
@@ -564,14 +570,10 @@ Correction
     contents.preamble += '\n\\usetikzlibrary{calc}'
     contents.preamble += '\n\\usepackage{fancyhdr}'
     contents.preamble += '\n\\pagestyle{fancy}'
-    contents.preamble +=
-      '\n\\usepackage{fvextra} %EE: Pour la gestion de verb (police Python)'
-    contents.preamble +=
-      '\n\\usepackage{tabularray} %EE: Pour la gestion des tableaux tblr'
+
     contents.preamble += '\n\\renewcommand\\headrulewidth{0pt}'
     contents.preamble += '\n\\setlength{\\headheight}{18pt}'
-    contents.preamble +=
-      '\n\\fancyhead[R]{\\href{https://coopmaths.fr/alea}{Mathaléa}}'
+    contents.preamble += `\n\\fancyhead[R]{\\href{${currentUrl.href.replaceAll('%','\\%')}}{Mathaléa}}`
     contents.preamble += '\n\\fancyfoot[C]{\\thepage}'
     contents.preamble += `\n\\fancyfoot[R]{%
 \\begin{tikzpicture}[remember picture,overlay]
@@ -606,6 +608,27 @@ Correction
   }%
 }%
 ${latexFileInfos.qrcodeOption === 'AvecQrcode' ? '\n\\tcbset{\n  tikzfiche/.append style={height=4cm, height plus=25cm}\n}\n' : ''}
+${
+  latexFileInfos.typeFiche === 'Eval'
+    ? `
+% Interrogations écrites
+% Définir un toggle "calculatrice"
+\\newtoggle{CalculatriceDisplay}
+% Valeur par défaut : désactivée
+\\togglefalse{CalculatriceDisplay}
+\\tcbset{%
+  userie/.style={%
+  colback=gray!5,
+  enhanced,%
+  overlay unbroken and first={%
+    \\iftoggle{CalculatriceDisplay}{
+    \\node[yshift=1em] at (frame.south) {\\scriptsize\\sffamily-- Calculatrice \\ifboolKV[IE]{Calculatrice}{autorisée}{interdite} --};
+    }{}
+    }%
+  }%
+}%}`
+    : ''
+}
 % Parametrages
 \\hypersetup{
     colorlinks=true,% On active la couleur pour les liens. Couleur par défaut rouge
@@ -621,6 +644,7 @@ ${latexFileInfos.qrcodeOption === 'AvecQrcode' ? '\n\\tcbset{\n  tikzfiche/.appe
     contents.preamble += '\n\\usepackage[french]{babel}'
     contents.preamble += '\n\\setlength{\\parindent}{0cm}'
     loadPackagesFromContent(contents)
+    contents.preamble += loadFonts(latexFileInfos)
     const [latexCmds, latexPackages] = this.getContentLatex()
     for (const pack of latexPackages) {
       logPDF(`pack: ${pack} : ${window.location.href}`)
@@ -962,8 +986,8 @@ function getUrlFromExercice(ex: TypeExercice) {
 
 function addPackages(latexFileInfos: LatexFileInfos, contents: contentsType) {
   contents.preamble += genericPreamble
-  contents.preamble += loadFonts(latexFileInfos)
   loadPreambule(latexFileInfos, contents)
+  contents.preamble += loadFonts(latexFileInfos)
   return contents.preamble
 }
 
