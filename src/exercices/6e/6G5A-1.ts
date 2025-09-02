@@ -42,7 +42,7 @@ export default class QuestionBissectrice extends Exercice {
     ]
     this.besoinFormulaire2Texte = [
       'Niveau de difficulté',
-      'Nombres séparés par des tirets :\n1 : Moitiés de nombres entiers pairs\n2 : Moitié de nombres entiers pairs ou impairs\n3 : Moitié de nombres décimaux\n4 : mélange',
+      'Nombres séparés par des tirets :\n1 : Moitié de nombres entiers pairs\n2 : Moitié de nombres entiers pairs ou impairs\n3 : Moitié de nombres décimaux\n4 : Mélange',
     ]
     this.besoinFormulaire4CaseACocher = ['Avec figure', false]
 
