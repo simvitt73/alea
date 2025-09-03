@@ -42,11 +42,11 @@ export default class RelationAireCoteTriangle extends Exercice {
           texteCorr = `$\\mathcal{A} = ${cotes[i]}~\\text{cm} \\times ${cotes[i]}~\\text{cm} = ${miseEnEvidence(cotes[i] * cotes[i])}~\\text{cm}^2$`
           break
         case 'determinerCote':
-          texte = `Quel est le côté d'un carré de $${cotes[i] ** 2}~\\text{cm}^2$ d'aire ?`
+          texte = `Quelle est la longueur du côté d'un carré de $${cotes[i] ** 2}~\\text{cm}^2$ d'aire ?`
            texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBase, { texteAvant: '<br> $c = $', texteApres: '$~\\text{cm}$' })
           handleAnswers(this, i, { reponse: { value: cotes[i] } })
           texteCorr = `On sait que $${cotes[i] ** 2}~\\text{cm}^2 = ${cotes[i]}~\\text{cm} \\times ${cotes[i]}~\\text{cm}$.<br>`
-          texteCorr += `Donc le côté du carré est $${miseEnEvidence(cotes[i])}~\\text{cm}$.`
+          texteCorr += `Donc la longueur du côté du carré est de $${miseEnEvidence(cotes[i])}~\\text{cm}$.`
           break
       }
       if (this.questionJamaisPosee(i, texte)) {
