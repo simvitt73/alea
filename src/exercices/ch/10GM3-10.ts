@@ -15,7 +15,7 @@ export const interactifType = 'mathLive'
 export const uuid = '31e61'
 export const refs = {
   'fr-ch': ['10GM3-10'],
-  'fr-fr': ['5N15-3']
+  'fr-fr': ['']
 }
 
 /**
@@ -468,7 +468,7 @@ export default class ConvertirDuree extends Exercice {
             texteCorr += `<br><br>Le nombre de minutes entières est la partie entière du quotient $${texNombre(secondesTotales, 0)} \\div 60$, soit $${mFinal}\\text{\\,min}$.<br>`
             
             const secondesRestantes = Math.round(secondesTotales - (mFinal * 60))
-            texteCorr += `Le nombre de secondes est donné par le nombre de secondes totales moins le nombre de minutes entières $${texNombre(secondesTotales)} - ${mFinal} \\times 60 = ${texNombre(secondesRestantes)}\\text{\\,s}$`
+            texteCorr += `Le nombre de secondes est donné par le nombre de secondes total moins le nombre de minutes entières $${texNombre(secondesTotales)} - ${mFinal} \\times 60 = ${texNombre(secondesRestantes)}\\text{\\,s}$`
           } else {
             texteCorr += `<br><br>Comme ${texNombre(secondesTotales, 0)} < 60, il n'y a pas de minutes entières, donc ${texNombre(secondesTotales, 0)} secondes.`
           }
