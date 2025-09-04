@@ -1,6 +1,5 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 // import ExerciceQcmA from '../../ExerciceQcmA'
 import ExerciceQcmA from '../ExerciceQcmA'
@@ -19,7 +18,7 @@ export const dateDePublication = '03/09/2025'
 // Ceci est un exemple de QCM avec version originale et version aléatoire
 /**
  *
- * @author Gilles Mora
+ * @author Gilles Mora (avec ia Claude)
  *
  */
 export default class Auto1AC1b extends ExerciceQcmA {
@@ -29,11 +28,6 @@ export default class Auto1AC1b extends ExerciceQcmA {
     denominateur: number,
   ): number {
     return numerateur / denominateur
-  }
-
-  // Fonction pour convertir une puissance de 10 en décimal
-  private puissanceVersDecimal(mantisse: number, exposant: number): number {
-    return mantisse * Math.pow(10, exposant)
   }
 
   // Fonction pour formater l'affichage d'une fraction
@@ -49,30 +43,51 @@ export default class Auto1AC1b extends ExerciceQcmA {
     return `${mantisse} \\times 10^{${exposant}}`
   }
 
-  // Fonction pour la ligne de correction
+  // Fonction pour la ligne de correction - modifiée pour être cohérente
   private construireLigneCorrection(
-    nom: string,
     tex: string,
     val: number,
+    denominateur: number | null = null,
   ): string {
     const valeurDecimale = texNombre(Math.round(val * 10000) / 10000)
 
-    if (tex.includes(',') && !tex.includes('\\times') && !tex.includes('^')) {
+    // Si c'est une fraction avec dénominateur 10, 100 ou 1000, on affiche directement la valeur décimale
+    if (denominateur !== null && [10, 100, 1000].includes(denominateur)) {
+      return `$${tex} = ${valeurDecimale}$ <br><br>`
+    } else if (tex.includes(',') && !tex.includes('\\times') && !tex.includes('^')) {
       // C'est déjà un nombre décimal
-      return `$${nom} = ${tex}$<br><br>`
+      return `$${tex}$ <br><br>`
     } else if (tex.includes('\\dfrac')) {
-      // C'est une fraction
-      return `$${nom} = ${tex} = ${valeurDecimale}$<br><br>`
+      // C'est une fraction (pas 10, 100, 1000)
+      return `$${tex} = ${valeurDecimale}$ <br><br>`
     } else if (tex.includes('\\times') || tex.includes('^')) {
       // C'est une puissance de 10
-      return `$${nom} = ${tex} = ${valeurDecimale}$<br><br>`
+      return `$${tex} = ${valeurDecimale}$ <br><br>`
     }
 
-    return `$${nom} = ${tex} = ${valeurDecimale}$<br><br>`
+    return `$${tex} = ${valeurDecimale}$ <br><br>`
+  }
+  versionOriginale: () => void = () => {
+    this.enonce = `Parmi les quatre nombres suivants, lequel est le plus grand ?`
+
+    this.correction = `Pour comparer ces quatre nombres, on les écrit sous forme décimale :<br><br>
+    $\\dfrac{9}{4}= 2,25$ <br><br>
+    $\\dfrac{123}{100}= 1,23$ <br><br>
+    $595 \\times 10^{-2} = 5,95$ <br><br>
+    $5,4$ <br><br>
+    On a donc : $1,23 < 2,25 < 5,4 < 5,95$<br><br>
+    Le plus grand nombre est donc : $${miseEnEvidence('595 \\times 10^{-2}')}$.`
+
+    this.reponses = [
+      '$595\\times 10^{-2}$',
+      '$5,4$',
+      '$\\dfrac{9}{4}$',
+      `$\\dfrac{123}{${texNombre(100)}}$`,
+    ]
   }
 
   versionAleatoire: () => void = () => {
-    // 25 cas différents avec 4 nombres chacun (uniquement fractions avec décimaux exacts)
+    // 25 cas diffÃ©rents avec 4 nombres chacun (uniquement fractions avec dÃ©cimaux exacts)
     const cas = [
       // Cas 1
       {
@@ -251,16 +266,15 @@ export default class Auto1AC1b extends ExerciceQcmA {
       },
     ]
 
-    // Sélection aléatoire d'un cas
+    // SÃ©lection alÃ©atoire d'un cas
     const casChoisi = choice(cas)
 
-    // Choix aléatoire entre plus grand ou plus petit
+    // Choix alÃ©atoire entre plus grand ou plus petit
     const cherchePlusGrand = choice([true, false])
 
-    // Construction des 4 nombres avec leurs représentations
+    // Construction des 4 nombres avec leurs reprÃ©sentations
     const nombres = [
       {
-        nom: 'A',
         tex: this.formaterFraction(
           casChoisi.fractionSimple.num,
           casChoisi.fractionSimple.den,
@@ -269,44 +283,39 @@ export default class Auto1AC1b extends ExerciceQcmA {
           casChoisi.fractionSimple.num,
           casChoisi.fractionSimple.den,
         ),
-        type: 'fraction',
+        denominateur: casChoisi.fractionSimple.den,
       },
       {
-        nom: 'B',
         tex: this.formaterFraction(
           casChoisi.fractionStandard.num,
           casChoisi.fractionStandard.den,
         ),
         val: casChoisi.fractionStandard.val,
-        type: 'fraction',
+        denominateur: casChoisi.fractionStandard.den,
       },
       {
-        nom: 'C',
         tex: this.formaterPuissance(
           casChoisi.puissance.mantisse,
           casChoisi.puissance.exp,
         ),
         val: casChoisi.puissance.val,
-        type: 'puissance',
+        denominateur: null,
       },
       {
-        nom: 'D',
         tex: texNombre(casChoisi.decimal.val),
         val: casChoisi.decimal.val,
-        type: 'decimal',
+        denominateur: null,
       },
     ]
 
-    // Tri selon le critère demandé
+    // Tri selon le critÃ¨re demandÃ©
     const nombresTriesParValeur = [...nombres].sort((x, y) => x.val - y.val)
     const solution = cherchePlusGrand
       ? nombresTriesParValeur[nombresTriesParValeur.length - 1]
       : nombresTriesParValeur[0]
 
-    // Construction de l'énoncé
-    this.enonce = `Voici quatre nombres :<br>
-    $A = ${nombres[0].tex}$ ${sp(4)} $B = ${nombres[1].tex}$ ${sp(4)} $C = ${nombres[2].tex}$ ${sp(4)} et ${sp(2)} $D = ${nombres[3].tex}$<br><br>
-    Le ${cherchePlusGrand ? 'plus grand' : 'plus petit'} de ces quatre nombres est :`
+    // Construction de l'Ã©noncÃ©
+    this.enonce = `Parmi les quatre nombres suivants, lequel est le ${cherchePlusGrand ? 'plus grand' : 'plus petit'} ?`
 
     // Construction de la correction
     let correctionTexte =
@@ -314,9 +323,9 @@ export default class Auto1AC1b extends ExerciceQcmA {
 
     nombres.forEach((nombre) => {
       correctionTexte += this.construireLigneCorrection(
-        nombre.nom,
         nombre.tex,
         nombre.val,
+        nombre.denominateur,
       )
     })
 
@@ -324,13 +333,13 @@ export default class Auto1AC1b extends ExerciceQcmA {
       .map((n) => texNombre(Math.round(n.val * 10000) / 10000))
       .join(' < ')
 
-    correctionTexte += `<br>On a donc : $${valeursTriees}$<br><br>`
+    correctionTexte += `On a donc : $${valeursTriees}$<br><br>`
     correctionTexte += `Le ${cherchePlusGrand ? 'plus grand' : 'plus petit'} nombre est donc : $${miseEnEvidence(solution.tex)}$.`
 
     this.correction = correctionTexte
 
-    // Construction des réponses (bonne réponse en premier)
-    const autresNombres = nombres.filter((n) => n.nom !== solution.nom)
+    // Construction des rÃ©ponses (bonne rÃ©ponse en premier)
+    const autresNombres = nombres.filter((n) => n.tex !== solution.tex)
 
     this.reponses = [
       `$${solution.tex}$`,
