@@ -2,7 +2,7 @@
   "slides": [
     {
       "background": "carousel06.jpg",
-      "title": "Nouveaux programmes en 6e",
+      "title": "Nouveau programme en 6e",
       "message": "Le référentiel et les exercices pour la classe de 6e ont été mis à jour pour suivre les nouveaux programmes.",
       "image": "",
       "link": "https://coopmaths.fr/www/blog/2025-09-03-nouveauprogramme6e/"
@@ -31,7 +31,7 @@
     {
       "background": "",
       "title": "Glisse-nombre",
-      "message": "Pour comprendre les multiplications et divisions par 10, 100, 1000, nous avons développé un glisse-nombre.",
+      "message": "Pour mieux appréhender les multiplications et divisions par 10, 100, 1\u00A0000, nous avons développé un glisse-nombre.",
       "image": "glisseNombre.png",
       "link": "https://coopmaths.fr/apps/glisse-nombre/"
     }
