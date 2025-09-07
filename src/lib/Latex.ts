@@ -46,6 +46,13 @@ export type LatexFileInfos = {
   correctionOption: 'AvecCorrection' | 'SansCorrection'
   qrcodeOption: 'AvecQrcode' | 'SansQrcode'
   typeFiche: 'Fiche' | 'Eval'
+  exos?: {
+    [key: string]: {
+      labels?: string
+      itemsep?: number
+      blocrep?: { nbligs: number; nbcols: number }
+    }
+  }
   signal?: AbortSignal | undefined
 }
 
@@ -100,6 +107,14 @@ class Latex {
     return this.exercices.some((e) => e.typeExercice === 'statique')
   }
 
+  getExercices() {
+    return this.exercices.map((e, i) => ({
+      titre: e.titre,
+      uuid: e.uuid,
+      index: i,
+    }))
+  }
+
   addExercices(exercices: TypeExercice[]) {
     this.exercices.push(...exercices)
   }
@@ -110,15 +125,12 @@ class Latex {
   ): { content: string; contentCorr: string } {
     if (latexFileInfos.style === 'ProfMaquette')
       return {
-        content: this.getContentForAVersionProfMaquette(
-          1,
-          latexFileInfos.qrcodeOption === 'AvecQrcode',
-        ),
+        content: this.getContentForAVersionProfMaquette(1, latexFileInfos),
         contentCorr: '',
       }
     if (latexFileInfos.style === 'ProfMaquetteQrcode')
       return {
-        content: this.getContentForAVersionProfMaquette(1, true),
+        content: this.getContentForAVersionProfMaquette(1, latexFileInfos),
         contentCorr: '',
       }
     let content = ''
@@ -343,26 +355,32 @@ class Latex {
 
   getContentForAVersionProfMaquette(
     indiceVersion: number = 1,
-    withQrcode = false,
+    latexFileInfos: LatexFileInfos,
   ): string {
     this.loadExercicesWithVersion(indiceVersion)
     let content = ''
-    for (const exercice of this.exercices) {
+    for (let k = 0; k < this.exercices.length; k++) {
+      const exercice = this.exercices[k]
+      const confExo: {
+        labels?: string
+        itemsep?: number
+        blocrep?: { nbligs: number; nbcols: number }
+      } =
+        latexFileInfos.exos && latexFileInfos.exos[k]
+          ? latexFileInfos.exos[k]
+          : {}
       content += `\n% @see : ${getUrlFromExercice(exercice)}`
       if (exercice.typeExercice === 'statique') {
         if (exercice.content === '') {
           content += "% Cet exercice n'est pas disponible au format LaTeX"
         } else {
           content += '\n\\needspace{10\\baselineskip}'
-          content += '\n\\begin{exercice}%[Lignes=5,Interieur]\n'
-          if (withQrcode) {
-            content += `\\begin{wrapfigure}{r}{2cm}
-\\centering
-{\\hypersetup{urlcolor=black}
-\\qrcode{${getUrlFromExercice(exercice)}&v=eleve&es=0211}
-}
-Correction
-\\end{wrapfigure}\\ `
+          if (latexFileInfos.qrcodeOption === 'AvecQrcode') {
+            content += `\n\\begin{exercice}[Ajout={\\node[anchor=north east, inner sep=2pt] 
+        at (frame.north east) {\\hypersetup{urlcolor=black}\\qrcode[height=2cm]{${getUrlFromExercice(exercice)}&v=eleve&es=0211}};
+}]%[Lignes=5,Interieur]`
+          } else {
+            content += '\n\\begin{exercice}%[Lignes=5,Interieur]\n'
           }
           content += exercice.content
           content += '\n\\end{exercice}\n'
@@ -372,7 +390,13 @@ Correction
         }
       } else {
         content += '\n\\needspace{10\\baselineskip}'
-        content += '\n\\begin{exercice}%[Lignes=5,Interieur]\n'
+        if (latexFileInfos.qrcodeOption === 'AvecQrcode') {
+          content += `\n\\begin{exercice}[Ajout={\\node[anchor=north east, inner sep=2pt] 
+        at (frame.north east) {\\hypersetup{urlcolor=black}\\qrcode[height=2cm]{${getUrlFromExercice(exercice)}&v=eleve&es=0211}};
+}]%[Lignes=5,Interieur]`
+        } else {
+          content += '\n\\begin{exercice}%[Lignes=5,Interieur]\n'
+        }
         content += testIfLoaded(
           [
             ...exercice.listeQuestions,
@@ -382,15 +406,6 @@ Correction
           '\\anote{',
           '\n\\resetcustomnotes',
         )
-        if (withQrcode) {
-          content += `\\begin{wrapfigure}{r}{2cm}
-\\centering
-{\\hypersetup{urlcolor=black}
-\\qrcode{${getUrlFromExercice(exercice)}&v=eleve&es=0211}
-}
-Correction
-\\end{wrapfigure}\\ `
-        }
         content += writeIntroduction(exercice.introduction)
         content += '\n' + format(exercice.consigne)
         content += writeInCols(
@@ -399,6 +414,7 @@ Correction
             exercice.spacing,
             Boolean(exercice.listeAvecNumerotation),
             Number(exercice.nbCols),
+            confExo,
           ),
           Number(exercice.nbCols),
         )
@@ -459,7 +475,7 @@ Correction
           }
           const contentVersion = this.getContentForAVersionProfMaquette(
             i,
-            latexFileInfos.qrcodeOption === 'AvecQrcode',
+            latexFileInfos,
           )
           contents.content += `\n\\begin{Maquette}[Fiche=${latexFileInfos.typeFiche === 'Fiche' ? 'true' : 'false'},IE=${latexFileInfos.typeFiche === 'Fiche' ? 'false' : 'true'}]{Niveau=${latexFileInfos.subtitle || ' '},Classe=${latexFileInfos.reference || ' '},Date= ${latexFileInfos.nbVersions > 1 ? 'v' + i : ' '} ,Theme=${latexFileInfos.title || 'Exercices'},Code= ,Calculatrice=false}\n`
           contents.content += contentVersion
@@ -476,7 +492,10 @@ Correction
               'AbortError',
             )
           }
-          const contentVersion = this.getContentForAVersionProfMaquette(i, true)
+          const contentVersion = this.getContentForAVersionProfMaquette(
+            i,
+            latexFileInfos,
+          )
           contents.content += `\n\\begin{Maquette}[Fiche=true, IE=false, CorrigeApres=false, CorrigeFin=true]{Niveau=${latexFileInfos.subtitle || ' '},Classe=${latexFileInfos.reference || ' '},Date= ${latexFileInfos.nbVersions > 1 ? 'v' + i : ' '} ,Theme=${latexFileInfos.title || 'Exercices'}}\n`
           contents.content += contentVersion
           contents.content += '\n\\end{Maquette}'
@@ -730,15 +749,27 @@ function writeQuestions(
   spacing = 1,
   numbersNeeded: boolean,
   nbCols: number = 1,
+  confExo: {
+    labels?: string
+    itemsep?: number
+    blocrep?: { nbligs: number; nbcols: number }
+  } = {},
 ): string {
   let content = ''
+  const blocrep = confExo.blocrep
+    ? `\\blocrep[1.5]{${confExo.blocrep.nbligs}}{${confExo.blocrep.nbcols}} `
+    : ''
   if (questions !== undefined && questions.length > 1) {
     content += '\n\\begin{enumerate}'
     const specs: string[] = []
-    if (spacing !== 0) {
+    if (confExo.itemsep !== undefined && confExo.itemsep !== null) {
+      specs.push(`itemsep=${confExo.itemsep}em`)
+    } else if (spacing !== 0) {
       specs.push(`itemsep=${spacing}em`)
     }
-    if (!numbersNeeded) {
+    if (confExo.labels) {
+      specs.push(`label=${confExo.labels}`)
+    } else if (!numbersNeeded) {
       specs.push('label={}')
     }
     if (specs.length !== 0) {
@@ -746,17 +777,17 @@ function writeQuestions(
     }
     for (const question of questions) {
       if (nbCols > 1) {
-        content += `\n\t\\item \\begin{minipage}[t]{\\linewidth} ${format(question)} \\end{minipage}`
+        content += `\n\t\\item \\begin{minipage}[t]{\\linewidth} ${format(question)} \\end{minipage}${blocrep}`
       } else {
-        content += `\n\t\\item ${format(question)}`
+        content += `\n\t\\item ${format(question)}${blocrep}`
       }
     }
     content += '\n\\end{enumerate}'
   } else {
     if (nbCols > 1) {
-      content += `\n \\begin{minipage}[t]{\\linewidth} ${format(questions[0])} \\end{minipage}`
+      content += `\n \\begin{minipage}[t]{\\linewidth} ${format(questions[0])} \\end{minipage}${blocrep}`
     } else {
-      content += `\n ${format(questions[0])}`
+      content += `\n ${format(questions[0])}${blocrep}`
     }
   }
   return content

@@ -25,6 +25,7 @@
   import Footer from '../../Footer.svelte'
   import ButtonActionInfo from '../../shared/forms/ButtonActionInfo.svelte'
   import ButtonCompileLatexToPDF from '../../shared/forms/ButtonCompileLatexToPDF.svelte'
+  import ButtonConfig from '../../shared/forms/ButtonConfig.svelte'
   import ButtonOverleaf from '../../shared/forms/ButtonOverleaf.svelte'
   import ButtonTextAction from '../../shared/forms/ButtonTextAction.svelte'
   import FormRadio from '../../shared/forms/FormRadio.svelte'
@@ -473,6 +474,20 @@
             <h6
               class="mb-2 text-lg font-black leading-tight text-coopmaths-struct-light dark:text-coopmathsdark-struct-light"
             >
+              Configuration
+            </h6>
+            {#await promise}
+                <p>Chargement en cours...</p>
+            {:then}
+                <ButtonConfig
+                  class=""
+                  {latex}
+                  {latexFileInfos}
+                />    
+            {/await}
+            <h6
+              class="mb-2 text-lg font-black leading-tight text-coopmaths-struct-light dark:text-coopmathsdark-struct-light"
+            >
               Exercices
             </h6>
             <FormRadio
@@ -687,6 +702,7 @@
                   class="flex w-full flex-col justify-center"
                   {latex}
                   {latexFileInfos}
+                  id="0"
                 />
               {/await}
             </div>
