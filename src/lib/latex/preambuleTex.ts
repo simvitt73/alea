@@ -404,6 +404,48 @@ export function loadPackagesFromContent(contents: contentsType) {
     contents,
   )
 
+  testIfLoaded(
+    ['\\blocrep{', '\\blocrep['],
+    `
+\\usepackage{setspace}
+% ligne pointillée
+\\newcommand{\\dotline}{\\noindent\\makebox[\\linewidth]{\\dotfill}}
+
+
+
+% bloc de réponses
+\\newcommand{\\blocrep}[3][1.5]{% #1 = nb lignes, #2 = nb colonnes
+  \\begin{spacing}{#1} % interligne
+  \\newcount\\foo
+  \\ifstrequal{#3}{1}{%
+  % --- Cas 1 colonne ---
+    
+  \\foo=#2
+	\\loop
+		\\dotline
+
+		\\advance \\foo -1
+	\\ifnum \\foo>0
+	\\repeat
+  }{%
+    % --- Cas multi-colonnes ---
+    \\begin{multicols}{#3}
+    \\foo=\\numexpr#2 * #3\\relax
+	  \\loop
+		  \\dotline 
+		
+      \\advance \\foo -1
+    \\ifnum \\foo>0
+    \\repeat
+    \\end{multicols}
+  }%
+  \\end{spacing}
+  \\vspace{-0cm}
+}
+`,
+    contents,
+  )
+
   if (
     contents.content.includes('\\ovalbox{') ||
     contents.content.includes('\\txtbox{')
