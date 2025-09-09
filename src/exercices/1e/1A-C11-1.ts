@@ -15,11 +15,11 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = 'Résoudre une équation du type $\\dfrac{a}{x}=b$'
+export const titre = 'Résoudre une équation du type $\\dfrac{a}{x}=b$ ou $\\dfrac{x}{a}=b$'
 export default class Auto1AC11a extends ExerciceQcmA {
   versionOriginale: () => void = () => {
     this.enonce = "La solution de l'équation  $\\dfrac{144}{x}=9$ est : "
-    this.correction = ` L'équation  $\\dfrac{144}{x}=9$ est équivalente à $9\\times x=144$, soit $x=\\dfrac{144}{9}$<br>
+    this.correction = ` L'équation  $\\dfrac{144}{x}=9$ est équivalente à $9\\times x=144$, soit $x=\\dfrac{144}{9}$.<br>
         Ainsi, la solution de l'équation est $${miseEnEvidence('\\dfrac{144}{9}')}$.`
 
     this.reponses = [
@@ -37,7 +37,7 @@ export default class Auto1AC11a extends ExerciceQcmA {
           const a = randint(6, 9)
           const b=a*randint(13,19)
           this.enonce =  `La solution de l'équation  $\\dfrac{${b}}{x}=${a}$ est : `
-          this.correction =  ` L'équation   $\\dfrac{${b}}{x}=${a}$ est équivalente à $${a}\\times x=${b}$, soit $x=\\dfrac{${b}}{${a}}$<br>
+          this.correction =  ` L'équation   $\\dfrac{${b}}{x}=${a}$ est équivalente à $${a}\\times x=${b}$, soit $x=\\dfrac{${b}}{${a}}$.<br>
         Ainsi, la solution de l'équation est $${miseEnEvidence(`\\dfrac{${b}}{${a}}`)}$.`
 
            this.reponses = [
@@ -53,7 +53,7 @@ export default class Auto1AC11a extends ExerciceQcmA {
     const a = randint(6, 9)
     const b = a * randint(13, 19)
     this.enonce = `La solution de l'équation $\\dfrac{x}{${a}}=${b}$ est : `
-    this.correction = `L'équation $\\dfrac{x}{${a}}=${b}$ est équivalente à $x=${a}\\times ${b}$<br>
+    this.correction = `L'équation $\\dfrac{x}{${a}}=${b}$ est équivalente à $x=${a}\\times ${b}$.<br>
     Ainsi, la solution de l'équation est $${miseEnEvidence(`${a}\\times ${b}`)}$.`
 
     this.reponses = [
@@ -72,7 +72,7 @@ case 3:
     const b = a * randint(13, 19)
     const solution = b / a  // Cette fois c'est un entier
     this.enonce = `La solution de l'équation $\\dfrac{${b}}{x}=${a}$ est : `
-    this.correction = `L'équation $\\dfrac{${b}}{x}=${a}$ est équivalente à $${a}\\times x=${b}$, soit $x=\\dfrac{${b}}{${a}}=${texNombre(b/a,0)}$<br>
+    this.correction = `L'équation $\\dfrac{${b}}{x}=${a}$ est équivalente à $${a}\\times x=${b}$, soit $x=\\dfrac{${b}}{${a}}=${texNombre(b/a,0)}$.<br>
     Ainsi, la solution de l'équation est $${miseEnEvidence(`${texNombre(b/a,0)}`)}$.`
 
     this.reponses = [
