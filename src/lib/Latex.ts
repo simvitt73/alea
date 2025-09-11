@@ -50,6 +50,8 @@ export type LatexFileInfos = {
     [key: string]: {
       labels?: string
       itemsep?: number
+      cols?: number
+      cols_corr?: number
       blocrep?: { nbligs: number; nbcols: number }
     }
   }
@@ -367,6 +369,8 @@ class Latex {
         labels?: string
         itemsep?: number
         blocrep?: { nbligs: number; nbcols: number }
+        cols?: number
+        cols_corr?: number
       } =
         latexFileInfos.exos && latexFileInfos.exos[k]
           ? latexFileInfos.exos[k]
@@ -408,6 +412,13 @@ class Latex {
           '\\anote{',
           '\n\\resetcustomnotes',
         )
+        if (
+          latexFileInfos.qrcodeOption === 'AvecQrcode' &&
+          (exercice.introduction.length > 40 || exercice.consigne.length > 40)
+        ) {
+          // il faut un espace pour le QRCODE
+          content += `\n\\vspace{1cm}`
+        }
         content += writeIntroduction(exercice.introduction)
         content += '\n' + format(exercice.consigne)
         content += writeInCols(
@@ -418,7 +429,7 @@ class Latex {
             Number(exercice.nbCols),
             confExo,
           ),
-          Number(exercice.nbCols),
+          confExo.cols ? confExo.cols : Number(exercice.nbCols),
         )
         content += testIfLoaded(
           [
@@ -443,7 +454,7 @@ class Latex {
             Boolean(exercice.listeAvecNumerotation),
             Number(exercice.nbCols),
           ),
-          Number(exercice.nbColsCorr),
+          confExo.cols_corr ? confExo.cols_corr : Number(exercice.nbColsCorr),
         )
         content += testIfLoaded(
           [...exercice.listeCorrections],
