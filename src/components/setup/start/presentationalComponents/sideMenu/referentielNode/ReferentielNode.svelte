@@ -201,7 +201,7 @@
   onMount(() => {
     //   console.log('******** subset ********')
     //   console.log(Object.entries(subset))
-    console.log('levelTitle: ', levelTitle)
+    // console.log('levelTitle: ', levelTitle)
     if (
       (nestedLevelCount === 1 && levelTitle === 'Exercices aléatoires') ||
       themeCodeisSubthemeCode(levelTitle, Array.from(levelTitle)[0])
