@@ -71,7 +71,6 @@
     themeCode: string,
     level: string = '6',
   ): boolean {
-    console.log('level : ', level)
     const regexp = new RegExp(`^(auto)?${level}[A-Z]\\d+[A-Z0-9]$`, 'g')
     return regexp.test(themeCode)
   }
