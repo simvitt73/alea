@@ -43,7 +43,7 @@ export default class SommeSuiteArithmetique extends ExerciceSimple {
     const u = choice(['u', 'v', 'w'])
 
     if (this.sup) {
-      this.question = `Soit $${u}$ la suite arithmétique de premier terme $${u}_1 = ${u1}$ et de raison $${r}$.`
+      this.question = `Soit $(${u}_n)$ la suite arithmétique de premier terme $${u}_1 = ${u1}$ et de raison $${r}$.`
       this.question += `<br>Calculer $\\displaystyle S = ${u}_1 + ${u}_2 + ... + ${u}_{${n}} =\\sum_{k=1}^{k=${n}}${u}_k$.`
       this.reponse = (n * (u1 + u1 + (n - 1) * r)) / 2
       this.correction = `$S = ${u1} + (${u1} + ${r}) + (${u1} + 2\\times${r}) + ... + (${u1} + ${n - 1} \\times ${r})$`
@@ -57,7 +57,7 @@ export default class SommeSuiteArithmetique extends ExerciceSimple {
       this.correction += `<br><br>$\\phantom{S} = ${n} \\times \\dfrac{${u1} + ${u1 + (n - 1) * r}}{2}$`
       this.correction += `<br><br>$\\phantom{S} = ${miseEnEvidence(texNombre(this.reponse))}$`
     } else {
-      this.question = `Soit $${u}$ la suite arithmétique de premier terme $${u}_0 = ${u0}$ et de raison $${r}$.`
+      this.question = `Soit $(${u}_n)$ la suite arithmétique de premier terme $${u}_0 = ${u0}$ et de raison $${r}$.`
       this.question += `<br>Calculer $\\displaystyle S = ${u}_0 + ${u}_1 + ... + ${u}_{${n}} =\\sum_{k=0}^{k=${n}}${u}_k$.`
       this.reponse = ((n + 1) * (u0 + u0 + n * r)) / 2
       this.correction = `$S = ${u0} + (${u0} + ${r}) + (${u0} + 2\\times${r}) + ... + (${u0} + ${n} \\times ${r})$`
