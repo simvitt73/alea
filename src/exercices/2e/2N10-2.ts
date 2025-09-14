@@ -19,6 +19,6 @@ export const refs = {
 export default class PlacerPointsSurAxe2nde extends PlacerPointsSurAxe {
   constructor() {
     super()
-    this.sup = 4
+    this.sup = 3
   }
 }
