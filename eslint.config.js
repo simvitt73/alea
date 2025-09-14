@@ -5,6 +5,7 @@ export default [
     rules: {
       // Désactive la règle stylistic qui pose problème
       '@stylistic/space-before-blocks': 'off',
+      '@stylistic/space-in-parens': 'off',
       '@stylistic/space-before-function-paren': ['error', 'never'],
       'space-before-function-paren': ['error', 'never'],
       'comma-dangle': ['error', 'always-multiline'],
