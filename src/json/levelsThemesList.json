@@ -1625,6 +1625,9 @@
   "5R21": {
     "titre": "Soustraire des nombres décimaux relatifs"
   },
+  "5R22": {
+    "titre": "Effectuer un enchaînement d'additions et de soustractions de nombres décimaux relatifs"
+  },
   "5L1": {
     "titre": "Calcul littéral"
   },
