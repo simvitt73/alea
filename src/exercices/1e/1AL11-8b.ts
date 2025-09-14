@@ -50,6 +50,12 @@ export default class SommeSuiteArithmetique extends ExerciceSimple {
       this.correction += `<br>$\\phantom{S} = (\\underbrace{${u1} + ${u1} + ... + ${u1}}_{${n}\\times ${u1}}) + ${r} \\times (1 + 2 + ... + ${n -1})$`
       this.correction += `<br>$\\phantom{S} = ${n} \\times ${u1} + ${r} \\times \\dfrac{${n - 1}\\times${n}}{2}$`
       this.correction += `<br>$\\phantom{S} = ${miseEnEvidence(texNombre(this.reponse))}$`
+      this.correction += '<br><br>'
+      this.correction += 'Deuxième méthode : on utilise la formule $S = \\text{nombre de termes} \\times \\dfrac{\\text{premier terme} + \\text{dernier terme}}{2}$.'
+      this.correction += `<br><br>$S = n \\times \\dfrac{(${u}_1 + ${u}_{${n}})}{2}$`
+      this.correction += `<br><br>$\\phantom{S} = ${n} \\times \\dfrac{(${u1} + (${u1} + (${n} - 1) \\times ${r})}{2}$`
+      this.correction += `<br><br>$\\phantom{S} = ${n} \\times \\dfrac{(${u1} + ${u1 + (n - 1) * r})}{2}$`
+      this.correction += `<br><br>$\\phantom{S} = ${miseEnEvidence(texNombre(this.reponse))}$`
     } else {
       this.question = `Soit $${u}$ la suite arithmétique de premier terme $${u}_0 = ${u0}$ et de raison $${r}$.`
       this.question += `<br>Calculer $\\displaystyle S = ${u}_0 + ${u}_1 + ... + ${u}_{${n}} =\\sum_{k=0}^{k=${n}}${u}_k$.`
@@ -58,6 +64,12 @@ export default class SommeSuiteArithmetique extends ExerciceSimple {
       this.correction += `<br>$\\phantom{S} = (\\underbrace{${u0} + ${u0} + ... + ${u0}}_{${n + 1}\\times ${u0}}) + ${r} \\times (1 + 2 + ... + ${n})$`
       this.correction += `<br>$\\phantom{S} = ${n + 1} \\times ${u0} + ${r} \\times \\dfrac{${n}\\times${n + 1}}{2}$`
       this.correction += `<br>$\\phantom{S} = ${miseEnEvidence(texNombre(this.reponse))}$`
+      this.correction += '<br><br>'
+      this.correction += 'Deuxième méthode : on utilise la formule $S = \\text{nombre de termes} \\times \\dfrac{\\text{premier terme} + \\text{dernier terme}}{2}$.'
+      this.correction += `<br><br>$S = (n + 1) \\times \\dfrac{(${u}_0 + ${u}_{${n}})}{2}$`
+      this.correction += `<br><br>$\\phantom{S} = ${n + 1} \\times \\dfrac{(${u0} + (${u0} + ${n} \\times ${r})}{2}$`
+      this.correction += `<br><br>$\\phantom{S} = ${n + 1} \\times \\dfrac{(${u0} + ${u0 + n * r})}{2}$`
+      this.correction += `<br><br>$\\phantom{S} = ${miseEnEvidence(texNombre(this.reponse))}$`
     }
   }
 }
