@@ -361,42 +361,7 @@ export function verifQuestionMathLive(
         feedback = check.feedback ?? ''
       }
     }
-    // Protection anti-fraude : observer toute modification du champ
-    if (
-      champTexte &&
-      exercice.answers != null &&
-      typeof exercice.answers === 'object'
-    ) {
-      const validatedValue =
-        exercice.answers[`Ex${exercice.numeroExercice}Q${i}`]
-      const renderRoot = (champTexte as any).shadowRoot ?? champTexte // shadowRoot pour Mathfield, sinon l'élément lui-même
-      if (renderRoot) {
-        const observer = new MutationObserver(() => {
-          if (champTexte != null) {
-            if (
-              'setValue' in champTexte &&
-              typeof champTexte.setValue === 'function'
-            ) {
-              ;(champTexte as MathfieldElement).setValue(validatedValue)
-              // Force le rafraîchissement du rendu
-              if (typeof (champTexte as any).focus === 'function') {
-                ;(champTexte as any).focus()
-              } else {
-                // Astuce : déclenche un événement 'input' pour forcer le refresh
-                champTexte.dispatchEvent(new Event('focus'))
-              }
-            } else {
-              ;(champTexte as HTMLInputElement).value = validatedValue
-            }
-          }
-        })
-        observer.observe(renderRoot, {
-          childList: true,
-          subtree: true,
-          characterData: true,
-        })
-      }
-    }
+
     if (spanReponseLigne != null) {
       spanReponseLigne.innerHTML = ''
       if (customFeedback.length > 0) {
