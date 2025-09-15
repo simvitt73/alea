@@ -147,11 +147,24 @@
                       <div
                         class="hidden lg:flex lg:w-1/2 flex-1 justify-center items-center"
                       >
+                        <!-- Support for both images and videos -->
+                        {#if slide.image.endsWith('.mp4')}
+                          <video
+                            class="flex items-center justify-center w-full h-full object-scale-down"
+                            src="images/carousel/{slide.image}"
+                            alt="Video:{slide.image}"
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                          ></video>
+                        {:else}
                         <img
                           class="flex items-center justify-center w-full h-full object-scale-down"
                           src="images/carousel/{slide.image}"
                           alt="Image:{slide.image}"
                         />
+                        {/if}
                       </div>
                     </div>
                   {:else}
