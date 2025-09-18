@@ -14,5 +14,5 @@ export default [
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1, maxBOF: 1 }],
     },
   },
-  prettier,
+  prettier, // à maintenir en dernier pour éviter les conflits entre ESLint et Prettier
 ]
