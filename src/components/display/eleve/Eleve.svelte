@@ -1,4 +1,21 @@
 <script lang="ts">
+  import { afterUpdate, beforeUpdate, onDestroy, onMount, tick } from 'svelte'
+  import type TypeExercice from '../../../exercices/Exercice'
+  import {
+    buildExercisesList,
+    splitExercisesIntoQuestions,
+  } from '../../../lib/components/exercisesUtils'
+  import {
+    getCanvasFont,
+    getTextWidth,
+    remToPixels,
+  } from '../../../lib/components/measures'
+  import { resizeContent } from '../../../lib/components/sizeTools'
+  import { verifQuestionCliqueFigure } from '../../../lib/interactif/cliqueFigure'
+  import { prepareExerciceCliqueFigure } from '../../../lib/interactif/gestionInteractif'
+  import { verifQuestionMathLive } from '../../../lib/interactif/mathLive'
+  import { verifQuestionQcm } from '../../../lib/interactif/qcm'
+  import { verifQuestionListeDeroulante } from '../../../lib/interactif/questionListeDeroulante'
   import {
     mathaleaFormatExercice,
     mathaleaRenderDiv,
@@ -6,41 +23,24 @@
     mathaleaUpdateUrlFromExercicesParams,
   } from '../../../lib/mathalea'
   import {
-    exercicesParams,
     darkMode,
+    exercicesParams,
     globalOptions,
-    resultsByExercice,
     isMenuNeededForExercises,
     isMenuNeededForQuestions,
+    resultsByExercice,
   } from '../../../lib/stores/generalStore'
   import { vendor } from '../../../lib/stores/vendorStore'
-  import type TypeExercice from '../../../exercices/Exercice'
-  import Exercice from '../../shared/exercice/Exercice.svelte'
-  import { onDestroy, onMount, tick, afterUpdate, beforeUpdate } from 'svelte'
   import { loadMathLive } from '../../../modules/loaders'
-  import ButtonTextAction from '../../shared/forms/ButtonTextAction.svelte'
-  import { verifQuestionMathLive } from '../../../lib/interactif/mathLive'
-  import { verifQuestionQcm } from '../../../lib/interactif/qcm'
-  import { verifQuestionListeDeroulante } from '../../../lib/interactif/questionListeDeroulante'
-  import ButtonToggle from '../../shared/forms/ButtonToggle.svelte'
-  import { verifQuestionCliqueFigure } from '../../../lib/interactif/cliqueFigure'
-  import { prepareExerciceCliqueFigure } from '../../../lib/interactif/gestionInteractif'
-  import BtnZoom from '../../shared/ui/btnZoom.svelte'
-  import {
-    getCanvasFont,
-    getTextWidth,
-    remToPixels,
-  } from '../../../lib/components/measures'
-  import Footer2 from './Footer2.svelte'
-  import FlipCard from './FlipCard.svelte'
   import Keyboard from '../../keyboard/Keyboard.svelte'
   import { keyboardState } from '../../keyboard/stores/keyboardStore'
-  import {
-    buildExercisesList,
-    splitExercisesIntoQuestions,
-  } from '../../../lib/components/exercisesUtils'
-  import { resizeContent } from '../../../lib/components/sizeTools'
+  import Exercice from '../../shared/exercice/Exercice.svelte'
+  import ButtonTextAction from '../../shared/forms/ButtonTextAction.svelte'
+  import ButtonToggle from '../../shared/forms/ButtonToggle.svelte'
+  import BtnZoom from '../../shared/ui/btnZoom.svelte'
   import Banner from '../../shared/vendors/Banner.svelte'
+  import FlipCard from './FlipCard.svelte'
+  import Footer2 from './Footer2.svelte'
 
   let currentIndex: number = 0
   let exercices: TypeExercice[] = []
@@ -224,7 +224,7 @@
 
     if ($globalOptions.presMode === 'une_question_par_page') {
       // construit les questions
-      buildQuestions()
+      await buildQuestions()
     }
 
     if (
