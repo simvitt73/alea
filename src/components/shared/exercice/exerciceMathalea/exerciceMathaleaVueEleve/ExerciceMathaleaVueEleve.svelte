@@ -236,7 +236,6 @@
     log('updateDisplay')
     if (exercise.typeExercice === 'simple') {
       if (exercise.seed === undefined) exercise.seed = mathaleaGenerateSeed()
-      console.info(`Chargement de la seed : ${exercise.seed}`)
       seedrandom(exercise.seed, { global: true })
       mathaleaHandleExerciceSimple(exercise, !!isInteractif, exerciseIndex)
     }
@@ -269,7 +268,6 @@
       typeof exercise.nouvelleVersionWrapper === 'function'
     ) {
       if (exercise.seed === undefined) exercise.seed = mathaleaGenerateSeed()
-      console.info(`Chargement de la seed : ${exercise.seed}`)
       seedrandom(exercise.seed, { global: true })
       exercise.nouvelleVersionWrapper(exerciseIndex)
     }
@@ -320,9 +318,6 @@
           l[exercise.numeroExercice as number].bestScore = bestScore
           return l
         })
-        console.info(
-          `Les deux seeds devraient être les même : ${exercise.seed} et ${$exercicesParams[exercise.numeroExercice].alea}`,
-        )
         resultsByExercice.update((l: InterfaceResultExercice[]) => {
           l[exercise.numeroExercice as number] = {
             uuid: exercise.uuid,
