@@ -77,7 +77,7 @@ export default class Auto1AC16a extends ExerciceQcmA {
     ]
 
     this.correction = `La fonction $f(x) = ${reduireAxPlusB(a, b)}$ est une fonction affine de coefficient directeur $a = ${a}$ et d'ordonnée à l'origine $b = ${b}$.<br>
-    • La fonction s'annule quand ${reduireAxPlusB(a, b)} = 0$, soit $x = ${new FractionEtendue(-b, a).simplifie().texFraction}$.<br>
+    • La fonction s'annule quand $${reduireAxPlusB(a, b)} = 0$, soit $x = ${new FractionEtendue(-b, a).simplifie().texFraction}$.<br>
     • Comme $a = ${a} < 0$, la fonction est décroissante : elle est positive avant la racine et négative après.<br>Le tableau de signes de la fonction $f$ est donc le suivant :<br>
     ${tableauSignesFonction(fCorrecte, -20, 20, {
       step: 1,
