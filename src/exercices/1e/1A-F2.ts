@@ -30,7 +30,7 @@ export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
 export const titre =
-  "Trouver les nombres solutions d'une équation avec un graphique"
+  "Trouver les abscisses solutions d'une inéquation avec un graphique"
 export default class auto1AF2 extends ExerciceQcmA {
   versionOriginale: () => void = () => {
     const o = latex2d('\\text{O}', -0.3, -0.3, { letterSize: 'scriptsize' })
