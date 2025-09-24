@@ -14,5 +14,13 @@
     "typeExercice": "html",
     "url": "ressources/iframe.ts",
     "tags": {}
+  },
+  "tableur": {
+    "id": "tableur",
+    "uuid": "tableur",
+    "titre": "Tableur",
+    "typeExercice": "html",
+    "url": "ressources/tableur.ts",
+    "tags": {}
   }
 }

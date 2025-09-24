@@ -6,5 +6,6 @@
   "clavier": "ClavierTest.svelte",
   "equation": "EquationSolve.svelte",
   "version": "Version.svelte",
-  "sandboxCE": "ressources/sandboxCE.ts"
+  "sandboxCE": "ressources/sandboxCE.ts",
+  "tableur": "ressources/tableur.ts"
 }
