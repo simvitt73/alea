@@ -6,7 +6,7 @@ import {
   tableauSignesFonction,
 } from '../../lib/mathFonctions/etudeFonction'
 
-import { reduireAxPlusB } from '../../lib/outils/ecritures'
+// import { reduireAxPlusB } from '../../lib/outils/ecritures'
 
 import { texNombre } from '../../lib/outils/texNombre'
 import { mathalea2d } from '../../modules/2dGeneralites'
@@ -59,7 +59,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
       (a * Number(x) - b) * (m * Number(x) - p)
 
     // Définition des lignes pour le tableau de signes
-    const lignePPM = [
+    /* const lignePPM = [
       'Line',
       30,
       '',
@@ -74,7 +74,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
       20,
       '-',
       20,
-    ]
+    ] */
     const lignePMM = [
       'Line',
       30,
@@ -107,7 +107,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
       '+',
       20,
     ]
-    const ligneMMP = [
+    /* const ligneMMP = [
       'Line',
       30,
       '',
@@ -138,7 +138,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
       5,
       '+',
       20,
-    ]
+    ] */
     const ligneMPM = [
       'Line',
       30,
@@ -156,19 +156,19 @@ export default class Auto1AF5 extends ExerciceQcmA {
       20,
     ]
 
-    let ligne1, ligne2, ligne3
+    // let ligne1, ligne2, ligne3
 
     // Pour g(x) = 2x + 6 : s'annule en x = -3, a = 2 > 0
     // donc négative pour x < -3, positive pour x > -3
-    ligne1 = ligneMPP // - puis +
+    const ligne1 = ligneMPP // - puis +
 
     // Pour h(x) = -x + 1 : s'annule en x = 1, m = -1 < 0
     // donc positive pour x < 1, négative pour x > 1
-    ligne2 = lignePMM // + puis -
+    const ligne2 = lignePMM // + puis -
 
     // Pour le produit f(x) = g(x) × h(x)
     // a * m = 2 * (-1) = -2 < 0
-    ligne3 = ligneMPM // - puis + puis -
+    const ligne3 = ligneMPM // - puis + puis -
 
     const o = latex2d('\\text{O}', -0.3, -0.3, { letterSize: 'scriptsize' })
     const xmin = -5
@@ -278,6 +278,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
             ['$h(x)$', 2, 50],
             ['$f(x)$', 2, 100],
           ],
+          // @ts-expect-error tableau de variation n'est pas typé
           [
             '$-\\infty$',
             30,
@@ -289,6 +290,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
             30,
           ],
         ],
+        // @ts-expect-error tableau de variation n'est pas typé
         tabLines: [ligne1, ligne2, ligne3],
         colorBackground: '',
         espcl: 3,
@@ -577,6 +579,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
             ['$h(x)$', 2, 50],
             ['$f(x)$', 2, 100],
           ],
+          // @ts-expect-error tableau de variation n'est pas typé
           [
             '$-\\infty$',
             30,
@@ -588,6 +591,7 @@ export default class Auto1AF5 extends ExerciceQcmA {
             30,
           ],
         ],
+        // @ts-expect-error tableau de variation n'est pas typé
         tabLines: [ligne1, ligne2, ligne3],
         colorBackground: '',
         espcl: 3,
