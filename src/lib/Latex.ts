@@ -127,14 +127,20 @@ class Latex {
   ): { content: string; contentCorr: string } {
     if (latexFileInfos.style === 'ProfMaquette') {
       return {
-        content: this.getContentForAVersionProfMaquette(1, latexFileInfos),
+        content: this.getContentForAVersionProfMaquette(
+          indiceVersion,
+          latexFileInfos,
+        ),
         contentCorr: '',
       }
     }
     if (latexFileInfos.style === 'ProfMaquetteQrcode') {
       latexFileInfos.qrcodeOption = 'AvecQrcode'
       return {
-        content: this.getContentForAVersionProfMaquette(1, latexFileInfos),
+        content: this.getContentForAVersionProfMaquette(
+          indiceVersion,
+          latexFileInfos,
+        ),
         contentCorr: '',
       }
     }
@@ -353,6 +359,7 @@ class Latex {
         indiceVersion > 1
           ? exercice.seed + indiceVersion.toString()
           : exercice.seed
+      exercice.seed = seed
       if (exercice.typeExercice === 'simple') {
         mathaleaHandleExerciceSimple(exercice, false)
       } else {
