@@ -43,7 +43,7 @@ export default class IdentifierGrandeurs extends Exercice {
       const grandeur1 = situation.grandeurs[0]
       const grandeur2 = situation.grandeurs[1]
 
-      const correctionGrandeurs = `Attention, « ${unite1} » et « ${unite2} » sont des unités !<br>
+      const correctionGrandeurs = `Attention, « ${unite1} » et « ${unite2} » sont des unités.<br>
       Les grandeurs sont « ${texteEnCouleurEtGras(grandeur1)} » et « ${texteEnCouleurEtGras(grandeur2)} ».`
 
       let correctionProportionnalite = `Les grandeurs « ${grandeur1} » et « ${grandeur2} »`
