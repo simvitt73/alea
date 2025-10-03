@@ -22,11 +22,12 @@ export default class Puissances extends ExerciceQcmA {
     this.enonce += `À quelle expression est égale $3(x+2)^2-8$ ?`
     this.correction = `On cherche parmi les  propositions, lesquelles peuvent donner, après développement, l'expression de l'énoncé. <br>
      $\\begin{aligned}
-       (2x+1)(x-3)&=2x^2-6x+x-3\\\\
-        &=2x^2-5x-3.
+       3(x+2)^2-8&=3(x^2+4x+4)-8\\\\
+        &=3x^2+12x+12-8\\\\
+        &=${miseEnEvidence('3x^2+12x+4')}
      \\end{aligned}$`
 
-    this.reponses = ['$3x^2+12x+4$', '$3x^2+12x-4$ ', '$3x^2+6x+4$ ', '$3x^2+6x-2$ ']
+    this.reponses = ['$3x^2+12x+4$', '$3x^2+12x-4$ ', '$3x^2+6x+4$ ', '$3x^2+4$ ']
   }
 
   versionAleatoire = () => {
@@ -40,7 +41,7 @@ export default class Puissances extends ExerciceQcmA {
     this.enonce += `À quelle expression est égale $${rienSi1(a)}(x${ecritureAlgebrique(-alpha)})^2${ecritureAlgebrique(beta)}$ ?`
     this.correction = `On développe l'expression de l'énoncé. <br>
               $\\begin{aligned}
-    ${rienSi1(a)}(x${ecritureAlgebrique(-alpha)})^2${ecritureAlgebrique(beta)}&=${ecritureAlgebriqueSauf1(a)}\\left(x^2 ${ecritureAlgebrique(2*-alpha)}x${ecritureAlgebrique((-alpha)*(-alpha))}\\right)${ecritureAlgebrique(beta)}\\\\
+    ${rienSi1(a)}(x${ecritureAlgebrique(-alpha)})^2${ecritureAlgebrique(beta)}&=${rienSi1(a)}\\left(x^2 ${ecritureAlgebrique(2*-alpha)}x${ecritureAlgebrique((-alpha)*(-alpha))}\\right)${ecritureAlgebrique(beta)}\\\\
     &=${rienSi1(a)}x^2 ${ecritureAlgebrique(-2*a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha))} ${ecritureAlgebrique(beta)}\\\\
         &=${miseEnEvidence(`${rienSi1(a)}x^2 ${ecritureAlgebrique(-2*a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}`)}\\\\
           \\end{aligned}$`
@@ -53,14 +54,14 @@ export default class Puissances extends ExerciceQcmA {
         `$${rienSi1(a)}x^2 ${ecritureAlgebrique(-2*a*alpha)}x$`,
         `$${rienSi1(a)}x^2 ${ecritureAlgebrique(2*a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}$`,
         `$${rienSi1(a)}x^2 ${ecritureAlgebrique(-2*a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)-beta)}$`,
-        `$${rienSi1(a)}x^2 ${ecritureAlgebrique(-a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}$`
+        `$${rienSi1(a)}x^2 ${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}$`
         ]
   }
   else { this.reponses = [
         `$${rienSi1(a)}x^2 ${ecritureAlgebrique(-2*a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}$`,
         `$${rienSi1(a)}x^2 ${ecritureAlgebrique(2*a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}$`,
         `$${rienSi1(a)}x^2 ${ecritureAlgebrique(-2*a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)-beta)}$`,
-        `$${rienSi1(a)}x^2 ${ecritureAlgebrique(-a*alpha)}x${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}$`
+        `$${rienSi1(a)}x^2 ${ecritureAlgebrique((a*-alpha)*(-alpha)+beta)}$`
         ]}
 }
 
