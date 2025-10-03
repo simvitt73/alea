@@ -35,7 +35,7 @@ export type OptionsComparaisonType = {
   fractionEgale?: boolean
   fractionIdentique?: boolean
   nombreDecimalSeulement?: boolean
-  operationSeulementEtNonResultat?: boolean
+  expressionNumerique?: boolean
   additionSeulementEtNonResultat?: boolean
   soustractionSeulementEtNonResultat?: boolean
   multiplicationSeulementEtNonResultat?: boolean
@@ -65,7 +65,6 @@ export type OptionsComparaisonType = {
   developpementEgal?: boolean
   egaliteExpression?: boolean
   calculFormel?: boolean
-  expressionNumerique?: boolean
   noUselessParen?: boolean
   nonReponseAcceptee?: boolean
   pluriels?: boolean
@@ -751,7 +750,7 @@ engine.latexDictionary = [
  *   fractionEgale: boolean,
  *   fractionIdentique : boolean,
  *   nombreDecimalSeulement: boolean,
- *   operationSeulementEtNonResultat: boolean,
+ *   expressionNumerique: boolean,
  *   additionSeulementEtNonResultat: boolean,
  *   soustractionSeulementEtNonResultat:boolean,
  *   multiplicationSeulementEtNonResultat:boolean,
@@ -797,7 +796,7 @@ export function fonctionComparaison(
     fractionEgale, // Documenté
     fractionIdentique, // Documenté
     nombreDecimalSeulement, // Documenté
-    operationSeulementEtNonResultat, // Documenté
+    expressionNumerique, // Non Documenté
     additionSeulementEtNonResultat, // Documenté
     soustractionSeulementEtNonResultat, // Documenté
     multiplicationSeulementEtNonResultat, // Documenté
@@ -827,7 +826,6 @@ export function fonctionComparaison(
     nombreAvecEspace,
     egaliteExpression,
     calculFormel, // Documenté
-    expressionNumerique,
     nonReponseAcceptee,
     variable,
     entier,
@@ -844,7 +842,7 @@ export function fonctionComparaison(
     fractionEgale: false,
     fractionIdentique: false,
     nombreDecimalSeulement: false,
-    operationSeulementEtNonResultat: false,
+    expressionNumerique: false,
     additionSeulementEtNonResultat: false,
     soustractionSeulementEtNonResultat: false,
     multiplicationSeulementEtNonResultat: false,
@@ -874,7 +872,6 @@ export function fonctionComparaison(
     nombreAvecEspace: false,
     egaliteExpression: false,
     calculFormel: false,
-    expressionNumerique: false,
     nonReponseAcceptee: false,
     variable: 'x',
     entier: false,
@@ -965,7 +962,6 @@ export function fonctionComparaison(
     avecFractions,
     sansTrigo,
     fractionIrreductible,
-    operationSeulementEtNonResultat,
     additionSeulementEtNonResultat,
     soustractionSeulementEtNonResultat,
     multiplicationSeulementEtNonResultat,
@@ -983,7 +979,6 @@ export function fonctionComparaison(
  *   expressionsForcementReduites: boolean,
  *   fractionIrreducibleSeulement: boolean,
  *   nombreDecimalSeulement: boolean,
- *   operationSeulementEtNonResultat: boolean
  *   resultatSeulementEtNonOperation: boolean
  * }} [options]
  * @author Eric Elter (aidé par ArnoG)
@@ -994,7 +989,6 @@ function customCanonical(
   {
     expressionsForcementReduites = true,
     fractionIrreductible = false, // SANS DOUTE INUTILE MAINTENANT. A VERIFIER
-    operationSeulementEtNonResultat = false,
     nombreDecimalSeulement = false,
     resultatSeulementEtNonOperation = false,
   } = {},
@@ -1004,31 +998,31 @@ function customCanonical(
     // Fonctionnement : On retourne le calcul
     return expression
   }
-  if (!operationSeulementEtNonResultat) {
-    // Fonctionnement par défaut : Tout est accepté si l'expression est un nombre
-    // Ci-dessous, on accepte le résultat d'un calcul mais pas un autre enchaînement Ici, si 4+2 est attendu, alors 4+2=6 mais 4+2!=5+1. C'est la valeur par défaut
-    if (typeof expression.value === 'number') {
-      // L'expression est une expression numérique, les expressions littérales ne sont pas traitées ici
-      if (fractionIrreductible) {
-        if (
-          (expression.operator === 'Divide' ||
-            expression.operator === 'Rational') && // L'expression contient une division ou une fraction fractionIrreductible
-          (expression.engine.box(['GCD', expression.op1, expression.op2])
-            .value !== 1 ||
-            expression.op2.value === 1)
-        )
-          return expression
+  // Fonctionnement par défaut : Tout est accepté si l'expression est un nombre
+  // Ci-dessous, on accepte le résultat d'un calcul mais pas un autre enchaînement Ici, si 4+2 est attendu, alors 4+2=6 mais 4+2!=5+1. C'est la valeur par défaut
+  if (typeof expression.value === 'number') {
+    // L'expression est une expression numérique, les expressions littérales ne sont pas traitées ici
+    if (fractionIrreductible) {
+      if (
+        (expression.operator === 'Divide' ||
+          expression.operator === 'Rational') && // L'expression contient une division ou une fraction fractionIrreductible
+        (expression.engine.box(['GCD', expression.op1, expression.op2])
+          .value !== 1 ||
+          expression.op2.value === 1)
+      )
+        return expression
 
-        if (expression.operator === 'Number') {
-          // Ce cas est si un élève note 1.4 pour une fraction de 7/5 par exemple.
-          return engine.parse(`\\frac{${expression.value}}{1}`, {
-            canonical: false,
-          })
-        }
+      if (expression.operator === 'Number') {
+        // Ce cas est si un élève note 1.4 pour une fraction de 7/5 par exemple.
+        return engine.parse(`\\frac{${expression.value}}{1}`, {
+          canonical: false,
+        })
       }
-      return expression.engine.number(expression.value)
     }
-  } else if (expressionsForcementReduites) {
+    return expression.engine.number(expression.value)
+  }
+  /* Supprimé depuis la création de expressionNumerique
+  if (expressionsForcementReduites) {
     // Ici, le traitement n'est fait que pour des expressions forcément réduites
     // Ci-dessous, on accepte que l'enchaînement proposé et pas le résultat. Ici, si 4+2 est attendu, alors4+2!=6 et 4+2!=5+1
     if (
@@ -1048,6 +1042,7 @@ function customCanonical(
       return expression.engine.number(expression.value)
     }
   }
+  */
   if (expression.operator === 'Divide' || expression.operator === 'Rational') {
     // Pour enlever les divisions éventuelles par 1
     if (expression.op2.value === 1) expression = expression.op1
@@ -1064,7 +1059,6 @@ function customCanonical(
             customCanonical(x, {
               expressionsForcementReduites,
               fractionIrreductible,
-              operationSeulementEtNonResultat,
               nombreDecimalSeulement,
             }),
           ),
@@ -1281,7 +1275,7 @@ type Substitutions = { [variable: string]: number }
  * - on n'accepte que l'enchaînement de calculs fourni en goodAnswer et non le résultat de cet enchaînement de calculs
  * @param {string} input
  * @param {string} goodAnswer
- * @param {{expressionsForcementReduites:boolean, avecSigneMultiplier:boolean, avecFractions:boolean, sansTrigo:boolean, fractionIrreducibleSeulement:boolean, nombreDecimalSeulement:boolean, operationSeulementEtNonResultat:boolean, resultatSeulementEtNonOperation:boolean}} [options]
+ * @param {{expressionsForcementReduites:boolean, avecSigneMultiplier:boolean, avecFractions:boolean, sansTrigo:boolean, fractionIrreducibleSeulement:boolean, nombreDecimalSeulement:boolean, resultatSeulementEtNonOperation:boolean}} [options]
  * @author Eric Elter
  * @return ResultType
  */
@@ -1296,7 +1290,6 @@ function expressionDeveloppeeEtReduiteCompare(
     sansTrigo = false,
     fractionIrreductible = false,
     nombreDecimalSeulement = false,
-    operationSeulementEtNonResultat = false,
     additionSeulementEtNonResultat = false,
     soustractionSeulementEtNonResultat = false,
     multiplicationSeulementEtNonResultat = false,
@@ -1381,7 +1374,6 @@ function expressionDeveloppeeEtReduiteCompare(
   const substitutions: Substitutions = { a: 2, b: 2, c: 2, x: 2, y: 2, z: 2 } // On peut ajouter d'autres variables si nécessaire
 
   if (
-    operationSeulementEtNonResultat ||
     additionSeulementEtNonResultat ||
     soustractionSeulementEtNonResultat ||
     multiplicationSeulementEtNonResultat ||
@@ -1451,7 +1443,6 @@ function expressionDeveloppeeEtReduiteCompare(
         {
           expressionsForcementReduites,
           fractionIrreductible,
-          operationSeulementEtNonResultat: false,
           nombreDecimalSeulement,
           resultatSeulementEtNonOperation,
         },
@@ -1461,7 +1452,6 @@ function expressionDeveloppeeEtReduiteCompare(
         {
           expressionsForcementReduites,
           fractionIrreductible,
-          operationSeulementEtNonResultat: false,
           resultatSeulementEtNonOperation,
         },
       )
@@ -1523,7 +1513,6 @@ function expressionDeveloppeeEtReduiteCompare(
         {
           expressionsForcementReduites,
           fractionIrreductible,
-          operationSeulementEtNonResultat,
           nombreDecimalSeulement: false,
           resultatSeulementEtNonOperation: false,
         },
@@ -1533,7 +1522,6 @@ function expressionDeveloppeeEtReduiteCompare(
         feedback = 'Résultat incorrect car une valeur numérique est attendue.' // Sous-entendu : Et pas une opération
       else feedback = 'Résultat incorrect.'
     } else if (
-      operationSeulementEtNonResultat ||
       additionSeulementEtNonResultat ||
       soustractionSeulementEtNonResultat ||
       multiplicationSeulementEtNonResultat ||
@@ -1545,7 +1533,6 @@ function expressionDeveloppeeEtReduiteCompare(
         {
           expressionsForcementReduites,
           fractionIrreductible,
-          operationSeulementEtNonResultat: false,
           nombreDecimalSeulement,
           resultatSeulementEtNonOperation,
         },
@@ -1555,7 +1542,6 @@ function expressionDeveloppeeEtReduiteCompare(
         {
           expressionsForcementReduites,
           fractionIrreductible,
-          operationSeulementEtNonResultat: false,
           resultatSeulementEtNonOperation,
         },
       )
@@ -1582,7 +1568,6 @@ function expressionDeveloppeeEtReduiteCompare(
         {
           expressionsForcementReduites,
           fractionIrreductible: false,
-          operationSeulementEtNonResultat,
           resultatSeulementEtNonOperation,
         },
       )
@@ -1591,7 +1576,6 @@ function expressionDeveloppeeEtReduiteCompare(
         {
           expressionsForcementReduites,
           fractionIrreductible: false,
-          operationSeulementEtNonResultat,
           resultatSeulementEtNonOperation,
         },
       )
@@ -1959,9 +1943,29 @@ export function expressionNumeriqueCompare(
   input: string,
   goodAnswer: string,
 ): ResultType {
-  const goodAnswerParsed = engine.parse(goodAnswer, { canonical: true }) // Important ce canonical à true
+  const cleaner = generateCleaner(['fractions'])
+  const localGoodAnswer = cleaner(goodAnswer)
+  const goodAnswerParsed = engine.parse(localGoodAnswer, { canonical: true }) // Important ce canonical à true
   const inputParsed = engine.parse(input, { canonical: true })
-  return { isOk: goodAnswerParsed.isSame(inputParsed) }
+  if (goodAnswerParsed.isSame(inputParsed)) return { isOk: true }
+  if (goodAnswerParsed.isEqual(inputParsed))
+    if (inputParsed.isNumber) {
+      return {
+        isOk: false,
+        feedback:
+          'Ce résultat pourrait être correct mais un calcul est attendu',
+      }
+    } else
+      return {
+        isOk: false,
+        feedback:
+          "Ce résultat pourrait être correct mais ce n'est pas ce calcul qui est attendu",
+      }
+  return {
+    isOk: false,
+    feedback:
+      "Ce résultat pourrait être correct mais ce n'est pas ce calcul qui est attendu",
+  }
 }
 
 /**
