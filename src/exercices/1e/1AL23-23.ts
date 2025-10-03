@@ -50,19 +50,13 @@ export default class EquationDuSecondDegreAvecUnParametre extends Exercice {
       const coefCc = randint(-3, 3, 0)
 
       // Enoncé
-      const expr0 = engine
-        .parse(
-          `${coefBm}mx${ecritureAlgebrique(a)}x^2${rienSi1(coefCm)}m${ecritureAlgebriqueSauf1(coefBc)}x${ecritureAlgebrique(coefCc)}`,
-        )
-        .simplify().latex
+      const expression0Math = `${coefBm}mx${ecritureAlgebrique(a)}x^2${ecritureAlgebriqueSauf1(coefCm)}m${ecritureAlgebriqueSauf1(coefBc)}x${ecritureAlgebrique(coefCc)}`
+      const expr0 = engine.parse(expression0Math).simplify().latex
       const texte = `$${expr0}=0$`
       // Corrigé
       let texteCorr = "Écrivons l'équation sous la forme $ax^2+bx+c=0$ :"
-      const expr1 = engine
-        .parse(
-          `${a}x^2+(${rienSi1(coefBm)}m${ecritureAlgebrique(coefBc)})x${ecritureAlgebriqueSauf1(coefCm)}m${ecritureAlgebrique(coefCc)}`,
-        )
-        .simplify().latex
+      const expr1 = `${rienSi1(a)}x^2+(${rienSi1(coefBm)}m${ecritureAlgebrique(coefBc)})x${ecritureAlgebriqueSauf1(coefCm)}m${ecritureAlgebrique(coefCc)}`
+
       texteCorr += `<br>$${expr1}=0$`
       texteCorr += `<br>On a donc $a=${a}$, $b=${rienSi1(coefBm)}m${ecritureAlgebrique(coefBc)}$ et $c=${rienSi1(coefCm)}m${ecritureAlgebrique(coefCc)}$`
       texteCorr += `<br>Le discriminant vaut $\\Delta=b^2-4\\times a\\times c = (${rienSi1(coefBm)}m${ecritureAlgebrique(coefBc)})^2${ecritureAlgebrique(-4 * a)}\\times(${rienSi1(coefCm)}m${ecritureAlgebrique(coefCc)})$`
