@@ -22,7 +22,6 @@ const engine = new ComputeEngine()
 /* const result = fonctionComparaison('3.1\\times10^{3}', '3100', {
   ecritureScientifique: true,
 })
-// console.log('result', result)
 
 const result = fonctionComparaison(
   '0.90\\times c_{n}+50',
@@ -31,7 +30,6 @@ const result = fonctionComparaison(
     calculFormel: true,
   },
 )
-console.log('result', result)
 
 
 */
