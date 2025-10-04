@@ -14,6 +14,7 @@ import {
   parseDependencies,
   pickRandomDependencies,
   randomDependencies,
+  randomIntDependencies,
   simplifyDependencies,
   smallerDependencies,
   smallerEqDependencies,
@@ -44,6 +45,7 @@ export const math = create(
     largerDependencies,
     smallerEqDependencies,
     largerEqDependencies,
+    randomIntDependencies,
   },
   config,
 )

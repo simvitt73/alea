@@ -284,8 +284,8 @@ export default class CalculsLoiNormale extends Exercice {
           mu = texNombre(variables.mu)
           sigma = texNombre(variables.sigma)
           resultat =
-            0.5 * math.erf(variables.b / sqrt(2)) -
-            0.5 * math.erf(variables.a / sqrt(2))
+            0.5 * math.erf(variables.b / math.sqrt(2)) -
+            0.5 * math.erf(variables.a / math.sqrt(2))
           expression = `$\\mathrm{P}(${bornec} < X < ${borned})$`
           calculstep = []
           texte =
@@ -313,12 +313,12 @@ export default class CalculsLoiNormale extends Exercice {
           )
           if (variables.b < 0) {
             resultatB = texNombre(
-              0.5 + 0.5 * math.erf(-variables.b / sqrt(2)),
+              0.5 + 0.5 * math.erf(-variables.b / math.sqrt(2)),
               3,
             )
             if (variables.a < 0) {
               resultatA = texNombre(
-                0.5 + 0.5 * math.erf(-variables.a / sqrt(2)),
+                0.5 + 0.5 * math.erf(-variables.a / math.sqrt(2)),
                 3,
               )
               calculstep.push(
@@ -333,7 +333,7 @@ export default class CalculsLoiNormale extends Exercice {
               calculstep.push(` &\\approx ${resultatA} - ${resultatB} &&`)
             } else {
               resultatA = texNombre(
-                0.5 + 0.5 * math.erf(variables.a / sqrt(2)),
+                0.5 + 0.5 * math.erf(variables.a / math.sqrt(2)),
                 3,
               )
               calculstep.push(
@@ -346,11 +346,11 @@ export default class CalculsLoiNormale extends Exercice {
             }
           } else if (variables.a < 0) {
             resultatA = texNombre(
-              0.5 + 0.5 * math.erf(-variables.a / sqrt(2)),
+              0.5 + 0.5 * math.erf(-variables.a / math.sqrt(2)),
               3,
             )
             resultatB = texNombre(
-              0.5 + 0.5 * math.erf(variables.b / sqrt(2)),
+              0.5 + 0.5 * math.erf(variables.b / math.sqrt(2)),
               3,
             )
             calculstep.push(
@@ -362,11 +362,11 @@ export default class CalculsLoiNormale extends Exercice {
             calculstep.push(` &\\approx  ${resultatB} - (1 - ${resultatA}) &&`)
           } else {
             resultatA = texNombre(
-              0.5 + 0.5 * math.erf(variables.a / sqrt(2)),
+              0.5 + 0.5 * math.erf(variables.a / math.sqrt(2)),
               3,
             )
             resultatB = texNombre(
-              0.5 + 0.5 * math.erf(variables.b / sqrt(2)),
+              0.5 + 0.5 * math.erf(variables.b / math.sqrt(2)),
               3,
             )
             calculstep.push(`&\\approx  ${resultatB} - ${resultatA} &&`)
@@ -433,8 +433,8 @@ export default class CalculsLoiNormale extends Exercice {
           mu = texNombre(variables.mu)
           sigma = texNombre(variables.sigma)
           resultat =
-            0.5 * math.erf(variables.a / sqrt(2)) -
-            0.5 * math.erf(-variables.a / sqrt(2))
+            0.5 * math.erf(variables.a / math.sqrt(2)) -
+            0.5 * math.erf(-variables.a / math.sqrt(2))
           expression = `$\\mathrm{P}(${bornec} < X < ${borned})$`
           calculstep = []
           texte =
@@ -460,7 +460,10 @@ export default class CalculsLoiNormale extends Exercice {
           calculstep.push(
             `&=  \\mathrm{P}(X < ${borneb}) - \\mathrm{P}(X \\leq ${bornea}) &&`,
           )
-          resultatA = texNombre(0.5 + 0.5 * math.erf(variables.a / sqrt(2)), 3)
+          resultatA = texNombre(
+            0.5 + 0.5 * math.erf(variables.a / math.sqrt(2)),
+            3,
+          )
           calculstep.push(
             ` &=  2\\times\\mathrm{P}(X < ${borneb}) - 1 && (\\text{par symétrie de la loi normale})`,
           )

@@ -102,8 +102,15 @@ export class Matrice {
   }
 
   multiply(v) {
-    const produit = math.multiply(this._data, v._data)
+    // On récupère toujours les données réelles
+    const vData = v._data ?? v // si v._data existe, on l'utilise, sinon v lui-même
+
+    const produit = math.multiply(this._data, vData)
+
+    // Si le résultat n'est pas une matrice (ex: scalaire), on retourne tel quel
     if (!Array.isArray(produit[0])) return produit
+
+    // Sinon on retourne une nouvelle instance de Matrice
     return matrice(produit)
   }
 
@@ -117,6 +124,10 @@ export class Matrice {
 
   toTex() {
     return math.parse(this.toString()).toTex().replaceAll('bmatrix', 'pmatrix')
+  }
+
+  toArray() {
+    return this._data
   }
 
   // Retourne la matrice sous forme de chaîne mathjs-compatible
