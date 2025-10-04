@@ -406,9 +406,18 @@ export default class Alea2iep {
    */
   private async ensureInstrumenPocheElementsRegistered() {
     if (customElements.get('alea-instrumenpoche') === undefined) {
-      const { ElementInstrumenpoche, ElementButtonInstrumenpoche } = await import('./ElementInstrumenpoche')
-      customElements.define('alea-instrumenpoche', ElementInstrumenpoche)
-      customElements.define('alea-buttoninstrumenpoche', ElementButtonInstrumenpoche)
+      try {
+        const { ElementInstrumenpoche, ElementButtonInstrumenpoche } = await import('./ElementInstrumenpoche')
+        customElements.define('alea-instrumenpoche', ElementInstrumenpoche)
+        customElements.define('alea-buttoninstrumenpoche', ElementButtonInstrumenpoche)
+      } catch (error) {
+        // Ignore les erreurs de double enregistrement qui peuvent survenir lors de rechargements
+        if (error instanceof DOMException && error.name === 'NotSupportedError') {
+          console.debug('Custom elements already registered:', error.message)
+        } else {
+          throw error
+        }
+      }
     }
   }
 
