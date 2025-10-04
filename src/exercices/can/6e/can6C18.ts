@@ -8,12 +8,12 @@ import { randint } from '../../../modules/outils'
 
 import { bleuMathalea } from '../../../lib/colors'
 import ExerciceSimple from '../../ExerciceSimple'
-export const titre = 'Utiliser la division euclidienne'
+export const titre = 'Utiliser la division euclidienne (cas concret)'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const amcReady = true
 export const amcType = 'AMCNum'
-export const dateDeModifImportante = '04/12/2021'
+export const dateDeModifImportante = '04/10/2025'
 /**
  * @author Jean-Claude Lhote
  * Créé pendant l'été 2021
@@ -24,7 +24,7 @@ export const refs = {
   'fr-fr': ['can6C18', '6N2K-flash1'],
   'fr-ch': [],
 }
-export default class ResteDivisionEuclidienne extends ExerciceSimple {
+export default class ResteDivisionEuclidienne1 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple'
@@ -35,7 +35,7 @@ export default class ResteDivisionEuclidienne extends ExerciceSimple {
 
   nouvelleVersion() {
     let a, b, c, d, q, r
-    if (choice([true, false])) {
+  
       a = randint(7, 9)
       b = randint(1, a - 1)
       d = randint(5, 9)
@@ -72,15 +72,7 @@ export default class ResteDivisionEuclidienne extends ExerciceSimple {
           bleuMathalea,
         )
       }
-    } else {
-      q = randint(11, 15)
-      b = randint(8, 11)
-      r = randint(1, b - 1)
-      a = b * q + r
-      this.question = `   En utilisant l'égalité $${a}=(${b}\\times ${q})+${r}$, donner le reste de la division euclidienne de $${a}$ par $${b}$.`
-      this.correction = `Puisque $${r}$ est strictement inférieur à $${b}$, le reste est $${miseEnEvidence(r)}$.`
-      this.reponse = r
-    }
+   
     this.canEnonce = this.question
     this.canReponseACompleter = ''
   }
