@@ -501,7 +501,7 @@ export default class ProblemesAvecOperationsEnUneLigne extends Exercice {
       handleAnswers(this, i * nbQ, {
         reponse: {
           value: reponse,
-          options: { operationSeulementEtNonResultat: true },
+          options: { expressionNumerique: true },
         },
       })
 

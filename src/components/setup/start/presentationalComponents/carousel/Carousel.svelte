@@ -1,15 +1,16 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte'
   import legacyCarouselContent from '../../../../../json/carouselContent.json'
-  import carouselContentForCapytale from '../../../../../json/carouselContentForCapytale.json'
+  // import carouselContentForCapytale from '../../../../../json/carouselContentForCapytale.json'
   import ButtonTextAction from '../../../../shared/forms/ButtonTextAction.svelte'
-    import { globalOptions } from '../../../../../lib/stores/generalStore'
+  import { globalOptions } from '../../../../../lib/stores/generalStore'
 
   let currentSlideIndex = 0
   let intervalId: number | null = null
   let isPaused = false
 
-  let carouselContent = $globalOptions.recorder === 'capytale' ? carouselContentForCapytale : legacyCarouselContent
+  // let carouselContent = $globalOptions.recorder === 'capytale' ? carouselContentForCapytale : legacyCarouselContent
+  let carouselContent = legacyCarouselContent
 
   // Configuration de l'animation
   const SLIDE_DURATION = 5000 // 5 secondes par slide
