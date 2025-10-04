@@ -19,10 +19,7 @@
   import { vendor } from '../lib/stores/vendorStore'
   import type { CanSolutionsMode } from '../lib/types/can'
   import { context } from '../modules/context'
-  import {
-      ElementButtonInstrumenpoche,
-      ElementInstrumenpoche,
-  } from '../modules/ElementInstrumenpoche'
+
   import Can from './display/can/Can.svelte'
   import Eleve from './display/eleve/Eleve.svelte'
   import Alacarte from './setup/alacarte/Alacarte.svelte'
@@ -71,13 +68,7 @@
     exercicesParamsUnsubscriber()
   })
 
-  if (customElements.get('alea-instrumenpoche') === undefined) {
-    customElements.define('alea-instrumenpoche', ElementInstrumenpoche)
-    customElements.define(
-      'alea-buttoninstrumenpoche',
-      ElementButtonInstrumenpoche,
-    )
-  }
+
 
   // charge le numéro de version du serveur
   fetchServerVersion()

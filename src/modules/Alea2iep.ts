@@ -371,6 +371,9 @@ export default class Alea2iep {
    */
   html(numeroExercice: number, id2 = 0) {
     if (context.isHtml) {
+      // Enregistrer les custom elements InstrumentPoche à la demande
+      this.ensureInstrumenPocheElementsRegistered()
+
       const id = `IEP_${numeroExercice}_${id2}`
       StoreIep.saveXml(id, this.script())
       const codeHTML = `<alea-instrumenpoche id=${id}>`
@@ -387,12 +390,26 @@ export default class Alea2iep {
    */
   htmlBouton(id1 = 0, id2 = 0) {
     if (context.isHtml) {
+      // Enregistrer les custom elements InstrumentPoche à la demande
+      this.ensureInstrumenPocheElementsRegistered()
+
       const id = `IEP_${id1}_${id2}`
       StoreIep.saveXml(id, this.script())
       const codeHTML = `<alea-buttoninstrumenpoche id=${id}>`
       return codeHTML
     }
     return ''
+  }
+
+  /**
+   * Enregistre les custom elements InstrumentPoche si ce n'est pas déjà fait
+   */
+  private async ensureInstrumenPocheElementsRegistered() {
+    if (customElements.get('alea-instrumenpoche') === undefined) {
+      const { ElementInstrumenpoche, ElementButtonInstrumenpoche } = await import('./ElementInstrumenpoche')
+      customElements.define('alea-instrumenpoche', ElementInstrumenpoche)
+      customElements.define('alea-buttoninstrumenpoche', ElementButtonInstrumenpoche)
+    }
   }
 
   /**
