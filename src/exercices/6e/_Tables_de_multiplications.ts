@@ -30,6 +30,7 @@ export default class TablesDeMultiplications extends Exercice {
     this.sup = tablesParDefaut
     this.sup2 = '1'
     this.sup3 = true
+    this.sup4 = true
     this.consigne = 'Calculer : '
     this.spacing = 2
 
