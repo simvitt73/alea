@@ -1,4 +1,4 @@
-import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
+import { choice } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import {
   texFractionFromString,
@@ -15,7 +15,11 @@ import { pgcd } from '../../lib/outils/primalite'
 import { texSymbole } from '../../lib/format/style'
 import Exercice from '../Exercice'
 import { context } from '../../modules/context'
-import { listeQuestionsToContenu, randint } from '../../modules/outils'
+import {
+  gestionnaireFormulaireTexte,
+  listeQuestionsToContenu,
+  randint,
+} from '../../modules/outils'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 
@@ -43,10 +47,9 @@ export default class ExerciceInequation1 extends Exercice {
   constructor() {
     super()
     this.besoinFormulaireCaseACocher = ['Avec des nombres relatifs']
-    this.besoinFormulaire2Numerique = [
+    this.besoinFormulaire2Texte = [
       "Type d'inéquations",
-      4,
-      '1 : ax≤b ou x+a≤b ou x-a≤b\n2 : ax+b≤c\n3 : ax+b≤cx+d\n4 : Les 2 types précédents',
+      '1 : ax≤b ou x+a≤b\n2 : ax+b≤c\n3 : ax+b≤cx+d\n4 : Les 2 types précédents',
     ]
 
     this.spacing = 1.5
@@ -68,35 +71,39 @@ export default class ExerciceInequation1 extends Exercice {
         : "l'inéquation suivante") +
       '.'
     if (this.interactif) {
-      this.consigne += "<p>On donnera la réponse sous forme d'un intervalle.</p>"
+      this.consigne +=
+        "<p>On donnera la réponse sous forme d'un intervalle.</p>"
     }
-    let listeTypeDeQuestions
 
-    switch (this.sup2.toString()) {
-      case '1':
-        listeTypeDeQuestions = ['ax≤b', 'x+b≤c']
-        break
-      case '2':
-        listeTypeDeQuestions = ['ax+b≤c']
+    let listeTypeDeQuestions = []
+    const typeDeQuestions = gestionnaireFormulaireTexte({
+      saisie: this.sup2,
+      min: 1,
+      max: 3,
+      melange: 4,
+      defaut: 1,
+      nbQuestions: this.nbQuestions,
+    })
 
-        break
-      case '3':
-        listeTypeDeQuestions = ['ax+b≤cx+d']
-        break
-      default:
-        listeTypeDeQuestions = [
-          'ax+b≤0',
-          'ax+b≤c',
-          'ax≤b',
-          'x+b≤c',
-          'ax+b≤cx+d',
-        ]
-        break
+    for (let index = 0; index < this.nbQuestions; index++) {
+      switch (typeDeQuestions[index]) {
+        case 1:
+          listeTypeDeQuestions.push(choice(['ax≤b', 'x+b≤c']))
+          break
+        case 2:
+          listeTypeDeQuestions.push('ax+b≤c')
+          break
+        case 3:
+          listeTypeDeQuestions.push('ax+b≤cx+d')
+          break
+        case 4:
+          listeTypeDeQuestions.push(
+            choice(['ax+b≤0', 'ax+b≤c', 'ax≤b', 'x+b≤c', 'ax+b≤cx+d']),
+          )
+          break
+      }
     }
-    listeTypeDeQuestions = combinaisonListes(
-      listeTypeDeQuestions,
-      this.nbQuestions,
-    )
+
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
       // On limite le nombre d'essais pour chercher des valeurs nouvelles
       let a = randint(2, 13)
