@@ -7,6 +7,7 @@ import {
 import {
   ecritureAlgebrique,
   ecritureParentheseSiNegatif,
+  reduireAxPlusB,
   rienSi1,
 } from '../../lib/outils/ecritures'
 import { abs, signe } from '../../lib/outils/nombres'
@@ -25,11 +26,17 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import FractionEtendue from '../../modules/FractionEtendue'
 
 type SymboleInegalite = '≤' | '≥' | '<' | '>'
-type Question = 'ax≤b' | 'x+b≤c' | 'ax+b≤c' | 'ax+b≤0' | 'ax+b≤cx+d'
+type Question =
+  | 'ax≤b'
+  | 'x+b≤c'
+  | 'ax+b≤c'
+  | 'ax+b≤0'
+  | 'ax+b≤cx+d'
+  | 'a(bx+c)≤dx+e'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const titre = 'Résoudre une inéquation du premier degré'
-export const dateDeModifImportante = '07/06/2024'
+export const dateDeModifImportante = '08/10/2025'
 /**
  * Inéquations du premier degré
  * * Type 1 : x+a≤b ou ax≤b
@@ -69,7 +76,7 @@ export default class ExerciceInequation1 extends Exercice {
     this.besoinFormulaireCaseACocher = ['Avec des nombres relatifs']
     this.besoinFormulaire2Texte = [
       "Type d'inéquations",
-      '1 : ax≤b ou x+a≤b\n2 : ax+b≤c ou ax+b≤0\n3 : ax+b≤cx+d\n4 : Mélange',
+      '1 : ax≤b ou x+a≤b\n2 : ax+b≤c ou ax+b≤0\n3 : ax+b≤cx+d\n4 : a(bx+c)≤dx+e\n5 : Mélange',
     ]
 
     this.spacing = 1.5
@@ -79,7 +86,7 @@ export default class ExerciceInequation1 extends Exercice {
       this.correctionDetaillee = false
     }
     this.sup = true // Avec des nombres relatifs
-    this.sup2 = 4 // Choix du type d'inéquation
+    this.sup2 = 5 // Choix du type d'inéquation
     this.nbQuestions = 2
   }
 
@@ -101,13 +108,14 @@ export default class ExerciceInequation1 extends Exercice {
       'ax+b≤c',
       'ax+b≤0', // pourquoi ce cas là est-il géré à part bien que non proposé explicitement à l'utilisateur
       'ax+b≤cx+d',
+      'a(bx+c)≤dx+e',
     ]
     let listeTypeDeQuestions: Question[] = []
     const typeDeQuestions = gestionnaireFormulaireTexte({
       saisie: this.sup2,
       min: 1,
-      max: 3,
-      melange: 4,
+      max: 4,
+      melange: 5,
       defaut: 1,
       nbQuestions: this.nbQuestions,
     })
@@ -124,6 +132,9 @@ export default class ExerciceInequation1 extends Exercice {
           listeTypeDeQuestions.push(typeQuestionsPermis[4])
           break
         case 4:
+          listeTypeDeQuestions.push(typeQuestionsPermis[5])
+          break
+        case 5:
           listeTypeDeQuestions.push(choice(typeQuestionsPermis))
           break
       }
@@ -135,6 +146,7 @@ export default class ExerciceInequation1 extends Exercice {
       let b = randint(1, 13)
       let c = randint(1, 13)
       let d = randint(1, 13)
+      let e = randint(1, 13) // sert seulement dans le dernier des types de questions
       let symboleInegalite: SymboleInegalite | '\\' = '>'
       let symboleInegaliteOppose: SymboleInegalite | '\\' = '<'
       let texte = ''
@@ -145,12 +157,10 @@ export default class ExerciceInequation1 extends Exercice {
         case 1:
           symboleInegalite = '<'
           symboleInegaliteOppose = '>'
-
           break
         case 2:
           symboleInegalite = '≤'
           symboleInegaliteOppose = '≥'
-
           break
         case 3:
           symboleInegalite = '>'
@@ -167,6 +177,7 @@ export default class ExerciceInequation1 extends Exercice {
         b *= choice([-1, 1])
         c *= choice([-1, 1])
         d *= choice([-1, 1])
+        e *= choice([-1, 1])
       }
 
       if (
@@ -178,7 +189,7 @@ export default class ExerciceInequation1 extends Exercice {
         }
         if (!this.sup && c < b) {
           b = randint(1, 9)
-          c = randint(b, 15) // c sera plus grand que b pour que c-b>0
+          c = randint(b, 15) // c sera plus grand que b pour que c-b≥0
         }
         texte = `$${a}x${ecritureAlgebrique(b)}${texSymbole(symboleInegalite)}${c}$`
         texteCorr = texte + '<br>'
@@ -295,8 +306,7 @@ export default class ExerciceInequation1 extends Exercice {
         const conclusion = buildConclusion(borneInfinie, borneFinie, estStrict)
         reponse = conclusion.reponse
         texteCorr += `<br> ${conclusion.correction}`
-      } else {
-        //  if (listeTypeDeQuestions[i] === 'ax+b≤cx+d') pas de condition pour le dernier if ! JCL le 5/02/2025
+      } else if (listeTypeDeQuestions[i] === 'ax+b≤cx+d') {
         if (c === a) {
           c = randint(1, 13, [a])
         } // sinon on arrive à une division par 0
@@ -366,8 +376,68 @@ export default class ExerciceInequation1 extends Exercice {
         const conclusion = buildConclusion(borneInfinie, borneFinie, estStrict)
         reponse = conclusion.reponse
         texteCorr += `<br> ${conclusion.correction}`
+      } else {
+        if (d === a * b) {
+          // évitons une division par 0
+          d = randint(1, 13, [a * b])
+        }
+        if (e === a * c) {
+          // évitons un résultat nul
+          e = randint(1, 13, [a * c])
+        }
+        texte = `$${a}(${reduireAxPlusB(b, c)})${symboleInegalite}${reduireAxPlusB(d, e)}$`
+        texteCorr = texte + '<br>'
+        texteCorr += 'On commence par développer le membre de gauche.<br>'
+        texteCorr += `$${a}\\times ${b === 1 ? '' : ecritureParentheseSiNegatif(b)}x${ecritureAlgebrique(a)}\\times${ecritureParentheseSiNegatif(c)}${symboleInegalite}${reduireAxPlusB(d, e)}$<br>`
+        texteCorr += `$${reduireAxPlusB(a * b, a * c)}${symboleInegalite}${reduireAxPlusB(d, e)}$<br>`
+        if (this.correctionDetaillee) {
+          if (d > 0) {
+            texteCorr += `On soustrait $${rienSi1(d)}x$ aux deux membres.<br>`
+          } else {
+            texteCorr += `On ajoute $${rienSi1(-d)}x$ aux deux membres.<br>`
+          }
+        }
+        texteCorr += `$${reduireAxPlusB(a * b, a * c)}${miseEnEvidence(signe(-1 * d) + rienSi1(abs(d)) + 'x', 'blue')}${symboleInegalite}${reduireAxPlusB(d, e)}${miseEnEvidence(signe(-1 * d) + rienSi1(abs(d)) + 'x', 'blue')}$<br>`
+        texteCorr += `$${rienSi1(a * b - d)}x${ecritureAlgebrique(a * c)}${texSymbole(symboleInegalite)}${e}$<br>`
+        if (this.correctionDetaillee) {
+          if (a * c > 0) {
+            texteCorr += `On soustrait $${a * c}$ aux deux membres.<br>`
+          } else {
+            texteCorr += `On ajoute $${-a * c}$ aux deux membres.<br>`
+          }
+        }
+        texteCorr += `$${rienSi1(a * b - d)}x${ecritureAlgebrique(a * c)}${miseEnEvidence(ecritureAlgebrique(-a * c), 'blue')}
+           ${texSymbole(symboleInegalite)}${e}${miseEnEvidence(ecritureAlgebrique(-a * c), 'blue')}$<br>`
+        texteCorr += `$${rienSi1(a * b - d)}x${texSymbole(symboleInegalite)}${e - a * c}$<br>`
+        if (this.correctionDetaillee) {
+          texteCorr += `On divise les deux membres par $${a * b - d}$.<br>`
+          if (a * b - d < 0) {
+            texteCorr += `Comme $${a * b - d}$ est négatif, l'inégalité change de sens.<br>`
+          }
+        }
+        const borneFinie = new FractionEtendue(e - a * c, a * b - d)
+        const symboleInegaliteFinal =
+          a * b - d > 0 ? symboleInegalite : symboleInegaliteOppose
+        texteCorr += `$${rienSi1(a * b - d)}x${miseEnEvidence(
+          '\\div' +
+            ecritureParentheseSiNegatif(a * b - d) +
+            texSymbole(symboleInegaliteFinal),
+          'blue',
+        )}${e - a * c + miseEnEvidence('\\div' + ecritureParentheseSiNegatif(a * b - d), 'blue')}$<br>`
+        texteCorr += `$x${texSymbole(symboleInegaliteFinal)}${borneFinie.texFraction}$`
+        if (!borneFinie.estIrreductible) {
+          texteCorr += `<br><br>$x${texSymbole(symboleInegaliteFinal)}${borneFinie.texFractionSimplifiee}$`
+        }
+
+        // Conclusion
+        const borneInfinie = ['≥', '>'].includes(symboleInegaliteFinal)
+          ? 'droite'
+          : 'gauche'
+        const conclusion = buildConclusion(borneInfinie, borneFinie, estStrict)
+        reponse = conclusion.reponse
+        texteCorr += `<br> ${conclusion.correction}`
       }
-      // texte += `<br> Solution : $${reponse}$`// pour test
+      // texte += `<br> Solution : $${reponse}$` // pour test
       texte +=
         '<br>' +
         ajouteChampTexteMathLive(this, i, KeyboardType.clavierEnsemble, {
