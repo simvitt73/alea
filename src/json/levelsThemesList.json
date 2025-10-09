@@ -2097,33 +2097,36 @@
     "titre": "Reconnaître et citer des angles sur une configuration géométrique"
   },
   "3AutoG04": {
-    "titre": "Connaître la somme des mesures des angles d'un triangle, calculer la mesure du troisième angle"
+    "titre": "Savoir qu’un angle droit mesure 90° et un angle plat 180°"
   },
   "3AutoG05": {
-    "titre": "Connaître les procédures de conversion d'unités"
+    "titre": "Connaître la somme des mesures des angles d'un triangle, calculer la mesure du troisième angle"
   },
   "3AutoG06": {
-    "titre": "Reconnaître des solides (cube, pavé droit, prisme droit, cylindre, pyramide, cône)"
+    "titre": "Connaître les procédures de conversion d'unités"
   },
   "3AutoG07": {
-    "titre": "Déterminer le périmètre d'un polygone, d'un disque"
+    "titre": "Reconnaître des solides (cube, pavé droit, prisme droit, cylindre, pyramide, cône)"
   },
   "3AutoG08": {
-    "titre": "Connaître et utiliser les formules d'aire d'un triangle, d'un rectangle, d'un disque"
+    "titre": "Déterminer le périmètre d'un polygone, d'un disque"
   },
   "3AutoG09": {
-    "titre": "Connaître et utiliser les formules du volume d'un cube, d'un pavé droit, d'un prisme droit, d'un cylindre"
+    "titre": "Connaître et utiliser les formules d'aire d'un triangle, d'un rectangle, d'un disque"
   },
   "3AutoG10": {
-    "titre": "Reconnaître une situation d'application du théorème de Pythagore"
+    "titre": "Connaître et utiliser les formules du volume d'un cube, d'un pavé droit, d'un prisme droit, d'un cylindre"
   },
   "3AutoG11": {
-    "titre": "Reconnaître une situation d'application du théorème de Thalès"
+    "titre": "Reconnaître une situation d'application du théorème de Pythagore"
   },
   "3AutoG12": {
-    "titre": "Reconnaître une situation d'application de la ligne trigonométrique cosinus"
+    "titre": "Reconnaître une situation d'application du théorème de Thalès"
   },
   "3AutoG13": {
+    "titre": "Reconnaître une situation d'application de la ligne trigonométrique cosinus"
+  },
+  "3AutoG14": {
     "titre": "Mobiliser les propriétés de la symétrie axiale, de la symétrie centrale, de la translation"
   },
   "3AutoP": {
