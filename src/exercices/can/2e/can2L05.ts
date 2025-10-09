@@ -99,7 +99,6 @@ x&${symbolFinal}${racine}
 		if (this.versionQcm) {
 			this.reponse = `$${this.reponse}$`
 		}
-		console.log(this.reponse)
 		this.canEnonce = this.question // 'Compléter'
 		this.canReponseACompleter = ''
 	}
