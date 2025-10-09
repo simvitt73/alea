@@ -19,7 +19,7 @@ export const uuid = '19060'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const refs = {
-  'fr-fr': ['5R13', 'BP2AutoG3'],
+  'fr-fr': ['5R13', 'BP2AutoG3', '3AutoN02-1'],
   'fr-ch': [],
 }
 
