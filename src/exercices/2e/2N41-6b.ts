@@ -1,7 +1,7 @@
 import developperIdentiteRemarquable from '../3e/3L11-15'
 
 export const titre = 'Développer une identité remarquable'
-export const dateDeModifImportante = '09/08/2025'
+export const dateDePublication = '09/10/2025'
 
 /**
  * Clone de 3L11-15 pour la France
