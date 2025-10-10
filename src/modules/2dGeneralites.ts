@@ -635,7 +635,7 @@ export function convertColorWithDieseToLatex(color: string) {
  */
 // JSDOC Validee par EE Juin 2022
 export function colorToLatexOrHTML(couleur: string): [string, string] {
-  let rgb = []
+  // let rgb = []
   if (Array.isArray(couleur) && couleur.length === 2) {
     if (couleur[1] === 'none') couleur[1] = '' // pas de 'none' comme couleur en latex !
     if (couleur.length === 2) {
