@@ -93,9 +93,27 @@ for (const tag of tagsDNB) {
   }
 }
 
+// Gestion des épreuves de 1re
+referentielFR['30_Épreuves de Première - Par année'] = {}
+referentielFR['30_Épreuves de Première - Par année']["E3C - Général"] = {}
+referentielFR['30_Épreuves de Première - Par année']["EAM - Spécialité"] = {}
+referentielFR['30_Épreuves de Première - Par année']["EAM - Spécifique"] = {}
+referentielFR['30_Épreuves de Première - Par année']["EAM - Technologique"] = {}
+referentielFR['40_Épreuves de Première - Par thème'] = {}
+referentielFR['40_Épreuves de Première - Par thème']["E3C - Général"] = {}
+referentielFR['40_Épreuves de Première - Par thème']["EAM - Spécialité"] = {}
+referentielFR['40_Épreuves de Première - Par thème']["EAM - Spécifique"] = {}
+referentielFR['40_Épreuves de Première - Par thème']["EAM - Technologique"] = {}
+referentielFR['50_Baccalauréat - Par année'] = {}
+referentielFR['50_Baccalauréat - Par année']["00_Général"] = {}
+referentielFR['50_Baccalauréat - Par année']["10_STI2D"] = {}
+referentielFR['50_Baccalauréat - Par année']["20_STL"] = {}
+referentielFR['60_Baccalauréat - Par thème'] = {}
+referentielFR['60_Baccalauréat - Par thème']["00_Général"] = {}
+referentielFR['60_Baccalauréat - Par thème']["10_STI2D"] = {}
+referentielFR['60_Baccalauréat - Par thème']["20_STL"] = {}
+
 // Gestion du BAC et des STI2D
-referentielFR.BAC = {}
-referentielFR.STI2D = {}
 const setThemesBAC = new Set()
 const setThemeSTI2D = new Set()
 
@@ -122,10 +140,10 @@ for (const annee of [
   '2028',
   '2029',
 ]) {
-  referentielFR.BAC[annee] = {}
+  referentielFR['50_Baccalauréat - Par année']["00_Général"][annee] = {}
   for (const ex in dictionnaireBAC) {
     if (dictionnaireBAC[ex].annee === annee) {
-      referentielFR.BAC[annee][ex] = { uuid: ex, ...dictionnaireBAC[ex] }
+      referentielFR['50_Baccalauréat - Par année']["00_Général"][annee][ex] = { uuid: ex, ...dictionnaireBAC[ex] }
     }
   }
 }
@@ -141,10 +159,10 @@ for (const annee of [
   '2028',
   '2029',
 ]) {
-  referentielFR.STI2D[annee] = {}
+  referentielFR['50_Baccalauréat - Par année']["10_STI2D"][annee] = {}
   for (const ex in dictionnaireSTI2D) {
     if (dictionnaireSTI2D[ex].annee === annee) {
-      referentielFR.STI2D[annee][ex] = { uuid: ex, ...dictionnaireSTI2D[ex] }
+      referentielFR['50_Baccalauréat - Par année']["10_STI2D"][annee][ex] = { uuid: ex, ...dictionnaireSTI2D[ex] }
     }
   }
 }
@@ -152,33 +170,33 @@ for (const annee of [
 const tagsBAC = [...setThemesBAC].sort((a, b) => {
   return a.localeCompare(b)
 })
-referentielFR.BACTags = {}
+referentielFR['60_Baccalauréat - Par thème']["00_Général"] = {}
 
 const tagsSTI2D = [...setThemeSTI2D].sort((a, b) => {
   return a.localeCompare(b)
 })
-referentielFR.STI2DTags = {}
+referentielFR['60_Baccalauréat - Par thème']["10_STI2D"] = {}
 
 for (const tag of tagsBAC) {
-  referentielFR.BACTags[tag] = {}
+  referentielFR['60_Baccalauréat - Par thème']["00_Général"][tag] = {}
   for (const ex in dictionnaireBAC) {
     if (dictionnaireBAC[ex].tags.includes(tag)) {
-      referentielFR.BACTags[tag][ex] = { uuid: ex, ...dictionnaireBAC[ex] }
+      referentielFR['60_Baccalauréat - Par thème']["00_Général"][tag][ex] = { uuid: ex, ...dictionnaireBAC[ex] }
     }
   }
 }
 
 for (const tag of tagsSTI2D) {
-  referentielFR.STI2DTags[tag] = {}
+  referentielFR['60_Baccalauréat - Par thème']["10_STI2D"][tag] = {}
   for (const ex in dictionnaireSTI2D) {
     if (dictionnaireSTI2D[ex].tags.includes(tag)) {
-      referentielFR.STI2DTags[tag][ex] = { uuid: ex, ...dictionnaireSTI2D[ex] }
+      referentielFR['60_Baccalauréat - Par thème']["10_STI2D"][tag][ex] = { uuid: ex, ...dictionnaireSTI2D[ex] }
     }
   }
 }
 
 // Gestion des E3C
-referentielFR.E3C = {}
+referentielFR['30_Épreuves de Première - Par année']["E3C - Général"] = {}
 const setThemesE3C = new Set()
 
 for (const ex in dictionnaireE3C) {
@@ -188,10 +206,10 @@ for (const ex in dictionnaireE3C) {
 }
 
 for (const annee of ['2020', '2021']) {
-  referentielFR.E3C[annee] = {}
+  referentielFR['30_Épreuves de Première - Par année']["E3C - Général"][annee] = {}
   for (const ex in dictionnaireE3C) {
     if (dictionnaireE3C[ex].annee === annee) {
-      referentielFR.E3C[annee][ex] = { uuid: ex, ...dictionnaireE3C[ex] }
+      referentielFR['30_Épreuves de Première - Par année']["E3C - Général"][annee][ex] = { uuid: ex, ...dictionnaireE3C[ex] }
     }
   }
 }
@@ -199,13 +217,13 @@ for (const annee of ['2020', '2021']) {
 const tagsE3C = [...setThemesE3C].sort((a, b) => {
   return a.localeCompare(b)
 })
-referentielFR.E3CTags = {}
+referentielFR['40_Épreuves de Première - Par thème']["E3C - Général"] = {}
 
 for (const tag of tagsE3C) {
-  referentielFR.E3CTags[tag] = {}
+  referentielFR['40_Épreuves de Première - Par thème']["E3C - Général"][tag] = {}
   for (const ex in dictionnaireE3C) {
     if (dictionnaireE3C[ex].tags.includes(tag)) {
-      referentielFR.E3CTags[tag][ex] = { uuid: ex, ...dictionnaireE3C[ex] }
+      referentielFR['40_Épreuves de Première - Par thème']["E3C - Général"][tag][ex] = { uuid: ex, ...dictionnaireE3C[ex] }
     }
   }
 }
@@ -294,17 +312,6 @@ for (const tag of tagsEVACOM) {
     }
   }
 }
-
-// Move referentielFR.BAC to referentielFR.Bac.BacTerminaleSpecialite
-referentielFR.Bac = {}
-referentielFR.Bac.Bac99TerminaleSpecialite = referentielFR.BAC
-delete referentielFR.BAC
-referentielFR.Bac.Bac98TerminaleSpecialiteTags = referentielFR.BACTags
-delete referentielFR.BACTags
-referentielFR.Bac.Bac89STI2D = referentielFR.STI2D
-delete referentielFR.STI2D
-referentielFR.Bac.Bac88STI2DTags = referentielFR.STI2DTags
-delete referentielFR.STI2DTags
 
 const dataFR = JSON.stringify(referentielFR, null, 2)
 fs.writeFileSync('src/json/referentielStaticFR.json', dataFR)
