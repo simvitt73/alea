@@ -42,8 +42,8 @@ export default class UtilerAppartientA extends Exercice {
   nouvelleVersion() {
     const objetsEnonce = []
     const lettres = choisitLettresDifferentes(6)
-    let rayon = 3
-    if (context.isHtml) rayon = 4
+    let rayon = 6
+    if (context.isHtml) rayon = 8
     const A = point(0, 0, lettres[0])
     let B = point(0, 0)
     let C = point(0, 0)
