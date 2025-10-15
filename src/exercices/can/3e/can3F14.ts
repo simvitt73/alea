@@ -29,7 +29,7 @@ export const refs = {
 export default class CalculProduitSommeImageParFonctionAffine extends ExerciceSimple {
   constructor() {
     super()
-    this.optionsDeComparaison = { resultatSeulementEtNonOperation: true }
+    this.optionsDeComparaison = { nombreDecimalSeulement: true }
     this.nbQuestions = 1
     this.versionQcmDisponible = true
     this.typeExercice = 'simple'
