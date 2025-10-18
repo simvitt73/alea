@@ -51,22 +51,16 @@ export default class RayonDiametreMilieu extends Exercice {
     )
 
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
-      let longueurSegment: number
       let reponse: number
       let texte = ''
       let texteCorr = ''
       const [lettre1, lettre2, lettre3] = Array.from(creerNomDePolygone(3))
-      longueurSegment = randint(11, 49)
+      const longueurSegment = randint(11, 49)
       switch (listeTypeDeQuestions[i]) {
         case 1: // Diamètre
           texte = `Si le rayon d'un cercle mesure $${longueurSegment}$ cm, alors son diamètre mesure`
           texteCorr = `Si le rayon d'un cercle mesure $${longueurSegment}$ cm alors son diamètre mesure $${longueurSegment * 2}$ cm.`
           reponse = longueurSegment * 2
-          break
-        default: // case 2 Rayon
-          texte = `Si le diamètre d'un cercle mesure $${longueurSegment * 2}$ cm, alors son rayon mesure`
-          texteCorr = `Si le diamètre d'un cercle mesure $${longueurSegment * 2}$ cm, alors son rayon mesure $${longueurSegment}$ cm.`
-          reponse = longueurSegment
           break
         case 3: // La moitié à partir du segment
           texte = `Si $${lettre1}$ est le milieu de $[${lettre2}${lettre3}]$ et $${lettre2}${lettre3}=${longueurSegment * 2}$ cm, alors  $[${lettre2}${lettre1}]$ mesure`
@@ -77,6 +71,11 @@ export default class RayonDiametreMilieu extends Exercice {
           texte = `$${lettre1}$ est le milieu de $[${lettre2}${lettre3}]$ et $${lettre2}${lettre1}=${longueurSegment}$ cm, alors $[${lettre2}${lettre3}]$ mesure`
           reponse = longueurSegment * 2
           texteCorr = `$${lettre1}$ est le milieu de $[${lettre2}${lettre3}]$ et $${lettre2}${lettre1}=${longueurSegment}$ cm, alors $[${lettre2}${lettre3}]$ mesure $${longueurSegment * 2}$ cm.`
+          break
+        default: // case 2 Rayon
+          texte = `Si le diamètre d'un cercle mesure $${longueurSegment * 2}$ cm, alors son rayon mesure`
+          texteCorr = `Si le diamètre d'un cercle mesure $${longueurSegment * 2}$ cm, alors son rayon mesure $${longueurSegment}$ cm.`
+          reponse = longueurSegment
           break
       }
       if (!this.interactif) {
