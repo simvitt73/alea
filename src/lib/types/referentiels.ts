@@ -329,6 +329,7 @@ export const isStaticWithoutPngUrl = (obj: any): obj is ExamItemInReferentiel =>
   (obj.typeExercice === 'sti2d' ||
     obj.typeExercice === 'dnb' ||
     obj.typeExercice === 'dnbpro' ||
+    obj.typeExercice === 'eam' ||
     obj.typeExercice === 'bac')
 
 /**

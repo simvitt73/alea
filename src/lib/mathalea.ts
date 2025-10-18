@@ -319,11 +319,13 @@ export async function mathaleaGetExercicesFromParams(
 ): Promise<TypeExercice[]> {
   const exercices = []
   for (const param of params) {
+    alert(param.uuid)
     if (
       param.uuid.substring(0, 4) === 'crpe' ||
       param.uuid.substring(0, 4) === 'dnb_' ||
       param.uuid.startsWith('dnbpro_') ||
       param.uuid.substring(0, 4) === 'e3c_' ||
+      param.uuid.startsWith('eam_') ||
       param.uuid.substring(0, 4) === 'bac_' ||
       param.uuid.startsWith('sti2d_') ||
       param.uuid.substring(0, 7) === 'evacom_' ||
@@ -340,6 +342,7 @@ export async function mathaleaGetExercicesFromParams(
         sujet === 'dnb' ||
         sujet === 'dnbpro' ||
         sujet === 'bac' ||
+        sujet === 'eam' ||
         sujet === 'sti2d'
       ) {
         let response = await window.fetch(

@@ -98,13 +98,13 @@ for (const tag of tagsDNB) {
 // Gestion des épreuves de 1re
 referentielFR['30_Épreuves de Première - Par année'] = {}
 referentielFR['30_Épreuves de Première - Par année']['E3C - Général'] = {}
-referentielFR['30_Épreuves de Première - Par année']['Spécialité'] = {}
-referentielFR['30_Épreuves de Première - Par année']['Spécifique'] = {}
+referentielFR['30_Épreuves de Première - Par année']['Specialite'] = {}
+referentielFR['30_Épreuves de Première - Par année']['Specifique'] = {}
 referentielFR['30_Épreuves de Première - Par année']['Technologique'] = {}
 referentielFR['40_Épreuves de Première - Par thème'] = {}
 referentielFR['40_Épreuves de Première - Par thème']['E3C - Général'] = {}
-referentielFR['40_Épreuves de Première - Par thème']['Spécialité'] = {}
-referentielFR['40_Épreuves de Première - Par thème']['Spécifique'] = {}
+referentielFR['40_Épreuves de Première - Par thème']['Specialite'] = {}
+referentielFR['40_Épreuves de Première - Par thème']['Specifique'] = {}
 referentielFR['40_Épreuves de Première - Par thème']['Technologique'] = {}
 referentielFR['50_Baccalauréat - Par année'] = {}
 referentielFR['50_Baccalauréat - Par année']['00_Général'] = {}
@@ -282,7 +282,7 @@ for (const tag of tagsE3C) {
 }
 
 // Gestion des EAM
-for (const filiere of ['Spécialité', 'Spécifique', 'Technologique']) {
+for (const filiere of ['Specialite', 'Specifique', 'Technologique']) {
   referentielFR['30_Épreuves de Première - Par année'][filiere] = {}
 }
 
@@ -295,7 +295,7 @@ for (const ex in dictionnaireEAM) {
 }
 
 for (const annee of ['2025']) {
-  for (const filiere of ['Spécialité', 'Spécifique', 'Technologique']) {
+  for (const filiere of ['Specialite', 'Specifique', 'Technologique']) {
     referentielFR['30_Épreuves de Première - Par année'][filiere][annee] = {}
     for (const ex in dictionnaireEAM) {
       if (
@@ -313,13 +313,13 @@ for (const annee of ['2025']) {
 const tagsEAM = [...setThemesEAM].sort((a, b) => {
   return a.localeCompare(b)
 })
-referentielFR['40_Épreuves de Première - Par thème']['Spécialité'] = {}
+referentielFR['40_Épreuves de Première - Par thème']['Specialite'] = {}
 
 for (const tag of tagsEAM) {
-  referentielFR['40_Épreuves de Première - Par thème']['Spécialité'][tag] = {}
+  referentielFR['40_Épreuves de Première - Par thème']['Specialite'][tag] = {}
   for (const ex in dictionnaireEAM) {
     if (dictionnaireEAM[ex].tags.includes(tag)) {
-      referentielFR['40_Épreuves de Première - Par thème']['Spécialité'][tag][
+      referentielFR['40_Épreuves de Première - Par thème']['Specialite'][tag][
         ex
       ] = { uuid: ex, ...dictionnaireEAM[ex] }
     }
