@@ -36,13 +36,15 @@
   export let zoomFactor: string
   export let isSolutionAccessible: boolean
   const foundResource = retrieveResourceFromUuid(allStaticReferentiels, uuid)
-  console.log(foundResource, uuid)
-  console.log(isStaticWithoutPngUrl(foundResource))
   if (isStaticWithoutPngUrl(foundResource)) {
     const [examen, filiere] = foundResource.uuid.split('_')
     if (examen === 'eam') {
     foundResource.png = `https://coopmaths.fr/alea/static/eam/${foundResource.annee}/tex/png/${foundResource.uuid}.png`
     foundResource.pngCor = `https://coopmaths.fr/alea/static/eam/${foundResource.annee}/tex/png/${foundResource.uuid}_cor.png`
+    }
+    else if (examen === 'STL') {
+      foundResource.png = `https://coopmaths.fr/alea/static/stl/${foundResource.annee}/tex/png/${foundResource.uuid}.png`
+      foundResource.pngCor = `https://coopmaths.fr/alea/static/stl/${foundResource.annee}/tex/png/${foundResource.uuid}_cor.png`
     } else {
     foundResource.png = `https://coopmaths.fr/alea/static/${examen}/${foundResource.annee}/tex/png/${foundResource.uuid}.png`
     foundResource.pngCor = `https://coopmaths.fr/alea/static/${examen}/${foundResource.annee}/tex/png/${foundResource.uuid}_cor.png`
