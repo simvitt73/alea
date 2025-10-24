@@ -438,7 +438,7 @@ Enfin, ils estiment que $${texNombre(Pev2 * 100, 1)}\\,\\%$ des animaux contract
         }
       }
 
-      if (this.questionJamaisPosee(i)) {
+      if (this.questionJamaisPosee(i, val1, val2, val3)) {
         // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
