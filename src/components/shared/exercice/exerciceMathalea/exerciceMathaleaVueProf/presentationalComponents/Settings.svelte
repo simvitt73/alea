@@ -176,7 +176,7 @@
     <h3 class="text-coopmaths-struct dark:text-coopmathsdark-struct font-bold">
       Paramètres
     </h3>
-    <div class="w-full flex flex-row gap-x-4">
+    <div class="w-full flex flex-row items-end gap-x-4">
       {#if exercice.nbQuestionsModifiable}
         <div>
           <span
