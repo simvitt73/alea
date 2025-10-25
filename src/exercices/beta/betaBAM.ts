@@ -2,6 +2,7 @@ import Stat from '../../lib/mathFonctions/Stat'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { texNombre } from '../../lib/outils/texNombre'
 import { randint } from '../../modules/outils'
+import { creerSerieDeQuartiles } from '../../modules/outilsStat'
 import Exercice from '../Exercice'
 
 export const uuid = 'a5ab7'
@@ -53,7 +54,7 @@ export default class BetaBAM extends Exercice {
     const min = 1
     const max = 11
 
-    const serie = Stat.createSerieFromQuartiles({
+    const serie = creerSerieDeQuartiles({
       q1,
       mediane,
       q3,
