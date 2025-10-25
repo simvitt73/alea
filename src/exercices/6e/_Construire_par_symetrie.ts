@@ -210,6 +210,7 @@ export default class ConstruireParSymetrie extends Exercice {
     this.comment =
       "Décentrer l'axe ou le centre, permt d'éviter les stratégies de comptage à partir du bord du quadrillage"
   }
+
   // La fonction qui suit va chercher 3 points au hasard placés par rapport à la droite d de la façon demandée
   // Elle va s'assurer que la distance entre les projetés n'est pas trop petite afin d'espacer les corrections
   // Si pour une raison ou une autre elle ne trouve pas de point convenable, un message dans la console le signale.

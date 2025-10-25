@@ -42,7 +42,7 @@ export default class auto1AF2 extends ExerciceQcmA {
       -1,
       0.1 * (-1 - 4) * (-1 - 1) * (-1 + 3) + 0.5,
       {
-        //0.1*(-1- 4) * (-1 - 1) * (-1 +3)
+        // 0.1*(-1- 4) * (-1 - 1) * (-1 +3)
         color: 'black',
         letterSize: 'normalsize',
       },

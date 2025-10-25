@@ -46,6 +46,7 @@ export default class Pythagore2DBlockly extends Exercice {
     listeTypeDeQuestion: string
     key: string
   }[]
+
   constructor() {
     super()
 

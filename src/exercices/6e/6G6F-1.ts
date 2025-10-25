@@ -88,7 +88,7 @@ export default class ConstruireUnTriangleParticulierEtSonCercleCirconscrit exten
       listeDeNomsDePolygones.push(nom)
       let sommets: string[] = []
       for (let i = 0; i < 3; i++) sommets.push(nom[i])
-      let codages: NestedObjetMathalea2dArray = []
+      const codages: NestedObjetMathalea2dArray = []
       const A = point(0, 0, 'A', 'left')
 
       let B: Point

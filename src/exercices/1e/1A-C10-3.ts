@@ -307,7 +307,7 @@ export default class InequationsSecondDegre extends ExerciceQcmA {
   constructor() {
     super()
     this.versionAleatoire()
-    //this.options = { vertical: true, ordered: false }
+    // this.options = { vertical: true, ordered: false }
     this.besoinFormulaire5CaseACocher = ['Sans la courbe']
   }
 }
