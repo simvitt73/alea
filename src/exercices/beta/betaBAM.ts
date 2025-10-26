@@ -2,6 +2,7 @@ import Stat from '../../lib/mathFonctions/Stat'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { texNombre } from '../../lib/outils/texNombre'
 import { randint } from '../../modules/outils'
+import { creerSerieDeQuartiles } from '../../modules/outilsStat'
 import Exercice from '../Exercice'
 
 export const uuid = 'a5ab7'
@@ -53,7 +54,7 @@ export default class BetaBAM extends Exercice {
     const min = 1
     const max = 11
 
-    const serie = Stat.createSerieFromQuartiles({
+    const serie = creerSerieDeQuartiles({
       q1,
       mediane,
       q3,
@@ -63,13 +64,13 @@ export default class BetaBAM extends Exercice {
       n: 30,
     })
     const stat = new Stat(serie)
-    const boite = Stat.boiteAMoustache(stat.serie)
+    const boite = stat.boiteAMoustache()
     const valeurs = boite.valeurs
     const ecartInterquartile = boite.q3 - boite.q1
     const borneInf = boite.q1 - 1.5 * ecartInterquartile
     const borneSup = boite.q3 + 1.5 * ecartInterquartile
     const valeursHorsBornes = stat.serie.filter(
-      (v) => v < borneInf || v > borneSup,
+      (v) => Number(v) < borneInf || Number(v) > borneSup,
     )
     const bonneReponse = valeursHorsBornes.length > 0 ? 'Oui' : 'Non'
     this.listeQuestions[0] = `Voici la série de nombres : ${stat.listeSerie({ triee: false, tableau: false })}.<br>
@@ -79,7 +80,6 @@ Et voici l'histogramme de cette série :<br>
 ${
   this.sup5
     ? stat.diagramme({
-        isQualitative: false,
         cumul: false,
         croissance: true,
         barres: true,
@@ -88,7 +88,6 @@ ${
         effectifsOn: this.sup3,
       })
     : stat.diagramme({
-        isQualitative: false,
         cumul: true,
         croissance: true,
         barres: false,
@@ -100,7 +99,6 @@ ${
 ${
   this.sup5
     ? stat.diagramme({
-        isQualitative: false,
         cumul: false,
         croissance: true,
         barres: true,
@@ -109,7 +107,6 @@ ${
         valuesOn: this.sup4,
       })
     : stat.diagramme({
-        isQualitative: false,
         cumul: true,
         croissance: false,
         barres: false,
