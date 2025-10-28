@@ -389,6 +389,8 @@ bcommit:
     - apt-get install -y wget iproute2
     - wget -qO- ipinfo.io/ip
     - ip addr show
+    - NODE_OPTIONS=--max-old-space-size=4096 pnpm test:unit
+    - NODE_OPTIONS=--max-old-space-size=4096 pnpm test:src
   rules:
     - when: always
   artifacts:
