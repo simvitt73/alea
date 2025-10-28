@@ -1,0 +1,23 @@
+{
+  // Configuration de l'éditeur
+  "format_on_save": "on",
+  "formatter": "prettier",
+  "c_spell.words": ["defaut", "reponse"],
+
+  // Actions à effectuer lors de la sauvegarde
+  "actions_on_save": {
+    "source.fix_all": true,
+    "organize_imports": true
+  },
+
+  // Configuration spécifique à ESLint
+  "eslint": {
+    "languages": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "svelte"
+    ]
+  }
+}
