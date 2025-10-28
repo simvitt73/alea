@@ -2719,6 +2719,42 @@
     "titre": "Nombres premiers",
     "sousThemes": {}
   },
+  "TTA": {
+    "titre": "Vocabulaire ensembliste et logique",
+    "sousThemes": {}
+  },
+  "TTB": {
+    "titre": "Algorithmique et programmation",
+    "sousThemes": {}
+  },
+  "TTC": {
+    "titre": "Activités géométriques",
+    "sousThemes": {}
+  },
+  "TTD": {
+    "titre": "Automatismes",
+    "sousThemes": {}
+  },
+  "TTE": {
+    "titre": "Analyse",
+    "sousThemes": {}
+  },
+  "TTF": {
+    "titre": "Analyse (STI2D)",
+    "sousThemes": {}
+  },
+  "TTG": {
+    "titre": "Statistique et probabilités",
+    "sousThemes": {}
+  },
+  "TTH": {
+    "titre": "Thèmes d’étude",
+    "sousThemes": {}
+  },
+  "TTI": {
+    "titre": "Nombres Complexes",
+    "sousThemes": {}
+  },
   "TQCM": {
     "titre": "Qcm du bac",
     "sousThemes": {
