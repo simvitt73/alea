@@ -905,7 +905,7 @@ export default class SujetCAN2023troisieme extends Exercice {
             texte = `Pour $x=${a}$, <br> $${b}x^2=$ `
             texte += ' $\\ldots$'
           }
-          texteCorr = `Pour $x=${a}$, ${sp(2)} $${b}x^2=${b}\\times${ecritureParentheseSiNegatif(a)}=${miseEnEvidence(reponse)}$.`
+          texteCorr = `Pour $x=${a}$, ${sp(2)} $${b}x^2=${b}\\times${ecritureParentheseSiNegatif(a)}^2=${miseEnEvidence(reponse)}$.`
           this.listeCanEnonces.push(`Pour $x=${a}$`)
           this.listeCanReponsesACompleter.push(`$${b}x^2=\\ldots$`)
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
