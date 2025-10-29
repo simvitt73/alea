@@ -391,6 +391,7 @@ tests-unitaires:
     - echo "CI_PIPELINE_SOURCE '$CI_PIPELINE_SOURCE'"
     - echo "$CI_COMMIT_AUTHOR"
     - pnpm install
+    - pnpm run makeJson
     - NODE_OPTIONS=--max-old-space-size=4096 pnpm test:unit
     - NODE_OPTIONS=--max-old-space-size=4096 pnpm test:src
   rules:
