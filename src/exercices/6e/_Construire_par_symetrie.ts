@@ -10,7 +10,7 @@ import {
 import { grille, seyes } from '../../lib/2d/Grille'
 import { point, pointSurDroite } from '../../lib/2d/points'
 import { nommePolygone, Polygone, polygone } from '../../lib/2d/polygones'
-import { norme, segment, Vecteur, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPoint } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import {
@@ -21,7 +21,12 @@ import {
   translation,
 } from '../../lib/2d/transformations'
 import { aireTriangle } from '../../lib/2d/triangle'
-import { longueur, pointEstSur } from '../../lib/2d/utilitairesGeometriques'
+import {
+  longueur,
+  norme,
+  pointEstSur,
+} from '../../lib/2d/utilitairesGeometriques'
+import { vecteur, type Vecteur } from '../../lib/2d/Vecteur'
 import { vide2d } from '../../lib/2d/Vide2d'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { creerNomDePolygone, numAlpha } from '../../lib/outils/outilString'

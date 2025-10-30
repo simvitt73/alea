@@ -7,14 +7,19 @@ import {
   pointSurSegment,
 } from '../lib/2d/points'
 import { pointAbstrait, PointAbstrait } from '../lib/2d/points-abstraits'
-import { norme, Segment, segment, vecteur } from '../lib/2d/segmentsVecteurs'
+import { Segment, segment } from '../lib/2d/segmentsVecteurs'
 import {
   homothetie,
   rotation,
   translation,
   translation2Points,
 } from '../lib/2d/transformations'
-import { angleOriente, longueur } from '../lib/2d/utilitairesGeometriques'
+import {
+  angleOriente,
+  longueur,
+  norme,
+} from '../lib/2d/utilitairesGeometriques'
+import { vecteur } from '../lib/2d/Vecteur'
 import { context } from './context'
 import {
   bissectriceAuCompas,

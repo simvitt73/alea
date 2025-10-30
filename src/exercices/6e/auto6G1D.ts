@@ -10,13 +10,13 @@ import {
   Polygone,
   polygone,
 } from '../../lib/2d/polygones'
-import { Vecteur, vecteur } from '../../lib/2d/segmentsVecteurs'
 import {
   homothetie,
   rotation,
   similitude,
   translation,
 } from '../../lib/2d/transformations'
+import { vecteur, type Vecteur } from '../../lib/2d/Vecteur'
 import { vide2d } from '../../lib/2d/Vide2d'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { context } from '../../modules/context'

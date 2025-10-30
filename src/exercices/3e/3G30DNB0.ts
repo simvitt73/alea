@@ -1,9 +1,9 @@
+import { vecteur } from '../../lib/2d/Vecteur'
 import { codageAngleDroit } from '../../lib/2d/angles'
 import { colorToLatexOrHTML } from '../../lib/2d/colorToLatexOrHtml'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { point } from '../../lib/2d/points'
 import { polygone } from '../../lib/2d/polygones'
-import { vecteur } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, latex2d } from '../../lib/2d/textes'
 import { translation } from '../../lib/2d/transformations'
 import {

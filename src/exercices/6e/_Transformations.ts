@@ -1,4 +1,5 @@
 import { tracePoint } from '../../lib/2d/TracePoint'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { codageAngleDroit } from '../../lib/2d/angles'
 import { afficheMesureAngle, codageSegments } from '../../lib/2d/codages'
 import {
@@ -11,7 +12,7 @@ import {
   droiteVerticaleParPoint,
 } from '../../lib/2d/droites'
 import { milieu, point, pointSurDroite } from '../../lib/2d/points'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import {
   labelLatexPoint,
   latexParCoordonnees,

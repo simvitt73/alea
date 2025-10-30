@@ -1,9 +1,10 @@
 import { codageAngleDroit } from '../../../lib/2d/angles'
 import { codageSegment } from '../../../lib/2d/codages'
+import { demiDroite } from '../../../lib/2d/DemiDroite'
 import { milieu, point } from '../../../lib/2d/points'
 import { polygoneAvecNom } from '../../../lib/2d/polygones'
 import { ellipse } from '../../../lib/2d/projections3d'
-import { demiDroite, segment } from '../../../lib/2d/segmentsVecteurs'
+import { segment } from '../../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPosition } from '../../../lib/2d/textes'
 import {
   handleAnswers,

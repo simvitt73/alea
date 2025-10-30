@@ -5,6 +5,7 @@
  * @author Rémi Angot
  */
 
+import type { DemiDroite } from '../lib/2d/DemiDroite'
 import type { Droite, Mediatrice } from '../lib/2d/droites'
 import { fixeBordures } from '../lib/2d/fixeBordures'
 import type { IDroite, IVecteur } from '../lib/2d/Interfaces'
@@ -12,7 +13,7 @@ import { ObjetMathalea2D } from '../lib/2d/ObjetMathalea2D'
 import type { Point } from '../lib/2d/points'
 import type { PointAbstrait } from '../lib/2d/points-abstraits'
 import type { Polygone } from '../lib/2d/polygones'
-import type { DemiDroite, Segment, Vecteur } from '../lib/2d/segmentsVecteurs'
+import type { Segment } from '../lib/2d/segmentsVecteurs'
 import {
   affiniteOrtho,
   homothetie,
@@ -20,6 +21,7 @@ import {
   symetrieAxiale,
   translation,
 } from '../lib/2d/transformations'
+import type { Vecteur } from '../lib/2d/Vecteur'
 import { arrondi } from '../lib/outils/nombres'
 
 // JSDOC Validee par EE Juin 2022

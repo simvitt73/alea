@@ -1,4 +1,3 @@
-import { arrondi } from '../outils/nombres'
 import { ObjetMathalea2D } from './ObjetMathalea2D'
 
 export class PointAbstrait extends ObjetMathalea2D {
@@ -42,19 +41,19 @@ export class PointAbstrait extends ObjetMathalea2D {
       this.nom = String(arg3)
     }
     // On n'a pas besoin de davantage de décimales pour les graphiques !
-    this.x = arrondi(this.x, 2)
-    this.y = arrondi(this.y, 2)
+    this.x = Number(this.x.toFixed(2))
+    this.y = Number(this.y.toFixed(2))
 
     this.positionLabel = positionLabel
     this.bordures = [this.x, this.y, this.x, this.y]
   }
 
   xSVG(coeff: number) {
-    return arrondi(this.x * coeff, 1)
+    return Number((this.x * coeff).toFixed(1))
   }
 
   ySVG(coeff: number) {
-    return arrondi(-this.y * coeff, 1)
+    return Number((-this.y * coeff).toFixed(1))
   }
 }
 

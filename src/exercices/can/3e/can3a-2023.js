@@ -1,13 +1,13 @@
 import { codageAngle, codageAngleDroit } from '../../../lib/2d/angles'
 import { codageSegments } from '../../../lib/2d/codages'
 import { colorToLatexOrHTML } from '../../../lib/2d/colorToLatexOrHtml'
+import { demiDroite } from '../../../lib/2d/DemiDroite'
 import { droite } from '../../../lib/2d/droites'
 import { fixeBordures } from '../../../lib/2d/fixeBordures'
 import { milieu, point } from '../../../lib/2d/points'
 import { polygone, polygoneAvecNom } from '../../../lib/2d/polygones'
 import { repere } from '../../../lib/2d/reperes'
 import {
-  demiDroite,
   segment,
   segmentAvecExtremites,
 } from '../../../lib/2d/segmentsVecteurs'

@@ -1,6 +1,7 @@
+import { vecteur } from '../../../lib/2d/Vecteur'
 import { point } from '../../../lib/2d/points'
 import { repere } from '../../../lib/2d/reperes'
-import { segment, vecteur } from '../../../lib/2d/segmentsVecteurs'
+import { segment } from '../../../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../../../lib/2d/textes'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
 import { remplisLesBlancs } from '../../../lib/interactif/questionMathLive'

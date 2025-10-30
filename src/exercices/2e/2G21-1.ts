@@ -1,7 +1,6 @@
 import { tracePoint } from '../../lib/2d/TracePoint'
 import { point, pointAdistance } from '../../lib/2d/points'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
-import { vecteur } from '../../lib/2d/segmentsVecteurs'
 import { latexParPoint } from '../../lib/2d/textes'
 import {
   homothetie,
@@ -14,6 +13,7 @@ import { translationAnimee } from '../../modules/2dAnimation'
 import Alea2iep from '../../modules/Alea2iep'
 import { context } from '../../modules/context'
 
+import { vecteur } from '../../lib/2d/Vecteur'
 import { colorToLatexOrHTML } from '../../lib/2d/colorToLatexOrHtml'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { mathalea2d } from '../../modules/mathalea2d'

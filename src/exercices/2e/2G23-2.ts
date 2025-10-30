@@ -1,13 +1,10 @@
 import { tracePoint } from '../../lib/2d/TracePoint'
+import { nomVecteurParPosition, vecteur } from '../../lib/2d/Vecteur'
 import { colorToLatexOrHTML } from '../../lib/2d/colorToLatexOrHtml'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { point } from '../../lib/2d/points'
 import { repere } from '../../lib/2d/reperes'
-import {
-  nomVecteurParPosition,
-  segment,
-  vecteur,
-} from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { latexParPoint, texteParPosition } from '../../lib/2d/textes'
 import { homothetie } from '../../lib/2d/transformations'
 import { longueur } from '../../lib/2d/utilitairesGeometriques'

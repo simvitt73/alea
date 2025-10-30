@@ -70,76 +70,74 @@ export class TracePoint extends ObjetMathalea2D {
       } else {
         A = unPoint
       }
-      if (A.constructor === Point) {
-        if (this.style === 'x') {
-          s1 = segment(
-            point(A.x - this.taille / coeff, A.y + this.taille / coeff),
-            point(A.x + this.taille / coeff, A.y - this.taille / coeff),
-            this.color[0],
-          )
-          s2 = segment(
-            point(A.x - this.taille / coeff, A.y - this.taille / coeff),
-            point(A.x + this.taille / coeff, A.y + this.taille / coeff),
-            this.color[0],
-          )
-          s1.epaisseur = this.epaisseur
-          s2.epaisseur = this.epaisseur
-          s1.opacite = this.opacite
-          s2.opacite = this.opacite
-          objetssvg.push(s1, s2)
-        } else if (this.style === 'o') {
-          p1 = point(A.x, A.y)
-          c = cercle(p1, this.taille / coeff, this.color[0])
-          c.epaisseur = this.epaisseur
-          c.opacite = this.opacite
-          c.couleurDeRemplissage = this.color
-          c.opaciteDeRemplissage = this.opacite / 2
-          objetssvg.push(c)
-        } else if (this.style === '#') {
-          p1 = point(A.x - this.taille / coeff, A.y - this.taille / coeff)
-          p2 = point(A.x + this.taille / coeff, A.y - this.taille / coeff)
-          c = carre(p1, p2, this.color[0]) as unknown as Polygone
-          c.epaisseur = this.epaisseur
-          c.opacite = this.opacite
-          c.couleurDeRemplissage = [
-            this.color[0] ?? 'black',
-            this.color[1] ?? 'black',
-          ]
-          c.opaciteDeRemplissage = this.opacite / 2
-          objetssvg.push(c)
-        } else if (this.style === '+') {
-          s1 = segment(
-            point(A.x, A.y + this.taille / coeff),
-            point(A.x, A.y - this.taille / coeff),
-            this.color[0],
-          )
-          s2 = segment(
-            point(A.x - this.taille / coeff, A.y),
-            point(A.x + this.taille / coeff, A.y),
-            this.color[0],
-          )
-          s1.epaisseur = this.epaisseur
-          s2.epaisseur = this.epaisseur
-          s1.opacite = this.opacite
-          s2.opacite = this.opacite
-          objetssvg.push(s1, s2)
-        } else if (this.style === '|') {
-          s1 = segment(
-            point(A.x, A.y + this.taille / coeff),
-            point(A.x, A.y - this.taille / coeff),
-            this.color[0],
-          )
-          s1.epaisseur = this.epaisseur
-          s1.opacite = this.opacite
-          objetssvg.push(s1)
-        } else if (this.style === '.') {
-          s1 = plot(A.x, A.y, {
-            couleur: this.color[0],
-            rayon: this.epaisseur * 0.05,
-            couleurDeRemplissage: this.color[0],
-          })
-          objetssvg.push(s1)
-        }
+      if (this.style === 'x') {
+        s1 = segment(
+          point(A.x - this.taille / coeff, A.y + this.taille / coeff),
+          point(A.x + this.taille / coeff, A.y - this.taille / coeff),
+          this.color[0],
+        )
+        s2 = segment(
+          point(A.x - this.taille / coeff, A.y - this.taille / coeff),
+          point(A.x + this.taille / coeff, A.y + this.taille / coeff),
+          this.color[0],
+        )
+        s1.epaisseur = this.epaisseur
+        s2.epaisseur = this.epaisseur
+        s1.opacite = this.opacite
+        s2.opacite = this.opacite
+        objetssvg.push(s1, s2)
+      } else if (this.style === 'o') {
+        p1 = point(A.x, A.y)
+        c = cercle(p1, this.taille / coeff, this.color[0])
+        c.epaisseur = this.epaisseur
+        c.opacite = this.opacite
+        c.couleurDeRemplissage = this.color
+        c.opaciteDeRemplissage = this.opacite / 2
+        objetssvg.push(c)
+      } else if (this.style === '#') {
+        p1 = point(A.x - this.taille / coeff, A.y - this.taille / coeff)
+        p2 = point(A.x + this.taille / coeff, A.y - this.taille / coeff)
+        c = carre(p1, p2, this.color[0]) as unknown as Polygone
+        c.epaisseur = this.epaisseur
+        c.opacite = this.opacite
+        c.couleurDeRemplissage = [
+          this.color[0] ?? 'black',
+          this.color[1] ?? 'black',
+        ]
+        c.opaciteDeRemplissage = this.opacite / 2
+        objetssvg.push(c)
+      } else if (this.style === '+') {
+        s1 = segment(
+          point(A.x, A.y + this.taille / coeff),
+          point(A.x, A.y - this.taille / coeff),
+          this.color[0],
+        )
+        s2 = segment(
+          point(A.x - this.taille / coeff, A.y),
+          point(A.x + this.taille / coeff, A.y),
+          this.color[0],
+        )
+        s1.epaisseur = this.epaisseur
+        s2.epaisseur = this.epaisseur
+        s1.opacite = this.opacite
+        s2.opacite = this.opacite
+        objetssvg.push(s1, s2)
+      } else if (this.style === '|') {
+        s1 = segment(
+          point(A.x, A.y + this.taille / coeff),
+          point(A.x, A.y - this.taille / coeff),
+          this.color[0],
+        )
+        s1.epaisseur = this.epaisseur
+        s1.opacite = this.opacite
+        objetssvg.push(s1)
+      } else if (this.style === '.') {
+        s1 = plot(A.x, A.y, {
+          couleur: this.color[0],
+          rayon: this.epaisseur * 0.05,
+          couleurDeRemplissage: this.color[0],
+        })
+        objetssvg.push(s1)
       }
     }
     let code = ''
@@ -163,77 +161,75 @@ export class TracePoint extends ObjetMathalea2D {
       } else {
         A = unPoint
       }
-      if (A.constructor === Point) {
-        if (this.style === 'x') {
-          this.tailleTikz = this.taille / 16 // EE : Sinon, on ne voit pas la croix.
-          s1 = segment(
-            point(A.x - this.tailleTikz, A.y + this.tailleTikz),
-            point(A.x + this.tailleTikz, A.y - this.tailleTikz),
-            this.color[1],
-          )
-          s2 = segment(
-            point(A.x - this.tailleTikz, A.y - this.tailleTikz),
-            point(A.x + this.tailleTikz, A.y + this.tailleTikz),
-            this.color[1],
-          )
-          s1.epaisseur = this.epaisseur / 1.6
-          s2.epaisseur = this.epaisseur / 1.6
-          s1.opacite = this.opacite
-          s2.opacite = this.opacite
-          objetstikz.push(s1, s2)
-        } else if (this.style === 'o') {
-          p1 = point(A.x, A.y)
-          c = cercle(p1, this.tailleTikz, this.color[1])
-          c.epaisseur = this.epaisseur
-          c.opacite = this.opacite
-          c.couleurDeRemplissage = this.color
-          c.opaciteDeRemplissage = this.opacite / 2
-          objetstikz.push(c)
-        } else if (this.style === '#') {
-          p1 = point(A.x - this.tailleTikz, A.y - this.tailleTikz)
-          p2 = point(A.x + this.tailleTikz, A.y - this.tailleTikz)
-          c = carre(p2, p1, this.color[1]) as unknown as Polygone
-          c.epaisseur = this.epaisseur
-          c.opacite = this.opacite
-          c.couleurDeRemplissage = [
-            this.color[0] ?? 'black',
-            this.color[1] ?? 'black',
-          ]
-          c.opaciteDeRemplissage = this.opacite / 2
-          objetstikz.push(c)
-        } else if (this.style === '+') {
-          s1 = segment(
-            point(A.x, A.y + this.tailleTikz),
-            point(A.x, A.y - this.tailleTikz),
-            this.color[1],
-          )
-          s2 = segment(
-            point(A.x - this.tailleTikz, A.y),
-            point(A.x + this.tailleTikz, A.y),
-            this.color[1],
-          )
-          s1.epaisseur = this.epaisseur
-          s2.epaisseur = this.epaisseur
-          s1.opacite = this.opacite
-          s2.opacite = this.opacite
-          objetstikz.push(s1, s2)
-        } else if (this.style === '|') {
-          s1 = segment(
-            point(A.x, A.y + this.tailleTikz),
-            point(A.x, A.y - this.tailleTikz),
-            this.color[1],
-          )
-          s1.epaisseur = this.epaisseur
-          s1.opacite = this.opacite
-          objetstikz.push(s1)
-        } else if (this.style === '.') {
-          s1 = plot(A.x, A.y, {
-            couleur: this.color[0],
-            rayon: this.epaisseur * 0.05,
-            couleurDeRemplissage: this.color[1], // je mets la couleur html, car elle va être parsée par colorToLatexOrHtml à nouveau
-          })
-          objetstikz.push(s1)
-        }
+      if (this.style === 'x') {
+        this.tailleTikz = this.taille / 16 // EE : Sinon, on ne voit pas la croix.
+        s1 = segment(
+          point(A.x - this.tailleTikz, A.y + this.tailleTikz),
+          point(A.x + this.tailleTikz, A.y - this.tailleTikz),
+          this.color[1],
+        )
+        s2 = segment(
+          point(A.x - this.tailleTikz, A.y - this.tailleTikz),
+          point(A.x + this.tailleTikz, A.y + this.tailleTikz),
+          this.color[1],
+        )
+        s1.epaisseur = this.epaisseur / 1.6
+        s2.epaisseur = this.epaisseur / 1.6
+        s1.opacite = this.opacite
+        s2.opacite = this.opacite
+        objetstikz.push(s1, s2)
+      } else if (this.style === 'o') {
+        p1 = point(A.x, A.y)
+        c = cercle(p1, this.tailleTikz, this.color[1])
+        c.epaisseur = this.epaisseur
+        c.opacite = this.opacite
+        c.couleurDeRemplissage = this.color
+        c.opaciteDeRemplissage = this.opacite / 2
+        objetstikz.push(c)
+      } else if (this.style === '#') {
+        p1 = point(A.x - this.tailleTikz, A.y - this.tailleTikz)
+        p2 = point(A.x + this.tailleTikz, A.y - this.tailleTikz)
+        c = carre(p2, p1, this.color[1]) as unknown as Polygone
+        c.epaisseur = this.epaisseur
+        c.opacite = this.opacite
+        c.couleurDeRemplissage = [
+          this.color[0] ?? 'black',
+          this.color[1] ?? 'black',
+        ]
+        c.opaciteDeRemplissage = this.opacite / 2
+        objetstikz.push(c)
+      } else if (this.style === '+') {
+        s1 = segment(
+          point(A.x, A.y + this.tailleTikz),
+          point(A.x, A.y - this.tailleTikz),
+          this.color[1],
+        )
+        s2 = segment(
+          point(A.x - this.tailleTikz, A.y),
+          point(A.x + this.tailleTikz, A.y),
+          this.color[1],
+        )
+        s1.epaisseur = this.epaisseur
+        s2.epaisseur = this.epaisseur
+        s1.opacite = this.opacite
+        s2.opacite = this.opacite
+        objetstikz.push(s1, s2)
+      } else if (this.style === '|') {
+        s1 = segment(
+          point(A.x, A.y + this.tailleTikz),
+          point(A.x, A.y - this.tailleTikz),
+          this.color[1],
+        )
+        s1.epaisseur = this.epaisseur
+        s1.opacite = this.opacite
+        objetstikz.push(s1)
+      } else if (this.style === '.') {
+        s1 = plot(A.x, A.y, {
+          couleur: this.color[0],
+          rayon: this.epaisseur * 0.05,
+          couleurDeRemplissage: this.color[1], // je mets la couleur html, car elle va être parsée par colorToLatexOrHtml à nouveau
+        })
+        objetstikz.push(s1)
       }
     }
     let code = ''

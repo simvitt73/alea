@@ -2,7 +2,6 @@ import type { Droite } from '../../lib/2d/droites'
 import { milieu } from '../../lib/2d/points'
 import type { PointAbstrait } from '../../lib/2d/points-abstraits'
 import type { Polygone } from '../../lib/2d/polygones'
-import { vecteur } from '../../lib/2d/segmentsVecteurs'
 import {
   homothetie,
   rotation,
@@ -10,6 +9,7 @@ import {
   translation,
 } from '../../lib/2d/transformations'
 import { longueur } from '../../lib/2d/utilitairesGeometriques'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { shuffle } from '../../lib/outils/arrayOutils'
 import { arrondi } from '../../lib/outils/nombres'
 import { stringNombre } from '../../lib/outils/texNombre'

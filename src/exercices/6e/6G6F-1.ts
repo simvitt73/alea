@@ -6,6 +6,7 @@ import {
   codageSegments,
   placeLatexSurSegment,
 } from '../../lib/2d/codages'
+import { demiDroite } from '../../lib/2d/DemiDroite'
 import { mediatrice } from '../../lib/2d/droites'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import {
@@ -15,7 +16,6 @@ import {
   pointIntersectionDD,
 } from '../../lib/2d/points'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
-import { demiDroite } from '../../lib/2d/segmentsVecteurs'
 import { longueur } from '../../lib/2d/utilitairesGeometriques'
 import { shuffle } from '../../lib/outils/arrayOutils'
 import { creerNomDePolygone } from '../../lib/outils/outilString'

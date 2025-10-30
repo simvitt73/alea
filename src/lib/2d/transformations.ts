@@ -12,7 +12,8 @@ import type {
 import { Point, point } from './points'
 import { pointAbstrait, PointAbstrait } from './points-abstraits'
 import { Polygone, polygone } from './polygones'
-import { Segment, segment, Vecteur, vecteur } from './segmentsVecteurs'
+import { Segment, segment } from './segmentsVecteurs'
+import { Vecteur, vecteur } from './Vecteur'
 
 /**
  * M = translation(O,v) //M est l'image de O dans la translation de vecteur v

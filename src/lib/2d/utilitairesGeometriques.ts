@@ -5,8 +5,6 @@ import type {
   IPolygone,
   ISegment,
 } from './Interfaces'
-import type { PointAbstrait } from './points-abstraits'
-import { vecteur } from './segmentsVecteurs'
 
 /**
  * Teste l'appartenance d'un point dans un triangle
@@ -237,9 +235,9 @@ export function angleOriente(
 // JSDOC Validee par EE Juin 2022
 
 export function angleradian(
-  A: PointAbstrait,
-  O: PointAbstrait,
-  B: PointAbstrait,
+  A: IPointAbstrait,
+  O: IPointAbstrait,
+  B: IPointAbstrait,
   precision = 2,
 ) {
   const OA = longueur(O, A, precision)
@@ -266,17 +264,17 @@ export function angleradian(
 // JSDOC Validee par EE Juin 2022
 
 export function angle(
-  A: PointAbstrait | IPointAbstrait,
-  O: PointAbstrait | IPointAbstrait,
-  B: PointAbstrait | IPointAbstrait,
+  A: IPointAbstrait,
+  O: IPointAbstrait,
+  B: IPointAbstrait,
   precision = 2,
 ) {
   const OA = longueur(O, A, precision)
   const OB = longueur(O, B, precision)
   const AB = longueur(A, B, precision)
   if (OA > 0 && OB > 0) {
-    const v = vecteur(O, A)
-    const w = vecteur(O, B)
+    const v = { x: A.x - O.x, y: A.y - O.y }
+    const w = { x: B.x - O.x, y: B.y - O.y }
     if (Math.abs(v.x * w.y - v.y * w.x) <= 0.000000000001) {
       // vecteurs colinéaires à epsilon près pour éviter les effets de bords dus aux flottants.
       if (v.x * w.x > 0) return 0
@@ -294,4 +292,144 @@ export function angle(
     // Ce n'est pas normal de demander la mesure d'un angle dont un côté a une longueur nulle.
     return 0
   }
+}
+/**
+ * norme(V) renvoie la norme du vecteur
+ *
+ * @author Rémi Angot
+ */
+
+export function norme(v: { x: number; y: number }): number {
+  return Math.sqrt(v.x ** 2 + v.y ** 2)
+}
+
+/**
+ * Teste si un segment coupe un cercle, une droite, une demi-droite ou un autre segment
+ * Déleste la classe Segment pour éviter les dépendances circulaires.
+ */
+export function estSecant(
+  s:
+    | ISegment
+    | {
+        extremite1: IPointAbstrait
+        extremite2: IPointAbstrait
+      },
+  objet:
+    | IDroite
+    | ISegment
+    | {
+        extremite1: IPointAbstrait
+        extremite2: IPointAbstrait
+      }
+    | ICercle,
+): boolean {
+  const A = s.extremite1
+  const B = s.extremite2
+  const eps = 0.01
+
+  // Segment dégénéré: on teste si l’unique point est sur l’objet
+  if (Math.abs(A.x - B.x) < eps && Math.abs(A.y - B.y) < eps) {
+    return pointEstSur(A, objet as any)
+  }
+
+  // Aides internes
+  const lineFrom2Pts = (P: IPointAbstrait, Q: IPointAbstrait) => {
+    // ax + by + c = 0
+    const a = P.y - Q.y
+    const b = Q.x - P.x
+    const c = P.x * Q.y - Q.x * P.y
+    return { a, b, c }
+  }
+  const intersectLines = (
+    L1: { a: number; b: number; c: number },
+    L2: { a: number; b: number; c: number },
+  ): IPointAbstrait | null => {
+    const det = L1.a * L2.b - L2.a * L1.b
+    if (Math.abs(det) < 1e-12) return null
+    const x = (L1.b * L2.c - L2.b * L1.c) / det
+    const y = (L1.c * L2.a - L2.c * L1.a) / det
+    return { x, y, nom: '' } as IPointAbstrait
+  }
+  const onSegment = (M: IPointAbstrait, P: IPointAbstrait, Q: IPointAbstrait) =>
+    Math.min(P.x, Q.x) - eps <= M.x &&
+    M.x <= Math.max(P.x, Q.x) + eps &&
+    Math.min(P.y, Q.y) - eps <= M.y &&
+    M.y <= Math.max(P.y, Q.y) + eps &&
+    Math.abs((Q.x - P.x) * (M.y - P.y) - (Q.y - P.y) * (M.x - P.x)) <= eps
+
+  const dist2PointSegment = (
+    M: IPointAbstrait,
+    P: IPointAbstrait,
+    Q: IPointAbstrait,
+  ) => {
+    const vx = Q.x - P.x
+    const vy = Q.y - P.y
+    const wx = M.x - P.x
+    const wy = M.y - P.y
+    const vv = vx * vx + vy * vy
+    if (vv === 0) return (M.x - P.x) ** 2 + (M.y - P.y) ** 2
+    let t = (wx * vx + wy * vy) / vv
+    t = Math.max(0, Math.min(1, t))
+    const px = P.x + t * vx
+    const py = P.y + t * vy
+    return (M.x - px) ** 2 + (M.y - py) ** 2
+  }
+
+  // Cercle
+  if ('rayon' in (objet as any) && 'centre' in (objet as any)) {
+    const R = Number((objet as ICercle).rayon)
+    const C = (objet as ICercle).centre
+    const d2 = dist2PointSegment(C, A, B)
+    if (d2 <= (R + eps) ** 2) return true
+    // sinon, pas d’intersection
+    return false
+  }
+
+  // Droite (via équation ax+by+c=0 si dispo)
+  if ('a' in (objet as any) && 'b' in (objet as any) && 'c' in (objet as any)) {
+    const Ls = lineFrom2Pts(A, B)
+    const Ld = {
+      a: (objet as any).a as number,
+      b: (objet as any).b as number,
+      c: (objet as any).c as number,
+    }
+    const I = intersectLines(Ls, Ld)
+    return I != null && onSegment(I, A, B)
+  }
+
+  // Segment ou demi-droite générique (extrémités)
+  if ('extremite1' in (objet as any) && 'extremite2' in (objet as any)) {
+    const C = (objet as any).extremite1 as IPointAbstrait
+    const D = (objet as any).extremite2 as IPointAbstrait
+    const L1 = lineFrom2Pts(A, B)
+    const L2 = lineFrom2Pts(C, D)
+    const I = intersectLines(L1, L2)
+
+    if (I == null) {
+      // Parallèles ou confondues -> tester recouvrement (points sur l’autre)
+      return (
+        onSegment(A, C, D) ||
+        onSegment(B, C, D) ||
+        onSegment(C, A, B) ||
+        onSegment(D, A, B)
+      )
+    }
+
+    // Si l’objet dispose d’une longueur => segment borné, sinon demi-droite
+    const isOtherSegment = 'longueur' in (objet as any)
+
+    const IOnS = onSegment(I, A, B)
+    if (!IOnS) return false
+    if (isOtherSegment) return onSegment(I, C, D)
+
+    // Demi-droite: vérifier la direction (produit scalaire >= 0 par rapport à C->D)
+    const dirx = D.x - C.x
+    const diry = D.y - C.y
+    const vix = I.x - C.x
+    const viy = I.y - C.y
+    return vix * dirx + viy * diry >= -eps
+  }
+
+  // Par défaut
+  return false
 }

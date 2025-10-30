@@ -5,9 +5,10 @@ import { cercle } from '../lib/2d/cercle'
 import { colorToLatexOrHTML } from '../lib/2d/colorToLatexOrHtml'
 import { Point, point } from '../lib/2d/points'
 import { carre } from '../lib/2d/polygones'
-import { segment, vecteur } from '../lib/2d/segmentsVecteurs'
+import { segment } from '../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../lib/2d/textes'
 import { rotation, translation } from '../lib/2d/transformations'
+import { vecteur } from '../lib/2d/Vecteur'
 import { extraireRacineCarree } from '../lib/outils/calculs'
 import {
   ecritureAlgebrique,

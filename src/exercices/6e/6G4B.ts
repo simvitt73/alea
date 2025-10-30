@@ -1,6 +1,6 @@
+import { demiDroite } from '../../lib/2d/DemiDroite'
 import { afficheMesureAngle } from '../../lib/2d/codages'
 import { point, pointSurSegment } from '../../lib/2d/points'
-import { demiDroite } from '../../lib/2d/segmentsVecteurs'
 import { texteParPoint } from '../../lib/2d/textes'
 import { homothetie, rotation, similitude } from '../../lib/2d/transformations'
 import { propositionsQcm } from '../../lib/interactif/qcm'

@@ -10,7 +10,7 @@ import { ObjetMathalea2D } from './ObjetMathalea2D'
 import { milieu, Point, point, pointSurSegment } from './points'
 import { PointAbstrait } from './points-abstraits'
 import type { Polygone } from './polygones'
-import { Segment, segment, vecteur } from './segmentsVecteurs'
+import { Segment, segment } from './segmentsVecteurs'
 import {
   Latex2d,
   latex2d,
@@ -23,6 +23,7 @@ import {
 import { tracePointSurDroite } from './TracePointSurDroite'
 import { rotation, similitude, translation } from './transformations'
 import { angleOriente, longueur } from './utilitairesGeometriques'
+import { vecteur } from './Vecteur'
 import { Vide2d } from './Vide2d'
 
 /**

@@ -1,9 +1,9 @@
+import { demiDroite } from '../../lib/2d/DemiDroite'
 import { tracePointSurDroite } from '../../lib/2d/TracePointSurDroite'
 import { afficheMesureAngle } from '../../lib/2d/codages'
 import { bissectrice, droite } from '../../lib/2d/droites'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { pointAbstrait } from '../../lib/2d/points-abstraits'
-import { demiDroite } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, latex2d } from '../../lib/2d/textes'
 import {
   homothetie,
