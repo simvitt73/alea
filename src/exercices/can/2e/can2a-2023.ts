@@ -1441,7 +1441,7 @@ export default class SujetCAN2023Seconde extends Exercice {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm$^3$'
           }
           this.canEnonce = texte
-          this.canReponseACompleter = '$\\ldots$ cm$^3$'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}^3$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           nbChamps = 1

@@ -128,7 +128,7 @@ export default class EnFonctionDeAire extends ExerciceSimple {
           }
 
           this.canEnonce = this.question
-          this.canReponseACompleter = '$\\ldots$ cm$^2$'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
           if (this.interactif) {
             this.optionsChampTexte = { texteApres: 'cm$^2$.' }
           } else {
@@ -232,7 +232,7 @@ export default class EnFonctionDeAire extends ExerciceSimple {
           $\\bullet$ L'aire de la partie hachurée est donc la somme de ces deux aires, soit $${miseEnEvidence(reduireAxPlusB(b, a ** 2))}$ cm$^2$.`
           }
           this.canEnonce = this.question
-          this.canReponseACompleter = '$\\ldots$ cm$^2$'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
           if (this.interactif) {
             this.optionsChampTexte = { texteApres: 'cm$^2$.' }
           } else {

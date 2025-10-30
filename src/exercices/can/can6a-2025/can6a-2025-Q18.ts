@@ -75,7 +75,7 @@ export default class Can2025N6Q18 extends ExerciceSimple {
     this.question += `Le périmètre de ce carré est égal à $${perimetre}$ cm.<br>
     La longueur du côté est égale à `
     if (!this.interactif) {
-      this.question += '$\\ldots$ cm.'
+      this.question += '$\\ldots\\text{ cm}$.'
     }
     this.canEnonce = `Le périmètre de ce carré est égal à $${perimetre}$ cm.<br>
     Complète. `

@@ -84,6 +84,6 @@ export default class SommeDeProduitsCompleter extends ExerciceSimple {
       this.question += '<br>'
     }
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots$ cm'
+    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
   }
 }

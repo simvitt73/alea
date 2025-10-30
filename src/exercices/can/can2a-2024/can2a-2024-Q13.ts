@@ -65,7 +65,7 @@ export default class NomExercice extends ExerciceSimple {
         this.correction = `L'aire est donnée par le produit des  deux plus petits côtés divisé par $2$, soit : $\\dfrac{5\\times 12}{2}=${miseEnEvidence(this.reponse)}$ cm$^2$.`
       }
       this.question = `Aire d'un triangle rectangle dont les côtés mesurent $${tri[0]}$ cm, $${tri[1]}$ cm et $${tri[2]}$ cm.`
-      this.canReponseACompleter = '$ \\ldots$ cm$^2$'
+      this.canReponseACompleter = '$ \\ldots\\text{ cm}^2$'
     }
     this.canEnonce = this.question
   }

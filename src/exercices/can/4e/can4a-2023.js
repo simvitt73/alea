@@ -999,9 +999,9 @@ export default class SujetCAN2023Quatrieme extends Exercice {
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
             } else {
-              texte += context.isHtml ? ' $\\ldots$ cm' : ''
+              texte += context.isHtml ? ' $\\ldots\\text{ cm}$' : ''
               this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
-                '$AC=\\ldots$ cm.'
+                '$AC=\\ldots\\text{ cm}$.'
             }
           } else {
             listeTriplet = [
@@ -1413,7 +1413,7 @@ export default class SujetCAN2023Quatrieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           } else {
-            texte += context.isHtml ? ' $\\ldots$ cm' : ''
+            texte += context.isHtml ? ' $\\ldots\\text{ cm}$' : ''
           }
 
           nbChamps = 1

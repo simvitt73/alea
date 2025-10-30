@@ -33,11 +33,11 @@ export default class Can2025N6Q29 extends ExerciceSimple {
     this.correction = ` Comme $1$ cm $=10$ mm, alors $1$ mm $=0,1$ cm.<br>
       Ainsi, pour passer des "mm" au "cm", on divise par $10$.<br>
         Comme $${a}\\div 10 =${texNombre(a / 10, 1)}$, alors $${a}$ mm$=${miseEnEvidence(texNombre(a / 10, 1))}$ cm. `
-    this.canReponseACompleter = ` $${a}$ mm $=\\ldots$ cm`
+    this.canReponseACompleter = ` $${a}$ mm $=\\ldots\\text{ cm}$`
     if (this.interactif) {
       this.optionsChampTexte = { texteApres: 'cm' }
     } else {
-      this.question += `${context.isHtml ? '$\\ldots$ cm' : ''}`
+      this.question += `${context.isHtml ? '$\\ldots\\text{ cm}$' : ''}`
     }
 
     this.canEnonce = 'Complète.'

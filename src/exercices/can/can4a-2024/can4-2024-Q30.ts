@@ -1,8 +1,8 @@
-import ExerciceSimple from '../../ExerciceSimple'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
-import { choice } from '../../../lib/outils/arrayOutils'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = 'Calculer un produit astucieusement'
 export const interactifReady = true
@@ -50,9 +50,9 @@ export default class NomExercice extends ExerciceSimple {
       }
     }
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots$ cm$^2$'
+    this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
     if (!this.interactif) {
-      this.question += ' $\\ldots$ cm$^2$.'
+      this.question += ' $\\ldots\\text{ cm}^2$.'
     }
   }
 }

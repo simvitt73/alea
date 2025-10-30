@@ -1,9 +1,9 @@
-import ExerciceSimple from '../../ExerciceSimple'
-import { texNombre } from '../../../lib/outils/texNombre'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { texNombre } from '../../../lib/outils/texNombre'
 import { context } from '../../../modules/context'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = 'Convertir des m en cm'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -32,11 +32,11 @@ export default class Can2025CM1Q29 extends ExerciceSimple {
     this.correction = ` $1$ m $=100$ cm<br>
       Ainsi, pour passer des "m" au "cm", on multiplie par $100$.<br>
         Comme $${a}\\times 100 =${texNombre(a * 100, 1)}$, alors $${a}$ m$=${miseEnEvidence(texNombre(a * 100, 1))}$ cm. `
-    this.canReponseACompleter = ` $${a}$ m $=\\ldots$ cm`
+    this.canReponseACompleter = ` $${a}$ m $=\\ldots\\text{ cm}$`
     if (this.interactif) {
       this.optionsChampTexte = { texteApres: 'cm' }
     } else {
-      this.question += `${context.isHtml ? '$\\ldots$ cm' : ''}`
+      this.question += `${context.isHtml ? '$\\ldots\\text{ cm}$' : ''}`
     }
 
     this.canEnonce = 'Complète.'

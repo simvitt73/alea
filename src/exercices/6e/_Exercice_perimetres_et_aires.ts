@@ -20,7 +20,6 @@ import { Polygone, polygone, polygoneRegulier } from '../../lib/2d/polygones'
 import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, TexteParPoint } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
-import { texTexte } from '../../lib/format/texTexte'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice } from '../../lib/outils/arrayOutils'
@@ -220,18 +219,18 @@ export default class ExercicePerimetresEtAires extends Exercice {
           } else {
             if (choice([true, false])) {
               // 2 énoncés possibles équiprobables
-              texte += `d'un carré $${nomCarre}$ de $${texNombre(cote)}$ cm de côté.<br>`
+              texte += `d'un carré $${nomCarre}$ de $${texNombre(cote)}\\text{ cm}$ de côté.<br>`
             } else {
               texte +=
-                `d'un carré $${nomCarre}$ tel que $${nomCarre[0] + nomCarre[1]} = ${texNombre(cote)}$ cm.` +
+                `d'un carré $${nomCarre}$ tel que $${nomCarre[0] + nomCarre[1]} = ${texNombre(cote)}\\text{ cm}$.` +
                 '<br>'
             }
           }
           if (this.sup5 !== 2)
-            texteCorr = `$\\mathcal{P}_{${nomCarre}}=4\\times${texNombre(cote)}${sp()}\\text{cm}=${miseEnEvidence(texNombre(4 * cote))}${sp()}\\text{cm}$<br>`
+            texteCorr = `$\\mathcal{P}_{${nomCarre}}=4\\times${texNombre(cote)}\\text{ cm}=${miseEnEvidence(texNombre(4 * cote))}\\text{ cm}$<br>`
 
           if (this.sup5 !== 1)
-            texteCorr += `$\\mathcal{A}_{${nomCarre}}=${texNombre(cote)}${sp()}\\text{cm}\\times${texNombre(cote)}${sp()}\\text{cm}=${miseEnEvidence(texNombre(cote * cote))}${sp()}\\text{cm}^2$`
+            texteCorr += `$\\mathcal{A}_{${nomCarre}}=${texNombre(cote)}\\text{ cm}\\times${texNombre(cote)}\\text{ cm}=${miseEnEvidence(texNombre(cote * cote))}\\text{ cm}^2$`
 
           resultat1 = 4 * cote
           resultat2 = cote * cote
@@ -305,18 +304,18 @@ export default class ExercicePerimetresEtAires extends Exercice {
           } else {
             if (choice([true, false])) {
               // 2 énoncés possibles équiprobables
-              texte += `d'un rectangle $${nomRectangle}$ de $${texNombre(L)}$ cm de longueur et de $${l}$ cm de largeur.<br>`
+              texte += `d'un rectangle $${nomRectangle}$ de $${texNombre(L)}\\text{ cm}$ de longueur et de $${l}\\text{ cm}$ de largeur.<br>`
             } else {
               texte +=
-                `d'un rectangle $${nomRectangle}$ tel que $${nomRectangle[0] + nomRectangle[1] + ' = ' + texNombre(L)}$ cm et $${nomRectangle[1] + nomRectangle[2] + ' = ' + l}$ cm.` +
+                `d'un rectangle $${nomRectangle}$ tel que $${nomRectangle[0] + nomRectangle[1] + ' = ' + texNombre(L)}\\text{ cm}$ et $${nomRectangle[1] + nomRectangle[2] + ' = ' + l}\\text{ cm}$.` +
                 '<br>'
             }
           }
           if (this.sup5 !== 2)
-            texteCorr = `$\\mathcal{P}_{${nomRectangle}}=(${texNombre(L)}${sp()}\\text{cm}+${l}${sp()}\\text{cm})\\times2=${miseEnEvidence(texNombre((L + l) * 2))}${sp()}\\text{cm}$<br>`
+            texteCorr = `$\\mathcal{P}_{${nomRectangle}}=(${texNombre(L)}\\text{ cm}+${l}\\text{ cm})\\times2=${miseEnEvidence(texNombre((L + l) * 2))}\\text{ cm}$<br>`
 
           if (this.sup5 !== 1)
-            texteCorr += `$\\mathcal{A}_{${nomRectangle}}=${texNombre(L)}${sp()}\\text{cm}\\times${l}${sp()}\\text{cm}=${miseEnEvidence(texNombre(L * l))}${sp()}\\text{cm}^2$`
+            texteCorr += `$\\mathcal{A}_{${nomRectangle}}=${texNombre(L)}\\text{ cm}\\times${l}\\text{ cm}=${miseEnEvidence(texNombre(L * l))}\\text{ cm}^2$`
 
           resultat1 = 2 * L + 2 * l
           resultat2 = L * l
@@ -399,21 +398,22 @@ export default class ExercicePerimetresEtAires extends Exercice {
           } else {
             if (choice([true, false])) {
               texte +=
-                `d'un triangle $${nomTriangle}$ rectangle en $${nomTriangle[1]}$ tel que $${nomTriangle[0] + nomTriangle[1] + ' = ' + texNombre(a)}$ cm, $${nomTriangle[1] + nomTriangle[2] + ' = ' + texNombre(b)}$ cm\
-   et $${nomTriangle[0] + nomTriangle[2] + ' = ' + texNombre(c)}$ cm.` + '<br>'
+                `d'un triangle $${nomTriangle}$ rectangle en $${nomTriangle[1]}$ tel que $${nomTriangle[0] + nomTriangle[1] + ' = ' + texNombre(a)}\\text{ cm}$, $${nomTriangle[1] + nomTriangle[2] + ' = ' + texNombre(b)}$ cm\
+   et $${nomTriangle[0] + nomTriangle[2] + ' = ' + texNombre(c)}\\text{ cm}$.` +
+                '<br>'
             } else {
               texte +=
-                `d'un triangle rectangle $${nomTriangle}$ qui a pour côtés : $${texNombre(a)}$ cm, $${texNombre(c)}$ cm et $${texNombre(b)}$ cm.` +
+                `d'un triangle rectangle $${nomTriangle}$ qui a pour côtés : $${texNombre(a)}\\text{ cm}$, $${texNombre(c)}\\text{ cm}$ et $${texNombre(b)}\\text{ cm}$.` +
                 '<br>'
             }
           }
 
           if (this.sup5 !== 2) {
-            texteCorr = `$\\mathcal{P}_{${nomTriangle}}=${texNombre(a)}${sp()}\\text{cm}+${texNombre(b)}
-          ${sp()}\\text{cm}+${texNombre(c)}${sp()}\\text{cm}=${miseEnEvidence(texNombre(a + b + c))}${sp()}\\text{cm}$<br>`
+            texteCorr = `$\\mathcal{P}_{${nomTriangle}}=${texNombre(a)}\\text{ cm}+${texNombre(b)}
+          \\text{ cm}+${texNombre(c)}\\text{ cm}=${miseEnEvidence(texNombre(a + b + c))}\\text{ cm}$<br>`
           }
           if (this.sup5 !== 1)
-            texteCorr += `$\\mathcal{A}_{${nomTriangle}}=${texNombre(a)}${sp()}\\text{cm}\\times${texNombre(b)}${sp()}\\text{cm}\\div2=${miseEnEvidence(texNombre((a * b) / 2))}${sp()}\\text{cm}^2$`
+            texteCorr += `$\\mathcal{A}_{${nomTriangle}}=${texNombre(a)}\\text{ cm}\\times${texNombre(b)}\\text{ cm}\\div2=${miseEnEvidence(texNombre((a * b) / 2))}\\text{ cm}^2$`
           resultat1 = a + b + c
           resultat2 = (a * b) / 2
           break
@@ -422,7 +422,7 @@ export default class ExercicePerimetresEtAires extends Exercice {
           R = this.sup2 ? randint(2, 4) + randint(1, 9) / 10 : randint(2, 5)
           if (this.sup3) {
             texte +=
-              "de ce disque. Donner une valeur approchée au dixième de cm pour l'un et au dixième de cm$^2$ pour l'autre."
+              "de ce disque. Donner une valeur approchée au dixième de $\\text{cm}$ pour l'un et au dixième de $\\text{cm}^2$ pour l'autre."
             const nomCercle = creerNomDePolygone(4, listeDeNomsDePolygones)
             listeDeNomsDePolygones.push(nomCercle)
             const A = point(0, 0, nomCercle.charAt(0), 'below left')
@@ -479,37 +479,37 @@ export default class ExercicePerimetresEtAires extends Exercice {
           } else {
             donneLeDiametre = choice([true, false])
             if (donneLeDiametre) {
-              texte += `d'un disque de $${texNombre(2 * R)}$ cm de diamètre. Donner une valeur approchée au dixième de cm pour l'un et au dixième de cm$^2$ pour l'autre.`
-              texteCorr = `Le diamètre est de $${texNombre(2 * R)}$ cm donc le rayon est de $${texNombre(R)}$ cm.<br>`
+              texte += `d'un disque de $${texNombre(2 * R)}\\text{ cm}$ de diamètre. Donner une valeur approchée au dixième de $\\text{cm}$ pour l'un et au dixième de $\\text{cm}^2$ pour l'autre.`
+              texteCorr = `Le diamètre est de $${texNombre(2 * R)}\\text{ cm}$ donc le rayon est de $${texNombre(R)}\\text{ cm}$.<br>`
             } else {
-              texte += `d'un disque de $${texNombre(R)}$ cm de rayon. Donner une valeur approchée au dixième de cm pour l'un et au dixième de cm$^2$ pour l'autre.`
+              texte += `d'un disque de $${texNombre(R)}\\text{ cm}$ de rayon. Donner une valeur approchée au dixième de $\\text{ cm}$ pour l'un et au dixième de $\\text{cm}^2$ pour l'autre.`
               texteCorr = ''
             }
           }
 
           if (this.sup4) {
             if (this.sup5 !== 2)
-              texteCorr += `<br>Si on utilise $\\pi \\approx 3,14$, alors <br> $\\mathcal{P}\\approx 2 \\times ${texNombre(R)} \\times 3,14 \\approx ${texNombre(2 * R * (this.sup4 ? 3.14 : Math.PI), 3)}${sp()}${texTexte('cm')}$.<br>`
+              texteCorr += `<br>Si on utilise $\\pi \\approx 3,14$, alors <br> $\\mathcal{P}\\approx 2 \\times ${texNombre(R)} \\times 3,14 \\approx ${texNombre(2 * R * (this.sup4 ? 3.14 : Math.PI), 3)}\\text{ cm}$.<br>`
             if (this.sup5 !== 1)
-              texteCorr += `$\\mathcal{A}\\approx ${texNombre(R)}\\times${texNombre(R)}\\times 3,14\\approx ${texNombre(R * R * (this.sup4 ? 3.14 : Math.PI), 3)}${sp()}${texTexte('cm')}^2$.`
+              texteCorr += `$\\mathcal{A}\\approx ${texNombre(R)}\\times${texNombre(R)}\\times 3,14\\approx ${texNombre(R * R * (this.sup4 ? 3.14 : Math.PI), 3)}\\text{ cm}^2$.`
           } else {
             if (this.sup5 !== 2) {
-              texteCorr += `$\\mathcal{P}=2\\times${texNombre(R)}\\times\\pi${sp()}\\text{cm}=${texNombre(2 * R)}\\pi${sp()}\\text{cm}\\approx${texNombre(
+              texteCorr += `$\\mathcal{P}=2\\times${texNombre(R)}\\times\\pi\\text{ cm}=${texNombre(2 * R)}\\pi\\text{ cm}\\approx${texNombre(
                 2 * R * (this.sup4 ? 3.14 : Math.PI),
                 3,
-              )}${sp()}\\text{cm}$<br>`
+              )}\\text{ cm}$<br>`
             }
             if (this.sup5 !== 1) {
-              texteCorr += `$\\mathcal{A}=${texNombre(R)}\\times${texNombre(R)}\\times\\pi${sp()}\\text{cm}^2=${texNombre(R * R)}\\pi${sp()}\\text{cm}^2\\approx${texNombre(
+              texteCorr += `$\\mathcal{A}=${texNombre(R)}\\times${texNombre(R)}\\times\\pi\\text{ cm}^2=${texNombre(R * R)}\\pi\\text{ cm}^2\\approx${texNombre(
                 R * R * (this.sup4 ? 3.14 : Math.PI),
                 3,
-              )}${sp()}\\text{cm}^2$`
+              )}\\text{ cm}^2$`
             }
           }
           if (this.sup5 !== 2)
-            texteCorr += `<br>Les deux valeurs approchées au dixième de cm du périmètre de ce disque sont donc  $${miseEnEvidence(texNombre(troncature(2 * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('cm')}$ et $${miseEnEvidence(texNombre(0.1 + troncature(2 * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('cm')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre(2 * R * (this.sup4 ? 3.14 : Math.PI), 1))}$ $${miseEnEvidence('cm')}$) est la valeur arrondie.`
+            texteCorr += `<br>Les deux valeurs approchées au dixième de $\\text{cm}$ du périmètre de ce disque sont donc  $${miseEnEvidence(texNombre(troncature(2 * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('\\text{cm}')}$ et $${miseEnEvidence(texNombre(0.1 + troncature(2 * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('\\text{cm}')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre(2 * R * (this.sup4 ? 3.14 : Math.PI), 1))}$ $${miseEnEvidence('\\text{cm}')}$) est la valeur arrondie.`
           if (this.sup5 !== 1)
-            texteCorr += `<br>Les deux valeurs approchées au dixième de cm$^2$ de l'aire de ce disque sont donc  $${miseEnEvidence(texNombre(troncature(R * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('cm^2')}$ et $${miseEnEvidence(texNombre(0.1 + troncature(R * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('cm^2')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre(R * R * (this.sup4 ? 3.14 : Math.PI), 1))}$ $${miseEnEvidence('cm^2')}$) est la valeur arrondie.<br>`
+            texteCorr += `<br>Les deux valeurs approchées au dixième de $\\text{cm}^2$ de l'aire de ce disque sont donc  $${miseEnEvidence(texNombre(troncature(R * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('\\text{cm}^2')}$ et $${miseEnEvidence(texNombre(0.1 + troncature(R * R * (this.sup4 ? 3.14 : Math.PI), 1)))}$ $${miseEnEvidence('\\text{cm}^2')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre(R * R * (this.sup4 ? 3.14 : Math.PI), 1))}$ $${miseEnEvidence('\\text{cm}^2')}$) est la valeur arrondie.<br>`
           resultat1 = arrondi(2 * R * (this.sup4 ? 3.14 : Math.PI), 1)
           resultat2 = arrondi(R * R * (this.sup4 ? 3.14 : Math.PI), 1)
           break
@@ -518,7 +518,7 @@ export default class ExercicePerimetresEtAires extends Exercice {
           R = this.sup2 ? randint(2, 4) + randint(1, 9) / 10 : randint(2, 5)
           if (this.sup3) {
             texte +=
-              "de ce demi-disque. Donner une valeur approchée au dixième de cm pour l'un et au dixième de cm$^2$ pour l'autre."
+              "de ce demi-disque. Donner une valeur approchée au dixième de $\\text{cm}$ pour l'un et au dixième de $\\text{cm}^2$ pour l'autre."
             const nomCercle = creerNomDePolygone(4, listeDeNomsDePolygones)
             listeDeNomsDePolygones.push(nomCercle)
             const A = point(0, 0, nomCercle.charAt(0), 'below left')
@@ -578,11 +578,11 @@ export default class ExercicePerimetresEtAires extends Exercice {
             donneLeDiametre = choice([true, false])
             if (donneLeDiametre) {
               texte +=
-                `d'un demi-disque de $${texNombre(2 * R)}$ cm de diamètre. Donner une valeur approchée au dixième de cm pour l'un et au dixième de cm$^2$ pour l'autre.` +
+                `d'un demi-disque de $${texNombre(2 * R)}\\text{ cm}$ de diamètre. Donner une valeur approchée au dixième de $\\text{cm}$ pour l'un et au dixième de $\\text{cm}^2$  pour l'autre.` +
                 '<br>'
-              texteCorr = `Le diamètre est de $${texNombre(2 * R)}$ cm donc le rayon est de $${texNombre(R)}$ cm.<br>`
+              texteCorr = `Le diamètre est de $${texNombre(2 * R)}\\text{ cm}$ donc le rayon est de $${texNombre(R)}\\text{ cm}$.<br>`
             } else {
-              texte += `d'un demi-disque de $${texNombre(R)}$ cm de rayon. Donner une valeur approchée au dixième de cm pour l'un et au dixième de cm$^2$ pour l'autre.`
+              texte += `d'un demi-disque de $${texNombre(R)}\\text{ cm}$ de rayon. Donner une valeur approchée au dixième de $\\text{cm}$ pour l'un et au dixième de $\\text{cm}^2$  pour l'autre.`
               texteCorr = ''
             }
           }
@@ -592,19 +592,19 @@ export default class ExercicePerimetresEtAires extends Exercice {
 
           if (this.sup4) {
             if (this.sup5 !== 2)
-              texteCorr += `<br>Si on utilise $\\pi \\approx 3,14$, alors <br> $\\mathcal{P}\\approx (2 \\times ${texNombre(R)} \\times 3,14 \\div 2) + (2 \\times ${texNombre(R)}) \\approx ${texNombre((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 3)}${sp()}${texTexte('cm')}$.<br>`
+              texteCorr += `<br>Si on utilise $\\pi \\approx 3,14$, alors <br> $\\mathcal{P}\\approx (2 \\times ${texNombre(R)} \\times 3,14 \\div 2) + (2 \\times ${texNombre(R)}) \\approx ${texNombre((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 3)} \\text{ cm} $.<br>`
             if (this.sup5 !== 1)
-              texteCorr += `$\\mathcal{A}\\approx ${texNombre(R)}\\times${texNombre(R)}\\times 3,14 \\div 2\\approx ${texNombre((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 3)}${sp()}${texTexte('cm')}^2$.`
+              texteCorr += `$\\mathcal{A}\\approx ${texNombre(R)}\\times${texNombre(R)}\\times 3,14 \\div 2\\approx ${texNombre((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 3)} \\text{ cm} ^2$.`
           } else {
             if (this.sup5 !== 2)
-              texteCorr += `$\\mathcal{P}=(2\\times${texNombre(R)}\\times\\pi\\div 2) + (2\\times${texNombre(R)})${sp()}\\approx${texNombre((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 3)}${sp()}\\text{cm}$<br>`
+              texteCorr += `$\\mathcal{P}=(2\\times${texNombre(R)}\\times\\pi\\div 2) + (2\\times${texNombre(R)})${sp()}\\approx${texNombre((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 3)}\\text{ cm}$<br>`
             if (this.sup5 !== 1)
-              texteCorr += `$\\mathcal{A}=${texNombre(R)}\\times${texNombre(R)}\\times\\pi \\div 2${sp()}\\approx${texNombre((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 3)}${sp()}\\text{cm}^2$`
+              texteCorr += `$\\mathcal{A}=${texNombre(R)}\\times${texNombre(R)}\\times\\pi \\div 2${sp()}\\approx${texNombre((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 3)}\\text{ cm}^2$`
           }
           if (this.sup5 !== 2)
-            texteCorr += `<br>Les deux valeurs approchées au dixième de cm du périmètre de ce disque sont donc  $${miseEnEvidence(texNombre(troncature((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 1)))}$ $${miseEnEvidence('cm')}$ et $${miseEnEvidence(texNombre(0.1 + troncature((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 1)))}$ $${miseEnEvidence('cm')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 1))}$ $${miseEnEvidence('cm')}$) est la valeur arrondie.`
+            texteCorr += `<br>Les deux valeurs approchées au dixième de $\\text{cm}$ du périmètre de ce disque sont donc  $${miseEnEvidence(texNombre(troncature((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 1)))}$ $${miseEnEvidence('\\text{ cm}')}$ et $${miseEnEvidence(texNombre(0.1 + troncature((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 1)))}$ $${miseEnEvidence('\\text{ cm}')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre((2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R, 1))}$ $${miseEnEvidence('\\text{ cm}')}$) est la valeur arrondie.`
           if (this.sup5 !== 1)
-            texteCorr += `<br>Les deux valeurs approchées au dixième de cm$^2$ de l'aire de ce disque sont donc  $${miseEnEvidence(texNombre(troncature((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 1)))}$ $${miseEnEvidence('cm^2')}$ et $${miseEnEvidence(texNombre(0.1 + troncature((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 1)))}$ $${miseEnEvidence('cm^2')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 1))}$ $${miseEnEvidence('cm^2')}$) est la valeur arrondie.<br>`
+            texteCorr += `<br>Les deux valeurs approchées au dixième de $\\text{cm}^2$  de l'aire de ce disque sont donc  $${miseEnEvidence(texNombre(troncature((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 1)))}$ $${miseEnEvidence('\\text{ cm}^2')}$ et $${miseEnEvidence(texNombre(0.1 + troncature((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 1)))}$ $${miseEnEvidence('\\text{ cm}^2')}$, sachant que la valeur la plus proche ($${miseEnEvidence(texNombre((R * R * (this.sup4 ? 3.14 : Math.PI)) / 2, 1))}$ $${miseEnEvidence('\\text{ cm}^2')}$) est la valeur arrondie.<br>`
 
           resultat1 = arrondi(
             (2 * R * (this.sup4 ? 3.14 : Math.PI)) / 2 + 2 * R,
@@ -667,7 +667,7 @@ export default class ExercicePerimetresEtAires extends Exercice {
                     statut: '',
                     multicolsBegin: true,
                     reponse: {
-                      texte: 'Périmètre en cm :',
+                      texte: 'Périmètre en $\\text{cm}$ :',
                       valeur: resultat1,
                       alignement: 'center',
                       param: {
@@ -689,7 +689,7 @@ export default class ExercicePerimetresEtAires extends Exercice {
                     statut: '',
                     multicolsEnd: true,
                     reponse: {
-                      texte: 'Aire en cm$^2$ :',
+                      texte: 'Aire en $\\text{cm}^2$  :',
                       valeur: resultat2,
                       alignement: 'center',
                       param: {

@@ -53,7 +53,7 @@ export default class Can2025N4Q18 extends ExerciceCan {
     if (this.interactif) {
       this.question += '<br>$AB=$'
     } else {
-      this.question += '<br>$AB=\\ldots$ cm'
+      this.question += '<br>$AB=\\ldots\\text{ cm}$'
     }
     this.canReponseACompleter = '$AB=\\ldots\\text{ cm}$'
     this.reponse = String(c)

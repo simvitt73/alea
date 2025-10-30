@@ -501,7 +501,7 @@ export default class CourseAuxNombresSpeciale2024 extends Exercice {
               if (this.interactif) {
                 texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
               } else {
-                texte += '  $\\ldots$ cm'
+                texte += '  $\\ldots\\text{ cm}$'
               }
               this.listeCanEnonces.push('Compléter.')
               this.listeCanReponsesACompleter.push(
@@ -2237,7 +2237,7 @@ export default class CourseAuxNombresSpeciale2024 extends Exercice {
             setReponse(this, index, reponse.toFixed(3))
 
             this.listeCanEnonces.push(texte)
-            this.listeCanReponsesACompleter.push('$\\ldots$ cm')
+            this.listeCanReponsesACompleter.push('$\\ldots\\text{ cm}$')
           }
           break
 

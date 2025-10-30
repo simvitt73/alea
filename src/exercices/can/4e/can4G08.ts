@@ -112,7 +112,7 @@ export default class QuestionsAiresEtPerimetres extends Exercice {
             '<br>' +
             ajouteChampTexteMathLive(this, i, ' ', { texteApres: 'cm$^2$' })
           this.canEnonce = texte // 'Compléter'
-          this.canReponseACompleter = '$\\ldots$ cm$^2$'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           break
@@ -136,7 +136,7 @@ export default class QuestionsAiresEtPerimetres extends Exercice {
               { texteApres: 'cm' },
             )
           this.canEnonce = texte // 'Compléter'
-          this.canReponseACompleter = '$\\ldots$ cm'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           break
@@ -160,7 +160,7 @@ export default class QuestionsAiresEtPerimetres extends Exercice {
               { texteApres: 'cm' },
             )
           this.canEnonce = texte // 'Compléter'
-          this.canReponseACompleter = '$\\ldots$ cm'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           break
@@ -263,7 +263,7 @@ export default class QuestionsAiresEtPerimetres extends Exercice {
                 { texteApres: 'cm$^2$' },
               )
             this.canEnonce = texte // 'Compléter'
-            this.canReponseACompleter = '$\\ldots$ cm$^2$'
+            this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
             this.listeCanEnonces.push(this.canEnonce)
             this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           } else if (N === 'b') {

@@ -293,7 +293,7 @@ export default class SujetCAN2022troisieme extends Exercice {
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
             } else {
-              texte += '  $\\ldots$ cm'
+              texte += '  $\\ldots\\text{ cm}$'
             }
           }
           nbChamps = 1
@@ -602,7 +602,7 @@ export default class SujetCAN2022troisieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
           } else {
-            texte += ' $\\ldots$ cm'
+            texte += ' $\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break

@@ -8,7 +8,6 @@ import { symetrieAxiale, translation } from '../../lib/2d/transformations'
 import { longueur } from '../../lib/2d/utilitairesGeometriques'
 import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { arrondi } from '../../lib/outils/nombres'
-import { sp } from '../../lib/outils/outilString'
 import { texNombre } from '../../lib/outils/texNombre'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { context } from '../../modules/context'
@@ -74,7 +73,7 @@ export default class EncadrerAireDisque extends Exercice {
     let compteurInterieur
     let longueurCoteCarreRef
 
-    texte += `Le disque a pour rayon ${texteEnCouleurEtGras(rayon + ' cm')}.<br>
+    texte += `Le disque a pour rayon $${texNombre(rayon)}\\text{ cm}$.<br>
     Pour chaque étape, encadrons le disque entre une figure basée sur un maximum de carrés et une figure basée sur un minimum de carrés.
     Encadrons ensuite l'aire du disque par l'aire de chaque figure.<br>`
     for (let Nmax = 1; Nmax <= this.sup; Nmax++) {
@@ -251,9 +250,9 @@ export default class EncadrerAireDisque extends Exercice {
         C = D
       }
       texte += mathalea2d(paramsEnonce, objets)
-      texte += `<br>${compteurInterieur} carrés < Aire du disque < ${compteurExterieur} carrés<br>`
-      texte += `Or l'aire d'un carré est $${texNombre(aireCarre)}${sp()}cm^2$ (ou environ).<br>`
-      texte += `$${texNombre(compteurInterieur * aireCarre)}${sp()}cm^2$ < Aire du disque < $${texNombre(compteurExterieur * aireCarre)}${sp()}cm^2$<br>`
+      texte += `<br>$${compteurInterieur}$ carrés < Aire du disque < $${compteurExterieur}$ carrés<br>`
+      texte += `Or l'aire d'un carré est $${texNombre(aireCarre)}\\text{ cm}^2$ (ou environ).<br>`
+      texte += `$${texNombre(compteurInterieur * aireCarre)}\\text{ cm}^2$ < Aire du disque < $${texNombre(compteurExterieur * aireCarre)}\\text{ cm}^2$<br>`
       texte += context.isHtml ? '<br>' : '\\newpage'
     }
     this.listeQuestions.push(texte)

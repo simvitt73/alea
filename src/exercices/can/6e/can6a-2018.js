@@ -684,7 +684,8 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             texte += ajouteChampTexteMathLive(this, index, '') + ' cm$^2$'
           }
           this.canEnonce = texte
-          this.canReponseACompleter = '$\\mathscr{A}=\\ldots\\ldots$ cm$^2$'
+          this.canReponseACompleter =
+            '$\\mathscr{A}=\\ldots\\ldots\\text{ cm}^2$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           nbChamps = 1
@@ -950,7 +951,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           }
           this.canEnonce = texte
-          this.canReponseACompleter = '$\\ldots$ cm'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           nbChamps = 1
