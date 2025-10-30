@@ -81,7 +81,7 @@ export default class hypoténusePythagore extends ExerciceSimple {
     this.canEnonce = this.question
     this.question += '<br>La valeur exacte de $ST$ est '
     if (!this.interactif) {
-      this.question += '$\\ldots$ cm.'
+      this.question += '$\\ldots\\text{ cm}$.'
     }
     this.correction = ` On utilise le théorème de Pythagore dans le triangle $SRT$,  rectangle en $R$.<br>
                   $\\begin{aligned}
@@ -93,6 +93,7 @@ export default class hypoténusePythagore extends ExerciceSimple {
                     ST&=${miseEnEvidence(`\\sqrt{${c2}}`)}
                     \\end{aligned}$`
     this.reponse = `\\sqrt{${c2}}`
-    this.canReponseACompleter = 'La valeur exacte de $ST$ est $\\ldots$ cm.'
+    this.canReponseACompleter =
+      'La valeur exacte de $ST$ est $\\ldots\\text{ cm}$.'
   }
 }

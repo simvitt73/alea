@@ -83,8 +83,8 @@ export default class CalculLongueurThales extends ExerciceSimple {
              $IR=${c}\\times ${k}=${miseEnEvidence(d)}$ cm.<br>`
     this.canEnonce = this.question
 
-    this.question += this.interactif ? '<br>$IR=$' : '$IR=\\ldots$ cm'
+    this.question += this.interactif ? '<br>$IR=$' : '$IR=\\ldots\\text{ cm}$'
 
-    this.canReponseACompleter = '$IR=\\ldots$ cm'
+    this.canReponseACompleter = '$IR=\\ldots\\text{ cm}$'
   }
 }

@@ -828,7 +828,7 @@ export default class SujetCAN20215ieme extends Exercice {
                 { texteApres: 'cm$^2$' },
               )
             } else {
-              texte += ' $\\ldots$ cm$^2$'
+              texte += ' $\\ldots\\text{ cm}^2$'
             }
           }
           if (choix === 'b') {
@@ -1411,7 +1411,7 @@ export default class SujetCAN20215ieme extends Exercice {
                 { texteApres: 'cm' },
               )
             } else {
-              texte += '<br>$CD=\\ldots$ cm'
+              texte += '<br>$CD=\\ldots\\text{ cm}$'
             }
           } else {
             objets.push(
@@ -1460,7 +1460,7 @@ export default class SujetCAN20215ieme extends Exercice {
                 { texteApres: 'cm' },
               )
             } else {
-              texte += '<br>$AE=\\ldots$ cm'
+              texte += '<br>$AE=\\ldots\\text{ cm}$'
             }
           }
 

@@ -625,7 +625,7 @@ export default class SujetCAN2021Seconde extends Exercice {
               texte += '<br>$EB=$'
               texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
             } else {
-              texte += ' $EB=\\ldots$ cm'
+              texte += ' $EB=\\ldots\\text{ cm}$'
             }
 
             nbChamps = 1
@@ -943,7 +943,7 @@ export default class SujetCAN2021Seconde extends Exercice {
               texte += '<br>$DB=$'
               texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
             } else {
-              texte += ' $DB=\\ldots$ cm'
+              texte += ' $DB=\\ldots\\text{ cm}$'
             }
 
             nbChamps = 1

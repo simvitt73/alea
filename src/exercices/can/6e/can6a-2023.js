@@ -1775,7 +1775,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           this.listeCanEnonces.push(texte)
-          this.listeCanReponsesACompleter.push('$\\ldots$ cm')
+          this.listeCanReponsesACompleter.push('$\\ldots\\text{ cm}$')
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '', {
               texteApres: 'cm',

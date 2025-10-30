@@ -108,7 +108,15 @@ export default class MettreEnEquationSansResoudre extends Exercice {
     })
 
     const variables = ['t', 'u', 'v', 'w', 'y', 'z']
-    const unites = ['mm', 'cm', 'dm', 'm', 'dam', 'hm', 'km']
+    const unites = [
+      '$\\text{mm}$',
+      '$\\text{cm}$',
+      '$\\text{dm}$',
+      '$\\text{m}$',
+      '$\\text{dam}$',
+      '$\\text{hm}$',
+      '$\\text{km}$',
+    ]
 
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
       // une fonction pour dire le nom du polygone
@@ -166,10 +174,10 @@ export default class MettreEnEquationSansResoudre extends Exercice {
       enonces.push({
         enonce: `On considère la figure suivante où l'unité est le ${polygone.unite}.<br>${prenom()} se demande pour quelle valeur de $${polygone.let_cote}$, exprimée en ${polygone.unite}, le périmètre ${polygone.article}${polygone.nom} est égal à $${polygone.perimetre}$ ${polygone.unite} .<br> ${polygone.fig}`,
         question: '',
-        correction: `La figure est un ${polygone.nom}, il a donc ${polygone.nb_cotes} côtés de même longueur.<br>
-        Cette longueur est notée ${polygone.let_cote}, le périmètre de la figure, exprimé en fonction de ${polygone.let_cote}, vaut donc $${polygone.nb_cotes}\\times$ ${polygone.let_cote}.<br>
+        correction: `La figure est un ${polygone.nom}, il a donc $${polygone.nb_cotes}$ côtés de même longueur.<br>
+        Cette longueur est notée $${polygone.let_cote}$, le périmètre de la figure, exprimé en fonction de $${polygone.let_cote}$, vaut donc $${polygone.nb_cotes}\\times ${polygone.let_cote}$.<br>
         D'après l'énoncé, ce périmètre vaut $${polygone.perimetre}$ ${polygone.unite}.<br>
-        L'équation suivante permet donc de résoudre le problème : <br>
+        L'équation suivante permet donc de résoudre le problème : 
         $${miseEnEvidence(`${polygone.nb_cotes}\\times ${polygone.let_cote} = ${polygone.perimetre}`)}$.`,
       })
 

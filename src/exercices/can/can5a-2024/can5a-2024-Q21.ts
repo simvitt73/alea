@@ -1,9 +1,9 @@
-import ExerciceSimple from '../../ExerciceSimple'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils'
-import { choice } from '../../../lib/outils/arrayOutils'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { texNombre } from '../../../lib/outils/texNombre'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = "Effectuer une conversion d'aires"
 export const interactifReady = true
@@ -44,9 +44,9 @@ export default class NomExercice extends ExerciceSimple {
         this.question = `$${a}$ dm$^2=$`
         this.correction = `$1$ dm$^2= 100$ cm$^2$, donc $${a}$ dm$^2=${a}\\times 100$ cm$^2=${miseEnEvidence(a * 100)}$ cm$^2$.`
         this.canEnonce = 'Complète.'
-        this.canReponseACompleter = `$${a}$ dm$^2=\\ldots$ cm$^2$`
+        this.canReponseACompleter = `$${a}$ dm$^2=\\ldots\\text{ cm}^2$`
         if (!this.interactif) {
-          this.question += ' $\\ldots$ cm$^2$'
+          this.question += ' $\\ldots\\text{ cm}^2$'
         } else {
           this.optionsChampTexte = { texteApres: 'cm$^2$' }
         }

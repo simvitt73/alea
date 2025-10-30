@@ -1650,7 +1650,7 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           this.listeCanEnonces.push(texte)
           this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
-            '$\\mathscr{V}=\\ldots$ cm$^3$'
+            '$\\mathscr{V}=\\ldots\\text{ cm}^3$'
           nbChamps = 1
           break
 

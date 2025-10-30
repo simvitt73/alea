@@ -91,9 +91,9 @@ export default class VolumeCylindre extends ExerciceSimple {
               Soit : $ ${aire}\\times ${h}=${miseEnEvidence(reponse)}$ cm$^3$.  `
     this.question += '<br>Le volume de ce cylindre est '
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots$ cm$^3$'
+    this.canReponseACompleter = '$\\ldots\\text{ cm}^3$'
     if (!this.interactif) {
-      this.question += ' $\\ldots$ cm$^3$.'
+      this.question += ' $\\ldots\\text{ cm}^3$.'
     }
   }
 }

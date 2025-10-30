@@ -1,14 +1,14 @@
-import { texNombre } from '../../lib/outils/texNombre'
-import Exercice from '../Exercice'
 import Decimal from 'decimal.js'
+import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
+import { texNombre } from '../../lib/outils/texNombre'
+import Grandeur from '../../modules/Grandeur'
 import {
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu,
   randint,
 } from '../../modules/outils'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import Grandeur from '../../modules/Grandeur'
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import Exercice from '../Exercice'
 
 export const titre = 'Agrandissement et réduction'
 export const interactifReady = true
@@ -107,7 +107,7 @@ export default class Agrandissement extends Exercice {
           texteCorr += k.gt(1) ? ' agrandit ' : ' réduit '
           texteCorr += `un solide à l'échelle $${texNombre(k, 1)}$.`
           texteCorr += `<br>Le volume obtenu est donc multiplié par $${texNombre(k, 1)}^3$.`
-          texteCorr += `<br>Le volume obtenu est donc $V=${V1}\\times ${texNombre(k, 1)}^3=${texNombre(V2, 3)} ~cm^3$.`
+          texteCorr += `<br>Le volume obtenu est donc $V=${V1}\\times ${texNombre(k, 1)}^3=${texNombre(V2, 3)}\\text{ cm}^3$.`
           setReponse(this, i, new Grandeur(V2, 'cm^3'), {
             formatInteractif: 'unites',
           })
@@ -148,7 +148,7 @@ export default class Agrandissement extends Exercice {
           texteCorr += k.gt(1) ? ' agrandit ' : ' réduit '
           texteCorr += `un solide à l'échelle $${texNombre(k, 1)}$.`
           texteCorr += `<br>Le volume obtenu est donc multiplié par $${texNombre(k, 1)}^3$.`
-          texteCorr += `<br>Le volume initial est donc $V=\\dfrac{${texNombre(V2, 3)}}{${texNombre(k, 1)}^3}=${V1} ~cm^3$.`
+          texteCorr += `<br>Le volume initial est donc $V=\\dfrac{${texNombre(V2, 3)}}{${texNombre(k, 1)}^3}=${V1}\\text{ cm}^3$.`
           setReponse(this, i, new Grandeur(V1, 'cm^3'), {
             formatInteractif: 'unites',
           })

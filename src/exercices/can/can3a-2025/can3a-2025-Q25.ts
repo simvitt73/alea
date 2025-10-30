@@ -1,7 +1,7 @@
-import ExerciceSimple from '../../ExerciceSimple'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 export const titre = "Calculer le périmètre d'un cercle"
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -35,9 +35,9 @@ export default class PerimetreCercle extends ExerciceSimple {
          Comme $r=${r}$, la valeur  exacte du périmètre est : $${miseEnEvidence(reponse)}$ cm.`
 
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots$ cm'
+    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
     if (!this.interactif) {
-      this.question += ' $\\ldots$ cm.'
+      this.question += ' $\\ldots\\text{ cm}$.'
     }
   }
 }

@@ -591,7 +591,7 @@ $${miseEnEvidence(a + 1)}$ h et $${miseEnEvidence(reponse)}$ min.`
               texteApres: 'cm',
             })
           } else {
-            texte += '  $\\text{?}=\\ldots$ cm'
+            texte += '  $\\text{?}=\\ldots\\text{ cm}$'
           }
 
           nbChamps = 1
@@ -1057,7 +1057,7 @@ $${miseEnEvidence(a + 1)}$ h et $${miseEnEvidence(reponse)}$ min.`
               texteApres: 'cm',
             })
           } else {
-            texte += '$\\ldots$ cm'
+            texte += '$\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break

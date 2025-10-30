@@ -96,7 +96,7 @@ export default class longueursRectPerimetre extends ExerciceSimple {
           Le périmètre du rectangle est : $${miseEnEvidence(stringNombre(2 * choix[0] + 2 * choix[1], 0))}$ cm.<br>`
 
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots$ cm'
+    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
     if (this.interactif) {
       this.optionsChampTexte = { texteApres: 'cm', texteAvant: '$P=$' }
     }

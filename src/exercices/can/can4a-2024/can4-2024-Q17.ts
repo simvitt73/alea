@@ -166,9 +166,9 @@ export default class NomExercice extends ExerciceSimple {
       }
     }
     this.canEnonce = this.question
-    this.canReponseACompleter = '? $=\\ldots$ cm'
+    this.canReponseACompleter = '? $=\\ldots\\text{ cm}$'
     if (!this.interactif) {
-      this.question += '? $=\\ldots$ cm'
+      this.question += '? $=\\ldots\\text{ cm}$'
     } else {
       this.optionsChampTexte = { texteAvant: '? $=$', texteApres: 'cm' }
     }

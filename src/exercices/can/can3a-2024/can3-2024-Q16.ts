@@ -1,9 +1,9 @@
-import ExerciceSimple from '../../ExerciceSimple'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { randint } from '../../../modules/outils'
-import { texNombre } from '../../../lib/outils/texNombre'
-import { choice } from '../../../lib/outils/arrayOutils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { texNombre } from '../../../lib/outils/texNombre'
+import { randint } from '../../../modules/outils'
+import ExerciceSimple from '../../ExerciceSimple'
 
 export const titre = "Calculer le côté d'un carré à partir de son aire"
 export const interactifReady = true
@@ -34,9 +34,9 @@ export default class NomExercice extends ExerciceSimple {
      `
       this.optionsChampTexte = { texteApres: 'cm' }
       this.canEnonce = this.question
-      this.canReponseACompleter = '$\\ldots$ cm'
+      this.canReponseACompleter = '$\\ldots\\text{ cm}$'
       if (!this.interactif) {
-        this.question += '$\\ldots$ cm'
+        this.question += '$\\ldots\\text{ cm}$'
       }
     } else {
       if (choice([true, false])) {
@@ -49,9 +49,9 @@ export default class NomExercice extends ExerciceSimple {
      `
         this.optionsChampTexte = { texteApres: 'cm' }
         this.canEnonce = this.question
-        this.canReponseACompleter = '$\\ldots$ cm'
+        this.canReponseACompleter = '$\\ldots\\text{ cm}$'
         if (!this.interactif) {
-          this.question += '$\\ldots$ cm'
+          this.question += '$\\ldots\\text{ cm}$'
         }
       } else {
         const a = randint(4, 12)
@@ -64,9 +64,9 @@ export default class NomExercice extends ExerciceSimple {
      `
         this.optionsChampTexte = { texteApres: 'cm$^2$' }
         this.canEnonce = this.question
-        this.canReponseACompleter = '$\\ldots$ cm$^2$'
+        this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
         if (!this.interactif) {
-          this.question += '$\\ldots$ cm$^2$'
+          this.question += '$\\ldots\\text{ cm}^2$'
         }
       }
     }

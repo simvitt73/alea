@@ -100,7 +100,7 @@ export default class PerimetreRectangle extends ExerciceSimple {
     )
     this.question +=
       'Le périmètre de ce rectangle est égal à ' +
-      (this.interactif ? '' : '$\\ldots$ cm.')
+      (this.interactif ? '' : '$\\ldots\\text{ cm}$.')
 
     this.canEnonce = mathalea2d(
       Object.assign(
@@ -114,7 +114,7 @@ export default class PerimetreRectangle extends ExerciceSimple {
       objets,
     )
     this.canReponseACompleter =
-      'Le périmètre de ce rectangle est égal à $\\ldots$ cm.'
+      'Le périmètre de ce rectangle est égal à $\\ldots\\text{ cm}$.'
     this.reponse = String((hauteur + grandeBase) * 2)
     this.correction = `Le périmètre du rectangle est égal à : <br>$(${String(grandeBase)}+${String(hauteur)})\\times 2=${String(grandeBase + hauteur)}\\times 2 = ${miseEnEvidence(this.reponse)}$.`
   }

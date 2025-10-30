@@ -59,7 +59,7 @@ export default class Can2025CM2Q18 extends ExerciceSimple {
     this.question += `Le périmètre de ce triangle équilatéral est de  $${perimetre}$ cm.<br>
     La longueur du côté est égale à `
     if (!this.interactif) {
-      this.question += '$\\ldots$ cm.'
+      this.question += '$\\ldots\\text{ cm}$.'
     }
     this.canEnonce = `Le périmètre de ce triangle équilatéral est de  $${perimetre}$ cm.<br>
     Complète. `

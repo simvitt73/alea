@@ -142,7 +142,7 @@ export default class NomExercice extends ExerciceSimple {
     }
     this.reponse = reponse.toFixed(1)
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots$ cm$^2$'
+    this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
     if (this.interactif) {
       this.optionsChampTexte = { texteApres: 'cm$^2$' }
     } else {

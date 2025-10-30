@@ -1,10 +1,10 @@
-import ExerciceSimple from '../../ExerciceSimple'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { choice } from '../../../lib/outils/arrayOutils'
+import ExerciceSimple from '../../ExerciceSimple'
 
-import { sp } from '../../../lib/outils/outilString'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { sp } from '../../../lib/outils/outilString'
 export const titre = "Charger d'unités"
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -47,11 +47,11 @@ export default class ChangerUnites extends ExerciceSimple {
       this.question = `$${texNombre(2025)}$ m   `
       this.correction = ` Comme $1$ m $=100$ cm,  alors $${texNombre(2025)}$ m$${sp()}=${sp()}${miseEnEvidence(texNombre(202500))}$ cm.`
       if (!this.interactif) {
-        this.question += '$=\\ldots$ cm'
+        this.question += '$=\\ldots\\text{ cm}$'
       }
       this.optionsChampTexte = { texteAvant: ' $=$', texteApres: ' cm' }
       this.canEnonce = 'Compléter.'
-      this.canReponseACompleter = `$${texNombre(2025)}$ m  $=$  $\\ldots$ cm`
+      this.canReponseACompleter = `$${texNombre(2025)}$ m  $=$  $\\ldots\\text{ cm}$`
     }
   }
 }

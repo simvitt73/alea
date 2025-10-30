@@ -301,7 +301,7 @@ export default class SujetCAN2022quatrieme extends Exercice {
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
             } else {
-              texte += '  $\\ldots$ cm'
+              texte += '  $\\ldots\\text{ cm}$'
             }
           }
           nbChamps = 1
@@ -934,7 +934,7 @@ export default class SujetCAN2022quatrieme extends Exercice {
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + ' cm$^3$'
             } else {
-              texte += '$\\ldots$ cm$^3$ '
+              texte += '$\\ldots\\text{ cm}^3$ '
             }
           } else {
             reponse = arrondi(a / 1000, 3)
@@ -1093,7 +1093,7 @@ export default class SujetCAN2022quatrieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           } else {
-            texte += ' $\\ldots$ cm'
+            texte += ' $\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break

@@ -490,7 +490,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
               texteApres: 'cm',
             })
           } else {
-            texte += ' $\\ldots$ cm'
+            texte += ' $\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break
@@ -779,7 +779,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
               '<br>' +
               ajouteChampTexteMathLive(this, index, '', { texteApres: ' cm' })
           } else {
-            texte += 'Périmètre $=\\ldots$ cm'
+            texte += 'Périmètre $=\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break
@@ -948,7 +948,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
                 texteApres: 'cm$^3$',
               })
             } else {
-              texte += ' $\\ldots$ cm$^3$'
+              texte += ' $\\ldots\\text{ cm}^3$'
             }
           }
           if (choix === 'b') {

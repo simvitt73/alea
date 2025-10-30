@@ -353,7 +353,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
               texteApres: 'cm',
             })
           } else {
-            texte += '$\\ldots$ cm'
+            texte += '$\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break
@@ -747,7 +747,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
                 texteApres: 'cm',
               })
             } else {
-              texte += '$\\ldots$ cm'
+              texte += '$\\ldots\\text{ cm}$'
             }
             texteCorr = ` Comme $1$ m $=100$ cm,  pour passer des "m" au "cm", on multiplie par $100$.<br>
                         Comme : $${texNombre(a, 0)}\\times 100 =${texNombre(a * 100, 0)}$, alors $${texNombre(a, 0)}$ m$=${texNombre(a * 100, 0)}$ cm.
@@ -834,7 +834,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
               '<br>' +
               ajouteChampTexteMathLive(this, index, '', { texteApres: 'cm' })
           } else {
-            texte += '  $\\mathscr{P}=\\ldots$ cm'
+            texte += '  $\\mathscr{P}=\\ldots\\text{ cm}$'
           }
 
           nbChamps = 1

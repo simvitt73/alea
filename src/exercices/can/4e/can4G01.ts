@@ -82,7 +82,7 @@ export default class LongueurPythagore extends ExerciceSimple {
         this.correction = ` $${nom[0]}${nom[1]}=${b}$ cm.`
         this.reponse = b
         this.canEnonce = this.question // 'Compléter'
-        this.canReponseACompleter = ` $${nom[0]}${nom[1]}=\\ldots$ cm.`
+        this.canReponseACompleter = ` $${nom[0]}${nom[1]}=\\ldots\\text{ cm}$.`
         break
       case 1: // calcul du côté vertical de l'angle droit
         objets.push(pol[0], pol[1], lc, lb, codageAngle(A, B, C))
@@ -106,7 +106,7 @@ export default class LongueurPythagore extends ExerciceSimple {
         this.correction = ` $${nom[1]}${nom[2]}=${a}$ cm.`
         this.reponse = a
         this.canEnonce = this.question // 'Compléter'
-        this.canReponseACompleter = ` $${nom[1]}${nom[2]}=\\ldots$ cm.`
+        this.canReponseACompleter = ` $${nom[1]}${nom[2]}=\\ldots\\text{ cm}$.`
         break
       case 2: // calcul de l'hypoténuse.
         objets.push(pol[0], pol[1], la, lc, codageAngle(A, B, C))
@@ -131,7 +131,7 @@ export default class LongueurPythagore extends ExerciceSimple {
         this.correction = ` $${nom[0]}${nom[2]}=${c}$ cm.`
         this.reponse = c
         this.canEnonce = this.question // 'Compléter'
-        this.canReponseACompleter = ` $${nom[0]}${nom[2]}=\\ldots$ cm.`
+        this.canReponseACompleter = ` $${nom[0]}${nom[2]}=\\ldots\\text{ cm}$.`
         break
     }
     this.correction += texteEnCouleur(`<br> Mentalement : <br>
