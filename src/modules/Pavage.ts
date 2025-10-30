@@ -5,7 +5,6 @@ import {
   polygone,
   polygoneRegulier,
 } from '../lib/2d/polygones'
-import { vecteur } from '../lib/2d/segmentsVecteurs'
 import { TexteParPoint, texteParPosition } from '../lib/2d/textes'
 import { tracePoint, type TracePoint } from '../lib/2d/TracePoint'
 import {
@@ -14,6 +13,7 @@ import {
   similitude,
   translation,
 } from '../lib/2d/transformations'
+import { vecteur } from '../lib/2d/Vecteur'
 import { nombreAvecEspace } from '../lib/outils/texNombre'
 import { egal } from './outils'
 

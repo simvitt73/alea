@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { tracePoint } from '../../lib/2d/TracePoint'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { codageSegments } from '../../lib/2d/codages'
 import { droite } from '../../lib/2d/droites'
 import {
@@ -9,7 +10,7 @@ import {
   pointSurSegment,
 } from '../../lib/2d/points'
 import { barycentre, nommePolygone, polygone } from '../../lib/2d/polygones'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
 import { rotation } from '../../lib/2d/transformations'
 import { aireTriangle } from '../../lib/2d/triangle'

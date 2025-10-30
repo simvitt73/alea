@@ -1,3 +1,4 @@
+import { vecteur } from '../../lib/2d/Vecteur'
 import { codageAngleDroit } from '../../lib/2d/angles'
 import { afficheLongueurSegment } from '../../lib/2d/codages'
 import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
@@ -12,7 +13,7 @@ import {
   type PointAbstrait,
 } from '../../lib/2d/points-abstraits'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
 import { translation2Points } from '../../lib/2d/transformations'
 import { triangle2points2longueurs } from '../../lib/2d/triangle'

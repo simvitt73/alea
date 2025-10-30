@@ -1,4 +1,5 @@
 import { tracePoint } from '../../lib/2d/TracePoint'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { cercle } from '../../lib/2d/cercle'
 import { cibleCarree, dansLaCibleCarree } from '../../lib/2d/cibles'
 import { codageMediatrice } from '../../lib/2d/codages'
@@ -11,11 +12,7 @@ import {
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { point, pointAdistance, pointIntersectionLC } from '../../lib/2d/points'
 import type { PointAbstrait } from '../../lib/2d/points-abstraits'
-import {
-  norme,
-  segmentAvecExtremites,
-  vecteur,
-} from '../../lib/2d/segmentsVecteurs'
+import { segmentAvecExtremites } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPoint } from '../../lib/2d/textes'
 import {
   homothetie,
@@ -23,6 +20,7 @@ import {
   symetrieAxiale,
   translation,
 } from '../../lib/2d/transformations'
+import { norme } from '../../lib/2d/utilitairesGeometriques'
 import { choisitLettresDifferentes } from '../../lib/outils/aleatoires'
 import { arrondi } from '../../lib/outils/nombres'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'

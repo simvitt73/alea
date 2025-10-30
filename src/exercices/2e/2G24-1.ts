@@ -2,12 +2,7 @@ import { tracePoint } from '../../lib/2d/TracePoint'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { point } from '../../lib/2d/points'
 import { Repere } from '../../lib/2d/reperes'
-import {
-  nomVecteurParPosition,
-  Segment,
-  segment,
-  vecteur,
-} from '../../lib/2d/segmentsVecteurs'
+import { Segment, segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPosition } from '../../lib/2d/textes'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
@@ -20,6 +15,7 @@ import { mathalea2d } from '../../modules/mathalea2d'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 
+import { nomVecteurParPosition, vecteur } from '../../lib/2d/Vecteur'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 
 export const interactifReady = true

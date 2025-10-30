@@ -6,7 +6,6 @@ import {
   droiteParPointEtPerpendiculaire,
 } from '../../lib/2d/droites'
 import { Point, point, pointSurDroite } from '../../lib/2d/points'
-import { DemiDroite, demiDroite } from '../../lib/2d/segmentsVecteurs'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import { rotation, translation2Points } from '../../lib/2d/transformations'
 import { angleOriente, longueur } from '../../lib/2d/utilitairesGeometriques'
@@ -22,6 +21,7 @@ import Exercice from '../Exercice'
 
 import { number } from 'mathjs'
 import type { CodageAngle } from '../../lib/2d/codages'
+import { demiDroite, type DemiDroite } from '../../lib/2d/DemiDroite'
 import type { TracePoint } from '../../lib/2d/TracePoint'
 import { bleuMathalea, vertMathalea } from '../../lib/colors'
 import { choice } from '../../lib/outils/arrayOutils'

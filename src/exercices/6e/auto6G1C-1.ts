@@ -1,3 +1,4 @@
+import { vecteur } from '../../lib/2d/Vecteur'
 import { droite } from '../../lib/2d/droites'
 import {
   listeFigures2d,
@@ -5,7 +6,6 @@ import {
 } from '../../lib/2d/figures2d/listeFigures2d'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { point } from '../../lib/2d/points'
-import { vecteur } from '../../lib/2d/segmentsVecteurs'
 import { latex2d } from '../../lib/2d/textes'
 import {
   homothetie,

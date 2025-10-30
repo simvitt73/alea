@@ -2,8 +2,9 @@ import { apparitionAnimee, translationAnimee } from '../../modules/2dAnimation'
 import { context } from '../../modules/context'
 import { ObjetMathalea2D } from './ObjetMathalea2D'
 import { point } from './points'
-import { segment, vecteur } from './segmentsVecteurs'
+import { segment } from './segmentsVecteurs'
 import { TexteParPoint, texteParPosition } from './textes'
+import { vecteur } from './Vecteur'
 export class GlisseNombre extends ObjetMathalea2D {
   constructor(nombre = 0, decalage = 0) {
     super()

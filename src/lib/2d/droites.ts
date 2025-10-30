@@ -4,17 +4,11 @@ import { arrondi } from '../outils/nombres'
 import { traceCompas } from './Arc'
 import { codageBissectrice, codageMediatrice, codageSegments } from './codages'
 import { colorToLatexOrHTML } from './colorToLatexOrHtml'
+import { DemiDroite, demiDroite } from './DemiDroite'
 import { ObjetMathalea2D } from './ObjetMathalea2D'
 import { milieu, Point, point, pointSurDroite, pointSurSegment } from './points'
 import { pointAbstrait, PointAbstrait } from './points-abstraits'
-import {
-  DemiDroite,
-  demiDroite,
-  norme,
-  segment,
-  Vecteur,
-  vecteur,
-} from './segmentsVecteurs'
+import { segment } from './segmentsVecteurs'
 import {
   Latex2d,
   latex2d,
@@ -28,7 +22,13 @@ import {
   symetrieAxiale,
   translation,
 } from './transformations'
-import { angleOriente, longueur, pointEstSur } from './utilitairesGeometriques'
+import {
+  angleOriente,
+  longueur,
+  norme,
+  pointEstSur,
+} from './utilitairesGeometriques'
+import { Vecteur, vecteur } from './Vecteur'
 import { vide2d } from './Vide2d'
 
 /**

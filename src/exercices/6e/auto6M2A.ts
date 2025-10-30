@@ -12,7 +12,7 @@ import {
 } from '../../lib/2d/points'
 import type { PointAbstrait } from '../../lib/2d/points-abstraits'
 import { polygone } from '../../lib/2d/polygones'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import {
   homothetie,
   projectionOrtho,
@@ -24,6 +24,7 @@ import {
   estDansTriangle,
   longueur,
 } from '../../lib/2d/utilitairesGeometriques'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { propositionsQcm } from '../../lib/interactif/qcm'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { arrondi } from '../../lib/outils/nombres'

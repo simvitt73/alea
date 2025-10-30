@@ -1,6 +1,3 @@
-import { arrondi } from '../outils/nombres'
-import { texNombre } from '../outils/texNombre'
-
 /**
  * Convertit un angle de radian vers degrés et fonction inverse
  * @Example
@@ -48,7 +45,7 @@ export function degTan(a: number) {
  * @author Jean-Claude Lhote
  */
 export function degAcos(x: number) {
-  return arrondi(radToDeg(Math.acos(x)), 1)
+  return Number(radToDeg(Math.acos(x)).toFixed(1))
 }
 
 /**
@@ -57,7 +54,7 @@ export function degAcos(x: number) {
  * @author Jean-Claude Lhote
  */
 export function degAsin(x: number) {
-  return arrondi(radToDeg(Math.asin(x)), 1)
+  return Number(radToDeg(Math.asin(x)).toFixed(1))
 }
 
 /**
@@ -66,7 +63,7 @@ export function degAsin(x: number) {
  * @author Jean-Claude Lhote
  */
 export function degAtan(x: number) {
-  return arrondi(radToDeg(Math.atan(x)), 1)
+  return Number(radToDeg(Math.atan(x)).toFixed(1))
 }
 
 export function angleOppose(angle: Angle) {
@@ -193,7 +190,7 @@ export function kCosOuKSin(k: number, cosOuSin: string) {
   } else {
     // Pas de dénominateur 2, on est sur un nombre décimal comme 0.5
     const val = parseFloat(cosOuSin)
-    return `${signe}${texNombre(k * val)}`
+    return `${signe}${(k * val).toFixed(1).replace('.', '{,}')}`
   }
 }
 

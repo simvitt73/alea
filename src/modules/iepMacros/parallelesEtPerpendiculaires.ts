@@ -12,7 +12,6 @@ import {
   pointSurSegment,
 } from '../../lib/2d/points'
 import type { PointAbstrait } from '../../lib/2d/points-abstraits'
-import { vecteur } from '../../lib/2d/segmentsVecteurs'
 import {
   homothetie,
   projectionOrtho,
@@ -26,6 +25,7 @@ import {
   longueur,
   pointEstSur,
 } from '../../lib/2d/utilitairesGeometriques'
+import { vecteur } from '../../lib/2d/Vecteur'
 import type {
   IAlea2iep,
   OptionsCompas,

@@ -2,12 +2,7 @@ import { codageSegment } from '../../lib/2d/codages'
 import { colorToLatexOrHTML } from '../../lib/2d/colorToLatexOrHtml'
 import { Point } from '../../lib/2d/points'
 import type { Polygone } from '../../lib/2d/polygones'
-import {
-  Segment,
-  segment,
-  Vecteur,
-  vecteur,
-} from '../../lib/2d/segmentsVecteurs'
+import { Segment, segment } from '../../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import { translation } from '../../lib/2d/transformations'
@@ -19,6 +14,7 @@ import { context } from '../../modules/context'
 import { mathalea2d } from '../../modules/mathalea2d'
 import type { NestedObjetMathalea2dArray } from '../../types/2d'
 
+import { vecteur, type Vecteur } from '../../lib/2d/Vecteur'
 import { egal, listeQuestionsToContenu, randint } from '../../modules/outils'
 import { Pavage, pavage } from '../../modules/Pavage'
 import Exercice from '../Exercice'

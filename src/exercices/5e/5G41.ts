@@ -7,6 +7,7 @@ import {
   afficheMesureAngle,
   codageSegments,
 } from '../../lib/2d/codages'
+import { demiDroite } from '../../lib/2d/DemiDroite'
 import { droite } from '../../lib/2d/droites'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import {
@@ -17,7 +18,7 @@ import {
   pointIntersectionDD,
 } from '../../lib/2d/points'
 import { polygone, polygoneAvecNom } from '../../lib/2d/polygones'
-import { demiDroite, segment } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPosition } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import { rotation, similitude } from '../../lib/2d/transformations'

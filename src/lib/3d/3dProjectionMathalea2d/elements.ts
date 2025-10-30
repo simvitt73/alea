@@ -1,11 +1,12 @@
-import { translation3d, rotation3d } from './tranformations'
+import { cross, dot, matrix, multiply, norm } from 'mathjs'
 import { context } from '../../../modules/context'
 import { Droite, droite } from '../../2d/droites'
 import { Point, point } from '../../2d/points'
-import { polyline, Polygone, polygone } from '../../2d/polygones'
-import { Vecteur, Segment, vecteur, segment } from '../../2d/segmentsVecteurs'
+import { Polygone, polygone, polyline } from '../../2d/polygones'
+import { Segment, segment } from '../../2d/segmentsVecteurs'
+import { vecteur } from '../../2d/Vecteur'
 import { arrondi } from '../../outils/nombres'
-import { cross, dot, matrix, multiply, norm } from 'mathjs'
+import { rotation3d, translation3d } from './tranformations'
 
 export const math = { matrix, multiply, norm, cross, dot }
 

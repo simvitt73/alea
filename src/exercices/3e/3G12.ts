@@ -1,3 +1,4 @@
+import { codageAngle } from '../../lib/2d/angles'
 import { colorToLatexOrHTML } from '../../lib/2d/colorToLatexOrHtml'
 import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPosition } from '../../lib/2d/textes'

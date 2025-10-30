@@ -3,7 +3,7 @@ import { Droite, droite } from '../../lib/2d/droites'
 import { grille } from '../../lib/2d/Grille'
 import { milieu, Point, point } from '../../lib/2d/points'
 import { Polygone, polygone } from '../../lib/2d/polygones'
-import { segment, Vecteur, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { texteParPointEchelle } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import {
@@ -12,6 +12,7 @@ import {
   symetrieAxiale,
   translation,
 } from '../../lib/2d/transformations'
+import { vecteur, type Vecteur } from '../../lib/2d/Vecteur'
 import { vide2d, Vide2d } from '../../lib/2d/Vide2d'
 import { texcolors } from '../../lib/format/style'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'

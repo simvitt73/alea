@@ -1,7 +1,7 @@
+import { demiDroite } from '../../lib/2d/DemiDroite'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import { codageAngle } from '../../lib/2d/angles'
 import { point } from '../../lib/2d/points'
-import { demiDroite } from '../../lib/2d/segmentsVecteurs'
 import { texteParPoint } from '../../lib/2d/textes'
 import { homothetie, rotation } from '../../lib/2d/transformations'
 import { angle, longueur } from '../../lib/2d/utilitairesGeometriques'

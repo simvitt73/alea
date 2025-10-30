@@ -1,9 +1,23 @@
-import { egal, randint } from '../../modules/outils'
-import { degToRad } from '../mathFonctions/trigo'
 import type { ICercle, IDroite, IPointAbstrait } from './Interfaces'
 import { PointAbstrait } from './points-abstraits'
-import { homothetie, similitude } from './transformations'
-import { longueur } from './utilitairesGeometriques'
+
+/**
+ * Retourne un entier aléatoire entre min et max (inclus)
+ * @param min Borne inférieure (incluse)
+ * @param max Borne supérieure (incluse)
+ * @returns Entier aléatoire entre min et max
+ */
+const randint = (min: number, max: number): number =>
+  Math.floor(Math.random() * (max - min + 1)) + min
+
+/**
+ * Calcule la distance entre deux points
+ * @param A Premier point
+ * @param B Deuxième point
+ * @returns Distance euclidienne entre A et B
+ */
+const longueur = (A: IPointAbstrait, B: IPointAbstrait): number =>
+  Math.sqrt((B.x - A.x) ** 2 + (B.y - A.y) ** 2)
 
 /**
  * A = point('A') //son nom
@@ -77,9 +91,12 @@ export function pointSurSegment(
   if (l === undefined || typeof l === 'string') {
     l = (longueur(A, B) * randint(15, 85)) / 100
   }
-  return pointDepuisPointAbstrait(
-    homothetie(B, A, l / longueur(A, B), nom, positionLabel),
-  )
+
+  // Calcul direct de l'homothétie de B par rapport à A avec rapport k = l / longueur(A, B)
+  const k = l / longueur(A, B)
+  const x = A.x + k * (B.x - A.x)
+  const y = A.y + k * (B.y - A.y)
+  return point(x, y, nom, positionLabel)
 }
 
 /**
@@ -100,8 +117,9 @@ export function pointSurCercle(
   positionLabel = 'above',
 ): Point {
   if (typeof angle !== 'number') angle = randint(-180, 180)
-  const x = c.centre.x + c.rayon * Math.cos(degToRad(angle))
-  const y = c.centre.y + c.rayon * Math.sin(degToRad(angle))
+  const angleRad = (angle * Math.PI) / 180
+  const x = c.centre.x + c.rayon * Math.cos(angleRad)
+  const y = c.centre.y + c.rayon * Math.sin(angleRad)
   return point(x, y, nom, positionLabel)
 }
 
@@ -142,13 +160,13 @@ export function pointIntersectionDD(
   positionLabel = 'above',
 ): Point | false {
   let x, y
-  if (egal(f.a * d.b - f.b * d.a, 0, 0.000001)) {
+  if (Math.abs(f.a * d.b - f.b * d.a) < 0.000001) {
     // Les droites sont parallèles ou confondues, pas de point d'intersection ou une infinité
     return pointIntersectionNonTrouveEntre(d, f, point(0, 0))
   } else {
     y = (f.c * d.a - d.c * f.a) / (f.a * d.b - f.b * d.a)
   }
-  if (egal(d.a, 0, 0.000001)) {
+  if (Math.abs(d.a) < 0.000001) {
     // si d est horizontale alors f ne l'est pas donc f.a<>0
     x = (-f.c - f.b * y) / f.a
   } else {
@@ -183,10 +201,23 @@ export function pointAdistance(
     if (positionLabel != null) lePositionLabel = positionLabel
   }
 
-  const B = point(A.x + 1, A.y)
-  return pointDepuisPointAbstrait(
-    similitude(B, A, lAngle, d, leNom, lePositionLabel),
-  )
+  // Calcul direct de la similitude de centre A, angle lAngle (en degrés), rapport d
+  // appliquée au point B = (A.x + 1, A.y)
+  // Formule : M = A + d * R(lAngle) * (B - A)
+  // où R est la rotation d'angle lAngle
+  const angleRad = (lAngle * Math.PI) / 180
+  const cos = Math.cos(angleRad)
+  const sin = Math.sin(angleRad)
+
+  // Vecteur AB (ici B = (A.x + 1, A.y) donc AB = (1, 0))
+  const dx = 1
+  const dy = 0
+
+  // Application de la rotation puis homothétie de rapport d
+  const x = A.x + d * (cos * dx - sin * dy)
+  const y = A.y + d * (sin * dx + cos * dy)
+
+  return point(x, y, leNom, lePositionLabel)
 }
 
 /**
@@ -211,13 +242,13 @@ export function pointIntersectionLC(
   const xO = O.x
   const yO = O.y
   let Delta, delta, xi, yi, xiPrime, yiPrime
-  if (egal(b, 0, 0.000001)) {
+  if (Math.abs(b) < 0.000001) {
     // la droite est verticale
     xi = -c / a
     xiPrime = xi
     Delta = 4 * (-xO * xO - (c * c) / (a * a) - (2 * xO * c) / a + r * r)
     if (Delta < 0) return pointIntersectionNonTrouveEntre(d, C, C.centre)
-    else if (egal(Delta, 0)) {
+    else if (Math.abs(Delta) < 1e-10) {
       // un seul point d'intersection
       yi = yO + Math.sqrt(Delta) / 2
       yiPrime = yi
@@ -226,13 +257,13 @@ export function pointIntersectionLC(
       yi = yO - Math.sqrt(Delta) / 2
       yiPrime = yO + Math.sqrt(Delta) / 2
     }
-  } else if (egal(a, 0, 0.0000001)) {
+  } else if (Math.abs(a) < 0.0000001) {
     // la droite est horizontale
     yi = -c / b
     yiPrime = yi
     Delta = 4 * (-yO * yO - (c * c) / (b * b) - (2 * yO * c) / b + r * r)
     if (Delta < 0) return pointIntersectionNonTrouveEntre(d, C, C.centre)
-    else if (egal(Delta, 0)) {
+    else if (Math.abs(Delta) < 1e-10) {
       // un seul point d'intersection
       xi = xO + Math.sqrt(Delta) / 2
       xiPrime = xi
@@ -249,7 +280,7 @@ export function pointIntersectionLC(
         (1 + (a / b) ** 2) *
         (xO * xO + yO * yO + (c / b) ** 2 + (2 * yO * c) / b - r * r)
     if (Delta < 0) return pointIntersectionNonTrouveEntre(d, C, C.centre)
-    else if (egal(Delta, 0)) {
+    else if (Math.abs(Delta) < 1e-10) {
       // un seul point d'intersection
       delta = Math.sqrt(Delta)
       xi =

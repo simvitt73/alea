@@ -1,10 +1,10 @@
+import { demiDroite } from '../../../lib/2d/DemiDroite'
 import { codageSegments } from '../../../lib/2d/codages'
 import { courbeInterpolee } from '../../../lib/2d/courbes'
 import { droite } from '../../../lib/2d/droites'
 import { milieu, point } from '../../../lib/2d/points'
 import { repere } from '../../../lib/2d/reperes'
 import {
-  demiDroite,
   segment,
   segmentAvecExtremites,
 } from '../../../lib/2d/segmentsVecteurs'

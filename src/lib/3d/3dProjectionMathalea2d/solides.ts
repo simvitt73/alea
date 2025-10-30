@@ -22,14 +22,16 @@ import {
   polyline,
   renommePolygone,
 } from '../../2d/polygones'
-import { norme, segment, vecteur } from '../../2d/segmentsVecteurs'
+import { segment } from '../../2d/segmentsVecteurs'
 import { labelPoint } from '../../2d/textes'
 import { translation } from '../../2d/transformations'
 import {
   estDansPolygone,
   estDansQuadrilatere,
   longueur,
+  norme,
 } from '../../2d/utilitairesGeometriques'
+import { vecteur } from '../../2d/Vecteur'
 import { vide2d } from '../../2d/Vide2d'
 import { choisitLettresDifferentes } from '../../outils/aleatoires'
 import { arrondi } from '../../outils/nombres'
