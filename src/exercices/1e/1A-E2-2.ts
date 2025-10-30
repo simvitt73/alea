@@ -20,7 +20,7 @@ export const interactifReady = true
 export const interactifType = 'qcm'
 export const amcReady = 'true'
 export const amcType = 'qcmMono'
-export const titre = "Calculer avec un taux d'évolution (2)"
+export const titre = "Choisir le calcul pour calculer un prix après des augmentations successives"
 
 export default class AugmentationsSuccessives extends ExerciceQcmA {
   versionOriginale: () => void = () => {
