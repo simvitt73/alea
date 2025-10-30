@@ -39,7 +39,7 @@ class PlacerPointsAbscissesFractionnaires extends Exercice {
 
     this.nbQuestions = 5
     this.sup = 1
-    this.sup2 = true
+    this.sup2 = false
     this.sup3 = true
     this.exoCustomResultat = true
     this.besoinFormulaireNumerique = [
@@ -48,7 +48,7 @@ class PlacerPointsAbscissesFractionnaires extends Exercice {
       '1 : Demis, tiers ou quarts avec zéro placé\n2 : Des cinquièmes aux neuvièmes avec zéro placé \n3 : Toutes les fractions précédentes mais zéro non visible\n4 : Mélange\n5 : Mélange avec des nombres relatifs',
     ] // Niveau de difficulté : 5 cf 2N10-3
     // cf 2N10-3
-    this.besoinFormulaire2CaseACocher = ['Utiliser la notation ( )', true]
+    this.besoinFormulaire2CaseACocher = ['Utiliser la notation ( )', false]
     this.besoinFormulaire3CaseACocher = ['Correction détaillée', true]
   }
 
@@ -119,7 +119,6 @@ class PlacerPointsAbscissesFractionnaires extends Exercice {
       } else {
         texte = `Placer le point $${label1}$ d'abscisse $${fraction(num1, den1).toLatex()}$, le point $${label2}$ d'abscisse $${fraction(num2, den1).toLatex()}$ et le point $${label3}$ d'abscisse $${fraction(num3, den1).toLatex()}$.`
       }
-      texte += `<br>************ $${label1}$ d'abscisse $${fraction(num1, den1).toLatex()}$ num1 $${num1}$ den1 $${den1}$`
       const { figure, latex } = apigeomGraduatedLine({
         xMin: origine,
         xMax: origine + 4,
