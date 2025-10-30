@@ -2126,7 +2126,7 @@ export function ensembleNombres(
   { kUplet = false, avecAccolades = true } = {},
 ): ResultType {
   const clean = generateCleaner(['virgules', 'fractions', 'parentheses'])
-  const cleanInput = clean(input)
+  const cleanInput = clean(input).replaceAll('∅', '\\emptyset')
   goodAnswer = clean(goodAnswer)
   if (goodAnswer === '\\emptyset' && cleanInput === goodAnswer)
     return { isOk: true }
