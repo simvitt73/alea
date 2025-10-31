@@ -44,7 +44,7 @@ export default class ConversionEnTousSensLongueur extends ExerciceSimple {
             this.question += ' ..... cm'
           }
 
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
           this.canEnonce = 'Compléter.'
           this.canReponseACompleter = `$${texNombre(a)}\\text{ m}$ $=$ $\\dots\\text{ cm}$`
           this.correction = `$${texNombre(a)}\\text{ m}$ $=${miseEnEvidence(texNombre(a * 100))}\\text{ cm}$`
@@ -64,7 +64,7 @@ export default class ConversionEnTousSensLongueur extends ExerciceSimple {
 
           this.optionsChampTexte = { texteApres: ' m' }
           this.canEnonce = 'Compléter.'
-          this.canReponseACompleter = `$${texNombre(a)}\\text{ cm}$ $= \\dots$ m`
+          this.canReponseACompleter = `$${texNombre(a)}\\text{ cm}$ $= \\dots\\text{ m}$`
           this.correction = `$${texNombre(a)}\\text{ cm}=${miseEnEvidence(texNombre(a / 100))}\\text{ m}$.`
           this.correction += texteEnCouleur(
             `<br> Mentalement : <br>
@@ -105,8 +105,8 @@ export default class ConversionEnTousSensLongueur extends ExerciceSimple {
 
           this.optionsChampTexte = { texteApres: ' m' }
           this.canEnonce = 'Compléter.'
-          this.canReponseACompleter = `$${texNombre(a)}\\text{ km}$ $= \\dots$ m`
-          this.correction = `$${texNombre(a)}$ km$=${miseEnEvidence(texNombre(a * 1000))}$ m`
+          this.canReponseACompleter = `$${texNombre(a)}\\text{ km}$ $= \\dots\\text{ m}$`
+          this.correction = `$${texNombre(a)}$ km$=${miseEnEvidence(texNombre(a * 1000))}\\text{ m}$`
           this.correction += texteEnCouleur(
             `<br> Mentalement : <br>
           Comme $1\\text{ km}$ $=${texNombre(1000)}\\text{ m}$,  pour convertir des «${sp()}km ${sp()}» au «${sp()}m ${sp()}», on multiplie par $${texNombre(1000)}$.<br>

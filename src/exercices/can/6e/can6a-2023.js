@@ -512,10 +512,10 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           a = randint(0, 4)
           b = randint(taille1[a][1], taille1[a][2])
           propositions = shuffle([
-            `$${b}$ m`,
-            `$${b}$ dm`,
+            `$${b}\\text{ m}$`,
+            `$${b}\\text{ dm}$`,
             `$${b}\\text{ cm}$`,
-            `$${b}$ mm`,
+            `$${b}\\text{ mm}$`,
           ])
 
           texte = `Choisis parmi les propositions suivantes la hauteur d'une ${taille1[a][0]}.<br>

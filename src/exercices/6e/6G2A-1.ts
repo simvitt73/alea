@@ -210,7 +210,7 @@ export default class RayonDiametreMilieu extends Exercice {
       if (this.interactif) {
         handleAnswers(this, i, { reponse: { value: reponse } })
         texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierDeBase, {
-          texteApres: ' cm',
+          texteApres: ' $\\text{cm}$',
         })
       }
       if (this.listeQuestions.indexOf(texte) === -1) {

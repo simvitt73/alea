@@ -55,7 +55,7 @@ Combien de balles ne sont pas rouges ?`
           this.reponse = texNombre(a - b, 0)
           this.question = `Un cycliste doit parcourir $${a}\\text{ km}$. <br>
           Il a déjà parcouru $${b}\\text{ km}$.<br>
-Combien lui reste-t-il de km à parcourir ?`
+Combien lui reste-t-il de $\\text{ km}$ à parcourir ?`
           this.correction = `Le cycliste doit parcourir $${a}\\text{ km}$ et il a déjà parcouru $${b}\\text{ km}$.<br>
            $${a} -${b}=${this.reponse}$ <br>
           Le cycliste doit encore parcourir $${miseEnEvidence(this.reponse)}\\text{ km}$.`

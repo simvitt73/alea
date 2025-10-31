@@ -28,7 +28,7 @@ export default class SommeDeProduitsCompleter extends ExerciceSimple {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
     this.nbQuestions = 1
-    this.optionsChampTexte = { texteApres: ' cm' }
+    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
     this.formatChampTexte = KeyboardType.clavierDeBase
   }
 

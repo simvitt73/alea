@@ -33,7 +33,7 @@ export default class ProblemesDeLongueurs extends ExerciceSimple {
     this.nbQuestions = 1
     this.typeExercice = 'simple'
 
-    this.optionsChampTexte = { texteApres: ' cm' }
+    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
   }
 
   nouvelleVersion() {

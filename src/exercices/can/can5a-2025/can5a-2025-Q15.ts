@@ -29,7 +29,7 @@ export default class Can2025N5Q15 extends ExerciceCan {
     this.correction = `Le périmètre d'un rectangle de longueur $${longueur}\\text{ cm}$ et de largeur $${largeur}\\text{ cm}$ est $2\\times (${longueur}+${largeur})=2\\times ${longueur + largeur}=${miseEnEvidence(texNombre((longueur + largeur) * 2, 0))}\\text{ cm}$.`
     this.canEnonce = this.question
     this.canReponseACompleter = '$\\ldots\\text{ cm}$'
-    this.optionsChampTexte = { texteApres: ' cm' }
+    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
     if (this.interactif) {
       this.question += '<br>'
     }

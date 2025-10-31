@@ -45,7 +45,7 @@ export default class CarreAire extends ExerciceSimple {
         this.question = `Déterminer le périmètre  d'un carré d'aire $${c}\\text{ cm}^2$. `
         this.reponse = 4 * a
         this.correction = `Le côté du carré est $\\sqrt{${c}}=${a}$. Son périmètre est donc $4\\times ${a}=${4 * a}\\text{ cm}$.`
-        this.optionsChampTexte = { texteApres: ' cm' }
+        this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
         this.canEnonce = this.question // 'Compléter'
         this.canReponseACompleter = '$\\ldots\\text{ cm}$'
         break

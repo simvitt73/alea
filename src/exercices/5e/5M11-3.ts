@@ -271,7 +271,7 @@ export default class PerimetreAireDisques extends Exercice {
                   this,
                   this.sup3 === 4 ? 2 * i : i,
                   ' ',
-                  { texteApres: ' cm' },
+                  { texteApres: ' $\\text{cm}$' },
                 )
             }
             if (choixValeurApprochee) {
@@ -288,7 +288,7 @@ export default class PerimetreAireDisques extends Exercice {
                   this,
                   this.sup3 === 4 ? 2 * i + 1 : i,
                   '   ',
-                  { texteApres: ' cm' },
+                  { texteApres: ' $\\text{cm}$' },
                 )
             }
           } else {
@@ -442,7 +442,7 @@ export default class PerimetreAireDisques extends Exercice {
                   this,
                   this.sup3 === 4 ? 4 * i : 2 * i,
                   ' ',
-                  { texteApres: ' cm' },
+                  { texteApres: ' $\\text{cm}$' },
                 )
             }
             if (choixValeurApprochee) {
@@ -459,7 +459,7 @@ export default class PerimetreAireDisques extends Exercice {
                   this,
                   this.sup3 === 4 ? 4 * i + 1 : 2 * i,
                   ' ',
-                  { texteApres: ' cm' },
+                  { texteApres: ' $\\text{cm}$' },
                 )
             }
             if (choixValeurExacte) {

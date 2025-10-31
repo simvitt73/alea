@@ -33,7 +33,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
     this.nbQuestions = 1
     this.typeExercice = 'simple'
 
-    this.optionsChampTexte = { texteApres: ' cm' }
+    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
   }
 
   nouvelleVersion() {
@@ -99,7 +99,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
             objets,
           )
 
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = new Decimal(a).mul(4)
           this.correction = `Il s'agit d'un carré. <br>
@@ -134,7 +134,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
             },
             objets,
           )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = a
           this.correction = `Il s'agit d'un carré. <br>
@@ -197,7 +197,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
           objets,
         )
 
-        this.optionsChampTexte = { texteApres: ' cm' }
+        this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
         this.reponse = new Decimal(a2).add(b2)
         this.correction = `Il s'agit d'un rectangle. <br>
@@ -242,7 +242,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
             },
             objets,
           )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = new Decimal(a).mul(3)
           this.correction = `Le triangle est équilatéral.<br>
@@ -269,7 +269,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
             },
             objets,
           )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = a
           this.correction = `Puisque le triangle est équilatéral, la longueur de son côté est le tiers de son périmètre, soit $${texNombre(3 * a)}\\div ${3}=${miseEnEvidence(texNombre(a, 1))}\\text{ cm}$. `
@@ -319,7 +319,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
             },
             objets,
           )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = new Decimal(a).mul(2).add(b)
           this.correction = `Le triangle est isocèle.<br>
@@ -350,7 +350,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
             objets,
           )
 
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = a
           this.correction = `Le triangle est isocèle, il possède donc deux longueurs égales.<br>
@@ -384,7 +384,7 @@ export default class ProblemesDeLongueursEtPerimetre extends ExerciceSimple {
             },
             objets,
           )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = b
           this.correction = `Le triangle est isocèle, il possède donc deux longueurs égales.<br>

@@ -238,7 +238,7 @@ export default class ProblemesPuissancesDe10EtConversions extends Exercice {
           const emissionElectrique = (a * c * 10000000) / 1000000 // conversion en kg
           const economie = arrondi(emissionEssence - emissionElectrique)
           reponseNumerique = economie
-          texteCorr = `Distance parcourue: en $m$ : $${texNombre(c * 10000)}~\\text{km}=${texNombre(c)}\\times10^4~\\text{km}=${texNombre(c)}\\times10^4\\times10^3~\\text{m}=${texNombre(c)}\\times10^7~\\text{m}$<br>`
+          texteCorr = `Distance parcourue: en $\\text{m}$ : $${texNombre(c * 10000)}~\\text{km}=${texNombre(c)}\\times10^4~\\text{km}=${texNombre(c)}\\times10^4\\times10^3~\\text{m}=${texNombre(c)}\\times10^7~\\text{m}$<br>`
           texteCorr += `Émission de CO$_2$ pour la voiture essence : $${texNombre(c)}\\times10^7~\\text{m} \\times ${b}~\\text{mg/m} = ${texNombre(b * c)}\\times10^7~\\text{mg}$<br>`
           texteCorr += `Émission de CO$_2$ pour la voiture électrique : $${texNombre(c)}\\times10^7~\\text{m} \\times ${a}~\\text{mg/m} = ${texNombre(a * c)}\\times10^7~\\text{mg}$<br>`
           texteCorr += `Économie de CO$_2$: $${texNombre(b * c)}\\times10^7 - ${texNombre(a * c)}\\times10^7 = ${texNombre((b - a) * c)}\\times10^7~\\text{mg}$<br>`

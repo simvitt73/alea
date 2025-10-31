@@ -46,7 +46,7 @@ export default class NomExercice extends ExerciceSimple {
          Comme $1\\text{ m}$ $=10$ dm, alors $1$ dm $=0,1\\text{ m}$.<br>
         Ainsi, pour passer des "dm" au "m", on divise par $10$.<br>
       Comme $${a}\\div 10 =${texNombre(a / 10, 1)}$, alors $${a}$ dm$=${miseEnEvidence(texNombre(a / 10, 1))}\\text{ m}$.  `
-        this.canReponseACompleter = `$${a}$ dm $=\\ldots$ m`
+        this.canReponseACompleter = `$${a}$ dm $=\\ldots\\text{ m}$`
         if (this.interactif) {
           this.optionsChampTexte = { texteApres: 'm' }
         } else {
@@ -63,7 +63,7 @@ export default class NomExercice extends ExerciceSimple {
         }
         this.correction = ` Comme $1\\text{ m}$ $=10$ dm,  pour passer des "m" au "dm", on multiplie par $10$.<br>
             Comme $${texNombre(a, 1)}\\times 10 =${texNombre(a * 10, 0)}$, alors $${texNombre(a, 2)}$ m$=${miseEnEvidence(texNombre(a * 10, 0))}$ dm.`
-        this.canReponseACompleter = ` $${texNombre(a, 0)}\\text{ m}$ $= \\ldots$ dm`
+        this.canReponseACompleter = ` $${texNombre(a, 0)}\\text{ m}$ $= \\ldots\\text{ dm}$`
       }
     }
     this.canEnonce = 'Complète.'
