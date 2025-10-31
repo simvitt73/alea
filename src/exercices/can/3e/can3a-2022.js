@@ -275,11 +275,17 @@ export default class SujetCAN2022troisieme extends Exercice {
 
             texteCorr = `
         Comme $1\\text{ m}$ $=100\\text{ cm}$, alors $1\\text{ cm}$ $=0,01\\text{ m}$.<br>
-        Ainsi pour passer des "m" au "cm", on divise par $100$.<br>
+        Ainsi pour passer des $\\text{m}$ au $\\text{cm}$, on divise par $100$.<br>
           Comme : $${a}\\div 100 =${texNombre(reponse, 2)}$<br> alors $${a}\\text{ cm}=${texNombre(reponse, 2)}\\text{ m}$.  `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
-              texte += ajouteChampTexteMathLive(this, index, ' ') + 'm'
+              texte +=
+                ajouteChampTexteMathLive(
+                  this,
+                  index,
+                  KeyboardType.clavierNumbers,
+                  { texteApres: '' },
+                ) + '$\\text{ m}$'
             } else {
               texte += '  $\\ldots\\text{ m}$'
             }
@@ -287,11 +293,16 @@ export default class SujetCAN2022troisieme extends Exercice {
             a = new Decimal(randint(1, 9)).div(10).plus(randint(1, 9))
             reponse = a.mul(100)
             texte = `$${texNombre(a, 1)}\\text{ m}$  $=$ `
-            texteCorr = ` Comme $1\\text{ m}$ $=100\\text{ cm}$,  pour passer des "m" au "cm", on multiplie par $100$.<br>
-                Comme : $${texNombre(a, 1)}\\times 100 =${texNombre(reponse, 0)}$, alors $${texNombre(a, 2)}$ m$=${texNombre(reponse, 0)}\\text{ cm}$.`
+            texteCorr = ` Comme $1\\text{ m}$ $=100\\text{ cm}$,  pour passer des $\\text{m}$ au $\\text{cm}$, on multiplie par $100$.<br>
+                Comme : $${texNombre(a, 1)}\\times 100 =${texNombre(reponse, 0)}$, alors $${texNombre(a, 2)}\\text{ m}=${texNombre(reponse, 0)}\\text{ cm}$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
-              texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
+              texte += ajouteChampTexteMathLive(
+                this,
+                index,
+                KeyboardType.clavierNumbers,
+                { texteApres: '$\\text{ cm}$' },
+              )
             } else {
               texte += '  $\\ldots\\text{ cm}$'
             }
@@ -600,7 +611,12 @@ export default class SujetCAN2022troisieme extends Exercice {
           texte += ' $AC= $'
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
-            texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ cm}$' },
+            )
           } else {
             texte += ' $\\ldots\\text{ cm}$'
           }
@@ -743,7 +759,12 @@ export default class SujetCAN2022troisieme extends Exercice {
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
             texte += ' <br>$\\mathscr{P}= $'
-            texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ cm}$' },
+            )
           } else {
             texte += ' $\\mathscr{P}=\\ldots \\text{ cm}$'
           }
@@ -852,7 +873,12 @@ export default class SujetCAN2022troisieme extends Exercice {
           ${texNombre(reponse, 0)}\\text{ km}$.`
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
-            texte += ajouteChampTexteMathLive(this, index, ' ') + 'km'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ km}$' },
+            )
           }
           nbChamps = 1
           break

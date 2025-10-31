@@ -22,6 +22,7 @@ import { mathalea2d } from '../../../modules/mathalea2d'
 import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import {
   handleAnswers,
   setReponse,
@@ -623,7 +624,12 @@ export default class SujetCAN2021Seconde extends Exercice {
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += '<br>$EB=$'
-              texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
+              texte += ajouteChampTexteMathLive(
+                this,
+                index,
+                KeyboardType.clavierNumbers,
+                { texteApres: '$\\text{ cm}$' },
+              )
             } else {
               texte += ' $EB=\\ldots\\text{ cm}$'
             }
@@ -819,7 +825,12 @@ export default class SujetCAN2021Seconde extends Exercice {
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
-            texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ cm}$' },
+            )
           }
           nbChamps = 1
           break
@@ -873,7 +884,12 @@ export default class SujetCAN2021Seconde extends Exercice {
             }
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
-              texte += ajouteChampTexteMathLive(this, index, ' ') + 'km'
+              texte += ajouteChampTexteMathLive(
+                this,
+                index,
+                KeyboardType.clavierNumbers,
+                { texteApres: '$\\text{ km}$' },
+              )
             }
             nbChamps = 1
           }
@@ -941,7 +957,12 @@ export default class SujetCAN2021Seconde extends Exercice {
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += '<br>$DB=$'
-              texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
+              texte += ajouteChampTexteMathLive(
+                this,
+                index,
+                KeyboardType.clavierNumbers,
+                { texteApres: '$\\text{ cm}$' },
+              )
             } else {
               texte += ' $DB=\\ldots\\text{ cm}$'
             }
@@ -954,17 +975,22 @@ export default class SujetCAN2021Seconde extends Exercice {
         case 28:
           a = choice([1, 2, 3, 4, 10])
           reponse = a ** 3 / 100
-          texte = `La masse volumique d'un solide  est de $10$ g/cm$^3$.<br>
-          Combien pèse (en kg) ce solide qui a la forme d'un cube  d'arête $${a}\\text{ cm}$  ?
+          texte = `La masse volumique d'un solide  est de $10\\text{ g/cm}^3$.<br>
+          Combien pèse (en $\\text{kg}$) ce solide qui a la forme d'un cube  d'arête $${a}\\text{ cm}$  ?
       `
           texteCorr = `Le volume du cube est $${a}^3=${a ** 3}\\text{ cm}^3$.<br>
-          Sa masse  est donc donnée par $${a ** 3}\\times 10=${10 * a ** 3}$ g soit $${texNombre(a ** 3 / 100, 2)}$ kg.
+          Sa masse est donc donnée par $${a ** 3}\\times 10=${10 * a ** 3}$ g soit $${texNombre(a ** 3 / 100, 2)}\text{ kg}$.
 
           `
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
-            texte += ajouteChampTexteMathLive(this, index, ' ') + 'kg'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ kg}$' },
+            )
           }
           nbChamps = 1
           break

@@ -4,7 +4,6 @@ import { texNombre } from '../../../lib/outils/texNombre'
 import ExerciceSimple from '../../ExerciceSimple'
 
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-import { sp } from '../../../lib/outils/outilString'
 export const titre = "Charger d'unités"
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -48,7 +47,7 @@ export default class ChangerUnites extends ExerciceSimple {
     } else {
       this.reponse = 202500
       this.question = `$${texNombre(2025)}\\text{ m}$   `
-      this.correction = ` Comme $1\\text{ m}$ $=100\\text{ cm}$,  alors $${texNombre(2025)}$ m$${sp()}=${sp()}${miseEnEvidence(texNombre(202500))}\\text{ cm}$.`
+      this.correction = ` Comme $1\\text{ m}$ $=100\\text{ cm}$,  alors $${texNombre(2025)}\\text{ m}=${miseEnEvidence(texNombre(202500))}\\text{ cm}$.`
       if (!this.interactif) {
         this.question += '$=\\ldots\\text{ cm}$'
       }

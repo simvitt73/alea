@@ -1553,7 +1553,7 @@ export default class SujetCAN2023Cinquieme extends Exercice {
             b = randint(10, 22) * 100
 
             texte = `Un avion parcourt $${texNombre(b)}\\text{ km}$ en $3$ h. <br>
-            Quelle durée met-il pour parcourir ${context.isHtml ? `$${texNombre(1.5 * b, 0)}$ km` : `\\Lg[km]{${texNombre(1.5 * b, 0)}}`} ?`
+            Quelle durée met-il pour parcourir ${context.isHtml ? `$${texNombre(1.5 * b, 0)}\\text{ km}$` : `\\Lg[km]{${texNombre(1.5 * b, 0)}}`} ?`
             texteCorr = `En 1h 30 min, l'avion parcourt $${texNombre(0.5 * b, 0)}\\text{ km}$.<br>
             Comme il met $3$ h pour parcourir $${texNombre(b)}\\text{ km}$,  il mettra $${miseEnEvidence(4)}$ h $${miseEnEvidence(30)}$ min pour parcourir $${texNombre(1.5 * b, 0)}\\text{ km}$. `
             handleAnswers(this, index, {
@@ -1572,9 +1572,9 @@ export default class SujetCAN2023Cinquieme extends Exercice {
             b = choice([900, 1200, 1500, 1800, 2100, 2400])
 
             texte = `Un avion parcourt $${texNombre(b)}\\text{ km}$ en $3$ h. <br>
-            Quelle durée met-il pour parcourir ${context.isHtml ? `$${texNombre(b + b / 6, 0)}$ km` : `\\Lg[km]{${texNombre(b + b / 6, 0)}}`} ? `
+            Quelle durée met-il pour parcourir ${context.isHtml ? `$${texNombre(b + b / 6, 0)}\\text{ km}$` : `\\Lg[km]{${texNombre(b + b / 6, 0)}}`} ? `
             texteCorr = `En $1$ h , l'avion parcourt $${texNombre(b / 3, 0)}\\text{ km}$, donc en $30$ min, il parcourt  $${texNombre(b / 6, 0)}\\text{ km}$. <br>
-            Ainsi, il met $${miseEnEvidence(3)}$ h $${miseEnEvidence(30)}$ min pour parcourir $${texNombre(b + b / 6, 0)}$ km`
+            Ainsi, il met $${miseEnEvidence(3)}$ h $${miseEnEvidence(30)}$ min pour parcourir $${texNombre(b + b / 6, 0)}\\text{ km}$`
             handleAnswers(this, index, {
               reponse: {
                 value: new Hms({ hour: 3, minute: 30 }).toString(),

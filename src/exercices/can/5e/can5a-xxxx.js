@@ -353,8 +353,8 @@ export default class CourseAuxNombres5e extends Exercice {
             texteCorr = `$${a}\\text{ cm}$ $= ${a} / 100$m $=${texNombre(resultat)}\\text{ m}$`
           } else {
             resultat = arrondi(a / 1000)
-            texte = `Convertir $${a}$ mm en m.`
-            texteCorr = `$${a}$ mm $= ${a} / 1000$m $=${texNombre(resultat)}\\text{ m}$`
+            texte = `Convertir $${a}\\text{ mm}$ en m.`
+            texteCorr = `$${a}\\text{ mm}$ $= ${a} / 1000$m $=${texNombre(resultat)}\\text{ m}$`
           }
           setReponse(this, i, resultat, { formatInteractif: 'calcul' })
           break

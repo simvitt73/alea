@@ -469,7 +469,7 @@ En utilisant la calculatrice, on trouve $n=${n1}$.`,
 
           texte = `Aujourd'hui les chardons (une plante vivace) ont envahi $${u0}\\text{ m}^2$ des champs d'une région.<br>
  Chaque semaine, la surface envahie augmente de $${texNombre(p, 0)}\\,\\%$ par le développement des racines, auquel s'ajoutent $${texNombre(k, 2)}\\text{ m}^2$ suite à la dissémination des graines.<br>
-Pour tout entier naturel $n$, on note $${NomS}_n$ la surface envahie par les chardons, en m$^2$, après $n$ semaines ; on a donc $${NomS}_0 = ${u0}\\text{ m}^2$.`
+Pour tout entier naturel $n$, on note $${NomS}_n$ la surface envahie par les chardons, en $\\text{ m}$$^2$, après $n$ semaines ; on a donc $${NomS}_0 = ${u0}\\text{ m}^2$.`
           texte += createList({
             items: [
               `Calculer $${NomS}_1$ et $${NomS}_2$.`,

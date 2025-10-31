@@ -997,7 +997,12 @@ export default class SujetCAN2023Quatrieme extends Exercice {
             texte += context.isHtml ? `${sp(4)}$AC= $` : ''
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
-              texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
+              texte += ajouteChampTexteMathLive(
+                this,
+                index,
+                KeyboardType.clavierNumbers,
+                { texteApres: '$\\text{ cm}$' },
+              )
             } else {
               texte += context.isHtml ? ' $\\ldots\\text{ cm}$' : ''
               this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
@@ -1412,7 +1417,12 @@ export default class SujetCAN2023Quatrieme extends Exercice {
           texte += context.isHtml ? `${sp(4)}$AI= $` : ''
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
-            texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ cm}$' },
+            )
           } else {
             texte += context.isHtml ? ' $\\ldots\\text{ cm}$' : ''
           }

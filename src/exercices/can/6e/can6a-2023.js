@@ -923,11 +923,11 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             b = a + a / 2
 
             reponse = arrondi(2 * b, 0)
-            texte = `Si une pile de $${a}$ pièces de monnaie a une hauteur de $${2 * a}$ mm, alors une pile de
+            texte = `Si une pile de $${a}$ pièces de monnaie a une hauteur de $${2 * a}\\text{ mm}$, alors une pile de
           $${texNombre(b, 0)}$ pièces a une hauteur de `
 
-            texteCorr = `Une pile de $${a}$ pièces de monnaie a une hauteur de $2\\times ${a}=${2 * a}$ mm.<br>
-            Donc une pile de  $${texNombre(b, 0)}$ pièces aura une hauteur de $2\\times ${b}=${miseEnEvidence(2 * b)}$ mm.`
+            texteCorr = `Une pile de $${a}$ pièces de monnaie a une hauteur de $2\\times ${a}=${2 * a}\\text{ mm}$.<br>
+            Donc une pile de  $${texNombre(b, 0)}$ pièces aura une hauteur de $2\\times ${b}=${miseEnEvidence(2 * b)}\\text{ mm}$.`
 
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
@@ -935,13 +935,13 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
                 '<br>' +
                 ajouteChampTexteMathLive(this, index, '', { texteApres: 'mm.' })
             } else {
-              texte += ' $\\ldots$ mm.'
+              texte += ' $\\ldots\\text{ mm}$.'
             }
             this.listeCanEnonces.push(
-              `Si une pile de $${a}$ pièces de monnaie a une hauteur de $${2 * a}$ mm, `,
+              `Si une pile de $${a}$ pièces de monnaie a une hauteur de $${2 * a}\\text{ mm}$, `,
             )
             this.listeCanReponsesACompleter.push(
-              `alors une pile de $${texNombre(b, 0)}$ pièces a une hauteur de $\\ldots$ mm.`,
+              `alors une pile de $${texNombre(b, 0)}$ pièces a une hauteur de $\\ldots\\text{ mm}$.`,
             )
           } else {
             a = randint(2, 6)

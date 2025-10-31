@@ -224,7 +224,7 @@ export default class PerimetreOuAireDeCarresRectanglesTriangles extends Exercice
               texteAMC =
                 (this.sup2 === 3 ? numAlpha(nbPuces) : '') +
                 "Calculer l'aire" +
-                (context.isAmc ? ', en cm$^2$, ' : ' ')
+                (context.isAmc ? ', en $\\text{cm}^2$, ' : ' ')
               texteAMC += this.sup3
                 ? 'du carré ci-dessus.'
                 : `d'un carré de côté${sp()}$${texNombre(c)}\\text{ cm}$.`
@@ -340,7 +340,7 @@ export default class PerimetreOuAireDeCarresRectanglesTriangles extends Exercice
               texteAMC =
                 (this.sup2 === 3 ? numAlpha(nbPuces) : '') +
                 "Calculer l'aire" +
-                (context.isAmc ? ', en cm$^2$, ' : ' ')
+                (context.isAmc ? ', en $\\text{cm}^2$, ' : ' ')
               texteAMC += this.sup3
                 ? 'du rectangle ci-dessus.'
                 : `d'un rectangle de longueur${sp()}$${texNombre(L > l ? L : l)}\\text{ cm}$ et de largeur${sp()}$${texNombre(L > l ? l : L)}\\text{ cm}$.`
@@ -456,7 +456,7 @@ export default class PerimetreOuAireDeCarresRectanglesTriangles extends Exercice
               texteAMC =
                 (this.sup2 === 3 ? numAlpha(nbPuces) : '') +
                 "Calculer l'aire" +
-                (context.isAmc ? ', en cm$^2$, ' : ' ')
+                (context.isAmc ? ', en $\\text{cm}^2$, ' : ' ')
               texteAMC += this.sup3
                 ? 'du triangle rectangle ci-dessus.'
                 : `d'un triangle rectangle dont l'hypoténuse mesure $${texNombre(c2, 1)}\\text{ cm}$ et les côtés de l'angle droit mesurent respectivement $${texNombre(a)}\\text{ cm}$ et $${texNombre(b)}\\text{ cm}$.`

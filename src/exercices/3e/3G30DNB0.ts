@@ -174,7 +174,7 @@ On dispose des informations suivantes :<br><br>
     Le triangle $ABC$ est rectangle en $C$ et :<br>
     ${createList({
       items: [
-        `$AC = ${texNombre(hauteur, 2)}$ m;`,
+        `$AC = ${texNombre(hauteur, 2)}\\text{ m}$;`,
         `$AB = ${texNombre(hypo, 2)}\\text{ m}$.`,
       ],
       style: 'fleches',
@@ -195,7 +195,7 @@ Si la mesure de l'angle $\\widehat{ABC}$ est supérieure à $8,5°$, cela entra�
 Est-ce le cas pour ce terrain ?`,
         `On admet que le volume de terre enlevée correspond au prisme droit $CBAFED$ de hauteur $[CF]$ et de bases $ABC$ et $DEF$comme représenté ci-dessous.<br>
  On rappelle que les longueurs CF et AD sont égales.<br>${figure2}\n
- Déterminer le volume de terre à enlever en m$^3$.<br>
+ Déterminer le volume de terre à enlever en $\\text{ m}^3$.<br>
 On rappelle la volume de formule :
  ${centrage(`Volume d'un prisme droit = ${texteItalique("aire d'une base du prisme × hauteur du prisme")}.`)}`,
       ],

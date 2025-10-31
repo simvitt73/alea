@@ -29,6 +29,7 @@ import Exercice from '../../Exercice'
 
 import Decimal from 'decimal.js'
 import { plot } from '../../../lib/2d/Plot'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 
@@ -423,7 +424,8 @@ export default class SujetCAN2022Premiere extends Exercice {
             const L = randint(2, 4)
             const h = randint(2, 6, [l, L])
             const pav = pave(L, l, h)
-            texte = ' Quel est le volume en cm$^3$ de ce  pavé droit ?<br>'
+            texte =
+              ' Quel est le volume en $\\text{cm}^3$ de ce  pavé droit ?<br>'
             texte += ` ${mathalea2d({ xmin: -2, ymin: -2, xmax: 10, ymax: l + 2, scale: 0.8 }, pav)}`
 
             const reponse = L * l * h
@@ -517,7 +519,12 @@ export default class SujetCAN2022Premiere extends Exercice {
               texteCorr = `$1$ $\\mu$m $=10^{-6}\\text{ m}$, donc $1$ $\\mu$m  $=10^{-4}\\text{ cm}$  $=${texNombre(0.0001, 4)}\\text{ cm}$.<br>
             Ainsi, $${texNombre(b, 1)}$ $\\mu$m $=${texNombre(b / 10000, 5)}\\text{ cm}$.`
               if (this.interactif) {
-                texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
+                texte += ajouteChampTexteMathLive(
+                  this,
+                  index,
+                  KeyboardType.clavierNumbers,
+                  { texteApres: '$\\text{ cm}$' },
+                )
               } else {
                 texte += ' ..... cm'
               }
@@ -1461,7 +1468,12 @@ export default class SujetCAN2022Premiere extends Exercice {
           Le périmètre est donc $4\\times ${a}=${4 * a}\\text{ cm}$. `
               setReponse(this, index, reponse, { formatInteractif: 'calcul' })
               if (this.interactif) {
-                texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
+                texte += ajouteChampTexteMathLive(
+                  this,
+                  index,
+                  KeyboardType.clavierNumbers,
+                  { texteApres: '$\\text{ cm}$' },
+                )
               }
             } else {
               a = randint(2, 10)

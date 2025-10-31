@@ -144,7 +144,7 @@ La chaleur provoque dans la retenue une évaporation de $${p}\\,\\%$  du volume 
 De plus, chaque soir, on doit libérer de la retenue $${abs(b)}\\text{ m}^3$ pour l'irrigation des cultures aux alentours.<br>
 `
           if (!this.sup2 || this.interactif) {
-            texte += `On modélise l'évolution du  volume d'eau dans la retenue par une suite $(u_n)$, le terme $u_n$ donnant une estimation du volume d'eau en m$^3$ au matin du $n$-ième jour
+            texte += `On modélise l'évolution du  volume d'eau dans la retenue par une suite $(u_n)$, le terme $u_n$ donnant une estimation du volume d'eau en $\\text{ m}^3$ au matin du $n$-ième jour
 qui suit le 1er juillet 2024.<br>
             Préciser la valeur de $u_0$, puis exprimer pour tout entier $n$, le terme $u_{n+1}$ en fonction de $u_n$.`
           } else {
@@ -175,7 +175,7 @@ qui suit le 1er juillet 2024.<br>
             },
             { formatInteractif: 'fillInTheBlank' },
           )
-          texteCorr = `$u_n$ est le  terme  donnant une estimation du volume d'eau en m$^3$ au matin du $n$-ième jour
+          texteCorr = `$u_n$ est le  terme  donnant une estimation du volume d'eau en $\\text{ m}^3$ au matin du $n$-ième jour
 qui suit le 1er juillet $2024$ l'année $2024 + n$.<br>
             D'une année sur l'autre, la retenue perd $${p}\\,\\%$  par évaporation donc il en reste $${100 - p}\\,\\%$. <br>
           De plus, la retenue perd  $${abs(b)}\\text{ m}^3$ chaque soir.<br>

@@ -110,6 +110,6 @@ export default class Perimetre extends ExerciceSimple {
    On doit calculer la somme des valeurs. On regroupe pour faciliter le calcul : <br>
    $\\underbrace{${texNombre(a, 1)}+${texNombre(b, 1)}}_{${texNombre(a + b, 1)}}+\\underbrace{${texNombre(c, 1)}+${texNombre(d, 1)}}_{${texNombre(new Decimal(c).add(d), 1)}}=${texNombre(reponse, 1)}\\text{ m}$.`)
     this.canEnonce = this.question
-    this.canReponseACompleter = ' $\\dots$ m'
+    this.canReponseACompleter = ' $\\dots\\text{ m}$'
   }
 }

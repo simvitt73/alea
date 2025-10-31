@@ -314,7 +314,7 @@ export default class SujetCAN2023Seconde extends Exercice {
 
             handleAnswers(this, index, { reponse: { value: reponse } })
             if (this.interactif) {
-              texte += ajouteChampTexteMathLive(this, index, '')
+              texte += ajouteChampTexteMathLive(this, index)
             }
             this.canEnonce = texte
             this.canReponseACompleter = ''
@@ -691,7 +691,13 @@ export default class SujetCAN2023Seconde extends Exercice {
             })
             if (this.interactif) {
               texte +=
-                ' $=$' + ajouteChampTexteMathLive(this, index, '') + ' m$^3$'
+                ' $=$' +
+                ajouteChampTexteMathLive(
+                  this,
+                  index,
+                  KeyboardType.clavierNumbers,
+                  { texteApres: '$\\text{ m}^3$' },
+                )
             } else {
               texte += ' $=\\ldots\\text{ m}^3$'
             }
@@ -823,7 +829,12 @@ export default class SujetCAN2023Seconde extends Exercice {
           }
           handleAnswers(this, index, { reponse: { value: reponse } })
           if (this.interactif) {
-            texte += ajouteChampTexteMathLive(this, index, '') + 'm$^2$'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ m}^2$' },
+            )
           }
 
           this.listeCanEnonces.push(this.canEnonce)
@@ -1438,7 +1449,12 @@ export default class SujetCAN2023Seconde extends Exercice {
           Le volume de cette pyramide est donc : $\\dfrac{${a}\\times ${b}}{3}=${miseEnEvidence(texNombre(reponse, 0))}\\text{ cm}^3$.`
           handleAnswers(this, index, { reponse: { value: reponse } })
           if (this.interactif) {
-            texte += ajouteChampTexteMathLive(this, index, '') + 'cm$^3$'
+            texte += ajouteChampTexteMathLive(
+              this,
+              index,
+              KeyboardType.clavierNumbers,
+              { texteApres: '$\\text{ cm}^3$' },
+            )
           }
           this.canEnonce = texte
           this.canReponseACompleter = '$\\ldots\\text{ cm}^3$'

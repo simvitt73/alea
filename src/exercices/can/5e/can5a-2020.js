@@ -769,8 +769,8 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           reponse = new Decimal(a1 * 2).add(b * 2)
 
           texte = ` Quel est le périmètre d'un rectangle $ABCD$ tel que :
-                $AB=${a}$ mm et $BC=${texNombre(b, 1)}\\text{ cm}$ ?<br>`
-          texteCorr = `$${a}$ mm $= ${texNombre(a1, 1)}\\text{ cm}$.<br>
+                $AB=${a}\\text{ mm}$ et $BC=${texNombre(b, 1)}\\text{ cm}$ ?<br>`
+          texteCorr = `$${a}\\text{ mm}$ $= ${texNombre(a1, 1)}\\text{ cm}$.<br>
                 Le périmètre de $ABCD$ est donc : $2\\times ${texNombre(a1, 1)} \\text{ cm}+ 2\\times ${texNombre(b, 1)} \\text{ cm}=${miseEnEvidence(texNombre(reponse, 1))}\\text{ cm}$.`
 
           if (this.interactif) {

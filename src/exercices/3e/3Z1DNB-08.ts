@@ -123,9 +123,9 @@ export default class ExercicePolynesie52024 extends ExerciceBrevetA {
     this.enonce = `La piscine du camping ${nom} dispose d'un bassin circulaire de forme cylindrique de rayon $${texNombre(r, 1)}~\\text{m}$ et de hauteur $${texNombre(h, 1)}~\\text{m}$.<br>
     En fin de saison, on utilise une pompe dont le débit est de $${texNombre(v1, 1)}~\\text{m}^3/\\text{h}$ pour vider l'eau de la piscine.<br><br>`
     const question1 = `Montrer que le volume du bassin, arrondi au dixième de m$^3$, est $${texNombre(volumeArrondi, 1)}\\text{ m}^3$.`
-    const question2 = `Le bassin est plein. On met en route la pompe. Au bout de $${duree}$ heures, quel volume d'eau en m$^3$ reste-t-il à vider ?`
+    const question2 = `Le bassin est plein. On met en route la pompe. Au bout de $${duree}$ heures, quel volume d'eau en $\\text{ m}^3$ reste-t-il à vider ?`
     const question3a =
-      "Montrer que l'expression $v(t)$ permet de déterminer le volume d'eau en m$^3$ qu'il reste à vider dans le bassin en fonction de la durée $t$, exprimée en minutes, d'utilisation de la pompe."
+      "Montrer que l'expression $v(t)$ permet de déterminer le volume d'eau en $\\text{ m}^3$ qu'il reste à vider dans le bassin en fonction de la durée $t$, exprimée en minutes, d'utilisation de la pompe."
     const question3b = `Calculer le temps nécessaire pour que le volume d'eau restant à vider soit égal à $${texNombre(reste1, 1)}~\\text{m}^3$.<br>
     On donnera une valeur approchée à la minute près.`
     let question4 = `On a tracé ci-dessous une partie de la représentation graphique de la fonction $v$.<br><br>

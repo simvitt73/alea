@@ -753,8 +753,8 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             } else {
               texte += '$\\ldots\\text{ cm}$'
             }
-            texteCorr = ` Comme $1\\text{ m}$ $=100\\text{ cm}$,  pour passer des "m" au "cm", on multiplie par $100$.<br>
-                        Comme : $${texNombre(a, 0)}\\times 100 =${texNombre(a * 100, 0)}$, alors $${texNombre(a, 0)}$ m$=${texNombre(a * 100, 0)}\\text{ cm}$.
+            texteCorr = ` Comme $1\\text{ m}$ $=100\\text{ cm}$,  pour passer des $\\text{m}$ au $\\text{cm}$, on multiplie par $100$.<br>
+                        Comme : $${texNombre(a, 0)}\\times 100 =${texNombre(a * 100, 0)}$, alors $${texNombre(a, 0)}\\text{ m}=${texNombre(a * 100, 0)}\\text{ cm}$.
                         `
           } else {
             a = randint(1, 12) * choice([1, 10, 100])
@@ -769,7 +769,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
               texte += '$\\ldots\\text{ m}$'
             }
             texteCorr = `Comme $1\\text{ m}$ $=100\\text{ cm}$, alors $1\\text{ cm}$ $=0,01\\text{ m}$.<br>
-            Ainsi pour passer des "cm" au "m", on divise par $100$.<br>
+            Ainsi pour passer des $\\text{cm}$ au $\\text{m}$, on divise par $100$.<br>
               Comme  $${texNombre(a, 0)}\\div 100 =${texNombre(a / 100, 2)}$, alors $${texNombre(a, 0)}\\text{ cm}=${miseEnEvidence(texNombre(a / 100, 2))}\\text{ m}$.  `
           }
 

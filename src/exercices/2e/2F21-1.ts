@@ -175,7 +175,7 @@ Avec la formule B, ${P} pourra faire au maximum $${new Decimal(T - c).div(d).flo
             const prix = new Decimal(c).mul(d).add(a) // prix payé
 
             texte = `  Une société de location de véhicules particuliers propose le tarif suivant pour un week-end de location :<br>
-          ${texteGras('TARIF WEEK-END :')}  forfait de $${a}$ € puis $${texNombre(c, 2)}$ € par $\\text{km}$ parcouru (dans la limite de $${texNombre(km, 0)}$ km).<br>
+          ${texteGras('TARIF WEEK-END :')}  forfait de $${a}$ € puis $${texNombre(c, 2)}$ € par $\\text{km}$ parcouru (dans la limite de $${texNombre(km, 0)}\\text{ km}$).<br>
           On note $x$ le nombre de $\\text{km}$ parcourus par un client au cours d'un week-end et on considère la fonction $T$ qui à chaque valeur de $x$ associe le prix payé par le client.<br>`
             texte += createList({
               items: [
@@ -804,14 +804,14 @@ On considère la fonction $${nom}$ qui associe à chaque valeur de $x$, le prix 
             const rest = randint(251, 299)
 
             texte = `  Un éleveur de poulets décide de remplir son silo à grains.<br>
-             En notant $t$ le nombre de jours écoulés après avoir rempli son silo à grains et $f(t)$ la masse (en kg) restante 
+             En notant $t$ le nombre de jours écoulés après avoir rempli son silo à grains et $f(t)$ la masse (en $\\text{kg}$) restante 
             au bout de $t$ jours, on a : $f(t)=${texNombre(p, 0)}-${texNombre(m, 1)}t$<br>`
 
             texte += createList({
               items: [
                 `Calculer l'image de $${j}$ par $f$. Interpréter le résultat dans le contexte de l'exercice.`,
                 `Calculer l'antécédent de $${texNombre(ant, 1)}$ par $f$.<br>`,
-                "Sachant que l'éleveur avait rempli son silo au maximum de sa capacité, quelle est la contenance (en kg) du silo ?<br> ",
+                "Sachant que l'éleveur avait rempli son silo au maximum de sa capacité, quelle est la contenance (en $\\text{kg}$) du silo ?<br> ",
                 "  Au bout de combien de jours, l'éleveur sera-t-il à court de grains ? Justifier.<br> ",
                 ' Quelle quantité de grains en kg consomment les poulets en une journée ?<br> ',
                 ` Un jour, des renards ont tué la moitié des poulets, divisant par deux la quantité de grains consommée par jour.<br>

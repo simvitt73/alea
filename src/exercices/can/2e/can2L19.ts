@@ -29,7 +29,7 @@ export default class ExprimerEnFonction extends ExerciceSimple {
     this.nbQuestions = 1
     this.versionQcmDisponible = true
     this.formatChampTexte = KeyboardType.alphanumeric
-    this.optionsChampTexte = { texteAvant: '<br> ', texteApres: ' ' }
+    this.optionsChampTexte = { texteAvant: '<br> ' }
     this.optionsDeComparaison = { calculFormel: true }
   }
 
@@ -39,8 +39,8 @@ export default class ExprimerEnFonction extends ExerciceSimple {
     switch (choice([1, 2, 3, 4, 5, 6])) {
       case 1:
         this.question = `Lorsqu’un point mobile suit une trajectoire circulaire de rayon $R$, 
-  en mètre (m), son accélération centripète $a$ (en m/s$^2$) 
-  et sa vitesse $v$ (en m/s) sont liées par la relation : <br>
+  en mètre ($\\text{m}$), son accélération centripète $a$ (en $\\text{m/s}^2$) 
+  et sa vitesse $v$ (en $\\text{m/s}$) sont liées par la relation : <br>
   ${choixQ ? `${texteCentre('$a=\\dfrac{v^2}{R}$')}` : `${texteCentre('$v=\\sqrt{aR}$')}`}`
         if (this.versionQcm) {
           this.question += choixQ
@@ -184,7 +184,7 @@ Puis en isolant  $F$, on obtient : $${miseEnEvidence('F = \\dfrac{9}{5}C + 32')}
           '$t=\\sqrt{\\dfrac{h}{2g}}$',
           '$t=\\dfrac{\\sqrt{2h}}{g}$',
         ]
-        this.optionsChampTexte = { texteAvant: '<br> $t=$', texteApres: ' ' }
+        this.optionsChampTexte = { texteAvant: '<br> $t=$' }
         this.correction = `On part de la formule : $h = \\dfrac{1}{2}gt^2$.<br>
 En multiplinat les deux membres par $2$, on obtient : $2h = gt^2$.<br>
 En isolant $t^2$, on obtient : $t^2 = \\dfrac{2h}{g}$.<br>

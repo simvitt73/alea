@@ -15,8 +15,8 @@ export const refs = {
 /**
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Gilles Mora
+ */
 
-*/
 export default class Can2025N5Q15 extends ExerciceSimple {
   constructor() {
     super()
@@ -24,7 +24,7 @@ export default class Can2025N5Q15 extends ExerciceSimple {
     this.typeExercice = 'simple'
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.optionsChampTexte = { texteApres: ' km/h.' }
+    this.optionsChampTexte = { texteApres: '$\\text{ km/h}$.' }
     this.canOfficielle = true
   }
 
@@ -43,7 +43,7 @@ export default class Can2025N5Q15 extends ExerciceSimple {
           [2, 15],
         ])
     const a = kmMin[1]
-    const $\\text{km}$ = kmMin[0]
+    const km = kmMin[0]
     this.reponse = texNombre((km * 60) / a, 0)
     this.question = `${quidam} a couru $${km}\\text{ km}$ en $${a}$ minutes, sa vitesse moyenne est de   `
     if (!this.interactif) {

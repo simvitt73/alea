@@ -127,7 +127,7 @@ const vitesses: [string, number, number, number][] = [
   ['dans une voiture', 15, 30, 5],
   ['en avion', 150, 250, 12],
   ['à pied', 2, 4, 5],
-] // [moyen de transport, vitesse min,vitesse max en m/s,durée max en h]
+] // [moyen de transport, vitesse min,vitesse max en $\\text{m/s}$,durée max en h]
 export default class ProblemesGrandeursComposees extends Exercice {
   constructor() {
     super()

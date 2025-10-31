@@ -49,6 +49,6 @@ export default class QuestionDeVitesse extends ExerciceSimple {
       bleuMathalea,
     )
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\dots$ km'
+    this.canReponseACompleter = '$\\dots\\text{ km}$'
   }
 }

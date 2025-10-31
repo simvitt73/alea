@@ -192,7 +192,7 @@ export default class ProportionnaliteParLineariteTableau extends Exercice {
               ],
               ligne2: [
                 {
-                  texte: `\\text{Masse des }${o}\\text{ (en kg)}`,
+                  texte: `\\text{Masse des }${o}\\text{ (en $\\text{kg}$)}`,
                   latex: true,
                 },
                 {
@@ -402,7 +402,7 @@ export default class ProportionnaliteParLineariteTableau extends Exercice {
               ],
               ligne2: [
                 {
-                  texte: `\\text{Masse des }${o}\\text{ (en kg)}`,
+                  texte: `\\text{Masse des }${o}\\text{ (en $\\text{kg}$)}`,
                   latex: true,
                 },
                 {
@@ -632,7 +632,7 @@ export default class ProportionnaliteParLineariteTableau extends Exercice {
               ],
               ligne2: [
                 {
-                  texte: `\\text{Masse des }${o}\\text{ (en kg)}`,
+                  texte: `\\text{Masse des }${o}\\text{ (en $\\text{kg}$)}`,
                   latex: true,
                 },
                 {

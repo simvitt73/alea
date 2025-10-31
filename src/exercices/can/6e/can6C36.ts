@@ -49,7 +49,7 @@ export default class PetitsProblemeReste2 extends ExerciceSimple {
             }
           }
           this.canEnonce = this.question
-          this.canReponseACompleter = '$\\dots$ m'
+          this.canReponseACompleter = '$\\dots\\text{ m}$'
         }
         break
       case 2:
@@ -71,7 +71,7 @@ Quelle longueur de tuyau lui reste-t-il ?`
             }
           }
           this.canEnonce = this.question
-          this.canReponseACompleter = '$\\dots$ m'
+          this.canReponseACompleter = '$\\dots\\text{ m}$'
         }
         break
     }
