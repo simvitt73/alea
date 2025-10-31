@@ -205,6 +205,7 @@ export type ChoixQcm = {
   feedback?: string
   multicolsBegin?: boolean
   multicolsEnd?: boolean
+  numQuestionVisible?: boolean
   reponse?: {
     texte?: string
     valeur?: number | number[]
