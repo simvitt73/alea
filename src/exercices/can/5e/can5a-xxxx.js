@@ -350,11 +350,11 @@ export default class CourseAuxNombres5e extends Exercice {
           if (choice([true, false])) {
             resultat = arrondi(a / 100)
             texte = `Convertir $${a}\\text{ cm}$ en m.`
-            texteCorr = `$${a}\\text{ cm}$ $= ${a} / 100$m $=${texNombre(resultat)}$ m`
+            texteCorr = `$${a}\\text{ cm}$ $= ${a} / 100$m $=${texNombre(resultat)}\\text{ m}$`
           } else {
             resultat = arrondi(a / 1000)
             texte = `Convertir $${a}$ mm en m.`
-            texteCorr = `$${a}$ mm $= ${a} / 1000$m $=${texNombre(resultat)}$ m`
+            texteCorr = `$${a}$ mm $= ${a} / 1000$m $=${texNombre(resultat)}\\text{ m}$`
           }
           setReponse(this, i, resultat, { formatInteractif: 'calcul' })
           break
@@ -381,7 +381,11 @@ export default class CourseAuxNombres5e extends Exercice {
         case 'q25':
           a = randint(0, 4)
           b = randint(hauteurs[a][1], hauteurs[a][2])
-          propositions = shuffle([`$${b}$ m`, `$${b}$ dm`, `$${b}\\text{ cm}$`])
+          propositions = shuffle([
+            `$${b}\\text{ m}$`,
+            `$${b}\\text{ dm}$`,
+            `$${b}\\text{ cm}$`,
+          ])
           texte = `Choisis parmi les propositions suivantes la hauteur d'une ${hauteurs[a][0]}<br>`
           texte += `${propositions[0]} ${sp(4)} ${propositions[1]} ${sp(4)} ${propositions[2]}`
           texteCorr = `La hauteur d'une ${hauteurs[a][0]} est ${b} ${hauteurs[a][3]}.`

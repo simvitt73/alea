@@ -182,7 +182,7 @@ export default class DivisionDecimale extends Exercice {
             this,
             i,
             KeyboardType.clavierNumbers,
-            { texteAvant: sp(10), texteApres: ' cm' },
+            { texteAvant: sp(10), texteApres: ' $\\text{cm}$' },
           )
           handleAnswers(this, i, {
             reponse: {

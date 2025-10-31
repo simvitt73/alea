@@ -984,10 +984,10 @@ $${miseEnEvidence(a + 1)}$ h et $${miseEnEvidence(reponse)}$ min.`
           a = randint(0, 1)
           b = randint(taille1[a][1], taille1[a][2])
           propositions = shuffle([
-            `$${b}$ m`,
-            `$${b}$ dm`,
+            `$${b}\\text{ m}$`,
+            `$${b}\\text{ dm}$`,
             `$${b}\\text{ cm}$`,
-            `$${b}$ mm`,
+            `$${b}\\text{ mm}$`,
           ])
 
           texte = `Choisis parmi les propositions suivantes la taille d'une ${taille1[a][0]} (nombre et unité à recopier).<br>`

@@ -15,11 +15,11 @@ export function couverture(decimal = false): Probleme {
   const data = { nb1Fois, part1, part2 }
   const probleme = new ProblemeMultiplicatifsComplexes('couverture', data)
   probleme.enonce = probleme.enonce.replace(
-    `$${data.part2}$ m`,
-    `$${part2EnM}$ m`,
+    `$${data.part2}\\text{ m}$`,
+    `$${part2EnM}\\text{ m}$`,
   )
   probleme.correction = probleme.correction.replace(
-    `$${data.part2}$ m`,
+    `$${data.part2}\\text{ m}$`,
     `$${miseEnEvidence(texNombre(part2EnM, 0))}\\text{ m}$, soit ${miseEnEvidence(data.part2)} cm`,
   )
   return probleme

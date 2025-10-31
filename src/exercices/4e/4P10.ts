@@ -393,13 +393,13 @@ export default class ProblemesGrandeursComposees extends Exercice {
                 numAlpha(1) +
                 ` Si on le remplit ${liquides[index2][0]} (dont la ` +
                 ajouterAide(
-                  "La densité d'une substance est égale à la masse volumique de la substance divisée par la masse volumique du corps de référence à la même température.<br>Pour les liquides et les solides, l'eau est utilisée comme référence (sa masse volumique est de 1 kg/dm$^3$), pour les gaz, la mesure s'effectue par rapport à l'air.<br>Donc pour les liquides, la densité est égale à la masse volumique exprimée en kg/dm$^3$.",
+                  "La densité d'une substance est égale à la masse volumique de la substance divisée par la masse volumique du corps de référence à la même température.<br>Pour les liquides et les solides, l'eau est utilisée comme référence (sa masse volumique est de $1$\\text{ kg/dm}^3$), pour les gaz, la mesure s'effectue par rapport à l'air.<br>Donc pour les liquides, la densité est égale à la masse volumique exprimée en $\\text{kg/dm}^3$.",
                   {
                     texteAvant: 'densité',
                     titreAide: 'Définition : Densité (grandeur physique)',
                   },
                 ) +
-                ` est de $${texNombre(liquides[index2][1])}$ kg/dm$^3$), quelle masse ${
+                ` est de $${texNombre(liquides[index2][1])}\\text{ kg/dm}^3$), quelle masse ${
                   liquides[index2][0]
                 } en kg contiendra-t-il au gramme près ?<br>`
               texteCorr =
@@ -422,7 +422,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
                 1,
               )}\\text{ dm}^3\\times ${texNombre(
                 liquides[index2][1],
-              )} \\dfrac{kg}{dm^3}\\approx${texNombre(
+              )} \\dfrac{\\text{kg}}{\\text{dm}^3}\\approx${texNombre(
                 ((r * r * h * Math.PI) / 1000) * liquides[index2][1],
                 3,
               )}\\text{ kg}.$`
@@ -461,7 +461,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
             numAlpha(1) +
             ' En déduire son ' +
             ajouterAide(
-              "L'énergie cinétique d'un corps de masse $m$ (en kg) assimilé à un point matériel se déplaçant à la vitesse $v$ (en m/s) est donné par la formule <br>$E=\\dfrac{1}{2}\\times m\\times v^2$.<br>L'unité de mesure de l'énergie cinétique est le Joule (J).<br>$1J = 1\\text{ kg.m}^2\\text{s}^{-2}$",
+              "L'énergie cinétique d'un corps de masse $m$ (en $\\text{kg}$) assimilé à un point matériel se déplaçant à la vitesse $v$ (en $\\text{m/s}$) est donné par la formule <br>$E=\\dfrac{1}{2}\\times m\\times v^2$.<br>L'unité de mesure de l'énergie cinétique est le Joule ($J$).<br>$1J = 1\\text{ kg.m}^2\\text{s}^{-2}$",
               {
                 texteAvant: 'énergie cinétique',
                 titreAide: 'Définition : Énergie cinétique (grandeur physique)',
@@ -501,7 +501,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
             numAlpha(0) +
             ' Calculer le ' +
             ajouterAide(
-              "Le moment d'une force d'intensité $F$ (en Newton ou kg.m.s$^{-2}$) en un point M par rapport à un pivot P est le produit de $F$ par la distance $d=$PM (appelée bras de levier) exprimée en mètres, soit $F\\times d$ (lorsque cette force s'exerce perpendiculairement au bras de levier). Le moment est l'energie permettant de faire tourner l'objet autour du pivot.<br>L'unité de mesure du moment est le Joule (J).<br>$1J=1\\text{ kg.m}^2\\text{s}^{-2}$",
+              "Le moment d'une force d'intensité $F$ (en Newton ou $\\text{kg.m.s}^{-2}$) en un point $M$ par rapport à un pivot $P$ est le produit de $F$ par la distance $d=PM$ (appelée bras de levier) exprimée en mètres, soit $F\\times d$ (lorsque cette force s'exerce perpendiculairement au bras de levier). Le moment est l'energie permettant de faire tourner l'objet autour du pivot.<br>L'unité de mesure du moment est le Joule ($J$).<br>$1J=1\\text{ kg.m}^2\\text{s}^{-2}$",
               {
                 texteAvant: 'moment',
                 titreAide: 'Définition : Moment (grandeur physique)',
@@ -509,7 +509,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
             ) +
             ' du ' +
             ajouterAide(
-              "Le poids est le produit de la masse $m$ d'un objet par l'accélération de la pesanteur terrestre ($g=9,81\\text{ m.s}^{-2}$).<br>L'unité du poids est le Newton (N) : 1 N = 1 kg.m.s$^{-2}$",
+              "Le poids est le produit de la masse $m$ d'un objet par l'accélération de la pesanteur terrestre ($g=9,81\\text{ m.s}^{-2}$).<br>L'unité du poids est le Newton ($N$) : $1 N = 1 \\text{kg.m.s}^{-2}$",
               {
                 texteAvant: 'poids',
                 titreAide: 'Définition : Poids (grandeur physique)',
@@ -518,7 +518,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
             ` de ${quidam} sur son siège par rapport au pivot central du trébuchet en Joules (on admettra que le bras de levier est horizontal).<br>`
           texte +=
             numAlpha(1) +
-            ` Le père de ${quidam} vient s'installer de l'autre côté du pivot central. Il pèse $${index}$ kg et s'installe de façon à ce que son poids permette d'équilibrer la balançoire à l'horizontale. Quelle doit être la longueur du bras de levier de son côté ? Autrement dit, à quelle distance du pivot, le père de ${quidam} est-il assis ?<br>`
+            ` Le père de ${quidam} vient s'installer de l'autre côté du pivot central. Il pèse $${index}\\text{ kg}$ et s'installe de façon à ce que son poids permette d'équilibrer la balançoire à l'horizontale. Quelle doit être la longueur du bras de levier de son côté ? Autrement dit, à quelle distance du pivot, le père de ${quidam} est-il assis ?<br>`
           texteCorr =
             numAlpha(0) +
             ` Le moment du poids de ${quidam} appliqué sur son siège par rapport au pivot central du trébuchet est :<br>`
@@ -561,13 +561,13 @@ export default class ProblemesGrandeursComposees extends Exercice {
             numAlpha(0) +
             ` Un bus de ville transporte en moyenne $${n1}$ personnes à la fois.<br> La longueur moyenne de déplacement est de $${d1}\\text{ km}$.<br> Calculer le ` +
             ajouterAide(
-              "Le trafic de voyageurs est le produit du nombre de voyageurs par la distance parcourue. L'unité est le voyageur.km qui correspond au déplacement d'un voyageur sur 1km.",
+              "Le trafic de voyageurs est le produit du nombre de voyageurs par la distance parcourue. L'unité est le $\\text{voyageur.km}$ qui correspond au déplacement d'un voyageur sur $1\\text{ km}$.",
               {
                 texteAvant: 'trafic',
                 titreAide: 'Définition : Trafic de voyageurs',
               },
             ) +
-            ' moyen de voyageurs en voyageurs.km.<br> '
+            ' moyen de voyageurs en $\\text{voyageurs.km}$.<br> '
           texte +=
             numAlpha(1) +
             ` Un autre bus de ville transporte en moyenne $${n2}$ personnes à la fois.<br> La longueur moyenne de déplacement est de $${d2}\\text{ km}$.<br> Montrer que le trafic de voyageurs est le même qu'à la question ` +
@@ -798,7 +798,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
               texte =
                 `${quidam} vient de courir ${distance} kilomètres. Sa montre connectée a enregistré l'` +
                 ajouterAide(
-                  "L'allure est le temps exprimé en h, min, s pour parcourir un kilomètre.<br>L'unité est alors h/km ou min/km.",
+                  "L'allure est le temps exprimé en $\\text{h}$, $\\text{min}$, $\\text{s}$ pour parcourir un kilomètre.<br>L'unité est alors $\\text{h/km}$ ou $\\text{min/km}$.",
                   {
                     texteAvant: 'allure',
                     titreAide: 'Définition : Allure (grandeur physique)',
@@ -1070,7 +1070,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
             numAlpha(1) +
             ' La même année, la ' +
             ajouterAide(
-              "C'est le quotient du nombre d'habitants par la superficie en km$^2$.<br>L'unité de la densité de population est l'habitant par km$^2$ (hab/km$^2$).",
+              "C'est le quotient du nombre d'habitants par la superficie en $\\text{km}^2$.<br>L'unité de la densité de population est l'habitant par $\\text{km}^2$ ($\\text{hab/km}^2$).",
               {
                 texteAvant: 'densité de population',
                 titreAide: 'Définition : Densité de population',
@@ -1131,7 +1131,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
             numAlpha(0) +
             ' La ' +
             ajouterAide(
-              "La masse volumique d'un élément est le quotient de la masse de cet élément par le volume qu'il occupe.<br>L'unité de la masse volumique dépend de la nature de l'élément et peut s'exprimer en kg/m$^3$ pour les solides ou en g/L pour les gaz, par exemple.",
+              "La masse volumique d'un élément est le quotient de la masse de cet élément par le volume qu'il occupe.<br>L'unité de la masse volumique dépend de la nature de l'élément et peut s'exprimer en $\\text{kg/m}^3$ pour les solides ou en g/L pour les gaz, par exemple.",
               {
                 texteAvant: 'masse volumique',
                 titreAide: 'Définition : Masse volumique (grandeur physique)',
@@ -1194,7 +1194,7 @@ export default class ProblemesGrandeursComposees extends Exercice {
             concentration2 = randint(11, solutes[index2][2] * 10) / 10
           } else concentration2 = randint(2, solutes[index2][2])
           texte =
-            "La concentration massique exprimée ici en $g/L$ est la quantité de matière (masse) en g par unité de volume (L).<br>On l'obtient donc en divisant la masse de produit dissous par le volume de la solution ($\\dfrac{m}{V}$).<br>" +
+            "La concentration massique exprimée ici en $\\text{g/L}$ est la quantité de matière (masse) en $\\text{g} par unité de volume ($\\text{L}$).<br>On l'obtient donc en divisant la masse de produit dissous par le volume de la solution ($\\dfrac{m}{V}$).<br>" +
             numAlpha(0) +
             ` On a dissous $${texNombre(masse, 1)}\\text{ g}$ de ${
               solutes[index1][0]

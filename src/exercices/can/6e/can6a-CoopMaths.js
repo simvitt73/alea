@@ -461,7 +461,11 @@ export default class CourseAuxNombres6e extends Exercice {
         case 'q25':
           a = randint(0, 4)
           b = randint(hauteurs[a][1], hauteurs[a][2])
-          propositions = shuffle([`$${b}$ m`, `$${b}$ dm`, `$${b}\\text{ cm}$`])
+          propositions = shuffle([
+            `$${b}\\text{ m}$`,
+            `$${b}\\text{ dm}$`,
+            `$${b}\\text{ cm}$`,
+          ])
           texte = `Choisis parmi les propositions suivantes la hauteur d'une ${hauteurs[a][0]} (nombre et unité)<br>`
           texte += `${propositions[0]} ${sp(4)} ${propositions[1]} ${sp(4)} ${propositions[2]}`
           texteCorr = `La hauteur d'une ${hauteurs[a][0]} est ${b} ${hauteurs[a][3]}`
