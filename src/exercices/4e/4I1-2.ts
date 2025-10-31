@@ -51,7 +51,8 @@ export default class AlgoTortue extends Exercice {
     super() // la classe parente qui définit les attributs commun à tous les exercices
     this.nbQuestions = 1
     this.nbQuestionsModifiable = false
-
+    this.besoinFormulaireNumerique = ['Type de figure', 5, '1 : Polygone régulier\n2 : Spirale\n3 : Rosace\n4 : Roue dentée\n5 : Frise\n6 : Au hasard']
+    this.sup = 6
     this.typeExercice = 'Scratch'
     this.interactif = true
     this.listeAvecNumerotation = false
@@ -63,14 +64,8 @@ export default class AlgoTortue extends Exercice {
     this.figures = []
     const objetsCorrection = []
     this.autoCorrection[0] = {}
-
-    const choix = choice([
-      'polygonesReguliers',
-      'spirales',
-      'rosaces1',
-      'roueDentee',
-      'frise1',
-    ])
+    const figuresDisponibles = ['polygonesReguliers', 'spirales', 'rosaces1', 'roueDentee', 'frise1']
+    const choix = this.sup < 6 ? figuresDisponibles[this.sup - 1] : choice(figuresDisponibles)
     let val1, val2, val3, n, n2
     const sens = choice(['turnright', 'turnleft'])
     let sequenceFrise1
