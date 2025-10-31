@@ -41,7 +41,7 @@ export default class ChangerUnites extends ExerciceSimple {
       }
       this.optionsChampTexte = { texteAvant: ' $=$', texteApres: ' m' }
       this.canEnonce = 'Compléter.'
-      this.canReponseACompleter = `$${texNombre(2025)}\\text{ cm}$  $=$  $~~\\ldots~~$ m`
+      this.canReponseACompleter = `$${texNombre(2025)}\\text{ cm}$  $=$  $~~\\ldots~~\\text{ m}$`
     } else {
       this.reponse = 202500
       this.question = `$${texNombre(2025)}\\text{ m}$   `
@@ -49,7 +49,10 @@ export default class ChangerUnites extends ExerciceSimple {
       if (!this.interactif) {
         this.question += '$=\\ldots\\text{ cm}$'
       }
-      this.optionsChampTexte = { texteAvant: ' $=$', texteApres: ' cm' }
+      this.optionsChampTexte = {
+        texteAvant: ' $=$',
+        texteApres: ' $\\text{cm}$',
+      }
       this.canEnonce = 'Compléter.'
       this.canReponseACompleter = `$${texNombre(2025)}\\text{ m}$  $=$  $\\ldots\\text{ cm}$`
     }

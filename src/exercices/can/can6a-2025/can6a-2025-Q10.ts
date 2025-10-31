@@ -38,7 +38,7 @@ export default class Can2025N6Q10 extends ExerciceCan {
       options: { vertical: false },
       propositions: [
         {
-          texte: `$${texNombre(a, 1)}$ m`,
+          texte: `$${texNombre(a, 1)}\\text{ m}$`,
           statut: b === 'm',
         },
         {

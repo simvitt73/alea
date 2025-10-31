@@ -89,7 +89,7 @@ export default class Can2025N5Q18 extends ExerciceCan {
     }
     this.canEnonce = this.question
     this.canReponseACompleter = '$AB=\\ldots\\text{ cm}$'
-    this.optionsChampTexte = { texteApres: ' cm' }
+    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
     if (this.interactif) {
       this.question += '<br>$AB=$'
     } else if (context.isHtml) {

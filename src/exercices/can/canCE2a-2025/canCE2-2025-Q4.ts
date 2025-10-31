@@ -40,7 +40,7 @@ export default class Can2025CE2Q4 extends ExerciceCan {
           statut: b === 'cm',
         },
         {
-          texte: `$${texNombre(a, 1)}$ m`,
+          texte: `$${texNombre(a, 1)}\\text{ m}$`,
           statut: b === 'm',
         },
         {

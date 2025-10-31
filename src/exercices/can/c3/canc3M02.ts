@@ -33,7 +33,7 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
     this.nbQuestions = 1
     this.typeExercice = 'simple'
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.optionsChampTexte = { texteApres: ' cm' }
+    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
   }
 
   nouvelleVersion() {
@@ -93,7 +93,9 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
               },
               objets,
             )
-          this.optionsChampTexte = { texteApres: choix ? ' cm' : ' cm$^2$' }
+          this.optionsChampTexte = {
+            texteApres: choix ? ' $\\text{cm}$' : ' $\\text{cm}^2$',
+          }
 
           this.reponse = choix ? 4 * a : a * a
           this.correction = `Il s'agit d'un carré. <br>
@@ -131,7 +133,7 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
               },
               objets,
             )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = a
           this.correction = `Il s'agit d'un carré. <br>
@@ -185,7 +187,9 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
             },
             objets,
           )
-        this.optionsChampTexte = { texteApres: choix ? ' cm' : ' cm$^2$' }
+        this.optionsChampTexte = {
+          texteApres: choix ? ' $\\text{cm}$' : ' $\\text{cm}^2$',
+        }
 
         this.reponse = choix ? 2 * a + 2 * b : a * b
         this.correction = `Il s'agit d'un rectangle. <br>
@@ -228,7 +232,7 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
               },
               objets,
             )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = 3 * a
           this.correction = `Le triangle est équilatéral.<br>
@@ -258,7 +262,7 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
               },
               objets,
             )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = a
           this.correction = `Puisque le triangle est équilatéral, la longueur de son côté est le tiers de son périmètre, soit $${3 * a}\\div ${3}=${a}\\text{ cm}$. `
@@ -310,7 +314,7 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
               },
               objets,
             )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = 2 * a + b
           this.correction = `Le triangle est isocèle.<br>
@@ -344,7 +348,7 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
               },
               objets,
             )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = a
           this.correction = `Le triangle est isocèle, il possède donc deux longueurs égales.<br>
@@ -382,7 +386,7 @@ export default class ProblemesDeLongueursEtPerimetreCM extends ExerciceSimple {
               },
               objets,
             )
-          this.optionsChampTexte = { texteApres: ' cm' }
+          this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
 
           this.reponse = b
           this.correction = `Le triangle est isocèle, il possède donc deux longueurs égales.<br>

@@ -491,7 +491,7 @@ export default class CourseAuxNombresSpeciale2024 extends Exercice {
               }
               this.listeCanEnonces.push('Compléter.')
               this.listeCanReponsesACompleter.push(
-                `$${texNombre(2024)}\\text{ cm}$  $=$  $~~\\ldots~~$ m`,
+                `$${texNombre(2024)}\\text{ cm}$  $=$  $~~\\ldots~~\\text{ m}$`,
               )
             } else {
               reponse = 202400
@@ -1086,7 +1086,7 @@ export default class CourseAuxNombresSpeciale2024 extends Exercice {
                 On obtient la longueur cherchée en divisant par $2$, soit $${texNombre(2 * a)}\\div 2=${miseEnEvidence(texNombre(a))}\\text{ cm}$.`
             }
             texte += ajouteChampTexteMathLive(this, index, '', {
-              texteApres: ' cm',
+              texteApres: ' $\\text{cm}$',
             })
             texte +=
               '<br>' +
@@ -2219,7 +2219,7 @@ export default class CourseAuxNombresSpeciale2024 extends Exercice {
             )
             texte = 'Quel est le périmètre de ce carré ? '
             texte += ajouteChampTexteMathLive(this, index, '', {
-              texteApres: ' cm',
+              texteApres: ' $\\text{cm}$',
             })
             texte +=
               '<br>' +

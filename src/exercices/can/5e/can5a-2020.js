@@ -777,7 +777,9 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             texte +=
               '<br>' +
-              ajouteChampTexteMathLive(this, index, '', { texteApres: ' cm' })
+              ajouteChampTexteMathLive(this, index, '', {
+                texteApres: ' $\\text{cm}$',
+              })
           } else {
             texte += 'Périmètre $=\\ldots\\text{ cm}$'
           }
