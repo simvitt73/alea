@@ -26,7 +26,7 @@ export default class convertirLitres extends ExerciceSimple {
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBase
     this.canOfficielle = true
-    this.optionsChampTexte = { texteAvant: '', texteApres: 'L' }
+    this.optionsChampTexte = { texteApres: 'L' }
   }
 
   nouvelleVersion() {
@@ -39,7 +39,7 @@ export default class convertirLitres extends ExerciceSimple {
     const reponse = arrondi(a / 1000, 3)
     this.reponse = reponse
     this.question = `$${a}\\text{ cm}^3=$ `
-    this.correction = `$1\\text{ cm}^3 = 0,001 $dm$^3$ et $1$ dm$^3 = 1$ L.<br>
+    this.correction = `$1\\text{ cm}^3 = 0,001 \\text{ dm}^3$ et $1\\text{ dm}^3 = 1$ L.<br>
              $${a} \\text{ cm}^3 = ${a}\\times 0,001 \\text{ dm}^3=${miseEnEvidence(`${texNombre(reponse, 3)}`)}$ L.`
     if (!this.interactif) {
       this.question += ' $\\ldots$ L'

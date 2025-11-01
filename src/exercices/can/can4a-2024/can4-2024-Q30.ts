@@ -21,7 +21,7 @@ export default class NomExercice extends ExerciceSimple {
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBase
 
-    this.optionsChampTexte = { texteApres: 'cm$^2$.' }
+    this.optionsChampTexte = { texteApres: '$\\text{ cm}^2$.' }
     this.canOfficielle = false
   }
 

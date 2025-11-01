@@ -152,7 +152,7 @@ export default class ConvertirVitesse extends Exercice {
           texteCorr += `En convertissant les unités :<br>`
           texteCorr += `$\\dfrac{1\\text{\\,m}}{1\\text{\\,s}} = \\dfrac{1\\text{\\,m} \\times \\dfrac{1\\text{\\,km}}{1000\\text{\\,m}}}{1\\text{\\,s} \\times \\dfrac{1\\text{\\,h}}{3600\\text{\\,s}}} = \\dfrac{\\dfrac{1}{1000}\\text{\\,km}}{\\dfrac{1}{3600}\\text{\\,h}} = \\dfrac{1}{1000} \\times \\dfrac{3600}{1}\\,\\dfrac{\\text{km}}{\\text{h}} = \\dfrac{3600}{1000}\\,\\dfrac{\\text{km}}{\\text{h}} = 3{,}6\\text{\\,km/h}$<br><br>`
 
-          texteCorr += `${texteEnCouleurEtGras('Règle : Pour convertir des m/s en km/h, on multiplie par 3,6')}<br><br>`
+          texteCorr += `${texteEnCouleurEtGras('Règle : Pour convertir des m/s en $\\text{km/h}$, on multiplie par 3,6')}<br><br>`
 
           texteCorr += `${texteEnCouleurEtGras('Étape 4 : Application numérique')}<br>`
           texteCorr += `$${texNombre(valeur, 2)}\\text{\\,m/s} = ${texNombre(valeur, 2)} \\times 3{,}6 = ${miseEnEvidence(`${texNombre(reponse, 2)}\\text{\\,km/h}`)}$`

@@ -216,14 +216,14 @@ On peut dire que lorsque le prix payé pour la location est $${texNombre(prix, 2
             const v = new Decimal(randint(70, 100)) //
 
             texte = `  Sur toute sèche, la distance de freinage en mètres, d'une voiture est modélisée de la façon suivante : <br>
-          En notant $v$ la vitesse du véhicule (en km/h), sa distance de freinage $d(v)$  (en $\\text{m}) est donnée par le carré de sa vitesse divisée par $${texNombre(a, 1)}$.`
+          En notant $v$ la vitesse du véhicule (en $\\text{km/h}$), sa distance de freinage $d(v)$  (en $\\text{m}) est donnée par le carré de sa vitesse divisée par $${texNombre(a, 1)}$.`
 
             texte += createList({
               items: [
                 " Donner l'expression de $d(v)$ en fonction de $v$. ",
                 ` Calculer au mètre près, la distance de freinage de la voiture si elle roule à $${v}\\text{ km/h}$.`,
                 ' La distance de freinage est-elle proportionnelle à la vitesse ?',
-                `  La distance de freinage de cette voiture a été de $${b}\\text{ m}$. Quelle était sa vitesse en km/h arrondie à l'unité ? `,
+                `  La distance de freinage de cette voiture a été de $${b}\\text{ m}$. Quelle était sa vitesse en $\\text{km/h}$ arrondie à l'unité ? `,
               ],
               style: 'nombres',
             })

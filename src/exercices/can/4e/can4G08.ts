@@ -289,7 +289,6 @@ export default class QuestionsAiresEtPerimetres extends Exercice {
                 this,
                 i,
                 KeyboardType.clavierDeBaseAvecFraction,
-                { texteApres: '' },
               )
             this.canEnonce = texte // 'Compléter'
             this.canReponseACompleter = ''
@@ -318,7 +317,6 @@ export default class QuestionsAiresEtPerimetres extends Exercice {
                 this,
                 i,
                 KeyboardType.clavierDeBaseAvecFraction,
-                { texteApres: '' },
               )
             this.canEnonce = texte // 'Compléter'
             this.canReponseACompleter = ''

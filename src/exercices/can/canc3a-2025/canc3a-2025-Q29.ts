@@ -34,7 +34,7 @@ export default class Can2025CM2Q29 extends ExerciceSimple {
         Comme $${a}\\times 10 =${texNombre(a * 10, 1)}$, alors $${a}\\text{ cm}=${miseEnEvidence(texNombre(a * 10, 1))}\\text{ mm}$. `
     this.canReponseACompleter = ` $${a}\\text{ cm}$ $=\\ldots\\text{ mm}$`
     if (this.interactif) {
-      this.optionsChampTexte = { texteApres: 'mm' }
+      this.optionsChampTexte = { texteApres: '$\\text{ mm}$' }
     } else {
       this.question += `${context.isHtml ? '$\\ldots\\text{ mm}$' : ''}`
     }

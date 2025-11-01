@@ -62,7 +62,7 @@ export default class NomExercice extends ExerciceSimple {
     const code3 = codageSegment(D, E, '||')
     poly.couleurDeRemplissage = colorToLatexOrHTML('lightgray')
     const d = texteParPosition(
-      `${c} cm`,
+      `$${c}\\text{ cm}$`,
       milieu(A, B).x,
       milieu(A, B).y - 0.5,
       0,
@@ -72,7 +72,7 @@ export default class NomExercice extends ExerciceSimple {
       false,
     )
     const e = texteParPosition(
-      `${b} cm`,
+      `$${b}\\text{ cm}$`,
       milieu(B, C).x + 1,
       milieu(B, C).y,
       0,

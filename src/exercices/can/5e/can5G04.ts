@@ -63,7 +63,7 @@ export default class longueursRectPerimetre extends ExerciceSimple {
       backgroundColor: '',
     })
 
-    const t = latex2d(`${aire} ~\\text{cm}^2`, milieu(A, B).x, milieu(B, C).y, {
+    const t = latex2d(`${aire} \\text{ cm}^2`, milieu(A, B).x, milieu(B, C).y, {
       color: 'black',
       letterSize: 'normalsize',
       backgroundColor: '',

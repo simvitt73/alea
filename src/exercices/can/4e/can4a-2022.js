@@ -944,7 +944,7 @@ export default class SujetCAN2022quatrieme extends Exercice {
             reponse = a * 1000
             texte = `Complète.<br>
                  $${a}$ L $=$ `
-            texteCorr = `$1$ dm$^3 = 1$ L et $1$ dm$^3 = 1000\\text{ cm}^3$.<br>
+            texteCorr = `$1\\text{ dm}^3 = 1$ L et $1\\text{ dm}^3 = 1000\\text{ cm}^3$.<br>
                   $${a}$ L = ${a} dm$^3 =${a} \\times 1000\\text{ cm}^3=${texNombre(reponse, 3)}\\text{ cm}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
@@ -956,8 +956,8 @@ export default class SujetCAN2022quatrieme extends Exercice {
             reponse = arrondi(a / 1000, 3)
             texte = `Complète.<br>
                    $${a}\\text{ cm}^3$ $=$ `
-            texteCorr = `$1$ dm$^3 = 1$ L et $1\\text{ cm}^3 = 0,001$ dm$^3$.<br>
-                   $${a}\\text{ cm}^3 = ${a} \\div 1000$ dm$^3= ${texNombre(a / 1000, 3)}$ dm$^3 =${texNombre(reponse, 3)}$ L.`
+            texteCorr = `$1\\text{ dm}^3 = 1$ L et $1\\text{ cm}^3 = 0,001\\text{ dm}^3$.<br>
+                   $${a}\\text{ cm}^3 = ${a} \\div 1000\\text{ dm}^3= ${texNombre(a / 1000, 3)}\\text{ dm}^3 =${texNombre(reponse, 3)}$ L.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + ' L'

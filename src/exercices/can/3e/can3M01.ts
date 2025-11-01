@@ -35,7 +35,7 @@ export default class CarreAire extends ExerciceSimple {
         this.question = `Quelle est l'aire d'un carré  dont le périmètre est $${4 * a}\\text{ cm}$ ?`
         this.reponse = a * a
         this.correction = `Le côté du carré est $${4 * a}\\div 4=${a}$, donc son aire est : $${a}\\times ${a}=${a ** 2}\\text{ cm}^2$.`
-        this.optionsChampTexte = { texteApres: ' cm$^2$' }
+        this.optionsChampTexte = { texteApres: '$\\text{ cm}^2$' }
         this.canEnonce = this.question // 'Compléter'
         this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
         break

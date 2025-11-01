@@ -360,9 +360,9 @@ export default class VocabulaireDesTriangles extends Exercice {
           )
 
           texte = `${nomTriangle} est un triangle tel que ${tEqui.getLongueurs()[0]} $= ${texNombre(tEqui.l1)}\\text{ cm}$ ; `
-          texte += `${tEqui.getLongueurs()[1]} $= ${texNombre(tEqui.l2 * 10)}\\text{ mm}$ et ${tEqui.getLongueurs()[2]} $= ${texNombre(tEqui.l3 / 10)}$ dm.`
+          texte += `${tEqui.getLongueurs()[1]} $= ${texNombre(tEqui.l2 * 10)}\\text{ mm}$ et ${tEqui.getLongueurs()[2]} $= ${texNombre(tEqui.l3 / 10)}\\text{ dm}$.`
           texteCorr = `${tEqui.getLongueurs()[1]} $= ${texNombre(tEqui.l2 * 10)}\\text{ mm}$ $= ${tEqui.l2}\\text{ cm}$.`
-          texteCorr += `<br> ${tEqui.getLongueurs()[2]} $= ${texNombre(tEqui.l3 / 10)}$ dm $= ${texNombre(tEqui.l3)}\\text{ cm}$.`
+          texteCorr += `<br> ${tEqui.getLongueurs()[2]} $= ${texNombre(tEqui.l3 / 10)}\\text{ dm}= ${texNombre(tEqui.l3)}\\text{ cm}$.`
           texteCorr += `<br> ${tEqui.getLongueurs()[0]} $= ${texNombre(tEqui.l1)}\\text{ cm}$.`
           texteCorr += `<br> Les longueurs des trois côtés du triangle ${nomTriangle} sont égales donc c'est un triangle ${texteEnCouleurEtGras('équilatéral')}.`
         }

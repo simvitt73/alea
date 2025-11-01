@@ -1,14 +1,16 @@
+import { bleuMathalea } from '../../lib/colors'
 import { texPrix } from '../../lib/format/style'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import {
   miseEnCouleur,
+  miseEnEvidence,
   texteEnCouleur,
   texteEnCouleurEtGras,
 } from '../../lib/outils/embellissements'
 import { arrondi } from '../../lib/outils/nombres'
 import { prenomF, prenomM } from '../../lib/outils/Personne'
-import { stringNombre } from '../../lib/outils/texNombre'
+import { stringNombre, texNombre } from '../../lib/outils/texNombre'
 import { context } from '../../modules/context'
 import {
   gestionnaireFormulaireTexte,
@@ -419,28 +421,28 @@ function questionDistance(exo: Exercice, i: number) {
 }
 
 function questionEchelle(exo: Exercice, i: number) {
-  // X cm sur une carte correspond à x $\\text{km}$ dans la réalité...
-  const distanceCarte = couplePremiersEntreEux[indexN][0] // Choix d'un nombre de cm sur la carte
+  // X $\\text{cm}$ sur une carte correspond à x $\\text{km}$ dans la réalité...
+  const distanceCarte = couplePremiersEntreEux[indexN][0] // Choix d'un nombre de $\\text{cm}$ sur la carte
   let distanceReel = distanceCarte * randint(2, 5) // Choix d'un nombre de $\\text{km}$ dans la réalité (on évite d'avoir 1cm pour 1km)
   if (!versionSimplifiee) distanceReel *= randint(1, 19, [10]) / 10
   const distanceCarte2 = couplePremiersEntreEux[indexN][1]
   const prenoms = [prenomF(), prenomM()]
   const texte =
-    `Sur une carte sur laquelle ${distanceCarte} cm représente ${stringNombre(distanceReel)} $\\text{km}$ dans la réalité, <br>
-  ${prenoms[0]} mesure son trajet et elle trouve une distance de ${distanceCarte2} cm. <br>` +
+    `Sur une carte sur laquelle $${distanceCarte}\\text{ cm}$ représente $${texNombre(distanceReel)}\\text{ km}$ dans la réalité, <br>
+  ${prenoms[0]} mesure son trajet et elle trouve une distance de $${distanceCarte2}\\text{ cm}$. <br>` +
     'À quelle distance cela correspond dans la réalité ?' +
     ajouteChampTexteMathLive(exo, i, '', { texteApres: '$\\text{ km}$' })
 
   const texteCorr =
-    `Commençons par trouver à combien de $\\text{km}$ dans la réalité, 1 cm sur la carte correspond. <br>
-  1 cm, c'est ${texteEnCouleur(distanceCarte)} fois moins que ${distanceCarte} cm.<br>` +
-    `${stringNombre(distanceReel)} $\\text{km}$ $\\div $ ${texteEnCouleur(distanceCarte)} = ${stringNombre(distanceReel / distanceCarte)} $\\text{km}$ <br>` +
+    `Commençons par trouver à combien de $\\text{km}$ dans la réalité, 1 $\\text{cm}$ sur la carte correspond. <br>
+  1 cm, c'est $${miseEnEvidence(distanceCarte, bleuMathalea)}$ fois moins que $${distanceCarte}\\text{ cm}$.<br>` +
+    `$${texNombre(distanceReel)}\\text{ km}\\div ${miseEnEvidence(distanceCarte, bleuMathalea)} = ${texNombre(distanceReel / distanceCarte)}\\text{ km}$ <br>` +
     texteEnCouleurEtGras(' Conclusion intermédiaire :', 'black') +
-    ` 1 cm sur la carte correspond donc à ${texteEnCouleur(stringNombre(distanceReel / distanceCarte), 'blue')} $\\text{km}$ dans la réalité. <br>` +
+    ` $1\\text{ cm}$ sur la carte correspond donc à $${miseEnEvidence(texNombre(distanceReel / distanceCarte), bleuMathalea)}\\text{ km}$ dans la réalité. <br>` +
     ' Cherchons maintenant la distance réelle de son trajet. <br>' +
-    ` ${distanceCarte2} cm, c'est ${texteEnCouleur(distanceCarte2)} fois 1 cm.` +
-    `<br> ${texteEnCouleur(stringNombre(distanceReel / distanceCarte), 'blue')} $\\text{km}$ $\\times$ ${texteEnCouleur(distanceCarte2)} = ${stringNombre((distanceCarte2 * distanceReel) / distanceCarte)} km<br>` +
-    `${texteEnCouleurEtGras('Conclusion :', 'black')} son trajet correspond en réalité à une distance de ${stringNombre((distanceCarte2 * distanceReel) / distanceCarte)} km.`
+    ` $${distanceCarte2}\\text{ cm}$, c'est $${miseEnEvidence(distanceCarte2, bleuMathalea)}$ fois $1\\text{ cm}$.` +
+    `<br> $${miseEnEvidence(texNombre(distanceReel / distanceCarte), bleuMathalea)}\\text{ km}\\times ${miseEnEvidence(distanceCarte2, bleuMathalea)} = ${texNombre((distanceCarte2 * distanceReel) / distanceCarte)}\\text{ km}$<br>` +
+    `${texteEnCouleurEtGras('Conclusion :', 'black')} son trajet correspond en réalité à une distance de $${miseEnEvidence(texNombre((distanceCarte2 * distanceReel) / distanceCarte))}\\text{ km}$.`
   setReponse(
     exo,
     i,

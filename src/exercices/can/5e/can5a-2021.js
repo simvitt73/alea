@@ -817,8 +817,8 @@ export default class SujetCAN20215ieme extends Exercice {
           choix = choice(['a', 'b', 'c', 'd']) //
           if (choix === 'a') {
             reponse = a * 100
-            texte = `$${a}$ dm$^2=$`
-            texteCorr = `$1$ dm$^2= 100\\text{ cm}^2$, donc $${a}$ dm$^2=${a}\\times 100\\text{ cm}^2=${miseEnEvidence(a * 100)}\\text{ cm}^2$.`
+            texte = `$${a}\\text{ dm}^2=$`
+            texteCorr = `$1\\text{ dm}^2= 100\\text{ cm}^2$, donc $${a}\\text{ dm}^2=${a}\\times 100\\text{ cm}^2=${miseEnEvidence(a * 100)}\\text{ cm}^2$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(
@@ -834,46 +834,46 @@ export default class SujetCAN20215ieme extends Exercice {
           if (choix === 'b') {
             reponse = a / 100
             texte = `$${a}\\text{ cm}^2=$`
-            texteCorr = `$1\\text{ cm}^2= 0,01$ dm$^2$, donc $${a}\\text{ cm}^2=${a}\\times 0,01$ dm$^2=${miseEnEvidence(texNombre(a / 100))}$ dm$^2$.`
+            texteCorr = `$1\\text{ cm}^2= 0,01\\text{ dm}^2$, donc $${a}\\text{ cm}^2=${a}\\times 0,01\\text{ dm}^2=${miseEnEvidence(texNombre(a / 100))}\\text{ dm}^2$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(
                 this,
                 index,
                 KeyboardType.clavierNumbers,
-                { texteApres: 'dm$^2$' },
+                { texteApres: '$\\text{ dm}^2$' },
               )
             } else {
-              texte += ' $\\ldots$ dm$^2$'
+              texte += ' $\\ldots\\text{ dm}^2$'
             }
           }
           if (choix === 'c') {
             reponse = a * 100
             texte = `$${a}\\text{ m}^2=$`
-            texteCorr = `$1\\text{ m}^2= 100$ dm$^2$, donc $${a}\\text{ m}^2=${a}\\times 100$ dm$^2=${miseEnEvidence(a * 100)}$ dm$^2$.`
+            texteCorr = `$1\\text{ m}^2= 100\\text{ dm}^2$, donc $${a}\\text{ m}^2=${a}\\times 100\\text{ dm}^2=${miseEnEvidence(a * 100)}\\text{ dm}^2$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(
                 this,
                 index,
                 KeyboardType.clavierNumbers,
-                { texteApres: 'dm$^2$' },
+                { texteApres: '$\\text{ dm}^2$' },
               )
             } else {
-              texte += '$\\ldots$ dm$^2$'
+              texte += '$\\ldots\\text{ dm}^2$'
             }
           }
           if (choix === 'd') {
             reponse = a / 100
-            texte = `$${a}$ dm$^2=$`
-            texteCorr = `$1$ dm$^2= 0,01\\text{ m}^2$, donc $${a}$ dm$^2=${a}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(a / 100))}\\text{ m}^2$.`
+            texte = `$${a}\\text{ dm}^2=$`
+            texteCorr = `$1\\text{ dm}^2= 0,01\\text{ m}^2$, donc $${a}\\text{ dm}^2=${a}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(a / 100))}\\text{ m}^2$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(
                 this,
                 index,
                 KeyboardType.clavierNumbers,
-                { texteApres: 'm$^2$' },
+                { texteApres: '$\\text{ m}^2$' },
               )
             } else {
               texte += '$\\ldots\\text{ m}^2$'
@@ -1551,7 +1551,7 @@ export default class SujetCAN20215ieme extends Exercice {
                 this,
                 index,
                 KeyboardType.clavierNumbers,
-                { texteApres: 'cm$^3$' },
+                { texteApres: '$\\text{ cm}^3$' },
               )
           }
           nbChamps = 1

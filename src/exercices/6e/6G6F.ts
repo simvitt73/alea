@@ -124,7 +124,7 @@ export default class ConstruireUnTriangleEtSonCercleCirconscrit extends Exercice
         labO,
       )
       if (this.sup2) {
-        texte = `Construire un triangle $${sommets[0]}${sommets[1]}${sommets[2]}$ avec $${sommets[0]}${sommets[1]} = ${stringNombre(lAB)}~\\text{cm}$, $${sommets[1]}${sommets[2]} = ${stringNombre(lBC)}~\\text{cm}$ et $${sommets[0]}${sommets[2]} = ${stringNombre(lAC)}~\\text{cm}$.<br>`
+        texte = `Construire un triangle $${sommets[0]}${sommets[1]}${sommets[2]}$ avec $${sommets[0]}${sommets[1]} = ${stringNombre(lAB)}\\text{ cm}$, $${sommets[1]}${sommets[2]} = ${stringNombre(lBC)}\\text{ cm}$ et $${sommets[0]}${sommets[2]} = ${stringNombre(lAC)}\\text{ cm}$.<br>`
       }
       texteCorr +=
         "Pour cette construction, nous avons utilisé le compas la règle graduée et l'équerre.<br>L'animation ci-dessous montre une façon de procéder sans équerre.<br>"

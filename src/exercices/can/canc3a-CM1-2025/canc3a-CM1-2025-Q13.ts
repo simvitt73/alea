@@ -23,7 +23,7 @@ export default class Can2025CM12Q13 extends ExerciceSimple {
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
     this.nbQuestions = 1
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.optionsChampTexte = { texteApres: 'dm.' }
+    this.optionsChampTexte = { texteApres: '$\\text{ dm}$.' }
   }
 
   nouvelleVersion() {
@@ -33,14 +33,15 @@ export default class Can2025CM12Q13 extends ExerciceSimple {
     this.question = `$${a}$ petites ficelles de longueur $${b}\\text{ cm}$ sont mises bout à bout.<br>
     On obtient une longueur de  `
     if (!this.interactif) {
-      this.question += '$\\ldots$ dm.'
+      this.question += '$\\ldots\\text{ dm}$.'
     }
-    this.optionsChampTexte = { texteApres: ' dm.' }
+    this.optionsChampTexte = { texteApres: '$\\text{ dm}$.' }
     this.correction = ` La longueur totale est donnée par le produit du nombre de petites ficelles par la longueur d'une petite ficelle. <br>
     $${a}\\times ${b}=${a * b}$<br>
     La longueur totale est $${a * b}\\text{ cm}$.<br>
-    Comme $1$ dm $=10\\text{ cm}$, la longueur totale est $${miseEnEvidence(this.reponse)}$ dm.`
+    Comme $1\\text{ dm}=10\\text{ cm}$, la longueur totale est $${miseEnEvidence(this.reponse)}\\text{ dm}$.`
     this.canEnonce = `$${a}$ petites ficelles de longueur $${b}\\text{ cm}$ sont mises bout à bout.`
-    this.canReponseACompleter = 'On obtient une longueur de $\\ldots$ dm.'
+    this.canReponseACompleter =
+      'On obtient une longueur de $\\ldots\\text{ dm}$.'
   }
 }

@@ -83,8 +83,8 @@ export default class ConversionsPuissancesDe10 extends Exercice {
               : ['\\text{km}', '\\text{m}']
           exposantReponse = listeDeSens[i] === 'div' ? n - 3 : n + 3
           correctionDetail = [
-            `Il faut $${texNombre(1000)}\\text{ m}$ pour 1 km, on va donc diviser par $${texNombre(1000)}$, c'est-à-dire multiplier par $10^{-3}$.<br>`,
-            `$1~\\text{km}=${texNombre(1000)}~\\text{km}$, on va donc multiplier par $${texNombre(1000)}$, c'est-à-dire multiplier par $10^{3}$.<br>`,
+            `Il faut $${texNombre(1000)}\\text{ m}$ pour $1\\text{ km}$, on va donc diviser par $${texNombre(1000)}$, c'est-à-dire multiplier par $10^{-3}$.<br>`,
+            `$1\\text{ km}=${texNombre(1000)}\\text{ km}$, on va donc multiplier par $${texNombre(1000)}$, c'est-à-dire multiplier par $10^{3}$.<br>`,
           ]
           break
         case 'u>M':
@@ -188,7 +188,7 @@ export default class ConversionsPuissancesDe10 extends Exercice {
           exposantReponse = listeDeSens[i] === 'div' ? n - 3 : n + 3
           correctionDetail = [
             `Il faut $${texNombre(1000)}\\text{ mm}$ pour$1\\text{ m}$, on va donc diviser par $${texNombre(1000)}$, c'est-à-dire multiplier par $10^{-3}$.<br>`,
-            `$1~\\text{m}=${texNombre(1000)}~\\text{mm}$, on va donc multiplier par $${texNombre(1000)}$, c'est-à-dire multiplier par $10^{3}$.<br>`,
+            `$1\\text{ m}=${texNombre(1000)}\\text{ mm}$, on va donc multiplier par $${texNombre(1000)}$, c'est-à-dire multiplier par $10^{3}$.<br>`,
           ]
           break
         case 'm>um':

@@ -933,7 +933,9 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             if (this.interactif) {
               texte +=
                 '<br>' +
-                ajouteChampTexteMathLive(this, index, '', { texteApres: 'mm.' })
+                ajouteChampTexteMathLive(this, index, '', {
+                  texteApres: '$\\text{ mm}$.',
+                })
             } else {
               texte += ' $\\ldots\\text{ mm}$.'
             }
