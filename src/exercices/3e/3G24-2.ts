@@ -348,9 +348,9 @@ export default class nomExercice extends Exercice {
           this,
           i,
           `${D.nom}${F.nom} =  %{champ1}` +
-            '~\\text{cm} ' +
+            '\\text{ cm} ' +
             `${E.nom}${F.nom} =  %{champ2}` +
-            '~\\text{cm}',
+            '\\text{ cm}',
           KeyboardType.clavierNumbers,
           '\\ldots\\ldots',
         )

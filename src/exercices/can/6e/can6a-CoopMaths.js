@@ -429,7 +429,7 @@ export default class CourseAuxNombres6e extends Exercice {
           a = randint(11, 24) * 10 + randint(0, 9)
           resultat = arrondi(a / 100)
           texte = `$${a}\\text{ cm}$ font combien de mètres ?`
-          texteCorr = `$${a}~\\text{cm} = ${texNombre(resultat)}~\\text{m}$`
+          texteCorr = `$${a}\\text{ cm} = ${texNombre(resultat)}\\text{ m}$`
           setReponse(this, q, resultat)
           texte += ajouteChampTexteMathLive(
             this,

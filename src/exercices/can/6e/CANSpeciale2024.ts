@@ -490,7 +490,6 @@ export default class CourseAuxNombresSpeciale2024 extends Exercice {
                     this,
                     index,
                     KeyboardType.clavierNumbers,
-                    { texteApres: '' },
                   ) + '$\\text{ m}$'
               } else {
                 texte += '  $\\ldots\\text{ m}$'

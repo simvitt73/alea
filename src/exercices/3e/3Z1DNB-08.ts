@@ -120,13 +120,13 @@ export default class ExercicePolynesie52024 extends ExerciceBrevetA {
       lect2,
     )
 
-    this.enonce = `La piscine du camping ${nom} dispose d'un bassin circulaire de forme cylindrique de rayon $${texNombre(r, 1)}~\\text{m}$ et de hauteur $${texNombre(h, 1)}~\\text{m}$.<br>
-    En fin de saison, on utilise une pompe dont le débit est de $${texNombre(v1, 1)}~\\text{m}^3/\\text{h}$ pour vider l'eau de la piscine.<br><br>`
+    this.enonce = `La piscine du camping ${nom} dispose d'un bassin circulaire de forme cylindrique de rayon $${texNombre(r, 1)}\\text{ m}$ et de hauteur $${texNombre(h, 1)}\\text{ m}$.<br>
+    En fin de saison, on utilise une pompe dont le débit est de $${texNombre(v1, 1)}\\text{ m}^3/\\text{h}$ pour vider l'eau de la piscine.<br><br>`
     const question1 = `Montrer que le volume du bassin, arrondi au dixième de m$^3$, est $${texNombre(volumeArrondi, 1)}\\text{ m}^3$.`
     const question2 = `Le bassin est plein. On met en route la pompe. Au bout de $${duree}$ heures, quel volume d'eau en $\\text{ m}^3$ reste-t-il à vider ?`
     const question3a =
       "Montrer que l'expression $v(t)$ permet de déterminer le volume d'eau en $\\text{ m}^3$ qu'il reste à vider dans le bassin en fonction de la durée $t$, exprimée en minutes, d'utilisation de la pompe."
-    const question3b = `Calculer le temps nécessaire pour que le volume d'eau restant à vider soit égal à $${texNombre(reste1, 1)}~\\text{m}^3$.<br>
+    const question3b = `Calculer le temps nécessaire pour que le volume d'eau restant à vider soit égal à $${texNombre(reste1, 1)}\\text{ m}^3$.<br>
     On donnera une valeur approchée à la minute près.`
     let question4 = `On a tracé ci-dessous une partie de la représentation graphique de la fonction $v$.<br><br>
 ${figure}
@@ -149,12 +149,12 @@ Répondre aux questions suivantes par une lecture graphique.`
       style: 'nombres',
     })
     this.enonce += listeQuestions
-    const correction1 = `Le volume du bassin est $V=\\pi R^2 h = \\pi\\times ${texNombre(r, 1)}^2\\times ${texNombre(h, 1)} \\approx ${miseEnEvidence(`${texNombre(volumeArrondi, 1)}~\\text{m}^3`)}$.`
-    const correction2 = `En une heure, la pompe vide $${texNombre(v1, 1)}~\\text{m}^3$, donc en $${duree}$ heures, elle vide $${duree}\\times ${texNombre(v1, 1)}$ soit $${texNombre(v1 * duree, 1)}~\\text{m}^3$.<br>
-$${texNombre(volumeArrondi, 1)} - ${texNombre(v1 * duree, 1)} = ${texNombre(volumeRestant, 1)}~\\text{m}^3$<br>
-Donc au bout de $${duree}$ heures, il reste $${miseEnEvidence(`${texNombre(volumeRestant, 1)}~\\text{m}^3`)}$ à vider.`
-    const correction3a = `La pompe vide $${texNombre(v1, 1)}~\\text{m}^3$ par heure donc $\\dfrac{${texNombre(v1, 1)}}{60}=${texNombre(v2, 3)}~\\text{m}^3$ par minute.<br>
-En $t$ minutes, elle vide $${texNombre(v2, 3)}t~\\text{m}^3$; il en reste donc $${miseEnEvidence(`${texNombre(volumeArrondi, 1)} - ${texNombre(v2, 3)}t`)}$ à vider.`
+    const correction1 = `Le volume du bassin est $V=\\pi R^2 h = \\pi\\times ${texNombre(r, 1)}^2\\times ${texNombre(h, 1)} \\approx ${miseEnEvidence(`${texNombre(volumeArrondi, 1)}\\text{ m}^3`)}$.`
+    const correction2 = `En une heure, la pompe vide $${texNombre(v1, 1)}\\text{ m}^3$, donc en $${duree}$ heures, elle vide $${duree}\\times ${texNombre(v1, 1)}$ soit $${texNombre(v1 * duree, 1)}\\text{ m}^3$.<br>
+$${texNombre(volumeArrondi, 1)} - ${texNombre(v1 * duree, 1)} = ${texNombre(volumeRestant, 1)}\\text{ m}^3$<br>
+Donc au bout de $${duree}$ heures, il reste $${miseEnEvidence(`${texNombre(volumeRestant, 1)}\\text{ m}^3`)}$ à vider.`
+    const correction3a = `La pompe vide $${texNombre(v1, 1)}\\text{ m}^3$ par heure donc $\\dfrac{${texNombre(v1, 1)}}{60}=${texNombre(v2, 3)}\\text{ m}^3$ par minute.<br>
+En $t$ minutes, elle vide $${texNombre(v2, 3)}t\\text{ m}^3$; il en reste donc $${miseEnEvidence(`${texNombre(volumeArrondi, 1)} - ${texNombre(v2, 3)}t`)}$ à vider.`
     const correction3b = `Le temps nécessaire pour que le volume d'eau restant à vider soit égal à $${texNombre(reste1, 1)}\\text{ m}^3$ est le temps $t$ tel que $v(t)=${texNombre(reste1, 1)}$.<br>
 On résout cette équation.<br>
 $\\begin{aligned}v(t)&=${texNombre(reste1, 1)}\\\\
@@ -170,7 +170,7 @@ Donc le temps nécessaire pour que le volume d'eau restant à vider soit égal �
     })
     const correction4a = `${figureCorrection}
  D'après le graphique, l'antécédent de $${texNombre(reste2, 1)}$ par la fonction $v$ est environ ${Math.round((volumeArrondi - reste2) / v2 / 5) * 5}.<br>
-Au bout de $${miseEnEvidence(`${Math.round((volumeArrondi - reste2) / v2 / 5) * 5}~\\text{minutes}`)}$, il reste donc $${texNombre(reste2, 1)}~\\text{m}^3$ à vider.`
+Au bout de $${miseEnEvidence(`${Math.round((volumeArrondi - reste2) / v2 / 5) * 5}~\\text{minutes}`)}$, il reste donc $${texNombre(reste2, 1)}\\text{ m}^3$ à vider.`
     const correction4b = `D'après le graphique, le temps nécessaire pour que la pompe vide complètement le bassin est d'environ $${miseEnEvidence(`${Math.round(volumeArrondi / v2 / 5) * 5}~\\text{minutes}`)}$.`
     const correction4 = createList({
       items: [correction4a, correction4b],

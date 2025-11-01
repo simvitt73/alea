@@ -42,7 +42,7 @@ export default class NomExercice extends ExerciceSimple {
     if (!this.interactif) {
       this.question += '$\\ldots\\text{ cm}^3$'
     } else {
-      this.optionsChampTexte = { texteApres: 'cm$^3$' }
+      this.optionsChampTexte = { texteApres: '$\\text{ cm}^3$' }
     }
   }
 }

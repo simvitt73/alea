@@ -113,7 +113,7 @@ export default class AireDuParallelogramme extends Exercice {
       H = projectionOrtho(I, droite(P[0].listePoints[3], P[0].listePoints[2]))
       s = segment(I, H)
       s.pointilles = 2
-      texteCorr += `<br>$\\mathcal{A}_{${nom.slice(i * 4, i * 4 + 4)}}=${c}~\\text{cm}\\times  ${h}~\\text{cm}=${c * h}~\\text{cm}^2$`
+      texteCorr += `<br>$\\mathcal{A}_{${nom.slice(i * 4, i * 4 + 4)}}=${c}\\text{ cm}\\times  ${h}\\text{ cm}=${c * h}\\text{ cm}^2$`
 
       C = P[0].listePoints[2]
       const D = P[0].listePoints[3]

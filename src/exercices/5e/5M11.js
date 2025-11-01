@@ -124,7 +124,7 @@ export default class AireCarresRectanglesTriangles extends Exercice {
           )
           texte = "Calculer l'aire du carré."
 
-          texteCorr += `$\\mathcal{A}_{${nom[0] + nom[1] + nom[2] + nom[3]}}=${c}~\\text{cm}\\times${c}~\\text{cm}=${miseEnEvidence(c * c)}~\\text{cm}^2$`
+          texteCorr += `$\\mathcal{A}_{${nom[0] + nom[1] + nom[2] + nom[3]}}=${c}\\text{ cm}\\times${c}\\text{ cm}=${miseEnEvidence(c * c)}\\text{ cm}^2$`
           setReponse(this, i, new Grandeur(c * c, 'cm^2'), {
             formatInteractif: 'unites',
           })
@@ -161,7 +161,7 @@ export default class AireCarresRectanglesTriangles extends Exercice {
           )
 
           texte = "Calculer l'aire du rectangle."
-          texteCorr += `$\\mathcal{A}_{${nom[4] + nom[5] + nom[6] + nom[7]}}=${L}~\\text{cm}\\times${l}~\\text{cm}=${miseEnEvidence(L * l)}~\\text{cm}^2$`
+          texteCorr += `$\\mathcal{A}_{${nom[4] + nom[5] + nom[6] + nom[7]}}=${L}\\text{ cm}\\times${l}\\text{ cm}=${miseEnEvidence(L * l)}\\text{ cm}^2$`
           setReponse(this, i, new Grandeur(L * l, 'cm^2'), {
             formatInteractif: 'unites',
           })
@@ -193,7 +193,7 @@ export default class AireCarresRectanglesTriangles extends Exercice {
             afficheLongueurSegment(I, K),
           )
           texte = "Calculer l'aire du triangle rectangle."
-          texteCorr += `$\\mathcal{A}_{${nom[8] + nom[9] + nom[10]}}=${a}~\\text{cm}\\times${b}~\\text{cm}\\div2=${miseEnEvidence(texNombre((a * b) / 2))}~\\text{cm}^2$`
+          texteCorr += `$\\mathcal{A}_{${nom[8] + nom[9] + nom[10]}}=${a}\\text{ cm}\\times${b}\\text{ cm}\\div2=${miseEnEvidence(texNombre((a * b) / 2))}\\text{ cm}^2$`
           setReponse(this, i, new Grandeur(arrondi((a * b) / 2), 'cm^2'), {
             formatInteractif: 'unites',
           })

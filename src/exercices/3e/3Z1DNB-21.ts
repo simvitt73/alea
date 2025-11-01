@@ -165,7 +165,7 @@ export default class ExercicePolynesie592015 extends ExerciceBrevetA {
     this.correction = `${texteGras('PARTIE 1 : La production de lait')}`
     this.correction += listeCorrections
     this.correction += `${texteGras('PARTIE 2 : Le stockage du lait')} <br>`
-    this.correction += `${'Volume de la cuve B :'} $V_{\\text{B}} = \\pi \\times  ${texNombre(diametreB / 20, 1)}^2 \\times ${texNombre(hauteurB / 10, 1)} = ${texNombre((diametreB * diametreB * hauteurB) / 4000, 3)} \\pi \\approx ${texNombre(volumeB, 1)}$ dm$^3$, `
+    this.correction += `${'Volume de la cuve B :'} $V_{\\text{B}} = \\pi \\times  ${texNombre(diametreB / 20, 1)}^2 \\times ${texNombre(hauteurB / 10, 1)} = ${texNombre((diametreB * diametreB * hauteurB) / 4000, 3)} \\pi \\approx ${texNombre(volumeB, 1)}\\text{ dm}^3$, `
     this.correction += `et $${texNombre(volumeB, 1)}$ litres ${volumeB > contenanceA ? '>' : '<'} $${contenanceA}$  litres.<br>`
     this.correction += `${majIlElle} va donc acheter une cuve ${volumeB > contenanceA ? 'B' : 'A'}.<br>`
   }

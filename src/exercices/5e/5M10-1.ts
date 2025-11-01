@@ -191,8 +191,8 @@ export default class AireDeTriangles extends Exercice {
           objetsCorrection,
         )
       } else texteCorr = ''
-      texteCorr += `$\\mathcal{A}_{${A.nom}${B.nom}${C.nom}}=\\dfrac{1}{2}\\times ${A.nom}${B.nom}\\times ${H.nom}${C.nom}=\\dfrac{1}{2}\\times${cotes[i]}~\\text{cm}\\times ${hauteurs[i]}~\\text{cm}=${miseEnEvidence(
-        texNombre((cotes[i] * hauteurs[i]) / 2) + '~\\text{cm}^2',
+      texteCorr += `$\\mathcal{A}_{${A.nom}${B.nom}${C.nom}}=\\dfrac{1}{2}\\times ${A.nom}${B.nom}\\times ${H.nom}${C.nom}=\\dfrac{1}{2}\\times${cotes[i]}\\text{ cm}\\times ${hauteurs[i]}\\text{ cm}=${miseEnEvidence(
+        texNombre((cotes[i] * hauteurs[i]) / 2) + '\\text{ cm}^2',
       )}$`
       handleAnswers(
         this,

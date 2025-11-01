@@ -125,9 +125,9 @@ export default class VitesseDistanceTemps extends Exercice {
             texteCorr += `$v=\\dfrac{${texNombre(d)}\\times 60}{${t}}=${v}$ \n`
           } else {
             if (tHour === 0) {
-              texteCorr = `$v = \\dfrac{d}{t} = \\dfrac{${texNombre(d)}~\\text{km}}{\\dfrac{${t}}{60}~\\text{h}}$`
+              texteCorr = `$v = \\dfrac{d}{t} = \\dfrac{${texNombre(d)}\\text{ km}}{\\dfrac{${t}}{60}~\\text{h}}$`
             } else {
-              texteCorr = `$v = \\dfrac{d}{t} = \\dfrac{${texNombre(d)}~\\text{km}}{${tHour} + \\dfrac{${tMin}}{60}~\\text{h}}$`
+              texteCorr = `$v = \\dfrac{d}{t} = \\dfrac{${texNombre(d)}\\text{ km}}{${tHour} + \\dfrac{${tMin}}{60}~\\text{h}}$`
             }
           }
           texteCorr += '<br><br>'
@@ -157,7 +157,7 @@ export default class VitesseDistanceTemps extends Exercice {
             texteCorr += `$t=\\dfrac{${texNombre(d)}\\times 60}{${v}}=${t}$ \n`
           } else {
             const tFrac = new FractionEtendue(d, v)
-            texteCorr = `$t = \\dfrac{d}{v} = \\dfrac{${texNombre(d)}~\\text{km}}{${v}~\\text{km/h}} = ${tFrac.texFractionSimplifiee}~\\text{h} = ${tFrac.texFractionSimplifiee} \\times 60~\\text{min} = ${t}~\\text{min}$`
+            texteCorr = `$t = \\dfrac{d}{v} = \\dfrac{${texNombre(d)}\\text{ km}}{${v}~\\text{km/h}} = ${tFrac.texFractionSimplifiee}~\\text{h} = ${tFrac.texFractionSimplifiee} \\times 60~\\text{min} = ${t}~\\text{min}$`
           }
           texteCorr += '<br><br>'
           texteCorr += `${prenom} mettra`
@@ -188,9 +188,9 @@ export default class VitesseDistanceTemps extends Exercice {
             texteCorr += `$d=\\dfrac{${texNombre(t)}\\times ${v}}{60}=${texNombre(d)}$ \n`
           } else {
             if (tHour === 0) {
-              texteCorr = `$d = v \\times t = ${v}~\\text{km/h} \\times \\dfrac{${t}}{60}~\\text{h} = ${texNombre(d)}~\\text{km}$`
+              texteCorr = `$d = v \\times t = ${v}~\\text{km/h} \\times \\dfrac{${t}}{60}~\\text{h} = ${texNombre(d)}\\text{ km}$`
             } else {
-              texteCorr = `$d = v \\times t = ${v}~\\text{km/h} \\times \\left(${tHour} + \\dfrac{${tMin}}{60}\\right)~\\text{h} = ${texNombre(d)}~\\text{km}$`
+              texteCorr = `$d = v \\times t = ${v}~\\text{km/h} \\times \\left(${tHour} + \\dfrac{${tMin}}{60}\\right)~\\text{h} = ${texNombre(d)}\\text{ km}$`
             }
           }
           texteCorr += '<br><br>'

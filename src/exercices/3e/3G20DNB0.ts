@@ -125,7 +125,7 @@ export default class Exercice3G2DNB0 extends ExerciceBrevetA {
         `Calculer $${A}${F}$.`,
         createList({
           items: [
-            `Justifier que l'aire du triangle $${A}${B}${D}$ est égale à $${texNombre(aireTriangle, 4)}~\\text{cm}^2$.`,
+            `Justifier que l'aire du triangle $${A}${B}${D}$ est égale à $${texNombre(aireTriangle, 4)}\\text{ cm}^2$.`,
             `Calculer l'aire du disque, arrondie au centième.<br>${texteItalique('Rappel')} : l'aire du disque est égale à $\\pi \\times R^2$, où $R$ est le rayon du disque.`,
           ],
           style: 'alpha',
@@ -153,7 +153,7 @@ export default class Exercice3G2DNB0 extends ExerciceBrevetA {
         createList({
           items: [
             `Si $\\mathscr{A}$ est l'aire du triangle $${A}${B}${D}$ , on sait que $\\mathscr{A} = \\dfrac{${D}${B} \\times ${A}${D}}{2} = \\dfrac{${texNombre(BD, 2)} \\times ${texNombre(DA, 2)}}{2} = \\dfrac{${texNombre(DA * BD, 4)}}{2}= ${texNombre(aireTriangle, 4)}\\text{ cm}^2$.`,
-            `L'aire du disque est égale à $\\pi \\times R^2 = \\pi \\times ${texNombre(rayon, 1)}^2 = \\left(${rayonFrac.texFraction}\\right)^2 \\times \\pi  = ${rayonFracCarre.texFraction}\\pi \\approx ${texNombre(aireDisque, 3)}~\\text{cm}^2$, soit $${texNombre(aireDisque, 2)}$ au centième de $\\text{cm}^2$.`,
+            `L'aire du disque est égale à $\\pi \\times R^2 = \\pi \\times ${texNombre(rayon, 1)}^2 = \\left(${rayonFrac.texFraction}\\right)^2 \\times \\pi  = ${rayonFracCarre.texFraction}\\pi \\approx ${texNombre(aireDisque, 3)}\\text{ cm}^2$, soit $${texNombre(aireDisque, 2)}$ au centième de $\\text{cm}^2$.`,
           ],
           style: 'alpha',
         }),

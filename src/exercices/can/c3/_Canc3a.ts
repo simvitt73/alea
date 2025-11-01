@@ -566,7 +566,6 @@ export default class ClasseCan2023 {
       canEnonce: '',
       canReponseACompleter: '',
       champTexteApres: {},
-      texteApres: '',
     }
     const prenom1 = prenomF()
     const prenom2 = prenomM()

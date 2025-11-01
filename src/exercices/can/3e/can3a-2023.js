@@ -574,29 +574,29 @@ export default class SujetCAN2023troisieme extends Exercice {
             texte = `$${texNombre(a, 1)}\\text{ m}^2$  $=$`
 
             texteCorr = `
-        Comme $1\\text{ m}^2$ $=100$ dm$^2$, alors $${texNombre(a, 1)}\\text{ m}^2$  $=${texNombre(a, 1)}\\times 100$ dm$^2=${miseEnEvidence(texNombre(reponse, 0))}$ dm$^2$. `
+        Comme $1\\text{ m}^2$ $=100\\text{ dm}^2$, alors $${texNombre(a, 1)}\\text{ m}^2$  $=${texNombre(a, 1)}\\times 100\\text{ dm}^2=${miseEnEvidence(texNombre(reponse, 0))}\\text{ dm}^2$. `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + ' dm$^2$'
             } else {
-              texte += context.isHtml ? '  $\\ldots$ dm$^2$' : ''
+              texte += context.isHtml ? '  $\\ldots\\text{ dm}^2$' : ''
             }
             this.listeCanEnonces.push(`$${texNombre(a, 1)}\\text{ m}^2$  $=$`)
             this.listeCanReponsesACompleter.push('$\\ldots\\text{dm}^2$')
           } else {
             a = new Decimal(randint(101, 199)).div(10)
             reponse = new Decimal(a).div(100)
-            texte = `$${texNombre(a, 1)}$ dm$^2$  $=$`
+            texte = `$${texNombre(a, 1)}\\text{ dm}^2$  $=$`
 
             texteCorr = `
-        Comme $1$ dm$^2$ $=0,01\\text{ m}^2$, alors $${texNombre(a, 1)}$ dm$^2$  $=${texNombre(a, 1)}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(reponse, 3))}\\text{ m}^2$. `
+        Comme $1\\text{ dm}^2$ $=0,01\\text{ m}^2$, alors $${texNombre(a, 1)}\\text{ dm}^2$  $=${texNombre(a, 1)}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(reponse, 3))}\\text{ m}^2$. `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + ' m$^2$'
             } else {
               texte += context.isHtml ? '  $\\ldots\\text{ m}^2$' : ''
             }
-            this.listeCanEnonces.push(`$${texNombre(a, 1)}$ dm$^2$  $=$`)
+            this.listeCanEnonces.push(`$${texNombre(a, 1)}\\text{ dm}^2$  $=$`)
             this.listeCanReponsesACompleter.push('$\\ldots\text{m}^2$')
           }
 
@@ -2088,7 +2088,7 @@ export default class SujetCAN2023troisieme extends Exercice {
           b = choice([6, 12, 15, 20, 10])
           reponse = new Decimal(60 * a).div(1000 * b)
           texte = `Zoé a parcouru $${texNombre(a)}\\text{ m}$ en $${b}$ minutes.<br>
-              Quelle est sa vitesse moyenne en km/h ?`
+              Quelle est sa vitesse moyenne en $\\text{km/h}$ ?`
           texteCorr = `$1$ heure $=${texNombre(new Decimal(60).div(b))}\\times ${b}$ min. <br>
               Donc en une heure, Zoé parcourt $${texNombre(new Decimal(60).div(b))}\\times ${texNombre(a)}\\text{ m}$ $= ${miseEnEvidence(texNombre(reponse * 1000, 0))}\\text{ m}$, soit $${texNombre(reponse, 0)}\\text{ km}$.<br>
               Sa vitesse moyenne est donc $${miseEnEvidence(texNombre(reponse))}\\text{ km/h}$.

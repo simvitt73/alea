@@ -544,12 +544,12 @@ export default class SujetCAN2023Cinquieme extends Exercice {
             texte = `$${texNombre(a, 1)}\\text{ m}^2$  $=$`
 
             texteCorr = `
-        Comme $1\\text{ m}^2$ $=100$ dm$^2$, alors $${texNombre(a, 1)}\\text{ m}^2$  $=${texNombre(a, 1)}\\times 100$ dm$^2=${miseEnEvidence(texNombre(reponse, 0))}$ dm$^2$. `
+        Comme $1\\text{ m}^2$ $=100\\text{ dm}^2$, alors $${texNombre(a, 1)}\\text{ m}^2$  $=${texNombre(a, 1)}\\times 100\\text{ dm}^2=${miseEnEvidence(texNombre(reponse, 0))}\\text{ dm}^2$. `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'dm$^2$'
             } else {
-              texte += context.isHtml ? '  $\\ldots$ dm$^2$' : ''
+              texte += context.isHtml ? '  $\\ldots\\text{ dm}^2$' : ''
             }
             this.listeCanEnonces.push(`$${texNombre(a, 1)}\\text{ m}^2$  $=$`)
             this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
@@ -557,17 +557,17 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           } else {
             a = new Decimal(randint(101, 199)).div(10)
             reponse = new Decimal(a).div(100)
-            texte = `$${texNombre(a, 1)}$ dm$^2$  $=$`
+            texte = `$${texNombre(a, 1)}\\text{ dm}^2$  $=$`
 
             texteCorr = `
-        Comme $1$ dm$^2$ $=0,01\\text{ m}^2$, alors $${texNombre(a, 1)}$ dm$^2$  $=${texNombre(a, 1)}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(reponse, 3))}\\text{ m}^2$. `
+        Comme $1\\text{ dm}^2$ $=0,01\\text{ m}^2$, alors $${texNombre(a, 1)}\\text{ dm}^2$  $=${texNombre(a, 1)}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(reponse, 3))}\\text{ m}^2$. `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'm$^2$'
             } else {
               texte += context.isHtml ? '  $\\ldots\\text{ m}^2$' : ''
             }
-            this.listeCanEnonces.push(`$${texNombre(a, 1)}$ dm$^2$  $=$`)
+            this.listeCanEnonces.push(`$${texNombre(a, 1)}\\text{ dm}^2$  $=$`)
             this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
               '$\\ldots\\Aire[m]{}$'
           }
@@ -1648,7 +1648,7 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           }
 
           texte += ajouteChampTexteMathLive(this, index, '', {
-            texteApres: ' cm$^3$',
+            texteApres: '$\\text{ cm}^3$',
           })
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           this.listeCanEnonces.push(texte)
@@ -1663,10 +1663,10 @@ export default class SujetCAN2023Cinquieme extends Exercice {
 
           if (choix === 'a') {
             reponse = a
-            texte = `$${a}$ dm$^3=$`
-            texteCorr = `$1$ dm$^3= 1$ L, donc $${a}$ dm$^3=${a}$ L.`
+            texte = `$${a}\\text{ dm}^3=$`
+            texteCorr = `$1\\text{ dm}^3= 1$ L, donc $${a}\\text{ dm}^3=${a}$ L.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
-            this.listeCanEnonces.push(`$${a}$ dm$^3=$`)
+            this.listeCanEnonces.push(`$${a}\\text{ dm}^3=$`)
             this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
               '$\\ldots$ L'
             if (this.interactif) {
@@ -1678,15 +1678,15 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           if (choix === 'b') {
             reponse = a
             texte = `$${a}$ L $=$`
-            texteCorr = `$1$ dm$^3= 1$ L, donc $${a}$ L $=${a}$ dm$^3$.`
+            texteCorr = `$1\\text{ dm}^3= 1$ L, donc $${a}$ L $=${a}\\text{ dm}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             this.listeCanEnonces.push(`$${a}$ L $=$`)
             this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
-              '$\\ldots$ dm$^3$'
+              '$\\ldots\\text{ dm}^3$'
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'dm$^3$'
             } else {
-              texte += ' $\\ldots$ dm$^3$'
+              texte += ' $\\ldots\\text{ dm}^3$'
             }
           }
           nbChamps = 1

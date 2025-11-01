@@ -54,17 +54,17 @@ export default class EnFonctionDeAire extends ExerciceSimple {
           poly.hachures = true
           // poly.couleurDeRemplissage = colorToLatexOrHTML('lightgray')
           const d = texteParPosition(
-            `${c} cm`,
+            `$${c}\\text{ cm}$`,
             milieu(A, B).x,
             milieu(A, B).y - 0.5,
             0,
-            'black',
+            'red',
             1,
             'milieu',
             false,
           )
           const e = texteParPosition(
-            `${texNombre(b, 0)} cm`,
+            `$${texNombre(b, 0)}\\text{ cm}$`,
             milieu(B, C).x + 1,
             milieu(B, C).y,
             0,
@@ -130,9 +130,9 @@ export default class EnFonctionDeAire extends ExerciceSimple {
           this.canEnonce = this.question
           this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
           if (this.interactif) {
-            this.optionsChampTexte = { texteApres: 'cm$^2$.' }
+            this.optionsChampTexte = { texteApres: '$\\text{ cm}^2$.' }
           } else {
-            this.question += ' $\\ldots \\text{ cm}^2$.'
+            this.question += ' $\\ldots\\text{ cm}^2$.'
           }
         }
         break
@@ -157,7 +157,7 @@ export default class EnFonctionDeAire extends ExerciceSimple {
           poly.hachures = true
           poly1.hachures = true
           const f = texteParPosition(
-            `${texNombre(a, 0)} cm`,
+            `$${texNombre(a, 0)}\\text{ cm}$`,
             -1.8,
             milieu(A, G).y,
             0,
@@ -167,7 +167,7 @@ export default class EnFonctionDeAire extends ExerciceSimple {
             false,
           )
           const e = texteParPosition(
-            `${texNombre(b, 0)} cm`,
+            `$${texNombre(b, 0)}\\text{ cm}$`,
             milieu(B, C).x + 1,
             milieu(B, C).y,
             0,
@@ -234,7 +234,7 @@ export default class EnFonctionDeAire extends ExerciceSimple {
           this.canEnonce = this.question
           this.canReponseACompleter = '$\\ldots\\text{ cm}^2$'
           if (this.interactif) {
-            this.optionsChampTexte = { texteApres: 'cm$^2$.' }
+            this.optionsChampTexte = { texteApres: '$\\text{ cm}^2$.' }
           } else {
             this.question += ' $\\ldots \\text{ cm}^2$.'
           }

@@ -828,7 +828,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           reponse = L * l * h
           texteCorr = `Le volume de ce pavé droit est : $${L}\\text{ cm}\\times ${l} \\text{ cm}\\times ${h}\\text{ cm}=${miseEnEvidence(reponse)}\\text{ cm}^3$.`
           texte += ajouteChampTexteMathLive(this, index, ' ', {
-            texteApres: ' cm$^3$',
+            texteApres: '$\\text{ cm}^3$',
           })
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           nbChamps = 1
@@ -942,12 +942,12 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           choix = choice(['a', 'b', 'c', 'd']) //
           if (choix === 'a') {
             reponse = a * 1000
-            texte = `$${a}$ dm$^3=$`
-            texteCorr = `$1$ dm$^3= ${texNombre(1000)}\\text{ cm}^3$, donc $${a}$ dm$^3=${a}\\times ${texNombre(1000)}\\text{ cm}^3=${miseEnEvidence(texNombre(a * 1000))}\\text{ cm}^3$.`
+            texte = `$${a}\\text{ dm}^3=$`
+            texteCorr = `$1\\text{ dm}^3= ${texNombre(1000)}\\text{ cm}^3$, donc $${a}\\text{ dm}^3=${a}\\times ${texNombre(1000)}\\text{ cm}^3=${miseEnEvidence(texNombre(a * 1000))}\\text{ cm}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, ' ', {
-                texteApres: 'cm$^3$',
+                texteApres: '$\\text{ cm}^3$',
               })
             } else {
               texte += ' $\\ldots\\text{ cm}^3$'
@@ -956,37 +956,37 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           if (choix === 'b') {
             reponse = a / 1000
             texte = `$${a}\\text{ cm}^3=$`
-            texteCorr = `$1\\text{ cm}^3= 0,001$ dm$^3$, donc $${a}\\text{ cm}^3=${a}\\times 0,001$ dm$^3=${miseEnEvidence(texNombre(a / 1000))}$ dm$^3$.`
+            texteCorr = `$1\\text{ cm}^3= 0,001\\text{ dm}^3$, donc $${a}\\text{ cm}^3=${a}\\times 0,001\\text{ dm}^3=${miseEnEvidence(texNombre(a / 1000))}\\text{ dm}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, ' ', {
                 texteApres: 'dm$^3$',
               })
             } else {
-              texte += ' $\\ldots$ dm$^3$'
+              texte += ' $\\ldots\\text{ dm}^3$'
             }
           }
           if (choix === 'c') {
             reponse = a * 1000
             texte = `$${a}\\text{ m}^3=$`
-            texteCorr = `$1\\text{ m}^3= ${texNombre(1000)}$ dm$^3$, donc $${a}\\text{ m}^3=${a}\\times ${texNombre(1000)}$ dm$^3=${miseEnEvidence(texNombre(a * 1000))}$ dm$^3$.`
+            texteCorr = `$1\\text{ m}^3= ${texNombre(1000)}\\text{ dm}^3$, donc $${a}\\text{ m}^3=${a}\\times ${texNombre(1000)}\\text{ dm}^3=${miseEnEvidence(texNombre(a * 1000))}\\text{ dm}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, ' ', {
                 texteApres: 'dm$^3$',
               })
             } else {
-              texte += ' $\\ldots$ dm$^3$'
+              texte += ' $\\ldots\\text{ dm}^3$'
             }
           }
           if (choix === 'd') {
             reponse = a / 1000
-            texte = `$${a}$ dm$^3=$`
-            texteCorr = `$1$ dm$^3= 0,001\\text{ m}^3$, donc $${a}$ dm$^3=${a}\\times 0,001\\text{ m}^3=${miseEnEvidence(texNombre(a / 1000))}\\text{ m}^3$.`
+            texte = `$${a}\\text{ dm}^3=$`
+            texteCorr = `$1\\text{ dm}^3= 0,001\\text{ m}^3$, donc $${a}\\text{ dm}^3=${a}\\times 0,001\\text{ m}^3=${miseEnEvidence(texNombre(a / 1000))}\\text{ m}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, ' ', {
-                texteApres: 'm$^3$',
+                texteApres: '$\\text{ m}^3$',
               })
             } else {
               texte += ' $\\ldots\\text{ m}^3$'
@@ -1068,7 +1068,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, ' ', {
-              texteApres: ' cm$^2$',
+              texteApres: '$\\text{ cm}^2$',
             })
           } else {
             texte += ' $\\ldots \\text{ cm}^2$<br>'

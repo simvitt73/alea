@@ -685,7 +685,7 @@ export default class AgrandissementReduction extends Exercice {
           " et l'égalité des produits en croix nous donne : $\\text{HL}\\left(\\text{SH}-\\text{BH} \\right) =\\text{BA}\\times \\text{SH}$.<br>"
         texteCorr += ` Soit avec les données numériques : $${texNombre(r, 1)}\\left(\\text{SH}-${texNombre(h3, 1)}\\right)=${texNombre(r2, 1)}\\times \\text{SH}$.<br>`
         texteCorr += `On en déduit que SH$\\left(${texNombre(r, 1)}-${texNombre(r2, 1)}\\right)=${texNombre(r, 1)}\\times${texNombre(h3, 1)}$.<br>`
-        texteCorr += `D'où SH $=\\dfrac{${texNombre(r.mul(h3), 2)}}{${texNombre(r.sub(r2), 1)}}=${texNombre(h1, 1)}$ dm ( SB = $${texNombre(h2, 1)}$ dm).<br>`
+        texteCorr += `D'où SH $=\\dfrac{${texNombre(r.mul(h3), 2)}}{${texNombre(r.sub(r2), 1)}}=${texNombre(h1, 1)}\\text{ dm}$ ( SB = $${texNombre(h2, 1)}\\text{ dm}$).<br>`
 
         texteCorr +=
           numAlpha(1) +

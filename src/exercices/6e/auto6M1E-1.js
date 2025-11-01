@@ -126,7 +126,7 @@ export default class AireCarresRectanglesTrianglesSL extends Exercice {
         case 0:
           texte = 'Calculer le périmètre du carré en cm.'
 
-          texteCorr += `$\\mathcal{P}_{${nom[0] + nom[1] + nom[2] + nom[3]}}=4\\times ${c}~\\text{cm}=${4 * c}~\\text{cm}$`
+          texteCorr += `$\\mathcal{P}_{${nom[0] + nom[1] + nom[2] + nom[3]}}=4\\times ${c}\\text{ cm}=${4 * c}\\text{ cm}$`
           setReponse(this, i, new Grandeur(4 * c, 'cm'), {
             formatInteractif: 'unites',
           })
@@ -151,9 +151,9 @@ export default class AireCarresRectanglesTrianglesSL extends Exercice {
           break
         case 1:
           texte = 'Calculer le périmètre du rectangle en cm.'
-          texteCorr += `$\\mathcal{P}_{${nom[4] + nom[5] + nom[6] + nom[7]}}=2\\times ${L}~\\text{cm} + 2\\times${l}~\\text{cm}=${
+          texteCorr += `$\\mathcal{P}_{${nom[4] + nom[5] + nom[6] + nom[7]}}=2\\times ${L}\\text{ cm} + 2\\times${l}\\text{ cm}=${
             2 * L + 2 * l
-          }~\\text{cm}$`
+          }\\text{ cm}$`
           setReponse(this, i, new Grandeur(2 * L + 2 * l, 'cm'), {
             formatInteractif: 'unites',
           })
@@ -178,7 +178,7 @@ export default class AireCarresRectanglesTrianglesSL extends Exercice {
           break
         case 2:
           texte = 'Calculer le périmètre du triangle en cm.'
-          texteCorr += `$\\mathcal{P}_{${nom[8] + nom[9] + nom[10]}}=${a}~\\text{cm} + ${b}~\\text{cm} + ${d}~\\text{cm} =${a + b + d}~\\text{cm}$`
+          texteCorr += `$\\mathcal{P}_{${nom[8] + nom[9] + nom[10]}}=${a}\\text{ cm} + ${b}\\text{ cm} + ${d}\\text{ cm} =${a + b + d}\\text{ cm}$`
           setReponse(this, i, new Grandeur(a + b + d, 'cm'), {
             formatInteractif: 'unites',
           })

@@ -834,7 +834,7 @@ export default class SujetCAN20213ieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, ' ') + 'dm'
           } else {
-            texte += ' $\\ldots$ dm '
+            texte += ' $\\ldots\\text{ dm}$ '
           }
           nbChamps = 1
           break
@@ -855,7 +855,6 @@ export default class SujetCAN20213ieme extends Exercice {
                 this,
                 index,
                 KeyboardType.clavierNumbers,
-                { texteApres: '' },
               ) + '$\\text{ m}$'
           } else {
             texte += '(en $\\text{m})'
@@ -871,7 +870,7 @@ export default class SujetCAN20213ieme extends Exercice {
           reponse = arrondi(a / 1000, 3)
           texte = `Complète.<br>
          $${a}\\text{ cm}^3 = $ `
-          texteCorr = `$1\\text{ cm}^3 = 0,001 $dm$^3$ et $1$ dm$^3 = 1$ L.<br>
+          texteCorr = `$1\\text{ cm}^3 = 0,001 \\text{ dm}^3$ et $1\\text{ dm}^3 = 1$ L.<br>
           $${a}\\text{ cm}^3 = ${a}\\times 0,001=${texNombre(reponse, 3)}$ L.`
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })

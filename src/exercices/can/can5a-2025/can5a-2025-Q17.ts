@@ -26,7 +26,7 @@ export default class Can2025N5Q17 extends ExerciceCan {
     }
     const prefixe = b === 1000 ? 'k' : b === 100 ? 'h' : 'da'
     this.reponse = a * b
-    this.question = `$${texNombre(a, 1)}$ ${prefixe}m $=$`
+    this.question = `$${texNombre(a, 1)}\\text{ ${prefixe}m} =$`
     this.correction = `$1\\text{ ${prefixe}m} = ${texNombre(b, 0)}\\text{ m}$, 
     donc $${texNombre(a, 1)}\\text{ ${prefixe}m} =${texNombre(a, 1)} \\times ${texNombre(b, 0)}\\text{ m}=${miseEnEvidence(`${texNombre(a * b, 0)}`)} \\text{ m}$.`
     this.canEnonce = this.question
