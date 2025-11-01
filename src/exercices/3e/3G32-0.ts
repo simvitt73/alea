@@ -1686,7 +1686,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
               scale: 1,
               mainlevee: false,
             }
-            enonceAMC = `$${A.nom + E.nom} = ${AE}~\\text{cm}$, $${A.nom + D.nom} = ${AD}~\\text{cm}$ et $${A.nom + C.nom} = ${AC}~\\text{cm}$.`
+            enonceAMC = `$${A.nom + E.nom} = ${AE}\\text{ cm}$, $${A.nom + D.nom} = ${AD}\\text{ cm}$ et $${A.nom + C.nom} = ${AC}\\text{ cm}$.`
             enonceAMC += '<br>' + mathalea2d(paramsEnonce, objetsEnonce)
             enonceAMC += `Calculer la longueur $${A.nom + B.nom}$ et donner une valeur approchée `
             texte =

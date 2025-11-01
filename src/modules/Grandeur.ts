@@ -182,7 +182,7 @@ class Grandeur implements IGrandeur {
 
   /**
    * Retourne une chaîne LaTeX :
-   * - valeurs usuelles : '12,345~\\text{cm}'
+   * - valeurs usuelles : '12,345\\text{ cm}'
    * - NEW durée hhmmss : '3~\\text{h} 45~\\text{min} 28~\\text{s}'
    */
   toTex(precision = 12) {

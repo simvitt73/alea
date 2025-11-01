@@ -60,7 +60,7 @@ export default class AgrandissementReduction extends ExerciceSimple {
         this.question = `Les longueurs d'un rectangle de $${a}\\text{ cm}^2$  sont multipliées par $${c}$.<br>
 
             Quelle est l'aire du rectangle ainsi obtenu ?        `
-        this.optionsChampTexte = { texteApres: ' cm$^2$' }
+        this.optionsChampTexte = { texteApres: '$\\text{ cm}^2$' }
         this.reponse = a * c * c
         this.correction = ` Si les longueurs sont multiplées par $k$, les aires sont multipliées par $k^2$, soit ici par $${c}^2=${c ** 2}$.<br>
             Ainsi, l'aire du nouveau rectangle est : $${a}\\times ${c * c}=${a * c * c}\\text{ cm}^2$.

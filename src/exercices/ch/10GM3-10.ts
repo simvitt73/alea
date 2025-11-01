@@ -364,20 +364,20 @@ export default class ConvertirDuree extends Exercice {
               this,
               champIndex,
               KeyboardType.clavierNumbers,
-              { texteAvant: '', texteApres: ' h ' },
+              { texteApres: ' h ' },
             )
           texte += ajouteChampTexteMathLive(
             this,
             champIndex + 1,
             KeyboardType.clavierNumbers,
-            { texteAvant: '', texteApres: ' min ' },
+            { texteApres: ' min ' },
           )
           if (!this.sup2 && !this.sup3)
             texte += ajouteChampTexteMathLive(
               this,
               champIndex + 2,
               KeyboardType.clavierNumbers,
-              { texteAvant: '', texteApres: ' s' },
+              { texteApres: ' s' },
             )
         } else {
           texte +=

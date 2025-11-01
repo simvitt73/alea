@@ -511,8 +511,8 @@ export default class SujetCAN2022Premiere extends Exercice {
             b = randint(2, 30)
             if (choice([true, false])) {
               texte = `$${texNombre(a, 1)}\\text{ cm}$ $=$`
-              texteCorr = `$1\\text{ m}$ $=10^6$ $\\mu$m, donc $1\\text{ cm}$ $=10^4 =${texNombre(10000, 0)}$ $\\mu$m.<br>
-            Ainsi, $${texNombre(a, 1)}\\text{ cm}$ $=${texNombre(a * 10000, 0)}$ $\\mu$m.`
+              texteCorr = `$1\\text{ m}$ $=10^6$ $\\mu\\text{m}$, donc $1\\text{ cm}$ $=10^4 =${texNombre(10000, 0)}$ $\\mu\\text{m}$.<br>
+            Ainsi, $${texNombre(a, 1)}\\text{ cm}$ $=${texNombre(a * 10000, 0)}$ $\\mu\\text{m}$.`
               if (this.interactif) {
                 texte += ajouteChampTexteMathLive(
                   this,

@@ -15,7 +15,7 @@ export const refs = {
 }
 /**
  * Modèle d'exercice très simple pour la course aux nombres
- * @author Eric Elter+  Gilles Mora
+ * @author Eric Elter + Gilles Mora
  */
 export default class Convertir extends ExerciceSimple {
   constructor() {
@@ -39,13 +39,13 @@ export default class Convertir extends ExerciceSimple {
         this.reponse = texNombre(new Decimal(a).mul(1000), 4)
         this.question = ` $${texNombre(a)}\\text{ m}^3 =$ `
         if (!this.interactif) {
-          this.question += '$ ....$ L'
+          this.question += ' $\\dots\\text{ L}$ '
         }
         this.optionsChampTexte = { texteApres: ' L' }
-        this.correction = `Comme $1\\text{ m}^3=${texNombre(1000, 0)}$ L, alors $${texNombre(a, 0)}\\text{ m}^3 =${texNombre(a)}\\times ${texNombre(1000, 0)}$ L $ = ${miseEnEvidence(this.reponse)}$ L.`
+        this.correction = `Comme $1\\text{ m}^3=${texNombre(1000, 0)}\\text{ L}$, alors $${texNombre(a, 0)}\\text{ m}^3 =${texNombre(a)}\\times ${texNombre(1000, 0)}$ L $ = ${miseEnEvidence(this.reponse)}$ L.`
 
         this.canEnonce = 'Compléter.'
-        this.canReponseACompleter = `$${texNombre(a)}\\text{ m}^3 = \\dots$ L`
+        this.canReponseACompleter = `$${texNombre(a)}\\text{ m}^3 = \\dots\\text{ L}$`
         break
       case 'b':
         b = 2025
@@ -56,15 +56,15 @@ export default class Convertir extends ExerciceSimple {
           new Decimal(b).div(10),
         ])
         this.reponse = texNombre(new Decimal(a).div(1000), 4)
-        this.question = `$${texNombre(a)}$  L $=$ `
+        this.question = `$${texNombre(a)}\\text{ L}=$ `
         if (!this.interactif) {
-          this.question += ' .... m$^3$ '
+          this.question += ' $\\dots\\text{ m}^3$ '
         }
 
-        this.optionsChampTexte = { texteApres: ' m$^3$' }
+        this.optionsChampTexte = { texteApres: '$\\text{ m}^3$' }
         this.canEnonce = 'Compléter.'
-        this.canReponseACompleter = `$${texNombre(a)}$ L $ = \\dots\\text{ m}^3$`
-        this.correction = `Comme $1$ L $=0,001\\text{ m}^3$, alors $${texNombre(a)}$ L $=${texNombre(a)}\\times 0,001\\text{ m}^3 = ${miseEnEvidence(this.reponse)}\\text{ m}^3$.`
+        this.canReponseACompleter = `$${texNombre(a)}\\text{ L} = \\dots\\text{ m}^3$`
+        this.correction = `Comme $1\\text{ L} =0,001\\text{ m}^3$, alors $${texNombre(a)}\\text{ L}=${texNombre(a)}\\times 0,001\\text{ m}^3 = ${miseEnEvidence(this.reponse)}\\text{ m}^3$.`
 
         break
     }

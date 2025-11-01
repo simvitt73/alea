@@ -284,7 +284,6 @@ export default class SujetCAN2022troisieme extends Exercice {
                   this,
                   index,
                   KeyboardType.clavierNumbers,
-                  { texteApres: '' },
                 ) + '$\\text{ m}$'
             } else {
               texte += '  $\\ldots\\text{ m}$'

@@ -544,22 +544,22 @@ export default class SujetCAN2023Quatrieme extends Exercice {
             texte = `$${texNombre(a, 1)}\\text{ m}^2$  $=$`
 
             texteCorr = `
-        Comme $1\\text{ m}^2$ $=100$ dm$^2$, alors $${texNombre(a, 1)}\\text{ m}^2$  $=${texNombre(a, 1)}\\times 100$ dm$^2=${miseEnEvidence(texNombre(reponse, 0))}$ dm$^2$. `
+        Comme $1\\text{ m}^2$ $=100\\text{ dm}^2$, alors $${texNombre(a, 1)}\\text{ m}^2$  $=${texNombre(a, 1)}\\times 100\\text{ dm}^2=${miseEnEvidence(texNombre(reponse, 0))}\\text{ dm}^2$. `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'dm$^2$'
             } else {
-              texte += context.isHtml ? '  $\\ldots$ dm$^2$' : ''
+              texte += context.isHtml ? '  $\\ldots\\text{ dm}^2$' : ''
             }
             this.listeCanReponsesACompleter[this.listeCanEnonces.length] =
               '$\\ldots\\text{dm}^2$'
           } else {
             a = new Decimal(randint(101, 199)).div(10)
             reponse = new Decimal(a).div(100)
-            texte = `$${texNombre(a, 1)}$ dm$^2$  $=$`
+            texte = `$${texNombre(a, 1)}\\text{ dm}^2$  $=$`
 
             texteCorr = `
-        Comme $1$ dm$^2$ $=0,01\\text{ m}^2$, alors $${texNombre(a, 1)}$ dm$^2$  $=${texNombre(a, 1)}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(reponse, 3))}\\text{ m}^2$. `
+        Comme $1\\text{ dm}^2$ $=0,01\\text{ m}^2$, alors $${texNombre(a, 1)}\\text{ dm}^2$  $=${texNombre(a, 1)}\\times 0,01\\text{ m}^2=${miseEnEvidence(texNombre(reponse, 3))}\\text{ m}^2$. `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'm$^2$'
@@ -763,8 +763,8 @@ export default class SujetCAN2023Quatrieme extends Exercice {
 
           if (choix === 'a') {
             reponse = a
-            texte = `$${texNombre(a, 1)}$ dm$^3=$`
-            texteCorr = `$1$ dm$^3= 1$ L, donc $${texNombre(a, 1)}$ dm$^3=${miseEnEvidence(texNombre(a, 1))}$ L.`
+            texte = `$${texNombre(a, 1)}\\text{ dm}^3=$`
+            texteCorr = `$1\\text{ dm}^3= 1$ L, donc $${texNombre(a, 1)}\\text{ dm}^3=${miseEnEvidence(texNombre(a, 1))}$ L.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'L'

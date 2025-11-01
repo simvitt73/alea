@@ -59,12 +59,6 @@ export function isReponseComplexe(value: unknown): value is ReponseComplexe {
   return isAnswerValueType(value) || isValeur(value)
 }
 
-// Ajout d'un type dédié pour les choix de QCM
-export type ChoixQcm = {
-  texte: string
-  statut?: boolean
-}
-
 export function isClickFiguresArray(
   figures: Figure[] | ClickFigures[],
 ): figures is ClickFigures[] {

@@ -372,14 +372,14 @@ export default class CalculsHomothetie extends Exercice {
         legendeOA:
           agrandissement || !kpositif
             ? texteSurSegmentDessus(
-                `$${texNombre(OA.valeurDecimale)}~\\text{cm}$`,
+                `$${texNombre(OA.valeurDecimale)}\\text{ cm}$`,
                 figure.A,
                 figure.O,
                 'black',
                 0.6,
               )
             : texteSurArc(
-                `$${texNombre(OA.valeurDecimale)}~\\text{cm}$`,
+                `$${texNombre(OA.valeurDecimale)}\\text{ cm}$`,
                 figure.O,
                 figure.A,
                 60,
@@ -389,14 +389,14 @@ export default class CalculsHomothetie extends Exercice {
         legendeOhA:
           !agrandissement || !kpositif
             ? texteSurSegmentDessus(
-                `$${texNombre(OhA)}~\\text{cm}$`,
+                `$${texNombre(OhA)}\\text{ cm}$`,
                 figure.hA,
                 figure.O,
                 'black',
                 0.6,
               )
             : texteSurArc(
-                `$${texNombre(OhA)}~\\text{cm}$`,
+                `$${texNombre(OhA)}\\text{ cm}$`,
                 figure.O,
                 figure.hA,
                 60,
@@ -406,14 +406,14 @@ export default class CalculsHomothetie extends Exercice {
         legendeOB:
           agrandissement || !kpositif
             ? texteSurSegmentDessus(
-                `$${texNombre(OB.valeurDecimale)}~\\text{cm}$`,
+                `$${texNombre(OB.valeurDecimale)}\\text{ cm}$`,
                 figure.B,
                 figure.O,
                 'black',
                 0.6,
               )
             : texteSurArc(
-                `$${texNombre(OB.valeurDecimale)}~\\text{cm}$`,
+                `$${texNombre(OB.valeurDecimale)}\\text{ cm}$`,
                 figure.B,
                 figure.O,
                 60,
@@ -423,14 +423,14 @@ export default class CalculsHomothetie extends Exercice {
         legendeOhB:
           !agrandissement || !kpositif
             ? texteSurSegmentDessus(
-                `$${texNombre(OhB)}~\\text{cm}$`,
+                `$${texNombre(OhB)}\\text{ cm}$`,
                 figure.hB,
                 figure.O,
                 'black',
                 0.6,
               )
             : texteSurArc(
-                `$${texNombre(OhB)}~\\text{cm}$`,
+                `$${texNombre(OhB)}\\text{ cm}$`,
                 figure.hB,
                 figure.O,
                 60,
@@ -439,14 +439,14 @@ export default class CalculsHomothetie extends Exercice {
               ),
         legendeAhA: kpositif
           ? texteSurSegmentDessus(
-              `$${texNombre(AhA.valeurDecimale)}~\\text{cm}$`,
+              `$${texNombre(AhA.valeurDecimale)}\\text{ cm}$`,
               figure.hA,
               figure.A,
               'black',
               0.6,
             )
           : texteSurArc(
-              `$${texNombre(AhA.valeurDecimale)}~\\text{cm}$`,
+              `$${texNombre(AhA.valeurDecimale)}\\text{ cm}$`,
               figure.hA,
               figure.A,
               60,
@@ -713,7 +713,7 @@ export default class CalculsHomothetie extends Exercice {
             <br>
             Donc `
           } else texteCorr = fImage.solution
-          texteCorr += `$${O}${hA}= ${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD} \\times ${texNombre(OA.valeurDecimale)} =  ${miseEnEvidence(texNombre(OhA))}~\\text{cm}$.`
+          texteCorr += `$${O}${hA}= ${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD} \\times ${texNombre(OA.valeurDecimale)} =  ${miseEnEvidence(texNombre(OhA))}\\text{ cm}$.`
           break
 
         case 'antécédent': // cas 3
@@ -746,7 +746,7 @@ export default class CalculsHomothetie extends Exercice {
             <br>
             Donc `
           } else texteCorr = fAntecedent.solution
-          texteCorr += `$${O}${A}=\\dfrac{${O}${hA}}{${signek}k}=\\dfrac{${texNombre(OhA)}}{${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD}} ${OhAtimeskinverse} = ${miseEnEvidence(texNombre(OA.valeurDecimale))}~\\text{cm}$.`
+          texteCorr += `$${O}${A}=\\dfrac{${O}${hA}}{${signek}k}=\\dfrac{${texNombre(OhA)}}{${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD}} ${OhAtimeskinverse} = ${miseEnEvidence(texNombre(OA.valeurDecimale))}\\text{ cm}$.`
           break
 
         case 'image2etapes': // cas 4
@@ -802,7 +802,7 @@ export default class CalculsHomothetie extends Exercice {
             texteCorr += `Soit $k=${signek}\\dfrac{${O}${hA}}{${O}${A}}=${signek}\\dfrac{${texNombre(OhA)}}{${texNombre(OA.valeurDecimale)}}=${this.sup3 === 1 ? texNombre(k.valeurDecimale) : k.texFSD}$.
             <br><br>`
           }
-          texteCorr += `$${O}${hB}= ${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD} \\times ${texNombre(OB.valeurDecimale)} = ${miseEnEvidence(texNombre(OhB))}~\\text{cm}$.`
+          texteCorr += `$${O}${hB}= ${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD} \\times ${texNombre(OB.valeurDecimale)} = ${miseEnEvidence(texNombre(OhB))}\\text{ cm}$.`
           break
 
         case 'antecendent2etapes': // cas 5
@@ -858,7 +858,7 @@ export default class CalculsHomothetie extends Exercice {
             texteCorr += `Soit $k=${signek}\\dfrac{${O}${hA}}{${O}${A}}=${signek}\\dfrac{${texNombre(OhA)}}{${texNombre(OA.valeurDecimale)}}=${this.sup3 === 1 ? texNombre(k.valeurDecimale) : k.texFSD}$.
             <br><br>`
           }
-          texteCorr += `$${O}${B}=\\dfrac{${O}${hB}}{${signek}k}=\\dfrac{${texNombre(OhB)}}{${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD}} ${OhBtimeskinverse} = ${miseEnEvidence(texNombre(OB.valeurDecimale))}~\\text{cm}$.`
+          texteCorr += `$${O}${B}=\\dfrac{${O}${hB}}{${signek}k}=\\dfrac{${texNombre(OhB)}}{${this.sup3 === 1 ? texNombre(absk.valeurDecimale) : absk.texFSD}} ${OhBtimeskinverse} = ${miseEnEvidence(texNombre(OB.valeurDecimale))}\\text{ cm}$.`
 
           break
 
@@ -887,7 +887,7 @@ export default class CalculsHomothetie extends Exercice {
             environ === 'environ'
               ? ` = ${texNombre(hAire)} \\approx ${miseEnEvidence(texNombre(hAireArrondie))}`
               : ` = ${miseEnEvidence(texNombre(hAire))}`
-          texteCorr += '~\\text{cm}^2$'
+          texteCorr += '\\text{ cm}^2$'
           if (this.correctionDetaillee) {
             texteCorr = `Une homothétie est une transformation qui multiplie toutes les aires par le carré de son rapport.
             <br>
@@ -897,7 +897,7 @@ export default class CalculsHomothetie extends Exercice {
                 ? `\\approx ${texNombre(hAireArrondie)}`
                 : ''
             texteCorr += `$<br>
-            Donc l'aire de l'image de cette figure est ${environ} $ {${miseEnEvidence(texNombre(hAireArrondie))}~\\text{cm}^2}$.`
+            Donc l'aire de l'image de cette figure est ${environ} $ {${miseEnEvidence(texNombre(hAireArrondie))}\\text{ cm}^2}$.`
           }
           break
 
@@ -917,7 +917,7 @@ export default class CalculsHomothetie extends Exercice {
 
           handleAnswers(this, i, { reponse: { value: Aire.texFSD } })
 
-          texteCorr = `$ {\\dfrac{${texNombre(hAire)}}{${parentheseskAire}^2} = ${miseEnEvidence(texNombre(Aire.valeurDecimale))}~\\text{cm}^2}$`
+          texteCorr = `$ {\\dfrac{${texNombre(hAire)}}{${parentheseskAire}^2} = ${miseEnEvidence(texNombre(Aire.valeurDecimale))}\\text{ cm}^2}$`
           if (this.correctionDetaillee) {
             texteCorr = `Une homothétie est une transformation qui multiplie toutes les aires par le carré de son rapport.
             <br>
@@ -927,7 +927,7 @@ export default class CalculsHomothetie extends Exercice {
             <br>
             Puis $\\mathscr{A}=\\dfrac{${texNombre(hAire)}}{${parentheseskAire}^2}=${texNombre(Aire.valeurDecimale)}$.
             <br>
-            Donc l'aire de la figure de départ est $ {${miseEnEvidence(texNombre(Aire.valeurDecimale))}~\\text{cm}^2}$.`
+            Donc l'aire de la figure de départ est $ {${miseEnEvidence(texNombre(Aire.valeurDecimale))}\\text{ cm}^2}$.`
           }
           break
 
