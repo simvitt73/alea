@@ -1,4 +1,4 @@
-import { codageAngleDroit } from '../../../lib/2d/angles'
+import { codageAngleDroit } from '../../../lib/2d/CodageAngleDroit'
 import { milieu, point } from '../../../lib/2d/points'
 import { polygoneAvecNom } from '../../../lib/2d/polygones'
 import { segment } from '../../../lib/2d/segmentsVecteurs'
@@ -428,7 +428,7 @@ export default class SujetCAN20214ieme extends Exercice {
         case 13:
           L = randint(8, 12)
           a = arrondi(L * randint(2, 7))
-          texte = `Un rectangle a une aire de $${a}$ m$^2$ et sa longueur mesure $${L}$ m.<br>
+          texte = `Un rectangle a une aire de $${a}$ m$^2$ et sa longueur mesure $${L}\\text{ m}$.<br>
             Détermine sa largeur.`
           texteCorr = `L'aire d'un rectangle est obtenue  par le produit de sa longueur par sa largeur. <br>
           On obtient donc sa largeur
@@ -486,9 +486,9 @@ export default class SujetCAN20214ieme extends Exercice {
           c = choice([30, 60, 90, 120])
           reponse = arrondi(c / a)
           texte = `Une voiture roule à $${c}$ km/h. Combien de kilomètres parcourt-elle en $${b}$ minutes ?`
-          texteCorr = `La voiture parcourt $${arrondi(c / a)}$ km.<br>
+          texteCorr = `La voiture parcourt $${arrondi(c / a)}\\text{ km}$.<br>
          En $${b}$ minutes, elle parcourt $${a}$ fois moins de km qu'en $1$ heure, soit $\\dfrac{${c}}{${a}}=
-          ${miseEnEvidence(arrondi(c / a))}$ km.`
+          ${miseEnEvidence(arrondi(c / a))}\\text{ km}$.`
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'km'
@@ -639,7 +639,7 @@ export default class SujetCAN20214ieme extends Exercice {
               objets,
             )
             texteCorr = `$ABD$ est un triangle rectangle isocèle. Son aire est donc la moitié de celle du carré :<br>
-            $\\dfrac{${L}\\times ${L}}{2}=${miseEnEvidence(texNombre((L * L) / 2, 1))}$ cm$^2$
+            $\\dfrac{${L}\\times ${L}}{2}=${miseEnEvidence(texNombre((L * L) / 2, 1))}\\text{ cm}^2$
                            `
           } else {
             L = randint(2, 5)
@@ -689,7 +689,7 @@ export default class SujetCAN20214ieme extends Exercice {
               objets,
             )
             texteCorr = `$ABD$ est un triangle rectangle. Son aire est donc la moitié de celle du rectangle : <br>
-            $\\dfrac{${L}\\times ${l2}}{2}=${miseEnEvidence(texNombre((L * l2) / 2, 2))}$ cm$^2$
+            $\\dfrac{${L}\\times ${l2}}{2}=${miseEnEvidence(texNombre((L * l2) / 2, 2))}\\text{ cm}^2$
             `
           }
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
@@ -969,7 +969,7 @@ export default class SujetCAN20214ieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           } else {
-            texte += ' $\\ldots$ cm'
+            texte += ' $\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break

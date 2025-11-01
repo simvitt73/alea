@@ -1,13 +1,14 @@
-import { codageAngle, codageAngleDroit } from '../../../lib/2d/angles'
-import { codageSegments } from '../../../lib/2d/codages'
+import { codageAngle } from '../../../lib/2d/angles'
+import { codageAngleDroit } from '../../../lib/2d/CodageAngleDroit'
+import { codageSegments } from '../../../lib/2d/CodageSegment'
 import { colorToLatexOrHTML } from '../../../lib/2d/colorToLatexOrHtml'
+import { demiDroite } from '../../../lib/2d/DemiDroite'
 import { droite } from '../../../lib/2d/droites'
 import { fixeBordures } from '../../../lib/2d/fixeBordures'
-import { milieu, point, tracePoint } from '../../../lib/2d/points'
+import { milieu, point } from '../../../lib/2d/points'
 import { polygone, polygoneAvecNom } from '../../../lib/2d/polygones'
 import { repere } from '../../../lib/2d/reperes'
 import {
-  demiDroite,
   segment,
   segmentAvecExtremites,
 } from '../../../lib/2d/segmentsVecteurs'
@@ -16,6 +17,7 @@ import {
   latexParCoordonnees,
   texteParPosition,
 } from '../../../lib/2d/textes'
+import { tracePoint } from '../../../lib/2d/TracePoint'
 import { rotation } from '../../../lib/2d/transformations'
 import { texPrix } from '../../../lib/format/style'
 import { choice, shuffle } from '../../../lib/outils/arrayOutils'
@@ -48,6 +50,7 @@ import {
   setReponse,
 } from '../../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
+import { representationFraction } from '../../../modules/representationsFractions'
 
 export const titre = 'CAN 3e sujet 2023'
 export const interactifReady = true
@@ -647,7 +650,8 @@ export default class SujetCAN2023troisieme extends Exercice {
           texte += context.isHtml
             ? mathalea2d(
                 params,
-                f.representation(
+                representationFraction(
+                  f,
                   0,
                   0,
                   3,
@@ -905,7 +909,7 @@ export default class SujetCAN2023troisieme extends Exercice {
             texte = `Pour $x=${a}$, <br> $${b}x^2=$ `
             texte += ' $\\ldots$'
           }
-          texteCorr = `Pour $x=${a}$, ${sp(2)} $${b}x^2=${b}\\times${ecritureParentheseSiNegatif(a)}=${miseEnEvidence(reponse)}$.`
+          texteCorr = `Pour $x=${a}$, ${sp(2)} $${b}x^2=${b}\\times${ecritureParentheseSiNegatif(a)}^2=${miseEnEvidence(reponse)}$.`
           this.listeCanEnonces.push(`Pour $x=${a}$`)
           this.listeCanReponsesACompleter.push(`$${b}x^2=\\ldots$`)
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
@@ -976,7 +980,7 @@ export default class SujetCAN2023troisieme extends Exercice {
 
             texteCorr = `On utilise le théorème de Pythagore dans le triangle rectangle $ABC$ :<br>
                 On a $AB^2=BC^2-AC^2$, soit $AB^2=${a[2]}^2-${a[0]}^2=${a[2] ** 2 - a[0] ** 2}$.<br>
-                Par conséquent, $AB=${miseEnEvidence(a[1])}$ cm.`
+                Par conséquent, $AB=${miseEnEvidence(a[1])}\\text{ cm}$.`
             this.listeCanEnonces.push(
               mathalea2d(
                 {
@@ -1039,7 +1043,7 @@ export default class SujetCAN2023troisieme extends Exercice {
 
             texteCorr = `On utilise le théorème de Pythagore dans le triangle rectangle $ABC$ :<br>
                   On a $AC^2=BC^2-AB^2$, soit $AC^2=${a[2]}^2-${a[1]}^2=${a[2] ** 2 - a[1] ** 2}$.<br>
-                  Par conséquent, $AC=${miseEnEvidence(a[0])}$ cm.`
+                  Par conséquent, $AC=${miseEnEvidence(a[0])}\\text{ cm}$.`
             this.listeCanEnonces.push(
               mathalea2d(
                 {
@@ -1102,7 +1106,7 @@ export default class SujetCAN2023troisieme extends Exercice {
 
             texteCorr = `On utilise le théorème de Pythagore dans le triangle rectangle $ABC$ :<br>
                     On a $BC^2=AB^2+AC^2$, soit $BC^2=${a[0]}^2+${a[1]}^2=${a[0] ** 2 + a[1] ** 2}$.<br>
-                    Par conséquent, $BC=${miseEnEvidence(a[2])}$ cm.`
+                    Par conséquent, $BC=${miseEnEvidence(a[2])}\\text{ cm}$.`
             this.listeCanEnonces.push(
               mathalea2d(
                 {
@@ -1125,7 +1129,7 @@ export default class SujetCAN2023troisieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           } else {
-            texte += ' $\\ldots$ cm'
+            texte += ' $\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break
@@ -1838,7 +1842,7 @@ export default class SujetCAN2023troisieme extends Exercice {
             grilleSecondaireXMax: 5,
             //   labelPointTaille: context.isHtml ? 10 : 7
           })
-          o = texteParPosition('O', -0.3, -0.3, 'milieu', 'black', 1)
+          o = texteParPosition('O', -0.3, -0.3, 0, 'black', 1)
           A = point(xA, yA, 'A', 'above')
           B = point(xB, yB, 'B', 'below')
           C = point(xC, yC, 'C', 'below left')
@@ -2077,10 +2081,10 @@ export default class SujetCAN2023troisieme extends Exercice {
           a = randint(1, 6) * 1000
           b = choice([6, 12, 15, 20, 10])
           reponse = new Decimal(60 * a).div(1000 * b)
-          texte = `Zoé a parcouru $${texNombre(a)}$ m en $${b}$ minutes.<br>
+          texte = `Zoé a parcouru $${texNombre(a)}\\text{ m}$ en $${b}$ minutes.<br>
               Quelle est sa vitesse moyenne en km/h ?`
           texteCorr = `$1$ heure $=${texNombre(new Decimal(60).div(b))}\\times ${b}$ min. <br>
-              Donc en une heure, Zoé parcourt $${texNombre(new Decimal(60).div(b))}\\times ${texNombre(a)}$ m $= ${miseEnEvidence(texNombre(reponse * 1000, 0))}$ m, soit $${texNombre(reponse, 0)}$ km.<br>
+              Donc en une heure, Zoé parcourt $${texNombre(new Decimal(60).div(b))}\\times ${texNombre(a)}\\text{ m}$ $= ${miseEnEvidence(texNombre(reponse * 1000, 0))}\\text{ m}$, soit $${texNombre(reponse, 0)}\\text{ km}$.<br>
               Sa vitesse moyenne est donc $${miseEnEvidence(texNombre(reponse))}$ km/h.
               `
           this.listeCanEnonces.push(texte)

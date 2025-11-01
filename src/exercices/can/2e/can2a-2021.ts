@@ -1,4 +1,4 @@
-import { codageSegment } from '../../../lib/2d/codages'
+import { codageSegment } from '../../../lib/2d/CodageSegment'
 import { courbe } from '../../../lib/2d/courbes'
 import { milieu, point } from '../../../lib/2d/points'
 import { repere } from '../../../lib/2d/reperes'
@@ -215,7 +215,7 @@ export default class SujetCAN2021Seconde extends Exercice {
           a = randint(3, 15)
           b = choice([15, 30])
 
-          texte = `Si l'on parcourt $${a}$ km en $${b}$ min, la vitesse moyenne est de
+          texte = `Si l'on parcourt $${a}\\text{ km}$ en $${b}$ min, la vitesse moyenne est de
              `
           if (b === 15) {
             texteCorr = `$15$ min est le quart d'une heure. Donc la vitesse moyenne est $${a}\\times 4=${4 * a}$ km/h.`
@@ -619,13 +619,13 @@ export default class SujetCAN2021Seconde extends Exercice {
             )
             texteCorr = `Le triangle $ACD$ est un agrandissement du triangle $EBC$. Le coefficient d'agrandissement est donné par : $\\dfrac{${b}}{${a}}=${k}$.<br>
           On obtient donc la longueur $EB$ en divisant par $${k}$ la longueur $AD$.<br>
-          $EB=\\dfrac{${d}}{${k}}=${c}$ cm.<br>`
+          $EB=\\dfrac{${d}}{${k}}=${c}\\text{ cm}$.<br>`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += '<br>$EB=$'
               texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
             } else {
-              texte += ' $EB=\\ldots$ cm'
+              texte += ' $EB=\\ldots\\text{ cm}$'
             }
 
             nbChamps = 1
@@ -812,10 +812,10 @@ export default class SujetCAN2021Seconde extends Exercice {
           a = randint(2, 10)
 
           reponse = 4 * a
-          texte = `Déterminer le périmètre d'un carré d'aire $${a ** 2}$ cm$^2$.
+          texte = `Déterminer le périmètre d'un carré d'aire $${a ** 2}\\text{ cm}^2$.
       `
-          texteCorr = `Si l'aire du carré est $${a ** 2}$ cm$^2$, la longueur de son côté est $\\sqrt{${a ** 2}}=${a}$ cm. <br>
-          On en déduit que le périmètre du carré est $4\\times ${a}=${4 * a}$ cm. `
+          texteCorr = `Si l'aire du carré est $${a ** 2}\\text{ cm}^2$, la longueur de son côté est $\\sqrt{${a ** 2}}=${a}\\text{ cm}$. <br>
+          On en déduit que le périmètre du carré est $4\\times ${a}=${4 * a}\\text{ cm}$. `
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
@@ -852,7 +852,7 @@ export default class SujetCAN2021Seconde extends Exercice {
               texte = `Une voiture roule à la vitesse moyenne de $${a}$ km/h.<br>
             Combien de kilomètres a-t-elle parcourus en $15$ minutes ?
         `
-              texteCorr = `Dans une heure, il y a $4\\times 15$ minutes. <br>Ainsi en $15$ minutes, la voiture aura parcouru $${a}\\div 4=${a / 4}$ km.<br>
+              texteCorr = `Dans une heure, il y a $4\\times 15$ minutes. <br>Ainsi en $15$ minutes, la voiture aura parcouru $${a}\\div 4=${a / 4}\\text{ km}$.<br>
             `
             } else if (choix === 'b') {
               a = choice([60, 90, 120])
@@ -860,7 +860,7 @@ export default class SujetCAN2021Seconde extends Exercice {
               texte = `Une voiture roule à la vitesse moyenne de $${a}$ km/h.<br>
                           Combien de kilomètres a-t-elle parcourus en $10$ minutes ?
                       `
-              texteCorr = `Dans une heure, il y a $6\\times 10$ minutes. <br>Ainsi en $10$ minutes, la voiture aura parcouru $${a}\\div 6=${a / 6}$ km.
+              texteCorr = `Dans une heure, il y a $6\\times 10$ minutes. <br>Ainsi en $10$ minutes, la voiture aura parcouru $${a}\\div 6=${a / 6}\\text{ km}$.
                           `
             } else {
               a = choice([30, 60, 90, 120])
@@ -868,7 +868,7 @@ export default class SujetCAN2021Seconde extends Exercice {
               texte = `Une voiture roule à la vitesse moyenne de $${a}$ km/h.<br>
                                         Combien de kilomètres a-t-elle parcourus en $20$ minutes ?
                                     `
-              texteCorr = `Dans une heure, il y a $3\\times 20$ minutes. <br>Ainsi en $20$ minutes, la voiture aura parcouru $${a}\\div 3=${a / 3}$ km.
+              texteCorr = `Dans une heure, il y a $3\\times 20$ minutes. <br>Ainsi en $20$ minutes, la voiture aura parcouru $${a}\\div 3=${a / 3}\\text{ km}$.
                                         `
             }
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
@@ -943,7 +943,7 @@ export default class SujetCAN2021Seconde extends Exercice {
               texte += '<br>$DB=$'
               texte += ajouteChampTexteMathLive(this, index, ' ') + 'cm'
             } else {
-              texte += ' $DB=\\ldots$ cm'
+              texte += ' $DB=\\ldots\\text{ cm}$'
             }
 
             nbChamps = 1
@@ -955,9 +955,9 @@ export default class SujetCAN2021Seconde extends Exercice {
           a = choice([1, 2, 3, 4, 10])
           reponse = a ** 3 / 100
           texte = `La masse volumique d'un solide  est de $10$ g/cm$^3$.<br>
-          Combien pèse (en kg) ce solide qui a la forme d'un cube  d'arête $${a}$ cm  ?
+          Combien pèse (en kg) ce solide qui a la forme d'un cube  d'arête $${a}\\text{ cm}$  ?
       `
-          texteCorr = `Le volume du cube est $${a}^3=${a ** 3}$ cm$^3$.<br>
+          texteCorr = `Le volume du cube est $${a}^3=${a ** 3}\\text{ cm}^3$.<br>
           Sa masse  est donc donnée par $${a ** 3}\\times 10=${10 * a ** 3}$ g soit $${texNombre(a ** 3 / 100, 2)}$ kg.
 
           `

@@ -11,12 +11,11 @@ import {
   pointAbstrait,
   type PointAbstrait,
 } from '../../lib/2d/points-abstraits'
-import { longueur } from '../../lib/2d/segmentsVecteurs'
 import { homothetie, rotation } from '../../lib/2d/transformations'
 import { triangle2points2longueurs } from '../../lib/2d/triangle'
+import { longueur } from '../../lib/2d/utilitairesGeometriques'
 import { nombreAvecEspace } from '../../lib/outils/texNombre'
-import type Alea2iep from '../Alea2iep'
-import type { OptionsCompas } from '../Alea2iep'
+import type { IAlea2iep, OptionsCompas } from '../Alea2iep.types'
 import { randint } from '../outils'
 
 /**
@@ -29,7 +28,7 @@ import { randint } from '../outils'
  * @return {array} [A, B, C] les 3 sommets du triangle (objets MathALEA2D)
  */
 export const triangle3longueurs = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   ABC: string,
   AB: number,
   AC: number,
@@ -112,7 +111,7 @@ export const triangle3longueurs = function (
  * @return {array} [A, B, C] les 3 sommets du triangle (objets MathALEA2D)
  */
 export const triangleRectangleCoteHypotenuse = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   ABC: string,
   AB: number,
   AC: number,
@@ -127,7 +126,7 @@ export const triangleRectangleCoteHypotenuse = function (
   dBC.isVisible = false
   const cAC = cercle(A, AC)
   cAC.isVisible = false
-  const C = pointIntersectionLC(dBC, cAC) as PointAbstrait
+  const C = pointIntersectionLC(dBC, cAC)
   const c = homothetie(C, B, 1.2)
   let description = options.description ?? true
   if (ABC.length !== 3) {
@@ -199,7 +198,7 @@ export const triangleRectangleCoteHypotenuse = function (
  * @return {array} [A, B, C] les 3 sommets du triangle (objets MathALEA2D)
  */
 export const triangleRectangle2Cotes = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   ABC: string,
   AB: number,
   BC: number,
@@ -214,7 +213,7 @@ export const triangleRectangle2Cotes = function (
   dBC.isVisible = false
   const cBC = cercle(B, BC)
   cBC.isVisible = false
-  const C = pointIntersectionLC(dBC, cBC) as PointAbstrait
+  const C = pointIntersectionLC(dBC, cBC)
   const c = homothetie(C, B, 1.2)
   let description = options.description ?? true
   if (ABC.length !== 3) {
@@ -283,7 +282,7 @@ type OptionsTriangle1longueur2angles = OptionsCompas & {
  * @return {array} [A, B, C] les 3 sommets du triangle (objets MathALEA2D)
  */
 export const triangle1longueur2angles = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   NOM: string | string[],
   AB: number,
   BAC: number,
@@ -307,7 +306,7 @@ export const triangle1longueur2angles = function (
   D.isVisible = false
   const d2 = rotation(droite(B, A), B, -a2)
   d2.isVisible = false
-  const C = pointIntersectionDD(d, d2) as PointAbstrait
+  const C = pointIntersectionDD(d, d2)
   let description = options.description ?? true
   const mesure = options.mesure ?? false
   if (NOM.length !== 3) {
@@ -393,7 +392,7 @@ export const triangle1longueur2angles = function (
  * @return {array} [A, B, C] les 3 sommets du triangle (objets MathALEA2D)
  */
 export const triangle2longueurs1angle = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   NOM: string,
   AB: number,
   AC: number,
@@ -478,7 +477,7 @@ export const triangle2longueurs1angle = function (
  * @return {array} [A, B, C]
  */
 export const triangleEquilateral2Sommets = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   A: PointAbstrait,
   B: PointAbstrait,
   nomC: string = '',
@@ -510,7 +509,7 @@ export const triangleEquilateral2Sommets = function (
  */
 
 export const triangleEquilateral = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   NOM: string | string[],
   AB: number,
 ) {
@@ -541,7 +540,7 @@ export const triangleEquilateral = function (
 }
 
 export const triangleIsocele2Longueurs = function (
-  this: Alea2iep,
+  this: IAlea2iep,
   NOM: string | string[],
   AB: number, // côtés égaux
   AC: number, // base,
@@ -551,7 +550,7 @@ export const triangleIsocele2Longueurs = function (
   const C = pointAdistance(A, AC, randint(-10, 10))
   const c1 = cercle(A, AB)
   const c2 = cercle(C, AB)
-  const B = pointIntersectionCC(c1, c2, 'C', 1) as PointAbstrait
+  const B = pointIntersectionCC(c1, c2, 'C', 1)
 
   //
   if (NOM.length === 3) {

@@ -1,10 +1,12 @@
-import { codageAngle, codageAngleDroit } from '../../../lib/2d/angles'
+import { codageAngle } from '../../../lib/2d/angles'
+import { codageAngleDroit } from '../../../lib/2d/CodageAngleDroit'
 import { colorToLatexOrHTML } from '../../../lib/2d/colorToLatexOrHtml'
 import { fixeBordures } from '../../../lib/2d/fixeBordures'
-import { milieu, point, tracePoint } from '../../../lib/2d/points'
+import { milieu, point } from '../../../lib/2d/points'
 import { polygone } from '../../../lib/2d/polygones'
 import { segment } from '../../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPosition } from '../../../lib/2d/textes'
+import { tracePoint } from '../../../lib/2d/TracePoint'
 import { rotation } from '../../../lib/2d/transformations'
 import { texPrix } from '../../../lib/format/style'
 import { choice, shuffle } from '../../../lib/outils/arrayOutils'
@@ -42,6 +44,7 @@ import Hms from '../../../modules/Hms'
 
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { ecritureAlgebrique, rienSi1 } from '../../../lib/outils/ecritures'
+import { representationFraction } from '../../../modules/representationsFractions'
 
 export const titre = 'CAN 4e sujet 2023'
 export const interactifReady = true
@@ -619,7 +622,8 @@ export default class SujetCAN2023Quatrieme extends Exercice {
           texte += context.isHtml
             ? mathalea2d(
                 params,
-                f.representation(
+                representationFraction(
+                  f,
                   0,
                   0,
                   2,
@@ -992,15 +996,15 @@ export default class SujetCAN2023Quatrieme extends Exercice {
               e,
             )
             texteCorr = `L'aire du triangle est $\\dfrac{\\text{AB}\\times \\text{AC}}{2}=\\dfrac{${a}\\times \\text{AC}}{2}$.<br>
-          On obtient ainsi,  $\\dfrac{${a}\\times \\text{AC}}{2}=${c}$ soit $${a}\\times AC=2\\times ${c}$, soit $AC=\\dfrac{${c * 2}}{${a}}=${reponse}$ cm.`
+          On obtient ainsi,  $\\dfrac{${a}\\times \\text{AC}}{2}=${c}$ soit $${a}\\times AC=2\\times ${c}$, soit $AC=\\dfrac{${c * 2}}{${a}}=${reponse}\\text{ cm}$.`
             texte += context.isHtml ? `${sp(4)}$AC= $` : ''
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
             } else {
-              texte += context.isHtml ? ' $\\ldots$ cm' : ''
+              texte += context.isHtml ? ' $\\ldots\\text{ cm}$' : ''
               this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
-                '$AC=\\ldots$ cm.'
+                '$AC=\\ldots\\text{ cm}$.'
             }
           } else {
             listeTriplet = [
@@ -1058,7 +1062,7 @@ export default class SujetCAN2023Quatrieme extends Exercice {
               e,
               f,
             )
-            texteCorr = `L'aire du triangle est $\\dfrac{\\text{AC}\\times \\text{CB}}{2}=\\dfrac{${a}\\times ${a}}{2}=${miseEnEvidence(reponse)}$ cm$^2$.`
+            texteCorr = `L'aire du triangle est $\\dfrac{\\text{AC}\\times \\text{CB}}{2}=\\dfrac{${a}\\times ${a}}{2}=${miseEnEvidence(reponse)}\\text{ cm}^2$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'cm$^2$'
@@ -1384,7 +1388,7 @@ export default class SujetCAN2023Quatrieme extends Exercice {
             context.isHtml ? 1 : 0.7,
           )
           reponse = c
-          texte = `Ce pavé droit a un volume de $${v}$ cm$^3$.<br>
+          texte = `Ce pavé droit a un volume de $${v}\\text{ cm}^3$.<br>
             Quelle est sa hauteur ? <br>`
           texte += mathalea2d(
             {
@@ -1412,7 +1416,7 @@ export default class SujetCAN2023Quatrieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           } else {
-            texte += context.isHtml ? ' $\\ldots$ cm' : ''
+            texte += context.isHtml ? ' $\\ldots\\text{ cm}$' : ''
           }
 
           nbChamps = 1

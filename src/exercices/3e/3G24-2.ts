@@ -2,9 +2,9 @@ import { pointAdistance } from '../../lib/2d/points'
 import { barycentre, nommePolygone } from '../../lib/2d/polygones'
 import { triangle2points2longueurs } from '../../lib/2d/triangle'
 // import { angle, angleOriente, MarqueAngle, MarqueAngleDroit } from '../../lib/2d/angles'
-import { angleOriente, markTypeArray, MarqueAngle } from '../../lib/2d/angles'
+import { angleOriente } from '../../lib/2d/utilitairesGeometriques'
 // import { afficheLongueurSegment, texteSurSegment, placeLatexSurSegment } from '../../lib/2d/codages'
-import { placeLatexSurSegment } from '../../lib/2d/codages'
+import { placeLatexSurSegment } from '../../lib/2d/placeLatexSurSegment'
 
 import { droite } from '../../lib/2d/droites'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
@@ -17,6 +17,7 @@ import { deuxColonnesResp } from '../../lib/format/miseEnPage'
 import { creerNomDePolygone } from '../../lib/outils/outilString'
 import { mathalea2d } from '../../modules/mathalea2d'
 
+import { markTypeArray, MarqueAngle } from '../../lib/2d/MarkType'
 import { PointAbstrait, pointAbstrait } from '../../lib/2d/points-abstraits'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif' // fonction qui va préparer l'analyse de la saisie
@@ -370,12 +371,12 @@ export default class nomExercice extends Exercice {
       texteCorr = rediger(A, B, C, D, E, F, typeQuestionsDisponibles[i] === 3)
       if (typeQuestionsDisponibles[i] === 3) {
         texteCorr += `Le coefficient ${motAgrandissementReduction} est égal à $${texNombre(longueurDE, 1)} \\div  ${texNombre(longueurAB, 1)} = ${texNombre(coeff, 1)}$.<br>`
-        texteCorr += `donc $${D.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${A.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurAC, 1)} = ${texNombre(longueurAC * coeff, 1)}$ cm.<br>`
-        texteCorr += `donc $${E.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${B.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurBC, 1)} = ${texNombre(longueurBC * coeff, 1)}$ cm.`
+        texteCorr += `donc $${D.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${A.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurAC, 1)} = ${texNombre(longueurAC * coeff, 1)}\\text{ cm}$.<br>`
+        texteCorr += `donc $${E.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${B.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurBC, 1)} = ${texNombre(longueurBC * coeff, 1)}\\text{ cm}$.`
       } else {
         texteCorr += `Les côtés $[${D.nom}${E.nom}]$ et $[${A.nom}${B.nom}]$ sont homologues et on remarque que $${D.nom}${E.nom} = ${texNombre(longueurDE, 1)}= ${texNombre(coeff, 1)} \\times ${texNombre(longueurAB, 1)}$.<br>`
-        texteCorr += `donc $${D.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${A.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurAC, 1)} = ${texNombre(longueurAC * coeff, 1)}$ cm.<br>`
-        texteCorr += `donc $${E.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${B.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurBC, 1)} = ${texNombre(longueurBC * coeff, 1)}$ cm.`
+        texteCorr += `donc $${D.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${A.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurAC, 1)} = ${texNombre(longueurAC * coeff, 1)}\\text{ cm}$.<br>`
+        texteCorr += `donc $${E.nom}${F.nom} = ${texNombre(coeff, 1)} \\times ${B.nom}${C.nom} = ${texNombre(coeff, 1)} \\times ${texNombre(longueurBC, 1)} = ${texNombre(longueurBC * coeff, 1)}\\text{ cm}$.`
       }
 
       if (

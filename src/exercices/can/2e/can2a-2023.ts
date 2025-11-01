@@ -1,10 +1,10 @@
-import { codageSegments } from '../../../lib/2d/codages'
+import { codageSegments } from '../../../lib/2d/CodageSegment'
+import { demiDroite } from '../../../lib/2d/DemiDroite'
 import { courbeInterpolee } from '../../../lib/2d/courbes'
 import { droite } from '../../../lib/2d/droites'
-import { milieu, point, tracePoint } from '../../../lib/2d/points'
+import { milieu, point } from '../../../lib/2d/points'
 import { repere } from '../../../lib/2d/reperes'
 import {
-  demiDroite,
   segment,
   segmentAvecExtremites,
 } from '../../../lib/2d/segmentsVecteurs'
@@ -30,6 +30,7 @@ import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 
 import { grille } from '../../../lib/2d/Grille'
+import { tracePoint } from '../../../lib/2d/TracePoint'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
@@ -332,10 +333,10 @@ export default class SujetCAN2023Seconde extends Exercice {
             const nbre = choice([(3 * a) / 2, a + 1, a - 1, a / 2, k * a])
 
             reponse = nbre * prix1
-            texte = `$${a}$ m de ruban  coûtent $${texPrix(prix1 * a)}$ €, combien coûtent $${nbre}$ m de ruban ? `
+            texte = `$${a}\\text{ m}$ de ruban  coûtent $${texPrix(prix1 * a)}$ €, combien coûtent $${nbre}\\text{ m}$ de ruban ? `
 
-            texteCorr = `$${a}$ m de ruban  coûtent $${texPrix(prix1 * a)}$ €, donc $1$ m coûte $${texPrix(prix1)}$ €. <br>
-            Ainsi, $${nbre}$ m de ruban ${nbre === 1 ? 'coûte' : 'coûtent'} $${miseEnEvidence(texPrix(reponse))}$ €.`
+            texteCorr = `$${a}\\text{ m}$ de ruban  coûtent $${texPrix(prix1 * a)}$ €, donc $1\\text{ m}$ coûte $${texPrix(prix1)}$ €. <br>
+            Ainsi, $${nbre}\\text{ m}$ de ruban ${nbre === 1 ? 'coûte' : 'coûtent'} $${miseEnEvidence(texPrix(reponse))}$ €.`
 
             handleAnswers(this, index, {
               reponse: { value: reponse.toFixed(2) },
@@ -1431,16 +1432,16 @@ export default class SujetCAN2023Seconde extends Exercice {
           a = randint(5, 10)
           b = randint(1, 8) * 3
           reponse = (a * b) / 3
-          texte = `Volume d'une pyramide dont la base a une aire de $${a}$ cm$^2$ et de hauteur $${b}$ cm`
+          texte = `Volume d'une pyramide dont la base a une aire de $${a}\\text{ cm}^2$ et de hauteur $${b}\\text{ cm}$`
 
           texteCorr = ` Le volume d'une pyramide est $\\dfrac{1}{3}\\times \\text{aire de la base} \\times \\text{hauteur}$.<br>
-          Le volume de cette pyramide est donc : $\\dfrac{${a}\\times ${b}}{3}=${miseEnEvidence(texNombre(reponse, 0))}$ cm$^3$.`
+          Le volume de cette pyramide est donc : $\\dfrac{${a}\\times ${b}}{3}=${miseEnEvidence(texNombre(reponse, 0))}\\text{ cm}^3$.`
           handleAnswers(this, index, { reponse: { value: reponse } })
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm$^3$'
           }
           this.canEnonce = texte
-          this.canReponseACompleter = '$\\ldots$ cm$^3$'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}^3$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           nbChamps = 1

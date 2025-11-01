@@ -1,14 +1,12 @@
-import {
-  angleOriente,
-  codageAngle,
-  codageAngleDroit,
-} from '../../lib/2d/angles'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
+import { codageAngle } from '../../lib/2d/angles'
 import { droite } from '../../lib/2d/droites'
 import { milieu, Point, point, pointIntersectionDD } from '../../lib/2d/points'
 import { barycentre, nommePolygone, polygone } from '../../lib/2d/polygones'
-import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { latexParPoint } from '../../lib/2d/textes'
 import { homothetie, rotation, similitude } from '../../lib/2d/transformations'
+import { angleOriente, longueur } from '../../lib/2d/utilitairesGeometriques'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice, shuffle } from '../../lib/outils/arrayOutils'
@@ -221,14 +219,14 @@ export default class CalculDAngle extends Exercice {
           ab = arrondi(randint(40, (bc - 2) * 10) / 10, 1)
           angleABC = Math.round((Math.acos(ab / bc) * 180) / Math.PI)
           ac = bc * Math.sin(Math.acos(ab / bc))
-          texte += `Le triangle $${nom}$ est rectangle en $${nom[0]}$ tel que $${nom[1] + nom[2]}=${texNombre2(bc)}$ cm et $${nom[0] + nom[1]}=${texNombre2(ab)}$ cm.<br>`
+          texte += `Le triangle $${nom}$ est rectangle en $${nom[0]}$ tel que $${nom[1] + nom[2]}=${texNombre2(bc)}\\text{ cm}$ et $${nom[0] + nom[1]}=${texNombre2(ab)}\\text{ cm}$.<br>`
           break
         case 'Asin':
           bc = randint(100, 150) / 10
           ac = randint(40, (bc - 2) * 10) / 10
           angleABC = Math.round((Math.asin(ac / bc) * 180) / Math.PI)
           ab = bc * Math.cos(Math.asin(ac / bc))
-          texte += `Le triangle $${nom}$ est rectangle en $${nom[0]}$ tel que $${nom[1] + nom[2]}=${texNombre2(bc)}$ cm et $${nom[0] + nom[2]}=${texNombre2(ac)}$ cm.<br>`
+          texte += `Le triangle $${nom}$ est rectangle en $${nom[0]}$ tel que $${nom[1] + nom[2]}=${texNombre2(bc)}\\text{ cm}$ et $${nom[0] + nom[2]}=${texNombre2(ac)}\\text{ cm}$.<br>`
           break
         case 'Atan':
         default:
@@ -236,7 +234,7 @@ export default class CalculDAngle extends Exercice {
           ac = randint(40, 100) / 10
           angleABC = Math.round((Math.atan(ac / ab) * 180) / Math.PI)
           bc = ab / Math.cos(Math.atan(ac / ab))
-          texte += `Le triangle $${nom}$ est rectangle en $${nom[0]}$ tel que $${nom[0] + nom[1]}=${texNombre2(ab)}$ cm et  $${nom[0] + nom[2]}=${texNombre2(ac)}$ cm.<br>`
+          texte += `Le triangle $${nom}$ est rectangle en $${nom[0]}$ tel que $${nom[0] + nom[1]}=${texNombre2(ab)}\\text{ cm}$ et  $${nom[0] + nom[2]}=${texNombre2(ac)}\\text{ cm}$.<br>`
           break
       }
 

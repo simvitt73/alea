@@ -5,12 +5,16 @@
  * @author Rémi Angot
  */
 
-import type { Droite, Mediatrice } from '../lib/2d/droites'
+import type { DemiDroite } from '../lib/2d/DemiDroite'
+import type { Droite } from '../lib/2d/droites'
 import { fixeBordures } from '../lib/2d/fixeBordures'
+import type { IDroite, IVecteur } from '../lib/2d/Interfaces'
+import type { Mediatrice } from '../lib/2d/Mediatrice'
 import { ObjetMathalea2D } from '../lib/2d/ObjetMathalea2D'
 import type { Point } from '../lib/2d/points'
+import type { PointAbstrait } from '../lib/2d/points-abstraits'
 import type { Polygone } from '../lib/2d/polygones'
-import type { DemiDroite, Segment, Vecteur } from '../lib/2d/segmentsVecteurs'
+import type { Segment } from '../lib/2d/segmentsVecteurs'
 import {
   affiniteOrtho,
   homothetie,
@@ -18,6 +22,7 @@ import {
   symetrieAxiale,
   translation,
 } from '../lib/2d/transformations'
+import type { Vecteur } from '../lib/2d/Vecteur'
 import { arrondi } from '../lib/outils/nombres'
 
 // JSDOC Validee par EE Juin 2022
@@ -261,7 +266,7 @@ export function apparitionAnimee(
  */
 export class TranslationAnimee extends ObjetMathalea2D {
   liste:
-    | (Point | Droite | Segment | DemiDroite | Polygone)[]
+    | (PointAbstrait | Droite | Segment | DemiDroite | Polygone)[]
     | Point
     | Droite
     | Segment
@@ -271,7 +276,7 @@ export class TranslationAnimee extends ObjetMathalea2D {
   v: Vecteur
   animation: string
   constructor(
-    liste: (Point | Droite | Segment | DemiDroite | Polygone)[],
+    liste: (PointAbstrait | Droite | Segment | DemiDroite | Polygone)[],
     v: Vecteur,
     animation = 'begin="0s" dur="2s" repeatCount="indefinite"',
   ) {
@@ -279,8 +284,18 @@ export class TranslationAnimee extends ObjetMathalea2D {
     this.liste = Array.isArray(liste) ? liste : [liste]
     this.v = v
     this.animation = animation
-    const liste2 = this.liste.map((el) => translation(el, v))
-    const bordures = fixeBordures(this.liste.concat(liste2))
+    const liste2 = this.liste.map((el) => translation(el, v as IVecteur))
+    const bordures = fixeBordures(
+      this.liste.concat(
+        liste2 as
+          | (PointAbstrait | Droite | Segment | DemiDroite | Polygone)[]
+          | Point
+          | Droite
+          | Segment
+          | DemiDroite
+          | Polygone,
+      ),
+    )
     this.bordures = [bordures.xmin, bordures.ymin, bordures.xmax, bordures.ymax]
   }
 
@@ -327,12 +342,12 @@ export function translationAnimee(
  */
 export class RotationAnimee extends ObjetMathalea2D {
   liste: (Point | Droite | Segment | DemiDroite | Polygone)[]
-  O: Point
+  O: Point | PointAbstrait
   angle: number
   animation: string
   constructor(
     liste: (Point | Droite | Segment | DemiDroite | Polygone)[],
-    O: Point,
+    O: Point | PointAbstrait,
     angle: number,
     animation = 'begin="0s" dur="2s" repeatCount="indefinite"',
   ) {
@@ -372,7 +387,7 @@ export class RotationAnimee extends ObjetMathalea2D {
 }
 export function rotationAnimee(
   liste: (Point | Droite | Segment | DemiDroite | Polygone)[],
-  O: Point,
+  O: Point | PointAbstrait,
   angle: number,
   animation = 'begin="0s" dur="2s" repeatCount="indefinite"',
 ) {
@@ -462,7 +477,7 @@ export class SymetrieAnimee extends ObjetMathalea2D {
 
   svg(coeff: number) {
     const binomesXY1 = this.p.binomesXY(coeff)
-    const p2 = symetrieAxiale(this.p, this.d)
+    const p2 = symetrieAxiale(this.p, this.d as IDroite)
     const binomesXY2 = p2.binomesXY(coeff)
     const code = `<polygon stroke="${this.p.color[0]}" stroke-width="${this.p.epaisseur}" fill="${this.p.couleurDeRemplissage[0]}" >
     <animate attributeName="points" ${this.animation}
@@ -535,7 +550,7 @@ export class TranslationPuisRotationAnimee extends ObjetMathalea2D {
   figure1: ObjetMathalea2D | ObjetMathalea2D[]
   v: Vecteur
   figure2: ObjetMathalea2D | ObjetMathalea2D[]
-  O: Point
+  O: PointAbstrait
   angle: number
   t1: number
   t2: number
@@ -545,7 +560,7 @@ export class TranslationPuisRotationAnimee extends ObjetMathalea2D {
     figure1: ObjetMathalea2D | ObjetMathalea2D[],
     v: Vecteur,
     figure2: ObjetMathalea2D | ObjetMathalea2D[],
-    O: Point,
+    O: Point | PointAbstrait,
     angle: number,
     t1 = 5,
     t2 = 2,
@@ -624,7 +639,7 @@ export function translationPuisRotationAnimees(
   figure1: ObjetMathalea2D | ObjetMathalea2D[],
   v: Vecteur,
   figure2: ObjetMathalea2D | ObjetMathalea2D[],
-  O: Point,
+  O: Point | PointAbstrait,
   angle: number,
   t1 = 5,
   t2 = 2,

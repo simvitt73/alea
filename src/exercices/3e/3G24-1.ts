@@ -1,22 +1,13 @@
-import {
-  angleOriente,
-  codageAngle,
-  codageAngleDroit,
-  markTypeArray,
-  MarqueAngle,
-} from '../../lib/2d/angles'
-import { placeLatexSurSegment } from '../../lib/2d/codages'
+import { codageAngle } from '../../lib/2d/angles'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
 import { droite } from '../../lib/2d/droites'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
+import { markTypeArray, MarqueAngle } from '../../lib/2d/MarkType'
+import { placeLatexSurSegment } from '../../lib/2d/placeLatexSurSegment'
 import { pointAdistance } from '../../lib/2d/points'
 import { pointAbstrait } from '../../lib/2d/points-abstraits'
 import { nommePolygone } from '../../lib/2d/polygones'
-import {
-  longueur,
-  segment,
-  Segment,
-  vecteur,
-} from '../../lib/2d/segmentsVecteurs'
+import { segment, Segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
 import {
   homothetie,
@@ -28,6 +19,8 @@ import {
   triangle2points2angles,
   triangle2points2longueurs,
 } from '../../lib/2d/triangle'
+import { angleOriente, longueur } from '../../lib/2d/utilitairesGeometriques'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { vide2d } from '../../lib/2d/Vide2d'
 import { deuxColonnesResp } from '../../lib/format/miseEnPage'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif' // fonction qui va préparer l'analyse de la saisie
@@ -762,7 +755,7 @@ export default class TrianglesSemblables extends Exercice {
             { label: 'sont semblables', value: 'oui' },
             { label: 'ne sont pas semblables', value: 'non' },
           ]
-          texte += `ont pour longueurs des côtés respectifs $${texNombre(longueurAB, 1)}$ cm, $${texNombre(longueurAC, 1)}$ cm et $${texNombre(longueurBC, 1)}$ cm pour le premier triangle et $${texNombre(longueurDE, 1)}$ cm, $${texNombre(longueurDF, 1)}$ cm et $${texNombre(longueurEF, 1)}$ cm pour le second triangle.`
+          texte += `ont pour longueurs des côtés respectifs $${texNombre(longueurAB, 1)}\\text{ cm}$, $${texNombre(longueurAC, 1)}\\text{ cm}$ et $${texNombre(longueurBC, 1)}\\text{ cm}$ pour le premier triangle et $${texNombre(longueurDE, 1)}\\text{ cm}$, $${texNombre(longueurDF, 1)}\\text{ cm}$ et $${texNombre(longueurEF, 1)}\\text{ cm}$ pour le second triangle.`
           if (this.interactif) {
             texte += choixDeroulant(this, indiceChampReponse, choices) + '.'
             handleAnswers(
@@ -1084,7 +1077,7 @@ export default class TrianglesSemblables extends Exercice {
             { label: 'sont semblables', value: 'oui' },
             { label: 'ne sont pas semblables', value: 'non' },
           ]
-          texte += `ont pour longueurs des côtés respectifs $${texNombre(longueurAB, 1)}$ cm, $${texNombre(longueurAC, 1)}$ cm et $${texNombre(longueurBC, 1)}$ cm pour le premier triangle et $${texNombre(longueurDE, 1)}$ cm, $${texNombre(longueurDF, 1)}$ cm et $${texNombre(longueurEF, 1)}$ cm pour le second triangle.`
+          texte += `ont pour longueurs des côtés respectifs $${texNombre(longueurAB, 1)}\\text{ cm}$, $${texNombre(longueurAC, 1)}\\text{ cm}$ et $${texNombre(longueurBC, 1)}\\text{ cm}$ pour le premier triangle et $${texNombre(longueurDE, 1)}\\text{ cm}$, $${texNombre(longueurDF, 1)}\\text{ cm}$ et $${texNombre(longueurEF, 1)}\\text{ cm}$ pour le second triangle.`
           if (this.interactif) {
             texte += choixDeroulant(this, indiceChampReponse, choices) + '.'
             handleAnswers(

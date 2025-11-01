@@ -1,5 +1,5 @@
+import { afficheLongueurSegment } from '../../../lib/2d/afficheLongueurSegment'
 import { codageAngle } from '../../../lib/2d/angles'
-import { afficheLongueurSegment } from '../../../lib/2d/codages'
 import { point, pointAdistance } from '../../../lib/2d/points'
 import { polygoneAvecNom } from '../../../lib/2d/polygones'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
@@ -52,20 +52,20 @@ export default class NomExercice extends ExerciceSimple {
           },
           objets,
         )
-      this.correction = `L'aire est donnée par le produit des deux plus petits côtés divisé par $2$, soit : $\\dfrac{3\\times 4}{2}=${miseEnEvidence(this.reponse)}$ cm$^2$.`
+      this.correction = `L'aire est donnée par le produit des deux plus petits côtés divisé par $2$, soit : $\\dfrac{3\\times 4}{2}=${miseEnEvidence(this.reponse)}\\text{ cm}^2$.`
       this.canReponseACompleter = ''
     } else {
       if (choice([true, false])) {
         tri = shuffle(['3', '4', '5'])
         this.reponse = 6
-        this.correction = `L'aire est donnée par le produit des deux plus petits côtés divisé par $2$, soit : $\\dfrac{3\\times 4}{2}=${miseEnEvidence(this.reponse)}$ cm$^2$.`
+        this.correction = `L'aire est donnée par le produit des deux plus petits côtés divisé par $2$, soit : $\\dfrac{3\\times 4}{2}=${miseEnEvidence(this.reponse)}\\text{ cm}^2$.`
       } else {
         tri = shuffle(['5', '12', '13'])
         this.reponse = 30
-        this.correction = `L'aire est donnée par le produit des  deux plus petits côtés divisé par $2$, soit : $\\dfrac{5\\times 12}{2}=${miseEnEvidence(this.reponse)}$ cm$^2$.`
+        this.correction = `L'aire est donnée par le produit des  deux plus petits côtés divisé par $2$, soit : $\\dfrac{5\\times 12}{2}=${miseEnEvidence(this.reponse)}\\text{ cm}^2$.`
       }
-      this.question = `Aire d'un triangle rectangle dont les côtés mesurent $${tri[0]}$ cm, $${tri[1]}$ cm et $${tri[2]}$ cm.`
-      this.canReponseACompleter = '$ \\ldots$ cm$^2$'
+      this.question = `Aire d'un triangle rectangle dont les côtés mesurent $${tri[0]}\\text{ cm}$, $${tri[1]}\\text{ cm}$ et $${tri[2]}\\text{ cm}$.`
+      this.canReponseACompleter = '$ \\ldots\\text{ cm}^2$'
     }
     this.canEnonce = this.question
   }

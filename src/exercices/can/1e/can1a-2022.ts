@@ -1,7 +1,8 @@
+import { tracePoint } from '../../../lib/2d/TracePoint'
 import { courbe } from '../../../lib/2d/courbes'
 import { droite } from '../../../lib/2d/droites'
 import { fixeBordures } from '../../../lib/2d/fixeBordures'
-import { milieu, plot, point, tracePoint } from '../../../lib/2d/points'
+import { milieu, point } from '../../../lib/2d/points'
 import { pave } from '../../../lib/2d/projections3d'
 import { repere } from '../../../lib/2d/reperes'
 import { segment } from '../../../lib/2d/segmentsVecteurs'
@@ -27,6 +28,7 @@ import { listeQuestionsToContenu, randint } from '../../../modules/outils'
 import Exercice from '../../Exercice'
 
 import Decimal from 'decimal.js'
+import { plot } from '../../../lib/2d/Plot'
 import { setReponse } from '../../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 
@@ -425,7 +427,7 @@ export default class SujetCAN2022Premiere extends Exercice {
             texte += ` ${mathalea2d({ xmin: -2, ymin: -2, xmax: 10, ymax: l + 2, scale: 0.8 }, pav)}`
 
             const reponse = L * l * h
-            texteCorr = `Le volume de ce pavé droit est : $${L}\\times ${l}\\times ${h}=${reponse}$ cm$^3$.`
+            texteCorr = `Le volume de ce pavé droit est : $${L}\\times ${l}\\times ${h}=${reponse}\\text{ cm}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + ' cm$^3$'
@@ -501,9 +503,9 @@ export default class SujetCAN2022Premiere extends Exercice {
             a = new Decimal(randint(1, 99)).div(10)
             b = randint(2, 30)
             if (choice([true, false])) {
-              texte = `$${texNombre(a, 1)}$ cm $=$`
-              texteCorr = `$1$ m $=10^6$ $\\mu$m, donc $1$ cm $=10^4 =${texNombre(10000, 0)}$ $\\mu$m.<br>
-            Ainsi, $${texNombre(a, 1)}$ cm $=${texNombre(a * 10000, 0)}$ $\\mu$m.`
+              texte = `$${texNombre(a, 1)}\\text{ cm}$ $=$`
+              texteCorr = `$1\\text{ m}$ $=10^6$ $\\mu$m, donc $1\\text{ cm}$ $=10^4 =${texNombre(10000, 0)}$ $\\mu$m.<br>
+            Ainsi, $${texNombre(a, 1)}\\text{ cm}$ $=${texNombre(a * 10000, 0)}$ $\\mu$m.`
               if (this.interactif) {
                 texte += ajouteChampTexteMathLive(this, index, '') + '$\\mu$m'
               } else {
@@ -512,8 +514,8 @@ export default class SujetCAN2022Premiere extends Exercice {
               reponse = a.mul(10000)
             } else {
               texte = `$${texNombre(b, 1)}$ $\\mu$m $=$`
-              texteCorr = `$1$ $\\mu$m $=10^{-6}$ m, donc $1$ $\\mu$m  $=10^{-4}$ cm  $=${texNombre(0.0001, 4)}$ cm.<br>
-            Ainsi, $${texNombre(b, 1)}$ $\\mu$m $=${texNombre(b / 10000, 5)}$ cm.`
+              texteCorr = `$1$ $\\mu$m $=10^{-6}\\text{ m}$, donc $1$ $\\mu$m  $=10^{-4}\\text{ cm}$  $=${texNombre(0.0001, 4)}\\text{ cm}$.<br>
+            Ainsi, $${texNombre(b, 1)}$ $\\mu$m $=${texNombre(b / 10000, 5)}\\text{ cm}$.`
               if (this.interactif) {
                 texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
               } else {
@@ -751,9 +753,9 @@ export default class SujetCAN2022Premiere extends Exercice {
             a = choice(listeChoix17)
             b = randint(1, 7) * 10
             const reponse = b * a[3]
-            texte = `Si l'on parcourt $${b}$ km en ${a[0]} minutes, alors la vitesse moyenne est : `
+            texte = `Si l'on parcourt $${b}\\text{ km}$ en ${a[0]} minutes, alors la vitesse moyenne est : `
             texteCorr = `${a[1]} minutes représentent $\\dfrac{1}{${a[3]}}$ heure.<br>
-          Donc en $1$ heure, on parcourt $${b}\\times ${a[3]}=${b * a[3]}$ km. <br>
+          Donc en $1$ heure, on parcourt $${b}\\times ${a[3]}=${b * a[3]}\\text{ km}$. <br>
           La vitesse moyenne est donc $${b * a[3]}$ km/h. `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
@@ -1390,7 +1392,7 @@ export default class SujetCAN2022Premiere extends Exercice {
                     new Arbre({
                       rationnel: false,
                       nom: '\\overline{B}',
-                      proba: new Decimal(1 - pBsachantA),
+                      proba: 1 - pBsachantA,
                     }),
                   ],
                 }),
@@ -1402,12 +1404,12 @@ export default class SujetCAN2022Premiere extends Exercice {
                     new Arbre({
                       rationnel: false,
                       nom: 'B',
-                      proba: new Decimal(pBsachantAbarre),
+                      proba: pBsachantAbarre,
                     }),
                     new Arbre({
                       rationnel: false,
                       nom: '\\overline{B}',
-                      proba: new Decimal(1 - pBsachantAbarre),
+                      proba: 1 - pBsachantAbarre,
                     }),
                   ],
                 }),
@@ -1453,10 +1455,10 @@ export default class SujetCAN2022Premiere extends Exercice {
               a = randint(2, 10)
 
               reponse = 4 * a
-              texte = `Donner le périmètre d'un carré d'aire $${a * a}$ cm$^2$.`
+              texte = `Donner le périmètre d'un carré d'aire $${a * a}\\text{ cm}^2$.`
 
               texteCorr = `La longueur du côté est donnée par $\\sqrt{${a * a}}=${a}$.<br>
-          Le périmètre est donc $4\\times ${a}=${4 * a}$ cm. `
+          Le périmètre est donc $4\\times ${a}=${4 * a}\\text{ cm}$. `
               setReponse(this, index, reponse, { formatInteractif: 'calcul' })
               if (this.interactif) {
                 texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
@@ -1465,10 +1467,10 @@ export default class SujetCAN2022Premiere extends Exercice {
               a = randint(2, 10)
 
               reponse = a * a
-              texte = `Donner l'aire d'un carré de périmètre $${4 * a}$ cm.`
+              texte = `Donner l'aire d'un carré de périmètre $${4 * a}\\text{ cm}$.`
 
               texteCorr = `La longueur du côté est donnée par $${4 * a}\\div 4=${a}$.<br>
-                      L'aire est donc $ ${a}\\times ${a}=${a * a}$ cm$^2$. `
+                      L'aire est donc $ ${a}\\times ${a}=${a * a}\\text{ cm}^2$. `
               setReponse(this, index, reponse, { formatInteractif: 'calcul' })
               if (this.interactif) {
                 texte += ajouteChampTexteMathLive(this, index, '') + 'cm$^2$'

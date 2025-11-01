@@ -1,13 +1,12 @@
-import { codageAngleDroit } from '../../lib/2d/angles'
-import {
-  afficheCoteSegment,
-  afficheLongueurSegment,
-} from '../../lib/2d/codages'
+import { afficheCoteSegment } from '../../lib/2d/AfficheCoteSegment'
+import { afficheLongueurSegment } from '../../lib/2d/afficheLongueurSegment'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
 import { point } from '../../lib/2d/points'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
-import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { rotation } from '../../lib/2d/transformations'
 import { triangle2points1hauteur } from '../../lib/2d/triangle'
+import { longueur } from '../../lib/2d/utilitairesGeometriques'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'

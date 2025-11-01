@@ -1,4 +1,5 @@
-import { codageMediatrice, codageMilieu } from '../../lib/2d/codages'
+import { codageMediatrice } from '../../lib/2d/CodageMediatrice'
+import { codageMilieu } from '../../lib/2d/CodageMilieu'
 import {
   dessousDessus,
   Droite,
@@ -8,16 +9,11 @@ import {
   droiteVerticaleParPoint,
 } from '../../lib/2d/droites'
 import { grille, seyes } from '../../lib/2d/Grille'
-import { point, pointSurDroite, tracePoint } from '../../lib/2d/points'
+import { point, pointSurDroite } from '../../lib/2d/points'
 import { nommePolygone, Polygone, polygone } from '../../lib/2d/polygones'
-import {
-  longueur,
-  norme,
-  segment,
-  Vecteur,
-  vecteur,
-} from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint, texteParPoint } from '../../lib/2d/textes'
+import { tracePoint } from '../../lib/2d/TracePoint'
 import {
   homothetie,
   projectionOrtho,
@@ -26,6 +22,12 @@ import {
   translation,
 } from '../../lib/2d/transformations'
 import { aireTriangle } from '../../lib/2d/triangle'
+import {
+  longueur,
+  norme,
+  pointEstSur,
+} from '../../lib/2d/utilitairesGeometriques'
+import { vecteur, type Vecteur } from '../../lib/2d/Vecteur'
 import { vide2d } from '../../lib/2d/Vide2d'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { creerNomDePolygone, numAlpha } from '../../lib/outils/outilString'
@@ -408,12 +410,12 @@ export default class ConstruireParSymetrie extends Exercice {
           CC = symetrieAxiale(C, d, `${p1nom[2]}'`, 'above')
           DD = symetrieAxiale(D, d, `${p1nom[3]}'`, 'above')
           EE = symetrieAxiale(E, d, `${p1nom[4]}'`, 'above')
-          cC = C.estSur(d) ? C : codageMediatrice(C, CC, 'red', '|')
-          cD = D.estSur(d) ? D : codageMediatrice(D, DD, 'blue', 'X')
-          cE = E.estSur(d) ? E : codageMediatrice(E, EE, 'green', 'O')
-          sC = C.estSur(d) ? vide2d() : segment(C, CC)
-          sD = D.estSur(d) ? vide2d() : segment(D, DD)
-          sE = E.estSur(d) ? vide2d() : segment(E, EE)
+          cC = pointEstSur(C, d) ? C : codageMediatrice(C, CC, 'red', '|')
+          cD = pointEstSur(D, d) ? D : codageMediatrice(D, DD, 'blue', 'X')
+          cE = pointEstSur(E, d) ? E : codageMediatrice(E, EE, 'green', 'O')
+          sC = pointEstSur(C, d) ? vide2d() : segment(C, CC)
+          sD = pointEstSur(D, d) ? vide2d() : segment(D, DD)
+          sE = pointEstSur(E, d) ? vide2d() : segment(E, EE)
           sCE = droite(CC, EE, '', 'gray')
           sCE.pointilles = 5
           sED = droite(EE, D, '', 'gray')
@@ -492,12 +494,12 @@ export default class ConstruireParSymetrie extends Exercice {
           CC = symetrieAxiale(C, d, `${p1nom[2]}'`, 'above')
           DD = symetrieAxiale(D, d, `${p1nom[3]}'`, 'above')
           EE = symetrieAxiale(E, d, `${p1nom[4]}'`, 'above')
-          cC = C.estSur(d) ? C : codageMediatrice(C, CC, 'red', '|')
-          cD = D.estSur(d) ? D : codageMediatrice(D, DD, 'blue', 'X')
-          cE = E.estSur(d) ? E : codageMediatrice(E, EE, 'green', 'O')
-          sC = C.estSur(d) ? vide2d() : segment(C, CC)
-          sD = D.estSur(d) ? vide2d() : segment(D, DD)
-          sE = E.estSur(d) ? vide2d() : segment(E, EE)
+          cC = pointEstSur(C, d) ? C : codageMediatrice(C, CC, 'red', '|')
+          cD = pointEstSur(D, d) ? D : codageMediatrice(D, DD, 'blue', 'X')
+          cE = pointEstSur(E, d) ? E : codageMediatrice(E, EE, 'green', 'O')
+          sC = pointEstSur(C, d) ? vide2d() : segment(C, CC)
+          sD = pointEstSur(D, d) ? vide2d() : segment(D, DD)
+          sE = pointEstSur(E, d) ? vide2d() : segment(E, EE)
           sCE = droite(CC, EE, '', 'gray')
           sCE.pointilles = 5
           sED = droite(EE, D, '', 'gray')
@@ -574,12 +576,12 @@ export default class ConstruireParSymetrie extends Exercice {
           CC = symetrieAxiale(C, d, `${p1nom[2]}'`, 'above')
           DD = symetrieAxiale(D, d, `${p1nom[3]}'`, 'above')
           EE = symetrieAxiale(E, d, `${p1nom[4]}'`, 'above')
-          cC = C.estSur(d) ? C : codageMediatrice(C, CC, 'red', '|')
-          cD = D.estSur(d) ? D : codageMediatrice(D, DD, 'blue', 'X')
-          cE = E.estSur(d) ? E : codageMediatrice(E, EE, 'green', 'O')
-          sC = C.estSur(d) ? vide2d() : segment(C, CC)
-          sD = D.estSur(d) ? vide2d() : segment(D, DD)
-          sE = E.estSur(d) ? vide2d() : segment(E, EE)
+          cC = pointEstSur(C, d) ? C : codageMediatrice(C, CC, 'red', '|')
+          cD = pointEstSur(D, d) ? D : codageMediatrice(D, DD, 'blue', 'X')
+          cE = pointEstSur(E, d) ? E : codageMediatrice(E, EE, 'green', 'O')
+          sC = pointEstSur(C, d) ? vide2d() : segment(C, CC)
+          sD = pointEstSur(D, d) ? vide2d() : segment(D, DD)
+          sE = pointEstSur(E, d) ? vide2d() : segment(E, EE)
           sCE = segment(CC, EE, 'gray')
           sCE.pointilles = 5
           sED = segment(EE, D, 'gray')
@@ -707,10 +709,10 @@ export default class ConstruireParSymetrie extends Exercice {
           p2.listePoints[2].nom = `${p1nom[4]}'`
           CC = nommePolygone(p1)
           DD = nommePolygone(p2)
-          cC = p1.listePoints[0].estSur(d)
+          cC = pointEstSur(p1.listePoints[0], d)
             ? vide2d()
             : codageMediatrice(p1.listePoints[0], p2.listePoints[0], 'red', '|')
-          cD = p1.listePoints[1].estSur(d)
+          cD = pointEstSur(p1.listePoints[1], d)
             ? vide2d()
             : codageMediatrice(
                 p1.listePoints[1],
@@ -718,7 +720,7 @@ export default class ConstruireParSymetrie extends Exercice {
                 'blue',
                 'X',
               )
-          cE = p1.listePoints[2].estSur(d)
+          cE = pointEstSur(p1.listePoints[2], d)
             ? vide2d()
             : codageMediatrice(
                 p1.listePoints[2],
@@ -726,13 +728,13 @@ export default class ConstruireParSymetrie extends Exercice {
                 'green',
                 'O',
               )
-          sC = p1.listePoints[0].estSur(d)
+          sC = pointEstSur(p1.listePoints[0], d)
             ? vide2d()
             : segment(p1.listePoints[0], p2.listePoints[0], 'red')
-          sD = p1.listePoints[1].estSur(d)
+          sD = pointEstSur(p1.listePoints[1], d)
             ? vide2d()
             : segment(p1.listePoints[1], p2.listePoints[1], 'blue')
-          sE = p1.listePoints[2].estSur(d)
+          sE = pointEstSur(p1.listePoints[2], d)
             ? vide2d()
             : segment(p1.listePoints[2], p2.listePoints[2], 'green')
 
@@ -857,10 +859,10 @@ export default class ConstruireParSymetrie extends Exercice {
           p2.listePoints[2].nom = `${p1nom[4]}'`
           CC = nommePolygone(p1)
           DD = nommePolygone(p2)
-          cC = p1.listePoints[0].estSur(d)
+          cC = pointEstSur(p1.listePoints[0], d)
             ? vide2d()
             : codageMediatrice(p1.listePoints[0], p2.listePoints[0], 'red', '|')
-          cD = p1.listePoints[1].estSur(d)
+          cD = pointEstSur(p1.listePoints[1], d)
             ? vide2d()
             : codageMediatrice(
                 p1.listePoints[1],
@@ -868,7 +870,7 @@ export default class ConstruireParSymetrie extends Exercice {
                 'blue',
                 'X',
               )
-          cE = p1.listePoints[2].estSur(d)
+          cE = pointEstSur(p1.listePoints[2], d)
             ? vide2d()
             : codageMediatrice(
                 p1.listePoints[2],
@@ -991,10 +993,10 @@ export default class ConstruireParSymetrie extends Exercice {
           p2.listePoints[2].nom = `${p1nom[4]}'`
           CC = nommePolygone(p1)
           DD = nommePolygone(p2)
-          cC = p1.listePoints[0].estSur(d)
+          cC = pointEstSur(p1.listePoints[0], d)
             ? vide2d()
             : codageMediatrice(p1.listePoints[0], p2.listePoints[0], 'red', '|')
-          cD = p1.listePoints[1].estSur(d)
+          cD = pointEstSur(p1.listePoints[1], d)
             ? vide2d()
             : codageMediatrice(
                 p1.listePoints[1],
@@ -1002,7 +1004,7 @@ export default class ConstruireParSymetrie extends Exercice {
                 'blue',
                 'X',
               )
-          cE = p1.listePoints[2].estSur(d)
+          cE = pointEstSur(p1.listePoints[2], d)
             ? vide2d()
             : codageMediatrice(
                 p1.listePoints[2],

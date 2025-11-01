@@ -1,17 +1,20 @@
-import { codageAngleDroit } from '../../lib/2d/angles'
+import { afficheLongueurSegment } from '../../lib/2d/afficheLongueurSegment'
 import { cercle } from '../../lib/2d/cercle'
-import { afficheLongueurSegment, codageMilieu } from '../../lib/2d/codages'
-import { Droite, droite, mediatrice } from '../../lib/2d/droites'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
+import { codageMilieu } from '../../lib/2d/CodageMilieu'
+import { Droite, droite } from '../../lib/2d/droites'
+import { mediatrice } from '../../lib/2d/Mediatrice'
 import {
   Point,
   point,
   pointAdistance,
   pointIntersectionDD,
   pointIntersectionLC,
-  tracePoint,
 } from '../../lib/2d/points'
-import { longueur, segment } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
+import { tracePoint } from '../../lib/2d/TracePoint'
+import { longueur } from '../../lib/2d/utilitairesGeometriques'
 import { combinaisonListes, shuffle } from '../../lib/outils/arrayOutils'
 import { arrondi } from '../../lib/outils/nombres'
 import { creerNomDePolygone } from '../../lib/outils/outilString'

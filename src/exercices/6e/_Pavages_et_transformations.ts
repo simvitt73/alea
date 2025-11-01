@@ -1,6 +1,6 @@
-import { codageAngleDroit } from '../../lib/2d/angles'
 import { arc } from '../../lib/2d/Arc'
-import { codageSegments } from '../../lib/2d/codages'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
+import { codageSegments } from '../../lib/2d/CodageSegment'
 import {
   assombrirOuEclaircir,
   colorToLatexOrHTML,
@@ -9,24 +9,25 @@ import {
   Droite,
   droiteHorizontaleParPoint,
   droiteVerticaleParPoint,
-  mediatrice,
 } from '../../lib/2d/droites'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
+import { mediatrice } from '../../lib/2d/Mediatrice'
 import {
   milieu,
   point,
   pointIntersectionDD,
   pointSurDroite,
-  tracePoint,
 } from '../../lib/2d/points'
 import { barycentre, polygone } from '../../lib/2d/polygones'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import {
   labelPoint,
   latexParCoordonnees,
   texteParPoint,
 } from '../../lib/2d/textes'
+import { tracePoint } from '../../lib/2d/TracePoint'
 import { rotation, similitude, translation } from '../../lib/2d/transformations'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice } from '../../lib/outils/arrayOutils'

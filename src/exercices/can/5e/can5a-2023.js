@@ -1,11 +1,13 @@
-import { codageAngle, codageAngleDroit } from '../../../lib/2d/angles'
+import { codageAngle } from '../../../lib/2d/angles'
+import { codageAngleDroit } from '../../../lib/2d/CodageAngleDroit'
 import { droite } from '../../../lib/2d/droites'
 import { fixeBordures } from '../../../lib/2d/fixeBordures'
-import { milieu, point, tracePoint } from '../../../lib/2d/points'
+import { milieu, point } from '../../../lib/2d/points'
 import { polygone } from '../../../lib/2d/polygones'
 import { pave } from '../../../lib/2d/projections3d'
 import { segment } from '../../../lib/2d/segmentsVecteurs'
 import { texteParPosition } from '../../../lib/2d/textes'
+import { tracePoint } from '../../../lib/2d/TracePoint'
 import { rotation } from '../../../lib/2d/transformations'
 import { paveLPH3d } from '../../../lib/3d/3dProjectionMathalea2d/solides'
 import { texPrix } from '../../../lib/format/style'
@@ -34,6 +36,7 @@ import {
 } from '../../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../../lib/interactif/questionMathLive'
 import Hms from '../../../modules/Hms'
+import { representationFraction } from '../../../modules/representationsFractions'
 
 export const titre = 'CAN 5e sujet 2023'
 export const interactifReady = true
@@ -621,7 +624,8 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           texte += context.isHtml
             ? mathalea2d(
                 params,
-                f.representation(
+                representationFraction(
+                  f,
                   0,
                   0,
                   3,
@@ -1551,10 +1555,10 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           if (m === 1) {
             b = randint(10, 22) * 100
 
-            texte = `Un avion parcourt $${texNombre(b)}$ km en $3$ h. <br>
+            texte = `Un avion parcourt $${texNombre(b)}\\text{ km}$ en $3$ h. <br>
             Quelle durée met-il pour parcourir ${context.isHtml ? `$${texNombre(1.5 * b, 0)}$ km` : `\\Lg[km]{${texNombre(1.5 * b, 0)}}`} ?`
-            texteCorr = `En 1h 30 min, l'avion parcourt $${texNombre(0.5 * b, 0)}$ km.<br>
-            Comme il met $3$ h pour parcourir $${texNombre(b)}$ km,  il mettra $${miseEnEvidence(4)}$ h $${miseEnEvidence(30)}$ min pour parcourir $${texNombre(1.5 * b, 0)}$ km. `
+            texteCorr = `En 1h 30 min, l'avion parcourt $${texNombre(0.5 * b, 0)}\\text{ km}$.<br>
+            Comme il met $3$ h pour parcourir $${texNombre(b)}\\text{ km}$,  il mettra $${miseEnEvidence(4)}$ h $${miseEnEvidence(30)}$ min pour parcourir $${texNombre(1.5 * b, 0)}\\text{ km}$. `
             handleAnswers(this, index, {
               reponse: {
                 value: new Hms({ hour: 4, minute: 30 }).toString(),
@@ -1570,9 +1574,9 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           if (m === 2) {
             b = choice([900, 1200, 1500, 1800, 2100, 2400])
 
-            texte = `Un avion parcourt $${texNombre(b)}$ km en $3$ h. <br>
+            texte = `Un avion parcourt $${texNombre(b)}\\text{ km}$ en $3$ h. <br>
             Quelle durée met-il pour parcourir ${context.isHtml ? `$${texNombre(b + b / 6, 0)}$ km` : `\\Lg[km]{${texNombre(b + b / 6, 0)}}`} ? `
-            texteCorr = `En $1$ h , l'avion parcourt $${texNombre(b / 3, 0)}$ km, donc en $30$ min, il parcourt  $${texNombre(b / 6, 0)}$ km. <br>
+            texteCorr = `En $1$ h , l'avion parcourt $${texNombre(b / 3, 0)}\\text{ km}$, donc en $30$ min, il parcourt  $${texNombre(b / 6, 0)}\\text{ km}$. <br>
             Ainsi, il met $${miseEnEvidence(3)}$ h $${miseEnEvidence(30)}$ min pour parcourir $${texNombre(b + b / 6, 0)}$ km`
             handleAnswers(this, index, {
               reponse: {
@@ -1631,7 +1635,7 @@ export default class SujetCAN2023Cinquieme extends Exercice {
             texte = `Quel est le volume du pavé droit ci-dessous ?<br>
         ${mathalea2d({ xmin: -2, ymin: -2, xmax: 10, ymax: 0.5 * h + l, scale: 0.6 }, pav)}`
             reponse = L * l * h
-            texteCorr = `Le volume de ce pavé droit est : $${L}\\text{ cm}\\times ${l} \\text{ cm}\\times ${h}\\text{ cm}=${reponse}$ cm$^3$.`
+            texteCorr = `Le volume de ce pavé droit est : $${L}\\text{ cm}\\times ${l} \\text{ cm}\\times ${h}\\text{ cm}=${reponse}\\text{ cm}^3$.`
           } else {
             l = randint(2, 5)
             L = l
@@ -1640,7 +1644,7 @@ export default class SujetCAN2023Cinquieme extends Exercice {
             texte = `Quel est le volume de ce cube ?<br>
           ${mathalea2d({ xmin: -2, ymin: -2, xmax: 10, ymax: 0.5 * h + l, scale: 0.6 }, pav)}`
             reponse = L * l * h
-            texteCorr = `Le volume de ce cube est : $${L}\\text{ cm}\\times ${l} \\text{ cm}\\times ${h}\\text{ cm}=${reponse}$ cm$^3$.`
+            texteCorr = `Le volume de ce cube est : $${L}\\text{ cm}\\times ${l} \\text{ cm}\\times ${h}\\text{ cm}=${reponse}\\text{ cm}^3$.`
           }
 
           texte += ajouteChampTexteMathLive(this, index, '', {
@@ -1649,7 +1653,7 @@ export default class SujetCAN2023Cinquieme extends Exercice {
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           this.listeCanEnonces.push(texte)
           this.listeCanReponsesACompleter[this.listeCanEnonces.length - 1] =
-            '$\\mathscr{V}=\\ldots$ cm$^3$'
+            '$\\mathscr{V}=\\ldots\\text{ cm}^3$'
           nbChamps = 1
           break
 

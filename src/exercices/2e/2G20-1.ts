@@ -1,6 +1,7 @@
 import { grille } from '../../lib/2d/Grille'
 import { point } from '../../lib/2d/points'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { segment } from '../../lib/2d/segmentsVecteurs'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { propositionsQcm } from '../../lib/interactif/qcm'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { mathalea2d } from '../../modules/mathalea2d'

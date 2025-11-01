@@ -1,8 +1,9 @@
-import { codageAngleDroit } from '../../../lib/2d/angles'
-import { milieu, point, tracePoint } from '../../../lib/2d/points'
+import { codageAngleDroit } from '../../../lib/2d/CodageAngleDroit'
+import { milieu, point } from '../../../lib/2d/points'
 import { polygone, polygoneAvecNom } from '../../../lib/2d/polygones'
 import { repere } from '../../../lib/2d/reperes'
 import { labelPoint, texteParPosition } from '../../../lib/2d/textes'
+import { tracePoint } from '../../../lib/2d/TracePoint'
 import { choice, shuffle } from '../../../lib/outils/arrayOutils'
 import { simplificationDeFractionAvecEtapes } from '../../../lib/outils/deprecatedFractions'
 import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
@@ -278,12 +279,12 @@ export default class SujetCAN2022quatrieme extends Exercice {
           if (choice([true, false])) {
             a = randint(1, 13) * 50
             reponse = a / 100
-            texte = `$${a}$ cm  $=$`
+            texte = `$${a}\\text{ cm}$  $=$`
 
             texteCorr = `
-        Comme $1$ m $=100$ cm, alors $1$ cm $=0,01$ m.<br>
+        Comme $1\\text{ m}$ $=100\\text{ cm}$, alors $1\\text{ cm}$ $=0,01\\text{ m}$.<br>
         Ainsi pour passer des "m" au "cm", on divise par $100$.<br>
-          Comme : $${a}\\div 100 =${texNombre(a / 100, 2)}$, alors $${a}$ cm$=${texNombre(a / 100, 2)}$ m.  `
+          Comme : $${a}\\div 100 =${texNombre(a / 100, 2)}$, alors $${a}\\text{ cm}=${texNombre(a / 100, 2)}\\text{ m}$.  `
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'm'
@@ -293,14 +294,14 @@ export default class SujetCAN2022quatrieme extends Exercice {
           } else {
             a = randint(1, 9) + randint(1, 9) / 10
             reponse = a * 100
-            texte = `$${texNombre(a, 1)}$ m  $=$ `
-            texteCorr = ` Comme $1$ m $=100$ cm,  pour passer des "m" au "cm", on multiplie par $100$.<br>
-                Comme : $${texNombre(a, 1)}\\times 100 =${texNombre(a * 100, 0)}$, alors $${texNombre(a, 2)}$ m$=${texNombre(reponse, 0)}$ cm.`
+            texte = `$${texNombre(a, 1)}\\text{ m}$  $=$ `
+            texteCorr = ` Comme $1\\text{ m}$ $=100\\text{ cm}$,  pour passer des "m" au "cm", on multiplie par $100$.<br>
+                Comme : $${texNombre(a, 1)}\\times 100 =${texNombre(a * 100, 0)}$, alors $${texNombre(a, 2)}$ m$=${texNombre(reponse, 0)}\\text{ cm}$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
             } else {
-              texte += '  $\\ldots$ cm'
+              texte += '  $\\ldots\\text{ cm}$'
             }
           }
           nbChamps = 1
@@ -553,14 +554,14 @@ export default class SujetCAN2022quatrieme extends Exercice {
             e,
           )
           texteCorr = `Le périmètre en cm est donné par :
-            $2\\times ${a}+2\\times ${b} =2\\times(${a}+${b})=${reponse}$ cm`
+            $2\\times ${a}+2\\times ${b} =2\\times(${a}+${b})=${reponse}\\text{ cm}$`
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
             texte += ' <br>$\\mathscr{P}= $'
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           } else {
-            texte += ' $\\mathscr{P}=\\ldots $ cm'
+            texte += ' $\\mathscr{P}=\\ldots \\text{ cm}$'
           }
           nbChamps = 1
           break
@@ -737,7 +738,7 @@ export default class SujetCAN2022quatrieme extends Exercice {
           })
 
           A = point(a, b)
-          o = texteParPosition('O', -0.4, -0.6, 'milieu', 'black') //, context.isHtml ? 1 : 0.7
+          o = texteParPosition('O', -0.4, -0.6, 0, 'black') //, context.isHtml ? 1 : 0.7
           // o = latexParCoordonnees('\\text{O}', -0.3, -0.4, 'black', 15, 10, '', 7)
           lA = texteParPosition(
             'A',
@@ -810,9 +811,9 @@ export default class SujetCAN2022quatrieme extends Exercice {
           c = choice([30, 60, 90, 120])
           reponse = c / a
           texte = `Un véhicule roule à $${c}$ km/h. Quelle distance parcourt-il en $${b}$ minutes ?`
-          texteCorr = `Le véhicule parcourt $${c / a}$ km.<br>
+          texteCorr = `Le véhicule parcourt $${c / a}\\text{ km}$.<br>
              En $${b}$ minutes, il parcourt $${a}$ fois moins de km qu'en $1$ heure, soit $\\dfrac{${c}}{${a}}=
-              ${c / a}$ km.`
+              ${c / a}\\text{ km}$.`
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'km'
@@ -927,20 +928,20 @@ export default class SujetCAN2022quatrieme extends Exercice {
             reponse = a * 1000
             texte = `Complète.<br>
                  $${a}$ L $=$ `
-            texteCorr = `$1$ dm$^3 = 1$ L et $1$ dm$^3 = 1000$ cm$^3$.<br>
-                  $${a}$ L = ${a} dm$^3 =${a} \\times 1000$ cm$^3=${texNombre(reponse, 3)}$ cm$^3$.`
+            texteCorr = `$1$ dm$^3 = 1$ L et $1$ dm$^3 = 1000\\text{ cm}^3$.<br>
+                  $${a}$ L = ${a} dm$^3 =${a} \\times 1000\\text{ cm}^3=${texNombre(reponse, 3)}\\text{ cm}^3$.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + ' cm$^3$'
             } else {
-              texte += '$\\ldots$ cm$^3$ '
+              texte += '$\\ldots\\text{ cm}^3$ '
             }
           } else {
             reponse = arrondi(a / 1000, 3)
             texte = `Complète.<br>
-                   $${a}$ cm$^3$ $=$ `
-            texteCorr = `$1$ dm$^3 = 1$ L et $1$ cm$^3 = 0,001$ dm$^3$.<br>
-                   $${a}$ cm$^3 = ${a} \\div 1000$ dm$^3= ${texNombre(a / 1000, 3)}$ dm$^3 =${texNombre(reponse, 3)}$ L.`
+                   $${a}\\text{ cm}^3$ $=$ `
+            texteCorr = `$1$ dm$^3 = 1$ L et $1\\text{ cm}^3 = 0,001$ dm$^3$.<br>
+                   $${a}\\text{ cm}^3 = ${a} \\div 1000$ dm$^3= ${texNombre(a / 1000, 3)}$ dm$^3 =${texNombre(reponse, 3)}$ L.`
             setReponse(this, index, reponse, { formatInteractif: 'calcul' })
             if (this.interactif) {
               texte += ajouteChampTexteMathLive(this, index, '') + ' L'
@@ -1092,7 +1093,7 @@ export default class SujetCAN2022quatrieme extends Exercice {
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           } else {
-            texte += ' $\\ldots$ cm'
+            texte += ' $\\ldots\\text{ cm}$'
           }
           nbChamps = 1
           break

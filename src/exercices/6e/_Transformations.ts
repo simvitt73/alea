@@ -1,5 +1,6 @@
-import { codageAngleDroit } from '../../lib/2d/angles'
-import { afficheMesureAngle, codageSegments } from '../../lib/2d/codages'
+import { afficheMesureAngle } from '../../lib/2d/AfficheMesureAngle'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
+import { codageSegments } from '../../lib/2d/CodageSegment'
 import {
   assombrirOuEclaircir,
   colorToLatexOrHTML,
@@ -9,14 +10,16 @@ import {
   droiteParPointEtPente,
   droiteVerticaleParPoint,
 } from '../../lib/2d/droites'
-import { milieu, point, pointSurDroite, tracePoint } from '../../lib/2d/points'
-import { segment, vecteur } from '../../lib/2d/segmentsVecteurs'
+import { milieu, point, pointSurDroite } from '../../lib/2d/points'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import {
   labelLatexPoint,
   latexParCoordonnees,
   texteParPositionEchelle,
 } from '../../lib/2d/textes'
+import { tracePoint } from '../../lib/2d/TracePoint'
 import { translation } from '../../lib/2d/transformations'
+import { vecteur } from '../../lib/2d/Vecteur'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import {

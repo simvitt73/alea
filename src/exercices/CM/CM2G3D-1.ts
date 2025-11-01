@@ -1,6 +1,6 @@
-import { codageAngleDroit } from '../../lib/2d/angles'
+import { afficheLongueurSegment } from '../../lib/2d/afficheLongueurSegment'
 import { cercle } from '../../lib/2d/cercle'
-import { afficheLongueurSegment, texteSurSegment } from '../../lib/2d/codages'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
 import { droite, droiteParPointEtPerpendiculaire } from '../../lib/2d/droites'
 import {
   milieu,
@@ -8,11 +8,12 @@ import {
   pointAdistance,
   pointIntersectionCC,
   pointIntersectionLC,
-  tracePoint,
 } from '../../lib/2d/points'
 import { polygone, polygoneRegulier } from '../../lib/2d/polygones'
 import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
+import { texteSurSegment } from '../../lib/2d/texteSurSegment'
+import { tracePoint } from '../../lib/2d/TracePoint'
 import { vide2d } from '../../lib/2d/Vide2d'
 import { texteEnCouleur } from '../../lib/outils/embellissements'
 import { creerNomDePolygone } from '../../lib/outils/outilString'

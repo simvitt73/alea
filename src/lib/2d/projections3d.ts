@@ -1,14 +1,17 @@
 import { abs, random, round } from 'mathjs'
+import { afficheCoteSegment } from './AfficheCoteSegment'
 import { arc } from './Arc'
 import { cercle, Cercle } from './cercle'
-import { afficheCoteSegment } from './codages'
 import { colorToLatexOrHTML } from './colorToLatexOrHtml'
 import { fixeBordures } from './fixeBordures'
 import { ObjetMathalea2D } from './ObjetMathalea2D'
+import { pattern } from './pattern'
 import { Point, point, pointAdistance } from './points'
-import { pattern, polygone } from './polygones'
-import { longueur, segment, vecteur } from './segmentsVecteurs'
+import { polygone } from './polygones'
+import { segment } from './segmentsVecteurs'
 import { homothetie, rotation, translation } from './transformations'
+import { longueur } from './utilitairesGeometriques'
+import { vecteur } from './Vecteur'
 
 /**
  *

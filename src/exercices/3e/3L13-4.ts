@@ -1,7 +1,7 @@
-import { texteSurSegment } from '../../lib/2d/codages'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { point } from '../../lib/2d/points'
 import { rectangle1Point2Longueurs } from '../../lib/2d/polygones'
+import { texteSurSegment } from '../../lib/2d/texteSurSegment'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { ecritureAlgebrique, rienSi1 } from '../../lib/outils/ecritures'
@@ -140,7 +140,7 @@ export default class ProblemeEquationsPerimetreAireRectangle extends Exercice {
             $\\mathcal{A} = ${longCote} \\times ${largeCote}$<br>
             $\\mathcal{A} = ${longueur} \\times ${largeur}$<br>
             $\\mathcal{A} = ${reponse}$<br>
-            Donc l'aire du rectangle $${nomRectangle}$ est de $${miseEnEvidence(reponse)}$ cm$^2$.`
+            Donc l'aire du rectangle $${nomRectangle}$ est de $${miseEnEvidence(reponse)}\\text{ cm}^2$.`
           break
         }
         case 2: // Deux longueurs différentes
@@ -211,12 +211,12 @@ export default class ProblemeEquationsPerimetreAireRectangle extends Exercice {
             $\\mathcal{A} = ${longCote} \\times ${largeCote}$<br>
             $\\mathcal{A} = ${longueur} \\times ${largeur}$<br>
             $\\mathcal{A} = ${reponse}$<br>
-            Donc l'aire du rectangle $${nomRectangle}$ est de $${miseEnEvidence(reponse)}$ cm$^2$.`
+            Donc l'aire du rectangle $${nomRectangle}$ est de $${miseEnEvidence(reponse)}\\text{ cm}^2$.`
           break
         }
       }
       texte +=
-        `Le périmètre de $${nomRectangle}$ mesure $${perimetre}$ cm.<br>
+        `Le périmètre de $${nomRectangle}$ mesure $${perimetre}\\text{ cm}$.<br>
       Déterminer son aire en cm$^2$.` +
         ajouteChampTexteMathLive(this, i, 'inline')
       handleAnswers(this, i, { reponse: { value: reponse } })

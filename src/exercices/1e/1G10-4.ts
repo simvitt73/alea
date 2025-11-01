@@ -1,15 +1,12 @@
-import { codageAngleDroit } from '../../lib/2d/angles'
-import { afficheLongueurSegment, codageSegment } from '../../lib/2d/codages'
+import { afficheLongueurSegment } from '../../lib/2d/afficheLongueurSegment'
+import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
+import { codageSegment } from '../../lib/2d/CodageSegment'
 import { droite } from '../../lib/2d/droites'
-import {
-  milieu,
-  point,
-  pointAdistance,
-  tracePointSurDroite,
-} from '../../lib/2d/points'
+import { milieu, point, pointAdistance } from '../../lib/2d/points'
 import { polygone } from '../../lib/2d/polygones'
 import { segment, segmentAvecExtremites } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
+import { tracePointSurDroite } from '../../lib/2d/TracePointSurDroite'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'

@@ -331,7 +331,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
                 scale: 0.8,
                 style: 'margin: auto',
               },
-              texteParPosition('?', (8 * b) / a, 0.7, 'milieu', 'blue', 2),
+              texteParPosition('?', (8 * b) / a, 0.7, 0, 'blue', 2),
               droiteGraduee({
                 Unite: 8,
                 Min: 0,
@@ -675,8 +675,8 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             objets,
           )
 
-          texteCorr = `Le rectangle est constitué de  $${j}$ carrés d'aire $1$ cm$^2$ et de $${j}$ rectangles d'aire $0,5$ cm$^2$.<br>
-            Son aire totale est donc :  $ ${j} \\times 1 \\text{ cm}^2+ ${j} \\times 0,5\\text{ cm}^2=${miseEnEvidence(texNombre(reponse, 2))}$ cm$^2$.
+          texteCorr = `Le rectangle est constitué de  $${j}$ carrés d'aire $1\\text{ cm}^2$ et de $${j}$ rectangles d'aire $0,5\\text{ cm}^2$.<br>
+            Son aire totale est donc :  $ ${j} \\times 1 \\text{ cm}^2+ ${j} \\times 0,5\\text{ cm}^2=${miseEnEvidence(texNombre(reponse, 2))}\\text{ cm}^2$.
             `
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
@@ -684,7 +684,8 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             texte += ajouteChampTexteMathLive(this, index, '') + ' cm$^2$'
           }
           this.canEnonce = texte
-          this.canReponseACompleter = '$\\mathscr{A}=\\ldots\\ldots$ cm$^2$'
+          this.canReponseACompleter =
+            '$\\mathscr{A}=\\ldots\\ldots\\text{ cm}^2$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           nbChamps = 1
@@ -942,7 +943,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           )
 
           texteCorr = `La longueur du rectangle A est $${k}$ fois plus grande que sa largeur. On en déduit que la longueur du rectangle B est aussi $${k}$ fois plus grande que sa largeur.<br>
-          Elle est donc égale à $${l2}\\times ${k}=${miseEnEvidence(k * l2)}$ cm.
+          Elle est donc égale à $${l2}\\times ${k}=${miseEnEvidence(k * l2)}\\text{ cm}$.
                   `
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
@@ -950,7 +951,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
             texte += ajouteChampTexteMathLive(this, index, '') + 'cm'
           }
           this.canEnonce = texte
-          this.canReponseACompleter = '$\\ldots$ cm'
+          this.canReponseACompleter = '$\\ldots\\text{ cm}$'
           this.listeCanEnonces.push(this.canEnonce)
           this.listeCanReponsesACompleter.push(this.canReponseACompleter)
           nbChamps = 1

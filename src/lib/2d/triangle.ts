@@ -1,13 +1,15 @@
 import { floor } from 'mathjs'
 import { randint } from '../../modules/outils'
-import { ObjetMathalea2D } from './ObjetMathalea2D'
-import { CodageAngleDroit, codageAngleDroit } from './angles'
 import { cercle } from './cercle'
-import { CodageMilieu } from './codages'
+import { CodageAngleDroit, codageAngleDroit } from './CodageAngleDroit'
+import { CodageMilieu } from './CodageMilieu'
 import { colorToLatexOrHTML } from './colorToLatexOrHtml'
-import { Droite, droite, mediatrice } from './droites'
+import { Droite, droite } from './droites'
+import { mediatrice } from './Mediatrice'
+import { ObjetMathalea2D } from './ObjetMathalea2D'
 import {
   milieu,
+  point,
   Point,
   pointIntersectionCC,
   pointIntersectionDD,
@@ -16,8 +18,8 @@ import {
 } from './points'
 import type { PointAbstrait } from './points-abstraits'
 import { Polygone, polygone } from './polygones'
-import { longueur } from './segmentsVecteurs'
 import { projectionOrtho, rotation, similitude } from './transformations'
+import { longueur } from './utilitairesGeometriques'
 
 /**
  * retourne un objet contenant le triangle ABC et le pied de la hauteur H
@@ -413,7 +415,7 @@ export function centreCercleCirconscrit(
 ) {
   const d = mediatrice(A, B)
   const e = mediatrice(B, C)
-  const p = pointIntersectionDD(d, e)
+  const p = pointIntersectionDD(d as Droite, e as Droite)
   const x = p.x
   const y = p.y
   return new Point(x, y, nom, positionLabel)

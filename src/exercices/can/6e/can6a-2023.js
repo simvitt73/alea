@@ -1,6 +1,6 @@
 import { colorToLatexOrHTML } from '../../../lib/2d/colorToLatexOrHtml'
 import { fixeBordures } from '../../../lib/2d/fixeBordures'
-import { milieu, plot, point } from '../../../lib/2d/points'
+import { milieu, point } from '../../../lib/2d/points'
 import { polygone, polygoneAvecNom } from '../../../lib/2d/polygones'
 import {
   segment,
@@ -31,6 +31,7 @@ import Exercice from '../../Exercice'
 import Decimal from 'decimal.js'
 import { droiteGraduee } from '../../../lib/2d/DroiteGraduee'
 import { grille } from '../../../lib/2d/Grille'
+import { plot } from '../../../lib/2d/Plot'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import {
   handleAnswers,
@@ -511,10 +512,10 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           a = randint(0, 4)
           b = randint(taille1[a][1], taille1[a][2])
           propositions = shuffle([
-            `$${b}$ m`,
-            `$${b}$ dm`,
-            `$${b}$ cm`,
-            `$${b}$ mm`,
+            `$${b}\\text{ m}$`,
+            `$${b}\\text{ dm}$`,
+            `$${b}\\text{ cm}$`,
+            `$${b}\\text{ mm}$`,
           ])
 
           texte = `Choisis parmi les propositions suivantes la hauteur d'une ${taille1[a][0]}.<br>
@@ -1198,9 +1199,9 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           reponse = arrondi(c / a, 0)
           texte = `Une voiture roule à $${c}$ km/h. <br>Combien de kilomètres
         parcourt-elle en $${b}$ min à cette vitesse ?`
-          texteCorr = `En $1$ h la voiture parcourt $${c}$ km.<br>
+          texteCorr = `En $1$ h la voiture parcourt $${c}\\text{ km}$.<br>
        En $${b}$ minutes, elle parcourt $${a}$ fois moins de km qu'en $1$ heure, soit $\\dfrac{${c}}{${a}}=
-        ${miseEnEvidence(texNombre(c / a, 0))}$ km.`
+        ${miseEnEvidence(texNombre(c / a, 0))}\\text{ km}$.`
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
@@ -1211,7 +1212,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
 
           this.listeCanEnonces.push(`Une voiture roule à $${c}$ km/h.`)
           this.listeCanReponsesACompleter.push(
-            `Elle parcourt $\\ldots$ km en $${b}$ min à cette vitesse.`,
+            `Elle parcourt $\\ldots\\text{ km}$ en $${b}$ min à cette vitesse.`,
           )
           nbChamps = 1
 
@@ -1235,9 +1236,9 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           texte = `Une voiture roule à  $${c}$ km/h.<br> Combien de kilomètres parcourt-elle
         en $${d}$ h et $${b * e}$ min à cette vitesse ?`
           texteCorr = `
-        En $${d}$ h, elle parcourt $${d * c}$ km.<br>
-       En $${b * e}$ min, elle parcourt $${texNombre((e * c) / a, 0)}$ km.<br>
-        Ainsi, en en $${d}$ h et $${b * e}$ min, elle parcourt donc $${miseEnEvidence(texNombre(d * c + (e * c) / a, 0))}$ km.`
+        En $${d}$ h, elle parcourt $${d * c}\\text{ km}$.<br>
+       En $${b * e}$ min, elle parcourt $${texNombre((e * c) / a, 0)}\\text{ km}$.<br>
+        Ainsi, en en $${d}$ h et $${b * e}$ min, elle parcourt donc $${miseEnEvidence(texNombre(d * c + (e * c) / a, 0))}\\text{ km}$.`
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           if (this.interactif) {
@@ -1247,7 +1248,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
           }
           this.listeCanEnonces.push(`Une voiture roule à $${c}$ km/h.`)
           this.listeCanReponsesACompleter.push(
-            `Elle parcourt $\\ldots$ km en $${d}$ h et $${b * e}$ min à cette vitesse.`,
+            `Elle parcourt $\\ldots\\text{ km}$ en $${d}$ h et $${b * e}$ min à cette vitesse.`,
           )
           nbChamps = 1
           break
@@ -1680,7 +1681,7 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
               )
 
             texteCorr = `La longueur du rectangle A est $${k}$ fois plus grande que sa largeur. On en déduit que la longueur du rectangle B est aussi $${k}$ fois plus grande que sa largeur.<br>
-          Elle est donc égale à $${l2}\\times ${k}=${miseEnEvidence(k * l2)}$ cm.
+          Elle est donc égale à $${l2}\\times ${k}=${miseEnEvidence(k * l2)}\\text{ cm}$.
                   `
           } else {
             L = randint(3, 5) * 2 // Longueur grand rectngle
@@ -1768,13 +1769,13 @@ Par exemple, en choisissant 20 questions, la course aux nombres sera composée d
               )
 
             texteCorr = `La longueur du rectangle A est $2$ fois plus grande que la longueur du rectangle B. On en déduit que la largeur  du rectangle B est aussi $2$ fois plus petite que la largeur du rectangle A.<br>
-                    Elle est donc égale à $${l}\\div 2=${miseEnEvidence(texNombre(reponse, 1))}$ cm.
+                    Elle est donc égale à $${l}\\div 2=${miseEnEvidence(texNombre(reponse, 1))}\\text{ cm}$.
                             `
           }
 
           setReponse(this, index, reponse, { formatInteractif: 'calcul' })
           this.listeCanEnonces.push(texte)
-          this.listeCanReponsesACompleter.push('$\\ldots$ cm')
+          this.listeCanReponsesACompleter.push('$\\ldots\\text{ cm}$')
           if (this.interactif) {
             texte += ajouteChampTexteMathLive(this, index, '', {
               texteApres: 'cm',
