@@ -168,7 +168,7 @@ export default class ExerciceLabyrinthe extends Exercice {
 
   correctionInteractive = (i: number) => {
     if (this.answers == null) this.answers = {}
-    this.answers[`labyrintheEx${this.numeroExercice}Q${i}`] =
+    this.answers[`labyrintheEx${this.numeroExercice}`] =
       this.labyrintheElement.state
     const divFeedback = document.querySelector(
       `#feedbackEx${this.numeroExercice}Q${i}`,
