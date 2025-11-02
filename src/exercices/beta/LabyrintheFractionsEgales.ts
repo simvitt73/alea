@@ -1,12 +1,12 @@
 import { randint } from "../../modules/outils"
 import ExerciceLabyrinthe from "./_Exercice_labyrinthe"
-export const titre = 'Labyrinthe des multiples de 3'
+export const titre = 'Labyrinthe des fractions égales'
 
 export const dateDePublication = '30/10/2026'
 export const interactifReady = true
 export const interactifType = 'custom'
 
-export const uuid = 'labyfrac'
+export const uuid = 'e1a0a'
 export const refs = {
   'fr-fr': [],
   'fr-ch': [],
@@ -18,8 +18,9 @@ export const refs = {
 export default class ExerciceLabyrintheMultiplesDe3 extends ExerciceLabyrinthe {
   
   consigne = 'Trouver le chemin qui passe par des fractions égales.'
-  cols = 4
+  cols = 6
   rows = 4
+  orientation?: "horizontal" | "vertical" = 'horizontal'
   
   num!: number
   den!: number
