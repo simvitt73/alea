@@ -15,9 +15,7 @@ export default class ExerciceLabyrinthe extends Exercice {
   orientation?: 'horizontal' | 'vertical'
   goodAnswers: string[] = []
   badAnswers: string[] = []
-  win?: boolean
-  correctClicks?: number
-  totalGood?: number
+  
   constructor() {
     super()
     this.nbQuestions = 1
@@ -116,15 +114,6 @@ export default class ExerciceLabyrinthe extends Exercice {
               const btnScore = document.querySelector(
                 `#buttonScoreEx${this.numeroExercice}`,
               )
-              const { win, correctClicks, totalGood } = (e as CustomEvent)
-                .detail as {
-                win: boolean
-                correctClicks: number
-                totalGood: number
-              }
-              this.win = win
-              this.correctClicks = correctClicks
-              this.totalGood = totalGood
               ;(btnScore as HTMLButtonElement)?.click()
             },
           )
@@ -173,14 +162,14 @@ export default class ExerciceLabyrinthe extends Exercice {
     const divFeedback = document.querySelector(
       `#feedbackEx${this.numeroExercice}Q${i}`,
     )
-    const isValid = this.win
+    const isValid = this.labyrintheElement.win
     if (divFeedback != null) {
       if (isValid) {
         divFeedback.innerHTML = 'Bravo !'
         return ['OK', 'OK', 'OK', 'OK']
       }
-      const ratio = (this.correctClicks ?? 0) / (this.totalGood ?? 1)
-      if (ratio <= 0.25) {
+      const ratio = this.labyrintheElement.correctClicks / this.labyrintheElement.totalGood
+      if (ratio <= 25) {
         return ['KO', 'KO', 'KO', 'KO']
       } else if (ratio <= 0.5) {
         return ['OK', 'KO', 'KO', 'KO']
