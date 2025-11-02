@@ -30,17 +30,22 @@ export default class ExerciceLabyrinthe extends Exercice {
     this.init()
     this.goodAnswers = []
     this.badAnswers = []
-
+        
     this.labyrinthe = new Labyrinthe({
       seed: this.seed,
       rows: this.rows,
       cols: this.cols,
       orientation: this.orientation,
     })
+    
+    if (this.labyrintheElement) {
+      this.labyrintheElement.remove()
+    }
 
     if (this.goodAnswers.length > 0) return
     const goodCount = this.labyrinthe.numberOfGoodAnswers() ?? 0
     const badCount = this.labyrinthe.numberOfIncorrectAnswers() ?? 0
+    console.log(goodCount, badCount)
     let attempts = 0
     for (let i = 0; i < goodCount; ) {
       const candidate = String(this.generateGoodAnswers())
@@ -73,6 +78,7 @@ export default class ExerciceLabyrinthe extends Exercice {
         }
       }
     }
+    console.log(this.goodAnswers, this.badAnswers)
     this.labyrinthe.setValues(this.goodAnswers, this.badAnswers)
 
     let texte = ''
