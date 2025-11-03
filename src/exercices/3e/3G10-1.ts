@@ -15,8 +15,10 @@ import { representant } from '../../lib/2d/representantVecteur'
 import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
+import { pointEstSur } from '../../lib/2d/utilitairesGeometriques'
 import { milieu, pointSurDroite } from '../../lib/2d/utilitairesPoint'
 import { vecteur } from '../../lib/2d/Vecteur'
+import { vide2d } from '../../lib/2d/Vide2d'
 import {
   handleAnswers,
   setReponse,
@@ -325,21 +327,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(A),
                 tracePoint(Aprime, '#f15929'),
                 labelPoint(Aprime, '#f15929'),
-                segment(A, Aprime, couleurs[i]),
-                codageAngleDroit(
-                  A,
-                  milieu(A, Aprime),
-                  pointSurDroite(droited1, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '//',
-                  couleurs[i],
-                  A,
-                  milieu(A, Aprime),
-                  milieu(A, Aprime),
-                  Aprime,
-                ),
+                pointEstSur(A, droited1)
+                  ? vide2d()
+                  : [
+                      segment(A, Aprime, couleurs[i]),
+                      codageAngleDroit(
+                        A,
+                        milieu(A, Aprime),
+                        pointSurDroite(droited1, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '//',
+                        couleurs[i],
+                        A,
+                        milieu(A, Aprime),
+                        milieu(A, Aprime),
+                        Aprime,
+                      ),
+                    ],
               )
               xP[1] = xA
               yP[1] = yA
@@ -355,21 +361,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(B),
                 tracePoint(Bprime, '#f15929'),
                 labelPoint(Bprime, '#f15929'),
-                segment(B, Bprime, couleurs[i]),
-                codageAngleDroit(
-                  B,
-                  milieu(B, Bprime),
-                  pointSurDroite(droited1, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  'O',
-                  couleurs[i],
-                  B,
-                  milieu(B, Bprime),
-                  milieu(B, Bprime),
-                  Bprime,
-                ),
+                pointEstSur(B, droited1)
+                  ? vide2d()
+                  : [
+                      segment(B, Bprime, couleurs[i]),
+                      codageAngleDroit(
+                        B,
+                        milieu(B, Bprime),
+                        pointSurDroite(droited1, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        'O',
+                        couleurs[i],
+                        B,
+                        milieu(B, Bprime),
+                        milieu(B, Bprime),
+                        Bprime,
+                      ),
+                    ],
               )
               xP[1] = xB
               yP[1] = yB
@@ -387,21 +397,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(C),
                 tracePoint(Cprime, '#f15929'),
                 labelPoint(Cprime, '#f15929'),
-                segment(C, Cprime, couleurs[i]),
-                codageAngleDroit(
-                  C,
-                  milieu(C, Cprime),
-                  pointSurDroite(droited1, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '|||',
-                  couleurs[i],
-                  C,
-                  milieu(C, Cprime),
-                  milieu(C, Cprime),
-                  Cprime,
-                ),
+                pointEstSur(C, droited1)
+                  ? vide2d()
+                  : [
+                      segment(C, Cprime, couleurs[i]),
+                      codageAngleDroit(
+                        C,
+                        milieu(C, Cprime),
+                        pointSurDroite(droited1, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '|||',
+                        couleurs[i],
+                        C,
+                        milieu(C, Cprime),
+                        milieu(C, Cprime),
+                        Cprime,
+                      ),
+                    ],
               )
               xP[1] = xC
               yP[1] = yC
@@ -443,21 +457,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(A),
                 tracePoint(Aprime, '#f15929'),
                 labelPoint(Aprime, '#f15929'),
-                segment(A, Aprime, couleurs[i]),
-                codageAngleDroit(
-                  A,
-                  milieu(A, Aprime),
-                  pointSurDroite(droited2, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '//',
-                  couleurs[i],
-                  A,
-                  milieu(A, Aprime),
-                  milieu(A, Aprime),
-                  Aprime,
-                ),
+                pointEstSur(A, droited2)
+                  ? vide2d()
+                  : [
+                      segment(A, Aprime, couleurs[i]),
+                      codageAngleDroit(
+                        A,
+                        milieu(A, Aprime),
+                        pointSurDroite(droited2, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '//',
+                        couleurs[i],
+                        A,
+                        milieu(A, Aprime),
+                        milieu(A, Aprime),
+                        Aprime,
+                      ),
+                    ],
               )
               xP[2] = xA
               yP[2] = yA
@@ -473,21 +491,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(B),
                 tracePoint(Bprime, '#f15929'),
                 labelPoint(Bprime, '#f15929'),
-                segment(B, Bprime, couleurs[i]),
-                codageAngleDroit(
-                  B,
-                  milieu(B, Bprime),
-                  pointSurDroite(droited2, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  'O',
-                  couleurs[i],
-                  B,
-                  milieu(B, Bprime),
-                  milieu(B, Bprime),
-                  Bprime,
-                ),
+                pointEstSur(B, droited2)
+                  ? vide2d()
+                  : [
+                      segment(B, Bprime, couleurs[i]),
+                      codageAngleDroit(
+                        B,
+                        milieu(B, Bprime),
+                        pointSurDroite(droited2, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        'O',
+                        couleurs[i],
+                        B,
+                        milieu(B, Bprime),
+                        milieu(B, Bprime),
+                        Bprime,
+                      ),
+                    ],
               )
               xP[2] = xB
               yP[2] = yB
@@ -505,21 +527,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(C),
                 tracePoint(Cprime, '#f15929'),
                 labelPoint(Cprime, '#f15929'),
-                segment(C, Cprime, couleurs[i]),
-                codageAngleDroit(
-                  C,
-                  milieu(C, Cprime),
-                  pointSurDroite(droited2, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '|||',
-                  couleurs[i],
-                  C,
-                  milieu(C, Cprime),
-                  milieu(C, Cprime),
-                  Cprime,
-                ),
+                pointEstSur(C, droited2)
+                  ? vide2d()
+                  : [
+                      segment(C, Cprime, couleurs[i]),
+                      codageAngleDroit(
+                        C,
+                        milieu(C, Cprime),
+                        pointSurDroite(droited2, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '|||',
+                        couleurs[i],
+                        C,
+                        milieu(C, Cprime),
+                        milieu(C, Cprime),
+                        Cprime,
+                      ),
+                    ],
               )
               xP[2] = xC
               yP[2] = yC
@@ -559,21 +585,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(A),
                 tracePoint(Aprime, couleurs[i]),
                 labelPoint(Aprime, '#f15929'),
-                segment(A, Aprime, '#f15929'),
-                codageAngleDroit(
-                  A,
-                  milieu(A, Aprime),
-                  pointSurDroite(droited, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '//',
-                  couleurs[i],
-                  A,
-                  milieu(A, Aprime),
-                  milieu(A, Aprime),
-                  Aprime,
-                ),
+                pointEstSur(A, droited)
+                  ? vide2d()
+                  : [
+                      segment(A, Aprime, '#f15929'),
+                      codageAngleDroit(
+                        A,
+                        milieu(A, Aprime),
+                        pointSurDroite(droited, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '//',
+                        couleurs[i],
+                        A,
+                        milieu(A, Aprime),
+                        milieu(A, Aprime),
+                        Aprime,
+                      ),
+                    ],
               )
               xP[3] = xA
               yP[3] = yA
@@ -589,21 +619,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(B),
                 tracePoint(Bprime, couleurs[i]),
                 labelPoint(Bprime, '#f15929'),
-                segment(B, Bprime, '#f15929'),
-                codageAngleDroit(
-                  B,
-                  milieu(B, Bprime),
-                  pointSurDroite(droited, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  'O',
-                  couleurs[i],
-                  B,
-                  milieu(B, Bprime),
-                  milieu(B, Bprime),
-                  Bprime,
-                ),
+                pointEstSur(B, droited)
+                  ? vide2d()
+                  : [
+                      segment(B, Bprime, '#f15929'),
+                      codageAngleDroit(
+                        B,
+                        milieu(B, Bprime),
+                        pointSurDroite(droited, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        'O',
+                        couleurs[i],
+                        B,
+                        milieu(B, Bprime),
+                        milieu(B, Bprime),
+                        Bprime,
+                      ),
+                    ],
               )
               xP[3] = xB
               yP[3] = yB
@@ -621,21 +655,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(C),
                 tracePoint(Cprime, couleurs[i]),
                 labelPoint(Cprime, '#f15929'),
-                segment(C, Cprime, '#f15929'),
-                codageAngleDroit(
-                  C,
-                  milieu(C, Cprime),
-                  pointSurDroite(droited, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '|||',
-                  couleurs[i],
-                  C,
-                  milieu(C, Cprime),
-                  milieu(C, Cprime),
-                  Cprime,
-                ),
+                pointEstSur(C, droited)
+                  ? vide2d()
+                  : [
+                      segment(C, Cprime, '#f15929'),
+                      codageAngleDroit(
+                        C,
+                        milieu(C, Cprime),
+                        pointSurDroite(droited, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '|||',
+                        couleurs[i],
+                        C,
+                        milieu(C, Cprime),
+                        milieu(C, Cprime),
+                        Cprime,
+                      ),
+                    ],
               )
               xP[3] = xC
               yP[3] = yC
@@ -675,21 +713,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(A),
                 tracePoint(Aprime, '#f15929'),
                 labelPoint(Aprime, '#f15929'),
-                segment(A, Aprime, couleurs[i]),
-                codageAngleDroit(
-                  A,
-                  milieu(A, Aprime),
-                  pointSurDroite(droitedprime, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '//',
-                  couleurs[i],
-                  A,
-                  milieu(A, Aprime),
-                  milieu(A, Aprime),
-                  Aprime,
-                ),
+                pointEstSur(A, droitedprime)
+                  ? vide2d()
+                  : [
+                      segment(A, Aprime, couleurs[i]),
+                      codageAngleDroit(
+                        A,
+                        milieu(A, Aprime),
+                        pointSurDroite(droitedprime, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '//',
+                        couleurs[i],
+                        A,
+                        milieu(A, Aprime),
+                        milieu(A, Aprime),
+                        Aprime,
+                      ),
+                    ],
               )
               xP[4] = xA
               yP[4] = yA
@@ -705,21 +747,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(B),
                 tracePoint(Bprime, '#f15929'),
                 labelPoint(Bprime, '#f15929'),
-                segment(B, Bprime, couleurs[i]),
-                codageAngleDroit(
-                  B,
-                  milieu(B, Bprime),
-                  pointSurDroite(droitedprime, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  'O',
-                  couleurs[i],
-                  B,
-                  milieu(B, Bprime),
-                  milieu(B, Bprime),
-                  Bprime,
-                ),
+                pointEstSur(B, droitedprime)
+                  ? vide2d()
+                  : [
+                      segment(B, Bprime, couleurs[i]),
+                      codageAngleDroit(
+                        B,
+                        milieu(B, Bprime),
+                        pointSurDroite(droitedprime, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        'O',
+                        couleurs[i],
+                        B,
+                        milieu(B, Bprime),
+                        milieu(B, Bprime),
+                        Bprime,
+                      ),
+                    ],
               )
               xP[4] = xB
               yP[4] = yB
@@ -737,21 +783,25 @@ export default class TransformationsDuPlanEtCoordonnees extends Exercice {
                 labelPoint(C),
                 tracePoint(Cprime, '#f15929'),
                 labelPoint(Cprime, '#f15929'),
-                segment(C, Cprime, couleurs[i]),
-                codageAngleDroit(
-                  C,
-                  milieu(C, Cprime),
-                  pointSurDroite(droitedprime, -15),
-                  couleurs[i],
-                ),
-                codageSegments(
-                  '|||',
-                  couleurs[i],
-                  C,
-                  milieu(C, Cprime),
-                  milieu(C, Cprime),
-                  Cprime,
-                ),
+                pointEstSur(C, droitedprime)
+                  ? vide2d()
+                  : [
+                      segment(C, Cprime, couleurs[i]),
+                      codageAngleDroit(
+                        C,
+                        milieu(C, Cprime),
+                        pointSurDroite(droitedprime, -15),
+                        couleurs[i],
+                      ),
+                      codageSegments(
+                        '|||',
+                        couleurs[i],
+                        C,
+                        milieu(C, Cprime),
+                        milieu(C, Cprime),
+                        Cprime,
+                      ),
+                    ],
               )
               xP[4] = xC
               yP[4] = yC

@@ -1,5 +1,4 @@
-import type { IExercice } from '../exercices/Exercice.type'
-import type { InterfaceParams } from './types'
+import type { IExercice, InterfaceParams } from '../lib/types'
 
 interface Items {
   [key: string]: string

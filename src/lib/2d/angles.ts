@@ -201,8 +201,8 @@ export function cercleTrigo(angle: Angle, cosOrSin = 'cos') {
   const Ry = point(M.x < 0 ? 0.65 : -1.5, M.y)
   const texteCosinus = latexParPoint(tCos ?? '0', Rx)
   const texteSinus = latexParPoint(tSin ?? '0', Ry)
-  const sCos = segment(O, point(M.x, 0))
-  const sSin = segment(O, point(0, M.y))
+  const sCos = M.x === 0 ? vide2d() : segment(O, point(M.x, 0))
+  const sSin = M.y === 0 ? vide2d() : segment(O, point(0, M.y))
   sCos.epaisseur = 3
   sSin.epaisseur = 3
   const marqueAngle = codageAngle(I, O, M)

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { tick } from 'svelte'
-  import type { IExercice } from '../../../../exercices/Exercice.type'
   import {
     mathaleaGenerateSeed,
     mathaleaRenderDiv,
@@ -11,7 +10,7 @@
     exercicesParams,
     globalOptions,
   } from '../../../../lib/stores/generalStore'
-  import type { InterfaceParams } from '../../../../lib/types'
+  import type { IExercice, InterfaceParams } from '../../../../lib/types'
   import { isIntegerInRange0to4 } from '../../../../lib/types/integerInRange'
   import ZoomButtons from '../../start/presentationalComponents/header/headerButtons/setupButtons/ZoomButtons.svelte'
   import type { Serie, Slideshow } from '../types'

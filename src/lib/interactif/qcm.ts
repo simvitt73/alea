@@ -1,4 +1,4 @@
-import type { IExercice } from '../../exercices/Exercice.type'
+import type { IExercice, UneProposition } from '../../lib/types'
 import { context } from '../../modules/context'
 import { messageFeedback } from '../../modules/messages'
 import { shuffleJusquaWithIndexes } from '../amc/qcmCam'
@@ -10,9 +10,8 @@ import {
   texteGras,
 } from '../outils/embellissements'
 import { lettreDepuisChiffre } from '../outils/outilString'
+import type { ButtonWithMathaleaListener } from '../types/can'
 import { afficheScore } from './afficheScore'
-import type { ButtonWithMathaleaListener } from './gestionCan'
-import type { UneProposition } from './gestionInteractif'
 
 export function verifQuestionQcm(exercice: IExercice, i: number) {
   let resultat

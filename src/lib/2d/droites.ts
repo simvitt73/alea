@@ -12,8 +12,7 @@ import {
   texteParPosition,
   type LetterSizeType,
 } from './textes'
-import { projectionOrtho, translation } from './transformations'
-import { angleOriente, longueur, norme } from './utilitairesGeometriques'
+import { angleOriente, norme } from './utilitairesGeometriques'
 import { pointSurDroite, pointSurSegment } from './utilitairesPoint'
 import { Vecteur, vecteur } from './Vecteur'
 import { vide2d } from './Vide2d'
@@ -1292,11 +1291,7 @@ export function positionLabelDroite(
     }
   }
   const scale = 0.5 / norme(vecteur(d.a, d.b))
-  const position = translation(
-    pointAbstrait(xLab, yLab),
-    vecteur(d.a * scale, d.b * scale),
-  )
-  return position
+  return pointAbstrait(xLab + d.a * scale, yLab + d.b * scale)
 }
 
 /**  Trace la droite passant par le point A et de vecteur directeur v
@@ -1418,6 +1413,8 @@ export function droiteParPointEtPente(
  */
 // JSDOC Validee par EE Aout 2022
 export function distancePointDroite(A: PointAbstrait, d: Droite) {
-  const M = projectionOrtho(A, d)
-  return longueur(A, M, 9)
+  // Formule: |a*xA + b*yA + c| / ||(a,b)||
+  const denom = norme(vecteur(d.a, d.b))
+  if (denom < 1e-12) return 0
+  return arrondi(Math.abs(d.a * A.x + d.b * A.y + d.c) / denom, 9)
 }
