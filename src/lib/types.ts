@@ -7,6 +7,7 @@ import type { Language } from './types/languages'
 import type { IFractionEtendue } from '../modules/FractionEtendue.type'
 // import Grandeur from '../modules/Grandeur'
 import type Decimal from 'decimal.js'
+import type FractionEtendue from '../modules/FractionEtendue'
 import Hms from '../modules/Hms'
 
 /*
@@ -600,12 +601,14 @@ export type ChoixQcm = {
   pointilles?: boolean
   reponse?: {
     texte?: string
-    valeur?: number | number[]
+    valeur?: number | number[] | FractionEtendue
     alignement?: string
     param?: {
       digits?: number
       decimals?: number
       signe?: boolean
+      digitsNum?: number
+      digitsDen?: number
       approx?: number
       aussiCorrect?: number
     }
