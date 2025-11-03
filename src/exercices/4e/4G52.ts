@@ -1,4 +1,6 @@
+import type { IPoint3d } from '../../lib/2d/Interfaces'
 import { tracePoint } from '../../lib/2d/TracePoint'
+import { vide2d } from '../../lib/2d/Vide2d'
 import { labelPoint } from '../../lib/2d/textes'
 import {
   arete3d,
@@ -42,6 +44,10 @@ export const uuid = '9c916'
 export const refs = {
   'fr-fr': ['4G52'],
   'fr-ch': [],
+}
+
+const longueur3d = (A: IPoint3d, B: IPoint3d): number => {
+  return Math.sqrt((A.x - B.x) ** 2 + (A.y - B.y) ** 2 + (A.z - B.z) ** 2)
 }
 export default class ReperagePaveDroit extends Exercice {
   constructor() {
@@ -214,34 +220,46 @@ export default class ReperagePaveDroit extends Exercice {
         lettreDepuisChiffre(i + 12),
         `${lettreDepuisChiffre(i + 12)}`,
       )
-      s1 = arete3d(A, point3d(pointAplacer.x, 0, 0), 'blue', true)
-      s2 = arete3d(
-        point3d(pointAplacer.x, 0, 0),
-        point3d(pointAplacer.x, pointAplacer.y, 0),
-        'green',
-        true,
-      )
-      s3 = arete3d(
-        point3d(pointAplacer.x, pointAplacer.y, 0),
-        pointAplacer,
-        'red',
-        true,
-      )
-      s1.c2d.epaisseur = 3
-      s2.c2d.epaisseur = 3
-      s3.c2d.epaisseur = 3
+      const pointAbscisse = point3d(pointAplacer.x, 0, 0)
+      const pointOrdonnee = point3d(pointAplacer.x, pointAplacer.y, 0)
+      s1 =
+        longueur3d(pointAbscisse, A) === 0
+          ? vide2d()
+          : arete3d(A, point3d(pointAplacer.x, 0, 0), 'blue', true).c2d
+      s2 =
+        longueur3d(pointAbscisse, pointOrdonnee) === 0
+          ? vide2d()
+          : arete3d(
+              point3d(pointAplacer.x, 0, 0),
+              point3d(pointAplacer.x, pointAplacer.y, 0),
+              'green',
+              true,
+            ).c2d
+      s3 =
+        longueur3d(pointOrdonnee, pointAplacer) === 0
+          ? vide2d()
+          : arete3d(
+              point3d(pointAplacer.x, pointAplacer.y, 0),
+              pointAplacer,
+              'red',
+              true,
+            ).c2d
+      //
+
+      s1.epaisseur = 3
+      s2.epaisseur = 3
+      s3.epaisseur = 3
       t = tracePoint(pointAplacer, 'red')
       t.epaisseur = 2
       t.taille = 6
       pointAplacer.c2d.positionLabel = 'above right'
-      objetsAtracerCorr.push(
-        s1.c2d,
-        s2.c2d,
-        s3.c2d,
-        t,
-        labelPoint(pointAplacer.c2d),
-        ...objetsAtracer,
-      )
+
+      objetsAtracerCorr.push(t, labelPoint(pointAplacer.c2d), ...objetsAtracer)
+      ;[s1, s2, s3].forEach((seg: any) => {
+        if (seg.longueur && seg.longueur > 0) {
+          objetsAtracerCorr.push(seg)
+        }
+      })
       let propositionsAMC
       if (listeTypesDeQuestions[i] === 'placer') {
         texte = `Placer le point $${lettreDepuisChiffre(i + 12)}$ de coordonnées $(${pointCoord[0]};${pointCoord[1]};${pointCoord[2]})$.`
