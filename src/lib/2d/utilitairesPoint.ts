@@ -68,6 +68,9 @@ export function pointSurSegment(
   }
 
   // Calcul direct de l'homothétie de B par rapport à A avec rapport k = l / longueur(A, B)
+  if (longueur(A, B) === 0) {
+    return pointAbstrait(A.x, A.y, A.nom, A.positionLabel)
+  }
   const k = l / longueur(A, B)
   const x = A.x + k * (B.x - A.x)
   const y = A.y + k * (B.y - A.y)

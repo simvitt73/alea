@@ -1,4 +1,4 @@
-import type { IExercice } from '../../exercices/Exercice.type'
+import type { IExercice } from '../../lib/types'
 import { context } from '../../modules/context'
 import { messageFeedback } from '../../modules/messages'
 import { get } from '../html/dom'

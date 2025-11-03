@@ -2,14 +2,15 @@
   import { afterUpdate, beforeUpdate, onDestroy, onMount } from 'svelte'
   import { get } from 'svelte/store'
   import { Carousel, initTE } from 'tw-elements'
-  import type { IExercice } from '../../../exercices/Exercice.type'
-  import Latex, { type LatexFileInfos } from '../../../lib/Latex'
+  import Latex from '../../../lib/Latex'
+  import { type LatexFileInfos } from '../../../lib/LatexTypes'
   import {
     mathaleaGetExercicesFromParams,
     mathaleaGoToView,
   } from '../../../lib/mathalea.js'
   import { darkMode, exercicesParams } from '../../../lib/stores/generalStore'
   import { referentielLocale } from '../../../lib/stores/languagesStore'
+  import { type IExercice } from '../../../lib/types'
   import Footer from '../../Footer.svelte'
   import ButtonCompileLatexToPdf from '../../shared/forms/ButtonCompileLatexToPDF.svelte'
   import ButtonTextAction from '../../shared/forms/ButtonTextAction.svelte'

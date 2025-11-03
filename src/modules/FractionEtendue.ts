@@ -1,23 +1,39 @@
 import Decimal from 'decimal.js'
-import { abs, gcd, lcm, max, min, multiply, round } from 'mathjs'
+import { abs, gcd, lcm, multiply, round } from 'mathjs'
 import { extraireRacineCarree } from '../lib/outils/calculs'
-import {
-  ecritureAlgebrique,
-  ecritureParentheseSiNegatif,
-  signeMoinsEnEvidence,
-} from '../lib/outils/ecritures'
 import { miseEnEvidence } from '../lib/outils/embellissements'
-import {
-  arrondi,
-  nombreDeChiffresDansLaPartieDecimale,
-} from '../lib/outils/nombres'
 import {
   decompositionFacteursPremiers,
   obtenirListeFacteursPremiers,
   ppcm,
 } from '../lib/outils/primalite'
 import { texNombre } from '../lib/outils/texNombre'
-import { egal } from './outils'
+
+// Versions locales (scope module) pour éviter la dépendance circulaire avec ecritures.ts
+function ecritureAlgebrique(n: number): string {
+  return n >= 0 ? '+' + texNombre(n, 7) : texNombre(n, 7)
+}
+
+function ecritureParentheseSiNegatif(n: number): string {
+  return n >= 0 ? texNombre(n, 8) : `(${texNombre(n, 8)})`
+}
+
+function signeMoinsEnEvidence(r: number, precision = 0): string {
+  if (typeof r !== 'number') {
+    window.notify(
+      "signeMoinsEnEvidence() appelé avec autre chose qu'un nombre.",
+      { argument: r },
+    )
+  }
+  if (r < 0) {
+    return miseEnEvidence('-') + texNombre(Math.abs(r), precision)
+  }
+  return texNombre(Math.abs(r), precision)
+}
+
+const arrondi = (x: number, p: number) => {
+  return Number(x.toFixed(p))
+}
 
 // Fonction écrite par Daniel Caillibaud pour créer ajouter les propriétés à la première utilisation de celles-ci.
 const definePropRo = (
@@ -55,6 +71,9 @@ export function rationnalise(x: number | FractionEtendue | Decimal | null) {
   if (typeof x === 'number') {
     // MGU  : C'est dangereux ce truc mais bon...
     // Déjà ça gère au delà des centièmes...
+    if (Number.isInteger(x)) {
+      return new FractionEtendue(x, 1)
+    }
     const numDen = new Decimal(x.toFixed(5)).toFraction(10000)
     return new FractionEtendue(numDen[0].toNumber(), numDen[1].toNumber())
   }
@@ -74,133 +93,35 @@ export function rationnalise(x: number | FractionEtendue | Decimal | null) {
 function normalizeFraction(n: number | Decimal, d: number): [number, number] {
   let num: number
   let den: number
-  if (d == null) {
-    // un seul argument qui peut être un nombre (décimal ou pas)
-    if (n instanceof Decimal) {
-      // Decimal.toFraction() retourne '7, 4' pour 1.75... On récupère ainsi le numérateur et le dénominateur.
-      const dec = n as Decimal
-      ;[num, den] = dec.toFraction(10000).map((el) => el.toNumber())
-    } else {
-      const f = rationnalise(n)
-      num = f.num // ça c'est pas terrible... et ça peut conduire à des fractions monumentales alors on se limite à 4 décimales
-      den = f.den
-    }
-  } else {
-    num = Number(n)
-    den = Number(d)
-  }
-  if (!isNaN(num) && !isNaN(den)) {
-    // Si ce sont des nombres, on les rend entiers si besoin.
-    //  num = Number(num) // Je ne vois pas bien à quoi ça sert ça ! ce sont déjà des numbers !
-    //  den = Number(den) // Je le vire le 27/09/2023 (J-C)
 
-    // Méthode codée par Eric Elter pour tenter de rendre rationnel un nombre qui ne l'est pas forcément.
-    let maxDecimalesNumDen: number = Math.max(
-      nombreDeChiffresDansLaPartieDecimale(num),
-      nombreDeChiffresDansLaPartieDecimale(den),
-    )
-    if (maxDecimalesNumDen > 9) {
-      // On peut estimer que num et/ou den ne sont pas décimaux. Essayons de les diviser car peut-être que leur quotient est mieux.
-      const quotientNumDen = arrondi(num / den, 12)
-      if (nombreDeChiffresDansLaPartieDecimale(quotientNumDen) < 9) {
-        // On peut estimer que le quotient aboutit à un décimal. Ex. dans fraction(7/3,14/3)
-        num = quotientNumDen
-        den = 1
-        maxDecimalesNumDen = max(
-          nombreDeChiffresDansLaPartieDecimale(num),
-          nombreDeChiffresDansLaPartieDecimale(den),
-        )
-      } else {
-        // On peut estimer que le quotient n'aboutit pas à un décimal. Essayons par l'inverse du quotient.
-        const quotientDenNum = arrondi(den / num, 12)
-        if (nombreDeChiffresDansLaPartieDecimale(quotientDenNum) < 9) {
-          // On peut estimer que l'inverse du quotient aboutit à un décimal. Ex. dans fraction(7/3,7/9)
-          den = quotientDenNum
-          num = 1
-          maxDecimalesNumDen = max(
-            nombreDeChiffresDansLaPartieDecimale(num),
-            nombreDeChiffresDansLaPartieDecimale(den),
-          )
-        } else {
-          // num et/ou den non décimaux et leurs quotients n'aboutissent pas à un décimal. Essayons par l'inverse de chaque nombre.
-          const inverseNum = arrondi(1 / num, 12)
-          const inverseDen = arrondi(1 / den, 12)
-          maxDecimalesNumDen = max(
-            nombreDeChiffresDansLaPartieDecimale(inverseNum),
-            nombreDeChiffresDansLaPartieDecimale(inverseDen),
-          )
-          if (maxDecimalesNumDen < 13) {
-            // Ex. dans fraction(1/3,1/7)
-            den = inverseNum
-            num = inverseDen
-          } else {
-            // Méthode plus bourrin
-            const testMAX = 2000 // Voir explications ci-dessous
-            // Ici, JCL, cela veut dire qu'on traite toutes les fractions de fractions où chaque numérateur ou dénominateur est inférieur à 1000.
-            // Si tu veux davantage que 1000, il faut augmenter ce nombre et dimininuer alors le nb de décimales de test fixé ici à 9.
-            let iDen = 1
-            let denTest = den
-            let inverseDenTest = inverseDen
-            while (
-              min(
-                nombreDeChiffresDansLaPartieDecimale(denTest),
-                nombreDeChiffresDansLaPartieDecimale(inverseDenTest),
-              ) > 9 &&
-              iDen < testMAX
-            ) {
-              iDen += iDen % 5 === 3 ? 4 : 2
-              denTest = arrondi(den * iDen, 10)
-              inverseDenTest = arrondi(inverseDen * iDen, 10)
-            }
-            let iNum = 1
-            let numTest = num
-            let inverseNumTest = inverseNum
-            while (
-              min(
-                nombreDeChiffresDansLaPartieDecimale(numTest),
-                nombreDeChiffresDansLaPartieDecimale(inverseNumTest),
-              ) > 9 &&
-              iNum < testMAX
-            ) {
-              iNum += iNum % 5 === 3 ? 4 : 2
-              numTest = arrondi(num * iNum, 10)
-              inverseNumTest = arrondi(inverseNum * iNum, 10)
-            }
-            if (nombreDeChiffresDansLaPartieDecimale(numTest) < 10) {
-              if (nombreDeChiffresDansLaPartieDecimale(denTest) < 10) {
-                num = arrondi(numTest * iDen, 10)
-                den = arrondi(denTest * iNum, 10)
-              } else {
-                num = arrondi(numTest * inverseDenTest, 10)
-                den = iDen * iNum
-              }
-            } else {
-              if (nombreDeChiffresDansLaPartieDecimale(denTest) < 10) {
-                den = arrondi(denTest * inverseNumTest, 10)
-                num = iDen * iNum
-              } else {
-                den = arrondi(inverseNumTest * iDen, 10)
-                num = arrondi(inverseDenTest * iNum, 10)
-              }
-            }
-            maxDecimalesNumDen = max(
-              nombreDeChiffresDansLaPartieDecimale(num),
-              nombreDeChiffresDansLaPartieDecimale(den),
-            )
-          }
-        }
-      }
-    }
-    den = round(den * Math.pow(10, maxDecimalesNumDen))
-    num = round(num * Math.pow(10, maxDecimalesNumDen))
-    return [num, den]
+  if (d == null) {
+    // Un seul argument : convertir en fraction
+    const decimal = n instanceof Decimal ? n : new Decimal(n)
+    const [numDec, denDec] = decimal.toFraction(10000) // Limite le dénominateur
+    num = numDec.toNumber()
+    den = denDec.toNumber()
   } else {
+    // Deux arguments : calculer le quotient puis convertir en fraction
+    if (Number.isInteger(n) && Number.isInteger(d)) {
+      num = Number(n)
+      den = Number(d)
+    } else {
+      const quotient = new Decimal(n).div(d)
+      const [numDec, denDec] = quotient.toFraction(10000)
+      num = numDec.toNumber()
+      den = denDec.toNumber()
+    }
+  }
+
+  if (isNaN(num) || isNaN(den)) {
     window.notify(
-      "Fraction Etendue : le constructeur a reçu des valeurs impossibles à mettre sous la forme d'une fraction",
+      'FractionEtendue : valeurs impossibles à convertir en fraction',
       { n, d },
     )
     return [NaN, NaN]
   }
+
+  return [num, den]
 }
 
 /**
@@ -1330,7 +1251,7 @@ class FractionEtendue {
           return redaction + redactionFinale
         } else {
           let redactionFinale
-          if (!egal(Math.abs(den / pgcd), 1))
+          if (Math.abs(den / pgcd) - 1 !== 0)
             redactionFinale = `=${signe}\\dfrac{${Math.abs(num / pgcd)}}{${Math.abs(den / pgcd)}}`
           else redactionFinale = `=${signe}${Math.abs(num / pgcd)}`
           if (couleurFinale !== '')

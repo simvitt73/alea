@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { IExercice } from '../../../../../exercices/Exercice.type'
   import { formattedTimeStamp } from '../../../../../lib/components/time'
   import { exercicesParams } from '../../../../../lib/stores/generalStore'
+  import type { IExercice } from '../../../../../lib/types'
   import NumberInput from '../../../../shared/forms/InputNumber.svelte'
 
   export let exercises: IExercice[]

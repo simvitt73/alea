@@ -1,10 +1,10 @@
 <script lang="ts">
   import { writable } from 'svelte/store'
-  import type { IExercice } from '../../../exercices/Exercice.type'
   import { generateLatex, handleUrl } from '../../../lib/alacarte'
   import { mathaleaGetExercicesFromParams } from '../../../lib/mathalea'
   import { darkMode } from '../../../lib/stores/generalStore'
   import { referentielLocale } from '../../../lib/stores/languagesStore'
+  import type { IExercice } from '../../../lib/types'
   import Footer from '../../Footer.svelte'
   import ButtonActionInfo from '../../shared/forms/ButtonActionInfo.svelte'
   import ButtonTextAction from '../../shared/forms/ButtonTextAction.svelte'

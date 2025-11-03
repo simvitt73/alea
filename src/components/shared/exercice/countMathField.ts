@@ -1,4 +1,4 @@
-import type { IExercice } from '../../../exercices/Exercice.type'
+import type { IExercice } from '../../../lib/types'
 
 export function countMathField(exercise: IExercice): number {
   if (exercise == null) return 0

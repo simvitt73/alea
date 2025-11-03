@@ -739,9 +739,6 @@ export default class ConstruireParSymetrie extends Exercice {
             ? vide2d()
             : segment(p1.listePoints[2], p2.listePoints[2], 'green')
 
-          sC = segment(p1.listePoints[0], p2.listePoints[0], 'red')
-          sD = segment(p1.listePoints[1], p2.listePoints[1], 'blue')
-          sE = segment(p1.listePoints[2], p2.listePoints[2], 'green')
           sCE = droite(p1.listePoints[2], p1.listePoints[1], '', 'gray')
           sCE.pointilles = 5
           sED = droite(p2.listePoints[2], p2.listePoints[1], '', 'gray')
@@ -879,9 +876,15 @@ export default class ConstruireParSymetrie extends Exercice {
                 'green',
                 'O',
               )
-          sC = segment(p1.listePoints[0], p2.listePoints[0], 'red')
-          sD = segment(p1.listePoints[1], p2.listePoints[1], 'blue')
-          sE = segment(p1.listePoints[2], p2.listePoints[2], 'green')
+          sC = pointEstSur(p1.listePoints[0], d)
+            ? vide2d()
+            : segment(p1.listePoints[0], p2.listePoints[0], 'red')
+          sD = pointEstSur(p1.listePoints[1], d)
+            ? vide2d()
+            : segment(p1.listePoints[1], p2.listePoints[1], 'blue')
+          sE = pointEstSur(p1.listePoints[2], d)
+            ? vide2d()
+            : segment(p1.listePoints[2], p2.listePoints[2], 'green')
           sCE = droite(p1.listePoints[2], p1.listePoints[1], '', 'gray')
           sCE.pointilles = 5
           sED = droite(p2.listePoints[2], p2.listePoints[1], '', 'gray')
@@ -1013,9 +1016,15 @@ export default class ConstruireParSymetrie extends Exercice {
                 'green',
                 'O',
               )
-          sC = segment(p1.listePoints[0], p2.listePoints[0], 'red')
-          sD = segment(p1.listePoints[1], p2.listePoints[1], 'blue')
-          sE = segment(p1.listePoints[2], p2.listePoints[2], 'green')
+          sC = pointEstSur(p1.listePoints[0], d)
+            ? vide2d()
+            : segment(p1.listePoints[0], p2.listePoints[0], 'red')
+          sD = pointEstSur(p1.listePoints[1], d)
+            ? vide2d()
+            : segment(p1.listePoints[1], p2.listePoints[1], 'blue')
+          sE = pointEstSur(p1.listePoints[2], d)
+            ? vide2d()
+            : segment(p1.listePoints[2], p2.listePoints[2], 'green')
           sCE = droite(p1.listePoints[2], p1.listePoints[1], '', 'gray')
           sCE.pointilles = 5
           sED = droite(p2.listePoints[2], p2.listePoints[1], '', 'gray')

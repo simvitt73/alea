@@ -6,7 +6,12 @@ import {
 } from '../../modules/outils'
 import Exercice from '../Exercice'
 
-import { Point, point } from '../../lib/2d/PointAbstrait'
+import {
+  Point,
+  point,
+  pointAbstrait,
+  PointAbstrait,
+} from '../../lib/2d/PointAbstrait'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import { vecteur } from '../../lib/2d/Vecteur'
 import { cercle } from '../../lib/2d/cercle'
@@ -139,24 +144,12 @@ export default class nomExercice extends Exercice {
         color: 'black',
       })
       let cent2 = point(0, hAff, 'Z', 'left')
-      let ext1RayonDiametre = point(0, 0)
-      let ext2RayonDiametre = point(0, 0)
-      let segRayon = segment(cent1, ext1RayonDiametre, 'black')
-      segRayon.pointilles = 1
+      // On initialise les éléments servant aux questions avec n'importe quoi (ce sera remplacé ensuite)
+      let ext1RayonDiametre: PointAbstrait = pointAbstrait(0, 0)
+      let ext2RayonDiametre: PointAbstrait
+      // On initialise les éléments servant aux questions avec n'importe quoi (ce sera remplacé ensuite)
       let ext1Hauteur = point(0, 0)
-      let ext2Hauteur = point(0, 0)
-      let qRayonCylindre = placeLatexSurSegment(
-        '?',
-        ext1RayonDiametre,
-        ext2RayonDiametre,
-      )
-      let qHauteurCylindre = placeLatexSurSegment('?', ext1Hauteur, ext2Hauteur)
-      let rRayonCylindre = placeLatexSurSegment(
-        '?',
-        ext1RayonDiametre,
-        ext2RayonDiametre,
-      )
-      let rHauteurCylindre = placeLatexSurSegment('?', ext1Hauteur, ext2Hauteur)
+      let ext2Hauteur = point(0, 1)
 
       switch (listeTypeOrientationCylindre[i]) {
         case 'DeboutVuDessus':
@@ -213,7 +206,8 @@ export default class nomExercice extends Exercice {
           ext2Hauteur = point(cent1.x + ex, cent1.y + ey)
           break
         }
-        case 'baseCoteCoucheVuDroite': {
+        case 'baseCoteCoucheVuDroite':
+        default:
           // a finir
           cylindreEx = cylindre({
             centre: cent1,
@@ -234,33 +228,30 @@ export default class nomExercice extends Exercice {
           ext1Hauteur = point(0, rAff)
           ext2Hauteur = point(hAff, rAff)
           break
-        }
-        default:
-          break
       }
       const tCent1 = tracePoint(cent1)
       const tCent2 = tracePoint(cent2)
 
-      segRayon = segment(ext1RayonDiametre, ext2RayonDiametre, 'black')
+      const segRayon = segment(ext1RayonDiametre, ext2RayonDiametre, 'black')
       segRayon.pointilles = 1
       // qRayonCylindre = texteSurSegment('\\text{.......}', ext1RayonDiametre, ext2RayonDiametre)
       segRayon.pointilles = 1
-      qRayonCylindre = placeLatexSurSegment(
+      const qRayonCylindre = placeLatexSurSegment(
         '\\text{.......}',
         ext1RayonDiametre,
         ext2RayonDiametre,
       )
-      rRayonCylindre = placeLatexSurSegment(
+      const rRayonCylindre = placeLatexSurSegment(
         `${texNombre(listeTypeBaseCylindre[i] === 'rayon' ? rEx : 2 * rEx, 1)}\\text{ cm}`,
         ext1RayonDiametre,
         ext2RayonDiametre,
       )
-      qHauteurCylindre = placeLatexSurSegment(
+      const qHauteurCylindre = placeLatexSurSegment(
         '\\text{.......}',
         ext1Hauteur,
         ext2Hauteur,
       )
-      rHauteurCylindre = placeLatexSurSegment(
+      const rHauteurCylindre = placeLatexSurSegment(
         `${texNombre(hEx, 1)}\\text{ cm}`,
         ext1Hauteur,
         ext2Hauteur,

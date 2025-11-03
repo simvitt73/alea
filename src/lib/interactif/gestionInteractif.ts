@@ -1,15 +1,10 @@
 import type Figure from 'apigeom/src/Figure'
 import Decimal from 'decimal.js'
-import type { IExercice } from '../../exercices/Exercice.type'
-import { context } from '../../modules/context'
-import FractionEtendue from '../../modules/FractionEtendue'
-import Grandeur from '../../modules/Grandeur'
-import Hms from '../../modules/Hms'
-import { addElement, get, setStyles } from '../html/dom'
 import type {
   AnswerValueType,
   AutoCorrection,
   ClickFigures,
+  IExercice,
   LegacyReponse,
   LegacyReponses,
   MathaleaSVG,
@@ -17,7 +12,12 @@ import type {
   ResultOfExerciceInteractif,
   Valeur,
   ValeurNormalized,
-} from '../types'
+} from '../../lib/types'
+import { context } from '../../modules/context'
+import FractionEtendue from '../../modules/FractionEtendue'
+import Grandeur from '../../modules/Grandeur'
+import Hms from '../../modules/Hms'
+import { addElement, get, setStyles } from '../html/dom'
 import { afficheScore } from './afficheScore'
 import { fonctionComparaison } from './comparisonFunctions'
 import { verifDragAndDrop } from './DragAndDrop'

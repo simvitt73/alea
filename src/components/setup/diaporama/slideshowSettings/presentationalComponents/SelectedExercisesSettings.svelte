@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { IExercice } from '../../../../../exercices/Exercice.type'
+  import type { IExercice } from '../../../../../lib/types'
   import CheckboxWithLabel from '../../../../shared/forms/CheckboxWithLabel.svelte'
   import NumberInput from '../../../../shared/forms/InputNumber.svelte'
 
