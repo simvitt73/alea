@@ -1,12 +1,12 @@
-import type { IExercice } from '../../exercices/Exercice.type'
-import { context } from '../../modules/context'
-import { sp } from '../outils/outilString'
 import type {
+  IExercice,
   InteractivityType,
   ReponseParams,
   TableauMathliveType,
   Valeur,
-} from '../types'
+} from '../../lib/types'
+import { context } from '../../modules/context'
+import { sp } from '../outils/outilString'
 import './champTexte.scss'
 import { buildDataKeyboardFromStyle } from './claviers/keyboard'
 import { handleAnswers } from './gestionInteractif'

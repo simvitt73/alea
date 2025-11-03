@@ -7,8 +7,8 @@
     doesLatexNeedsPics,
     getExosContentList,
     getPicsNames,
-    type LatexFileInfos,
   } from '../../../lib/Latex'
+  import { type LatexFileInfos } from '../../../lib/LatexTypes'
   import PdFviewer from '../../shared/forms/PDFviewer.svelte'
 
   export let latex: Latex

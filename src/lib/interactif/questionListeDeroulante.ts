@@ -1,5 +1,5 @@
 // import { addElement, get, setStyles } from '../html/dom'
-import type { IExercice } from '../../exercices/Exercice.type'
+import type { IExercice } from '../../lib/types'
 import { context } from '../../modules/context'
 import type { AllChoicesType } from './listeDeroulante/ListeDeroulante'
 import './listeDeroulante/ListeDeroulanteElement'

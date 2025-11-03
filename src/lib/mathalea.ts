@@ -5,7 +5,6 @@ import type LabyrintheElement from 'labyrinthe/src/LabyrintheElement'
 import seedrandom from 'seedrandom'
 import { get } from 'svelte/store'
 import Exercice from '../exercices/Exercice'
-import type { IExercice } from '../exercices/Exercice.type'
 import ExerciceSimple from '../exercices/ExerciceSimple'
 import referentielStaticCH from '../json/referentielStaticCH.json'
 import referentielStaticFR from '../json/referentielStaticFR.json'
@@ -14,6 +13,18 @@ import {
   ajouteChampTexteMathLive,
   remplisLesBlancs,
 } from '../lib/interactif/questionMathLive'
+import {
+  type AnswerValueType,
+  type IExercice,
+  type InterfaceGlobalOptions,
+  type InterfaceParams,
+  type MathaleaSVG,
+  type Valeur,
+  type VueType,
+  convertVueType,
+  isAnswerValueType,
+  isValeur,
+} from '../lib/types'
 import FractionEtendue from '../modules/FractionEtendue'
 import Grandeur from '../modules/Grandeur'
 import { contraindreValeur } from '../modules/outils'
@@ -50,17 +61,6 @@ import {
   updateURLFromReferentielLocale,
 } from './stores/languagesStore'
 import type { MySpreadsheetElement } from './tableur/MySpreadSheet'
-import {
-  convertVueType,
-  isAnswerValueType,
-  isValeur,
-  type AnswerValueType,
-  type InterfaceGlobalOptions,
-  type InterfaceParams,
-  type MathaleaSVG,
-  type Valeur,
-  type VueType,
-} from './types'
 import {
   isIntegerInRange0to2,
   isIntegerInRange0to4,
@@ -121,83 +121,6 @@ export async function getSvelteComponent(paramsExercice: InterfaceParams) {
     `Chargement de l'exercice ${paramsExercice.uuid} impossible. Vérifier ${directory === undefined ? '' : `${directory}/`}${filename}`,
   )
 }
-
-/**
- * Charge un svelte exercice depuis son uuid
- * Exemple : mathaleaLoadSvelteExerciceFromUuid('clavier')
- * @param {string} uuid
- * @returns {Promise<IExercice>} exercice
- */
-export async function mathaleaLoadSvelteExerciceFromUuid(uuid: string) {
-  const url = uuidToUrl[uuid as keyof typeof uuidToUrl]
-  let filename, directory, isCan
-  if (url) {
-    ;[filename, directory, isCan] = url
-      .replaceAll('\\', '/')
-      .split('/')
-      .reverse()
-  }
-  let attempts = 0
-  const maxAttempts = 3
-  while (attempts < maxAttempts) {
-    try {
-      // L'import dynamique ne peut descendre que d'un niveau, les sous-répertoires de directory ne sont pas pris en compte
-      // cf https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#globs-only-go-one-level-deep
-      // L'extension doit-être visible donc on l'enlève avant de la remettre...
-      let module: any
-      if (isCan === 'can') {
-        if (filename != null && filename.includes('.ts')) {
-          module = await import(
-            `../exercices/can/${directory}/${filename.replace('.ts', '')}.ts`
-          )
-        } else if (filename != null) {
-          module = await import(
-            `../exercices/can/${directory}/${filename.replace('.js', '')}.js`
-          )
-        }
-      } else {
-        if (filename != null && filename.includes('.ts')) {
-          module = await import(
-            `../exercices/${directory}/${filename.replace('.ts', '')}.ts`
-          )
-        } else if (filename != null) {
-          module = await import(
-            `../exercices/${directory}/${filename.replace('.js', '')}.js`
-          )
-        }
-      }
-      const ClasseExercice = module.default
-      const exercice = new ClasseExercice()
-      ;[
-        'titre',
-        'amcReady',
-        'amcType',
-        'interactifType',
-        'interactifReady',
-      ].forEach((p) => {
-        if (module[p] !== undefined) exercice[p] = module[p]
-      })
-      ;(await exercice).id = filename
-      return exercice
-    } catch (error) {
-      attempts++
-      window.notify(`Un exercice ne s'est pas affiché ${attempts} fois`, {})
-      if (attempts === maxAttempts) {
-        console.error(
-          `Chargement de l'exercice ${uuid} impossible. Vérifier ${directory}/${filename}`,
-        )
-        console.error(error)
-        const exercice = new Exercice()
-        exercice.titre = ERROR_MESSAGE
-        exercice.nouvelleVersion = () => {}
-        return exercice
-      } else {
-        await delay(1000)
-      }
-    }
-  }
-}
-
 /**
  * Charge un exercice depuis son uuid
  * Exemple : const exercice = loadExercice('3cvng')
@@ -217,26 +140,30 @@ export async function mathaleaLoadExerciceFromUuid(uuid: string) {
   const maxAttempts = 3
   while (attempts < maxAttempts) {
     try {
-      // L'import dynamique ne peut descendre que d'un niveau, les sous-répertoires de directory ne sont pas pris en compte
-      // cf https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#globs-only-go-one-level-deep
-      // L'extension doit-être visible donc on l'enlève avant de la remettre...
-      let module
+      // Type explicite pour le module importé
+      type ExerciceModule = {
+        default: new () => IExercice
+        titre?: string
+        amcReady?: boolean
+        amcType?: string
+        interactifType?: string
+        interactifReady?: boolean
+      }
+
+      let module: ExerciceModule | undefined
+
       if (isCan === 'can') {
-        // D'après ChatGPT, avec vite, il faudrait comme ça pour charger les modules dynamiquement
-        // un import direct avec safari plante aléatoirement, et je ne sais pas pourquoi
         const modules = import.meta.glob('../exercices/can/**/*.{ts,js}')
         if (filename != null && filename.includes('.ts')) {
           const path = `../exercices/can/${directory}/${filename.replace('.ts', '')}.ts`
           const loader = modules[path]
           if (!loader) throw new Error(`Module "${path}" introuvable`)
-          module = await loader()
-          // module = await import(`../exercices/can/${directory}/${filename.replace('.ts', '')}.ts`)
+          module = (await loader()) as ExerciceModule
         } else if (filename != null) {
           const path = `../exercices/can/${directory}/${filename.replace('.js', '')}.js`
           const loader = modules[path]
           if (!loader) throw new Error(`Module "${path}" introuvable`)
-          module = await loader()
-          // module = await import(`../exercices/can/${directory}/${filename.replace('.js', '')}.js`)
+          module = (await loader()) as ExerciceModule
         }
       } else if (isCan === 'QCMBrevet') {
         if (filename != null && filename.includes('.ts')) {
@@ -260,17 +187,24 @@ export async function mathaleaLoadExerciceFromUuid(uuid: string) {
         }
       } else {
         if (filename != null && filename.includes('.ts')) {
-          module = await import(
+          module = (await import(
             `../exercices/${directory}/${filename.replace('.ts', '')}.ts`
-          )
+          )) as ExerciceModule
         } else if (filename != null) {
-          module = await import(
+          module = (await import(
             `../exercices/${directory}/${filename.replace('.js', '')}.js`
-          )
+          )) as ExerciceModule
         }
       }
+
+      if (module === undefined) {
+        throw new Error(`Module not loaded for uuid: ${uuid}`)
+      }
+
       const ClasseExercice = module.default
       const exercice = new ClasseExercice()
+
+      // Copie des propriétés optionnelles
       ;[
         'titre',
         'amcReady',
@@ -278,10 +212,13 @@ export async function mathaleaLoadExerciceFromUuid(uuid: string) {
         'interactifType',
         'interactifReady',
       ].forEach((p) => {
-        if (module[p] !== undefined) exercice[p] = module[p]
+        if (module[p as keyof ExerciceModule] !== undefined) {
+          exercice[p] = module[p as keyof ExerciceModule]
+        }
       })
-      ;(await exercice).id = filename
-      return exercice
+
+      exercice.id = filename
+      return exercice as IExercice
     } catch (error) {
       attempts++
       const serverUpdated = await checkForServerUpdate()
@@ -300,7 +237,7 @@ export async function mathaleaLoadExerciceFromUuid(uuid: string) {
         const exercice = new Exercice()
         exercice.titre = ERROR_MESSAGE
         exercice.nouvelleVersion = () => {}
-        return exercice
+        return exercice as IExercice
       } else {
         await delay(1000)
       }
@@ -469,7 +406,7 @@ export function mathaleaHandleSup(param: boolean | string | number): string {
 }
 
 /**
- * sup, sup2, sup3 et sup4 permettent de sauvegarder les formulaires modifiés par
+ * sup, sup2, sup3 et sup4 permettent de sauvegarder les formulaires modifiées par
  * les enseignants pour paramétrer les exercices.
  * Ces paramètres peuvent être des strings, des booléens ou des numbers mais que ce soit dans l'url
  * ou dans le store exercicesParams, ils sont sauvegardés sous forme de string d'où cette fonction de conversion
@@ -595,8 +532,8 @@ export function mathaleaUpdateExercicesParamsFromUrl(
   let title = ''
   let iframe = ''
   let answers = ''
-  let recorder: 'capytale' | 'moodle' | 'labomep' | 'anki'
-  let done: '1'
+  let recorder: 'capytale' | 'moodle' | 'labomep' | 'anki' | undefined
+  let done: '1' | undefined
   let es
   let presMode:
     | 'liste_exos'
@@ -909,7 +846,7 @@ export function mathaleaHandleExerciceSimple(
               }
             } else {
               window.notify(
-                `MathaleaHandleExerciceSimple n'a pas réussi à déterminer le type de exercice.reponse, dans ${exercice?.numeroExercice + 1} - ${exercice.titre} ${JSON.stringify(exercice.reponse)}, on Stingifie, mais c'est sans doute une erreur à rectifier`,
+                `MathaleaHandleExerciceSimple n'a pas réussi à déterminer le type de exercice.reponse, dans ${(exercice?.numeroExercice ?? 0) + 1} - ${exercice.titre} ${JSON.stringify(exercice.reponse)}, on Stingifie, mais c'est sans doute une erreur à rectifier`,
                 { exercice: JSON.stringify(exercice) },
               )
               reponse = {
@@ -1531,9 +1468,8 @@ export async function getExercisesFromExercicesParams() {
     if (isStatic(paramsExercice.uuid) || isSvelte(paramsExercice.uuid)) {
       continue
     }
-    const exercise: Exercice = await mathaleaLoadExerciceFromUuid(
-      paramsExercice.uuid,
-    )
+    const exercise = await mathaleaLoadExerciceFromUuid(paramsExercice.uuid)
+    if (!exercise) continue
     mathaleaHandleParamOfOneExercice(exercise, paramsExercice)
     exercise.duration = paramsExercice.duration ?? 10
     exercises.push(exercise)

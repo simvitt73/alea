@@ -1,7 +1,7 @@
 import type { MathfieldElement } from 'mathlive'
+import type { IExercice } from '../../lib/types'
 import { sp } from '../outils/outilString'
 import { fonctionComparaison } from './comparisonFunctions'
-import type { IExercice } from '../../exercices/Exercice.type'
 
 // Un barème qui ne met qu'un point si tout est juste
 export function toutPourUnPoint(listePoints: number[]): [number, number] {

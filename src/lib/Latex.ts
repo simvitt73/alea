@@ -1,5 +1,4 @@
 import seedrandom from 'seedrandom'
-import type { IExercice } from '../exercices/Exercice.type'
 import genericPreamble from '../lib/latex/preambule.tex?raw'
 import {
   loadFonts,
@@ -8,79 +7,16 @@ import {
   loadProfCollegeIfNeed,
   logPDF,
 } from '../lib/latex/preambuleTex'
+import type { IExercice } from '../lib/types'
+import type {
+  ExoContent,
+  LatexFileInfos,
+  contentsType,
+  latexFileType,
+  picFile,
+} from './LatexTypes'
 import { mathaleaHandleExerciceSimple } from './mathalea.js'
 import { getLang } from './stores/languagesStore'
-// printPrettier pose problème avec begin{aligned}[t] en ajoutant un saut de ligne problématique
-// import { printPrettier } from 'prettier-plugin-latex/standalone.js'
-
-export interface Exo {
-  content?: string
-  serie?: string
-  month?: string
-  year?: string
-  zone?: string
-  title?: string
-}
-
-export interface picFile {
-  name: string
-  format: string
-}
-
-export type LatexFileInfos = {
-  title: string
-  reference: string
-  subtitle: string
-  dysTailleFontOption: number
-  tailleFontOption: number
-  durationCanOption: string
-  titleOption: string
-  style:
-    | 'Coopmaths'
-    | 'Classique'
-    | 'ProfMaquette'
-    | 'ProfMaquetteQrcode'
-    | 'Can'
-  nbVersions: number
-  fontOption: 'StandardFont' | 'DysFont'
-  correctionOption: 'AvecCorrection' | 'SansCorrection'
-  qrcodeOption: 'AvecQrcode' | 'SansQrcode'
-  typeFiche: 'Fiche' | 'Eval'
-  exos?: {
-    [key: string]: {
-      labels?: string
-      itemsep?: number
-      cols?: number
-      cols_corr?: number
-      blocrep?: { nbligs: number; nbcols: number }
-    }
-  }
-  signal?: AbortSignal | undefined
-}
-
-export type contentsType = {
-  preamble: string
-  intro: string
-  content: string
-  contentCorr: string
-}
-
-export type latexFileType = {
-  contents: contentsType
-  latexWithoutPreamble: string
-  latexWithPreamble: string
-}
-
-interface ExoContent {
-  content?: string
-  contentCorr?: string
-  serie?: string
-  month?: string
-  year?: string
-  zone?: string
-  title?: string
-}
-
 function testIfLoaded(
   values: string[],
   valuetoSearch: string,

@@ -8,6 +8,7 @@ import { segment } from '../../lib/2d/segmentsVecteurs'
 import { labelPoint } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
 import { rotation, translation } from '../../lib/2d/transformations'
+import { pointEstSur } from '../../lib/2d/utilitairesGeometriques'
 import { milieu } from '../../lib/2d/utilitairesPoint'
 import { vecteur } from '../../lib/2d/Vecteur'
 import {
@@ -250,12 +251,14 @@ export default class SymAxeEtCoordonnees extends Exercice {
       for (let i = 0; i < 3; i++) {
         const m = milieu(antecedents[i], images[i])
         const p = rotation(antecedents[i], m, 90)
-        const codage = codageAngleDroit(antecedents[i], m, p)
-        objetsCorrection.push(
-          segment(antecedents[i], images[i], couleurs[i]),
-          codageSegments('//', couleurs[i], m, antecedents[i], m, images[i]),
-          codage,
-        )
+        if (!pointEstSur(antecedents[i], d)) {
+          objetsCorrection.push(
+            segment(antecedents[i], images[i], couleurs[i]),
+            codageSegments('//', couleurs[i], m, antecedents[i], m, images[i]),
+            codageAngleDroit(antecedents[i], m, p),
+          )
+        }
+
         texte +=
           (i === 0 ? numAlpha(i) : '<br>' + numAlpha(i)) +
           ` Donner les coordonnées de l'image de $${lettre1[i]}$ par la symétrie d'axe $(d)$.`

@@ -4,7 +4,6 @@
   import { get } from 'svelte/store'
   import { notify } from '../../../bugsnag'
   import type Exercice from '../../../exercices/Exercice'
-  import type { IExercice } from '../../../exercices/Exercice.type'
   import {
     getExercisesFromExercicesParams,
     mathaleaFormatExercice,
@@ -21,7 +20,7 @@
     globalOptions,
     previousView,
   } from '../../../lib/stores/generalStore'
-  import type { InterfaceParams } from '../../../lib/types'
+  import type { IExercice, InterfaceParams } from '../../../lib/types'
   import type { CanState } from '../../../lib/types/can'
   import { isIntegerInRange0to3 } from '../../../lib/types/integerInRange'
   import { context } from '../../../modules/context.js'

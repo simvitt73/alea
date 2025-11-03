@@ -1,10 +1,9 @@
 import { context } from '../../modules/context'
 import type { NestedObjetMathalea2dArray, ObjetDivLatex } from '../../types/2d'
-import { Point3d } from '../3d/3dProjectionMathalea2d/elementsEtTransformations3d'
 import { arrondi } from '../outils/nombres'
 import { stringNombre } from '../outils/texNombre'
 import { colorToLatexOrHTML } from './colorToLatexOrHtml'
-import type { IPointAbstrait, IPolygone } from './Interfaces'
+import type { IPoint3d, IPointAbstrait, IPolygone } from './Interfaces'
 import { ObjetMathalea2D } from './ObjetMathalea2D'
 import { point, Point, PointAbstrait } from './PointAbstrait'
 import type { Vide2d } from './Vide2d'
@@ -78,8 +77,8 @@ export function labelLatexPoint(
   } else {
     listePoints = points
   }
-  listePoints = listePoints.map((pt: PointAbstrait | Point3d) =>
-    pt instanceof Point3d ? pt.c2d : pt,
+  listePoints = listePoints.map((pt: PointAbstrait | IPoint3d) =>
+    'c2d' in pt ? pt.c2d : pt,
   )
   for (const unPoint of listePoints) {
     x = arrondi(unPoint.x)

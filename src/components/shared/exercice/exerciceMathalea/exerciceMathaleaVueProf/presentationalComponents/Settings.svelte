@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import type { IExercice } from '../../../../../../exercices/Exercice.type'
   import ExerciceSimple from '../../../../../../exercices/ExerciceSimple'
+  import type { IExercice } from '../../../../../../lib/types'
 
   export let exercice: IExercice
   export let exerciceIndex: number

@@ -1,6 +1,5 @@
-import type { IExercice } from '../../exercices/Exercice.type'
+import type { IExercice, UneProposition } from '../../lib/types'
 import { lettreDepuisChiffre } from '../outils/outilString'
-import type { UneProposition } from '../types'
 
 export function shuffleJusquaWithIndexes(array: unknown[], lastChoice: number) {
   // Créer une copie du tableau d'entrée

@@ -1,4 +1,4 @@
-import type { IExercice } from '../exercices/Exercice.type'
+import type { IExercice } from '../lib/types'
 
 /**
  * Sauvegarde les réponses d'un exercice de type tableau dont on connait le nombre de lignes et de colonnes

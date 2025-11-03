@@ -1,5 +1,4 @@
 import Decimal from 'decimal.js'
-import type { IExercice } from '../exercices/Exercice.type'
 import { texMulticols } from '../lib/format/miseEnPage'
 import {
   combinaisonListes,
@@ -8,6 +7,7 @@ import {
   enleveDoublonNum,
 } from '../lib/outils/arrayOutils'
 import { arrondi, rangeMinMax } from '../lib/outils/nombres'
+import type { IExercice } from '../lib/types'
 import { context } from './context'
 import type { IFractionEtendue } from './FractionEtendue.type'
 

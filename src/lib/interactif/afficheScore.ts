@@ -1,5 +1,4 @@
-import type { IExercice } from '../../exercices/Exercice.type'
-import type { ResultOfExerciceInteractif } from '../types'
+import type { IExercice, ResultOfExerciceInteractif } from '../../lib/types'
 
 export function afficheScore(
   exercice: IExercice,
