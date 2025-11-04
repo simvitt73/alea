@@ -106,10 +106,24 @@ function normalizeFraction(n: number | Decimal, d: number): [number, number] {
       num = Number(n)
       den = Number(d)
     } else {
-      const quotient = new Decimal(n).div(d)
-      const [numDec, denDec] = quotient.toFraction(10000)
-      num = numDec.toNumber()
-      den = denDec.toNumber()
+      // attention aux flottants en javascript...
+      // La fraction retournée sera irreductible
+      // il vaut mieux utiliser n et d entiers !
+      const nDecimal = n instanceof Decimal ? n : new Decimal(n)
+      const dDecimal = new Decimal(d)
+      const nNbChiffresDecimaux = nDecimal.decimalPlaces()
+      const dNbChiffresDecimaux = dDecimal.decimalPlaces()
+      const pow = Math.min(
+        5,
+        Math.max(nNbChiffresDecimaux, dNbChiffresDecimaux),
+      )
+      if (pow > 0) {
+        const facteur = Math.pow(10, pow)
+        n = nDecimal.mul(facteur).round().toNumber()
+        d = dDecimal.mul(facteur).round().toNumber()
+      }
+      num = Number(n)
+      den = Number(d)
     }
   }
 
@@ -238,7 +252,7 @@ class FractionEtendue {
    * le code LaTeX de l'écriture avec parenthèse si négatif
    */
 
-  constructor(n: number, d: number) {
+  constructor(n: number | Decimal, d: number) {
     const [num, den] = normalizeFraction(n, d)
     if (isNaN(num) || isNaN(den))
       throw Error(
