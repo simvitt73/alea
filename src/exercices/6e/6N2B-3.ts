@@ -71,13 +71,11 @@ export default class MultiplierUnDecimalParPuissanceDeDix extends Exercice {
     ]
     let listeChoixAlea = range(6, [3])
     let reponse
-    this.nbQuestions = Math.min(this.nbQuestions, 6)
     if (parseInt(this.sup2) === 1) {
       listeChoixAlea = rangeMinMax(4, 6)
     }
     if (parseInt(this.sup2) === 2) {
       listeChoixAlea = range(2)
-      this.nbQuestions = Math.min(this.nbQuestions, 3)
     }
     this.consigne = ''
     if (!context.isDiaporama && this.sup4) {
