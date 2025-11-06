@@ -96,8 +96,7 @@ export default class MultiplierUnDecimalParPuissanceDeDix extends Exercice {
       i < this.nbQuestions && cpt < 50;
 
     ) {
-      const choixAlea = listeChoixAlea[0]
-      listeChoixAlea.splice(0, 1)
+      const choixAlea = listeChoixAlea[i]
       const centaine = randint(0, 1) === 0 ? choice(rangeMinMax(0, 9)) : 0
       const dizaine = choice(rangeMinMax(0, 9), [centaine])
       const unite = choice(rangeMinMax(0, 9), [centaine, dizaine])
