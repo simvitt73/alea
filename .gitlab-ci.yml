@@ -428,6 +428,8 @@ tests-unitaires:
     - echo "CI_OPEN_MERGE_REQUESTS '$CI_OPEN_MERGE_REQUESTS'"
     - echo "CI_PIPELINE_SOURCE '$CI_PIPELINE_SOURCE'"
     - echo "$CI_COMMIT_AUTHOR"
+    - export PNPM_HOME="$HOME/.pnpm-global"
+    - export PATH="$PNPM_HOME:$PATH"
     - pnpm add -g husky
     - pnpm install
     - pnpm run makeJson
