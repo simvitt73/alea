@@ -56,7 +56,7 @@ export const amcType = 'qcmMono'
 
 export const titre = 'Triangles semblables'
 export const dateDePublication = '16/05/2024' // La date de publication initiale au format 'jj/mm/aaaa' pour affichage temporaire d'un tag
-export const dateDeModifImportante = '15/04/2025'
+export const dateDeModifImportante = '06/11/2025'
 
 /**
  * Deux triangles semblables sont codés, il faut reconnaitre les côtés homologues
@@ -851,7 +851,7 @@ export default class TrianglesSemblables extends Exercice {
             { label: 'sont semblables', value: 'oui' },
             { label: 'ne sont pas semblables', value: 'non' },
           ]
-          texte += `ont pour angles respectifs $\\widehat{${A.nom + B.nom + C.nom}}$ = $\\widehat{${D.nom + E.nom + F.nom}}$ = 90°, $\\widehat{${B.nom + C.nom + A.nom}}$ = $\\widehat{${F.nom + D.nom + E.nom}}$ et $\\widehat{${C.nom + A.nom + B.nom}}$ = $\\widehat{${E.nom + F.nom + D.nom}}$.`
+          texte += `ont pour angles respectifs $\\widehat{${A.nom + F.nom + E.nom}}$ = $\\widehat{${E.nom + D.nom + C.nom}}$ = 90°, $\\widehat{${B.nom + C.nom + A.nom}}$ = $\\widehat{${F.nom + D.nom + E.nom}}$ et $\\widehat{${C.nom + A.nom + B.nom}}$ = $\\widehat{${E.nom + F.nom + D.nom}}$.`
           if (this.interactif) {
             texte += choixDeroulant(this, indiceChampReponse, choices) + '.'
             handleAnswers(
