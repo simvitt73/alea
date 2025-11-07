@@ -42,6 +42,8 @@ cache:
     - .pnpm-store
 
 .install_dependencies:
+  variables:
+    PNPM_SKIP_GIT_POSTINSTALL: 'true'
   before_script:
     - npm install -g corepack@latest
     - corepack enable
@@ -50,8 +52,6 @@ cache:
     - pnpm -v
     - pnpm add playwright@1.51.1 --save-dev
     - pnpm add @playwright/test@1.51.1 --save-dev
-    # Installe apigeom sans exécuter prepare
-    - pnpm add https://forge.apps.education.fr/coopmaths/apigeom.git --ignore-scripts
     - NODE_OPTIONS=--max-old-space-size=4096 pnpm install
     - nohup pnpm start &
     - sleep 20
@@ -59,6 +59,8 @@ cache:
     - sleep 60
 
 .install_dependenciesPDF:
+  variables:
+    PNPM_SKIP_GIT_POSTINSTALL: 'true'
   before_script:
     - pnpm config set store-dir .pnpm-store
     - pnpm -v
@@ -68,8 +70,6 @@ cache:
     - pnpm exec playwright install chromium
     - ls /root/.cache/ms-playwright/
     - pnpm add playwright@1.51.1 --save-dev
-    # Installe apigeom sans exécuter prepare
-    - pnpm add https://forge.apps.education.fr/coopmaths/apigeom.git --ignore-scripts
     - pnpm install
     - nohup pnpm start &
     - sleep 10
