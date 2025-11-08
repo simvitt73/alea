@@ -349,10 +349,14 @@ export default class EcrireUneExpressionNumerique extends Exercice {
                   { label: 'un quotient', value: 'quotient' },
                 ]),
               ])
+            const val =
+              typeof expNom === 'string'
+                ? expNom.replace('une ', '').replace('un ', '')
+                : expNom
             handleAnswers(
               this,
               i,
-              { reponse: { value: expNom } },
+              { reponse: { value: val } },
               { formatInteractif: 'listeDeroulante' },
             )
           }
