@@ -144,15 +144,33 @@ function genererVariantsParFraction(texte: string): string[][] {
 }
 
 /**
- * Génère toutes les égalités triples possibles entre les fractions d'un texte.
+ * Inverse une fraction LaTeX du type \dfrac{num}{den}.
+ *
+ * @param fraction - Fraction LaTeX à inverser.
+ * @returns La fraction inversée (\dfrac{den}{num}).
+ * @example
+ * inverserFraction("\\dfrac{GE}{GH}")
+ * // => "\\dfrac{GH}{GE}"
+ * @author Eric Elter
+ */
+function inverserFraction(fraction: string): string {
+  const match = /\\dfrac\{([^}]*)\}\{([^}]*)\}/.exec(fraction)
+  if (!match) return fraction
+  const [, num, den] = match
+  return `\\dfrac{${den}}{${num}}`
+}
+
+/**
+ * Génère toutes les égalités triples possibles entre les fractions d'un texte,
+ * y compris leurs inverses.
  * Chaque égalité relie une variante de chaque fraction, et peut inclure toutes les permutations d’ordre.
  *
  * @param texte - Chaîne contenant des fractions LaTeX du type \dfrac{...}{...}.
  * @param inclurePermutations - Si true, inclut aussi toutes les permutations d’ordre entre les fractions.
- * @returns Un tableau de chaînes représentant des égalités complètes de type "f1 = f2 = f3".
+ * @returns Un tableau de chaînes représentant des égalités complètes de type "f1 = f2 = f3" et leurs inverses.
  * @example
  * genererToutesEgalites("\\dfrac{GE}{GH}=\\dfrac{BF}{BK}=\\dfrac{AB}{CD}", true)
- * // => ["\\dfrac{GE}{GH} = \\dfrac{BF}{BK} = \\dfrac{AB}{CD}", ...]
+ * // => ["\\dfrac{GE}{GH} = \\dfrac{BF}{BK} = \\dfrac{AB}{CD}", "\\dfrac{GH}{GE} = \\dfrac{BK}{BF} = \\dfrac{CD}{AB}", ...]
  * @throws Erreur si le texte contient moins de trois fractions.
  * @author Eric Elter
  */
@@ -171,12 +189,19 @@ function genererToutesEgalites(
     for (const f2 of groupes[1]) {
       for (const f3 of groupes[2]) {
         const base = [f1, f2, f3]
+        const baseStr = base.join('=')
+        egalites.add(baseStr)
+
+        // Ajoute la version inverse (toutes les fractions inversées)
+        const inverses = base.map(inverserFraction).join('=')
+        egalites.add(inverses)
+
         if (inclurePermutations) {
           for (const perm of permutationsUnique(base)) {
-            egalites.add(perm.join(' = '))
+            egalites.add(perm.join('='))
+            const invPerm = perm.map(inverserFraction)
+            egalites.add(invPerm.join('='))
           }
-        } else {
-          egalites.add(base.join(' = '))
         }
       }
     }
@@ -365,7 +390,9 @@ export default class RelationDeThales extends Exercice {
         `\\dfrac{${nomC + nomA}}{${nomC + nomM}}=\\dfrac{${nomC + nomB}}{${nomC + nomN}}=\\dfrac{${nomA + nomB}}{${nomM + nomN}}`,
         true,
       )
-      handleAnswers(this, i, { reponse: { value: reponse } })
+      handleAnswers(this, i, {
+        reponse: { value: reponse, options: { texteAvecCasse: true } },
+      })
       if (context.isHtml) {
         texte += `<br><div style="display: inline-block;margin-top:20px;">${boutonAideMathalea2d}</div>`
       }
