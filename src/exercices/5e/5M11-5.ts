@@ -32,6 +32,7 @@ import { context } from '../../modules/context'
 import Grandeur from '../../modules/Grandeur'
 import { mathalea2d } from '../../modules/mathalea2d'
 import {
+  contraindreValeur,
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu,
   randint,
@@ -122,7 +123,7 @@ export default class PerimetreOuAireDeFiguresComposees extends Exercice {
       this.nbQuestions === 1 ? 'la figure suivante' : 'les figures suivantes'
     const singulierPluriel2 =
       this.nbQuestions === 1 ? 'de la figure suivante' : 'des figures suivantes'
-
+    this.sup3 = contraindreValeur(1, 2, this.sup3, 1)
     switch (this.sup4) {
       case 4:
         this.consigne = `Décomposer ${singulierPluriel} en plusieurs figures simples.`

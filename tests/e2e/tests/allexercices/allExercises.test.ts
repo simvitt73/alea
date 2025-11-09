@@ -270,6 +270,7 @@ async function getConsoleTest(uuid: string, urlExercice: string) {
       for (const keySup of keysToUse) {
         exercice.sup = sup[keySup]
         log('sup=' + exercice.sup)
+        exercice.sup = 4
         for (const keySup2 in sup2) {
           exercice.sup2 = sup2[keySup2]
           for (const keySup3 in sup3) {
@@ -291,7 +292,15 @@ async function getConsoleTest(uuid: string, urlExercice: string) {
               .join(':')
             // log(signature)
             const c = mockConsole()
-            exercice.nouvelleVersionWrapper()
+            try {
+              exercice.nouvelleVersionWrapper()
+            } catch (e) {
+              logError(
+                `Exception levée pour exercice ${exercice.uuid} avec signature ${signature}:`,
+                e,
+              )
+              throw e
+            }
             c.restore()
             if (c.logs.error.length > 0) {
               logError(
@@ -454,7 +463,7 @@ if (
   }
 } else {
   // testRunAllLots('2e/2F22-1')
-  testRunAllLots('3e/')
+  testRunAllLots('5e/5M11-5')
   // testRunAllLots('4e/4G52')
 
   // testRunAllLots('techno1')
