@@ -139,26 +139,26 @@ const limitesCaps: CompleteKeysList = {
     'ADD',
   ],
   block: [
+    'FRAC',
+    'ADD',
     7,
     8,
     9,
-    'DIV',
+    'SQRT',
+    'SUB',
     4,
     5,
     6,
+    'e^',
     'MULT',
     1,
     2,
     3,
-    'SUB',
+    'LN',
+    'DIV',
+    'INFTY',
     0,
     'COMMA',
-    'INFTY',
-    'ADD',
-    'FRAC',
-    'SQRT',
-    'e^',
-    'LN',
   ],
 }
 const numbersOperationsXCaps: CompleteKeysList = {
@@ -794,7 +794,7 @@ export const numbersOperationsX: KeyboardBlock = {
 
 export const limites: KeyboardBlock = {
   keycaps: limitesCaps,
-  cols: 4,
+  cols: 5,
   title: 'Clavier pour les Limites',
   isUnits: false,
 }
