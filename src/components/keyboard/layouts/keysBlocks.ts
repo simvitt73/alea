@@ -248,7 +248,7 @@ const variableCaps: CompleteKeysList = {
     'kMath',
     'nMath',
     'iMath',
-    'e',
+    'hMath',
     'V',
     'F',
   ],
@@ -262,7 +262,7 @@ const variableCaps: CompleteKeysList = {
     'cMath',
     'zMath',
     'iMath',
-    'e',
+    'hMath',
     'V',
     'F',
   ],
@@ -701,46 +701,57 @@ const eosnCaps: CompleteKeysList = {
   block: ['O', 'E', 'S', 'N', 'DEG', 'SEMICOLON'],
 }
 
-// @ts-expect-error Problème de typage
 const lengthUnitsKeys = Object.keys(keys)
   .filter((k) => k.includes('LENGTH'))
-  .reduce((prev, k) => Object.assign(prev, { [k]: keys[k] }), {})
+  .reduce(
+    (prev, k) => Object.assign(prev, { [k]: keys[k as keyof typeof keys] }),
+    {} as Partial<typeof keys>,
+  )
+
 const lengthsCaps: CompleteKeysList = {
   inline: Object.keys(lengthUnitsKeys) as KeysList,
   block: Object.keys(lengthUnitsKeys) as KeysList,
 }
 
-// @ts-expect-error Problème de typage
 const areasUnitsKeys = Object.keys(keys)
   .filter((k) => k.includes('AREA'))
-  .reduce((prev, k) => Object.assign(prev, { [k]: keys[k] }), {})
+  .reduce(
+    (prev, k) => Object.assign(prev, { [k]: keys[k as keyof typeof keys] }),
+    {},
+  )
 const areasCaps: CompleteKeysList = {
   inline: Object.keys(areasUnitsKeys) as KeysList,
   block: Object.keys(areasUnitsKeys) as KeysList,
 }
 
-// @ts-expect-error Problème de typage
 const volumesUnitsKeys = Object.keys(keys)
   .filter((k) => k.includes('VOLUME'))
-  .reduce((prev, k) => Object.assign(prev, { [k]: keys[k] }), {})
+  .reduce(
+    (prev, k) => Object.assign(prev, { [k]: keys[k as keyof typeof keys] }),
+    {},
+  )
 const volumesCaps: CompleteKeysList = {
   inline: Object.keys(volumesUnitsKeys) as KeysList,
   block: Object.keys(volumesUnitsKeys) as KeysList,
 }
 
-// @ts-expect-error Problème de typage
 const capacitiesUnitsKeys = Object.keys(keys)
   .filter((k) => k.includes('CAPACITY'))
-  .reduce((prev, k) => Object.assign(prev, { [k]: keys[k] }), {})
+  .reduce(
+    (prev, k) => Object.assign(prev, { [k]: keys[k as keyof typeof keys] }),
+    {},
+  )
 const capacitiesCaps: CompleteKeysList = {
   inline: Object.keys(capacitiesUnitsKeys) as KeysList,
   block: Object.keys(capacitiesUnitsKeys) as KeysList,
 }
 
-// @ts-expect-error Problème de typage
 const massesUnitsKeys = Object.keys(keys)
   .filter((k) => k.includes('MASS'))
-  .reduce((prev, k) => Object.assign(prev, { [k]: keys[k] }), {})
+  .reduce(
+    (prev, k) => Object.assign(prev, { [k]: keys[k as keyof typeof keys] }),
+    {},
+  )
 const massesCaps: CompleteKeysList = {
   inline: Object.keys(massesUnitsKeys) as KeysList,
   block: Object.keys(massesUnitsKeys) as KeysList,
