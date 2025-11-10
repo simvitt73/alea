@@ -1,5 +1,5 @@
 import { randint } from '../../modules/outils'
-import ExerciceLabyrinthe from './_Exercice_labyrinthe'
+import ExerciceLabyrinthe from '../_Exercice_labyrinthe'
 export const titre = 'Labyrinthe des vecteurs colinéaires'
 
 export const dateDePublication = '30/10/2026'
