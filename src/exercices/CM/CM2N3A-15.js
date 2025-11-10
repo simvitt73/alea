@@ -1,6 +1,6 @@
 import Exercice from '../Exercice'
 
-import { setReponse } from '../../lib/interactif/gestionInteractif'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 
@@ -13,7 +13,6 @@ export const amcType = 'AMCNum'
 /**
  * Une soustraction dont le premier terme est un multiple de 10
  * @author Rémi Angot
-
  */
 export const uuid = '5e009'
 
@@ -25,9 +24,7 @@ export const refs = {
 export default class ComplementAUneDizaine extends Exercice {
   constructor() {
     super()
-
     this.consigne = 'Calculer.'
-
     this.nbCols = 2
     this.nbColsCorr = 2
   }
@@ -36,13 +33,12 @@ export default class ComplementAUneDizaine extends Exercice {
     for (
       let i = 0, texte, texteCorr, a, b, cpt = 0;
       i < this.nbQuestions && cpt < 50;
-
     ) {
       a = randint(2, 9) * 10
       b = randint(2, a - 11)
       texte = `$${a}-${b}=$`
       texteCorr = `$${a}-${b}=${a - b}$`
-      setReponse(this, i, a - b)
+      handleAnswers(this, i, {reponse: {value: a - b}})
       if (this.interactif) texte += ajouteChampTexteMathLive(this, i, '')
 
       if (this.listeQuestions.indexOf(texte) === -1) {
@@ -55,5 +51,4 @@ export default class ComplementAUneDizaine extends Exercice {
     }
     listeQuestionsToContenu(this)
   }
-  // this.besoinFormulaireNumerique = ['Niveau de difficulté',3];
 }
