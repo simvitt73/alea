@@ -378,6 +378,7 @@ export class DroiteGraduee extends ObjetMathalea2D {
         labelsPrincipaux: false,
         labelListe: [[0, 'O'], [1, 'I']],
         pointListe: [[-1, 'A'], [5, 'B'], [7.2, 'C']],
+        labelListeScriptsize: true,
         pointTaille: 6,
         pointCouleur: 'gray',
         pointStyle: '|',
