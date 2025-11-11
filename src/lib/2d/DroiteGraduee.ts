@@ -304,7 +304,7 @@ export class DroiteGraduee extends ObjetMathalea2D {
         )
         T = tracePoint(P, pointCouleur)
         T.taille = pointTaille
-        T.tailleTikz = Math.max(T.taille / 30, 0.3)
+        T.tailleTikz = Math.max(T.taille / 30, 0.1)
         T.opacite = pointOpacite
         T.style = pointStyle
         T.epaisseur = pointEpaisseur
