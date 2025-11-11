@@ -78,6 +78,7 @@ export default class sensDesPrefixes extends Exercice {
         pointListe: [[fractionUnitaire.toNumber(), '']],
         pointCouleur: 'black',
         pointStyle: '|',
+        pointTaille: 3,
         labelListeScriptsize: true,
       }
       const droiteEnonce = droiteGraduee(paramsDroite)
@@ -154,4 +155,5 @@ type ParamsDroite = {
   pointCouleur: string
   pointStyle: string
   labelListeScriptsize: boolean
+  pointTaille: number
 }
