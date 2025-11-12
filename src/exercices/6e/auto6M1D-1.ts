@@ -117,7 +117,7 @@ export default class sensDesPrefixes extends Exercice {
         droiteEnonce,
       )
       let texteCorr = `$${fraction.texFraction} = ${num} \\times ${fractionUnitaire.texFraction}$ donc
-pour placer $${fraction.texFraction}$ il faut faire $${num}$ fois la distance entre $0$ et $${fractionUnitaire.texFraction}$.<br>
+pour placer $${fraction.texFraction}$ il faut reporter $${num}$ fois la distance entre $0$ et $${fractionUnitaire.texFraction}$.<br>
 On peut utiliser le compas pour reporter cette distance $${num}$ fois sur la droite graduée.<br>`
       texteCorr += mathalea2d(
         Object.assign({}, fixeBordures([droiteCorrection])),
