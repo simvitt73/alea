@@ -18,7 +18,7 @@ export const refs = {
  * @author Gilles Mora
 
 */
-export default class anneeATrouver extends ExerciceSimple {
+export default class anneeATrouver2026 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
@@ -27,14 +27,15 @@ export default class anneeATrouver extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const a = randint(30, 50)
+    const annee = 2026
+    const a = this.canOfficielle ? 30 : randint(30, 50)
     const prenom = prenomF(1)
     this.question =
       'Si ' +
       prenom +
-      ` a $${a}$ ans en $2025$, en quelle année est-elle naît  ?`
-    this.reponse = 2025 - a
-    this.correction = `Comme $${2025}-${a}=${texNombre(this.reponse, 0)}$, ${prenom} est naît en $${miseEnEvidence(texNombre(this.reponse))}$.`
+      ` a $${a}$ ans en $${annee}$, en quelle année est-elle naît  ?`
+    this.reponse = annee - a
+    this.correction = `Comme $${annee}-${a}=${texNombre(this.reponse, 0)}$, ${prenom} est naît en $${miseEnEvidence(texNombre(this.reponse))}$.`
     if (this.interactif) {
       this.question += '<br>'
     }

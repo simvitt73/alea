@@ -18,7 +18,7 @@ export const refs = {
  * @author Gilles Mora
 
 */
-export default class nombreEntreDeuxValeurs extends ExerciceSimple {
+export default class nombreEntreDeuxValeurs2026 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
@@ -27,8 +27,9 @@ export default class nombreEntreDeuxValeurs extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const valInf = new Decimal(2025).div(choice([100, 1000]))
-    const valSup = choice([valInf.add(0.01), valInf.add(0.001)])
+    const annee =2026
+    const valInf = new Decimal(annee).div(this.canOfficielle ? 100 : choice([100, 1000]))
+    const valSup = this.canOfficielle ? valInf.add(0.01) : choice([valInf.add(0.01), valInf.add(0.001)])
     this.reponse = {
       reponse: {
         value: `]${valInf};${valSup}[`,

@@ -31,8 +31,9 @@ export default class CompleterUneSuite2026 extends ExerciceSimple {
   }
 
   nouvelleVersion() {
+    const annee = 2026
     const choix = this.canOfficielle ? true : choice([true, false])
-    const abs0 = choix ? 2000 : 2005
+    const abs0 = choix ? annee - 25 : annee - 20
     const abs1 = choix ? abs0 + 25 : abs0 + 20
     const abs2 = choix ? abs0 + 50 : abs0 + 40
     const x1 = this.canOfficielle
