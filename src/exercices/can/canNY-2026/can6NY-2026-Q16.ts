@@ -67,7 +67,7 @@ export default class PlusGrandNombre2026 extends ExerciceSimple {
       this.question = 'Cocher le plus grand nombre : ' + qcm.texte
     }
 
-    this.canEnonce = 'Cocher le plus grand nombre.'
+    this.canEnonce = 'Entourer le plus grand nombre.'
     this.canReponseACompleter = `$${texNombre(a, 3)}$ ${b} ${sp(7)} $${texNombre(nbB, 3)}$`
   }
 }

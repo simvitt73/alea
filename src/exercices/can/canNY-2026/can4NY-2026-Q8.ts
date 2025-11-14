@@ -17,7 +17,7 @@ export const refs = {
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Eric Elter+  Gilles Mora
  */
-export default class CalculParentheses extends ExerciceSimple {
+export default class CalculParentheses2026 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
@@ -26,12 +26,13 @@ export default class CalculParentheses extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const a = randint(1, 12) * 2 + 1
+    const annee =2026
+    const a = this.canOfficielle ? 4 : randint(1, 12) * 2 
 
-    this.reponse = texNombre(new Decimal(2025).sub(a).div(2), 0)
-    this.question = `Calculer, sous forme décimale, $(${texNombre(2025, 0)}-${a})\\times 0,5$.`
+    this.reponse = texNombre(new Decimal(annee).sub(a).div(2), 0)
+    this.question = `Calculer, sous forme décimale, $(${texNombre(annee, 0)}-${a})\\times 0,5$.`
     this.correction = `Multiplier par $0,5$ revient à prendre la moitié.<br>
-      Ainsi, $(${texNombre(2025, 0)}-${a})\\times 0,5=\\dfrac{${new Decimal(2025).sub(a)}}{2}=${miseEnEvidence(this.reponse)}$.`
+      Ainsi, $(${texNombre(annee, 0)}-${a})\\times 0,5=\\dfrac{${texNombre(new Decimal(annee).sub(a))}}{2}=${miseEnEvidence(this.reponse)}$.`
 
     if (this.interactif) {
       this.question += '<br>'

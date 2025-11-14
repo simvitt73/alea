@@ -27,11 +27,12 @@ export default class calcAvecChiffresRel extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const a = randint(1, 9)
+    const annee=2026
+    const a = this.canOfficielle ? 5 : randint(1, 9)
 
-    this.reponse = a - 2025
-    this.question = `$${a}-${texNombre(2025, 0)}$`
-    this.correction = `$${a}-${texNombre(2025, 0)}=${a}+(-${texNombre(2025, 0)})=${miseEnEvidence(texNombre(this.reponse, 0))}$`
+    this.reponse = a - annee
+    this.question = `$${a}-${texNombre(annee, 0)}$`
+    this.correction = `$${a}-${texNombre(annee, 0)}=${a}+(-${texNombre(annee, 0)})=${miseEnEvidence(texNombre(this.reponse, 0))}$`
 
     this.canEnonce = this.question
     this.canReponseACompleter = ''

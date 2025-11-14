@@ -25,7 +25,7 @@ export const refs = {
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Eric Elter - Gilles Mora
  */
-export default class perimetreCalcul extends ExerciceSimple {
+export default class perimetreCalcul2026 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
@@ -35,9 +35,10 @@ export default class perimetreCalcul extends ExerciceSimple {
   }
 
   nouvelleVersion() {
+    const annee= 2026
     const objets = []
-    const diviseur = choice([1, 10, 100, 1000])
-    const a = new Decimal(2025).div(diviseur)
+    const diviseur = this.canOfficielle ? 1 : choice([1, 10, 100, 1000])
+    const a = new Decimal(annee).div(diviseur)
     const A = point(0, 0, 'A', 'below')
     const B = point(6, 0, 'B', 'below')
     const C = point(6, 6, 'C', 'below')

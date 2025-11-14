@@ -18,7 +18,7 @@ export const refs = {
  * Modèle d'exercice très simple pour la course aux nombres
  * @author Eric Elter - Gilles Mora
  */
-export default class InverseOppose extends ExerciceSimple {
+export default class valeurDecimale2026 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
@@ -27,13 +27,14 @@ export default class InverseOppose extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const c = choice([2, 4, 5])
-    const b = randint(1, c - 1)
+    const annee=2026
+    const c = this.canOfficielle ? 4 : choice([2, 4, 5])
+    const b = this.canOfficielle ? 1 : randint(1, c - 1)
     const maFraction = new FractionEtendue(b, c)
-    const a = 2025
+    const a = annee
     const resultat = maFraction.ajouteEntier(a).valeurDecimale
     this.question = `Quelle est la valeur décimale de  $${texNombre(a, 0)}+${maFraction.texFraction}$ ?`
-    this.correction = `$${a}+${maFraction.texFraction} = ${a} + ${texNombre(maFraction.valeurDecimale)}= ${miseEnEvidence(texNombre(resultat, 2))}$`
+    this.correction = `$${texNombre(a)}+${maFraction.texFraction} = ${texNombre(a)} + ${texNombre(maFraction.valeurDecimale)}= ${miseEnEvidence(texNombre(resultat, 2))}$`
     this.reponse = resultat
 
     if (this.interactif) {

@@ -26,19 +26,23 @@ export default class AjouterMinutes extends ExerciceSimple {
   }
 
   nouvelleVersion() {
+    const annee = 2026
     const h = 20
-    const k = randint(8, 11) * 5
-    this.question = `Ajouter $${k}$ minutes à $20$ h $25$ minutes.`
+    const k = this.canOfficielle ? 50 : randint(8, 11) * 5
+    this.question = `Ajouter $${k}$ minutes à $20$ h $${annee % 100}$ minutes.`
 
-    this.correction = `$20$ h $25$ minutes + $${k}$ minutes  $=$$20$ h $25$ minutes + $35$ minutes  + $${k - 35}$ minutes  $=${miseEnEvidence(`${h + 1}\\text{ h } ${25 + k - 60}\\text{ min}`)}$.`
+    this.correction = `$20$ h $${annee % 100}$ minutes + $${k}$ minutes  $=$$20$ h $${annee % 100}$ minutes + $${60 - (annee % 100)}$ minutes  + $${k - (60 - (annee % 100))}$ minutes  $=${miseEnEvidence(`${h + 1}\\text{ h } ${(annee % 100) + k - 60}\\text{ min}`)}$.`
     this.reponse = {
-      reponse: { value: `${h + 1}h ${25 + k - 60}`, options: { HMS: true } },
+      reponse: {
+        value: `${h + 1}h ${(annee % 100) + k - 60}`,
+        options: { HMS: true },
+      },
     }
     if (this.interactif) {
       this.question += '<br>'
     }
 
-    this.canEnonce = `Ajouter $${k}$ minutes à $20$ h 25 minutes.`
+    this.canEnonce = `Ajouter $${k}$ minutes à $20$ h ${annee % 100} minutes.`
     this.canReponseACompleter = `$\\ldots${sp()}\\text{h}${sp()}\\ldots${sp()}\\text{min}$`
   }
 }
