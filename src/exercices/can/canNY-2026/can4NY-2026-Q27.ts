@@ -26,10 +26,11 @@ export default class Convertir extends ExerciceSimple {
   }
 
   nouvelleVersion() {
+    const annee = 2026
     let a, b
-    switch (choice(['b', 'b'])) {
+    switch (this.canOfficielle ? 'a' : choice(['a', 'b'])) {
       case 'a':
-        b = 2025
+        b = annee
         a = choice([
           new Decimal(b).div(10),
           new Decimal(b).div(10000),
@@ -48,7 +49,7 @@ export default class Convertir extends ExerciceSimple {
         this.canReponseACompleter = `$${texNombre(a)}\\text{ m}^3 = \\dots\\text{ L}$`
         break
       case 'b':
-        b = 2025
+        b = annee
         a = choice([
           new Decimal(b),
           new Decimal(b).mul(10),
@@ -68,7 +69,5 @@ export default class Convertir extends ExerciceSimple {
 
         break
     }
-    this.canEnonce = this.question
-    this.canReponseACompleter = ''
   }
 }

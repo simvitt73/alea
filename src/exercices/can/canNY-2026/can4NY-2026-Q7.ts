@@ -18,7 +18,7 @@ export const refs = {
  * @author Gilles Mora
 
 */
-export default class CalculsEntiersRelatifs extends ExerciceSimple {
+export default class CalculsEntiersRelatifs2026 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
@@ -28,17 +28,18 @@ export default class CalculsEntiersRelatifs extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const choix = choice([1, 2])
-    const a = randint(-30, -5)
+    const annee = 2026
+    const choix = this.canOfficielle ? 1 : choice([1, 2])
+    const a = this.canOfficielle ? -15 : randint(-30, -5)
     if (choix === 1) {
-      this.reponse = 2025 - a
-      this.question = `$${texNombre(2025, 0)}-(${a})$`
-      this.correction = `$${texNombre(2025, 0)}-(${a})=${texNombre(2025, 0)}+(-${a})=${miseEnEvidence(texNombre(this.reponse, 0))}$`
+      this.reponse = annee - a
+      this.question = `$${texNombre(annee, 0)}-(${a})$`
+      this.correction = `$${texNombre(annee, 0)}-(${a})=${texNombre(annee, 0)}+${-a}=${miseEnEvidence(texNombre(this.reponse, 0))}$`
     }
     if (choix === 2) {
-      this.reponse = a - 2025
-      this.question = `$(${a})-${texNombre(2025, 0)}$`
-      this.correction = `$(${a})-${texNombre(2025, 0)}=(${a})+(-${texNombre(2025, 0)})=${miseEnEvidence(texNombre(this.reponse, 0))}$`
+      this.reponse = a - annee
+      this.question = `$(${a})-${texNombre(annee, 0)}$`
+      this.correction = `$(${a})-${texNombre(annee, 0)}=(${a})+(-${texNombre(annee, 0)})=${miseEnEvidence(texNombre(this.reponse, 0))}$`
     }
 
     this.canEnonce = this.question
