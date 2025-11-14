@@ -3,8 +3,9 @@ import { miseEnEvidence } from '../../../lib/outils/embellissements'
 
 import { randint } from '../../../modules/outils'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-import { texNombre } from '../../../lib/outils/texNombre'
-import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
+import { sp } from '../../../lib/outils/outilString'
+import { minToHoraire } from '../../../lib/outils/dateEtHoraires'
+import { prenomF } from '../../../lib/outils/Personne'
 export const titre = 'Déterminer un nombre de minutes'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,52 +19,48 @@ export const refs = {
  * @author Gilles Mora + Eric Elter
 
 */
-export default class nbreMinutes extends ExerciceSimple {
+export default class nbreMinutes2026 extends ExerciceSimple {
   constructor() {
-    super()
-    this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
-    this.nbQuestions = 1
-    this.nbQuestionsModifiable = false
-    this.formatInteractif = 'fillInTheBlank'
-    this.formatChampTexte = KeyboardType.clavierDeBase
-  }
-
-  nouvelleVersion() {
-    this.consigne = "Compléter l'égalité.<br>"
-    switch (randint(1, 4)) {
-      case 1:
-        this.reponse = texNombre(15, 0)
-        this.question = `${texNombre(20.25, 2)} \\text{ h }=20 \\text{ h } ~%{champ1} \\text{ min }`
-        this.correction = `$${texNombre(20.25, 2)} \\text{ h }=20 \\text{ h } + ${texNombre(0.25, 2)} \\text{ h }= 20 \\text{ h } + \\dfrac14 \\text{ h } = 20 \\text{ h } + ${miseEnEvidence(this.reponse)} \\text{ min. }$`
-        handleAnswers(this, 0, { champ1: { value: this.reponse } })
-        this.canReponseACompleter = `$${texNombre(20.25, 2)} \\text{ h }=20 \\text{ h } \\ldots \\text{ min }$`
-        break
-      case 2:
-        this.reponse = texNombre(30, 0)
-        this.question = `${texNombre(202.5, 1)} \\text{ h }=202 \\text{ h } ~%{champ1} \\text{ min }`
-        this.correction = `$${texNombre(202.5, 1)} \\text{ h }=202 \\text{ h } + ${texNombre(0.5, 1)} \\text{ h }= 202 \\text{ h } + \\dfrac12 \\text{ h } = 202 \\text{ h } ${miseEnEvidence(this.reponse)} \\text{ min. }$`
-        handleAnswers(this, 0, { champ1: { value: this.reponse } })
-        this.canReponseACompleter = `$${texNombre(202.5, 1)} \\text{ h }=202 \\text{ h }\\ldots \\text{ min }$`
-        break
-      case 3:
-        this.reponse = texNombre(20.25, 2)
-        this.question =
-          '20 \\text{ h } 15 \\text{ min } = ~%{champ1} \\text{ h }'
-        this.correction = `$20 \\text{ h } 15 \\text{ min }= 20 \\text{ h } + \\dfrac14 \\text{ h } =20 \\text{ h } + ${texNombre(0.25, 2)} \\text{ h }= ${miseEnEvidence(this.reponse)} \\text{ h. }$`
-        handleAnswers(this, 0, { champ1: { value: this.reponse } })
-        this.canReponseACompleter =
-          '$20 \\text{ h } 15 \\text{ min }= \\ldots \\text{ h }$'
-        break
-      case 4:
-        this.reponse = texNombre(202.5, 1)
-        this.question =
-          '202 \\text{ h } 30 \\text{ min } = ~%{champ1} \\text{ h }'
-        this.correction = `$202 \\text{ h } 30 \\text{ min }= 202 \\text{ h } + \\dfrac12 \\text{ h } =202 \\text{ h } + ${texNombre(0.5, 1)} \\text{ h } = ${miseEnEvidence(this.reponse)} \\text{ h. }$`
-        handleAnswers(this, 0, { champ1: { value: this.reponse } })
-        this.canReponseACompleter =
-          '$202 \\text{ h } 30 \\text{ min }= \\ldots \\text{ h }$'
-        break
+      super()
+      this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
+      this.nbQuestions = 1
+      this.optionsDeComparaison = { HMS: true }
+      this.formatChampTexte = KeyboardType.clavierHms
+      this.optionsChampTexte = { texteAvant: '<br>' }
     }
-    this.canEnonce = this.consigne
+  
+    nouvelleVersion() {
+      const annee=2026
+      const heureDebut = 20
+      const minutesDebut = annee%100
+    const prenom= prenomF()
+      const dureeMinutes = this.canOfficielle ? 40 : randint(40, 55)
+      const dureeHeures = 1
+      
+      // Calcul de l'heure de fin
+      const totalMinutesDebut = heureDebut * 60 + minutesDebut
+      const totalMinutesFin = totalMinutesDebut + dureeHeures * 60 + dureeMinutes
+      const heureFin = Math.floor(totalMinutesFin / 60)
+      const minutesFin = totalMinutesFin % 60
+      
+      const heureDebutAff = minToHoraire(totalMinutesDebut, true)
+      const heureFinAff = minToHoraire(totalMinutesFin, true)
+  
+      this.question = `${prenom} commence à regarder un film à $${heureDebutAff}$.<br> La durée de ce film est $${dureeHeures}$ h $${dureeMinutes}$ min. <br>
+      À quelle heure le film sera-t-il terminé ?`
+  
+      this.correction = `Le film commence à $${heureDebutAff}$ et dure $${dureeHeures}$ h $${dureeMinutes}$ min.<br>
+      On calcule : $${heureDebut}$ h $${minutesDebut}$ min $+$ $${dureeHeures}$ h $${dureeMinutes}$ min $=$ $${heureDebut + dureeHeures}$ h $${minutesDebut + dureeMinutes}$ min $=$ $${miseEnEvidence(heureFinAff)}$.`
+      
+      this.reponse = {
+        reponse: {
+          value: `${heureFin}h ${minutesFin}`,
+          options: { HMS: true },
+        },
+      }
+      
+  
+      this.canEnonce = ''
+      this.canReponseACompleter = `$\\ldots${sp()}\\text{h}${sp()}\\ldots${sp()}\\text{min}$`
+    }
   }
-}

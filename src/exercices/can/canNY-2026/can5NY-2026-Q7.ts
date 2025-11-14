@@ -18,7 +18,7 @@ export const refs = {
  * @author Gilles Mora
 
 */
-export default class CompleterUneSuite extends ExerciceSimple {
+export default class CompleterUneSuite2026 extends ExerciceSimple {
   constructor() {
     super()
     this.typeExercice = 'simple' // Cette ligne est très importante pour faire un exercice simple !
@@ -27,17 +27,18 @@ export default class CompleterUneSuite extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const k = randint(3, 9)
-    const nbre2 = 2025 - k
+    const annee = 2026
+    const k = this.canOfficielle ? 5 : randint(3, 9)
+    const nbre2 = annee - k
     const nbre3 = nbre2 - k
     this.reponse = nbre3 - k
     this.question = `Compléter la suite : <br>
-   $${texNombre(2025)}$${sp(3)}; ${sp(3)}$${texNombre(nbre2)}$ ${sp(3)}; ${sp(3)}$${texNombre(nbre3)}$ ${sp(3)}; ${sp(3)}`
-    this.correction = `$${texNombre(2025)}-${k}=${texNombre(nbre2)}$ et  $${texNombre(nbre2)}-${k}=${texNombre(nbre3)}$, donc le nombre suivant est  $${texNombre(nbre3)}-${k}=${miseEnEvidence(texNombre(this.reponse, 0))}$.`
+   $${texNombre(annee)}$${sp(3)}; ${sp(3)}$${texNombre(nbre2)}$ ${sp(3)}; ${sp(3)}$${texNombre(nbre3)}$ ${sp(3)}; ${sp(3)}`
+    this.correction = `$${texNombre(annee)}-${k}=${texNombre(nbre2)}$ et  $${texNombre(nbre2)}-${k}=${texNombre(nbre3)}$, donc le nombre suivant est  $${texNombre(nbre3)}-${k}=${miseEnEvidence(texNombre(this.reponse, 0))}$.`
     if (!this.interactif) {
       this.question += `${sp(3)}$\\ldots$`
     }
     this.canEnonce = 'Compléter la suite.'
-    this.canReponseACompleter = `$${texNombre(2025)}$ ; $${texNombre(nbre2)}$ ; $${texNombre(nbre3)}$ ; $\\ldots$`
+    this.canReponseACompleter = `$${texNombre(annee)}$ ; $${texNombre(nbre2)}$ ; $${texNombre(nbre3)}$ ; $\\ldots$`
   }
 }
