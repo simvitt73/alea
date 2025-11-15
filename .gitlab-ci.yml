@@ -562,7 +562,7 @@ testExosModifiedWithoutPlayWright:
     # -  CHANGED_FILES=$(git diff --name-only "$DIFF_BASE"..HEAD)
     # - CHANGED_FILES=$(git diff --name-only HEAD~5..HEAD)
     - echo "$CHANGED_FILES"
-    - CHANGED_FILES="$CHANGED_FILES" pnpm vitest --config tests/e2e/vitest.config.allexercices.js --run
+    - CHANGED_FILES="$CHANGED_FILES" pnpm vitest --config tests/e2e/vitest.config.all_exercises.js --run
   rules:
     - when: always
 

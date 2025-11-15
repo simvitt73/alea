@@ -337,13 +337,13 @@ if (
   // testRunAllLots('1e')
   // testRunAllLots('QCM')
   // testRunAllLots('dnb')
-  testRunAllLots('TEx')
-  testRunAllLots('TSpe')
-  testRunAllLots('techno1')
+  // testRunAllLots('TEx')
+  // testRunAllLots('TSpe')
+  // testRunAllLots('techno1')
   // testRunAllLots('QCMBac')
   // testRunAllLots('QCMBrevet')
   // testRunAllLots('QCMStatiques')
 
   // pour faire un test sur un exercice particulier:
-  // testRunAllLots('6e/6G2C')
+  testRunAllLots('6e/6G2A')
 }

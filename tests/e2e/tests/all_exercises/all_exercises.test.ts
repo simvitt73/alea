@@ -478,4 +478,4 @@ if (
   // testRunAllLots('6e/6I16')
 }
 
-// pnpm vitest --test-timeout=60000 --environment=jsdom --run tests\e2e\tests\allexercices\allExercises.test.ts
+// pnpm vitest --test-timeout=60000 --environment=jsdom --run tests\e2e\tests\all_exercises\all_exercises.test.ts

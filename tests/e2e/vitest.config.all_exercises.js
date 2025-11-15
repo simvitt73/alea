@@ -15,14 +15,14 @@ export default mergeConfig(
       },
     },
     test: {
-      include: ['./tests/console_errors/allExercisesT.test.ts'],
-      exclude: [
-        './tests/pdfexports/pdfexport.moule.test.ts',
-        './tests/console_errors/*Zoom.test.{js,ts}',
-      ],
+      include: ['./tests/all_exercises/*.test.{js,ts}'],
+      exclude: [],
+      // 🔹 ajoute ici l'environnement jsdom
+      environment: 'jsdom',
+
       // on veut laisser le navigateur ouvert sur un plantage (3min)
       hookTimeout: 120_000,
-      testTimeout: 1000_000,
+      testTimeout: 120_000,
       // describe.sequential() ne fonctionne que dans un describe.concurrent()
       // cf https://vitest.dev/api/#describe-sequential
       // pour lancer tous les tests en séquentiel, il faut préciser singleThread ou singleFork
