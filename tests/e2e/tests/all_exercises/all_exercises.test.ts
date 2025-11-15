@@ -430,7 +430,7 @@ if (
   process.env.CHANGED_FILES !== null &&
   process.env.CHANGED_FILES !== undefined
 ) {
-  const changedFiles = process.env.CHANGED_FILES?.split('\n') ?? []
+  const changedFiles = process.env.CHANGED_FILES?.split(' ') ?? []
   log(changedFiles)
   const filtered = changedFiles
     .filter(
