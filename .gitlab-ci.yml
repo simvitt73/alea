@@ -83,6 +83,7 @@ cache:
     - ls /root/.cache/ms-playwright/
     - pnpm add playwright@1.51.1 --save-dev
     - git clone https://forge.apps.education.fr/coopmaths/dnb.git ./public/static/dnb
+    - mv ./public/static/dnb/sujets_decoupes/* ./public/static/dnb/
     - pnpm install
     - nohup pnpm start &
     - sleep 10
