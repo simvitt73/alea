@@ -416,11 +416,7 @@ async function testRunAllLots(filter: string) {
   }
 }
 
-if (
-  process.env.CI &&
-  process.env.NIV !== null &&
-  process.env.NIV !== undefined
-) {
+if (process.env.NIV !== null && process.env.NIV !== undefined) {
   // utiliser pour les tests d'intégration
   const filter = (process.env.NIV as string).replaceAll(' ', '')
   log(filter)
@@ -430,7 +426,7 @@ if (
   process.env.CHANGED_FILES !== null &&
   process.env.CHANGED_FILES !== undefined
 ) {
-  const changedFiles = process.env.CHANGED_FILES?.split('\n') ?? []
+  const changedFiles = process.env.CHANGED_FILES?.split(' ') ?? []
   log(changedFiles)
   const filtered = changedFiles
     .filter(
@@ -478,4 +474,4 @@ if (
   // testRunAllLots('6e/6I16')
 }
 
-// pnpm vitest --test-timeout=60000 --environment=jsdom --run tests\e2e\tests\allexercices\allExercises.test.ts
+// pnpm vitest --test-timeout=60000 --environment=jsdom --run tests\e2e\tests\all_exercises\all_exercises.test.ts

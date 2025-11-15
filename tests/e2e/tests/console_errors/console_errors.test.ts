@@ -275,12 +275,7 @@ async function testRunAllLots(filter: string) {
 const alea = 'e906e'
 const local = true
 
-if (
-  process.env.CI &&
-  process.env.NIV !== null &&
-  process.env.NIV !== undefined
-) {
-  // utiliser pour les tests d'intégration
+if (process.env.NIV !== null && process.env.NIV !== undefined) {
   const filter = (process.env.NIV as string).replaceAll(' ', '')
   prefs.headless = true
   prefs.nbExosParLot = 300
@@ -337,13 +332,13 @@ if (
   // testRunAllLots('1e')
   // testRunAllLots('QCM')
   // testRunAllLots('dnb')
-  testRunAllLots('TEx')
-  testRunAllLots('TSpe')
-  testRunAllLots('techno1')
+  // testRunAllLots('TEx')
+  // testRunAllLots('TSpe')
+  // testRunAllLots('techno1')
   // testRunAllLots('QCMBac')
   // testRunAllLots('QCMBrevet')
   // testRunAllLots('QCMStatiques')
 
   // pour faire un test sur un exercice particulier:
-  // testRunAllLots('6e/6G2C')
+  testRunAllLots('6e/6G2A')
 }
