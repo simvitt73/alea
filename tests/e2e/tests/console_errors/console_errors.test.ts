@@ -236,9 +236,10 @@ async function getConsoleTest(page: Page, urlExercice: string) {
 }
 
 async function testRunAllLots(filter: string) {
-  const uuids = filter.includes('dnb')
-    ? await findStatic(filter)
-    : await findUuid(filter)
+  const uuids =
+    filter.includes('dnb') || filter.includes('bac') || filter.includes('e3c')
+      ? await findStatic(filter)
+      : await findUuid(filter)
   for (let i = 0; i < uuids.length && i < prefs.nbExosParLot; i += 20) {
     const ff: ((page: Page) => Promise<boolean>)[] = []
     for (let k = i; k < i + 20 && k < uuids.length; k++) {
@@ -327,6 +328,7 @@ if (process.env.NIV !== null && process.env.NIV !== undefined) {
   log('Exemples')
   log('Pour le lancer sur le niveau 4e :')
   log('Sur Windows (cmd) : set NIV=4e && pnpm test:e2e:console_errors')
+  log('Sur Winows (PowerShell) : $env:NIV="4e"; pnpm test:e2e:console_errors')
   log('Sur Linux/MacOS : NIV=4e pnpm test:e2e:console_errors')
   log("Pour le lancer sur l'exercice 6e/6G2A :")
   log('Sur Windows (cmd) : set NIV=6e/6G2A.ts && pnpm test:e2e:console_errors')
