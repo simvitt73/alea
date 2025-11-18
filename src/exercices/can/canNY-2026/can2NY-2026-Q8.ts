@@ -26,6 +26,8 @@ export default class EgaliteCompleter2026 extends ExerciceSimple {
     this.nbQuestionsModifiable = false
     this.formatInteractif = 'fillInTheBlank'
     this.formatChampTexte = KeyboardType.clavierFullOperations
+    this.optionsDeComparaison = { expressionsForcementReduites: true }
+
   }
 
   nouvelleVersion() {
@@ -42,7 +44,7 @@ export default class EgaliteCompleter2026 extends ExerciceSimple {
         break
       case 2:
        this.reponse = `2\\times\\sqrt{${annee}}`
-        this.consigne = `Compléter :`
+        this.consigne = `Compléter le plus simplement posible :`
         this.question = `\\sqrt{${texNombre(annee, 0)}}+\\sqrt{${texNombre(annee, 0)}}= ~%{champ1} `
         this.correction = `
         $\\sqrt{${texNombre(annee, 0)}}+\\sqrt{${texNombre(annee, 0)}}=${miseEnEvidence(this.reponse)}$`
@@ -51,7 +53,7 @@ export default class EgaliteCompleter2026 extends ExerciceSimple {
         break
       case 3:
          this.reponse = `${annee}`
-        this.consigne = `Compléter :`
+        this.consigne = `Compléter le plus simplement possible :`
         this.question = `\\sqrt{${texNombre(annee, 0)}}\\times \\sqrt{${texNombre(annee, 0)}}=~%{champ1} `
         this.correction = `On utilise la propriété $\\sqrt{a}\\times \\sqrt{a} =a$ valable pour $a$  positif.<br>
         $\\sqrt{${texNombre(annee, 0)}}\\times \\sqrt{${texNombre(annee, 0)}}=${miseEnEvidence(this.reponse)}$`
