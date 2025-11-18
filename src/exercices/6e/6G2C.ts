@@ -1016,27 +1016,33 @@ export default class ProblemeDeLaChevreDansSonEnclos extends Exercice {
             if (
               longueurRestanteHautDroite <= 0 &&
               longueurRestanteHautGauche <= 0
-            )
+            ) {
               break // Il n'y a pas de cordelette au dessus de la cabane
-            const c5 = cercle(cabB, Math.max(longueurRestanteHautDroite, 0))
-            const c6 = cercle(cabC, Math.max(longueurRestanteHautGauche, 0))
-            const contact = pointIntersectionCC(c5, c6, '', 1)
-
+            }
             let VGauche: Point | undefined
             let VDroite: Point | undefined
-            if (isTouchCDByRight) {
-              VDroite = pointIntersectionLC(CD, c5, '', 1)
-            } else {
-              VDroite = SDroit
-            }
-            if (isTouchCDByLeft) {
-              VGauche = pointIntersectionLC(CD, c6, '', 2)
-            } else {
-              VGauche = SGauche
-            }
 
-            if (contact && contact.y < largeurEnclos) {
-              if (contact.y >= cabB.y) {
+            const c5 = cercle(cabB, Math.max(longueurRestanteHautDroite, 0))
+            const c6 = cercle(cabC, Math.max(longueurRestanteHautGauche, 0))
+            if (
+              longueurRestanteHautDroite + longueurRestanteHautGauche >=
+              cabB.x - cabC.x
+            ) {
+              // Il y a contact entre les deux arcs
+
+              const contact = pointIntersectionCC(c5, c6, '', 1)
+              if (isTouchCDByRight) {
+                VDroite = pointIntersectionLC(CD, c5, '', 1)
+              } else {
+                VDroite = SDroit
+              }
+              if (isTouchCDByLeft) {
+                VGauche = pointIntersectionLC(CD, c6, '', 2)
+              } else {
+                VGauche = SGauche
+              }
+
+              if (contact && contact.y < largeurEnclos) {
                 // Point de contact en dessous du bord haut de l'enclos et au dessus de la cabane
                 if (TDroit.y === largeurEnclos && TDroit.x !== VDroite.x) {
                   const t6 = polygone(cabB, TDroit, VDroite)
@@ -1090,16 +1096,30 @@ export default class ProblemeDeLaChevreDansSonEnclos extends Exercice {
                 a5.hachures = 'north east lines'
                 a5.opacite = 0.3
                 objetsCorrection.push(a5, a4)
+              } else if (contact && contact.y >= largeurEnclos) {
+                // On trace un rectangle car les deux arcs se croisent au dessus de l'enclos
+                const t8 = polygone(
+                  cabB,
+                  pointAbstrait(cabB.x, largeurEnclos),
+                  pointAbstrait(cabC.x, largeurEnclos),
+                  cabC,
+                )
+                t8.couleurDeRemplissage = colorToLatexOrHTML('pink')
+                t8.opaciteDeRemplissage = 0.2
+                t8.couleurDesHachures = colorToLatexOrHTML('black')
+                t8.hachures = 'north east lines'
+                t8.opacite = 0.2
+                objetsCorrection.push(t8)
               }
-            } else if (!contact) {
+            } else {
               // la cordelette ne permet pas de faire se toucher les deux arcs
-              if (
-                longueurRestanteHautDroite <= 0 &&
-                longueurRestanteHautGauche <= 0
-              )
-                break // Il n'y a pas de cordelette au dessus de la cabane
               // on trace séparément les deux arcs, parce qu'ils peuvent potentiellement ne pas exister
               if (longueurRestanteHautDroite > 0) {
+                if (isTouchCDByRight) {
+                  VDroite = pointIntersectionLC(CD, c5, '', 1)
+                } else {
+                  VDroite = SDroit
+                }
                 const finDroite = pointIntersectionLC(
                   droite(cabB, cabC),
                   c5,
@@ -1127,6 +1147,11 @@ export default class ProblemeDeLaChevreDansSonEnclos extends Exercice {
                 objetsCorrection.push(a4, a6)
               }
               if (longueurRestanteHautGauche > 0) {
+                if (isTouchCDByLeft) {
+                  VGauche = pointIntersectionLC(CD, c6, '', 2)
+                } else {
+                  VGauche = SGauche
+                }
                 const finGauche = pointIntersectionLC(
                   droite(cabB, cabC),
                   c6,
@@ -1153,20 +1178,6 @@ export default class ProblemeDeLaChevreDansSonEnclos extends Exercice {
                 a7.opacite = 0.3
                 objetsCorrection.push(a5, a7)
               }
-            } else {
-              // On trace un rectangle car les deux arcs se croisent au dessus de l'enclos
-              const t8 = polygone(
-                cabB,
-                pointAbstrait(cabB.x, largeurEnclos),
-                pointAbstrait(cabC.x, largeurEnclos),
-                cabC,
-              )
-              t8.couleurDeRemplissage = colorToLatexOrHTML('pink')
-              t8.opaciteDeRemplissage = 0.2
-              t8.couleurDesHachures = colorToLatexOrHTML('black')
-              t8.hachures = 'north east lines'
-              t8.opacite = 0.2
-              objetsCorrection.push(t8)
             }
           }
           break
