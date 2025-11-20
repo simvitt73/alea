@@ -32,9 +32,9 @@ export default class DevelopperIdentitesRemarquables5 extends Exercice {
   constructor() {
     super()
     this.besoinFormulaireNumerique = [
-      'Niveau de difficulté',
+      'Valeur devant $x$',
       2,
-      '1 : Coefficient de x égal à 1\n 2 : Coefficient de x supérieur à 1',
+      '1 : Égal à 1\n2 : Supérieur à 1',
     ]
 
     this.besoinFormulaire2Texte = [
@@ -59,14 +59,13 @@ export default class DevelopperIdentitesRemarquables5 extends Exercice {
       ].join('\n'),
     ]
 
-    this.consigne = 'Développer et réduire les expressions suivantes.'
-
     this.nbQuestions = 5
     this.sup = 2
     this.sup2 = 4
+    this.sup3 = 4
 
     this.correctionDetailleeDisponible = true
-    context.isHtml ? (this.spacingCorr = 3) : (this.spacingCorr = 2)
+    context.isHtml ? (this.spacingCorr = 2) : (this.spacingCorr = 1.5)
     if (!context.isHtml) {
       this.correctionDetaillee = false
     }
