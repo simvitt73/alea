@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mathaleaGoToView } from '../../../lib/mathaleaUtils
+  import { mathaleaGoToView } from '../../../lib/mathaleaUtils'
   import { darkMode } from '../../../lib/stores/generalStore'
   import { globalOptions } from '../../../lib/stores/globalOptions'
   import {

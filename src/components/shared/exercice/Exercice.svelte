@@ -1,10 +1,7 @@
 <script lang="ts">
   import { SvelteComponent, onMount } from 'svelte'
   import Exercice from '../../../exercices/Exercice'
-  import {
-    isStatic,
-    isSvelte,
-  } from '../../../lib/components/componentsUtilstsUtils'
+  import { isStatic, isSvelte } from '../../../lib/components/componentsUtils'
   import {
     getSvelteComponent,
     mathaleaHandleParamOfOneExercice,
