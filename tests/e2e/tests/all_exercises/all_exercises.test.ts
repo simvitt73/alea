@@ -391,9 +391,9 @@ async function testRunAllLots(filter: string) {
   log(uuids)
   if (uuids.length === 0) {
     log(`Aucun uuid trouvé pour le filtre '${filter}'`)
-    describe('dummy', () => {
-      test('should pass', () => {
-        expect(true).toBe(true)
+    describe('no-parameter-warning', () => {
+      test.skip(`Aucun uuid trouvé pour le filtre '${filter}'`, () => {
+        // This test is skipped to show a warning instead of pass/fail
       })
     })
   }
