@@ -28,6 +28,9 @@ export class TracePoint extends ObjetMathalea2D {
   tailleTikz: number
   points: (Point | Point3d)[]
   couleurDeRemplissage?: string[]
+  usePgfplots: boolean
+  pgfplotsOptions?: string
+  pgfplotsMark?: string
   constructor(...points: (PointAbstrait | Point | Point3d | string)[]) {
     super()
     this.taille = 3
@@ -35,6 +38,7 @@ export class TracePoint extends ObjetMathalea2D {
     this.epaisseur = 1
     this.opacite = 0.8
     this.style = 'x'
+    this.usePgfplots = false
     let xmin = 1000
     let xmax = -1000
     let ymin = 1000
@@ -150,6 +154,56 @@ export class TracePoint extends ObjetMathalea2D {
   }
 
   tikz() {
+    if (this.usePgfplots) {
+      const coords: Point[] = []
+      for (const unPoint of this.points) {
+        if (unPoint.typeObjet === 'point3d') {
+          coords.push((unPoint as Point3d).c2d)
+        } else {
+          coords.push(unPoint as Point)
+        }
+      }
+      if (coords.length === 0) return ''
+      const colorLatex = this.color[1].replace(/[{}]/g, '') || 'black'
+      const styleToMark: Record<string, { mark: string; filled?: boolean }> = {
+        x: { mark: 'x' },
+        '+': { mark: '+' },
+        '|': { mark: '|' },
+        '#': { mark: 'square*', filled: true },
+        o: { mark: '*', filled: true },
+        '.': { mark: '*', filled: true },
+      }
+      const descriptor = styleToMark[this.style] ?? styleToMark.x
+      const mark = this.pgfplotsMark ?? descriptor.mark
+      const options = ['only marks']
+      options.push(`color=${colorLatex}`)
+      options.push(`mark=${mark}`)
+      const markSize =
+        (this.tailleTikz ?? this.taille / 15) *
+        10 *
+        (this.style === '.' ? 0.7 : 1)
+      options.push(`mark size=${Number(Math.max(0.6, markSize).toFixed(3))}pt`)
+      if (this.opacite !== 1) {
+        options.push(`opacity=${this.opacite}`)
+      }
+      const markOptions: string[] = []
+      if (descriptor.filled) {
+        markOptions.push(`fill=${colorLatex}`)
+      }
+      markOptions.push(`draw=${colorLatex}`)
+      if (markOptions.length > 0) {
+        options.push(`mark options={${markOptions.join(',')}}`)
+      }
+      if (this.pgfplotsOptions && this.pgfplotsOptions.trim() !== '') {
+        options.push(this.pgfplotsOptions)
+      }
+      const formatCoord = (val: number) =>
+        Number.isFinite(val) ? Number(val.toFixed(4)).toString() : '0'
+      const coordsTex = coords
+        .map((pt) => `(${formatCoord(pt.x)},${formatCoord(pt.y)})`)
+        .join(' ')
+      return `\\addplot [${options.join(',')}] coordinates { ${coordsTex} };\n`
+    }
     const objetstikz = []
     let s1
     let s2

@@ -761,6 +761,14 @@ export class Droite extends ObjetMathalea2D {
   normal: Vecteur
   directeur: Vecteur
   stringColor: string
+  usePgfplots: boolean
+  pgfplotsOptions?: string
+  pgfplotsDomain?: {
+    xmin?: number
+    xmax?: number
+    ymin?: number
+    ymax?: number
+  }
   leNom?: TexteParPoint
   constructor(
     arg1: number | PointAbstrait,
@@ -772,6 +780,7 @@ export class Droite extends ObjetMathalea2D {
     super()
     let a, b, c
     this.stringColor = 'black'
+    this.usePgfplots = false
 
     if (arguments.length === 2) {
       if (arg1 instanceof PointAbstrait && arg2 instanceof PointAbstrait) {
@@ -1121,8 +1130,13 @@ export class Droite extends ObjetMathalea2D {
     }
   }
 
-  tikz() {
-    const tableauOptions = []
+  tikz(
+    axisYMin?: number,
+    axisYMax?: number,
+    axisXMin?: number,
+    axisXMax?: number,
+  ) {
+    const tableauOptions: string[] = []
     if (this.color[1].length > 1 && this.color[1] !== 'black') {
       tableauOptions.push(`color=${this.color[1]}`)
     }
@@ -1151,10 +1165,69 @@ export class Droite extends ObjetMathalea2D {
       tableauOptions.push(`opacity = ${this.opacite}`)
     }
 
-    let optionsDraw = ''
-    if (tableauOptions.length > 0) {
-      optionsDraw = '[' + tableauOptions.join(',') + ']'
+    const optionsDraw =
+      tableauOptions.length > 0 ? '[' + tableauOptions.join(',') + ']' : ''
+
+    const shouldUsePgfplots =
+      this.usePgfplots &&
+      axisYMin !== undefined &&
+      axisYMax !== undefined &&
+      axisXMin !== undefined &&
+      axisXMax !== undefined
+
+    const formatNombre = (val: number) =>
+      Number.isFinite(val) ? Number(val.toFixed(4)).toString() : '0'
+    const formatSlope = (val: number) => {
+      const formatted = Number(val.toFixed(6))
+      if (Math.abs(formatted) < 1e-9) return '0'
+      return formatted.toString()
     }
+
+    if (shouldUsePgfplots) {
+      const pgfplotsOptions = [...tableauOptions]
+      if (this.pgfplotsOptions && this.pgfplotsOptions.trim() !== '') {
+        pgfplotsOptions.push(this.pgfplotsOptions)
+      }
+      const domainMin = this.pgfplotsDomain?.xmin ?? axisXMin
+      const domainMax = this.pgfplotsDomain?.xmax ?? axisXMax
+      const rangeMin = this.pgfplotsDomain?.ymin ?? axisYMin
+      const rangeMax = this.pgfplotsDomain?.ymax ?? axisYMax
+      const optionsList = [...pgfplotsOptions]
+      const vertical = egal(this.b, 0, 0.0001)
+      let code = ''
+      if (vertical) {
+        const xValue = formatNombre(this.x1)
+        const coordYMin = formatNombre(rangeMin ?? axisYMin)
+        const coordYMax = formatNombre(rangeMax ?? axisYMax)
+        const options =
+          optionsList.length > 0 ? '[' + optionsList.join(',') + ']' : ''
+        code += `\\addplot${options} coordinates {(${xValue},${coordYMin}) (${xValue},${coordYMax})};\n`
+      } else {
+        const slope = (this.y2 - this.y1) / (this.x2 - this.x1)
+        const intercept = this.y1 - slope * this.x1
+        if (domainMin !== undefined && domainMax !== undefined) {
+          optionsList.push(
+            `domain=${formatNombre(domainMin)}:${formatNombre(domainMax)}`,
+          )
+        }
+        if (rangeMin !== undefined && rangeMax !== undefined) {
+          optionsList.push(
+            `restrict y to domain=${formatNombre(rangeMin)}:${formatNombre(rangeMax)}`,
+          )
+        }
+        const options =
+          optionsList.length > 0 ? '[' + optionsList.join(',') + ']' : ''
+        const slopeStr = formatSlope(slope)
+        const interceptStr = formatSlope(intercept)
+        const expression =
+          interceptStr.startsWith('-')
+            ? `${slopeStr}*x${interceptStr}`
+            : `${slopeStr}*x+${interceptStr}`
+        code += `\\addplot${options} {${expression}};\n`
+      }
+      return code
+    }
+
     const A = point(this.x1, this.y1)
     const B = point(this.x2, this.y2)
     const A1 = pointSurSegment(A, B, -50)

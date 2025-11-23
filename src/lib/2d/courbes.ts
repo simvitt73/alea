@@ -592,7 +592,12 @@ export class Courbe extends ObjetMathalea2D {
     return code
   }
 
-  tikz(axisYMin?: number, axisYMax?: number) {
+  tikz(
+    axisYMin?: number,
+    axisYMax?: number,
+    _axisXMin?: number,
+    _axisXMax?: number,
+  ) {
     if (this.usePgfplots && this.fLatex) {
       // Use pgfplots with function expression
       let colorLatex = colorToLatexOrHTML(this.stringColor)[1] || 'black'
