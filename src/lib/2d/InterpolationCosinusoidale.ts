@@ -1,4 +1,4 @@
-import { antecedentParDichotomie } from './courbes'
+import { antecedentParDichotomie } from './antecedentParDichotomie'
 
 /**
  * @see : https://gist.github.com/ericelliott/80905b159e1f3b28634ce0a690682957
