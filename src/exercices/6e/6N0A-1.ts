@@ -1,3 +1,4 @@
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import {
   handleAnswers,
   setReponse,
@@ -74,20 +75,20 @@ export default class ExerciceTablesAdditions extends Exercice {
               this,
               i,
               `${texNombre(a, 0)} + ${texNombre(b, 0)} = %{champ1}`,
-              'fillInTheBlank',
+              KeyboardType.clavierNumbers,
             )
           : choix
             ? remplisLesBlancs(
                 this,
                 i,
                 `${texNombre(a, 0)} + %{champ1} = ${texNombre(a + b, 0)}`,
-                'fillInTheBlank',
+                KeyboardType.clavierNumbers,
               )
             : remplisLesBlancs(
                 this,
                 i,
                 `%{champ1} + ${texNombre(a, 0)} = ${texNombre(a + b, 0)}`,
-                'fillInTheBlank',
+                KeyboardType.clavierNumbers,
               )
 
       texteCorr =
