@@ -4,7 +4,7 @@ import type {
   CompleteKeysList,
   KeyboardBlock,
   KeysList,
-} from '../types/keyboardTypes'
+} from '../types/keyboardContent'
 
 // Keycaps lists
 export const specialKeysCaps: CompleteKeysList = {
