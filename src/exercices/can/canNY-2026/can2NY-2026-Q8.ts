@@ -1,10 +1,10 @@
-import ExerciceSimple from '../../ExerciceSimple'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import ExerciceSimple from '../../ExerciceSimple'
 
-import { randint } from '../../../modules/outils'
 import { handleAnswers } from '../../../lib/interactif/gestionInteractif'
+import { randint } from '../../../modules/outils'
 export const titre = 'Compléter une égalité'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -29,9 +29,10 @@ export default class EgaliteCompleter2026 extends ExerciceSimple {
   }
 
   nouvelleVersion() {
-    const annee =2026
-    switch (this.canOfficielle ? 1 : randint(1,3)) {
+    const annee = 2026
+    switch (this.canOfficielle ? 1 : randint(1, 3)) {
       case 1:
+        this.optionsDeComparaison = { texteAvecCasse: true }
         this.reponse = `\\sqrt{${annee}}`
         this.consigne = `Compléter :`
         this.question = `\\sqrt{${texNombre(annee, 0)}}\\times ~%{champ1}=${annee} `
@@ -41,16 +42,31 @@ export default class EgaliteCompleter2026 extends ExerciceSimple {
         this.canReponseACompleter = `$\\sqrt{${texNombre(annee, 0)}}\\times \\ldots =${annee}$`
         break
       case 2:
-       this.reponse = `2\\times\\sqrt{${annee}}`
+        this.optionsDeComparaison = { texteAvecCasse: true }
+        this.reponse = `2\\times\\sqrt{${annee}}` // A cause de remplisLesBlancs, les 3 bonnes réponses sont écrites en dur dans handleAnswers alors qu'elles devraient écrites ici.
+        /*this.reponse = [
+          `2\\times\\sqrt{${annee}}`,
+          `2\\sqrt{${annee}}`,
+          `\\sqrt{${annee}}\\times2`,
+        ]*/
         this.consigne = `Compléter :`
         this.question = `\\sqrt{${texNombre(annee, 0)}}+\\sqrt{${texNombre(annee, 0)}}= ~%{champ1} `
         this.correction = `
         $\\sqrt{${texNombre(annee, 0)}}+\\sqrt{${texNombre(annee, 0)}}=${miseEnEvidence(this.reponse)}$`
-        handleAnswers(this, 0, { champ1: { value: this.reponse } })
+        handleAnswers(this, 0, {
+          champ1: {
+            value: [
+              `2\\times\\sqrt{${annee}}`,
+              `2\\sqrt{${annee}}`,
+              `\\sqrt{${annee}}\\times2`,
+            ],
+          },
+        })
         this.canReponseACompleter = `$\\sqrt{${texNombre(annee, 0)}}+\\sqrt{${texNombre(annee, 0)}}= \\ldots$`
         break
       case 3:
-         this.reponse = `${annee}`
+        this.optionsDeComparaison = { nombreDecimalSeulement: true }
+        this.reponse = `${annee}`
         this.consigne = `Compléter :`
         this.question = `\\sqrt{${texNombre(annee, 0)}}\\times \\sqrt{${texNombre(annee, 0)}}=~%{champ1} `
         this.correction = `On utilise la propriété $\\sqrt{a}\\times \\sqrt{a} =a$ valable pour $a$  positif.<br>
