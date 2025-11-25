@@ -1,4 +1,3 @@
-import { traceCompas } from '../../lib/2d/Arc'
 import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
 import { codageMediatrice } from '../../lib/2d/CodageMediatrice'
 import { codageSegments } from '../../lib/2d/CodageSegment'
@@ -9,6 +8,7 @@ import { cercle } from '../../lib/2d/cercle'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { placeLatexSurSegment } from '../../lib/2d/placeLatexSurSegment'
 import { polygoneAvecNom } from '../../lib/2d/polygones'
+import { traceCompas } from '../../lib/2d/traceCompas'
 import { longueur } from '../../lib/2d/utilitairesGeometriques'
 import {
   pointIntersectionCC,
