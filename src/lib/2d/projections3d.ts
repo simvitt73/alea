@@ -56,8 +56,8 @@ export class Pave extends ObjetMathalea2D {
 
     this.objets.push(p, sAE, sBF, sCG, sDH, sEF, sFG, sGH, sHE)
     if (cote) {
-      this.objets.push(afficheCoteSegment(segment(B, A), '', 1))
-      this.objets.push(afficheCoteSegment(segment(A, D), '', 1))
+      this.objets.push(afficheCoteSegment(segment(B, A), L + ' cm', 1))
+      this.objets.push(afficheCoteSegment(segment(A, D), l + ' cm', 1))
       this.objets.push(afficheCoteSegment(segment(F, B), h + ' cm', 1))
     }
     const { xmin, xmax, ymin, ymax } = fixeBordures(this.objets, {
