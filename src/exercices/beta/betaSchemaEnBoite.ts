@@ -311,7 +311,7 @@ Quelle est la plus grande longueur qu’elle peut choisir pour que toutes les in
               topBraces: [
                 {
                   text: `${texNombre(nb2, 0)}\\text{ cm}`,
-                  type: 'flèche',
+                  type: 'accolade',
                   options: { color: 'magenta' },
                   start: 1,
                   end: 1 + nb1 * 2,
