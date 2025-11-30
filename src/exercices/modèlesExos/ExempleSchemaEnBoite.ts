@@ -9,6 +9,10 @@ import Exercice from '../Exercice'
 
 export const titre = 'Schemas en boite'
 export const uuid = 'sebseb'
+export const refs = {
+  'fr-fr': [],
+  'fr-ch': [],
+}
 
 export default class BetaSchemaEnBoite extends Exercice {
   constructor() {
