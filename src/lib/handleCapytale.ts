@@ -353,6 +353,16 @@ export function sendToCapytaleSaveStudentAssignment({
       .catch(() => {
         console.error('Problème avec la sauvegarde')
         // Indiquer à l'élève qu'il y a un soucis réseau
+
+        window.notify('Problème avec la sauvegarde Capytale', {
+          mode: currentMode,
+          indiceExercice,
+          data,
+          globalOptions: get(globalOptions),
+          exercicesParams: get(exercicesParams),
+          resultsByExercice: get(resultsByExercice),
+          canOptions: get(canOptionsStore),
+        })
       })
   }
 }
