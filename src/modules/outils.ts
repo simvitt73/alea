@@ -740,3 +740,13 @@ export function itemize(tableauDeTexte: string[]) {
     )
   }
 }
+/**
+ * Retourne la factorielle d'un nombre
+ * 
+ * @author Stéphane Guyon
+ * 
+ */
+export function factorielle(num: number): number {
+  if (num === 0 || num === 1) return 1
+  return num * factorielle(num - 1)
+}
