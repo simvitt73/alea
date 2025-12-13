@@ -14,6 +14,7 @@ import {
   reduireAxPlusB,
 } from '../../lib/outils/ecritures'
 import { signe } from '../../lib/outils/nombres'
+import FractionEtendue from '../../modules/FractionEtendue'
 import {
   gestionnaireFormulaireTexte,
   listeQuestionsToContenu,
@@ -83,6 +84,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
       const fAff = new Polynome({ coeffs: [b, a] })
       const questions: string[] = []
       const corrections: string[] = []
+      const sommet = new FractionEtendue(a+m*b,a*m)
       if (this.questionJamaisPosee(i, a, b, m)) {
         const texte = `Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = \\left(${reduireAxPlusB(a, b)} \\right) \\mathrm{e}^{${m}x}.$<br>`
         let indiceInteractif = 0
@@ -110,20 +112,24 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                  On sait avec les croissances comparées que $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^X=0$ , donc $\\displaystyle\\lim_{X\\to -\\infty}${ecritureParentheseSiNegatif(m)}x\\mathrm{e}^{${m}x}=0$
                  et $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, on obtient $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
               } else if (m < 0) {
-                corrPlus = `En $+\\infty$, $${fAff.toString()}$ tend vers ${signe(
+                corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(
                   a,
-                )}\\infty$ tandis que $\\mathrm{e}^{${m}x}\\to 0$, ce qui crée la forme indéterminée $\\infty\\times 0$. On écrit alors $f(x)=\\dfrac{${a}}{${m}}${ecritureParentheseSiNegatif(
-                  m,
-                )}x\\mathrm{e}^{${m}x}${ecritureAlgebriqueSauf1(
+                )}\\infty$ et $\\displaystyle\\lim_{x \\to +\\infty}\\mathrm{e}^{${m}x}= 0$.<br>
+                On reconnaît une forme indéterminée $${signe(a)}\\infty \\times 0$.<br>
+                Pour la lever, on écrit : <br>
+                $\\begin{aligned}
+                f(x)&=\\left(${reduireAxPlusB(a, b)} \\right) \\mathrm{e}^{${m}x}\\\\
+                  &=${a}x\\times \\mathrm{e}^{${m}x}${ecritureAlgebrique(b)}\\times \\mathrm{e}^{${m}x}\\\\
+                &=\\dfrac{1}{${m}}\\times${ecritureParentheseSiNegatif(a)} \\times${ecritureParentheseSiNegatif(m)}x\\mathrm{e}^{${m}x}${ecritureAlgebriqueSauf1(
                   b,
-                )}\\mathrm{e}^{${m}x}$. Comme $m<0$, on a ${ecritureParentheseSiNegatif(
-                  m,
-                )}x\\to -\\infty$ et on utilise $\\lim_{X\\to -\\infty} X\\mathrm{e}^X = 0$ ; le second terme tend aussi vers $0$, d'où $\\lim_{x\\to +\\infty} f(x)=0$.`
-                corrMoins = `En $-\\infty$, $${fAff.toString()}$ tend vers ${signe(
+                )}\\mathrm{e}^{${m}x}
+                \\end{aligned}$ <br>
+                Avec les croissances comparées, on sait que $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^X=0$. <br>
+               donc $\\displaystyle\\lim_{x\\to -\\infty}${m}x\\mathrm{e}^{${m}x}=0$
+                 et $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, on obtient $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
+                corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(
                   -a,
-                )}\\infty$ et $\\mathrm{e}^{${m}x}\\to +\\infty$ ; l'exponentielle domine, le signe est celui du terme affine principal (ici $a\\,x$ avec $x<0$), donc $\\lim_{x\\to -\\infty} f(x) = ${signe(
-                  -a,
-                )}\\infty$.`
+                )}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${m}x}= +\\infty$ donc $\\displaystyle\\lim_{x \\to -\\infty} f(x) = ${signe(-a)}\\infty$.`
               } else {
                 corrPlus =
                   '$m=0$ donc $f$ est affine : $\\lim_{x \\to +\\infty} f(x)=+\\infty$.'
@@ -140,41 +146,44 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                 items: [corrPlus, corrMoins],
               })
               correction += '<br>'
-              break
-            }
-            case 2:
-              question += `Calculer la dérivée $f'(x)$ de la fonction $f$.<br>`
-              correction += `Pour calculer la dérivée de la fonction $f$, on utilise la règle du produit :<br>
-      Si $f(x) = u(x) \\times v(x)$, alors $f'(x) = u'(x) \\times v(x) + u(x) \\times v'(x)$.<br>
-      Ici, on a $u(x) = ${reduireAxPlusB(a, b)}$ et $v(x) = \\mathrm{e}^{${m}x}$.<br>
-      Donc, $u'(x) = ${a}$ et $v'(x) = ${m} \\times \\mathrm{e}^{${m}x}$.<br>
-      En appliquant la règle du produit, on obtient :<br>
-      $f'(x) = ${a} \\times \\mathrm{e}^{${m}x} + (${reduireAxPlusB(a, b)}) \\times (${m} \\times \\mathrm{e}^{${m}x})$.<br>
-      En factorisant par $\\mathrm{e}^{${m}x}$, on a :<br>
-      $f'(x) = \\mathrm{e}^{${m}x} \\times (${a} + ${m} \\times (${reduireAxPlusB(a, b)}))$.<br>`
-              if (this.interactif) {
+               if (this.interactif) {
                 question += ajouteChampTexteMathLive(
                   this,
                   i * nbDeQuestions + indiceInteractif,
                   KeyboardType.clavierNumbers,
-                  { texteAvant: `$\\displaystyle\\lim_{x \\to +\\infty}=$` },
+                  { texteAvant: `$\\displaystyle\\lim_{x \\to +\\infty}f(x)=$` },
                 )
                 question += '<br>'
                 question += ajouteChampTexteMathLive(
                   this,
                   i * nbDeQuestions + indiceInteractif + 1,
                   KeyboardType.clavierNumbers,
-                  { texteAvant: `$\\displaystyle\\lim_{x \\to -\\infty}=$` },
+                  { texteAvant: `$\\displaystyle\\lim_{x \\to -\\infty}f(x)=$` },
+                )
+              }
+              break
+            }
+            case 2:
+              question += `Calculer la dérivée $f'(x)$ de la fonction $f$.<br>`
+              correction += `Pour calculer la dérivée de la fonction $f$, on utilise la règle du produit :<br>
+      Si $f = uv$, alors $f' = u' v + u v'$.<br>
+      Ici, on a $u(x) = ${reduireAxPlusB(a, b)}$ et $v(x) = \\mathrm{e}^{${m}x}$.<br>
+      Donc, $u'(x) = ${a}$ et $v'(x) = ${m} \\times \\mathrm{e}^{${m}x}$.<br>
+      On obtient :<br>
+      $\\begin{aligned}
+      f'(x) &= ${a} \\mathrm{e}^{${m}x} + (${reduireAxPlusB(a, b)})  (${m}  \\mathrm{e}^{${m}x})\\\\
+      &=  \\mathrm{e}^{${m}x} \\left(${a} + ${m} \\times (${reduireAxPlusB(a, b)})\\right)\\\\
+      &=\\mathrm{e}^{${m}x}  \\left( ${a*m}x${ecritureAlgebrique(a+m*b)} \\right)
+      \\end{aligned}$.<br>`
+     
+              if (this.interactif) {
+                question += ajouteChampTexteMathLive(
+                  this,
+                  i * nbDeQuestions + indiceInteractif,
+                  KeyboardType.clavierNumbers,
+                  { texteAvant: `$f'(x)=$` },
                 )
                 question += '<br>'
-                handleAnswers(this, i * nbDeQuestions + indiceInteractif, {
-                  reponse: {
-                    value: 2,
-                    options: {
-                      nombreDecimalSeulement: true,
-                    },
-                  },
-                })
                 handleAnswers(this, i * nbDeQuestions + indiceInteractif + 1, {
                   reponse: {
                     value: 3,
@@ -184,14 +193,31 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                   },
                 })
               }
-              indiceInteractif = indiceInteractif + 2
+              indiceInteractif = indiceInteractif + 1
               break
             case 3:
               question += `Étudier les variations de la fonction $f$.<br>`
               correction += `Pour étudier les variations de la fonction $f$, on analyse le signe de sa dérivée $f'(x)$.<br>
-      On a $f'(x) = \\mathrm{e}^{${m}x} \\times (${a} + ${m} \\times (${reduireAxPlusB(a, b)}))$.<br>
-      Comme $\\mathrm{e}^{${m}x}$ est toujours positif, le signe de $f'(x)$ dépend du signe de la partie entre parenthèses : ${a} + ${m} \\times (${reduireAxPlusB(a, b)})$.<br>
-      En résolvant l'inéquation ${a} + ${m} \\times (${reduireAxPlusB(a, b)}) > 0$, on détermine les intervalles où $f$ est croissante ou décroissante.<br>`
+      On a $f'(x) = \\mathrm{e}^{${m}x}  \\left( ${a*m}x${ecritureAlgebrique(a+m*b)} \\right)$.<br>
+      Comme pour tout $x\\in\\mathbb{R}$, $\\mathrm{e}^{${m}x}>0$, le signe de $f'(x)$ dépend du signe de $${a*m}x${ecritureAlgebrique(a+m*b)}$.<br>
+     On résout <br>`
+     
+      if (a*m>0) {
+     correction += `<br>$\\begin{aligned}
+     f'(x)&>0\\\\
+     ${a*m}x${ecritureAlgebrique(a+m*b)}&>0\\\\
+     x&>${sommet.texFraction}\\\\
+     x&>${sommet.texFractionSimplifiee}
+     \\end{aligned}$, <br>
+     $f$ est donc croissante quand $x>${sommet.texFractionSimplifiee}$<br>`}
+     else if (a*m<0) {
+      correction += `<br>$\\begin{aligned}
+      f'(x)&>0\\\\
+      ${a*m}x${ecritureAlgebrique(a+m*b)}&>0\\\\
+      x&<${sommet.texFraction}\\\\
+      x&<${sommet.texFractionSimplifiee}
+      \\end{aligned}$, <br>
+      $f$ est donc croissante quand $x<${sommet.texFractionSimplifiee}$<br>`}
 
               break
             case 4:
