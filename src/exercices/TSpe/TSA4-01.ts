@@ -8,6 +8,7 @@ import {
   enleveDoublonNum,
 } from '../../lib/outils/arrayOutils'
 import {
+  ecritureAlgebrique,
   ecritureAlgebriqueSauf1,
   ecritureParentheseSiNegatif,
   reduireAxPlusB,
@@ -77,7 +78,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
       const a = randint(-5, 5, 0)
       const b = randint(-5, 5, 0)
-      const m = randint(-5, 5, 0)
+      const m = randint(-5, 5, [0,1])
       const k = randint(-5, 5, 0)
       const fAff = new Polynome({ coeffs: [b, a] })
       const questions: string[] = []
@@ -97,24 +98,31 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
               let corrMoins = ''
 
               if (m > 0) {
-                 corrPlus = `En $+\\infty$, $${fAff.toString()}$ tend vers $${signe(
+                 corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(a,)}\\infty$ et $\\displaystyle\\lim_{x \\to +\\infty}\\mathrm{e}^{${m}x}=+\\infty$, donc $\\displaystyle\\lim_{x \\to +\\infty} f(x) = ${signe(
+                  a,)}\\infty$.`
+                corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(-a)}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${m}x}= 0$. <br>On reconnaît une forme indéterminée $${signe(-a)}\\infty \\times 0$.<br>
+                Pour la lever, on écrit : <br>
+                $\\begin{aligned}
+                f(x)&=\\left(${reduireAxPlusB(a, b)} \\right) \\mathrm{e}^{${m}x}\\\\
+                  &=${a}x\\times \\mathrm{e}^{${m}x}${ecritureAlgebrique(b)}\\times \\mathrm{e}^{${m}x}\\\\
+                &=\\dfrac{1}{${m}}\\times${a} \\times${ecritureParentheseSiNegatif(m)}x\\mathrm{e}^{${m}x}${ecritureAlgebriqueSauf1(b,)}\\mathrm{e}^{${m}x}
+                \\end{aligned}$ <br>
+                 On sait avec les croissances comparées que $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^X=0$ , donc $\\displaystyle\\lim_{X\\to -\\infty}${ecritureParentheseSiNegatif(m)}x\\mathrm{e}^{${m}x}=0$
+                 et $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, on obtient $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
+              } else if (m < 0) {
+                corrPlus = `En $+\\infty$, $${fAff.toString()}$ tend vers ${signe(
                   a,
-                )}\\infty$ et $\\mathrm{e}^{${m}x}$ vers $+\\infty$, donc $\\lim_{x \\to +\\infty} f(x) = ${signe(
-                  a,
-                )}\\infty$.`
-                corrMoins = `En $-\\infty$, $${fAff.toString()}$ tend vers $${signe(
-                  -a,
-                )}\\infty$ et $\\mathrm{e}^{${m}x}$ vers $0$. On écrit $f(x)=\\dfrac{${a}}{${m}}${ecritureParentheseSiNegatif(
+                )}\\infty$ tandis que $\\mathrm{e}^{${m}x}\\to 0$, ce qui crée la forme indéterminée $\\infty\\times 0$. On écrit alors $f(x)=\\dfrac{${a}}{${m}}${ecritureParentheseSiNegatif(
                   m,
                 )}x\\mathrm{e}^{${m}x}${ecritureAlgebriqueSauf1(
                   b,
-                )}\\mathrm{e}^{${m}x}$ ; comme $\\lim_{X\\to -\\infty} X\\mathrm{e}^X=0$ et $\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, on obtient $\\lim_{x \\to -\\infty} f(x)=0$.`
-              } else if (m < 0) {
-                corrPlus = `En $+\\infty$, $\\mathrm{e}^{${m}x}\\to 0$ plus vite que $${fAff.toString()}$ ne tend vers ${signe(
-                  a,
-                )}\\infty$, donc $\\lim_{x \\to +\\infty} f(x)=0$.`
-                corrMoins = `En $-\\infty$, $\\mathrm{e}^{${m}x}\\to +\\infty$ domine le facteur affine $${fAff.toString()}$, donc $\\lim_{x \\to -\\infty} f(x) = ${signe(
-                  a,
+                )}\\mathrm{e}^{${m}x}$. Comme $m<0$, on a ${ecritureParentheseSiNegatif(
+                  m,
+                )}x\\to -\\infty$ et on utilise $\\lim_{X\\to -\\infty} X\\mathrm{e}^X = 0$ ; le second terme tend aussi vers $0$, d'où $\\lim_{x\\to +\\infty} f(x)=0$.`
+                corrMoins = `En $-\\infty$, $${fAff.toString()}$ tend vers ${signe(
+                  -a,
+                )}\\infty$ et $\\mathrm{e}^{${m}x}\\to +\\infty$ ; l'exponentielle domine, le signe est celui du terme affine principal (ici $a\\,x$ avec $x<0$), donc $\\lim_{x\\to -\\infty} f(x) = ${signe(
+                  -a,
                 )}\\infty$.`
               } else {
                 corrPlus =
