@@ -118,7 +118,7 @@ export class TexteSurArc extends ObjetMathalea2D {
  * @param {number} angle Angle au centre
  * @param {string} [color='black'] Code couleur HTML accepté
  * @param {number} [d=0.5] Distance à la droite.
- * @param {boolean} [horizontal = false] Décide si le texte est horizontal ou pas, quelle que soit la valeur de angle.
+ * @param {number} [horizontalite = 0]
  * @return {object} LatexParCoordonnees si le premier caractère est '$', TexteParPoint sinon
  * @author Rémi Angot et Frédéric Piou
  */
