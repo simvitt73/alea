@@ -22,7 +22,7 @@ import {
 } from '../../modules/outils'
 import Exercice from '../Exercice'
 
-export const titre = "Etude complète d'une fonction exponentielle."
+export const titre = "Travailler un sujet de synthèse avec lafonction exponentielle."
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '18/12/2025'
@@ -110,7 +110,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                 &=\\dfrac{1}{${m}}\\times${a} \\times${ecritureParentheseSiNegatif(m)}x\\mathrm{e}^{${m}x}${ecritureAlgebriqueSauf1(b,)}\\mathrm{e}^{${m}x}
                 \\end{aligned}$ <br>
                  On sait avec les croissances comparées que $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^X=0$ , donc $\\displaystyle\\lim_{X\\to -\\infty}${ecritureParentheseSiNegatif(m)}x\\mathrm{e}^{${m}x}=0$
-                 et $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, on obtient $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
+                 et $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, donc $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
               } else if (m < 0) {
                 corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(
                   a,
@@ -126,7 +126,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                 \\end{aligned}$ <br>
                 Avec les croissances comparées, on sait que $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^X=0$. <br>
                donc $\\displaystyle\\lim_{x\\to -\\infty}${m}x\\mathrm{e}^{${m}x}=0$
-                 et $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, on obtient $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
+                 et $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, donc $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
                 corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(
                   -a,
                 )}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${m}x}= +\\infty$ donc $\\displaystyle\\lim_{x \\to -\\infty} f(x) = ${signe(-a)}\\infty$.`
