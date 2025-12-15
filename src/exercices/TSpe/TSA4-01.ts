@@ -2,6 +2,7 @@ import { createList } from '../../lib/format/lists'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
+import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
 import { Polynome } from '../../lib/mathFonctions/Polynome'
 import {
   compteOccurences,
@@ -217,8 +218,37 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
       x&<${sommet.texFraction}\\\\
       x&<${sommet.texFractionSimplifiee}
       \\end{aligned}$, <br>
-      $f$ est donc croissante quand $x<${sommet.texFractionSimplifiee}$<br>`}
-
+      $f$ est donc croissante quand $x<${sommet.texFractionSimplifiee}$<br><br>`}
+ 
+ correction +=   tableauDeVariation({
+                tabInit: [
+                  [
+                    // Première colonne du tableau avec le format [chaine d'entête, hauteur de ligne, nombre de pixels de largeur estimée du texte pour le centrage]
+                    ['$x$', 1.5, 40],
+                    [`$f(x)$`, 4, 40],
+                  ],
+                  // Première ligne du tableau avec chaque antécédent suivi de son nombre de pixels de largeur estimée du texte pour le centrage
+                  [`$-\\infty$`, 30, `$${sommet.texFractionSimplifiee}$`, 10, `$+\\infty$`, 30],
+                ],
+                // tabLines ci-dessous contient les autres lignes du tableau.
+                tabLines: [
+                  [
+                    'Var',
+                    20,
+                    `-/`,
+                    20,
+                    `+/`,
+                    20,
+                    `-/`,
+                    20,
+                  ],
+                ],
+                colorBackground: '',
+                espcl: 4, // taille en cm entre deux antécédents
+                deltacl: 1, // distance entre la bordure et les premiers et derniers antécédents
+                lgt: 2.5, // taille de la première colonne en cm
+                hauteurLignes: [25, 25],
+              }) 
               break
             case 4:
               question += `Étudier la convexité de la fonction $f$.<br>`
