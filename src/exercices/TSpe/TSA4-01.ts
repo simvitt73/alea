@@ -11,7 +11,6 @@ import {
 import {
   ecritureAlgebrique,
   ecritureAlgebriqueSauf1,
-  ecritureParentheseSiNegatif,
   reduireAxPlusB,
   rienSi1,
 } from '../../lib/outils/ecritures'
@@ -25,7 +24,8 @@ import {
 } from '../../modules/outils'
 import Exercice from '../Exercice'
 
-export const titre = "Travailler un sujet de synthèse avec la fonction exponentielle."
+export const titre =
+  'Travailler un sujet de synthèse avec la fonction exponentielle.'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const dateDePublication = '18/12/2025'
@@ -82,17 +82,20 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
       const a = randint(-5, 5, 0)
       const b = randint(-5, 5, 0)
-      const m = randint(-5, 5, [0,1])
+      const m = randint(-5, 5, [0, 1])
       const k = randint(-5, 5, 0)
       const fAff = new Polynome({ coeffs: [b, a] })
       const questions: string[] = []
       const corrections: string[] = []
-      const sommet = new FractionEtendue(-a-m*b,a*m)
+      const sommet = new FractionEtendue(-a - m * b, a * m)
       const extremum = arrondi(
         (a * sommet.valeurDecimale + b) * Math.exp(m * sommet.valeurDecimale),
         2,
       )
-          const sommetConvexite = new FractionEtendue(-m*(2*a+m*b),a*m*m)
+      const sommetConvexite = new FractionEtendue(
+        -m * (2 * a + m * b),
+        a * m * m,
+      )
       if (this.questionJamaisPosee(i, a, b, m)) {
         const texte = `Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = \\left(${reduireAxPlusB(a, b)} \\right) \\mathrm{e}^{${rienSi1(m)}x}.$<br>`
         let indiceInteractif = 0
@@ -102,14 +105,14 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
 
           switch (typesDeQuestionsDisponibles[j]) {
             case 1: {
-              
               let corrPlus = ''
               let corrMoins = ''
 
               if (m > 0) {
-                 corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(a,)}\\infty$ et $\\displaystyle\\lim_{x \\to +\\infty}\\mathrm{e}^{${m}x}=+\\infty$, donc par produit, $\\displaystyle\\lim_{x \\to +\\infty} f(x) = ${signe(
-                  a,)}\\infty$.<br>`
-                
+                corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(a)}\\infty$ et $\\displaystyle\\lim_{x \\to +\\infty}\\mathrm{e}^{${m}x}=+\\infty$, donc par produit, $\\displaystyle\\lim_{x \\to +\\infty} f(x) = ${signe(
+                  a,
+                )}\\infty$.<br>`
+
                 corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(-a)}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${m}x}= 0$. <br>On reconnaît une forme indéterminée $${signe(-a)}\\infty \\times 0$.<br>
                 Pour la lever, on utilise le théorème des croissances comparées : <br>
                 $\\begin{aligned}
@@ -134,30 +137,33 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                 corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(
                   -a,
                 )}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${m}x}= +\\infty$ donc par produit $\\displaystyle\\lim_{x \\to -\\infty} f(x) = ${signe(-a)}\\infty$.`
-              } 
+              }
 
               question +=
-                ' Étudier les limites de la fonction $f$ en $+\\infty$ et $-\\infty$.<br>' 
-               
+                ' Étudier les limites de la fonction $f$ en $+\\infty$ et $-\\infty$.<br>'
 
               correction += createList({
                 style: 'fleches',
                 items: [corrPlus, corrMoins],
               })
               correction += '<br>'
-               if (this.interactif) {
+              if (this.interactif) {
                 question += ajouteChampTexteMathLive(
                   this,
                   i * nbDeQuestions + indiceInteractif,
                   KeyboardType.clavierNumbers,
-                  { texteAvant: `$\\displaystyle\\lim_{x \\to +\\infty}f(x)=$` },
+                  {
+                    texteAvant: `$\\displaystyle\\lim_{x \\to +\\infty}f(x)=$`,
+                  },
                 )
                 question += '<br>'
                 question += ajouteChampTexteMathLive(
                   this,
                   i * nbDeQuestions + indiceInteractif + 1,
                   KeyboardType.clavierNumbers,
-                  { texteAvant: `$\\displaystyle\\lim_{x \\to -\\infty}f(x)=$` },
+                  {
+                    texteAvant: `$\\displaystyle\\lim_{x \\to -\\infty}f(x)=$`,
+                  },
                 )
               }
               break
@@ -171,9 +177,9 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
       f'(x) &=u'(x)v(x) + u(x)v'(x)\\\\
       &= ${rienSi1(a)} \\mathrm{e}^{${m}x} + (${reduireAxPlusB(a, b)})  (${m}  \\mathrm{e}^{${m}x})\\\\
       &=  \\mathrm{e}^{${m}x} \\left(${a} ${ecritureAlgebriqueSauf1(m)} (${reduireAxPlusB(a, b)})\\right)\\\\
-      &=\\mathrm{e}^{${m}x}  \\left( ${a*m}x${ecritureAlgebrique(a+m*b)} \\right)
+      &=\\mathrm{e}^{${m}x}  \\left( ${a * m}x${ecritureAlgebrique(a + m * b)} \\right)
       \\end{aligned}$.<br>`
-     
+
               if (this.interactif) {
                 question += ajouteChampTexteMathLive(
                   this,
@@ -193,106 +199,167 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
               }
               indiceInteractif = indiceInteractif + 1
               break
-            case 3:{
-              question += `Étudier les variations de la fonction $f$.<br>`
-              correction += `Pour étudier les variations de la fonction $f$, on analyse le signe de sa dérivée $f'(x)$.<br>
-      On a $f'(x) = \\mathrm{e}^{${rienSi1(m)}x}  \\left( ${rienSi1(a*m)}x${ecritureAlgebrique(a+m*b)} \\right)$.<br>
-      Pour tout $x\\in\\mathbb{R}$, $\\mathrm{e}^{${rienSi1(m)}x}>0$. <br>On étudie le signe de $${rienSi1(a*m)}x${ecritureAlgebrique(a+m*b)}$.`
+            case 3:
+              {
+                question += `Étudier les variations de la fonction $f$.<br>`
+                correction += `Pour étudier les variations de la fonction $f$, on analyse le signe de sa dérivée $f'(x)$.<br>
+      On a $f'(x) = \\mathrm{e}^{${rienSi1(m)}x}  \\left( ${rienSi1(a * m)}x${ecritureAlgebrique(a + m * b)} \\right)$.<br>
+      Pour tout $x\\in\\mathbb{R}$, $\\mathrm{e}^{${rienSi1(m)}x}>0$. <br>On étudie le signe de $${rienSi1(a * m)}x${ecritureAlgebrique(a + m * b)}$.`
 
-     
-     
-     correction += `<br>$\\begin{aligned}
-       \\phantom{\\iff}&${rienSi1(a*m)}x${ecritureAlgebrique(a+m*b)}>0\\\\
-       \\iff&${rienSi1(a*m)}x>${-a-m*b}\\\\
+                correction += `<br>$\\begin{aligned}
+       \\phantom{\\iff}&${rienSi1(a * m)}x${ecritureAlgebrique(a + m * b)}>0\\\\
+       \\iff&${rienSi1(a * m)}x>${-a - m * b}\\\\
         \\end{aligned}$`
-         if (a*m>0) {
-      correction += `<br>$\\begin{aligned}
+                if (a * m > 0) {
+                  correction += `<br>$\\begin{aligned}
      \\iff x&>${sommet.texFraction}\\\\
      \\iff x&>${sommet.texFractionSimplifiee}
      \\end{aligned}$ <br>
-     $f$ est donc croissante quand $x>${sommet.texFractionSimplifiee}$<br>`}
-     else if (a*m<0) {
-      correction += `<br>$\\begin{aligned}
+     $f$ est donc croissante quand $x>${sommet.texFractionSimplifiee}$<br>`
+                } else if (a * m < 0) {
+                  correction += `<br>$\\begin{aligned}
       \\iff&x<${sommet.texFraction}\\\\
       \\iff&x<${sommet.texFractionSimplifiee}
-      \\end{aligned}$ <br>`}
-  const ligneFprime =
-                a * m > 0
-                  ? ['Line', 20,'', 20, '-', 20, 'z', 20, '+', 20]
-                  : ['Line', 20, '',20,'+', 20, 'z', 20, '-', 20]
-              const ligneVariation =
-                a * m > 0
-                  ? ['Var', 20, '+/$0$', 20, `-/$f\\left(${sommet.texFractionSimplifiee}\\right)$`, 20, '+/$+\\infty$', 20]
-                  : ['Var', 20, '-/$0$', 20, `+/$f\\left(${sommet.texFractionSimplifiee}\\right)$`, 20, '-/$-\\infty$', 20]
-              correction += 
-              tableauDeVariation({
-                tabInit: [
-                  [['x', 1.5, 100],['f\'(x)', 2, 30],['f(x)', 4, 30]],
-                  // Première ligne du tableau avec chaque antécédent suivi de son nombre de pixels de largeur estimée du texte pour le centrage
-                  ['$-\\infty$', 30, `$${sommet.texFractionSimplifiee}$`, 30, '$+\\infty$', 30],
-                ],
-                // tabLines ci-dessous contient les autres lignes du tableau.
-               tabLines: [ ligneFprime, ligneVariation],
-                colorBackground: '',
-                espcl: 4, // taille en cm entre deux antécédents
-                deltacl: 1, // distance entre la bordure et les premiers et derniers antécédents
-                lgt: 3.5, // taille de la première colonne en cm
-                hauteurLignes: [30, 30, 30],
-              })
-           correction +=`avec $f\\left(${sommet.texFractionSimplifiee}\\right) \\approx ${texNombre(extremum)}$.<br>`
-     
-        
-            }
+      \\end{aligned}$ <br>`
+                }
+                const ligneFprime =
+                  a * m > 0
+                    ? ['Line', 20, '', 20, '-', 20, 'z', 20, '+', 20]
+                    : ['Line', 20, '', 20, '+', 20, 'z', 20, '-', 20]
+                const ligneVariation =
+                  a * m > 0
+                    ? [
+                        'Var',
+                        20,
+                        '+/$0$',
+                        20,
+                        `-/$f\\left(${sommet.texFractionSimplifiee}\\right)$`,
+                        20,
+                        '+/$+\\infty$',
+                        20,
+                      ]
+                    : [
+                        'Var',
+                        20,
+                        '-/$0$',
+                        20,
+                        `+/$f\\left(${sommet.texFractionSimplifiee}\\right)$`,
+                        20,
+                        '-/$-\\infty$',
+                        20,
+                      ]
+                correction += tableauDeVariation({
+                  tabInit: [
+                    [
+                      ['x', 2, 100],
+                      ["f'(x)", 2, 30],
+                      ['f(x)', 4, 30],
+                    ],
+                    // Première ligne du tableau avec chaque antécédent suivi de son nombre de pixels de largeur estimée du texte pour le centrage
+                    [
+                      '$-\\infty$',
+                      30,
+                      `$${sommet.texFractionSimplifiee}$`,
+                      30,
+                      '$+\\infty$',
+                      30,
+                    ],
+                  ],
+                  // tabLines ci-dessous contient les autres lignes du tableau.
+                  tabLines: [ligneFprime, ligneVariation],
+                  colorBackground: '',
+                  espcl: 6, // taille en cm entre deux antécédents
+                  deltacl: 2, // distance entre la bordure et les premiers et derniers antécédents
+                  lgt: 3.5, // taille de la première colonne en cm
+                  hauteurLignes: [30, 30, 30],
+                })
+                correction += `avec $f\\left(${sommet.texFractionSimplifiee}\\right) \\approx ${texNombre(extremum)}$.<br>`
+              }
               break
             case 4:
               question += `Soit $f''$ la dérivée de la fonction $f'$. <br>
-              On donne, pour tout $x\\in\\mathbb{R}, f''(x) = \\mathrm{e}^{${rienSi1(m)}x}\\left(${rienSi1(a*m*m)}x${ecritureAlgebrique(m*(2*a+m*b))}\\right)$.<br>
+              On donne, pour tout $x\\in\\mathbb{R}, f''(x) = \\mathrm{e}^{${rienSi1(m)}x}\\left(${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}\\right)$.<br>
               Étudier la convexité de la fonction $f$.<br>
               Déterminer la présence éventuelle de points d'inflexion.<br>`
               correction += `Pour étudier la convexité de la fonction $f$, on étudie le signe de la dérivée seconde $f''(x)$.<br>
-      Soit $x\\in\\mathbb{R}$, on a $f''(x) = \\mathrm{e}^{${rienSi1(m)}x}\\left(${rienSi1(a*m*m)}x${ecritureAlgebrique(m*(2*a+m*b))}\\right)$<br>
+      Soit $x\\in\\mathbb{R}$, on a $f''(x) = \\mathrm{e}^{${rienSi1(m)}x}\\left(${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}\\right)$<br>
     On sait que pour tout $x\\in\\mathbb{R}$, $\\mathrm{e}^{${rienSi1(m)}x}>0$.<br>
-    On étudie donc le signe de $${rienSi1(a*m*m)}x${ecritureAlgebrique(m*(2*a+m*b))}$.<br>
+    On étudie donc le signe de $${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}$.<br>
     On résout <br>$\\begin{aligned}
-      &${rienSi1(a*m*m)}x${ecritureAlgebrique(m*(2*a+m*b))}>0\\\\
-      \\iff&${rienSi1(a*m*m)}x>${-m*(2*a+m*b)}\\\\
+      &${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}>0\\\\
+      \\iff&${rienSi1(a * m * m)}x>${-m * (2 * a + m * b)}\\\\
       \\end{aligned}$<br>`
-  
-      if (a*m*m>0) {
-        correction += `$\\begin{aligned}
+
+              if (a * m * m > 0) {
+                correction += `$\\begin{aligned}
        \\iff x&>${sommetConvexite.texFraction}\\\\
        \\iff x&>${sommetConvexite.texFractionSimplifiee}
        \\end{aligned}$ <br>
-       `}
-       else if (a*m*m<0) {
-        correction += `$\\begin{aligned}
+       `
+              } else if (a * m * m < 0) {
+                correction += `$\\begin{aligned}
         \\iff&x<${sommetConvexite.texFraction}\\\\
         \\iff&x<${sommetConvexite.texFractionSimplifiee}
-        \\end{aligned}$ <br>`}
-       correction += '  $f$ est convexe quand sa dérivée seconde est positive, concave quand elle est négative. On en déduit le tableau récapitulatif : <br>'
-       const ligneFseconde =
+        \\end{aligned}$ <br>`
+              }
+              correction +=
+                '  $f$ est convexe quand sa dérivée seconde est positive, concave quand elle est négative. On en déduit le tableau récapitulatif : <br>'
+              const ligneFseconde =
                 a * m * m > 0
-                  ? ['Line', 20,'', 20, '-', 20, 'z', 20, '+', 20]
-                  : ['Line', 20, '',20,'+', 20, 'z', 20, '-', 20]
-          const ligneFconvexite =
+                  ? ['Line', 20, '', 20, '-', 20, 'z', 20, '+', 20]
+                  : ['Line', 20, '', 20, '+', 20, 'z', 20, '-', 20]
+              const ligneFconvexite =
                 a * m * m > 0
-                  ? ['Line', 20,'', 20, '$\\text{Concave}$', 20, 't', 20, '$\\text{Convexe}$', 20]
-                  : ['Line', 20, '$\\text{Convexe}$',20,'', 20, 't', 20, '$\\text{Concave}$', 20]
-                  correction += tableauDeVariation({
+                  ? [
+                      'Line',
+                      20,
+                      '',
+                      20,
+                      '$\\text{Concave}$',
+                      20,
+                      't',
+                      20,
+                      '$\\text{Convexe}$',
+                      20,
+                    ]
+                  : [
+                      'Line',
+                      20,
+                      '$\\text{Convexe}$',
+                      20,
+                      '',
+                      20,
+                      't',
+                      20,
+                      '$\\text{Concave}$',
+                      20,
+                    ]
+              correction += tableauDeVariation({
                 tabInit: [
-                  [['x', 3.5, 100],['f\'\'(x)', 2, 30],['$f$', 4, 30]],
+                  [
+                    ['x', 3.5, 100],
+                    ["f''(x)", 2, 30],
+                    ['$f$', 4, 30],
+                  ],
                   // Première ligne du tableau avec chaque antécédent suivi de son nombre de pixels de largeur estimée du texte pour le centrage
-                  ['$-\\infty$', 30, `$${sommetConvexite.texFractionSimplifiee}$`, 30, '$+\\infty$', 30],
+                  [
+                    '$-\\infty$',
+                    30,
+                    `$${sommetConvexite.texFractionSimplifiee}$`,
+                    30,
+                    '$+\\infty$',
+                    30,
+                  ],
                 ],
                 // tabLines ci-dessous contient les autres lignes du tableau.
-               tabLines: [ ligneFseconde, ligneFconvexite],
+                tabLines: [ligneFseconde, ligneFconvexite],
                 colorBackground: '',
                 espcl: 4, // taille en cm entre deux antécédents
                 deltacl: 1, // distance entre la bordure et les premiers et derniers antécédents
                 lgt: 3.5, // taille de la première colonne en cm
                 hauteurLignes: [30, 30, 30],
               })
-           correction += `Une courbe admet un point d\'inflexion si et seulement si sa dérivée seconde s'annule et change de signe. <br>
+              correction += `Une courbe admet un point d\'inflexion si et seulement si sa dérivée seconde s'annule et change de signe. <br>
            On peut donc conlure que la courbe représentative de $f$ admet un unique point d'inflexion en $x = ${sommetConvexite.texFractionSimplifiee}$.<br>`
               break
             case 5:
