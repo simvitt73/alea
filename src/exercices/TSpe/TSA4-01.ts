@@ -296,7 +296,8 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
            On peut donc conlure que la courbe représentative de $f$ admet un unique point d'inflexion en $x = ${sommetConvexite.texFractionSimplifiee}$.<br>`
               break
             case 5:
-              question += `Résoudre l'équation $f(x) = ${k}$.<br>`
+              question += `Déterminer le nombre de solution(s) de l'équation $f(x) = ${k}$.<br>
+              On donnera, le cas échéant, une valeur approchée au centième près, de la ou des solutions.<br>`
               correction += `Pour résoudre l'équation $f(x) = k$, on écrit :<br>
       $${reduireAxPlusB(a, b)} \\times \\mathrm{e}^{${m}x} = k$.<br>
       En isolant le terme exponentiel, on obtient :<br>
