@@ -357,14 +357,26 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
             case 5:
               question += `Déterminer le nombre de solution(s) de l'équation $f(x) = ${k}$.<br>
               On donnera, le cas échéant, une valeur approchée au centième près, de la ou des solutions.<br>`
-              correction += `Pour résoudre l'équation $f(x) = ${k}$, on écrit :<br>
-      $${reduireAxPlusB(a, b)} \\times \\mathrm{e}^{${m}x} = ${k}$.<br>
-      En isolant le terme exponentiel, on obtient :<br>
-      $\\mathrm{e}^{${m}x} = \\frac{${k}}{${reduireAxPlusB(a, b)}}$.<br>
-      En prenant le logarithme népérien des deux côtés, on a :<br>
-      $${m}x = \\ln\\left(\\frac{${k}}{${reduireAxPlusB(a, b)}}\\right)$.<br>
-      Finalement, en isolant $x$, on trouve :<br>
-      $x = \\frac{1}{${m}} \\times \\ln\\left(\\frac{${k}}{${reduireAxPlusB(a, b)}}\\right)$.<br>`
+              correction +=  ` comme $${k}>${extremum}$. On sait que la fonction $f$ est dérivable sur $\\mathbb{R}$, elle est donc continue sur $\\mathbb{R}$.<br>
+              D'autre part, d'après l'étude de la fonction $f$, on sait que :<br>`
+              
+              if (a * m > 0) {
+                correction +=` Sur l'intervalle $]-\\infty ; ${sommet.texFractionSimplifiee}[$, on a $f(x)<0$ donc l'équation $f(x) = ${k}$ n'admet aucune solution.
+                <br>Sur l'intervalle $[ ${sommet.texFractionSimplifiee};+\\infty [$ :
+                <br>On sait que $f$ est dérivable donc continue.
+                <br>${k}\\in [${sommet.texFractionSimplifiee};+\\infty [$ 
+                <br>$f$ est strictement croissante.
+                D'après le corollaire du théorème des valeurs intermédiaires, l'équation $f(x) = ${k}$ admet une unique solution.<br>
+                 Par disjon des cas, l'équation $f(x) = ${k}$ admet donc une unique solution sur $\\mathbb{R}$.<br>`
+                
+              } else if (a * m < 0) {
+                correction += `Sur l'intervalle $]-\\infty ; ${sommet.texFractionSimplifiee}]$, $f$ est croissante et atteint son maximum $${texNombre(
+                  extremum,
+                )}$ en $x = ${sommet.texFractionSimplifiee}$.<br>
+                Sur l'intervalle $[${sommet.texFractionSimplifiee};+\\infty[$, $f$ est décroissante, donc son image est incluse dans $]-\\infty;${texNombre(
+                  extremum,
+                )}]$.<br>
+                Comme ${k} > ${texNombre(extremum)}, ${k}$ n'appartient pas à l'image de $f$ et l'équation $f(x) = ${k}$ n'admet aucune solution sur $\\mathbb{R}$.<br>`  }
 
               if (this.interactif) {
                 question += ajouteChampTexteMathLive(
