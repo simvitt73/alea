@@ -357,8 +357,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
             case 5:
               question += `Déterminer le nombre de solution(s) de l'équation $f(x) = ${k}$.<br>
               On donnera, le cas échéant, une valeur approchée au centième près, de la ou des solutions.<br>`
-              correction +=  ` comme $${k}>${extremum}$. On sait que la fonction $f$ est dérivable sur $\\mathbb{R}$, elle est donc continue sur $\\mathbb{R}$.<br>
-              D'autre part, d'après l'étude de la fonction $f$, on sait que :<br>`
+              
               
               if (a * m > 0) {
                 correction +=` Sur l'intervalle $]-\\infty ; ${sommet.texFractionSimplifiee}[$, on a $f(x)<0$ donc l'équation $f(x) = ${k}$ n'admet aucune solution.
@@ -370,10 +369,13 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                  Par disjon des cas, l'équation $f(x) = ${k}$ admet donc une unique solution sur $\\mathbb{R}$.<br>`
                 
               } else if (a * m < 0) {
-                correction += `Sur l'intervalle $]-\\infty ; ${sommet.texFractionSimplifiee}]$, $f$ est croissante et atteint son maximum $${texNombre(
-                  extremum,
-                )}$ en $x = ${sommet.texFractionSimplifiee}$.<br>
-                Sur l'intervalle $[${sommet.texFractionSimplifiee};+\\infty[$, $f$ est décroissante, donc son image est incluse dans $]-\\infty;${texNombre(
+                correction += ` Sur l'intervalle $]-\\infty ; ${sommet.texFractionSimplifiee}]$, $f$ est croissante et $\\displaystyle\\lim_{x \\to -\\infty} f(x) =  0$.<br>
+                Comme $${texNombre(k)}< 0$, $${k}$ ne possède pas d'antécedent par $f$ sur cet intervalle.
+                <br> L'équation $f(x) = ${k}$ n'admet donc aucune solution sur $]-\\infty ; ${sommet.texFractionSimplifiee}]$.<br>
+                Sur l'intervalle $[${sommet.texFractionSimplifiee};+\\infty[$ :<br>
+                $f$ est décroissante, <br>
+                $\\displaystyle\\lim_{x \\to +\\infty} f(x) =  -\\infty$.<br>
+                Comme $${texNombre(k)} \\in]-\\infty ; $, d'après le corollaire du théorème des valeurs intermédiaires, l'équation $f(x) = ${k}$ admet une unique solution sur $[${sommet.texFractionSimplifiee};+\\infty[$.<br>
                   extremum,
                 )}]$.<br>
                 Comme ${k} > ${texNombre(extremum)}, ${k}$ n'appartient pas à l'image de $f$ et l'équation $f(x) = ${k}$ n'admet aucune solution sur $\\mathbb{R}$.<br>`  }
