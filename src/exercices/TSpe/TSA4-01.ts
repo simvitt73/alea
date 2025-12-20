@@ -14,6 +14,7 @@ import {
   reduireAxPlusB,
   rienSi1,
 } from '../../lib/outils/ecritures'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { arrondi, signe } from '../../lib/outils/nombres'
 import { texNombre } from '../../lib/outils/texNombre'
 import FractionEtendue from '../../modules/FractionEtendue'
@@ -115,9 +116,9 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
               let corrMoins = ''
 
               if (m > 0) {
-                corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(a)}\\infty$ et $\\displaystyle\\lim_{x \\to +\\infty}\\mathrm{e}^{${rienSi1(m)}x}=+\\infty$, donc par produit, $\\displaystyle\\lim_{x \\to +\\infty} f(x) = ${signe(
+                corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(a)}\\infty$ et $\\displaystyle\\lim_{x \\to +\\infty}\\mathrm{e}^{${rienSi1(m)}x}=+\\infty$, donc par produit, $${miseEnEvidence(`\\displaystyle\\lim_{x \\to +\\infty} f(x) = ${signe(
                   a,
-                )}\\infty$.<br>`
+                )}\\infty`)}.$<br>`
 
                 corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(-a)}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${rienSi1(m)}x}= 0$. <br>On reconnaît une forme indéterminée $${signe(-a)}\\infty \\times 0$.<br>
                 Pour la lever, on utilise le théorème des croissances comparées : <br>
@@ -126,7 +127,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                   &=${rienSi1(a)}x\\times \\mathrm{e}^{${m}x}${ecritureAlgebrique(b)}\\times \\mathrm{e}^{${m}x}\\\\
                               \\end{aligned}$ <br>
                  On sait que , pour tout réel $a$ non-nul, $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^{aX}=0$, donc  $\\displaystyle\\lim_{x\\to -\\infty}${rienSi1(a)}x\\mathrm{e}^{${m}x}=0.$<br>
-                 Comme $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, alors par somme $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
+                 Comme $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, alors par somme $${miseEnEvidence(`\\displaystyle\\lim_{x \\to -\\infty} f(x)=0)`)}.$`
               } else if (m < 0) {
                 corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(
                   a,
@@ -139,10 +140,10 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                                \\end{aligned}$ <br>
                On sait que , pour tout réel $a$ non-nul, $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^{aX}=0$,
                donc , $\\displaystyle\\lim_{x\\to +\\infty}${rienSi1(a)}x\\mathrm{e}^{${rienSi1(m)}x}=0.$<br>
-                 Comme $\\displaystyle\\lim_{x\\to +\\infty} \\mathrm{e}^{${rienSi1(m)}x}=0$, alors par somme $\\displaystyle\\lim_{x \\to -\\infty} f(x)=0$.`
+                 Comme $\\displaystyle\\lim_{x\\to +\\infty} \\mathrm{e}^{${rienSi1(m)}x}=0$, alors par somme $${miseEnEvidence(`\\displaystyle\\lim_{x \\to +\\infty} f(x)=0`)}.$`
                 corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(
                   -a,
-                )}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${m}x}= +\\infty$ donc par produit $\\displaystyle\\lim_{x \\to -\\infty} f(x) = ${signe(-a)}\\infty$.`
+                )}\\infty$ et $\\displaystyle\\lim_{x \\to -\\infty}\\mathrm{e}^{${m}x}= +\\infty$ donc par produit $${miseEnEvidence(`\\displaystyle\\lim_{x \\to -\\infty} f(x) = ${signe(-a)}\\infty`)}.$`
               }
 
               question +=
@@ -184,8 +185,8 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
       &= ${rienSi1(a)} \\mathrm{e}^{${rienSi1(m)}x} + (${reduireAxPlusB(a, b)})  (${m}  \\mathrm{e}^{${rienSi1(m)}x})\\\\
       &=  \\mathrm{e}^{${rienSi1(m)}x} \\left(${a} ${ecritureAlgebriqueSauf1(m)} (${reduireAxPlusB(a, b)})\\right)\\\\
       &=\\mathrm{e}^{${rienSi1(m)}x}  \\left( ${a * m}x${ecritureAlgebrique(a + m * b)} \\right)
-      \\end{aligned}$.<br>`
-
+      \\end{aligned}$.`
+correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = \\mathrm{e}^{${rienSi1(m)}x}  \\left( ${a * m}x${ecritureAlgebrique(a + m * b)} \\right)`)}.$<br>`
               if (this.interactif) {
                 question += ajouteChampTexteMathLive(
                   this,
