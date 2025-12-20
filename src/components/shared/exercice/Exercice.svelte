@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SvelteComponent, onMount } from 'svelte'
+  import { onMount, type Component } from 'svelte'
   import Exercice from '../../../exercices/Exercice'
   import { isStatic, isSvelte } from '../../../lib/components/componentsUtils'
   import {
@@ -28,7 +28,7 @@
 
   let exercise: Exercice
   let exerciseType: ExerciseType
-  let ComponentExercice: typeof SvelteComponent<any>
+  let ComponentExercice: Component<any>
 
   let debug = false
   function log(str: string) {
