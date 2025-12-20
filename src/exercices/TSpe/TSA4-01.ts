@@ -215,12 +215,12 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
 
                 correction += `<br>$\\begin{aligned}
        \\phantom{\\iff}&${rienSi1(a * m)}x${ecritureAlgebrique(a + m * b)}>0\\\\
-       \\iff&${rienSi1(a * m)}x>${-a - m * b}\\\\
+       \\iff &${rienSi1(a * m)}x>${-a - m * b}\\\\
         \\end{aligned}$`
                 if (a * m > 0) {
                   correction += `<br>$\\begin{aligned}
-     \\iff x&>${sommet.texFraction}\\\\
-     \\iff x&>${sommet.texFractionSimplifiee}
+     \\iff &x>${sommet.texFraction}\\\\
+     \\iff &x>${sommet.texFractionSimplifiee}
      \\end{aligned}$ <br>
      $f$ est donc croissante quand $x>${sommet.texFractionSimplifiee}$<br>`
                 } else if (a * m < 0) {
