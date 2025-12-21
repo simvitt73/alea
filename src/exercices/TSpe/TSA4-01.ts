@@ -1,8 +1,7 @@
 import { createList } from '../../lib/format/lists'
-import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
+import { brent, tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
 import { Polynome } from '../../lib/mathFonctions/Polynome'
 import {
-  compteOccurences,
   enleveDoublonNum,
 } from '../../lib/outils/arrayOutils'
 import {
@@ -74,8 +73,8 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
           }).map(Number),
     )
 
-    let nbDeQuestions = typesDeQuestionsDisponibles.length
-    if (compteOccurences(typesDeQuestionsDisponibles, 1) > 0) nbDeQuestions++
+  
+  
 
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
       let a :number 
@@ -94,7 +93,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
       const k =
         a * m > 0 ? randint(k1 + 2, k1 + 10, 0) : randint(-k1 - 10, k1 - 2, 0)// Pour le TVI
       let extremum : number
-      if (m>0) extremum = arrondi((a * sommet.valeurDecimale + b) * Math.exp(m * sommet.valeurDecimale),0,)
+      if (m>0) extremum = arrondi((a * sommet.valeurDecimale + b) * Math.exp(m * sommet.valeurDecimale),2,)
         else extremum = arrondi((a * sommet.valeurDecimale + b) * Math.exp(m * sommet.valeurDecimale),4,) // valeur approchée du maximum ou minimum de f
 
       const extremumF1 =new FractionEtendue(-a,m) // image du sommet dans (ax+b)  
@@ -123,8 +122,8 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                 f(x)&=\\left(${reduireAxPlusB(a, b)} \\right) \\mathrm{e}^{${m}x}\\\\ 
                   &=${rienSi1(a)}x\\times \\mathrm{e}^{${m}x}${ecritureAlgebrique(b)}\\times \\mathrm{e}^{${m}x}\\\\
                               \\end{aligned}$ <br>
-                 On sait que , pour tout réel $a$ non-nul, $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^{aX}=0$, donc  $\\displaystyle\\lim_{x\\to -\\infty}${rienSi1(a)}x\\mathrm{e}^{${m}x}=0.$<br>
-                 Comme $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, alors par somme $${miseEnEvidence(`\\displaystyle\\lim_{x \\to -\\infty} f(x)=0)`)}.$`
+                 On sait que, pour tout réel $a$ strictement positif, $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^{aX}=0$, donc  $\\displaystyle\\lim_{x\\to -\\infty}${rienSi1(a)}x\\mathrm{e}^{${m}x}=0.$<br>
+                 Comme $\\displaystyle\\lim_{x\\to -\\infty} \\mathrm{e}^{${m}x}=0$, alors par somme $${miseEnEvidence(`\\displaystyle\\lim_{x \\to -\\infty} f(x)=0`)}.$`
               } else if (m < 0) {
                 corrPlus = `$\\displaystyle\\lim_{x \\to +\\infty} ${fAff.toString()}=${signe(
                   a,
@@ -135,8 +134,8 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
                 f(x)&=\\left(${reduireAxPlusB(a, b)} \\right) \\mathrm{e}^{${rienSi1(m)}x}\\\\
                   &=${rienSi1(a)}x\\times \\mathrm{e}^{${rienSi1(m)}x}${ecritureAlgebrique(b)}\\times \\mathrm{e}^{${rienSi1(m)}x}\\\\
                                \\end{aligned}$ <br>
-               On sait que , pour tout réel $a$ non-nul, $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^{aX}=0$,
-               donc , $\\displaystyle\\lim_{x\\to +\\infty}${rienSi1(a)}x\\mathrm{e}^{${rienSi1(m)}x}=0.$<br>
+               On sait que, pour tout réel $a$ strictement positif, $\\displaystyle\\lim_{X\\to -\\infty} X\\mathrm{e}^{aX}=0$,
+               donc, $\\displaystyle\\lim_{x\\to +\\infty}${rienSi1(a)}x\\mathrm{e}^{${rienSi1(m)}x}=0.$<br>
                  Comme $\\displaystyle\\lim_{x\\to +\\infty} \\mathrm{e}^{${rienSi1(m)}x}=0$, alors par somme $${miseEnEvidence(`\\displaystyle\\lim_{x \\to +\\infty} f(x)=0`)}.$`
                 corrMoins = `$\\displaystyle\\lim_{x \\to -\\infty} ${fAff.toString()}=${signe(
                   -a,
@@ -155,7 +154,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
             }
             case 2:
               question += `Calculer la dérivée $f'(x)$ de la fonction $f$.`
-              correction += `On a $f=uv$, avec pour tout $x\\in\\mathbb{R}$ , $u(x) = ${reduireAxPlusB(a, b)}$ et $v(x) = \\mathrm{e}^{${rienSi1(m)}x}$.<br>
+              correction += `On a $f=uv$, avec pour tout $x\\in\\mathbb{R}$, $u(x) = ${reduireAxPlusB(a, b)}$ et $v(x) = \\mathrm{e}^{${rienSi1(m)}x}$.<br>
       On calcule :    $u'(x) = ${a}$ et $v'(x) = ${m} \\mathrm{e}^{${rienSi1(m)}x}$.<br>
      Par dérivation d'un produit,<br>
       $\\begin{aligned}
@@ -171,7 +170,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
             case 3:
               {
                 question += `Étudier les variations de la fonction $f$ sur $\\mathbb{R}$.`
-                correction += `Pour étudier les variations de la fonction $f$, on analyse le signe de sa dérivée $f'(x)$.<br>
+                correction += `Pour étudier les variations de la fonction $f$, on analyse le signe de sa dérivée $f'$.<br>
       On a $f'(x) = \\mathrm{e}^{${rienSi1(m)}x}  \\left( ${rienSi1(a * m)}x${ecritureAlgebrique(a + m * b)} \\right)$.<br>
       Pour tout $x\\in\\mathbb{R}$, $\\mathrm{e}^{${rienSi1(m)}x}>0$. <br>On étudie le signe de $${rienSi1(a * m)}x${ecritureAlgebrique(a + m * b)}$.`
 
@@ -202,7 +201,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                         10,
                         '+/$0$',
                         30,
-                        `-/$${extremumF1.texFractionSimplifiee}\\mathrm{e}^{${extremumF2.texFractionSimplifiee}}$`,
+                        `-/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
                         15,
                         '+/$+\\infty$',
                       ]
@@ -211,7 +210,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                         10,
                         '-/$0$',
                         30,
-                        `+/$${extremumF1.texFractionSimplifiee}\\mathrm{e}^{${extremumF2.texFractionSimplifiee}}$`,
+                        `+/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
                         15,
                         '-/$-\\infty$',
                       ]
@@ -226,7 +225,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                     [
                       '$-\\infty$',
                       30,
-                      `$\\quad${sommet.texFractionSimplifiee}\\quad$`,
+                      `$${sommet.texFractionSimplifiee}$`,
                       30,
                       '$+\\infty$',
                       30,
@@ -240,7 +239,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                   lgt: 3.5, // taille de la première colonne en cm
                   hauteurLignes: [30, 30, 30],
                 })
-                correction += `<br>$\\begin{aligned}f\\left(${sommet.texFractionSimplifiee}\\right)& = ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{${extremumF2.texFractionSimplifiee}}\\\\&\\approx ${texNombre(extremum)}\\end{aligned}$.<br>`
+                correction += `<br>$\\begin{aligned}f\\left(\\frac{${sommet.numIrred}}{${sommet.denIrred}}\\right)& = ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}\\\\&\\approx ${texNombre(extremum)}\\end{aligned}$.<br>`
               }
               break
             case 4:
@@ -248,11 +247,11 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
               On donne, pour tout $x\\in\\mathbb{R}, f''(x) = \\mathrm{e}^{${rienSi1(m)}x}\\left(${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}\\right)$.<br>
               Étudier la convexité de la fonction $f$.<br>
               Déterminer la présence éventuelle de points d'inflexion.`
-              correction += `Pour étudier la convexité de la fonction $f$, on étudie le signe de la dérivée seconde $f''(x)$.<br>
-      Soit $x\\in\\mathbb{R}$, on a $f''(x) = \\mathrm{e}^{${rienSi1(m)}x}\\left(${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}\\right)$<br>
+              correction += `Pour étudier la convexité de la fonction $f$, on étudie le signe de la dérivée seconde $f''$.<br>
+      Soit $x\\in\\mathbb{R}$, on a $f''(x) = \\mathrm{e}^{${rienSi1(m)}x}\\left(${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}\\right)$.<br>
     On sait que pour tout $x\\in\\mathbb{R}$, $\\mathrm{e}^{${rienSi1(m)}x}>0$.<br>
     On étudie donc le signe de $${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}$.<br>
-    On résout <br>$\\begin{aligned}
+    On résout : <br>$\\begin{aligned}
       &${rienSi1(a * m * m)}x${ecritureAlgebrique(m * (2 * a + m * b))}>0\\\\
       \\iff&${rienSi1(a * m * m)}x>${-m * (2 * a + m * b)}\\\\
       \\end{aligned}$<br>`
@@ -304,9 +303,9 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
               correction += tableauDeVariation({
                 tabInit: [
                   [
-                    ['x', 3.5, 100],
+                    ['x', 2, 20],
                     ["f''(x)", 2, 30],
-                    ['$f$', 4, 30],
+                    ['$f$', 2, 20],
                   ],
                   // Première ligne du tableau avec chaque antécédent suivi de son nombre de pixels de largeur estimée du texte pour le centrage
                   [
@@ -324,7 +323,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                 espcl: 8, // taille en cm entre deux antécédents
                 deltacl: 1, // distance entre la bordure et les premiers et derniers antécédents
                 lgt: 3.5, // taille de la première colonne en cm
-                hauteurLignes: [30, 30, 30],
+                hauteurLignes: [20, 20, 10],
               })
               correction += `<br>Une fonction admet un point d'inflexion si et seulement si sa dérivée seconde s'annule et change de signe. <br>
            On peut donc conlure que la courbe représentative de $f$ admet un unique point d'inflexion en $x = ${sommetConvexite.texFractionSimplifiee}$.<br>`
@@ -333,8 +332,8 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
 // TVI
 // ******************************** */
             case 5:
-              question += `Déterminer  le nombre de solution(s) sur $\\mathbb{R}$ , de l'équation $f(x) = ${k}$.
-              On donnera, le cas échéant, une valeur approchée au centième près, de la ou des solutions.<br>`
+              question += `Déterminer  le nombre de solution(s) sur $\\mathbb{R}$, de l'équation $f(x) = ${k}$.
+              On donnera, le cas échéant, pour chacune, une valeur approchée au centième près.<br>`
               let TVIPlus="  "
               let TVIMoins=" "
               let TVI1=" "
@@ -356,15 +355,15 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                 style: 'carres',
                 items: [ TVI1, TVI2, TVI3],
               })
-               correction +=`d'après le corollaire du théorème des valeurs intermédiaires, l'équation $f(x) = ${k}$ admet une unique solution sur cet intervalle.<br> `
+               correction +=`D'après le corollaire du théorème des valeurs intermédiaires, l'équation $f(x) = ${k}$ admet une unique solution sur cet intervalle.<br> `
               } else if (a * m < 0) {
                 TVIPlus += ` Sur l'intervalle $\\left ]-\\infty ; ${sommet.texFractionSimplifiee}\\right]$ : <br> $f$ est strictement croissante et $\\displaystyle\\lim_{x \\to -\\infty} f(x) =  0$.<br>
                 Pour tout $x$ de cet intervalle, on a donc $f(x)>0$.<br> L'équation $f(x) = ${k}$ n'admet alors aucune solution sur $\\left]-\\infty ; ${sommet.texFractionSimplifiee}\\right]$.`
                 TVIMoins +=`Sur l'intervalle $\\left[${sommet.texFractionSimplifiee};+\\infty \\right[$ :`
                   TVI1='On sait que $f$ est dérivable donc continue.'
                 TVI2='$f$ est strictement décroissante.'
-                TVI3=`$\\displaystyle\\lim_{x \\to +\\infty} f(x) =  -\\infty$ et $f\\left(${sommet.texFractionSimplifiee}\\right) = ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{${extremumF2.texFractionSimplifiee}}\\approx ${texNombre(extremum)}$, 
-                donc $${texNombre(k)} \\in\\left]-\\infty ; ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{${extremumF2.texFractionSimplifiee}}\\right]$.`
+                TVI3=`$\\displaystyle\\lim_{x \\to +\\infty} f(x) =  -\\infty$ et $f\\left(${sommet.texFractionSimplifiee}\\right) = ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}\\approx ${texNombre(extremum)}$, 
+                donc $${texNombre(k)} \\in\\left]-\\infty ; ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}\\right]$.`
                 
                  correction = createList({
                 style: 'fleches',
@@ -377,9 +376,13 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                correction +=`d'après le corollaire du théorème des valeurs intermédiaires, l'équation $f(x) = ${k}$ admet une unique solution sur cet intervalle.<br> `
               }
               
- correction += ` Par disjonction des cas, l'équation $f(x) = ${k}$ admet donc une unique solution sur $\\mathbb{R}$.`
-             
-            
+              correction += ` Par disjonction des cas, l'équation $f(x) = ${k}$ admet donc une unique solution sur $\\mathbb{R}$.`
+              const fEquation = (x: number) => (a * x + b) * Math.exp(m * x) - k
+              const x0 = brent(fEquation, -100, 100, 1e-10, 200)
+              correction += ` On en déduit que $f(x) = ${k}$ admet une unique solution $x_0 \\approx ${texNombre(
+                arrondi(x0, 2),
+              )}$.`
+              
               break
           }
           questions.push(question)
