@@ -354,7 +354,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                 lgt: 3.5, // taille de la première colonne en cm
                 hauteurLignes: [20, 20, 10],
               })
-              correction += `<br>Une courbe représentative d'une fonction $f$ admet un point d'inflexion si et seulement si la dérivée seconde $f''$ s'annule et change de signe. <br>
+              correction += `<br><br>Une courbe représentative d'une fonction $f$ admet un point d'inflexion si et seulement si la dérivée seconde $f''$ s'annule et change de signe. <br>
            On peut donc conlure que la courbe représentative de $f$ admet un unique point d'inflexion en $x = ${sommetConvexite.texFractionSimplifiee}$.<br>`
               break
 // *********************************
