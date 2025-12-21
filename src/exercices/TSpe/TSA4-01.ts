@@ -331,7 +331,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
 // *********************************
 // TVI
 // ******************************** */
-            case 5:
+            case 5:{
               question += `Déterminer  le nombre de solution(s) sur $\\mathbb{R}$, de l'équation $f(x) = ${k}$.
               On donnera, le cas échéant, pour chacune, une valeur approchée au centième près.<br>`
               let TVIPlus="  "
@@ -379,10 +379,13 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
               correction += ` Par disjonction des cas, l'équation $f(x) = ${k}$ admet donc une unique solution sur $\\mathbb{R}$.`
               const fEquation = (x: number) => (a * x + b) * Math.exp(m * x) - k
               const x0 = brent(fEquation, -100, 100, 1e-10, 200)
-              correction += ` On en déduit que $f(x) = ${k}$ admet une unique solution $x_0 \\approx ${texNombre(
-                arrondi(x0, 2),
-              )}$.`
-              
+              const x0Nombre = Number(x0)
+             
+                correction += ` On en déduit que $f(x) = ${k}$ admet une unique solution $x_0 \\approx ${texNombre(
+                  arrondi(x0Nombre, 2),
+                )}$.`
+              }
+            
               break
           }
           questions.push(question)
