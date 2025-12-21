@@ -369,8 +369,8 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
             let TVI1=" "
             let TVI2=" "
             let TVI3=" "
-            let variation = ''
-            let variation2 = ''
+             variation = ''
+             variation2 = ''
             if (a > 0) {
               variation = 'croissante'
               variation2 = 'décroissante'
