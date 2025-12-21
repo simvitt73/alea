@@ -99,6 +99,7 @@ export default class EtudeCompleteFonctionExponentielle extends Exercice {
       const extremumF1 =new FractionEtendue(-a,m) // image du sommet dans (ax+b)  
       const extremumF2 = new FractionEtendue(-m*b-a, a) // image du sommet dans e^(mx)
       const sommetConvexite = new FractionEtendue(-m * (2 * a + m * b),a * m * m,)// abscisse du point d'inflexion de f
+      let variation : string // pour le TVI
       if (this.questionJamaisPosee(i, a, b, m)) {
         const texte = `Soit $f$ la fonction deux fois dérivable sur $\\mathbb{R}$,  définie pour tout réel $x$ par $f(x) = \\left(${reduireAxPlusB(a, b)} \\right) \\mathrm{e}^{${rienSi1(m)}x}.$`
        
@@ -194,26 +195,51 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                   a * m > 0
                     ? ['Line', 20, '', 20, '-', 20, 'z', 20, '+', 20]
                     : ['Line', 20, '', 20, '+', 20, 'z', 20, '-', 20]
-                const ligneVariation =
-                  a * m > 0
-                    ? [
-                        'Var',
-                        10,
-                        '+/$0$',
-                        30,
-                        `-/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
-                        15,
-                        '+/$+\\infty$',
-                      ]
-                    : [
-                        'Var',
-                        10,
-                        '-/$0$',
-                        30,
-                        `+/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
-                        15,
-                        '-/$-\\infty$',
-                      ]
+                let ligneVariation;
+                if (a > 0 && m > 0) {
+                  ligneVariation = [
+                    'Var',
+                    10,
+                    '+/$0$',
+                    30,
+                    `-/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
+                    15,
+                    '+/$+\\infty$',
+                  ];
+                } 
+                if (a < 0 && m < 0) {
+                  ligneVariation = [
+                    'Var',
+                    10,
+                    '+/$+\\infty$',
+                    30,
+                    `-/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
+                    15,
+                    '+/$0$',
+                  ];
+                }
+                  if (a > 0 && m < 0) {
+                  ligneVariation = [
+                    'Var',
+                    10,
+                    '-/$-\\infty$',
+                    30,
+                    `+/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
+                    15,
+                    '-/$0$',
+                  ];
+                }
+                  if (a < 0 && m > 0) {
+                  ligneVariation = [
+                    'Var',
+                    10,
+                    '-/$0$',
+                    30,
+                    `+/$\\frac{${extremumF1.numIrred}}{${extremumF1.denIrred}}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}$`,
+                    15,
+                    '-/$-\\infty$',
+                  ];
+                }
                 correction += tableauDeVariation({
                   tabInit: [
                     [
@@ -239,7 +265,10 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                   lgt: 3.5, // taille de la première colonne en cm
                   hauteurLignes: [30, 30, 30],
                 })
-                correction += `<br>$\\begin{aligned}f\\left(\\frac{${sommet.numIrred}}{${sommet.denIrred}}\\right)& = ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}\\\\&\\approx ${texNombre(extremum)}\\end{aligned}$.<br>`
+                extremumF2.numIrred === 0
+                  ? (correction += `<br>$\\begin{aligned}f\\left(\\frac{${sommet.numIrred}}{${sommet.denIrred}}\\right)& = ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{\\frac{${extremumF2.numIrred}}{${extremumF2.denIrred}}}\\\\&\\approx ${texNombre(extremum)}\\end{aligned}$.<br>`)
+                  : (correction += `<br>$\\begin{aligned}f\\left(\\frac{${sommet.numIrred}}{${sommet.denIrred}}\\right)& = ${extremumF1.texFractionSimplifiee}\\mathrm{e}^{${extremumF2.numIrred}}\\\\&\\approx ${texNombre(extremum)}\\end{aligned}$.<br>`)
+
               }
               break
             case 4:
@@ -325,7 +354,7 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                 lgt: 3.5, // taille de la première colonne en cm
                 hauteurLignes: [20, 20, 10],
               })
-              correction += `<br>Une fonction admet un point d'inflexion si et seulement si sa dérivée seconde s'annule et change de signe. <br>
+              correction += `<br>Une courbe représentative d'une fonction $f$ admet un point d'inflexion si et seulement si la dérivée seconde $f''$ s'annule et change de signe. <br>
            On peut donc conlure que la courbe représentative de $f$ admet un unique point d'inflexion en $x = ${sommetConvexite.texFractionSimplifiee}$.<br>`
               break
 // *********************************
@@ -339,9 +368,16 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
               let TVI1=" "
               let TVI2=" "
               let TVI3=" "
-              if (a * m > 0) {
+              if (a>0) { variation='croissante'}
+              else { variation='décroissante'}
+             
+              
+              if ( m > 0) {
                 TVIPlus += ` Sur l'intervalle $\\left ]-\\infty ; ${sommet.texFractionSimplifiee}\\right[$ :<br> 
-                $f$ est strictement décroissante. Comme $\\displaystyle\\lim_{x \\to -\\infty} f(x) =  0$, alors pour tout $x$ de cet intervalle, on a $f(x)<0$.<br> L'équation $f(x) = ${k}$ n'admet donc aucune solution.`
+                $f$ est strictement ${variation }. `
+                TVIPlus +=`Comme $\\displaystyle\\lim_{x \\to -\\infty} f(x) =  0$, alors pour tout $x$ de cet intervalle, on a `
+                if (a>0) { TVIPlus +=`$f(x)<0$.<br> L'équation $f(x) = ${k}$ n'admet donc aucune solution.`}
+                else { TVIPlus +=`$f(x)>0$.<br> L'équation $f(x) = ${k}$ n'admet donc aucune solution.`}
                 TVIMoins +=`Sur l'intervalle $\\left[ ${sommet.texFractionSimplifiee};+\\infty \\right[$ :`
                 TVI1='On sait que $f$ est dérivable donc continue.'
                 TVI2=`$${k}\\in \\left[${sommet.texFractionSimplifiee};+\\infty \\right[.$ `
@@ -356,7 +392,8 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
                 items: [ TVI1, TVI2, TVI3],
               })
                correction +=`D'après le corollaire du théorème des valeurs intermédiaires, l'équation $f(x) = ${k}$ admet une unique solution sur cet intervalle.<br> `
-              } else if (a * m < 0) {
+              } 
+              else if ( m < 0) {
                 TVIPlus += ` Sur l'intervalle $\\left ]-\\infty ; ${sommet.texFractionSimplifiee}\\right]$ : <br> $f$ est strictement croissante et $\\displaystyle\\lim_{x \\to -\\infty} f(x) =  0$.<br>
                 Pour tout $x$ de cet intervalle, on a donc $f(x)>0$.<br> L'équation $f(x) = ${k}$ n'admet alors aucune solution sur $\\left]-\\infty ; ${sommet.texFractionSimplifiee}\\right]$.`
                 TVIMoins +=`Sur l'intervalle $\\left[${sommet.texFractionSimplifiee};+\\infty \\right[$ :`
@@ -378,12 +415,12 @@ correction += `<br>Donc, pour tout $x\\in\\mathbb{R}, ${miseEnEvidence(`f'(x) = 
               
               correction += ` Par disjonction des cas, l'équation $f(x) = ${k}$ admet donc une unique solution sur $\\mathbb{R}$.`
               const fEquation = (x: number) => (a * x + b) * Math.exp(m * x) - k
-              const x0 = brent(fEquation, -100, 100, 1e-10, 200)
-              const x0Nombre = Number(x0)
+              const {root: x0} = brent(fEquation, -100, 100, 1e-10, 200)
              
+            
                 correction += ` On en déduit que $f(x) = ${k}$ admet une unique solution.<br>
                 A la calculatrice, on trouve une valeur approchée au centième qui vaut $x_0 \\approx ${texNombre(
-                  arrondi(x0Nombre, 2),
+                  arrondi(x0, 2),
                 )}$.`
               }
             
