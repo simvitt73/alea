@@ -184,7 +184,7 @@ export default class CourbeConvexite extends ExerciceSimple {
     // Perturbation des abscisses : translation entière et pas multiplicatif entier (>=1)
     const baseX0 = scenario.noeuds[0].x
     const deltaX = randint(-1, 1)
-    const pasX = 1 + randint(0, 1) // 1 ou 2
+    const pasX = 2 + randint(0, 1) // 2 ou 3 pour espacer davantage les abscisses
     const transformX = (x: number) =>
       x === Infinity || x === -Infinity ? x : baseX0 + deltaX + (x - baseX0) * pasX
 
