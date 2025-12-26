@@ -15,6 +15,7 @@ import { context } from './context'
 export function scratchblock(
   stringLatex: string,
   style = 'block',
+  useHighContrast = false,
 ): string | false {
   const regex1 = /[\\{}]/
   const regex4 = /[{ ]/
@@ -442,11 +443,14 @@ export function scratchblock(
       style !== 'block'
         ? ' style="display:inline-block; vertical-align:middle";'
         : ''
+    const highContrastClass = useHighContrast
+      ? ' scratchblocks-style-scratch3-high-contrast'
+      : ''
     if (matches) {
       const scale = matches[0]
-      codeScratch = `<pre class="blocks2" ${inlineStyle} ${scale}>`
+      codeScratch = `<pre class="blocks2${highContrastClass}" ${inlineStyle} ${scale}>`
     } else {
-      codeScratch = `<pre class="blocks" ${inlineStyle}>`
+      codeScratch = `<pre class="blocks${highContrastClass}" ${inlineStyle}>`
     }
     index = 0
     fin = false

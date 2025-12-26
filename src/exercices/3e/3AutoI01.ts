@@ -74,7 +74,7 @@ export default class BlocPersonnaliseScratch extends Exercice {
       longueurCote,
       angle: 360 / nbCotes,
     })
-    let codeScratch3 = String(scratchblock(codeScratch))
+    let codeScratch3 = String(scratchblock(codeScratch, 'block', true))
     if (context.isHtml) {
       let ligne = 1
       const lignes = codeScratch3.split('\n')
