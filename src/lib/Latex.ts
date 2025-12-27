@@ -236,29 +236,15 @@ class Latex {
             '\\anote{',
             '\n\\resetcustomnotes',
           )
-          if (Number(exercice.nbColsCorr) > 1) {
-            contentCorr += `\\begin{multicols}{${exercice.nbColsCorr}}\n`
-          }
-          if (Number(exercice.nbQuestions) > 1) {
-            if (Number(exercice.spacingCorr) > 0) {
-              contentCorr += `\n\\begin{enumerate}[itemsep=${exercice.spacingCorr}em]`
-            } else {
-              contentCorr += '\n\\begin{enumerate}'
-            }
-          }
-          for (const correction of exercice.listeCorrections) {
-            if (Number(exercice.nbColsCorr) > 1) {
-              contentCorr += `\n${Number(exercice.nbQuestions) > 1 ? '\\item' : ''} \\begin{minipage}[t]{\\linewidth}${format(correction)}\\end{minipage}`
-            } else {
-              contentCorr += `\n${Number(exercice.nbQuestions) > 1 ? '\\item' : ''} ${format(correction)}`
-            }
-          }
-          if (Number(exercice.nbQuestions) > 1) {
-            contentCorr += '\n\\end{enumerate}\n'
-          }
-          if (Number(exercice.nbColsCorr) > 1) {
-            contentCorr += '\\end{multicols}\n'
-          }
+          contentCorr += writeInCols(
+            writeQuestions(
+              exercice.listeCorrections,
+              exercice.spacingCorr,
+              Boolean(exercice.listeAvecNumerotation),
+              Number(exercice.nbColsCorr),
+            ),
+            Number(exercice.nbColsCorr),
+          )
           contentCorr += testIfLoaded(
             exercice.listeCorrections,
             '\\anote{',
