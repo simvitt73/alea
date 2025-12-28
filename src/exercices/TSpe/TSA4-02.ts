@@ -45,8 +45,14 @@ export default class CourbeConvexite extends ExerciceSimple {
       inflexion: number[]
       zero: number[]
       commentaire: string
+      TableInit?: (string | number)[]
+      SigneFprime?: (string | number)[]
+      VariationFprime?: (string | number)[]
+      abscissesVar : (string | number)[]
+      LigneFprime?: (string | number)[]
+      LigneF?: (string | number)[]
        }
-
+      
     const perturb = (amplitude: number, offset = 0) =>
       offset + randint(-amplitude, amplitude) / 10
 
@@ -68,8 +74,22 @@ export default class CourbeConvexite extends ExerciceSimple {
         inflexion: [-2,2],
         zero: [],
         commentaire: "f' décroît puis croît, donc f est concave puis convexe.",
+         TableInit:  [  '$-\\infty$',30,`$2$`,30,'$+\\infty$',30,],
+        SigneFprime  :['Line', 20, '', 20, '-', 20, 'z', 20, '+', 20],
+        VariationFprime : [
+                    'Var',
+                    10,
+                    '+/$0$',
+                    30,
+                    '-/',
+                    15,
+                    '+/$+\\infty$',
+                  ],
+        abscissesVar: [`$${texNombre(a + 1)}$`,`$${texNombre((a + b) / 2)}$`,`$${texNombre(b - 1)}$`],
+        ligneFprime: ['Line', 10, '', 0, '+', 20, 'z', 20, '-', 20, '+'],
+        ligneF: ['Line', 10, '', 0, '\\nearrow', 20, '', 20, '\\searrow'],
 
-      },
+      }/* ,
       {
         // f' en cloche : concave, convexe, concave avec zéros entiers en x=-3,1,4 OK
         noeuds: [
@@ -175,7 +195,7 @@ export default class CourbeConvexite extends ExerciceSimple {
         zero: [],
         commentaire:
           "f' alterne décroissance/croissance, fournissant plusieurs changements de convexité.",
-      }
+      } */
     ]
 
     const scenario = choice(scenarios)
@@ -355,8 +375,34 @@ export default class CourbeConvexite extends ExerciceSimple {
         +
       dessin
 
-reponse1=`La représentation graphique proposée est celle de la fonction dérivée de $f$.<br>
-On sait que le signe de la dérivée $f'$ donne les variations de $f$.<br>`
+	
+	reponse1=`La représentation graphique proposée est celle de la fonction dérivée de $f$.<br>
+	On sait que le signe de la dérivée $f'$ donne les variations de $f$.<br>`+tableauDeVariation({
+	                  tabInit: [
+	                    [
+	                      ['$x$', 2, 30],
+	                      ["$f'(x)$", 2, 40],
+	                      ['$f(x)$', 2, 40],
+	                    ],
+	                    [
+	                      abscissesVar[0],
+	                      30,
+	                      abscissesVar[1],
+	                      30,
+	                      abscissesVar[2],
+	                      30,
+	                    ],
+	                  ],
+	                  tabLines: [ligneFprime, ligneF],
+	                  style: 'compact',
+	                  espcl: 8,
+	                  deltacl: 1,
+	                  lgt: 3.5,
+	                  hauteurLignes: [30, 30, 30],
+	                })+`<br>
+	    - $f'$ est positive sur $${positifTex}$ donc $f$ est croissante sur ces intervalles.<br>
+	    - $f'$ est négative sur $${negatifTex}$ donc $f$ est décroissante sur ces intervalles.<br>
+	    - $f'$ s'annule en $${zeroTex}$ sans changement de signe, donc $f$ n'a pas d'extrémum en ces points.`
 
 reponse2=`La convexité de $f$ dépend du sens de variation de $f'$. ${commentaireK}<br>
     - $f''>0$ (donc $f$ convexe) sur $${positifTex}$.<br>
