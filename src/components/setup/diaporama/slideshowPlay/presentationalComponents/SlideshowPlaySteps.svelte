@@ -16,12 +16,19 @@
   $: {
     if (stepsContainer) {
       const steps = stepsContainer.querySelectorAll('button')
-      if (steps[currentQuestionNumber])
+      if (steps[currentQuestionNumber]) {
         steps[currentQuestionNumber].scrollIntoView()
-      if (steps[currentQuestionNumber + 5])
+      }
+      if (steps[currentQuestionNumber + 5]) {
         steps[currentQuestionNumber + 5].scrollIntoView()
-      if (steps[currentQuestionNumber - 5])
+      } else {
+        steps[totalQuestionsNumber - 1].scrollIntoView()
+      }
+      if (steps[currentQuestionNumber - 5]) {
         steps[currentQuestionNumber - 5].scrollIntoView()
+      } else {
+        steps[0].scrollIntoView()
+      }
       const diapoProgressContainer = document.getElementById(
         'diapoProgressContainer',
       )
