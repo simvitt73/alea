@@ -14,25 +14,28 @@
   import ButtonToggleAlt from '../../shared/forms/ButtonToggleAlt.svelte'
   import FormRadio from '../../shared/forms/FormRadio.svelte'
   import NavBar from '../../shared/header/NavBar.svelte'
-  // pour les tabs
-  import { Tab, initTWE } from 'tw-elements'
   import ButtonActionInfo from '../../shared/forms/ButtonActionInfo.svelte'
   import ButtonTextAction from '../../shared/forms/ButtonTextAction.svelte'
+  import Tabs from '../../shared/ui/Tabs.svelte'
+
+  $: activeTab = $canOptions.isChoosen ? 'can' : 'classic'
+
+  const tabs = [
+    { id: 'classic', label: 'Présentation classique', ariaControls: 'tabs-pres-classic' },
+    { id: 'can', label: 'Course aux nombres', ariaControls: 'tabs-pres-can' },
+  ]
+
+  function handleTabChange(e: CustomEvent<string>) {
+    if (e.detail === 'classic') {
+      $canOptions.isChoosen = false
+    } else {
+      $canOptions.isChoosen = true
+      toggleCan()
+    }
+  }
 
   onMount(() => {
-    initTWE({ Tab })
-    // mathaleaUpdateUrlFromExercicesParams($exercicesParams)
     handleSeed()
-    const btnElementId = $canOptions.isChoosen
-      ? 'tabs-pres-can-btn'
-      : 'tabs-pres-classic-btn'
-    const tabElementId = $canOptions.isChoosen
-      ? 'tabs-pres-can'
-      : 'tabs-pres-classic'
-    const btnElement = document.getElementById(btnElementId)
-    const tabElement = document.getElementById(tabElementId)
-    btnElement?.setAttribute('data-twe-nav-active', '')
-    tabElement?.setAttribute('data-twe-tab-active', '')
   })
 
   const availableLinkFormats = {
@@ -126,60 +129,14 @@
         </h3>
       </div>
       <!-- Tabulations pour la présentation -->
-      <ul
-        class="flex list-none flex-row flex-wrap border-b-0 pl-0 pt-0 bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas"
-        role="tablist"
-        data-twe-nav-ref
-      >
-        <li role="presentation" class="flex-grow basis-0 text-center">
-          <a
-            id="tabs-pres-classic-btn"
-            href="#tabs-pres-classic"
-            class="relative block font-extrabold px-7 pb-3.5 pt-4 text-base uppercase leading-tight text-coopmaths-action bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas-darkest hover:isolate focus:isolate data-[twe-nav-active]:bg-coopmaths-canvas data-[twe-nav-active]:text-coopmaths-struct dark:text-coopmathsdark-action dark:hover:bg-coopmathsdark-action/20 dark:data-[twe-nav-active]:bg-coopmathsdark-canvas dark:data-[twe-nav-active]:text-coopmathsdark-struct
-            {$canOptions.isChoosen
-              ? 'hover:bg-coopmaths-action/10'
-              : ''}"
-            data-twe-toggle="pill"
-            data-twe-target="#tabs-pres-classic"
-            role="tab"
-            aria-controls="tabs-pres-classic"
-            aria-selected="true"
-            on:click={() => {
-              $canOptions.isChoosen = false
-            }}
-          >
-            Présentation classique
-          </a>
-        </li>
-        <li role="presentation" class="flex-grow basis-0 text-center">
-          <a
-            id="tabs-pres-can-btn"
-            href="#tabs-pres-can"
-            class="relative block font-extrabold px-7 pb-3.5 pt-4 text-base uppercase leading-tight text-coopmaths-action bg-coopmaths-canvas-darkest dark:bg-coopmathsdark-canvas-darkest hover:isolate focus:isolate data-[twe-nav-active]:bg-coopmaths-canvas data-[twe-nav-active]:text-coopmaths-struct dark:text-coopmathsdark-action dark:hover:bg-coopmathsdark-action/20 dark:data-[twe-nav-active]:bg-coopmathsdark-canvas dark:data-[twe-nav-active]:text-coopmathsdark-struct
-            {$canOptions.isChoosen
-              ? ''
-              : 'hover:bg-coopmaths-action/10'}"
-            data-twe-toggle="pill"
-            data-twe-target="#tabs-pres-can"
-            role="tab"
-            aria-controls="tabs-pres-can"
-            aria-selected="false"
-            on:click={() => {
-              $canOptions.isChoosen = true
-              toggleCan()
-            }}
-          >
-            Course aux nombres
-          </a>
-        </li>
-      </ul>
+      <Tabs {tabs} {activeTab} on:change={handleTabChange} />
       <!-- Pages des réglages -->
       <div class="pb-6 pt-4 bg-coopmaths-canvas dark:bg-coopmathsdark-canvas">
         <div
-          class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[twe-tab-active]:block"
+          class="transition-opacity duration-150 ease-linear {activeTab === 'classic' ? 'block opacity-100' : 'hidden opacity-0'}"
           id="tabs-pres-classic"
           role="tabpanel"
-          aria-labelledby="tabs-pres-classic"
+          aria-labelledby="tabs-pres-classic-btn"
         >
           <!-- Présentation classique -->
           <div
@@ -315,10 +272,10 @@
           </div>
         </div>
         <div
-          class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[twe-tab-active]:block"
+          class="transition-opacity duration-150 ease-linear {activeTab === 'can' ? 'block opacity-100' : 'hidden opacity-0'}"
           id="tabs-pres-can"
           role="tabpanel"
-          aria-labelledby="tabs-pres-can"
+          aria-labelledby="tabs-pres-can-btn"
         >
           <!-- Can -->
           <div

@@ -54,7 +54,7 @@
   ```
  -->
 
-<div class="flex flex-{orientation} justify-start items-start mt-1">
+<div class="flex justify-start items-start mt-1" class:flex-col={orientation === 'col'} class:flex-row={orientation === 'row'}>
   {#each labelsValues as labelValue, i}
     <div class="form-check flex flex-row ml-4 items-center">
       <input

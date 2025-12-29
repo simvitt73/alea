@@ -18,7 +18,7 @@
       {isDisabled
       ? 'border-coopmaths-action/20 dark:border-coopmathsdark-action/20'
       : 'border-coopmaths-action dark:border-coopmathsdark-action cursor-pointer'}
-      text-coopmaths-action dark:text-coopmathsdark-action
+      checked:bg-coopmaths-action dark:checked:bg-coopmathsdark-action
       focus:ring-3
       focus:ring-coopmaths-action dark:focus:ring-coopmathsdark-action"
     bind:checked={isChecked}
