@@ -1,10 +1,11 @@
 import { texPrix } from '../../lib/format/style'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { abs, arrondi } from '../../lib/outils/nombres'
-import { stringNombre, texNombre } from '../../lib/outils/texNombre'
+import { texNombre } from '../../lib/outils/texNombre'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 
@@ -177,12 +178,12 @@ export default class EvolutionsEnPourcentage extends Exercice {
                 texte = `Depuis ${anneeDerniere} le nombre d'élèves d'un ${etablissement} a augmenté de $${taux}~\\%$. Il y a maintenant $${texNombre(arrive)}$ élèves. Calculer le nombre d'élèves en ${anneeDerniere} dans cet établissement.`
                 texteCorr = `Une augmentation de $${taux}~\\%$ revient à multiplier par $100~\\% + ${taux}~\\% = ${100 + taux}~\\% = ${coeff}$.<br>Pour retrouver le nombre initial d'élèves, on va donc diviser le nombre actuel d'élèves par $${coeff}$.`
                 texteCorr += `<br>$${texNombre(arrive)}\\div ${coeff} = ${texNombre(depart)}$`
-                texteCorr += `<br>En ${anneeDerniere}, il y avait $${miseEnEvidence(stringNombre(depart))}$ élèves dans ce ${etablissement}.`
+                texteCorr += `<br>En ${anneeDerniere}, il y avait $${miseEnEvidence(texNombre(depart))}$ élèves dans ce ${etablissement}.`
               } else {
                 texte = `Depuis ${anneeDerniere} le nombre d'élèves d'un ${etablissement} a diminué de $${taux}~\\%$. Il y a maintenant $${texNombre(arrive)}$ élèves. Calculer le nombre d'élèves en ${anneeDerniere} dans cet établissement.`
                 texteCorr = `Une diminution de $${abs(taux)}~\\%$ revient à multiplier par $100~\\% ${taux}~\\% = ${100 + taux}~\\% = ${coeff}$.<br>Pour retrouver le nombre initial d'élèves, on va donc diviser le nombre actuel d'élèves par $${coeff}$.`
                 texteCorr += `<br>$${texNombre(arrive)}\\div ${coeff} = ${texNombre(depart)}$`
-                texteCorr += `<br>En ${anneeDerniere}, il y avait $${miseEnEvidence(stringNombre(depart))}$ élèves dans ce ${etablissement}.`
+                texteCorr += `<br>En ${anneeDerniere}, il y avait $${miseEnEvidence(texNombre(depart))}$ élèves dans ce ${etablissement}.`
               }
               reponse = depart
               texteApres = ' élèves'
@@ -322,7 +323,9 @@ export default class EvolutionsEnPourcentage extends Exercice {
       }
       handleAnswers(this, i, { reponse: { value: arrondi(reponse) } })
 
-      texte += ajouteChampTexteMathLive(this, i, '', { texteApres })
+      texte += ajouteChampTexteMathLive(this, i, KeyboardType.clavierNumbers, {
+        texteApres,
+      })
       if (this.questionJamaisPosee(i, reponse)) {
         // Si la question n'a jamais été posée, on en créé une autre
         this.listeQuestions[i] = texte
