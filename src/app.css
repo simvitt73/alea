@@ -1,30 +1,33 @@
 /* Tailwind CSS v4 imports */
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* Dark mode: use class strategy instead of media query */
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Plugins */
 @plugin "daisyui";
 @plugin "daisyui/theme" {
-  name: "mytheme";
+  name: 'mytheme';
   default: true;
-  --color-base-100: #FFFF;
+  --color-base-100: #ffff;
   --color-base-200: #f2f2f2;
   --color-base-300: #e5e5e5;
   --color-base-content: #1f2937;
-  --color-primary: #F15929;
+  --color-primary: #f15929;
   --color-primary-content: #ffffff;
-  --color-secondary: #216D9A;
+  --color-secondary: #216d9a;
   --color-secondary-content: #ffffff;
-  --color-accent: #D84010;
+  --color-accent: #d84010;
   --color-accent-content: #ffffff;
   --color-neutral: #e1e1e6;
   --color-neutral-content: #1f2937;
   --color-info: #bd93f9;
   --color-info-content: #000000;
-  --color-success: #36D399;
+  --color-success: #36d399;
   --color-success-content: #000000;
-  --color-warning: #FBBD23;
+  --color-warning: #fbbd23;
   --color-warning-content: #000000;
-  --color-error: #F87272;
+  --color-error: #f87272;
   --color-error-content: #000000;
 }
 @plugin "@tailwindcss/forms";
@@ -56,26 +59,30 @@
   --scale-200: 2;
 
   /* Fonts */
-  --font-sans: "Source Sans Pro", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-logo9: "jelleebold";
+  --font-sans:
+    'Source Sans Pro', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  --font-logo9: 'jelleebold';
 
   /* coopmaths colors - light mode */
-  --color-coopmaths: #F15929;
+  --color-coopmaths: #f15929;
   --color-coopmaths-lightest: #f87f5c;
   --color-coopmaths-light: #f56d45;
-  --color-coopmaths-dark: #F45E27;
-  --color-coopmaths-darkest: #E64A10;
+  --color-coopmaths-dark: #f45e27;
+  --color-coopmaths-darkest: #e64a10;
   --color-coopmaths-back: #f5f1f3;
   --color-coopmaths-backdark: #dadbdf;
   --color-coopmaths-backdarker: #cecfd4;
-  --color-coopmaths-backcorrection: #E0A588;
-  --color-coopmaths-backnav: #F15929;
+  --color-coopmaths-backcorrection: #e0a588;
+  --color-coopmaths-backnav: #f15929;
   --color-coopmaths-backnavlight: #f56d45;
-  --color-coopmaths-title: #342A34;
-  --color-coopmaths-titlemenu: #F15929;
+  --color-coopmaths-title: #342a34;
+  --color-coopmaths-titlemenu: #f15929;
   --color-coopmaths-titlelight: #f5f1f3;
-  --color-coopmaths-titleexercise: #F15929;
+  --color-coopmaths-titleexercise: #f15929;
   --color-coopmaths-darkmode: #2e2e2b;
   --color-coopmaths-darkmodelight: #363633;
 
@@ -86,14 +93,14 @@
   --color-coopmaths-canvas-moredark: #c8c8c8;
 
   /* coopmaths corpus colors */
-  --color-coopmaths-corpus: #1F2429;
+  --color-coopmaths-corpus: #1f2429;
   --color-coopmaths-corpus-light: #45505b;
   --color-coopmaths-corpus-lightest: #6a7c8d;
   --color-coopmaths-corpus-dark: #191d21;
   --color-coopmaths-corpus-darkest: #131619;
 
   /* coopmaths action colors */
-  --color-coopmaths-action: #F15929;
+  --color-coopmaths-action: #f15929;
   --color-coopmaths-action-light: #f47a54;
   --color-coopmaths-action-lightest: #f79b7f;
   --color-coopmaths-action-dark: #d43d0e;
@@ -109,7 +116,7 @@
   --color-coopmaths-action-900: #f26a3e;
 
   /* coopmaths warn colors */
-  --color-coopmaths-warn: #80D925;
+  --color-coopmaths-warn: #80d925;
   --color-coopmaths-warn-light: #99e150;
   --color-coopmaths-warn-lightest: #b3e97c;
   --color-coopmaths-warn-dark: #66ae1e;
@@ -128,28 +135,28 @@
   --color-coopmaths-warn-1100: #4d8613;
 
   /* coopmaths struct colors */
-  --color-coopmaths-struct: #216D9A;
+  --color-coopmaths-struct: #216d9a;
   --color-coopmaths-struct-light: #2c93cf;
   --color-coopmaths-struct-lightest: #5faedd;
   --color-coopmaths-struct-dark: #1a577b;
   --color-coopmaths-struct-darkest: #14415c;
 
   /* coopmathsdark colors - dark mode */
-  --color-coopmathsdark: #F15929;
+  --color-coopmathsdark: #f15929;
   --color-coopmathsdark-lightest: #f87f5c;
   --color-coopmathsdark-light: #f56d45;
-  --color-coopmathsdark-dark: #F45E27;
-  --color-coopmathsdark-darkest: #E64A10;
+  --color-coopmathsdark-dark: #f45e27;
+  --color-coopmathsdark-darkest: #e64a10;
   --color-coopmathsdark-back: #2e2e2b;
   --color-coopmathsdark-backdark: #dadbdf;
   --color-coopmathsdark-backdarker: #cecfd4;
-  --color-coopmathsdark-backcorrection: #E0A588;
-  --color-coopmathsdark-backnav: #F15929;
+  --color-coopmathsdark-backcorrection: #e0a588;
+  --color-coopmathsdark-backnav: #f15929;
   --color-coopmathsdark-backnavlight: #f56d45;
-  --color-coopmathsdark-title: #342A34;
-  --color-coopmathsdark-titlemenu: #F15929;
+  --color-coopmathsdark-title: #342a34;
+  --color-coopmathsdark-titlemenu: #f15929;
   --color-coopmathsdark-titlelight: #f5f1f3;
-  --color-coopmathsdark-titleexercise: #F15929;
+  --color-coopmathsdark-titleexercise: #f15929;
   --color-coopmathsdark-darkmode: #2e2e2b;
   --color-coopmathsdark-darkmodelight: #363633;
 
@@ -187,6 +194,19 @@
   --color-coopmathsdark-struct-lightest: #caa9fa;
   --color-coopmathsdark-struct-dark: #a66df7;
   --color-coopmathsdark-struct-darkest: #8f48f5;
+}
+
+/* Restore cursor-pointer on interactive elements (removed in Tailwind v4 Preflight) */
+@layer base {
+  button,
+  [role='button'],
+  [type='button'],
+  [type='submit'],
+  [type='reset'],
+  select,
+  summary {
+    cursor: pointer;
+  }
 }
 
 /* Modifie le style des sb3-comment-label */
@@ -1019,4 +1039,12 @@ div.etiquettes {
 /* Fixes issue where Blockly toolbox scrollbar doesn't hide - https://github.com/google/blockly/issues/5840*/
 svg[display='none'] {
   display: none;
+}
+
+/* Ripple animation for button effects */
+@keyframes ripple-animation {
+  to {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
 }

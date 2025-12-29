@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Modal, initTWE } from 'tw-elements'
   import type { CanState } from '../../../../lib/types/can'
   import ShortPagination from './ShortPagination.svelte'
 
@@ -9,6 +8,12 @@
   export let handleEndOfRace: () => void
   export let state: CanState
   export let resultsByQuestion: boolean[]
+
+  let isModalOpen = false
+  let dialog: HTMLDialogElement
+
+  $: if (dialog && isModalOpen) dialog.showModal()
+  $: if (dialog && !isModalOpen) dialog.close()
 
   function swipe(node: HTMLElement) {
     let touchStartX = 0
@@ -59,7 +64,6 @@
   }
 
   onMount(() => {
-    initTWE({ Modal })
     setTimeout(() => {
       const endButtonDiv = document.getElementById('race-ended-by-user-btn')
       if (endButtonDiv) {
@@ -145,8 +149,7 @@
         id="race-ended-by-user-btn"
         type="button"
         class="inline-block p-2 md:p-4 font-bold rounded-lg text-sm md:text-xl leading-normal text-coopmaths-canvas dark:text-coopmathsdark-canvas transition duration-150 ease-in-out bg-coopmaths-action hover:bg-coopmaths-action-lightest focus:bg-coopmaths-action-lightest dark:bg-coopmathsdark-action dark:hover:bg-coopmathsdark-action-lightest dark:focus:bg-coopmathsdark-action-lightest focus:outline-none focus:ring-0 active:bg-coopmaths-action-light dark:active:bg-coopmathsdark-action-light disabled:bg-coopmaths-action/10"
-        data-twe-toggle="modal"
-        data-twe-target="#staticBackdrop"
+        on:click={() => (isModalOpen = true)}
         disabled
       >
         Rendre la copie
@@ -154,99 +157,84 @@
     {/if}
   </div>
 </div>
-<!-- Modal -->
-<div
-  data-twe-modal-init
-  class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-  id="staticBackdrop"
-  data-twe-backdrop="static"
-  data-twe-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<dialog
+  bind:this={dialog}
+  on:click|self={() => (isModalOpen = false)}
+  on:close={() => (isModalOpen = false)}
+  class="m-auto rounded-md bg-coopmaths-canvas dark:bg-coopmathsdark-canvas p-0 backdrop:bg-black/50"
 >
-  <div
-    data-twe-modal-dialog-ref
-    class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]"
-  >
+  <div class="min-[576px]:max-w-125">
     <div
-      class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-coopmaths-canvas dark:bg-coopmathsdark-canvas bg-clip-padding text-current shadow-lg outline-none"
+      class="flex shrink-0 items-center justify-between rounded-t-md p-4 bg-coopmaths-warn-900 dark:bg-coopmathsdark-warn"
     >
-      <div
-        class="flex flex-shrink-0 items-center justify-between rounded-t-md p-4 bg-coopmaths-warn-900 dark:bg-coopmathsdark-warn"
+      <h5
+        class="text-xl leading-normal text-coopmaths-canvas dark:text-coopmathsdark-canvas font-bold"
       >
-        <!--Modal title-->
-        <h5
-          class="text-xl leading-normal text-coopmaths-canvas dark:text-coopmathsdark-canvas bg-coopmaths-warn-900 dark:bg-coopmathsdark-warn font-bold"
-          id="staticBackdropLabel"
+        Attention !
+      </h5>
+      <button
+        type="button"
+        class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 text-coopmaths-canvas dark:text-coopmathsdark-canvas-darkest"
+        on:click={() => (isModalOpen = false)}
+        aria-label="Close"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-6 w-6"
         >
-          Attention !
-        </h5>
-        <!--Close button-->
-        <button
-          type="button"
-          class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none text-coopmaths-canvas dark:text-coopmathsdark-canvas-darkest"
-          data-twe-modal-dismiss
-          aria-label="Close"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-6 w-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
-        </button>
-      </div>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </div>
 
-      <!--Modal body-->
-      <div data-twe-modal-body-ref class="relative p-4">
-        <div
-          class="flex flex-col space-y-4 text-coopmaths-corpus dark:text-coopmathsdark-corpus"
-        >
-          <div class="w-full flex justify-center items-center p-8">
-            <i
-              class="bx bxs-error text-coopmaths-warn-900 dark:text-coopmathsdark-warn-dark text-[70px]"
-            ></i>
-          </div>
-          <div>
-            Si vous cliquez sur le bouton
-            <span class="font-bold">Terminer </span>
-            alors vous ne pourrez plus revenir en arrière.
-          </div>
-          <div>Que souhaitez-vous faire ?</div>
+    <div class="relative p-4">
+      <div
+        class="flex flex-col space-y-4 text-coopmaths-corpus dark:text-coopmathsdark-corpus"
+      >
+        <div class="w-full flex justify-center items-center p-8">
+          <i
+            class="bx bxs-error text-coopmaths-warn-900 dark:text-coopmathsdark-warn-dark text-[70px]"
+          ></i>
         </div>
-      </div>
-
-      <!--Modal footer-->
-      <div
-        class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 p-4 dark:border-neutral-100/50"
-      >
-        <button
-          type="button"
-          class="inline-block rounded bg-coopmaths-action-200 dark:bg-coopmathsdark-action-lightest px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-coopmaths-action dark:text-coopmathsdark-action-dark transition duration-150 ease-in-out hover:bg-coopmaths-action-400 focus:bg-coopmaths-action-400 dark:hover:bg-coopmathsdark-action-light dark:focus:bg-coopmathsdark-action-light focus:outline-none focus:ring-0 active:bg-coopmaths-action-500 dark:active:bg-coopmathsdark-action-light"
-          data-twe-modal-dismiss
-        >
-          Annuler
-        </button>
-        <button
-          type="button"
-          class="ml-1 inline-block rounded bg-coopmaths-action dark:bg-coopmathsdark-action px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-coopmaths-canvas dark:text-coopmathsdark-canvas transition duration-150 ease-in-out hover:bg-coopmaths-action-dark focus:bg-coopmaths-action-dark dark:hover:bg-coopmathsdark-action-dark dark:focus:bg-coopmathsdark-action-dark focus:outline-none focus:ring-0 dark:active:bg-coopmathsdark-action-dark"
-          on:click={() => {
-            handleEndOfRace()
-          }}
-          data-twe-modal-dismiss
-        >
-          Terminer
-        </button>
+        <div>
+          Si vous cliquez sur le bouton
+          <span class="font-bold">Terminer</span>
+          alors vous ne pourrez plus revenir en arrière.
+        </div>
+        <div>Que souhaitez-vous faire ?</div>
       </div>
     </div>
+
+    <div
+      class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 p-4 dark:border-neutral-100/50"
+    >
+      <button
+        type="button"
+        class="inline-block rounded bg-coopmaths-action-200 dark:bg-coopmathsdark-action-lightest px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-coopmaths-action dark:text-coopmathsdark-action-dark transition duration-150 ease-in-out hover:bg-coopmaths-action-400 focus:bg-coopmaths-action-400"
+        on:click={() => (isModalOpen = false)}
+      >
+        Annuler
+      </button>
+      <button
+        type="button"
+        class="ml-1 inline-block rounded bg-coopmaths-action dark:bg-coopmathsdark-action px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-coopmaths-canvas dark:text-coopmathsdark-canvas transition duration-150 ease-in-out hover:bg-coopmaths-action-dark focus:bg-coopmaths-action-dark"
+        on:click={() => {
+          handleEndOfRace()
+          isModalOpen = false
+        }}
+      >
+        Terminer
+      </button>
+    </div>
   </div>
-</div>
+</dialog>
