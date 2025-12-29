@@ -293,8 +293,12 @@ async function fillMathField(
   const champTexteMathlive = page.locator(selector)
   if (Array.isArray(answer)) {
     for (let i = 0; i < answer.length; i++) {
-      if (i > 0) await champTexteMathlive.press('Tab')
-      await champTexteMathlive.click()
+      if (i === 0) {
+        await champTexteMathlive.click()
+        await champTexteMathlive.press('Shift+Tab')
+      } else {
+        await champTexteMathlive.press('Tab')
+      }
       await champTexteMathlive.pressSequentially(answer[i].toString())
     }
   } else {
