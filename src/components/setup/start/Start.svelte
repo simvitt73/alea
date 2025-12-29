@@ -17,7 +17,7 @@
     tick,
   } from 'svelte'
   import { get } from 'svelte/store'
-  import { Collapse, Ripple, Sidenav, initTE } from 'tw-elements'
+  import { Collapse, Ripple, initTE } from 'tw-elements'
   import appsTierce from '../../../json/referentielAppsTierce.json'
   import { qcmCamExportAll } from '../../../lib/amc/qcmCam'
   import { buildEsParams } from '../../../lib/components/urls'
@@ -53,6 +53,7 @@
   import Keyboard from '../../keyboard/Keyboard.svelte'
   import { SM_BREAKPOINT } from '../../keyboard/lib/sizes'
   import BasicClassicModal from '../../shared/modal/BasicClassicModal.svelte'
+  import Sidenav from '../../shared/sidenav/Sidenav.svelte'
   import ButtonBackToTop from './presentationalComponents/ButtonBackToTop.svelte'
   import Exercices from './presentationalComponents/Exercices.svelte'
   import Header from './presentationalComponents/header/Header.svelte'
@@ -366,17 +367,9 @@
   }
 
   function toggleSidenav(forceOpening: boolean): void {
-    const sideMenuWrapper = document.getElementById('choiceSideMenuWrapper')
-    if (!sideMenuWrapper) return
-    const sidenav = Sidenav.getOrCreateInstance(sideMenuWrapper)
-    if (!sidenav) return
     if (forceOpening) {
-      if (!isSidenavOpened) {
-        sidenav.toggle()
-        isSidenavOpened = !isSidenavOpened
-      }
+      isSidenavOpened = true
     } else {
-      sidenav.toggle()
       isSidenavOpened = !isSidenavOpened
     }
   }
@@ -457,29 +450,26 @@
               {toggleSidenav}
             />
           {/if}
-          <nav
-            id="choiceSideMenuWrapper"
-            class="absolute left-0 top-0 w-[400px] h-full z-[1035] -translate-x-full data-[te-sidenav-hidden='false']:translate-x-0 overflow-y-auto overscroll-contain bg-coopmaths-canvas-dark dark:bg-coopmathsdark-canvas-dark"
-            data-te-sidenav-init
-            data-te-sidenav-width="400"
-            data-te-sidenav-hidden="false"
-            data-te-sidenav-content="#exercisesPart"
-            data-te-sidenav-position="absolute"
-            data-te-sidenav-mode="side"
-          >
+          <Sidenav isOpen={isSidenavOpened} width={400}>
             <div
-              data-te-sidenav-menu-ref
               class="w-full bg-coopmaths-canvas dark:bg-coopmathsdark-canvas"
             >
               <SideMenu {addExercise} />
             </div>
-          </nav>
+          </Sidenav>
           <!-- Affichage exercices -->
           <main
             id="exercisesPart"
             class="absolute right-0 top-0 flex flex-col w-full h-full px-6 overflow-x-auto overflow-y-auto
-            {$globalOptions.recorder ? '!pl-[425px]' : '!pl-[400px]'}
+            transition-[padding-left] duration-300
             bg-coopmaths-canvas dark:bg-coopmathsdark-canvas"
+            style="padding-left: {$globalOptions.recorder
+              ? isSidenavOpened
+                ? '425px'
+                : '25px'
+              : isSidenavOpened
+                ? '400px'
+                : '0px'}"
           >
             <!-- MGu si la vue n'est pas START, le composant va être detruit et ici ca empeche de charger des exos inutilement-->
             {#if $exercicesParams.length !== 0 && ($globalOptions.v === '' || $globalOptions.v === undefined || $globalOptions.v === 'l')}
