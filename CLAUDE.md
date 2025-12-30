@@ -37,7 +37,7 @@ pnpm test:src      # Tests in src/
 ./tasks/run-e2e-test.sh view          # views test
 ./tasks/run-e2e-test.sh interactivity # interactivity test
 
-# Run a single test file
+# Run a single test file (with a dev server already running)
 pnpm vitest <path-to-test-file> --run
 
 # Generate exercise reference JSON (auto-runs with dev/build)

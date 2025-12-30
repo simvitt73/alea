@@ -2888,7 +2888,7 @@ export function checkLeCompteEstBon( // Ne fonctionne que si numbers est un tabl
     canonical: false,
   }) as BoxedExpression
   const value = answer.value
-  if (value !== target) {
+  if (value === undefined || Number(value) !== target) {
     return {
       isOk: false,
       feedback: `L'expression vaut ${value} et non ${target}.`,
