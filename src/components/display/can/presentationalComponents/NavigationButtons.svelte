@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import type { CanState } from '../../../../lib/types/can'
-  import ShortPagination from './ShortPagination.svelte'
   import BasicClassicModal from '../../../shared/modal/BasicClassicModal.svelte'
+  import ShortPagination from './ShortPagination.svelte'
 
   export let current: number
   export let numberOfQuestions: number
@@ -74,7 +74,7 @@
   use:swipe
   class="w-full pb-8 md:pb-10 px-10 space-y-4 flex flex-col md:flex-row justify-start md:justify-between items-center"
 >
-  <div></div>
+  <div class="w-50"></div>
   <div class="flex flex-row space-x-10">
     <button
       class="md:hidden flex justify-center items-center"
@@ -160,7 +160,10 @@
 </div>
 <BasicClassicModal bind:isDisplayed={isModalOpen} icon="bxs-error">
   <span slot="header">Attention !</span>
-  <div slot="content" class="text-coopmaths-corpus dark:text-coopmathsdark-corpus">
+  <div
+    slot="content"
+    class="text-coopmaths-corpus dark:text-coopmathsdark-corpus"
+  >
     <div>
       Si vous cliquez sur le bouton
       <span class="font-bold">Terminer</span>
