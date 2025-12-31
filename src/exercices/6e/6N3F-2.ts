@@ -62,6 +62,11 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
     ]
     this.exoCustomResultat = true // Permet de mettre chaque question sur 2 points
     this.besoinFormulaire2CaseACocher = ['Brouillon interactif']
+    this.besoinFormulaire3CaseACocher = [
+      'Avec la valeur décimale à la fin',
+      true,
+    ]
+    this.sup3 = true
   }
 
   nouvelleVersion(): void {
@@ -74,6 +79,9 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
       nbQuestions: this.nbQuestions,
       exclus: [3, 6, 7, 9],
     }) as number[]
+    this.consigne = this.sup3
+      ? "Écrire sous la forme de la somme d'un nombre entier et d'une fraction inférieure à 1 puis donner l'écriture décimale."
+      : "Écrire sous la forme de la somme d'un nombre entier et d'une fraction inférieure à 1."
 
     if (this.sup2) {
       const figure = getDynamicFractionDiagram()
@@ -131,7 +139,7 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
         frac.texFraction +
         ' = \\phantom{00}\\text{........}\\phantom{00} + ' +
         '\\dfrac{\\phantom{00}\\text{........}\\phantom{00}}{\\phantom{00}\\text{........}\\phantom{00}}' +
-        ' =  $'
+        (this.sup3 ? ' =  $' : '$')
       texteCorr =
         '$ ' +
         frac.texFraction +
@@ -150,12 +158,19 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
       }
 
       if (this.interactif) {
-        texte = remplisLesBlancs(
-          this,
-          i,
-          `${frac.texFraction} =~\\placeholder[n]{} + \\dfrac{\\placeholder[num]{}}{\\placeholder[den]{}} =~\\placeholder[ecritureDecimale]{}`,
-          KeyboardType.clavierNumbers,
-        )
+        texte = this.sup3
+          ? remplisLesBlancs(
+              this,
+              i,
+              `${frac.texFraction} =~%{n} + \\dfrac{%{num}}{%{den}} =~%{ecritureDecimale}`,
+              KeyboardType.clavierNumbers,
+            )
+          : remplisLesBlancs(
+              this,
+              i,
+              `${frac.texFraction} =~%{n} + \\dfrac{%{num}}{%{den}}`,
+              KeyboardType.clavierNumbers,
+            )
       }
       if (this.questionJamaisPosee(i, num, den)) {
         // Si la question n'a jamais été posée, on en crée une autre
@@ -186,7 +201,10 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
     const test1 = nSaisi === entier
     const numSaisi = Number(clean(mf.getPromptValue('num')))
     const denSaisi = Number(clean(mf.getPromptValue('den')))
-    const valeurDecimale = clean(mf.getPromptValue('ecritureDecimale'))
+    const valeurDecimale = this.sup3
+      ? clean(mf.getPromptValue('ecritureDecimale'))
+      : null
+
     const test2 =
       denSaisi !== 0 &&
       Number.isInteger(denSaisi) &&
@@ -194,9 +212,12 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
       new FractionEtendue(numPartieDecimale, den).isEqual(
         new FractionEtendue(numSaisi, denSaisi),
       )
-    const test3 = ce
-      .parse(valeurDecimale)
-      .isEqual(ce.parse(`${clean(ecritureDecimale)}`))
+
+    const test3 = this.sup3
+      ? ce
+          .parse(String(valeurDecimale))
+          .isEqual(ce.parse(`${clean(ecritureDecimale)}`))
+      : true
     let feedback: string
     if (test1 && test2 && test3) {
       spanResultat.innerHTML = '😎'
@@ -215,10 +236,12 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
       mf.setPromptState('num', 'correct', true)
       mf.setPromptState('den', 'correct', true)
     }
-    if (!test3) {
-      mf.setPromptState('ecritureDecimale', 'incorrect', true)
-    } else {
-      mf.setPromptState('ecritureDecimale', 'correct', true)
+    if (this.sup3) {
+      if (!test3) {
+        mf.setPromptState('ecritureDecimale', 'incorrect', true)
+      } else {
+        mf.setPromptState('ecritureDecimale', 'correct', true)
+      }
     }
     if (test1 && test2) {
       feedback = 'Décomposition correcte, '
@@ -227,12 +250,14 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
       feedback = 'Décomposition fausse, '
       result.push('KO')
     }
-    if (test3) {
-      feedback += 'valeur décimale exacte.'
-      result.push('OK')
-    } else {
-      feedback += 'valeur décimale fausse.'
-      result.push('KO')
+    if (this.sup3) {
+      if (test3) {
+        feedback += 'valeur décimale exacte.'
+        result.push('OK')
+      } else {
+        feedback += 'valeur décimale fausse.'
+        result.push('KO')
+      }
     }
     const divFeedback = document.querySelector(
       `#feedbackEx${this.numeroExercice}Q${i}`,
