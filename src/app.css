@@ -234,6 +234,7 @@ math-field:not(.fillInTheBlanks) {
   padding-right: 5px;
   border-radius: 4px;
   min-width: 80px;
+  @apply border border-[#ACACAC];
 }
 math-field.fillInTheBlanks {
   /* @apply bg-coopmaths-canvas dark:bg-coopmathsdark-canvas text-coopmaths-corpus dark:text-coopmathsdark-corpus; */
