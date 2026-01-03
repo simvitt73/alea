@@ -29,6 +29,7 @@ import {
   pointSurDroite,
 } from '../../lib/2d/utilitairesPoint'
 import { vecteur } from '../../lib/2d/Vecteur'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice } from '../../lib/outils/arrayOutils'
@@ -419,7 +420,7 @@ export default class PavagesEtTransformations extends Exercice {
           ' Quel est le numéro de la figure symétrique de la figure ' +
           texteEnCouleurEtGras(`${numA}`, context.isAmc ? 'black' : 'green') +
           ` dans la symétrie d'axe  $${miseEnEvidence('(d_1)', context.isAmc ? 'black' : 'green')}$  ?` +
-          ajouteChampTexteMathLive(this, 0, '') +
+          ajouteChampTexteMathLive(this, 0, KeyboardType.clavierNumbers) +
           '<br>'
         texte += texteAMC1
         texteCorr +=
@@ -507,7 +508,7 @@ export default class PavagesEtTransformations extends Exercice {
           ' Quel est le numéro de la figure symétrique de la figure ' +
           texteEnCouleurEtGras(`${numD}`, context.isAmc ? 'black' : 'red') +
           ` dans la symétrie d'axe  $${miseEnEvidence('(d_2)', context.isAmc ? 'black' : 'red')}$  ?` +
-          ajouteChampTexteMathLive(this, 1, '') +
+          ajouteChampTexteMathLive(this, 1, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC2
         texteCorr +=
@@ -595,7 +596,7 @@ export default class PavagesEtTransformations extends Exercice {
           ' Quel est le numéro de la figure symétrique de la figure ' +
           texteEnCouleurEtGras(`${numC}`, context.isAmc ? 'black' : 'blue') +
           ` dans la symétrie d'axe  $${miseEnEvidence('(d_3)', context.isAmc ? 'black' : 'blue')}$  ?` +
-          ajouteChampTexteMathLive(this, 2, '') +
+          ajouteChampTexteMathLive(this, 2, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC3
         texteCorr +=
@@ -959,7 +960,7 @@ export default class PavagesEtTransformations extends Exercice {
             ` Quel est le numéro de la figure symétrique de la figure ${numA} dans la symétrie de centre ${s0} ?`,
             context.isAmc ? 'black' : 'green',
           ) +
-          ajouteChampTexteMathLive(this, 0, '') +
+          ajouteChampTexteMathLive(this, 0, KeyboardType.clavierNumbers) +
           '<br>'
         texte += texteAMC1
         texteCorr =
@@ -1020,7 +1021,7 @@ export default class PavagesEtTransformations extends Exercice {
             ` Quel est le numéro de la figure symétrique de la figure ${numD} dans la symétrie de centre ${s1} ?`,
             context.isAmc ? 'black' : 'red',
           ) +
-          ajouteChampTexteMathLive(this, 1, '') +
+          ajouteChampTexteMathLive(this, 1, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC2
         texteCorr +=
@@ -1093,7 +1094,7 @@ export default class PavagesEtTransformations extends Exercice {
             ` Quel est le numéro de la figure symétrique de la figure ${numC} dans la symétrie de centre ${s2} ?`,
             context.isAmc ? 'black' : 'blue',
           ) +
-          ajouteChampTexteMathLive(this, 2, '') +
+          ajouteChampTexteMathLive(this, 2, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC3
         texteCorr +=
@@ -1304,7 +1305,7 @@ export default class PavagesEtTransformations extends Exercice {
             ` Dans la translation qui transforme la figure ${tabfigB[iB1][2]} en la figure ${tabfigB[iB2][2]}, quel est le numéro de l'image de la figure ${numA} ?`,
             context.isAmc ? 'black' : 'green',
           ) +
-          ajouteChampTexteMathLive(this, 0, '') +
+          ajouteChampTexteMathLive(this, 0, KeyboardType.clavierNumbers) +
           '<br>'
         texte += texteAMC1
         texteCorr =
@@ -1377,7 +1378,7 @@ export default class PavagesEtTransformations extends Exercice {
             ` Dans la translation qui transforme la figure ${tabfigC[iC1][2]} en la figure ${tabfigA[iA1][2]}, quel est le numéro de l'image de la figure ${numD} ?`,
             context.isAmc ? 'black' : 'red',
           ) +
-          ajouteChampTexteMathLive(this, 1, '') +
+          ajouteChampTexteMathLive(this, 1, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC2
         texteCorr +=
@@ -1461,7 +1462,7 @@ export default class PavagesEtTransformations extends Exercice {
             ` Dans la translation qui transforme la figure ${tabfigC[iD1][2]} en la figure ${tabfigA[iB3][2]}, quel est le numéro de l'image de la figure ${numC} ?`,
             context.isAmc ? 'black' : 'blue',
           ) +
-          ajouteChampTexteMathLive(this, 2, '') +
+          ajouteChampTexteMathLive(this, 2, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC3
         texteCorr +=
@@ -1601,7 +1602,7 @@ export default class PavagesEtTransformations extends Exercice {
           ' dans la rotation de centre ' +
           texteEnCouleurEtGras(`${s0}`, context.isAmc ? 'black' : 'green') +
           " et d'angle 90° dans le sens des aiguilles d'une montre ?" +
-          ajouteChampTexteMathLive(this, 0, '') +
+          ajouteChampTexteMathLive(this, 0, KeyboardType.clavierNumbers) +
           '<br>'
         texte += texteAMC1
         texteCorr +=
@@ -1664,7 +1665,7 @@ export default class PavagesEtTransformations extends Exercice {
           ' dans la rotation de centre ' +
           texteEnCouleurEtGras(`${s1}`, context.isAmc ? 'black' : 'red') +
           " et d'angle 90° dans le sens contraire des aiguilles d'une montre ?" +
-          ajouteChampTexteMathLive(this, 1, '') +
+          ajouteChampTexteMathLive(this, 1, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC2
         texteCorr +=
@@ -1740,7 +1741,7 @@ export default class PavagesEtTransformations extends Exercice {
           ' dans la rotation de centre ' +
           texteEnCouleurEtGras(`${s2}`, context.isAmc ? 'black' : 'blue') +
           " et d'angle 90° dans le sens des aiguilles d'une montre ?" +
-          ajouteChampTexteMathLive(this, 2, '') +
+          ajouteChampTexteMathLive(this, 2, KeyboardType.clavierNumbers) +
           '<br>'
         texte += '<br>' + texteAMC3
         texteCorr +=
