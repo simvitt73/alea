@@ -1,4 +1,5 @@
 import { texPrix } from '../../lib/format/style'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import {
@@ -101,7 +102,6 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
     for (
       let i = 0, texte, texteCorr, cpt = 0;
       i < this.nbQuestions && cpt < 50;
-
     ) {
       // une fonction pour gérer le pluriel
       const pluriel = function (n: number, obj: Situation) {
@@ -137,7 +137,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
 
       texte = `${situation.lieu}, ${prenomliste[0]} achète $${n1}$ ${pluriel(n1, situation)} et paie $${texPrix(n1 * situation.pu)}$${sp()}€.
       <br>${prenomliste[1]} achète $${n2}$ ${pluriel(n2, situation)} et paie $${texPrix(n2 * situation.pu)}$${sp()}€.`
-      const enonceQ1 = `<br>${numAlpha(k++)} Combien paiera ${prenomlisteEE[0]} pour $${consigneQuestions[k - 1]}$ ${pluriel(consigneQuestions[k - 1], situation)} ? ${ajouteChampTexteMathLive(this, 4 * i, '', { texteApres: sp(2) + '€' })}`
+      const enonceQ1 = `<br>${numAlpha(k++)} Combien paiera ${prenomlisteEE[0]} pour $${consigneQuestions[k - 1]}$ ${pluriel(consigneQuestions[k - 1], situation)} ? ${ajouteChampTexteMathLive(this, 4 * i, KeyboardType.clavierNumbers, { texteApres: sp(2) + '€' })}`
       let enonceAMC = texte + '<br>' + enonceQ1
       texte += enonceQ1
       const propositionsAMC = [
@@ -165,7 +165,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
           ],
         },
       ]
-      enonceAMC = `${numAlpha(k++)} Combien paiera ${prenomlisteEE[1]} pour $${consigneQuestions[k - 1]}$ ${pluriel(consigneQuestions[k - 1], situation)} ? ${ajouteChampTexteMathLive(this, 4 * i + 1, '', { texteApres: sp(2) + '€' })}`
+      enonceAMC = `${numAlpha(k++)} Combien paiera ${prenomlisteEE[1]} pour $${consigneQuestions[k - 1]}$ ${pluriel(consigneQuestions[k - 1], situation)} ? ${ajouteChampTexteMathLive(this, 4 * i + 1, KeyboardType.clavierNumbers, { texteApres: sp(2) + '€' })}`
       texte += '<br>' + enonceAMC
       propositionsAMC.push({
         type: 'AMCNum',
@@ -190,7 +190,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
           },
         ],
       })
-      enonceAMC = `${numAlpha(k++)} Combien paiera ${prenomlisteEE[2]} pour $${consigneQuestions[k - 1]}$ ${pluriel(consigneQuestions[k - 1], situation)} ? ${ajouteChampTexteMathLive(this, 4 * i + 2, '', { texteApres: sp(2) + '€' })}`
+      enonceAMC = `${numAlpha(k++)} Combien paiera ${prenomlisteEE[2]} pour $${consigneQuestions[k - 1]}$ ${pluriel(consigneQuestions[k - 1], situation)} ? ${ajouteChampTexteMathLive(this, 4 * i + 2, KeyboardType.clavierNumbers, { texteApres: sp(2) + '€' })}`
       texte += '<br>' + enonceAMC
       propositionsAMC.push({
         type: 'AMCNum',
@@ -215,7 +215,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
           },
         ],
       })
-      enonceAMC = `${numAlpha(k++)} Quel est le nombre maximum de ${situation.achat_plur} que ${prenomliste[5]} peut acheter avec $${texPrix(nMax * situation.pu)}$${sp()}€ ? ${ajouteChampTexteMathLive(this, 4 * i + 3, '', { texteApres: sp(2) + situation.achat_plur })}`
+      enonceAMC = `${numAlpha(k++)} Quel est le nombre maximum de ${situation.achat_plur} que ${prenomliste[5]} peut acheter avec $${texPrix(nMax * situation.pu)}$${sp()}€ ? ${ajouteChampTexteMathLive(this, 4 * i + 3, KeyboardType.clavierNumbers, { texteApres: sp(2) + situation.achat_plur })}`
       texte += '<br>' + enonceAMC
       propositionsAMC.push({
         type: 'AMCNum',
