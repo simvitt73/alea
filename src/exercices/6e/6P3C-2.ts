@@ -1,5 +1,6 @@
 import { bleuMathalea } from '../../lib/colors'
 import { texPrix } from '../../lib/format/style'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import {
@@ -203,7 +204,9 @@ function questionAchat(exo: Exercice, i: number) {
     `${prenoms[0]} a repéré, ${listeDeLieux[index1]}, des ${objet} qui l'intéressent.<br>
   Elle lit que $${n}$ ${objet} coûtent $${texPrix(x)}$ €. Elle veut en acheter $${y}$.<br>
   Combien va-t-elle dépenser ?` +
-    ajouteChampTexteMathLive(exo, i, '', { texteApres: ' €' })
+    ajouteChampTexteMathLive(exo, i, KeyboardType.clavierNumbers, {
+      texteApres: ' €',
+    })
   const texteCorr =
     `Commençons par trouver le prix d'${listeDeChose[index1][index2]}. <br>` +
     `Si $${n}$ ${objet} coûtent $${texPrix(x)}$ €, alors ${listeDeChose[index1][index2]} coûte $${miseEnEvidence(n, bleuMathalea)}$ fois moins cher.<br>` +
@@ -263,7 +266,9 @@ function questionRecette(exo: Exercice, i: number) {
     `${prenoms[0]} lit sur sa recette de ${liste[alea1].recettes[alea2]} pour $${nbPersonneInit}$ personnes qu'il faut $$${texNombre(quantite)}$$ g de ${liste[alea1].ingredient}. <br>` +
     `Elle veut adapter sa recette pour $${nbPersonneFinal}$ personnes.` +
     `<br> Quelle masse de ${liste[alea1].ingredient} doit-elle prévoir ?` +
-    ajouteChampTexteMathLive(exo, i, '', { texteApres: ' g' })
+    ajouteChampTexteMathLive(exo, i, KeyboardType.clavierNumbers, {
+      texteApres: ' g',
+    })
   const texteCorr =
     `Commençons par trouver la masse de ${liste[alea1].ingredient} pour une personne. <br>` +
     ` $${nbPersonneInit}$ personnes, c'est $${miseEnEvidence(nbPersonneInit, bleuMathalea)}$ fois $1$ personne. ` +
@@ -336,7 +341,7 @@ function questionDillution(exo: Exercice, i: number) {
     ` $${texNombre(quantite)}$ ${liste[alea1].unite_solute} de  ${liste[alea1].solute} pour $${volumeInitialAff}$ ${liste[alea1].unite_solvant[1]} d'eau.<br> ` +
     `On veut utiliser $${volumeFinalAff}$ ${uniteSolvantVolumeFinal} d'eau.` +
     `<br> Quel volume de ${liste[alea1].solute} doit-on prévoir ? ` +
-    ajouteChampTexteMathLive(exo, i, '', {
+    ajouteChampTexteMathLive(exo, i, KeyboardType.clavierNumbers, {
       texteApres: ' ' + liste[alea1].unite_solute,
     })
 
@@ -395,7 +400,9 @@ function questionDistance(exo: Exercice, i: number) {
   const texte =
     `Un ${liste[alea1].locomotion} parcourt en moyenne $${texNombre(liste[alea1].vitesse[alea2] * dureeQ * facteur)}\\text{ km}$ en $${dureeQ}$ heures.
   <br> Quelle distance va-t-il parcourir, à la même vitesse, en $${dureeR}$ heures ?` +
-    ajouteChampTexteMathLive(exo, i, '', { texteApres: '$\\text{ km}$' })
+    ajouteChampTexteMathLive(exo, i, KeyboardType.clavierNumbers, {
+      texteApres: '$\\text{ km}$',
+    })
 
   const texteCorr =
     `Commençons par trouver quelle est la distance parcourue en 1h. <br>
@@ -429,7 +436,9 @@ function questionEchelle(exo: Exercice, i: number) {
     `Sur une carte sur laquelle $${distanceCarte}\\text{ cm}$ représente $${texNombre(distanceReel)}\\text{ km}$ dans la réalité, <br>
   ${prenoms[0]} mesure son trajet et elle trouve une distance de $${distanceCarte2}\\text{ cm}$. <br>` +
     'À quelle distance cela correspond dans la réalité ?' +
-    ajouteChampTexteMathLive(exo, i, '', { texteApres: '$\\text{ km}$' })
+    ajouteChampTexteMathLive(exo, i, KeyboardType.clavierNumbers, {
+      texteApres: '$\\text{ km}$',
+    })
 
   const texteCorr =
     `Commençons par trouver à combien de $\\text{km}$ dans la réalité, $1\\text{ cm}$ sur la carte correspond. <br>
@@ -500,7 +509,7 @@ function questionRecouvrirSurface(exo: Exercice, i: number) {
     `${prenoms[0]} doit acheter ${liste[alea1].matiere}. <br>` +
     `Sur la notice, il est indiqué de prévoir $${qttaffichage}$ ${liste[alea1].unite} pour $${texNombre(surfaceInitiale)}\\text{ m}^2$. <br> ` +
     `Combien doit-elle en acheter pour une surface de $${texNombre(surfaceFinale)}\\text{ m}^2$ ?` +
-    ajouteChampTexteMathLive(exo, i, '', {
+    ajouteChampTexteMathLive(exo, i, KeyboardType.clavierNumbers, {
       texteApres: ' ' + liste[alea1].unite,
     })
 

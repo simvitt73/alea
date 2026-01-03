@@ -67,7 +67,6 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
     for (
       let i = 0, texte, texteCorr, cpt = 0;
       i < this.nbQuestions && cpt < 50;
-
     ) {
       let d1
       let extremite
@@ -248,7 +247,7 @@ export default class LireAbscisseDecimaleTroisFormes extends Exercice {
             texteAvant: `${sp(10)} $${noms[1]}($`,
             texteApres: `$${sp(1)})$`, // `$${sp(2)}+$`
           },
-        ) // + ajouteChampTexteMathLive(this, i * 3 + 2, ' ', { texteApres: `$${sp(1)})$` })
+        )
       let texte3 = `Donner l'abscisse de $${noms[2]}$ sous la forme d'une fraction décimale.`
       texte +=
         `<br>${numAlpha(2)} ` +

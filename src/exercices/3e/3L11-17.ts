@@ -1,4 +1,5 @@
 import { tableauColonneLigne } from '../../lib/2d/tableau'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { handleAnswers } from '../../lib/interactif/gestionInteractif'
 import { toutPourUnPoint } from '../../lib/interactif/mathLive'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
@@ -8,6 +9,7 @@ import {
   reduireAxPlusB,
   reduirePolynomeDegre3,
 } from '../../lib/outils/ecritures'
+import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { lettreDepuisChiffre } from '../../lib/outils/outilString'
 import { context } from '../../modules/context'
 import {
@@ -198,14 +200,18 @@ export default class TableSimpleDistributivite extends Exercice {
       }
 
       texte += '<br><br> Développement réduit : '
-      texte += ajouteChampTexteMathLive(this, 2 * i + 1, '')
+      texte += ajouteChampTexteMathLive(
+        this,
+        2 * i + 1,
+        KeyboardType.lyceeClassique,
+      )
       texte += `<br><br>`
       texteCorr += tableauColonneLigne(
         tableau.entetesCol,
         tableau.entetesLgn,
         [
-          reduirePolynomeDegre3(0, a1 * b, a0 * b, 0),
-          reduireAxPlusB(a1 * c, a0 * c),
+          miseEnEvidence(reduirePolynomeDegre3(0, a1 * b, a0 * b, 0)),
+          miseEnEvidence(reduireAxPlusB(a1 * c, a0 * c)),
         ],
         1,
         true,
@@ -215,7 +221,7 @@ export default class TableSimpleDistributivite extends Exercice {
         { L0C0: 'red' },
       )
 
-      texteCorr += `<br><br>Développement réduit : $${lettreDepuisChiffre(i + 1)} = ${dvpt}$`
+      texteCorr += `<br><br>Développement réduit : $${lettreDepuisChiffre(i + 1)} = ${miseEnEvidence(dvpt)}$`
 
       handleAnswers(this, 2 * i, {
         bareme: toutPourUnPoint,
@@ -232,14 +238,6 @@ export default class TableSimpleDistributivite extends Exercice {
           },
         },
       })
-      /*  handleAnswers(this, i, {
-              reponse: {
-                value: reponse,
-                options: {
-                  expressionNumerique: !this.litteral,
-                },
-              },
-            }) */
       handleAnswers(this, 2 * i + 1, {
         reponse: {
           value: dvpt,
