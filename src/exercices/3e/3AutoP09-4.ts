@@ -2,6 +2,7 @@ import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { pointAbstrait, type PointAbstrait } from '../../lib/2d/PointAbstrait'
 import { polyline } from '../../lib/2d/Polyline'
 import { repere } from '../../lib/2d/reperes'
+import { segment } from '../../lib/2d/segmentsVecteurs'
 import { approximatelyCompare } from '../../lib/interactif/comparisonFunctions'
 import { texNombre } from '../../lib/outils/texNombre'
 import { mathalea2d } from '../../modules/mathalea2d'
@@ -85,11 +86,36 @@ export default class HauteurValve extends ExerciceSimple {
       ),
       objets,
     )
+    const objetsCorr: NestedObjetMathalea2dArray = [...objets]
+    const seg1 = segment(
+      pointAbstrait(dist / 10, 0),
+      pointAbstrait(dist / 10, y(tetaDist) / 10),
+      'red',
+    )
+    const seg2 = segment(
+      pointAbstrait(dist / 10, y(tetaDist) / 10),
+      pointAbstrait(0, y(tetaDist) / 10),
+      'red',
+    )
+    seg1.styleExtremites = '->'
+    seg2.styleExtremites = '->'
+    seg1.pointilles = 5
+    seg2.pointilles = 5
+    objetsCorr.push(seg1, seg2)
+    const graphiqueCorr = mathalea2d(
+      Object.assign(
+        { scale: 0.5, style: 'display: inline-block', pixelsParCm: 20 },
+        fixeBordures(objetsCorr, { rxmin: 2 }),
+      ),
+      objetsCorr,
+    )
     this.question = `${graphique}<br><br>
     Sur le graphique ci-dessus, on a représenté la hauteur de la valve d'une roue de vélo en fonction de la distance parcourue en $\\text{cm}$ lors d'un tour complet.<br>`
     this.question += `Quelle est la hauteur de la valve lorsque la distance parcourue est de $${dist}\\text{ cm}$ ?`
 
     this.reponse = texNombre(y(tetaDist), 0)
-    this.correction = `La hauteur de la valve lorsque la distance parcourue est de $${dist}\\text{ cm}$ est de $${this.reponse}\\text{ cm}$.`
+    this.correction =
+      graphiqueCorr +
+      `<br><br>La hauteur de la valve lorsque la distance parcourue est de $${dist}\\text{ cm}$ est de $${this.reponse}\\text{ cm}$.`
   }
 }
