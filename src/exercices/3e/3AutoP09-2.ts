@@ -1,5 +1,7 @@
 import { courbe } from '../../lib/2d/Courbe'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
+import { lectureAntecedent } from '../../lib/2d/LectureAntecedent'
+import { lectureImage } from '../../lib/2d/LectureImage'
 import { repere } from '../../lib/2d/reperes'
 import { approximatelyCompare } from '../../lib/interactif/comparisonFunctions'
 import { choice } from '../../lib/outils/arrayOutils'
@@ -71,8 +73,37 @@ export default class VitesseEtDistance extends ExerciceSimple {
       })
       const objets = [rep, cF]
       const graphique = mathalea2d(
-        Object.assign({ scale: 0.7 }, fixeBordures(objets)),
+        Object.assign({ scale: 0.7, pixelsParCm: 20 }, fixeBordures(objets)),
         objets,
+      )
+      const objetsCorr = [
+        ...objets,
+        reciproquement
+          ? lectureAntecedent(
+              distanceByVitesse(vitesse),
+              vitesse,
+              isDry ? 10 : 20,
+              10,
+              'red',
+              '',
+              '',
+            )
+          : lectureImage(
+              dist,
+              vitesseByDistance(dist),
+              isDry ? 10 : 20,
+              10,
+              'red',
+              '',
+              '',
+            ),
+      ]
+      const graphiqueCorr = mathalea2d(
+        Object.assign(
+          { scale: 0.7, pixelsParCm: 20 },
+          fixeBordures(objetsCorr),
+        ),
+        objetsCorr,
       )
       this.question = `${graphique}<br><br>`
       this.question += reciproquement
@@ -80,9 +111,11 @@ export default class VitesseEtDistance extends ExerciceSimple {
     En utilisant le graphique ci-dessous, quelle est la distance de freinage en mètres ?`
         : `Une voiture freine sur une route ${isDry ? 'sèche' : 'mouillée'} et parcourt $${dist}\\text{ m}$.<br>
     En utilisant le graphique ci-dessous, dire à quelle vitesse elle roulait ?`
-      this.correction = reciproquement
-        ? `Pour une vitesse de $${vitesse}\\text{ km/h}$, la distance de freinage est d'environ $${miseEnEvidence(Math.round(distanceByVitesse(vitesse)))}\\text{ m}$.`
-        : `Pour une distance de freinage de $${dist}\\text{ m}$, la vitesse est d'environ $${miseEnEvidence(Math.round(vitesseByDistance(dist)))}\\text{ km/h}$.`
+      this.correction =
+        `${graphiqueCorr}<br><br>` +
+        (reciproquement
+          ? `Pour une vitesse de $${vitesse}\\text{ km/h}$, la distance de freinage est d'environ $${miseEnEvidence(Math.round(distanceByVitesse(vitesse)))}\\text{ m}$.`
+          : `Pour une distance de freinage de $${dist}\\text{ m}$, la vitesse est d'environ $${miseEnEvidence(Math.round(vitesseByDistance(dist)))}\\text{ km/h}$.`)
       this.reponse = reciproquement
         ? `${Math.round(distanceByVitesse(vitesse))}`
         : `${Math.round(vitesseByDistance(dist))}`
@@ -111,8 +144,37 @@ export default class VitesseEtDistance extends ExerciceSimple {
       const cF = courbe(distanceByVitesse, { repere: rep, xMin: 0, xMax: 135 })
       const objets = [rep, cF]
       const graphique = mathalea2d(
-        Object.assign({ scale: 0.7 }, fixeBordures(objets)),
+        Object.assign({ scale: 0.7, pixelsParCm: 20 }, fixeBordures(objets)),
         objets,
+      )
+      const objetsCorr = [
+        ...objets,
+        reciproquement
+          ? lectureAntecedent(
+              vitesseByDistance(dist),
+              dist,
+              10,
+              isDry ? 10 : 20,
+              'red',
+              '',
+              '',
+            )
+          : lectureImage(
+              vitesse,
+              distanceByVitesse(vitesse),
+              10,
+              isDry ? 10 : 20,
+              'red',
+              '',
+              '',
+            ),
+      ]
+      const graphiqueCorr = mathalea2d(
+        Object.assign(
+          { scale: 0.7, pixelsParCm: 20 },
+          fixeBordures(objetsCorr),
+        ),
+        objetsCorr,
       )
       this.question = `${graphique}<br><br>`
       this.question += reciproquement
@@ -120,9 +182,11 @@ export default class VitesseEtDistance extends ExerciceSimple {
     En utilisant le graphique ci-dessous, dire à quelle vitesse elle roulait ?`
         : `Une voiture roule à la vitesse de $${vitesse}\\text{ km/h}$ sur une route ${isDry ? 'sèche' : 'mouillée'}.<br>
     En utilisant le graphique ci-dessous, quelle est la distance de freinage en mètres ?`
-      this.correction = reciproquement
-        ? `Pour une distance de freinage de $${dist}\\text{ m}$, la vitesse est d'environ $${miseEnEvidence(Math.round(vitesseByDistance(dist)))}\\text{ km/h}$.`
-        : `Pour une vitesse de $${vitesse}\\text{ km/h}$, la distance de freinage est d'environ $${miseEnEvidence(Math.round(distanceByVitesse(vitesse)))}\\text{ m}$.`
+      this.correction =
+        `${graphiqueCorr}<br><br>` +
+        (reciproquement
+          ? `Pour une distance de freinage de $${dist}\\text{ m}$, la vitesse est d'environ $${miseEnEvidence(Math.round(vitesseByDistance(dist)))}\\text{ km/h}$.`
+          : `Pour une vitesse de $${vitesse}\\text{ km/h}$, la distance de freinage est d'environ $${miseEnEvidence(Math.round(distanceByVitesse(vitesse)))}\\text{ m}$.`)
       this.reponse = reciproquement
         ? `${Math.round(vitesseByDistance(dist))}`
         : `${Math.round(distanceByVitesse(vitesse))}`

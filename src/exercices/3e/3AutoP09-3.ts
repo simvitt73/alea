@@ -1,6 +1,8 @@
 import { codageAngleDroit } from '../../lib/2d/CodageAngleDroit'
 import { courbe } from '../../lib/2d/Courbe'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
+import { lectureAntecedent } from '../../lib/2d/LectureAntecedent'
+import { lectureImage } from '../../lib/2d/LectureImage'
 import { placeLatexSurSegment } from '../../lib/2d/placeLatexSurSegment'
 import { pointAbstrait } from '../../lib/2d/PointAbstrait'
 import { polygone } from '../../lib/2d/polygones'
@@ -95,13 +97,35 @@ export default class LongueurEtAire extends ExerciceSimple {
       xMax: choix ? coteTriangle / 2 : coteTriangle,
     })
     const objets: NestedObjetMathalea2dArray = [rep, cF]
+    const objetsCorr: NestedObjetMathalea2dArray = [
+      ...objets,
+      choix
+        ? lectureAntecedent(
+            (coteTriangle - Math.sqrt(coteTriangle ** 2 - 4 * aire)) / 2,
+            aire,
+            1,
+            5,
+            'red',
+            '',
+            '',
+          )
+        : lectureImage(largeur, f(largeur), 1, 5, 'red', '', ''),
+    ]
     const graphique = mathalea2d(
       Object.assign(
-        { scale: 0.7, style: 'display: inline-block' },
+        { scale: 0.7, style: 'display: inline-block', pixelsParCm: 30 },
         fixeBordures(objets),
       ),
       objets,
     )
+    const graphiqueCorr = mathalea2d(
+      Object.assign(
+        { scale: 0.7, style: 'display: inline-block', pixelsParCm: 30 },
+        fixeBordures(objetsCorr),
+      ),
+      objetsCorr,
+    )
+    this.correction = graphiqueCorr + '<br><br>'
     this.question = `${graphique}${figure}<br><br>
     Sur le graphique ci-dessus, on a représenté la relation entre la longueur $AD$ et l'aire du rectangle $ADEF$.<br>`
     if (choix) {
@@ -112,15 +136,15 @@ export default class LongueurEtAire extends ExerciceSimple {
       )
       this.optionsDeComparaison = { tolerance: 0.25 }
       this.optionsChampTexte = { texteApres: ' $\\text{ cm}$' }
-      this.correction = `On cherche $x$ tel que $y = ${aire}$.<br>
-      On trouve $x=${miseEnEvidence(this.reponse)}$ cm.`
+      this.correction += `On cherche $AD$ tel que $Aire_{ADEF} = ${aire}\\text{ cm}^2$.<br>
+      On trouve $AD=${miseEnEvidence(this.reponse)}$ cm.`
     } else {
       this.question += `Quelle est l'aire du rectangle $ADEF$ lorsque la longueur $AD$ vaut $${largeur}\\text{ cm}$ ?`
       this.reponse = f(largeur).toFixed(0)
       this.optionsDeComparaison = { tolerance: 2.5 }
       this.optionsChampTexte = { texteApres: ' $\\text{ cm}^2$' }
-      this.correction = `On cherche $y$ lorsque $x = ${largeur}$.<br>`
-      this.correction += `On trouve $y=${miseEnEvidence(this.reponse)}$ cm².`
+      this.correction += `On cherche $Aire_{ADEF}$ lorsque $AD = ${largeur}\\text{ cm}$.<br>`
+      this.correction += `On trouve $Aire_{ADEF}=${miseEnEvidence(this.reponse)}$ cm².`
     }
   }
 }
