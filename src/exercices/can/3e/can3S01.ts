@@ -139,7 +139,7 @@ export default class CalculProbaSimple extends ExerciceSimple {
 
     const situ = choice(situations)
     const a = randint(3, 10)
-    const k = choice([1, 3, 4, 9])
+    const k = choice([3, 4, 9])
 
     let label1Sing: string,
       label2Sing: string,
@@ -216,7 +216,9 @@ export default class CalculProbaSimple extends ExerciceSimple {
      On choisit ${situ.itemSing} au hasard. <br>
 Quelle est la probabilité de choisir ${ciblePhrase} ?`
 
-    this.correction = `Il y a en tout : $${a} + ${k * a} = ${denomTotal}$ ${situ.itemPlur}.<br>La probabilité de choisir ${ciblePhrase} est de $\\dfrac{${numCorrect}}{${denomTotal}}=${miseEnEvidence(correctTexSimpl)}$.`
+    this.correction = this.versionQcm
+      ? `Il y a en tout : $${a} + ${k * a} = ${denomTotal}$ ${situ.itemPlur}.<br>La probabilité de choisir ${ciblePhrase} est de $${miseEnEvidence(`\\dfrac{${numCorrect}}{${denomTotal}}`)}$.`
+      : `Il y a en tout : $${a} + ${k * a} = ${denomTotal}$ ${situ.itemPlur}.<br>La probabilité de choisir ${ciblePhrase} est de $${miseEnEvidence(`\\dfrac{${numCorrect}}{${denomTotal}}`)}$ ou $${miseEnEvidence(correctTexSimpl)}$.`
 
     // Version QCM : distracteurs plausibles
     if (this.versionQcm) {
@@ -225,23 +227,23 @@ Quelle est la probabilité de choisir ${ciblePhrase} ?`
 
       // erreurs/alternatives courantes adaptées à la cible
       // erreur plausible : confondre a*(k+1) avec a + k
-      candidates.push(fraction(numCorrect, a + k).texFraction)
+      candidates.push(fraction((k - 1) * a, k * a).texFraction)
       // complémentaire (1 - p)
       candidates.push(
-        fraction(denomTotal - numCorrect, denomTotal).texFractionSimplifiee,
+        fraction(denomTotal - (ciblePremiere ? k * a : a), k * a).texFraction,
       )
       // oublier le facteur k (si cible = 2ème étiquette on peut confondre num / a)
       const otherNum = ciblePremiere ? k * a : a
       candidates.push(fraction(otherNum, denomTotal).texFraction) // confondre les deux catégories
       // erreurs arithmétiques courantes
-      if (numCorrect > 1)
+      /*  if (numCorrect > 1)
         candidates.push(
           fraction(numCorrect - 1, denomTotal).texFractionSimplifiee,
         )
       candidates.push(
         fraction(numCorrect + 1, denomTotal).texFractionSimplifiee,
       )
-
+*/
       // filtrer, dédupliquer et retirer la bonne réponse, puis choisir 3 distracteurs
       const uniq = Array.from(
         new Set(candidates.filter((s) => s && s !== correctTex)),
