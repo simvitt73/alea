@@ -62,14 +62,15 @@ export default class ProduitDeDecimauxAPartirProduitConnu extends Exercice {
       'Types du calcul final',
       [
         'Nombres séparés par des tirets  :',
-        '1 : nb1*10^p1 + nb2',
-        '2 : nb1 + nb2*10^p2',
-        '3 : nb1*10^p1 + nb2*10^p2',
+        '1 : nb1$\\times$10^p1 $\\times$ nb2',
+        '2 : nb1 $\\times$ nb2$\\times$10^p2',
+        '3 : nb1$\\times$10^p1 $\\times$ nb2$\\times$10^p2',
         '4 : Mélange',
       ].join('\n'),
     ]
     this.comment =
-      'Dans le premier paramètre, nb1, nb2 représentent des entiers entre 2 et 99.<br> p1 et p2 représentent des entiers non nuls entre -3 et 3.'
+      'Le premier calcul est nb1 $\\times$ nb2 où nb1 et nb2 représentent des entiers entre 2 et 99. <br> Le premier paramètre permet de paramétrer le calcul final ' +
+      'dans lequel p1 et p2 représentent des exposants entiers non nuls entre -3 et 3.'
     this.besoinFormulaire2Numerique = [
       'Nombre de chiffres non nuls dans le plus petit facteur',
       4,
@@ -109,17 +110,17 @@ export default class ProduitDeDecimauxAPartirProduitConnu extends Exercice {
 
       let choix = true
       switch (listeTypeDeQuestions[i]) {
-        case 1: // nb1*10^p1 + nb2
+        case 1: // nb1*10^p1 x nb2
           if (this.sup2 === 1) d1 = 0
           p1 = randint(-3, 3, [0])
           break
 
-        case 2: // nb1 + nb2*10^p2
+        case 2: // nb1 x nb2*10^p2
           if (this.sup2 === 1) d2 = 0
           p2 = randint(-3, 3, [0])
           break
 
-        case 3: // nb1*10^p1 + nb2*10^p2
+        case 3: // nb1*10^p1 x nb2*10^p2
           do {
             p1 = randint(-3, 3, [0])
             p2 = randint(-3, 3, [0])
