@@ -12,6 +12,7 @@ import {
 } from '../../lib/3d/3dProjectionMathalea2d/BarreEtPlaque3dPerspectiveCavaliere'
 import { cube3d } from '../../lib/3d/3dProjectionMathalea2d/Cube3dPerspectiveCavaliere'
 import { paveLPH3d } from '../../lib/3d/3dProjectionMathalea2d/PaveEtPaveLPH3dPerspectiveCavaliere'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { arrondi } from '../../lib/outils/nombres'
@@ -63,7 +64,6 @@ export default class RecompositionDecimale extends Exercice {
     for (
       let q = 0, cpt = 0, e, d, c, m, texte, texteCorr, xDecal;
       q < this.nbQuestions && cpt < 50;
-
     ) {
       e = choice([0, 1])
       d = choice([0, randint(0, 5), randint(0, 7)])
@@ -101,7 +101,8 @@ export default class RecompositionDecimale extends Exercice {
         Object.assign({ scale: 0.5 }, fixeBordures(objets)),
         objets,
       )
-      if (!context.isAmc) texte += ajouteChampTexteMathLive(this, q, '')
+      if (!context.isAmc)
+        texte += ajouteChampTexteMathLive(this, q, KeyboardType.clavierNumbers)
 
       if (this.correctionDetaillee) {
         if (e === 1) texteCorr += 'Il y a 1 cube unité.<br>'

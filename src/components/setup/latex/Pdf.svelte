@@ -17,6 +17,8 @@
   import SimpleCard from '../../shared/ui/SimpleCard.svelte'
   import ImageCarousel from '../../shared/ui/ImageCarousel.svelte'
   import FormConfigSection from './FormConfigSection.svelte'
+  import InputNumber from '../../shared/forms/InputNumber.svelte'
+  import InputText from '../../shared/forms/InputText.svelte'
   import { decodeBase64, encodeBase64 } from './LatexConfig'
   import PdfResult from './PdfResult.svelte'
 
@@ -328,20 +330,23 @@
               </div>
 
               <SimpleCard icon={''} title={'Éléments de titres'} class="mb-4">
-                <input
-                  type="text"
+                <InputText
+                  inputID="pdf-titre-input"
                   placeholder="Titre"
                   bind:value={latexFileInfos.title}
+                  showTitle={false}
                 />
-                <input
-                  type="text"
+                <InputText
+                  inputID="pdf-reference-input"
                   placeholder="Référence"
                   bind:value={latexFileInfos.reference}
+                  showTitle={false}
                 />
-                <input
-                  type="text"
+                <InputText
+                  inputID="pdf-subtitle-input"
                   placeholder="Sous-titre"
                   bind:value={latexFileInfos.subtitle}
+                  showTitle={false}
                 />
               </SimpleCard>
 
@@ -350,10 +355,10 @@
                 title={'Nombre de versions des exercices'}
                 class="mb-4"
               >
-                <input
-                  type="number"
-                  min="1"
-                  max="20"
+                <InputNumber
+                  id="pdf-nb-versions"
+                  min={1}
+                  max={20}
                   bind:value={latexFileInfos.nbVersions}
                 />
               </SimpleCard>

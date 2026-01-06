@@ -442,7 +442,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
             texte += ajouteChampTexteMathLive(
               this,
               i + ii,
-              '  unites[longueurs]',
+              KeyboardType.longueur,
               {
                 texteAvant: `$${sp(25)}$`,
                 texteApres: sp(4) + "(Préciser l'unité)",
@@ -610,7 +610,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
             texte += ajouteChampTexteMathLive(
               this,
               i + ii,
-              '  unites[longueurs]',
+              KeyboardType.longueur,
               { texteApres: sp(4) + "(Préciser l'unité)" },
             )
             setReponse(this, i + ii, new Grandeur(reponse, 'km'), {
@@ -720,9 +720,14 @@ export default class ProblemesTrigoLongueur extends Exercice {
             enonceAMC = texte
             texte = enonceInit + texte
             if (this.interactif) {
-              texte += ajouteChampTexteMathLive(this, i + ii, ' ', {
-                texteApres: '$^\\circ$',
-              })
+              texte += ajouteChampTexteMathLive(
+                this,
+                i + ii,
+                KeyboardType.clavierNumbers,
+                {
+                  texteApres: '$^\\circ$',
+                },
+              )
               setReponse(this, i + ii, arrondi(beta))
               ii++
             } else if (context.isAmc) {
@@ -765,9 +770,14 @@ export default class ProblemesTrigoLongueur extends Exercice {
             enonceAMC = `${numAlpha(j)}En déduire la mesure de l'angle $\\widehat{${lR}${lC}${lS}}$, arrondie au centième près.`
             texte += '<br>' + enonceAMC
             if (this.interactif) {
-              texte += ajouteChampTexteMathLive(this, i + ii, ' ', {
-                texteApres: '$^\\circ$',
-              })
+              texte += ajouteChampTexteMathLive(
+                this,
+                i + ii,
+                KeyboardType.clavierNumbers,
+                {
+                  texteApres: '$^\\circ$',
+                },
+              )
               setReponse(this, i + ii, arrondi(alpha - beta))
               ii++
             } else if (context.isAmc) {
@@ -801,7 +811,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
               texte += ajouteChampTexteMathLive(
                 this,
                 i + ii,
-                '  unites[longueurs]',
+                KeyboardType.longueur,
                 { texteApres: sp(4) + "(Préciser l'unité)" },
               )
               setReponse(
@@ -857,7 +867,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
             texte += ajouteChampTexteMathLive(
               this,
               i + ii,
-              '  unites[longueurs]',
+              KeyboardType.longueur,
               { texteApres: sp(4) + "(Préciser l'unité)" },
             )
             setReponse(this, i + ii, new Grandeur(arrondi(taille, 0), 'm'), {
@@ -1119,7 +1129,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
             texte += ajouteChampTexteMathLive(
               this,
               i + ii,
-              '  unites[longueurs]',
+              KeyboardType.longueur,
               { texteApres: sp(4) + "(Préciser l'unité)" },
             )
             setReponse(this, i + ii, new Grandeur(arrondi(taille, 0), 'm'), {
@@ -1175,7 +1185,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
             texte += ajouteChampTexteMathLive(
               this,
               i + ii,
-              '  unites[longueurs]',
+              KeyboardType.longueur,
               { texteApres: sp(4) + "(Préciser l'unité)" },
             )
             context.isAmc
@@ -1599,7 +1609,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
             texte += ajouteChampTexteMathLive(
               this,
               i + ii,
-              '  unites[longueurs]',
+              KeyboardType.longueur,
             )
             setReponse(this, i + ii, new Grandeur(arrondi(taille, 0), 'm'), {
               formatInteractif: 'unites',
@@ -1723,7 +1733,7 @@ export default class ProblemesTrigoLongueur extends Exercice {
               texte += ajouteChampTexteMathLive(
                 this,
                 i + ii,
-                '  unites[longueurs]',
+                KeyboardType.longueur,
               )
               setReponse(
                 this,
