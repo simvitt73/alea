@@ -34,10 +34,9 @@ export const refs = {
   'fr-ch': ['NR'],
 }
 
-const debug = false
 
 const log = function (str: string) {
-  if (debug || window.logDebug > 1) console.info(str)
+  if (window.logDebug > 1) console.info(str)
 }
 
 export default class can6eAll extends Exercice {
