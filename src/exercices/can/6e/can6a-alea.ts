@@ -319,12 +319,13 @@ export default class can6eAll extends Exercice {
         .then((exports) => {
           // const quest =  import(fileScript).then(exports => {
           const q2 = exports // new exports.default()
+          const k = i
           exercice.interactif ? (q2.interactif = true) : (q2.interactif = false)
           q2.numeroExercice = exercice.numeroExercice
           q2.seed = exercice.seed
           seedrandom(q2.seed, { global: true })
           q2.nouvelleVersion()
-          const k = i
+          
           if (q2.listeQuestions.length === 0) {
             exercice.listeCorrections[k] = q2.correction
             exercice.listeCanEnonces[k] = q2.canEnonce
@@ -419,6 +420,12 @@ export default class can6eAll extends Exercice {
     }
 
     loadAllQuests(this, questionsDisponibles)
+
+    this.listeQuestions = []
+    this.listeCorrections = []
+    this.listeCanEnonces = []
+    this.listeCanReponsesACompleter = []
+    this.autoCorrection = []
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; cpt++) {
       this.listeCorrections[i] = ''
       this.listeCanEnonces[i] = ''
