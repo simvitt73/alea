@@ -109,7 +109,10 @@ async function action(page: Page, description: string) {
         const questions = Array.from(document.querySelectorAll(selector))
         return questions.length > 0 &&
           questions.every(
-            q => q.textContent && q.textContent.trim() !== 'chargement...'
+            q => {
+              log(q.textContent)
+              return q.textContent && q.textContent.trim() !== 'chargement...'
+            }
           )
       },
       questionSelector,
