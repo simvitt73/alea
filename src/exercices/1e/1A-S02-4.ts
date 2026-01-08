@@ -27,10 +27,12 @@ export const dateDePublication = '01/08/2025'
  */
 
 export default class MoyennePondereeQCM extends ExerciceQcmA {
-  // Ceci est la fonction qui s'occupe d'écrire l'énoncé, la correction et les réponses
-  // Elle factorise le code qui serait dupliqué dans versionAleatoire et versionOriginale
-
-  private appliquerLesValeurs(): void {
+   private appliquerLesValeurs(
+    notesFixees?: number[],
+    coeffXFixe?: number,
+    moyenneFixee?: number,
+    distracteursFixesOriginal?: string[],
+  ): void {
     let x: number
     let notes: number[]
     let coeffX: number
@@ -41,22 +43,39 @@ export default class MoyennePondereeQCM extends ExerciceQcmA {
     let effectif: number
     // let propositionImpossibleIncluse = false // Pour savoir si on inclut la proposition "Impossible" dans les distracteurs
 
-    do {
-      effectif = randint(3, 4) // nombre de notes connues à coefficient 1
-      notes = Array.from({ length: effectif }, () => randint(8, 15))
-      coeffX = choice([2, 3])
-      moyenne = randint(10, 16)
+    // Si les valeurs sont fixées, on les utilise directement
+    if (notesFixees && coeffXFixe && moyenneFixee) {
+      notes = notesFixees
+      coeffX = coeffXFixe
+      moyenne = moyenneFixee
+      effectif = notes.length
 
       const sommeNotes = notes.reduce((a, b) => a + b, 0)
-      sommeCoeff = effectif + coeffX // la somme de tous les coefficients, y compris x
-      sommeProduits = sommeNotes // la somme des notes connues de coeff 1
+      sommeCoeff = effectif + coeffX
+      sommeProduits = sommeNotes
 
       const totalCible = moyenne * sommeCoeff
-      x = (totalCible - sommeProduits) / coeffX // Calcul de x
+      x = (totalCible - sommeProduits) / coeffX
+      estPossible = x >= 0 && x <= 20
+    } else {
+      // Sinon on génère aléatoirement
+      do {
+        effectif = randint(3, 4) // nombre de notes connues à coefficient 1
+        notes = Array.from({ length: effectif }, () => randint(8, 15))
+        coeffX = choice([2, 3])
+        moyenne = randint(10, 16)
 
-      if (!Number.isInteger(x)) continue // Si x entier
-      estPossible = x >= 0 && x <= 20 // On veut vérifier que x dans l'intervalle [0, 20]
-    } while (!Number.isInteger(x) || (!estPossible && Math.random() < 0.8)) // On continue jusqu'à ce que x soit entier et dans l'intervalle [0, 20] ou qu'on ait une chance de 20% de ne pas respecter cette condition (pour avoir le cas impossible)
+        const sommeNotes = notes.reduce((a, b) => a + b, 0)
+        sommeCoeff = effectif + coeffX // la somme de tous les coefficients, y compris x
+        sommeProduits = sommeNotes // la somme des notes connues de coeff 1
+
+        const totalCible = moyenne * sommeCoeff
+        x = (totalCible - sommeProduits) / coeffX // Calcul de x
+
+        if (!Number.isInteger(x)) continue // Si x entier
+        estPossible = x >= 0 && x <= 20 // On veut vérifier que x dans l'intervalle [0, 20]
+      } while (!Number.isInteger(x) || (!estPossible && Math.random() < 0.8)) // On continue jusqu'à ce que x soit entier et dans l'intervalle [0, 20] ou qu'on ait une chance de 20% de ne pas respecter cette condition (pour avoir le cas impossible)
+    }
 
     function shuffleArray<T>(array: T[]): void {
       for (let i = array.length - 1; i > 0; i--) {
@@ -134,14 +153,23 @@ ${tableau}
 <br><br>
 On cherche ce que doit valoir $x$ pour que la moyenne de l'élève soit égale $${moyenne}$.`
     if (estPossible) {
-      const inclureImpossibleCommePiege = x >= 18
-      const distracteurs = genererDistracteurs(x, inclureImpossibleCommePiege)
-      // Ajout du distracteur par erreur "numéro de devoir comme coefficient"
-      if (distracteurErreur && !distracteurs.includes(distracteurErreur)) {
-        distracteurs.pop() // on en retire un pour garder 3 au total
-        distracteurs.push(distracteurErreur)
-        shuffleArray(distracteurs)
+      let distracteurs: string[]
+      
+      // Si des distracteurs fixes sont fournis, les utiliser
+      if (distracteursFixesOriginal) {
+        distracteurs = distracteursFixesOriginal
+      } else {
+        // Sinon générer des distracteurs aléatoires
+        const inclureImpossibleCommePiege = x >= 18
+        distracteurs = genererDistracteurs(x, inclureImpossibleCommePiege)
+        // Ajout du distracteur par erreur "numéro de devoir comme coefficient"
+        if (distracteurErreur && !distracteurs.includes(distracteurErreur)) {
+          distracteurs.pop() // on en retire un pour garder 3 au total
+          distracteurs.push(distracteurErreur)
+          shuffleArray(distracteurs)
+        }
       }
+      
       this.reponses = [`$x=${texNombre(x)}$`, ...distracteurs]
 
       this.correction = `
@@ -162,14 +190,14 @@ ${sommeProduits} + ${coeffX}x &= ${moyenne} \\times ${sommeCoeff}\\\\
 ${coeffX}x &= ${moyenne * sommeCoeff} - ${sommeProduits}\\\\
  ${coeffX}x &= ${moyenne * sommeCoeff - sommeProduits}\\\\
 x &= \\dfrac{${moyenne * sommeCoeff - sommeProduits}}{${coeffX}}\\\\
-x&= ${miseEnEvidence(x)}.
+x&= ${miseEnEvidence(x)}
 \\end{aligned}
 $
 `
     } else {
       // Générer des distracteurs élevés (≥17) incluant obligatoirement 20
       const distracteursSet = new Set<number>()
-      distracteursSet.add(20) // on impose qu’il y ait un 20
+      distracteursSet.add(20) // on impose qu'il y ait un 20
       // propositionImpossibleIncluse = true
       while (distracteursSet.size < 3) {
         const val = randint(17, 20, 0)
@@ -204,7 +232,19 @@ Mais cette valeur dépasse 20. Il est donc <strong>impossible</strong> d'obtenir
     }
   }
 
-  // S'occupe de passser les données originales à la fonction appliquerLesValeurs
+  // S'occupe de passer les données originales à la fonction appliquerLesValeurs
+  versionOriginale: () => void = () => {
+    // Valeurs de l'exercice 12 de l'image
+    // Notes : 10, 13, 12 avec coefficient 1, x avec coefficient 2
+    // Calcul : (10 + 13 + 12 + 2x) / 5 = 15 => 35 + 2x = 75 => x = 20
+    // Distracteurs de l'image : x=18, x=15, Impossible
+    const distracteursOriginal = [
+      '$x=18$',
+      '$x=15$',
+      'Impossible, il faudrait une note supérieure à 20.',
+    ]
+    this.appliquerLesValeurs([10, 13, 12], 2, 15, distracteursOriginal)
+  }
 
   // s'occupe d'aléatoiriser les valeurs à passer à la fonction appliquerLesValeurs en vérifiant qu'on a bien 3 réponses différentes
   // Pour un qcm à n réponses, il faudrait vérifier que nombreElementsDifferents(this.reponses) < n
