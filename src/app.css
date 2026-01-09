@@ -209,6 +209,16 @@
   }
 }
 
+/* Text selection highlight - consistent in light and dark modes */
+::selection {
+  background-color: hsl(212, 70%, 85%);
+  color: #000;
+}
+.dark ::selection {
+  background-color: hsl(212, 65%, 55%);
+  color: #fff;
+}
+
 /* Modifie le style des sb3-comment-label */
 text.sb3-comment-label {
   fill: #000 !important;
@@ -217,6 +227,21 @@ text.sb3-comment-label {
 math-field {
   @apply bg-coopmaths-canvas dark:bg-coopmathsdark-canvas
   text-coopmaths-corpus dark:text-coopmathsdark-corpus;
+  /* Override MathLive highlight colors to match our class-based dark mode (not prefers-color-scheme) */
+  --caret-color: hsl(212, 40%, 49%);
+  --selection-color: #000;
+  --selection-background-color: hsl(212, 70%, 85%);
+  --contains-highlight-color: hsl(212, 40%, 49%);
+  --contains-highlight-background-color: hsl(212, 40%, 95%);
+  --highlight-text: hsla(212, 40%, 50%, 0.1);
+}
+.dark math-field {
+  --caret-color: hsl(212, 65%, 55%);
+  --selection-color: #fff;
+  --selection-background-color: hsl(212, 65%, 55%);
+  --contains-highlight-color: hsl(212, 85%, 75%);
+  --contains-highlight-background-color: hsl(212, 30%, 40%);
+  --highlight-text: hsla(212, 40%, 50%, 0.6);
 }
 math-field::part(menu-toggle) {
   display: none;
