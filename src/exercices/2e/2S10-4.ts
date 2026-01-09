@@ -8,7 +8,6 @@ import { context } from '../../modules/context'
 import {
   gestionnaireFormulaireTexte,
   listeQuestionsToContenuSansNumero,
-  randint,
 } from '../../modules/outils'
 import Exercice from '../Exercice'
 
@@ -20,6 +19,7 @@ export const titre = "Compléter et utiliser un tableau d'effectif"
 export const dateDePublication = '08/01/2024'
 export const interactifReady = true
 export const interactifType = 'mathLive'
+export const dateDeModifImportante = '08/01/2026'
 /**
  * Compléter ou utiliser un tableau
  * @author Gilles Mora +Jean-Claude Lhote pour l'interactif
@@ -51,7 +51,7 @@ export default class TableauProportion extends Exercice {
     this.nbQuestionsModifiable = true
   }
 
-  nouvelleVersion() {
+   nouvelleVersion() {
     this.answers = {}
 
     const typesDeQuestionsDisponibles = gestionnaireFormulaireTexte({
@@ -74,20 +74,27 @@ export default class TableauProportion extends Exercice {
     let increment = 1
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
       const typesDeQuestions = listeTypeDeQuestions[i]
-      const total = choice([100, 150, 200, 250, 300, 350]) //
-      const totalGA = (randint(4, 6) * total) / 10
-      const totalG = (randint(5, 6) * total) / 10
+      const total = choice([240, 280, 320, 342, 360, 420, 450, 480]) 
+      // Pourcentages variés pour éviter les doublons
+      const pourcGA = choice([48, 52, 54, 56, 58])
+      const totalGA = Math.round((pourcGA * total) / 100)
       const totalF = total - totalGA
+      
+      // Pourcentage en filière générale (doit être > pourcGA pour avoir des filles en générale)
+      const pourcG = choice([62, 64, 66, 68])
+      const totalG = Math.round((pourcG * total) / 100)
       const totalT = total - totalG
-      const GAetG = (choice([26, 28]) * total) / 100
+      
+      // Garçons en filière générale : doit être < min(pourcGA, pourcG)
+      // On prend entre 28% et 42% pour être sûr d'avoir GAetG < totalGA et GAetG < totalG
+      const pourcGAetG = choice([28, 31, 34, 37, 40])
+      const GAetG = Math.round((pourcGAetG * total) / 100)
+      
       const FetG = totalG - GAetG
       const GAetT = totalGA - GAetG
       const FetT = totalF - FetG
-      const pourcGA = (totalGA * 100) / total
-      const pourcG = (totalG * 100) / total
-      const pourcGAetG = (GAetG * 100) / total
-      const pourcF = (totalF * 100) / total
-      const pourcT = (totalT * 100) / total
+      const pourcF = arrondi((totalF * 100) / total, 0)
+      const pourcT = arrondi((totalT * 100) / total, 0)
       const choix = choice([true, false])
       let texte = ''
       let texteCorr = ''
@@ -287,15 +294,18 @@ export default class TableauProportion extends Exercice {
 
           texteCorr = `${numAlpha(0)} La proportion de ${choix ? 'filles' : 'garçons'} en première technologique parmi les élèves de ce lycée est donnée par le quotient : 
           ${choix ? ` $${miseEnEvidence(`\\dfrac{${FetT}}{${total}}`)}$.` : ` $${miseEnEvidence(`\\dfrac{${GAetT}}{${total}}`)}$.`} <br>
-         Sous la forme d'un pourcentage, on obtient :  ${choix ? ` $${miseEnEvidence(`${miseEnEvidence((FetT * 100) / total)} \\,\\%`)}$.` : ` $${miseEnEvidence(`${miseEnEvidence((GAetT * 100) / total)} \\,\\%`)}$.`}<br>`
+         Sous la forme d'un pourcentage, on obtient :  ${choix ? ` $${miseEnEvidence(`${texNombre(arrondi((FetT * 100) / total, 1), 1)} \\,\\%`)}$.` : ` $${miseEnEvidence(`${texNombre(arrondi((GAetT * 100) / total, 1), 1)} \\,\\%`)}$.`}<br>
+         Arrondi à l'unité : ${choix ? ` $${miseEnEvidence(`${arrondi((FetT * 100) / total, 0)} \\,\\%`)}$.` : ` $${miseEnEvidence(`${arrondi((GAetT * 100) / total, 0)} \\,\\%`)}$.`}<br>`
 
           texteCorr += `${numAlpha(1)} La proportion de ${choix ? 'filles' : 'garçons'} en première technologique parmi parmi les élèves en première technologique est donnée par le quotient : 
           ${choix ? ` $${miseEnEvidence(`\\dfrac{${FetT}}{${totalT}}`)}$.` : ` $${miseEnEvidence(`\\dfrac{${GAetT}}{${totalT}}`)}$.`} <br>
-         Sous la forme d'un pourcentage, on obtient :  ${choix ? ` $${miseEnEvidence(`${miseEnEvidence(arrondi((FetT * 100) / totalT, 0))} \\,\\%`)}$.` : ` $${miseEnEvidence(`${miseEnEvidence(arrondi((GAetT * 100) / totalT, 0))} \\,\\%`)}$.`}<br>`
+         Sous la forme d'un pourcentage, on obtient :  ${choix ? ` $${miseEnEvidence(`${texNombre(arrondi((FetT * 100) / totalT, 1), 1)} \\,\\%`)}$.` : ` $${miseEnEvidence(`${texNombre(arrondi((GAetT * 100) / totalT, 1), 1)} \\,\\%`)}$.`}<br>
+         Arrondi à l'unité : ${choix ? ` $${miseEnEvidence(`${arrondi((FetT * 100) / totalT, 0)} \\,\\%`)}$.` : ` $${miseEnEvidence(`${arrondi((GAetT * 100) / totalT, 0)} \\,\\%`)}$.`}<br>`
 
           texteCorr += `${numAlpha(2)} La proportion de ${choix ? 'filles' : 'garçons'} en première technologique parmi les ${choix ? 'filles' : 'garçons'}  est donnée par le quotient : 
          ${choix ? ` $${miseEnEvidence(`\\dfrac{${FetT}}{${totalF}}`)}$.` : ` $${miseEnEvidence(`\\dfrac{${GAetT}}{${totalGA}}`)}$.`} <br>
-        Sous la forme d'un pourcentage, on obtient :  ${choix ? ` $${miseEnEvidence(`${miseEnEvidence(arrondi((FetT * 100) / totalF, 0))} \\,\\%`)}$.` : ` $${miseEnEvidence(`${miseEnEvidence(arrondi((GAetT * 100) / totalGA, 0))} \\,\\%`)}$.`}`
+        Sous la forme d'un pourcentage, on obtient :  ${choix ? ` $${miseEnEvidence(`${texNombre(arrondi((FetT * 100) / totalF, 1), 1)} \\,\\%`)}$.` : ` $${miseEnEvidence(`${texNombre(arrondi((GAetT * 100) / totalGA, 1), 1)} \\,\\%`)}$.`}<br>
+        Arrondi à l'unité : ${choix ? ` $${miseEnEvidence(`${arrondi((FetT * 100) / totalF, 0)} \\,\\%`)}$.` : ` $${miseEnEvidence(`${arrondi((GAetT * 100) / totalGA, 0)} \\,\\%`)}$.`}`
 
           increment = 6
           break
