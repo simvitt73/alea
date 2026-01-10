@@ -63,10 +63,7 @@ export default class DeriveeQuotient extends Exercice {
       'Montrer que... (non interactif)',
       false,
     ]
-    // this.consigne = "Pour chacune des fonctions suivantes, dire sur quel ensemble elle est dérivable, puis déterminer l'expression de sa fonction dérivée."
-    this.consigne =
-      "Pour chacune des fonctions suivantes, déterminer l'expression de sa fonction dérivée."
-    this.nbQuestions = 5
+    this.nbQuestions = 4
     // Sortie LaTeX
     this.nbCols = 2 // Nombre de colonnes
     this.nbColsCorr = 2 // Nombre de colonnes dans la correction
@@ -75,6 +72,10 @@ export default class DeriveeQuotient extends Exercice {
   }
 
   nouvelleVersion() {
+    this.consigne =
+      this.nbQuestions > 1
+        ? "Pour chacune des fonctions suivantes, déterminer l'expression de sa fonction dérivée."
+        : "Déterminer l'expression de la fonction dérivée de la fonction suivante."
     const listeValeurs: string[] = [] // Les questions sont différentes du fait du nom de la fonction, donc on stocke les valeurs
     if (this.sup2) {
       this.interactifReady = false
