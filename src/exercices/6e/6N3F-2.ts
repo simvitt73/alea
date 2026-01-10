@@ -1,16 +1,12 @@
 import { ComputeEngine } from '@cortex-js/compute-engine'
 import Figure from 'apigeom'
-import erase from 'apigeom/src/assets/svg/erase.svg'
-import minus from 'apigeom/src/assets/svg/minus.svg'
-import plus from 'apigeom/src/assets/svg/plus.svg'
-import RectangleFractionDiagram from 'apigeom/src/elements/diagrams/RectangleFractionDiagram'
-import TextByPosition from 'apigeom/src/elements/text/TextByPosition'
 import type { MathfieldElement } from 'mathlive'
-import figureApigeom from '../../lib/figureApigeom'
+import handleApigeomFigureElement from '../../lib/apigeom/apigeom-figure'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { generateCleaner } from '../../lib/interactif/comparisonFunctions'
 import { remplisLesBlancs } from '../../lib/interactif/questionMathLive'
 import { shuffle } from '../../lib/outils/arrayOutils'
+import { context } from '../../modules/context'
 import FractionEtendue from '../../modules/FractionEtendue'
 import {
   gestionnaireFormulaireTexte,
@@ -83,17 +79,21 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
       ? "Écrire sous la forme de la somme d'un nombre entier et d'une fraction inférieure à 1 puis donner l'écriture décimale."
       : "Écrire sous la forme de la somme d'un nombre entier et d'une fraction inférieure à 1."
 
-    if (this.sup2) {
-      const figure = getDynamicFractionDiagram()
-      this.introduction = figureApigeom({
-        exercice: this,
-        i: 0,
-        figure,
-        isDynamic: true,
-        hasFeedback: false
+    if (this.sup2 && context.isHtml) {
+      const figure = new Figure({
+        xMin: -0.5,
+        yMin: -2,
+        width: 800,
+        height: 120,
       })
-      figure.divButtons.style.display = 'grid'
-      if (figure.ui) figure.ui.send({ type: 'FILL' })
+      figure.options.automaticUserMessage = false
+      figure.options.color = 'blue'
+      figure.create('RectangleFractionDiagram', {
+        denominator: 2,
+        numberOfRectangles: 5,
+      })
+      handleApigeomFigureElement()
+      this.introduction = `<apigeom-figure interactive default-action='FILL' x-min=${figure.xMin} y-min=${figure.yMin} width=${figure.width} height=${figure.height} numero-exercice=${this.numeroExercice} index=0 auto-index><script type="application/json">${figure.json}</script></apigeom-figure>`
     } else {
       this.introduction = ''
     }
@@ -266,107 +266,4 @@ export default class ExerciceFractionsDifferentesEcritures extends Exercice {
     if (divFeedback) divFeedback.innerHTML = feedback
     return result
   }
-}
-
-export function getDynamicFractionDiagram() {
-  const figure = new Figure({ xMin: -0.5, yMin: -2, width: 800, height: 120 })
-  figure.divUserMessage.style.display = 'none'
-  figure.options.automaticUserMessage = false
-  figure.options.color = 'blue'
-
-  figure.create('RectangleFractionDiagram', {
-    denominator: 2,
-    numberOfRectangles: 5,
-  })
-
-  function decreaseDenominator(): void {
-    let denominator = 2
-    figure.elements.forEach((ele) => {
-      if (
-        ele.type === 'RectangleFractionDiagram' &&
-        ele instanceof RectangleFractionDiagram
-      ) {
-        if (ele.denominator === 2) return
-        const num = ele.numerator
-        ele.denominator--
-        denominator = ele.denominator
-        ele.redraw()
-        ele.numerator = num
-      }
-      if (ele.type === 'TextByPosition' && ele instanceof TextByPosition) {
-        ele.text = `L'unité est partagée en ${denominator} parts égales.`
-      }
-    })
-  }
-
-  function increaseNumerator(): void {
-    let denominator = 2
-    figure.elements.forEach((ele) => {
-      if (
-        ele.type === 'RectangleFractionDiagram' &&
-        ele instanceof RectangleFractionDiagram
-      ) {
-        const num = ele.numerator
-        ele.denominator++
-        denominator = ele.denominator
-        ele.redraw()
-        ele.numerator = num
-      }
-      if (ele.type === 'TextByPosition' && ele instanceof TextByPosition) {
-        ele.text = `L'unité est partagée en ${denominator} parts égales.`
-      }
-    })
-  }
-
-  function clearFill(): void {
-    figure.elements.forEach((ele) => {
-      if (
-        ele.type === 'RectangleFractionDiagram' &&
-        ele instanceof RectangleFractionDiagram
-      ) {
-        ele.numerator = 0
-      }
-    })
-  }
-
-  figure.setToolbar({ position: 'top', tools: ['FILL'] })
-  const p = document.createElement('p')
-  p.innerHTML = 'Brouillon non évalué'
-  p.classList.add(
-    'italic',
-    'font-black',
-    'text-coopmaths-struct',
-    'ml-10',
-    'my-auto',
-  )
-  figure.addCustomButton({
-    action: decreaseDenominator,
-    tooltip: 'Diminuer le nombre de parts',
-    url: minus,
-  })
-  figure.addCustomButton({
-    action: increaseNumerator,
-    tooltip: 'Augmenter le nombre de parts',
-    url: plus,
-  })
-  figure.addCustomButton({
-    action: clearFill,
-    tooltip: 'Réinitialiser le coloriage',
-    url: erase,
-  })
-  figure.divButtons.appendChild(p)
-  figure.container.classList.add(
-    'border-2',
-    'border-coopmaths-struct',
-    'p-2',
-    'rounded-md',
-  )
-  figure.create('TextByPosition', {
-    text: `L'unité est partagée en ${2} parts égales.`,
-    x: 0,
-    y: -1.5,
-    anchor: 'bottomLeft',
-    isChild: false,
-  })
-  return figure
 }
