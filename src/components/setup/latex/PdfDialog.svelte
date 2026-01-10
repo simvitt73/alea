@@ -53,6 +53,7 @@
     latex.addExercices([exercice])
     ready = true
     context.isHtml = false
+    exercice.interactif = false
     dialog.showModal()
   })
 
@@ -63,7 +64,7 @@
   }
 </script>
 
-<dialog bind:this={dialog} class="rounded-xl p-6 shadow-xl w-[400px]">
+<dialog bind:this={dialog} class="rounded-xl p-6 shadow-xl w-[400px] m-auto">
   <!-- Bouton fermer -->
   <button
     type="button"
