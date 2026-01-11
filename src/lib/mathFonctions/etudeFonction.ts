@@ -2981,12 +2981,12 @@ export function tableauVariationsFonction(
   if (variationG.variation === 'croissant') {
     tabLineVariations.push(
       `-/${stringNombre(fonction(variationG.xG), precisionImage)}`,
-      10,
+      30,
     )
   } else {
     tabLineVariations.push(
       `+/${stringNombre(fonction(variationG.xG), precisionImage)}`,
-      10,
+      30,
     )
   }
   for (let i = 0; i < variations.length - 1; i++) {
@@ -3004,7 +3004,7 @@ export function tableauVariationsFonction(
     } else {
       tabLineVariations.push(
         `${variationG.variation === 'croissant' ? '+' : '-'}/${stringNombre(fonction(variationG.xD), precisionImage)}`,
-        10,
+        30,
       )
     }
   }
@@ -3012,18 +3012,18 @@ export function tableauVariationsFonction(
     if (variationD.variation === 'croissant') {
       tabLineVariations.push(
         `+/${stringNombre(fonction(variationD.xD, 1), precisionImage)}`,
-        10,
+        30,
       )
     } else {
       tabLineVariations.push(
         `-/${stringNombre(fonction(variationD.xD, 1), precisionImage)}`,
-        10,
+        30,
       )
     }
   } else {
     tabLineVariations.push(
       `${variationG.variation === 'croissant' ? '+' : '-'}/${stringNombre(fonction(variationG.xD), precisionImage)}`,
-      10,
+      30,
     )
   }
   if (substituts && Array.isArray(substituts)) {
@@ -3058,7 +3058,7 @@ export function tableauVariationsFonction(
     ],
     tabLines,
     colorBackground: '',
-    espcl: 4.5, // taille en cm entre deux antécédents
+    espcl: 5, // taille en cm entre deux antécédents
     deltacl: 0.8, // distance entre la bordure et les premiers et derniers antécédents
     lgt: 3, // taille de la première colonne en cm
   })
