@@ -199,7 +199,10 @@ const miseEnForme = (str: string, color: string, isColored: boolean) =>
   isColored ? miseEnEvidence(str, color) : str
 function neg(expr) {
   if (expr.operator !== 'Add') return engine.function('Multiply', [expr, '-1'])
-  return engine.function('Add', expr.ops.map(neg), { canonical: false })
+  return engine.function('Add', expr.ops.map(neg), {
+    canonical: false,
+    structural: false,
+  })
 }
 
 /**
@@ -211,13 +214,17 @@ function neg(expr) {
 function flattenAdd(expr: BoxedExpression): BoxedExpression {
   if (expr.operator === 'Negate') {
     const oppose = neg(expr.op1)
-    const newExpr = engine.function('Add', [oppose], { canonical: false })
+    const newExpr = engine.function('Add', [oppose], {
+      canonical: false,
+      structural: false,
+    })
     return newExpr
   }
   if (expr.operator === 'Subtract') {
     const oppose = neg(expr.op2)
     const newExpr = engine.function('Add', [expr.op1, oppose], {
       canonical: false,
+      structural: false,
     })
     return flattenAdd(newExpr)
   }
@@ -231,7 +238,7 @@ function flattenAdd(expr: BoxedExpression): BoxedExpression {
       ops.push(...(op.ops ?? []).map(flattenAdd))
     else ops.push(op)
   }
-  return engine.function('Add', ops, { canonical: false })
+  return engine.function('Add', ops, { canonical: false, structural: false })
 }
 
 /**
@@ -376,6 +383,10 @@ export function regroupeTermesMemeDegre(
   return expressionFinale.join('+')
 }
 
+const isNumeric = (node: BoxedExpression) => node.isNumberLiteral
+const isSingleSymbol = (node: BoxedExpression) =>
+  node.symbol && node.symbol.length === 1 && node.latex.length === 1
+
 /**
  * @author Jean-Claude Lhote
  * @param expr
@@ -419,28 +430,36 @@ export function developpe(
     const somme = interior.operator === 'Add'
     const terme1 = interior.op1
     const terme2 = interior.op2
-    const carre1 = terme1.isAlgebraic
+    const carre1 = isNumeric(terme1)
       ? terme1.latex.startsWith('-')
         ? `\\left( ${terme1.latex}\\right) ^2`
         : `${terme1.latex}^2`
-      : `\\left( ${terme1.latex}\\right) ^2`
-    const carre2 = terme2.isAlgebraic
+      : isSingleSymbol(terme1)
+        ? `${terme1.latex}^2`
+        : `\\left( ${terme1.latex}\\right) ^2`
+    const carre2 = isNumeric(terme2)
       ? terme2.latex.startsWith('-')
         ? `\\left( ${terme2.latex}\\right) ^2`
         : `${terme2.latex}^2`
-      : `\\left( ${terme2.latex}\\right) ^2`
+      : isSingleSymbol(terme2)
+        ? `${terme2.latex}^2`
+        : `\\left( ${terme2.latex}\\right) ^2`
     const dbleProd = `2\\times ${
-      terme1.isConstant
+      isNumeric(terme1)
         ? terme1.latex.startsWith('-')
           ? `\\left( ${terme1.latex}\\right) `
           : `${terme1.latex}`
-        : `\\left( ${terme1.latex}\\right) `
+        : isSingleSymbol(terme1)
+          ? `${terme1.latex}`
+          : `\\left( ${terme1.latex}\\right) `
     }\\times ${
-      terme2.isConstant
+      isNumeric(terme2)
         ? terme2.latex.startsWith('-')
           ? `\\left( ${terme2.latex}\\right) `
           : `${terme2.latex}`
-        : `${terme2.latex}`
+        : isSingleSymbol(terme2)
+          ? `${terme2.latex}`
+          : `\\left( ${terme2.latex}\\right) `
     }`
     if (level === 2) {
       return `${miseEnForme(carre1, couleurs[colorOffset], isColored)}${somme ? '+' : '-'}${miseEnForme(dbleProd, couleurs[colorOffset + 1], isColored)}+${miseEnForme(carre2, couleurs[colorOffset + 2], isColored)}`.replaceAll(
