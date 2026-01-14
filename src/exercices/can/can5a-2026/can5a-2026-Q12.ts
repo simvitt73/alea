@@ -1,10 +1,11 @@
+import Decimal from 'decimal.js'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
-export const titre = 'Calculer le périmètre d\'un rectangle'
+export const titre = 'Multiplier un nombre décimalpar 0,2'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'hbp7h'
@@ -18,32 +19,33 @@ export const refs = {
 
 */
 export default class Can52026Q12 extends ExerciceCan {
-  enonce(longueur?: number, largeur?: number) {
-    if (longueur == null || largeur == null) {
-      longueur = randint(5, 9)
-      largeur = randint(3, longueur - 1)
+  enonce(a?: number) {
+    if (a == null) {
+      // Génère un nombre décimal de 1,5 à 9,5 par pas de 0,5
+      // Soit : 1,5 / 2,5 / 3,5 / 4,5 / 5,5 / 6,5 / 7,5 / 8,5 / 9,5
+      const valeurs = [1.5, 2.5, 3.5, 5.5, 6.5, 7.5, 8.5, 9.5]
+      a = choice(valeurs)
     }
 
-    this.reponse = (longueur + largeur) * 2
-     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.question = `Un rectangle a une longueur de $${longueur}\\text{ cm}$ et une largeur de $${largeur}\\text{ cm}$.<br>
-Son périmètre est égal à :`
+    const aDecimal = new Decimal(a)
+    const resultat = aDecimal.times(0.2)
     
-    this.correction = `Le périmètre d'un rectangle de longueur $${longueur}\\text{ cm}$ et de largeur $${largeur}\\text{ cm}$ est :<br>
-$2\\times (${longueur}+${largeur})=2\\times ${longueur + largeur}=${miseEnEvidence(texNombre((longueur + largeur) * 2, 0))}\\text{ cm}$.`
+    this.reponse = resultat.toNumber()
+    this.formatChampTexte = KeyboardType.clavierDeBase
+    this.question = `$${texNombre(a, 1)} \\times 0,2$`
+    
+    this.correction = `Multiplier par $0,2$ revient multiplier par $\\dfrac{1}{5}$, c'est-à-dire à diviser par $5$. <br>
+    En effet, $0,2 = \\dfrac{2}{10} = \\dfrac{1}{5}$.<br>
+    $${texNombre(a, 1)} \\times 0,2 = ${miseEnEvidence(texNombre(resultat.toNumber(), 2))}$.`
     
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
-    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
-    
+    this.canReponseACompleter = ''
     if (this.interactif) {
-      this.question += '<br>'
-    } else {
-      this.question += '<br>$\\ldots$ cm'
+      this.question += ' $=$'
     }
   }
 
   nouvelleVersion() {
-    this.canOfficielle ? this.enonce(7, 5) : this.enonce()
+    this.canOfficielle ? this.enonce(4.5) : this.enonce()
   }
 }
