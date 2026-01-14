@@ -1,6 +1,7 @@
-import { texNombre } from '../../../lib/outils/texNombre'
-import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { choice } from '../../../lib/outils/arrayOutils'
+import { miseEnEvidence } from '../../../lib/outils/embellissements'
+import { texNombre } from '../../../lib/outils/texNombre'
 import ExerciceCan from '../../ExerciceCan'
 
 export const titre = 'Calculer un produit (table de multiplication)'
@@ -16,12 +17,14 @@ export const refs = {
  * @author Gilles Mora
 
 */
-export default class Can2026Q1 extends ExerciceCan {
+export default class Can32026Q1 extends ExerciceCan {
   enonce(a?: number, b?: number) {
     if (a == null || b == null) {
       a = choice([4, 6, 7, 8])
-      b = choice([4,6, 7, 8], [a])
+      b = choice([4, 6, 7, 8], [a])
     }
+
+    this.formatChampTexte = KeyboardType.clavierNumbers
     this.reponse = a * b
     this.question = `$${a} \\times ${b}$ `
     this.correction = `$${a}\\times${b}=${miseEnEvidence(texNombre(this.reponse, 0))}$`
