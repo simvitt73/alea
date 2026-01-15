@@ -1,10 +1,12 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
+import { formatMinute } from '../../../lib/outils/texNombre'
+import Hms from '../../../modules/Hms'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
-export const titre = 'Calculer le périmètre d\'un rectangle'
+export const titre = 'Déteterminer une heure de départ en soustrayant une durée'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'zqf0m'
@@ -18,32 +20,44 @@ export const refs = {
 
 */
 export default class Can52026Q15 extends ExerciceCan {
-  enonce(longueur?: number, largeur?: number) {
-    if (longueur == null || largeur == null) {
-      longueur = randint(5, 9)
-      largeur = randint(3, longueur - 1)
+  enonce(hArrivee?: number, minArrivee?: number, duree?: number) {
+    if (hArrivee == null || minArrivee == null || duree == null) {
+      // Génération aléatoire
+      duree = choice([25, 35, 45, 55]) // durées variées
+      hArrivee = randint(8, 17) // heure d'arrivée entre 8h et 17h
+      minArrivee = randint(1, 5) * 10 + 5 // minutes : 15, 25, 35, 45, 55
     }
 
-    this.reponse = (longueur + largeur) * 2
-     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.question = `Un rectangle a une longueur de $${longueur}\\text{ cm}$ et une largeur de $${largeur}\\text{ cm}$.<br>
-Son périmètre est égal à :`
+    // Calcul de l'heure de départ en soustrayant la durée
+    const totalMinutesArrivee = hArrivee * 60 + minArrivee
+    const totalMinutesDepart = totalMinutesArrivee - duree
+    const hDepart = Math.floor(totalMinutesDepart / 60)
+    const minDepart = totalMinutesDepart % 60
+ this.optionsDeComparaison = { HMS: true }
+    this.reponse = new Hms({ hour: hDepart, minute: minDepart })
+    this.formatChampTexte = KeyboardType.clavierHms
     
-    this.correction = `Le périmètre d'un rectangle de longueur $${longueur}\\text{ cm}$ et de largeur $${largeur}\\text{ cm}$ est :<br>
-$2\\times (${longueur}+${largeur})=2\\times ${longueur + largeur}=${miseEnEvidence(texNombre((longueur + largeur) * 2, 0))}\\text{ cm}$.`
+    const prenom = choice(['Zoé', 'Emma', 'Léa', 'Chloé', 'Manon', 'Camille', 'Sarah', 'Laura', 'Marine', 'Lucie'])
     
-    this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
-    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
+    this.question = `${prenom} est arrivée au collège à $${hArrivee}$ h $${formatMinute(minArrivee)}$ min.<br>
+Son trajet a duré $${duree}$ minutes.<br>
+Elle est partie à :`
+
+    this.correction = `Pour trouver l'heure de départ, on soustrait la durée du trajet de l'heure d'arrivée.<br>
+$${hArrivee}$ h $${formatMinute(minArrivee)}$ min $-$ ${duree} min $=$ $${hDepart}$ h $${formatMinute(minDepart)}$ min.<br>
+${prenom} est partie à $${miseEnEvidence(hDepart)}$ h $${miseEnEvidence(formatMinute(minDepart))}$ min.`
+
+    this.canEnonce = `${prenom} est arrivée au collège à $${hArrivee}$ h $${formatMinute(minArrivee)}$ min. Son trajet a duré $${duree}$ minutes. Elle est partie à :`
+    this.canReponseACompleter = '$\\ldots$ h $\\ldots$ min'
     
     if (this.interactif) {
-      this.question += '<br>'
+      this.question += ''
     } else {
-      this.question += '<br>$\\ldots$ cm'
+      this.question += ' $\\ldots$ h $\\ldots$ min'
     }
   }
 
   nouvelleVersion() {
-    this.canOfficielle ? this.enonce(7, 5) : this.enonce()
+    this.canOfficielle ? this.enonce(8, 45, 55) : this.enonce()
   }
 }
