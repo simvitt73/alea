@@ -5,7 +5,8 @@ import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
-export const titre = 'Déterminer le terme manquant dans une égalité de fractions'
+export const titre =
+  'Déterminer le terme manquant dans une égalité de fractions'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = '81r9y'
@@ -19,18 +20,18 @@ export const refs = {
 
 */
 export default class Can52026Q14 extends ExerciceCan {
- enonce(a?: number, b?: number, c?: number) {
+  enonce(a?: number, b?: number, c?: number) {
     let question = 'num'
     let coeff = 5
-    
+
     if (a == null || b == null || c == null) {
       question = choice(['num', 'den'])
       a = randint(2, 6)
-      b = randint(2, 7, [a, 2 * a, 3 * a])
+      b = choice([a + 1, a - 1])
       coeff = randint(2, 7)
       c = question === 'num' ? b * coeff : a * coeff
     }
-    
+
     this.reponse = question === 'num' ? (c * a) / b : (c * b) / a
     this.question = `$\\dfrac{${a}}{${b}}=${question === 'num' ? `\\dfrac{?}{${c}}` : `\\dfrac{${c}}{?}`}$`
     this.formatChampTexte = KeyboardType.clavierDeBase
@@ -40,10 +41,10 @@ export default class Can52026Q14 extends ExerciceCan {
         : `On remarque que $${c}=${coeff}\\times ${a}$, donc $?=${coeff}\\times ${b}=${coeff * b}$.<br>`
 
     this.correction += `Ainsi, $\\dfrac{${a}}{${b}}=${question === 'num' ? `\\dfrac{${miseEnEvidence(coeff * a)}}{${c}}` : `\\dfrac{${c}}{${miseEnEvidence(coeff * b)}}`}$.`
-    
+
     this.canEnonce = this.question
     this.canReponseACompleter = '$\\text{? }=\\ldots$'
-    
+
     if (this.interactif) {
       this.question += '<br>$\\text{? }=$'
     } else {
