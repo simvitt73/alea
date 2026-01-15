@@ -6,7 +6,7 @@ import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
-export const titre = "Calculer le périmètre d'un rectangle"
+export const titre = "Effectuer des conversions entre grammes et kilogrammes"
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 's5og8'
