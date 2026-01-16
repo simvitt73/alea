@@ -43,7 +43,7 @@ export default class ExerciceTableur3T10 extends Exercice {
     this.nbQuestions = 2
     this.besoinFormulaireTexte = [
       'Types de questions',
-      `Nombres séparés par des tirets\n${ExerciceTableur3T10.listeTypeDeQuestions.map((type, index) => `${index + 1} : ${type}`).join('\n')}\n${ExerciceTableur3T10.listeTypeDeQuestions.length + 1} : Mélange`,
+      `Nombres séparés par des tirets\n${ExerciceTableur3T10.listeTypeDeQuestions.map((type, index) => `${index + 1} : ${type}`).join('\n')}\n0: Mélange`,
     ]
     this.sup = '1-2' // `${ExerciceTableur3T10.listeTypeDeQuestions.length + 1}`
   }
@@ -578,7 +578,7 @@ export default class ExerciceTableur3T10 extends Exercice {
             goodAnswerFormulas: [
               {
                 ref: `${String.fromCharCode(66 + indexPointureChoisie)}3`,
-                formula: `=${String.fromCharCode(66 + indexPointureChoisie)}3/SOMME(B2:E2)`,
+                formula: `=${String.fromCharCode(66 + indexPointureChoisie)}2/SOMME(B2:E2)`,
               },
             ],
             sheetTestDatas: [
@@ -612,7 +612,7 @@ export default class ExerciceTableur3T10 extends Exercice {
     }
 
     const texteCorr = `Voici la formule à saisir en cellule ${String.fromCharCode(66 + indexPointureChoisie)}3 :<br>${texteEnCouleurEtGras(
-      `=${String.fromCharCode(66 + indexPointureChoisie)}3/SOMME(B2:E2)`,
+      `=${String.fromCharCode(66 + indexPointureChoisie)}2/SOMME(B2:E2)`,
     )}`
     return { texte, texteCorr }
   }
@@ -738,8 +738,8 @@ export default class ExerciceTableur3T10 extends Exercice {
       nbQuestions: this.nbQuestions,
       min: 1,
       max: ExerciceTableur3T10.listeTypeDeQuestions.length,
-      melange: ExerciceTableur3T10.listeTypeDeQuestions.length + 1,
-      defaut: ExerciceTableur3T10.listeTypeDeQuestions.length + 1,
+      melange: 0,
+      defaut: 0,
     }).map(Number)
     for (
       let q = 0, cpt = 0, texte, texteCorr: string;
