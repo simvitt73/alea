@@ -1,10 +1,12 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
+import FractionEtendue from '../../../modules/FractionEtendue'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
-export const titre = 'Calculer le périmètre d\'un rectangle'
+export const titre = 'Écrire une fraction décimale en écriture décimale'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'ehdej'
@@ -18,32 +20,34 @@ export const refs = {
 
 */
 export default class Can52026Q20 extends ExerciceCan {
-  enonce(longueur?: number, largeur?: number) {
-    if (longueur == null || largeur == null) {
-      longueur = randint(5, 9)
-      largeur = randint(3, longueur - 1)
+   enonce(numerateur?: number, denominateur?: number) {
+    if (numerateur == null || denominateur == null) {
+      // Choix du dénominateur : 10, 100 ou 1000
+      denominateur = choice([10, 100])
+      
+      
+        numerateur = choice([randint(1, 9) * 100 +  randint(1, 9), randint(1, 9) * 1000   + randint(1, 9)
+         ])
+      
     }
 
-    this.reponse = (longueur + largeur) * 2
-     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.question = `Un rectangle a une longueur de $${longueur}\\text{ cm}$ et une largeur de $${largeur}\\text{ cm}$.<br>
-Son périmètre est égal à :`
-    
-    this.correction = `Le périmètre d'un rectangle de longueur $${longueur}\\text{ cm}$ et de largeur $${largeur}\\text{ cm}$ est :<br>
-$2\\times (${longueur}+${largeur})=2\\times ${longueur + largeur}=${miseEnEvidence(texNombre((longueur + largeur) * 2, 0))}\\text{ cm}$.`
-    
+    const frac = new FractionEtendue(numerateur, denominateur)
+    const resultat = numerateur / denominateur
+
+    this.question = `Écriture décimale de $${frac.texFraction}$`
+
+    this.correction = `$${frac.texFraction}=${texNombre(numerateur)}\\div ${texNombre(denominateur)}=${miseEnEvidence(texNombre(resultat))}$`
+ this.formatChampTexte = KeyboardType.clavierDeBase
+    this.reponse = resultat
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
-    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
+    this.canReponseACompleter = ''
     
     if (this.interactif) {
-      this.question += '<br>'
-    } else {
-      this.question += '<br>$\\ldots$ cm'
+      this.optionsChampTexte = { texteAvant: '<br>' }
     }
   }
 
   nouvelleVersion() {
-    this.canOfficielle ? this.enonce(7, 5) : this.enonce()
+    this.canOfficielle ? this.enonce(207, 10) : this.enonce()
   }
 }

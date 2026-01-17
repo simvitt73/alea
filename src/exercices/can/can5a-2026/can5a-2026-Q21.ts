@@ -1,10 +1,11 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
-export const titre = 'Calculer le périmètre d\'un rectangle'
+export const titre = 'Effectuer des conversions de volumes entre m³ et dm³'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = '50n52'
@@ -18,32 +19,49 @@ export const refs = {
 
 */
 export default class Can52026Q21 extends ExerciceCan {
-  enonce(longueur?: number, largeur?: number) {
-    if (longueur == null || largeur == null) {
-      longueur = randint(5, 9)
-      largeur = randint(3, longueur - 1)
+ enonce(valeur?: number, sens?: string) {
+    if (valeur == null || sens == null) {
+      sens = choice(['m3versdm3', 'dm3versm3'])
+      
+      if (sens === 'm3versdm3') {
+        // m³ → dm³ : nombres de 0,01 à 0,99
+        valeur = randint(1, 99) / 100
+      } else {
+        // dm³ → m³ : nombres de 10 à 990
+        valeur = randint(1, 99) * 10
+      }
     }
 
-    this.reponse = (longueur + largeur) * 2
-     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.question = `Un rectangle a une longueur de $${longueur}\\text{ cm}$ et une largeur de $${largeur}\\text{ cm}$.<br>
-Son périmètre est égal à :`
-    
-    this.correction = `Le périmètre d'un rectangle de longueur $${longueur}\\text{ cm}$ et de largeur $${largeur}\\text{ cm}$ est :<br>
-$2\\times (${longueur}+${largeur})=2\\times ${longueur + largeur}=${miseEnEvidence(texNombre((longueur + largeur) * 2, 0))}\\text{ cm}$.`
-    
-    this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
-    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
-    
-    if (this.interactif) {
-      this.question += '<br>'
+    if (sens === 'm3versdm3') {
+      // Conversion m³ → dm³
+      this.reponse = valeur * 1000
+      this.question = `$${texNombre(valeur, 2)}\\text{ m}^3=$`
+      this.correction = `$1\\text{ m}^3=${texNombre(1000, 0)}\\text{ dm}^3$<br>
+Ainsi, $${texNombre(valeur, 2)}\\text{ m}^3=${texNombre(valeur, 2)}\\times ${texNombre(1000)}\\text{ dm}^3=${miseEnEvidence(texNombre(valeur * 1000))}\\text{ dm}^3$.`
+      this.optionsChampTexte = { texteApres: ' $\\text{ dm}^3$' }
+      this.canEnonce = `$${texNombre(valeur, 2)}\\text{ m}^3=$`
+      this.canReponseACompleter = '$\\ldots\\text{ dm}^3$'
+      if (!this.interactif) {
+        this.question += '$\\ldots\\text{ dm}^3$'
+      }
     } else {
-      this.question += '<br>$\\ldots$ cm'
+      // Conversion dm³ → m³
+      this.reponse = valeur / 1000
+      this.question = `$${texNombre(valeur, 0)}\\text{ dm}^3=$`
+      this.correction = `$1\\text{ dm}^3=${texNombre(0.001, 3)}\\text{ m}^3$<br>
+Ainsi, $${texNombre(valeur, 0)}\\text{ dm}^3=${texNombre(valeur, 0)}\\times ${texNombre(0.001, 3)}\\text{ m}^3=${miseEnEvidence(texNombre(valeur / 1000))}\\text{ m}^3$.`
+      this.optionsChampTexte = { texteApres: ' $\\text{ m}^3$' }
+        this.canEnonce = `$${texNombre(valeur, 0)}\\text{ dm}^3=$`
+      this.canReponseACompleter = '$\\ldots\\text{ m}^3$'
+      if (!this.interactif) {
+        this.question += '$\\ldots\\text{ m}^3$'
+      }
     }
+ this.formatChampTexte = KeyboardType.clavierDeBase
+  
   }
 
   nouvelleVersion() {
-    this.canOfficielle ? this.enonce(7, 5) : this.enonce()
+    this.canOfficielle ? this.enonce(0.05, 'm3versdm3') : this.enonce()
   }
 }

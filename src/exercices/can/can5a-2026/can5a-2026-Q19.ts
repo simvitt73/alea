@@ -2,13 +2,11 @@ import { afficheMesureAngle } from '../../../lib/2d/AfficheMesureAngle'
 import { pointAbstrait } from '../../../lib/2d/PointAbstrait'
 import { polygoneAvecNom } from '../../../lib/2d/polygones'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
-import { degTan } from '../../../lib/mathFonctions/radToDeg'
+import { degCos, degSin } from '../../../lib/mathFonctions/radToDeg'
 import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { context } from '../../../modules/context'
 import { mathalea2d } from '../../../modules/mathalea2d'
-import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
 export const titre = 'Calculer un angle dans un triangle connaissant les deux autres'
@@ -31,14 +29,11 @@ export default class Can52026Q19 extends ExerciceCan {
       const listeCas = [
         [75, 50],   // angleE = 55°
         [65, 45],   // angleE = 70°
-        [70, 60],   // angleE = 50°
-       
-        [60, 50],   // angleE = 70°
+        [45, 75],   // angleE = 60°
+        [45, 65],   // angleE = 70°
         [75, 45],   // angleE = 60°
-       
         [70, 55],   // angleE = 55°
         [65, 60],   // angleE = 55°
-       
       ]
       const cas = choice(listeCas)
       angleD = cas[0]
@@ -47,12 +42,22 @@ export default class Can52026Q19 extends ExerciceCan {
 
     const angleE = 180 - angleD - angleF
     
-    // Construction du triangle
+    // Construction du triangle avec les vrais angles
     // D en bas à gauche, F en bas à droite, E en haut
     const D = pointAbstrait(0, 0, 'D')
     const F = pointAbstrait(5, 0, 'F')
-    // Position de E basée sur l'angle en D
-    const E = pointAbstrait(2.5, 2.5 * degTan(angleD), 'E')
+    
+    // Construction géométrique correcte de E
+    // À partir de D, on trace un segment à l'angle angleD
+    // À partir de F, on trace un segment à l'angle (180 - angleF)
+    // E est à l'intersection
+    const longueurDF = 5
+    // On utilise la loi des sinus pour trouver la hauteur
+    // sin(angleD)/longueurEF = sin(angleF)/longueurDE = sin(angleE)/longueurDF
+    const hauteur = longueurDF * degSin(angleD) * degSin(angleF) / degSin(angleE)
+    const distanceHorizontale = longueurDF * degSin(angleD) * degCos(angleF) / degSin(angleE)
+    
+    const E = pointAbstrait(distanceHorizontale, hauteur, 'E')
     
     const pol = polygoneAvecNom(D, F, E)
     const triangle = pol[0] // Le tracé du triangle
@@ -92,20 +97,20 @@ export default class Can52026Q19 extends ExerciceCan {
     
     this.question = this.canEnonce
     
-    this.correction = `La somme des angles d'un triangle est égale à $180\\circ$.<br>
+    this.correction = `La somme des angles d'un triangle est égale à $180^\\circ$.<br>
 Dans le triangle $DEF$, on a :<br>
-$\\widehat{EDF}+\\widehat{DFE}+\\widehat{FED}=180\\circ$<br>
-$${angleD}\\circ+${angleF}\\circ+\\widehat{FED}=180\\circ$<br>
-$${angleD + angleF}\\circ+\\widehat{FED}=180\\circ$<br>
-$\\widehat{FED}=180\\circ-${angleD + angleF}\\circ=${miseEnEvidence(angleE + '$\\circ$')}$`
+$\\widehat{EDF}+\\widehat{DFE}+\\widehat{FED}=180^\\circ$<br>
+$${angleD}^\\circ+${angleF}^\\circ+\\widehat{FED}=180^\\circ$<br>
+$${angleD + angleF}^\\circ+\\widehat{FED}=180^\\circ$<br>
+$\\widehat{FED}=180^\\circ-${angleD + angleF}^\\circ=${miseEnEvidence(angleE + '^\\circ')}$`
     
-    this.canReponseACompleter = '$?=\\ldots\\circ$'
-    this.optionsChampTexte = { texteApres: '$\\circ$' }
+    this.canReponseACompleter = '$?=\\ldots^\\circ$'
+    this.optionsChampTexte = { texteApres: '$^\\circ$' }
     this.formatChampTexte = KeyboardType.clavierDeBase
     if (this.interactif) {
       this.question += '<br>$?=$'
     } else if (context.isHtml) {
-      this.question += '<br>$?=\\ldots\\circ$'
+      this.question += '<br>$?=\\ldots^\\circ$'
     }
   }
 
