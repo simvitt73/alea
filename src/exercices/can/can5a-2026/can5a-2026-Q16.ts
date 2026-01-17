@@ -1,4 +1,3 @@
-
 import { fixeBordures } from '../../../lib/2d/fixeBordures'
 import { plot } from '../../../lib/2d/Plot'
 import { pointAbstrait } from '../../../lib/2d/PointAbstrait'
@@ -24,11 +23,19 @@ export const refs = {
 
 */
 export default class Can52026Q16 extends ExerciceCan {
- enonce(nbBlanches?: number, nbNoires?: number) {
+  enonce(nbBlanches?: number, nbNoires?: number) {
     if (nbBlanches == null || nbNoires == null) {
       const listeCas = [
-        [3, 5], [4, 4], [2, 6], [5, 3], [3, 6],
-        [4, 5], [2, 5], [3, 4], [4, 6], [5, 5],
+        [3, 5],
+        [4, 4],
+        [2, 6],
+        [5, 3],
+        [3, 6],
+        [4, 5],
+        [2, 5],
+        [3, 4],
+        [4, 6],
+        [5, 5],
       ]
       const cas = choice(listeCas)
       nbBlanches = cas[0]
@@ -40,7 +47,7 @@ export default class Can52026Q16 extends ExerciceCan {
     const fractionSimplifiee = fraction.simplifie()
 
     const objets = []
-    
+
     // Création du sac (contour)
     const boiteGauche = 0
     const boiteDroite = 2.5
@@ -60,15 +67,15 @@ export default class Can52026Q16 extends ExerciceCan {
 
     // Création des boules avec plot() - POSITIONNÉES EN BAS
     const k = 4 // nombre de boules par ligne maximum
-    
+
     for (let n = 0; n < total; n++) {
       const x = n % k
       const y = Math.floor(n / k)
-      
+
       // Position depuis le bas de la boîte
       const posX = x * 0.6 + 0.3
       const posY = y * 0.6 + 0.3
-      
+
       if (n < nbBlanches) {
         // Boule blanche : contour noir, pas de remplissage
         objets.push(
@@ -76,7 +83,7 @@ export default class Can52026Q16 extends ExerciceCan {
             rayon: 0.2,
             couleur: 'black',
             couleurDeRemplissage: 'white',
-          })
+          }),
         )
       } else {
         // Boule noire : contour noir, remplissage noir
@@ -85,27 +92,29 @@ export default class Can52026Q16 extends ExerciceCan {
             rayon: 0.2,
             couleur: 'black',
             couleurDeRemplissage: 'black',
-          })
+          }),
         )
       }
     }
 
-    this.canEnonce = mathalea2d(
-      Object.assign({ scale: 0.5 }, fixeBordures(objets)),
-      objets
-    )+'La proportion de boules blanches de cette boîte est :'
-    this.question = this.canEnonce
-   
+    this.consigne =
+      mathalea2d(Object.assign({ scale: 0.5 }, fixeBordures(objets)), objets) +
+      'La proportion de boules blanches de cette boîte est :'
+    this.question = '\\dfrac{%{champ1}}{%{champ2}}'
 
     this.correction = `Il y a $${nbBlanches}$ boules blanches sur un total de $${total}$ boules.<br>
 La proportion de boules blanches est donc : $\\dfrac{${nbBlanches}}{${total}}=${miseEnEvidence(fractionSimplifiee.texFraction)}$.`
- this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
-    this.reponse = fractionSimplifiee.texFraction
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
+
+    this.reponse = {
+      champ1: { value: fractionSimplifiee.num },
+      champ2: { value: fractionSimplifiee.den },
+    }
     this.canReponseACompleter = '$\\dfrac{\\ldots}{\\ldots}$'
-    
   }
 
   nouvelleVersion() {
+    this.formatInteractif = 'fillInTheBlank'
     this.canOfficielle ? this.enonce(3, 4) : this.enonce()
   }
 }

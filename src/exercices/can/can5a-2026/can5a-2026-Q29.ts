@@ -19,7 +19,7 @@ export const refs = {
 
 */
 export default class Can52026Q29 extends ExerciceCan {
-enonce(k?: number, numIrred?: number, denIrred?: number) {
+  enonce(k?: number, numIrred?: number, denIrred?: number) {
     if (k == null || numIrred == null || denIrred == null) {
       // Génération aléatoire : on part d'une fraction irréductible et on la multiplie par k
       k = randint(2, 7) // Facteur de simplification
@@ -49,25 +49,26 @@ enonce(k?: number, numIrred?: number, denIrred?: number) {
     const numerateur = k * numIrred
     const denominateur = k * denIrred
     const fractionInitiale = new FractionEtendue(numerateur, denominateur)
-    
-    // Fraction simplifiée
-    const fractionSimplifiee = new FractionEtendue(numIrred, denIrred)
 
-    this.question = `Fraction irréductible de $${fractionInitiale.texFraction}$`
+    // Fraction simplifiée
+    const fractionSimplifiee = fractionInitiale.simplifie()
+
+    this.consigne = `Fraction irréductible de $${fractionInitiale.texFraction}$`
+    this.question = '\\dfrac{%{champ1}}{%{champ2}}'
+    this.reponse = {
+      champ1: { value: fractionSimplifiee.num },
+      champ2: { value: fractionSimplifiee.den },
+    }
 
     this.correction = `$${fractionInitiale.texFraction}=\\dfrac{${numIrred}\\times \\cancel{${k}}}{${denIrred}\\times \\cancel{${k}}}=${miseEnEvidence(fractionSimplifiee.texFraction)}$`
- this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
-    this.reponse = fractionSimplifiee.texFraction
-    this.canEnonce = this.question
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
+    this.canEnonce = this.consigne
     this.canReponseACompleter = '$\\dfrac{\\ldots}{\\ldots}$'
     this.optionsDeComparaison = { fractionIrreductible: true }
-     if (this.interactif) {this.question += '<br>'}
-    else{
-      this.question += '<br>$\\dfrac{\\ldots}{\\ldots}$'
-    }
   }
 
   nouvelleVersion() {
+    this.formatInteractif = 'fillInTheBlank'
     this.canOfficielle ? this.enonce(7, 6, 5) : this.enonce()
   }
 }
