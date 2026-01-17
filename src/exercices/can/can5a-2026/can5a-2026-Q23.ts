@@ -1,10 +1,11 @@
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
+import { sp } from '../../../lib/outils/outilString'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
 
-export const titre = 'Calculer le périmètre d\'un rectangle'
+export const titre = 'Compléter une suite logique'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'e21zf'
@@ -18,32 +19,35 @@ export const refs = {
 
 */
 export default class Can52026Q23 extends ExerciceCan {
-  enonce(longueur?: number, largeur?: number) {
-    if (longueur == null || largeur == null) {
-      longueur = randint(5, 9)
-      largeur = randint(3, longueur - 1)
+ enonce(premier?: number, raison?: number) {
+    if (premier == null || raison == null) {
+      // Génération aléatoire
+      premier = choice([ 13, 14, 15, 16, 17, 18, 19, 22, 23, 24, 25, 26, 27, 28, 29])
+      raison = randint(7, 9)
     }
 
-    this.reponse = (longueur + largeur) * 2
-     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.question = `Un rectangle a une longueur de $${longueur}\\text{ cm}$ et une largeur de $${largeur}\\text{ cm}$.<br>
-Son périmètre est égal à :`
-    
-    this.correction = `Le périmètre d'un rectangle de longueur $${longueur}\\text{ cm}$ et de largeur $${largeur}\\text{ cm}$ est :<br>
-$2\\times (${longueur}+${largeur})=2\\times ${longueur + largeur}=${miseEnEvidence(texNombre((longueur + largeur) * 2, 0))}\\text{ cm}$.`
-    
+    const terme2 = premier + raison
+    const terme3 = premier + 2 * raison
+    const reponse = premier + 3 * raison
+
+    this.question = `Complète la suite logique :<br>
+$${premier}$ ${sp(2)} ; ${sp(2)} $${terme2}$ ${sp(2)} ; ${sp(2)} $${terme3}$ ${sp(2)} ; ${sp(2)} ?`
+
+    this.correction = `On obtient un terme de cette suite en ajoutant $${raison}$ au terme précédent.<br>
+Ainsi, ? $=${miseEnEvidence(reponse)}$.`
+ this.formatChampTexte = KeyboardType.clavierDeBase
+    this.reponse = reponse
     this.canEnonce = this.question
-    this.canReponseACompleter = '$\\ldots\\text{ cm}$'
-    this.optionsChampTexte = { texteApres: ' $\\text{cm}$' }
-    
-    if (this.interactif) {
-      this.question += '<br>'
+    this.canReponseACompleter = '? $=\\ldots$'
+
+    if (!this.interactif) {
+      this.question += '<br>? $=\\ldots$'
     } else {
-      this.question += '<br>$\\ldots$ cm'
+      this.question += '<br>? $=$'
     }
   }
 
   nouvelleVersion() {
-    this.canOfficielle ? this.enonce(7, 5) : this.enonce()
+    this.canOfficielle ? this.enonce(17, 9) : this.enonce()
   }
 }
