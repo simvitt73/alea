@@ -101,7 +101,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
     ]
 
     for (
-      let i = 0, texte, texteCorr, cpt = 0;
+      let i = 0, texte = '', texteCorr = '', cpt = 0;   
       i < this.nbQuestions && cpt < 50;
     ) {
       // une fonction pour gérer le pluriel
@@ -282,7 +282,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
         <br> Pour $${texPrix(nMax * situation.pu)}$${sp()}€, nous aurons donc $${texPrix(nMax * situation.pu)}$ ${sp()}€ $\\div ${texPrix(situation.pu)}$${sp()}€ $= ${nMax}$.
         <br> Avec $${texPrix(nMax * situation.pu)}$${sp()}€, ${prenomliste[5]} peut donc acheter $${miseEnEvidence(nMax)}$ ${pluriel(nMax, situation)}.`
     }
-    if (this.sup && context.isHtml) {
+    if (this.sup && context.isHtml ) {
       texteCorr = `
       C'est une situation de proportionnalité. Nous pouvons donc utiliser les propriétés de linéarité de la proportionnalité.
       <br>`
