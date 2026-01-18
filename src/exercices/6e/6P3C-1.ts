@@ -1,3 +1,6 @@
+import { fixeBordures } from '../../lib/2d/fixeBordures'
+import { pointAbstrait } from '../../lib/2d/PointAbstrait'
+import { tableau } from '../../lib/2d/tableau'
 import { texPrix } from '../../lib/format/style'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { setReponse } from '../../lib/interactif/gestionInteractif'
@@ -17,6 +20,7 @@ import {
 import { numAlpha, sp } from '../../lib/outils/outilString'
 import { prenom } from '../../lib/outils/Personne'
 import { context } from '../../modules/context'
+import { mathalea2d } from '../../modules/mathalea2d'
 import {
   checkSum,
   listeQuestionsToContenu,
@@ -56,7 +60,9 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
     super()
 
     context.isHtml ? (this.spacing = 2) : (this.spacing = 1)
-    this.besoinFormulaireCaseACocher = ['Résolution avec tableau récapitulatif en version html']
+    this.besoinFormulaireCaseACocher = [
+      'Résolution avec tableau récapitulatif en version html',
+    ]
     this.sup = false
     /*  if (context.isAmc) {
     titre = 'Résoudre un problème relevant de la proportionnalité'
@@ -101,7 +107,7 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
     ]
 
     for (
-      let i = 0, texte = '', texteCorr = '', cpt = 0;   
+      let i = 0, texte = '', texteCorr = '', cpt = 0;
       i < this.nbQuestions && cpt < 50;
     ) {
       // une fonction pour gérer le pluriel
@@ -237,86 +243,119 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
           },
         ],
       })
-      if ( !this.sup || !context.isHtml ){
-      texteCorr = `
+      if (!this.sup) {
+        texteCorr = `
         C'est une situation de proportionnalité. Nous pouvons donc utiliser les propriétés de linéarité de la proportionnalité.
         <br>C'est ce que nous allons faire pour les trois premières questions.
         <br>`
-        
-      const texteCorrInit = `
+
+        const texteCorrInit = `
         Pour $${n1}$ ${pluriel(n1, situation)}, on paie $${texPrix(n1 * situation.pu)}$${sp()}€.
         <br> Pour $${n2}$ ${pluriel(n2, situation)}, on paie $${texPrix(n2 * situation.pu)}$${sp()}€.`
-      const texteCorrn3 = `
+        const texteCorrn3 = `
         <br> Donc pour $${n1}$ ${pluriel(n3, situation)} $+$ $${n2}$ ${pluriel(n3, situation)}, on paie $${texPrix(n1 * situation.pu)}$${sp()}€ + $${texPrix(n2 * situation.pu)}$${sp()}€.
         <br> $${texPrix(n1 * situation.pu)}$${sp()}€ + $${texPrix(n2 * situation.pu)}$${sp()}€ = $${texPrix(n3 * situation.pu)}$${sp()}€
         <br> ${prenomliste[2]} paiera donc $${miseEnEvidence(texPrix(n3 * situation.pu))}$${sp()}€ pour $${n3}$ ${pluriel(n3, situation)}.
         <br>`
-      const texteCorrn4 = `
+        const texteCorrn4 = `
         <br> Donc pour $${n1}$ ${pluriel(n3, situation)} $-$ $${n2}$ ${pluriel(n4, situation)}, on paie $${texPrix(n1 * situation.pu)}$${sp()}€ - $${texPrix(n2 * situation.pu)}$${sp()}€.
         <br> $${texPrix(n1 * situation.pu)}$${sp()}€ - $${texPrix(n2 * situation.pu)}$${sp()}€ = $${texPrix(n4 * situation.pu)}$${sp()}€
         <br> ${prenomliste[3]} paiera donc $${miseEnEvidence(texPrix(n4 * situation.pu))}$${sp()}€ pour $${n4}$ ${pluriel(n4, situation)}.
         <br>`
-      const texteCorrn5 = `
+        const texteCorrn5 = `
         <br> Donc pour $${choixMult}\\times${choixN}$ ${pluriel(n5, situation)}, on paie $${choixMult}\\times${texPrix(choixN * situation.pu)}$${sp()}€.
         <br> $${choixMult}\\times${texPrix(choixN * situation.pu)}$${sp()}€ = $${texPrix(n5 * situation.pu)}$${sp()}€
         <br> ${prenomliste[4]} paiera donc $${miseEnEvidence(texPrix(n5 * situation.pu))}$${sp()}€ pour $${n5}$ ${pluriel(n5, situation)}.
         <br>`
-      for (let kk = 0; kk < 3; kk++) {
-        texteCorr += `<br>${numAlpha(kCorr++)} ` + texteCorrInit
-        switch (consigneQuestions[kk]) {
-          case n3:
-            texteCorr += texteCorrn3
-            break
-          case n4:
-            texteCorr += texteCorrn4
-            break
-          case n5:
-            texteCorr += texteCorrn5
-            break
+        for (let kk = 0; kk < 3; kk++) {
+          texteCorr += `<br>${numAlpha(kCorr++)} ` + texteCorrInit
+          switch (consigneQuestions[kk]) {
+            case n3:
+              texteCorr += texteCorrn3
+              break
+            case n4:
+              texteCorr += texteCorrn4
+              break
+            case n5:
+              texteCorr += texteCorrn5
+              break
+          }
         }
-      }
-      texteCorr += `<br>
+        texteCorr += `<br>
         ${numAlpha(kCorr++)} On peut utiliser l'une ou l'autre des informations de l'énoncé pour répondre en revenant à l'unité.
         <br> Par exemple, pour $${n1}$ ${pluriel(n1, situation)}, on paie $${texPrix(n1 * situation.pu)}$${sp()}€.
         <br> Donc $1$ ${situation.achat_sing} coûte $${texPrix(n1 * situation.pu)}$${sp()}€ $\\div ${n1} = ${texPrix(situation.pu)}$${sp()}€.
         <br> Pour $${texPrix(nMax * situation.pu)}$${sp()}€, nous aurons donc $${texPrix(nMax * situation.pu)}$ ${sp()}€ $\\div ${texPrix(situation.pu)}$${sp()}€ $= ${nMax}$.
         <br> Avec $${texPrix(nMax * situation.pu)}$${sp()}€, ${prenomliste[5]} peut donc acheter $${miseEnEvidence(nMax)}$ ${pluriel(nMax, situation)}.`
-    }
-    if (this.sup && context.isHtml ) {
-      texteCorr = `
+      } else {
+        texteCorr = `
       C'est une situation de proportionnalité. Nous pouvons donc utiliser les propriétés de linéarité de la proportionnalité.
       <br>`
-      const texteCorrInit = ``
-    const texteCorrn3 = `
+        const texteCorrInit = ``
+        const texteCorrn3 = `
       $${texPrix(n1 * situation.pu)}$${sp()}€ + $${texPrix(n2 * situation.pu)}$${sp()}€ = $${miseEnEvidence(texPrix(n3 * situation.pu))}$${sp()}€.
       <br>`
-    const texteCorrn4 = `
+        const texteCorrn4 = `
       $${texPrix(n1 * situation.pu)}$${sp()}€ - $${texPrix(n2 * situation.pu)}$${sp()}€ = $${miseEnEvidence(texPrix(n4 * situation.pu))}$${sp()}€.
       <br>`
-    const texteCorrn5 = `
+        const texteCorrn5 = `
      $${choixMult}\\times${texPrix(choixN * situation.pu)}$${sp()}€ = $${miseEnEvidence(texPrix(n5 * situation.pu))}$${sp()}€.
       <br>`
-    for (let kk = 0; kk < 3; kk++) {
-      texteCorr += `<br>${numAlpha(kCorr++)} ` + texteCorrInit
-      switch (consigneQuestions[kk]) {
-        case n3:
-          texteCorr += texteCorrn3
-          break
-        case n4:
-          texteCorr += texteCorrn4
-          break
-        case n5:
-          texteCorr += texteCorrn5
-          break
-      }
-    }
-    
-    texteCorr += `<br>
+        for (let kk = 0; kk < 3; kk++) {
+          texteCorr += `<br>${numAlpha(kCorr++)} ` + texteCorrInit
+          switch (consigneQuestions[kk]) {
+            case n3:
+              texteCorr += texteCorrn3
+              break
+            case n4:
+              texteCorr += texteCorrn4
+              break
+            case n5:
+              texteCorr += texteCorrn5
+              break
+          }
+        }
+
+        texteCorr += `<br>
       ${numAlpha(kCorr++)}$${texPrix(n1 * situation.pu)}$${sp()}€ $\\div ${n1} = ${texPrix(situation.pu)}$${sp()}€.
       <br> $${texPrix(nMax * situation.pu)}$ ${sp()}€ $\\div ${texPrix(situation.pu)}$${sp()}€ $= ${miseEnEvidence(nMax)}$ ${pluriel(nMax, situation)}.`
-
-
-        const tableauRécap = `
+        const ligne1 = [
+          { texte: 'Nombre de ' + situation.achat_plur, latex: undefined },
+          { latex: true, texte: n1.toString() },
+          { latex: true, texte: n2.toString() },
+          { latex: true, texte: consigneQuestions[0].toString() },
+          { latex: true, texte: consigneQuestions[1].toString() },
+          { latex: true, texte: consigneQuestions[2].toString() },
+          { latex: true, texte: miseEnEvidence(nMax.toString()) },
+        ]
+        const ligne2 = [
+          { texte: 'Prix (en €)', latex: undefined },
+          { latex: true, texte: texPrix(n1 * situation.pu) },
+          { latex: true, texte: texPrix(n2 * situation.pu) },
+          {
+            latex: true,
+            texte: miseEnEvidence(texPrix(consigneQuestions[0] * situation.pu)),
+          },
+          {
+            latex: true,
+            texte: miseEnEvidence(texPrix(consigneQuestions[1] * situation.pu)),
+          },
+          {
+            latex: true,
+            texte: miseEnEvidence(texPrix(consigneQuestions[2] * situation.pu)),
+          },
+          { latex: true, texte: texPrix(nMax * situation.pu) },
+        ]
+        const tableauCorr = tableau({
+          largeurTitre: 14,
+          largeur: 2.5,
+          hauteur: 2,
+          nbColonnes: 7,
+          origine: pointAbstrait(0, 0),
+          ligne1,
+          ligne2,
+        })
+        /*  const tableauRécap = `
         <table style="margin-top:1em; border-collapse:collapse;">
           <tr>
             <th style="border:1px solid #777; padding:4px;">Nombre de ${situation.achat_plur}</th>
@@ -336,9 +375,14 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
             <td style="border:1px solid #777; padding:4px;">$${miseEnEvidence(texPrix(consigneQuestions[2] * situation.pu))}$</td>
             <td style="border:1px solid #777; padding:4px;">$${texPrix(nMax * situation.pu)}$</td>
           </tr>
-        </table>`;
-       texteCorr += tableauRécap;}
-        
+        </table>`
+        */
+        texteCorr += mathalea2d(
+          Object.assign({}, fixeBordures([tableauCorr]), { xmin: -0.2 }),
+          tableauCorr,
+        ) // Un tableau qui remplace la table html compatible avec la sortie pdf.
+      }
+
       if (tabHash.indexOf(checkSum(prenomliste[3], n3, n2, nMax)) === -1) {
         // Si la question n'a jamais été posée, on en crée une autre
         tabHash.push(checkSum(prenomliste[3], n3, n2, nMax))
