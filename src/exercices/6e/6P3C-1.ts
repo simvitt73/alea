@@ -1,3 +1,4 @@
+import { orangeMathalea } from 'apigeom/src/elements/defaultValues'
 import { fixeBordures } from '../../lib/2d/fixeBordures'
 import { pointAbstrait } from '../../lib/2d/PointAbstrait'
 import { tableau } from '../../lib/2d/tableau'
@@ -61,12 +62,9 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
 
     context.isHtml ? (this.spacing = 2) : (this.spacing = 1)
     this.besoinFormulaireCaseACocher = [
-      'Résolution avec tableau récapitulatif en version html',
+      'Résolution avec tableau récapitulatif dans la correction',
     ]
     this.sup = false
-    /*  if (context.isAmc) {
-    titre = 'Résoudre un problème relevant de la proportionnalité'
-  } */
   }
 
   nouvelleVersion() {
@@ -320,67 +318,88 @@ export default class ProportionnaliteParLineariteBis extends Exercice {
       ${numAlpha(kCorr++)}$${texPrix(n1 * situation.pu)}$${sp()}€ $\\div ${n1} = ${texPrix(situation.pu)}$${sp()}€.
       <br> $${texPrix(nMax * situation.pu)}$ ${sp()}€ $\\div ${texPrix(situation.pu)}$${sp()}€ $= ${miseEnEvidence(nMax)}$ ${pluriel(nMax, situation)}.`
         const ligne1 = [
-          { texte: 'Nombre de ' + situation.achat_plur, latex: undefined },
+          {
+            texte: 'Nombre de ' + situation.achat_plur,
+            latex: undefined,
+            gras: true,
+          },
           { latex: true, texte: n1.toString() },
           { latex: true, texte: n2.toString() },
           { latex: true, texte: consigneQuestions[0].toString() },
           { latex: true, texte: consigneQuestions[1].toString() },
           { latex: true, texte: consigneQuestions[2].toString() },
-          { latex: true, texte: miseEnEvidence(nMax.toString()) },
+          {
+            latex: true,
+            color: orangeMathalea,
+            gras: true,
+            texte: nMax.toString(),
+          },
         ]
         const ligne2 = [
-          { texte: 'Prix (en €)', latex: undefined },
+          { texte: 'Prix (en €)', latex: undefined, gras: true },
           { latex: true, texte: texPrix(n1 * situation.pu) },
           { latex: true, texte: texPrix(n2 * situation.pu) },
           {
             latex: true,
-            texte: miseEnEvidence(texPrix(consigneQuestions[0] * situation.pu)),
+            color: orangeMathalea,
+            gras: true,
+            texte: texPrix(consigneQuestions[0] * situation.pu),
           },
           {
             latex: true,
-            texte: miseEnEvidence(texPrix(consigneQuestions[1] * situation.pu)),
+            color: orangeMathalea,
+            gras: true,
+            texte: texPrix(consigneQuestions[1] * situation.pu),
           },
           {
             latex: true,
-            texte: miseEnEvidence(texPrix(consigneQuestions[2] * situation.pu)),
+            color: orangeMathalea,
+            gras: true,
+            texte: texPrix(consigneQuestions[2] * situation.pu),
           },
           { latex: true, texte: texPrix(nMax * situation.pu) },
         ]
         const tableauCorr = tableau({
           largeurTitre: 14,
-          largeur: 2.5,
+          largeur: 2.8,
           hauteur: 2,
           nbColonnes: 7,
           origine: pointAbstrait(0, 0),
           ligne1,
           ligne2,
         })
-        /*  const tableauRécap = `
+        const tableauRécap = `
         <table style="margin-top:1em; border-collapse:collapse;">
           <tr>
-            <th style="border:1px solid #777; padding:4px;">Nombre de ${situation.achat_plur}</th>
-            <td style="border:1px solid #777; padding:4px;">${n1}</td>
-            <td style="border:1px solid #777; padding:4px;">${n2}</td>
-            <td style="border:1px solid #777; padding:4px;">${consigneQuestions[0]}</td>
-            <td style="border:1px solid #777; padding:4px;">${consigneQuestions[1]}</td>
-            <td style="border:1px solid #777; padding:4px;">${consigneQuestions[2]}</td>
-            <td style="border:1px solid #777; padding:4px;">$${miseEnEvidence(nMax)}$</td>
+            <th style="border:1px solid #777; padding:4px; text-align:center;">Nombre de ${situation.achat_plur}</th>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${n1}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${n2}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${consigneQuestions[0]}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${consigneQuestions[1]}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${consigneQuestions[2]}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${miseEnEvidence(nMax)}$</td>
           </tr>
           <tr>
-            <th style="border:1px solid #777; padding:4px;">Prix (en €)</th>
-            <td style="border:1px solid #777; padding:4px;">$${texPrix(n1 * situation.pu)}$</td>
-            <td style="border:1px solid #777; padding:4px;">$${texPrix(n2 * situation.pu)}$</td>
-            <td style="border:1px solid #777; padding:4px;">$${miseEnEvidence(texPrix(consigneQuestions[0] * situation.pu))}$</td>
-            <td style="border:1px solid #777; padding:4px;">$${miseEnEvidence(texPrix(consigneQuestions[1] * situation.pu))}$</td>
-            <td style="border:1px solid #777; padding:4px;">$${miseEnEvidence(texPrix(consigneQuestions[2] * situation.pu))}$</td>
-            <td style="border:1px solid #777; padding:4px;">$${texPrix(nMax * situation.pu)}$</td>
+            <th style="border:1px solid #777; padding:4px; text-align:center;">Prix (en €)</th>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${texPrix(n1 * situation.pu)}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${texPrix(n2 * situation.pu)}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${miseEnEvidence(texPrix(consigneQuestions[0] * situation.pu))}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${miseEnEvidence(texPrix(consigneQuestions[1] * situation.pu))}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${miseEnEvidence(texPrix(consigneQuestions[2] * situation.pu))}$</td>
+            <td style="border:1px solid #777; padding:4px; text-align:center;">$${texPrix(nMax * situation.pu)}$</td>
           </tr>
         </table>`
-        */
-        texteCorr += mathalea2d(
-          Object.assign({}, fixeBordures([tableauCorr]), { xmin: -0.2 }),
-          tableauCorr,
-        ) // Un tableau qui remplace la table html compatible avec la sortie pdf.
+        if (context.isHtml) {
+          texteCorr += `<br> Voici un tableau récapitulatif des informations de l'énoncé : ${tableauRécap}`
+        } else {
+          texteCorr += `<br> Voici un tableau récapitulatif des informations de l'énoncé :<br>
+         ${mathalea2d(
+           Object.assign({ scale: 0.4 }, fixeBordures([tableauCorr]), {
+             xmin: -0.2,
+           }),
+           tableauCorr,
+         )}`
+        }
       }
 
       if (tabHash.indexOf(checkSum(prenomliste[3], n3, n2, nMax)) === -1) {
