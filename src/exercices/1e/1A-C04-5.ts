@@ -1,12 +1,10 @@
 import { choice, shuffle } from '../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { texNombre } from '../../lib/outils/texNombre'
-import { randint } from '../../modules/outils'
-import { nombreElementsDifferents } from '../ExerciceBrevet'
 // import ExerciceQcmA from '../../ExerciceQcmA'
 import ExerciceQcmA from '../ExerciceQcmA'
 
-export const uuid = ''
+export const uuid = '43516'
 export const refs = {
   'fr-fr': ['1A-C04-5'],
   'fr-ch': [],
@@ -24,7 +22,7 @@ export const dateDePublication = '18/01/2026'
  *
  */
 export default class AutoC4e extends ExerciceQcmA {
-   private appliquerLesValeurs(
+    private appliquerLesValeurs(
     partieEntiere: number,
     partieDecimale: number,
     denominateur: number,
@@ -37,7 +35,8 @@ export default class AutoC4e extends ExerciceQcmA {
     const numerateurFraction = partieEntiere * denominateur + partieDecimale * denominateur + 1
     
     // Énoncé
-    this.enonce = `On considère $A = ${texNombre(partieEntiere)} + ${texNombre(partieDecimale)} + \\dfrac{1}{${texNombre(denominateur)}}$. On a :`
+    this.enonce = `On considère $A = ${texNombre(partieEntiere)} + ${texNombre(partieDecimale)} + \\dfrac{1}{${texNombre(denominateur)}}$. <br>
+    On a :`
 
     // Créer tous les distracteurs possibles
     const tousLesDistracteursDecimaux = [
@@ -55,7 +54,7 @@ export default class AutoC4e extends ExerciceQcmA {
     ]
     
     const tousLesDistracteursFractions = [
-      `$A = \\dfrac{1}{${texNombre(denominateur)}}$`,
+      `$A = \\dfrac{${texNombre(partieEntiere+denominateur)}}{${texNombre(denominateur)}}$`,
       `$A = \\dfrac{${texNombre(partieEntiere * denominateur + 1)}}{${texNombre(denominateur)}}$`,
       `$A = \\dfrac{${texNombre(partieEntiere * denominateur + (partieDecimale * 10) * denominateur)}}{${texNombre(denominateur)}}$`,
       `$A = \\dfrac{${texNombre(partieEntiere * denominateur)}}{${texNombre(denominateur)}}$`,
@@ -67,13 +66,13 @@ export default class AutoC4e extends ExerciceQcmA {
       const bonneReponse = `$A = ${texNombre(resultatDecimal)}$`
       
       // Filtrer les distracteurs décimaux différents de la bonne réponse et éliminer les doublons
-      const distracteursDisponiblesDecimaux = [...new Set(tousLesDistracteursDecimaux)].filter(d => d !== bonneReponse)
+      const distracteursDisponiblesDecimaux = shuffle([...new Set(tousLesDistracteursDecimaux)].filter(d => d !== bonneReponse))
       
-      // Prendre 1 distracteur décimal
+      // Prendre 1 distracteur décimal aléatoire
       const distracteurDecimal = distracteursDisponiblesDecimaux[0]
       
-      // Prendre 2 distracteurs fractions (déjà uniques)
-      const distracteursFractionsSelectionnes = tousLesDistracteursFractions.slice(0, 2)
+      // Prendre 2 distracteurs fractions aléatoires
+      const distracteursFractionsSelectionnes = shuffle(tousLesDistracteursFractions).slice(0, 2)
       
       this.reponses = [
         bonneReponse,
@@ -91,17 +90,17 @@ export default class AutoC4e extends ExerciceQcmA {
       const bonneReponseDecimale = `$A = ${texNombre(resultatDecimal)}$`
       
       // Filtrer les distracteurs fractions différents de la bonne réponse et éliminer les doublons
-      const distracteursDisponiblesFractions = [...new Set(tousLesDistracteursFractions)].filter(d => d !== bonneReponse)
+      const distracteursDisponiblesFractions = shuffle([...new Set(tousLesDistracteursFractions)].filter(d => d !== bonneReponse))
       
-      // Prendre 1 distracteur fraction
+      // Prendre 1 distracteur fraction aléatoire
       const distracteurFraction = distracteursDisponiblesFractions[0]
       
       // Filtrer les distracteurs décimaux et éliminer les doublons
-      const distracteursDisponiblesDecimaux = [...new Set(tousLesDistracteursDecimaux)].filter(
+      const distracteursDisponiblesDecimaux = shuffle([...new Set(tousLesDistracteursDecimaux)].filter(
         d => d !== bonneReponseDecimale
-      )
+      ))
       
-      // Prendre 2 distracteurs décimaux
+      // Prendre 2 distracteurs décimaux aléatoires
       const distracteursDecimauxSelectionnes = distracteursDisponiblesDecimaux.slice(0, 2)
       
       this.reponses = [
@@ -119,8 +118,7 @@ export default class AutoC4e extends ExerciceQcmA {
       A &= ${texNombre(partieEntiere)} + ${texNombre(partieDecimale)} + \\dfrac{1}{${texNombre(denominateur)}}\\\\
       & = \\dfrac{${texNombre(numerateurEntier)}}{${texNombre(denominateur)}} + \\dfrac{${texNombre(numerateurDecimal)}}{${texNombre(denominateur)}} + \\dfrac{1}{${texNombre(denominateur)}}\\\\
       & = ${miseEnEvidence('\\dfrac{' + texNombre(numerateurFraction) + '}{' + texNombre(denominateur) + '}')}
-      \\end{aligned}$.<br>
-      On peut aussi écrire $A = ${texNombre(resultatDecimal)}$.`
+      \\end{aligned}$.<br>`
     }
   }
 
