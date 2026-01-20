@@ -255,7 +255,6 @@ export default class ExerciceAmeriqueNord4062025 extends ExerciceBrevetA {
     const distanceAvantPause: number =
       randint(miParcours, miParcours + 1) + 0.5 * choice([0, 1])
     let vitesseMoyenne: number = (distanceAvantPause / heurePause) * 60
-    console.log('miTemps', miTemps)
     let sousListeAleatoire = listePoints(miTemps - 1, 1)
     let d = 0
     let tAvant = 0
@@ -287,8 +286,6 @@ export default class ExerciceAmeriqueNord4062025 extends ExerciceBrevetA {
       tAvant = t
     }
     pointsParcours.push({ x: tempsParcours, y: longueurParcours })
-    console.log('pointsParcours', pointsParcours)
-    console.log('listePointsAleatoires', listePointsAleatoires)
     const indexQuestion2 = randint(0, listePointsAleatoires.length - 1)
     const question2 = listePointsAleatoires[indexQuestion2]
     const indexQuestion3 = randint(0, listePointsAleatoires.length - 1, [
@@ -321,12 +318,5 @@ function listePoints(nbPointsMax: number, debutPoints: number): number[] {
   )
   const melange = combinaisonListes(listeNombres, nbPoints)
   const sousListeAleatoire = melange.slice(0, nbPoints).sort((a, b) => a - b)
-  console.log('nbPointsMax', nbPointsMax)
-  console.log('debutPoints', debutPoints)
-  console.log('nbPoints', nbPoints)
-  console.log('listeNombres', listeNombres)
-  console.log('melange', melange)
-
-  console.log('sousListeAleatoire', sousListeAleatoire)
   return sousListeAleatoire
 }
