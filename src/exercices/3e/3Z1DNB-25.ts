@@ -49,10 +49,15 @@ export default class ExerciceAmeriqueNord4062025 extends ExerciceBrevetA {
     prenom2: string,
     prenom3: string,
   ): void {
-    const txtPremiersKm =
-      Question3.y > 1
-        ? `les $${texNombre(Question3.y, 1)}$ premiers $\\text{kilomètres}$`
-        : `le premier $\\text{kilomètre}$`
+    Question3.y = 1.5
+    let txtPremiersKm = `les $${texNombre(Question3.y, 1)}$ premiers $\\text{kilomètres}$`
+    if (Question3.y === 1) {
+      txtPremiersKm = `le premier $\\text{kilomètre}$`
+    }
+    if (Question3.y === 1.5) {
+      txtPremiersKm = `le premier $\\text{kilomètre}$ et demi`
+    }
+
     const listeQuestions = createList({
       items: [
         `Le temps et la distance parcourue par ${prenom1} sont-ils proportionnels ?`,
