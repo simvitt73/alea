@@ -1,10 +1,12 @@
-import Decimal from 'decimal.js'
+
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils'
+
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+import FractionEtendue from '../../../modules/FractionEtendue'
+import { choice } from '../../../lib/outils/arrayOutils'
+export const titre = 'Calculer la somme d’une fraction et d’un nombre décimal'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'qo4f0'
@@ -18,24 +20,29 @@ export const refs = {
 
 */
 export default class Can2a2026Q6 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+  enonce(denominateur?: number, decimal?: number): void {
+    if (denominateur == null || decimal == null) {
+      denominateur = choice([4, 5])
+      decimal = choice([0.15, 0.2, 0.25, 0.35, 0.45, 0.65])
     }
 
+    const fraction = new FractionEtendue(1, denominateur)
+    const decimalFraction = fraction.valeurDecimale
+    const resultat = decimalFraction + decimal
+
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
+    this.reponse = texNombre(resultat, 2)
+    this.question = `Écriture décimale de : $${fraction.texFraction}+${texNombre(decimal, 2)}$`
+    this.correction = `$${fraction.texFraction}+${texNombre(decimal, 2)}=${texNombre(decimalFraction, 2)}+${texNombre(decimal, 2)}=${miseEnEvidence(texNombre(resultat, 2))}$`
     this.canEnonce = this.question
     this.canReponseACompleter = ''
+    
     if (this.interactif) {
-      this.question += '$=$'
+      this.question += '<br>'
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(4, 0.15) : this.enonce()
   }
 }

@@ -1,10 +1,11 @@
-import Decimal from 'decimal.js'
+
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+import { choice } from '../../../lib/outils/arrayOutils'
+import { rienSi1 } from '../../../lib/outils/ecritures'
+export const titre = 'Factoriser une expression du type ax² ± x'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'j33nh'
@@ -18,24 +19,35 @@ export const refs = {
 
 */
 export default class Can2a2026Q3 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+   enonce(a?: number, signe?: string) {
+    if (a == null || signe == null) {
+      a = randint(2, 5)
+      signe = choice(['+', '-'])
     }
-
-    this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
+this.optionsDeComparaison = { exclusifFactorisation: true }
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFractionPuissanceCrochets
+    
+    if (signe === '-') {
+      this.reponse = `x(${a}x-1)`
+      this.question = `Factoriser $${rienSi1(a)}x^2-x$`
+      this.correction = `$\\begin{aligned}${rienSi1(a)}x^2-x&=x\\times ${rienSi1(a)}x-x\\times 1\\\\
+      &=${miseEnEvidence(`x(${a}x-1)`)}\\end{aligned}$`
+    } else {
+      this.reponse = `x(${a}x+1)`
+      this.question = `Factoriser $${rienSi1(a)}x^2+x$`
+      this.correction = `$\\begin{aligned}${rienSi1(a)}x^2+x&=x\\times ${rienSi1(a)}x+x\\times 1\\\\
+      &=${miseEnEvidence(`x(${a}x+1)`)}\\end{aligned}$`
+    }
+    
     this.canEnonce = this.question
     this.canReponseACompleter = ''
+    
     if (this.interactif) {
-      this.question += '$=$'
+      this.question += '<br>'
     }
   }
 
   nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+    this.canOfficielle ? this.enonce(1, '-') : this.enonce()
   }
 }

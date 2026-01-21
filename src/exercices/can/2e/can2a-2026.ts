@@ -45,7 +45,7 @@ export const refs = {
 export const dateDePublication = '19/01/2026'
 
 /**
- * Annales CAN 2025
+ * Annales CAN 2026
  * @author Gilles Mora
  */
 
