@@ -127,7 +127,7 @@ export default class AntecedentGraphique extends Exercice {
         } else {
           fx3 = fx1
           ;[a, b] = resolutionSystemeLineaire2x2(x1, x3, fx1, fx3, c)
-          console.info('Initial values:', { x1, x3, fx1, fx3, c, a, b })
+          // console.info('Initial values:', { x1, x3, fx1, fx3, c, a, b })
           let tentatives = 0
           while (
             (Number.isNaN(a) || Number.isNaN(b) || a === 0) &&
@@ -141,7 +141,7 @@ export default class AntecedentGraphique extends Exercice {
             ;[a, b] = resolutionSystemeLineaire2x2(x1, x3, fx1, fx3, c)
             tentatives++
             if (tentatives % 10 === 0) {
-              console.info(`Tentative ${tentatives}:`, {
+              /*  console.info(`Tentative ${tentatives}:`, {
                 x1,
                 x3,
                 fx1,
@@ -150,6 +150,7 @@ export default class AntecedentGraphique extends Exercice {
                 a,
                 b,
               })
+            */
             }
           }
           // Si après 50 tentatives on n'a pas trouvé, on force des valeurs valides
@@ -163,7 +164,7 @@ export default class AntecedentGraphique extends Exercice {
             fx1 = 4
             fx3 = 4
           } else {
-            console.info('Success after', tentatives, 'attempts:', {
+            /* console.info('Success after', tentatives, 'attempts:', {
               x1,
               x3,
               fx1,
@@ -171,7 +172,7 @@ export default class AntecedentGraphique extends Exercice {
               c,
               a,
               b,
-            })
+            }) */
           }
           x2 = 0
           fx2 = c
