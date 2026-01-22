@@ -1,9 +1,9 @@
-import Decimal from 'decimal.js'
+
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
+import Trinome from '../../../modules/Trinome'
 export const titre = 'Multiplier un entier avec un décimal'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,24 +18,29 @@ export const refs = {
 
 */
 export default class Can2a2026Q7 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+ enonce(b?: number, val?: number): void {
+    if (b == null || val == null) {
+      b = randint(-6, -1)
+      val = randint(-5, -1)
     }
+    const p = new Trinome(1, b, 0)
+    
+    const resultat = val ** 2 + b * val
 
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
-    this.canEnonce = this.question
-    this.canReponseACompleter = ''
+    this.reponse = resultat.toString()
+    this.question = `$f(x)=${p.tex}$<br>$f(${val})=\\ldots$`
+    this.correction = `$f(${val})=${p.texCalculImage(val)}$<br>
+    On a donc $f(${val})=${miseEnEvidence(resultat)}$.`
+    this.canEnonce = `$f(x)=${p.tex}$`
+    this.canReponseACompleter = `$f(${val})=\\ldots$`
+    
     if (this.interactif) {
-      this.question += '$=$'
+      this.question = `$f(x)=${p.tex}$<br>$f(${val})=$`
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(-3, -3) : this.enonce()
   }
 }

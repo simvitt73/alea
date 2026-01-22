@@ -1,10 +1,10 @@
-import Decimal from 'decimal.js'
+
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils'
+import { texNombre, texPrix } from '../../../lib/outils/texNombre'
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+import { choice } from '../../../lib/outils/arrayOutils'
+export const titre = 'Déterminer le prix en fonction d’un tarif proportionnel'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'h66n9'
@@ -18,24 +18,50 @@ export const refs = {
 
 */
 export default class Can2a2026Q8 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+  enonce(nbDepart?: number, prixDepart?: number, nbArrivee?: number): void {
+    if (nbDepart == null || prixDepart == null || nbArrivee == null) {
+      // Tableau de cas prédéfinis : [nbDepart, prixDepart, nbArrivee]
+      // UNIQUEMENT des réponses finissant par 0,5
+      const listeCas: [number, number, number][] = [
+        [12, 18, 3],    // 4,5€
+        [16, 22, 4],    // 5,5€
+        [20, 30, 5],    // 7,5€
+        [18, 27, 3],    // 4,5€
+        [12, 21, 2],    // 3,5€
+        [14, 21, 3],    // 4,5€
+        [10, 15, 3],    // 4,5€
+        [16, 26, 4],    // 6,5€
+        [6, 9, 3],      // 4,5€
+      ]
+      const cas: [number, number, number] = choice(listeCas)
+      nbDepart = cas[0]
+      prixDepart = cas[1]
+      nbArrivee = cas[2]
     }
 
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
+    const prixUnitaire = prixDepart / nbDepart
+    const reponse = prixUnitaire * nbArrivee
+    const facteur = nbDepart / nbArrivee
+    
+    this.reponse = texNombre(reponse, 2)
+    this.question = `$${nbDepart}$ gommes identiques coûtent $${texPrix(prixDepart)}$ €.<br>
+Combien ${nbArrivee === 1 ? 'coûte' : 'coûtent'} $${nbArrivee}$ ${nbArrivee === 1 ? 'gomme' : 'de ces gommes'} ?`
+    
+    this.correction = `On a le prix de $${nbDepart}$ gommes.<br>
+On veut le prix de $${texNombre(facteur)}$ fois moins de gommes.<br>
+On divise donc le prix de $${nbDepart}$ gommes par $${texNombre(facteur)}$.<br>
+$${texPrix(prixDepart)}\\div ${texNombre(facteur)}=${miseEnEvidence(texPrix(reponse))}$ €.`
+    
     this.canEnonce = this.question
-    this.canReponseACompleter = ''
+    this.canReponseACompleter = '$\\ldots$ €'
+    
     if (this.interactif) {
-      this.question += '$=$'
+      this.optionsChampTexte = { texteAvant: '<br>', texteApres: ' €' }
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(12, 18, 3) : this.enonce()
   }
 }

@@ -1,9 +1,10 @@
-import Decimal from 'decimal.js'
+
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
+import { context } from '../../../modules/context'
+import { sp } from '../../../lib/outils/outilString'
 export const titre = 'Multiplier un entier avec un décimal'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,24 +19,61 @@ export const refs = {
 
 */
 export default class Can2a2026Q12 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+  enonce(a?: number, coeff?: number): void {
+    if (a == null || coeff == null) {
+      a = randint(5, 9)
+      coeff = randint(2, 5)
     }
 
+    // b = a*a - coeff, return 2*b
+    const resultat = 2 * (a * a - coeff)
+
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
-    this.canEnonce = this.question
-    this.canReponseACompleter = ''
+    this.reponse = resultat.toString()
+
+    if (context.isHtml) {
+      this.question = '$\\begin{array}{|l|}\n'
+      this.question += '\\hline\n'
+      this.question += '\\\n \\texttt{def mystere(a) :}  \\\n '
+      this.question += `\\\\\n${sp(9)}\\texttt{b=a*a-${coeff}} \\\n`
+      this.question += `\\\\\n${sp(9)}\\texttt{return 2*b} \\\\\n`
+      this.question += '\\hline\n'
+      this.question += '\\end{array}\n$'
+      this.question += `<br>Que renvoie $\\texttt{mystere(${a})}$ ?`
+    } else {
+      this.question = '\\medskip'
+      this.question += '\\hspace*{10mm}\\fbox{'
+      this.question += '\\parbox{0.5\\linewidth}{'
+      this.question += '\\setlength{\\parskip}{.5cm}'
+      this.question += ' \\texttt{def mystere(a) :}\\newline'
+      this.question += ` \\hspace*{7mm}\\texttt{b=a*a-${coeff}}\\newline`
+      this.question += ' \\hspace*{7mm}\\texttt{return 2*b}'
+      this.question += '}'
+      this.question += '}\\newline'
+      this.question += '\\medskip'
+      this.question += `<br>Que renvoie $\\texttt{mystere(${a})}$ ?`
+    }
+
+    this.correction = `L'algorithme retourne $2\\times (${a}\\times ${a}-${coeff})=2\\times ${a * a - coeff}=${miseEnEvidence(resultat)}$.`
+
+    this.canEnonce = '\\medskip'
+    this.canEnonce += '\\hspace*{10mm}\\fbox{'
+    this.canEnonce += '\\parbox{0.5\\linewidth}{'
+    this.canEnonce += '\\setlength{\\parskip}{.5cm}'
+    this.canEnonce += ' \\texttt{def mystere(a) :}\\newline'
+    this.canEnonce += ` \\hspace*{7mm}\\texttt{b=a*a-${coeff}}\\newline`
+    this.canEnonce += ' \\hspace*{7mm}\\texttt{return 2*b}'
+    this.canEnonce += '}'
+    this.canEnonce += '}'
+    this.canEnonce += `<br>Que renvoie $\\texttt{mystere(${a})}$ ?`
+    this.canReponseACompleter = '$\\ldots$'
+
     if (this.interactif) {
-      this.question += '$=$'
+      this.question += '<br>'
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(8, 3) : this.enonce()
   }
 }
