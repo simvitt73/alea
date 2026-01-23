@@ -1,12 +1,10 @@
 import { choice } from '../../lib/outils/arrayOutils'
 import {
   ecritureAlgebrique,
-  reduireAxPlusB,
   rienSi1,
 } from '../../lib/outils/ecritures'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
 import { abs } from '../../lib/outils/nombres'
-import { texNombre } from '../../lib/outils/texNombre'
 import FractionEtendue from '../../modules/FractionEtendue'
 import { randint } from '../../modules/outils'
 import ExerciceQcm from '../ExerciceQcm'
