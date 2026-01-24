@@ -118,14 +118,14 @@ export default class NomExercice extends Exercice {
            orthogonalite += '<br>Le produit scalaire est non nul, les vecteurs ne sont donc pas orthogonaux.  La droite $(d)$ est sécante au plan $\\mathcal{P}$.'
            
          }
-      else {orthogonalite += '<br>Le produit scalaire est nul, les vecteurs sont donc orthogonaux.  La droite $(d)$ est soit strictement parallèle au plan $\\mathcal{P}$ soit incluse dedans.'}
+      else {orthogonalite += '<br>Le produit scalaire est nul, les vecteurs sont donc orthogonaux.  Il reste donc deux possibilités : Soit la droite $(d)$ est strictement parallèle au plan $\\mathcal{P}$ soit elle est incluse dedans.'}
       
       let PointCommun =''
-      PointCommun +=`${texteEnCouleurEtGras('Calcul du point d\'intersection entre la droite $(d)$ et le plan $\\mathcal{P}$ :')}<br>`
+      PointCommun +=`${texteEnCouleurEtGras('Étude de l\'intersection entre la droite $(d)$ et le plan $\\mathcal{P}$ :')}<br>`
       if (produitScalaire===0) {PointCommun +='Pour différencier les deux cas possibles, on va chercher s\'il existe des points d\'intersection entre la droite $(d)$ et le plan $\\mathcal{P}$. On cherche donc les points $M(x;y;z)$ dont les coordonnées vérifient en même temps la représentation paramétrique de $(d)$ et l\'équation cartésienne de $(\\mathcal{P})$. <br>'}
-      else{PointCommun +='On  cherche les coordonnées du point $M(x;y;z)$, intersection entre la droite $(d)$ et le plan $\\mathcal{P}$. Ses coordonnées vérifient donc en même temps la représentation paramétrique de $(d)$ et l\'équation cartésienne de $(\\mathcal{P})$. <br>'}
-      PointCommun +='On obtient ainsi un système à résoudre: <br>'
-       PointCommun +=`$\\begin{cases}x=${x0}${ecritureAlgebriqueSauf1(ux)}t\\\\y=${y0}${ecritureAlgebriqueSauf1(uy)}t\\quad (t\\in\\mathbb{R})\\\\z=${z0}${ecritureAlgebriqueSauf1(uz)}t\\\\ ${equationPlan}\\end{cases}.$<br>`
+      else{PointCommun +='On  cherche les coordonnées du point $M(x;y;z)$, intersection entre la droite $(d)$ et le plan $\\mathcal{P}$. Ses coordonnées vérifient donc la représentation paramétrique de $(d)$ et l\'équation cartésienne de $(\\mathcal{P})$. <br>'}
+      PointCommun +='On cherche donc l\'existence des réels $t$ qui vérifient le système à résoudre: <br>'
+       PointCommun +=`$\\begin{cases}x=${x0}${ecritureAlgebriqueSauf1(ux)}t\\\\y=${y0}${ecritureAlgebriqueSauf1(uy)}t\\\\z=${z0}${ecritureAlgebriqueSauf1(uz)}t\\\\ ${equationPlan}\\end{cases}.$<br>`
         PointCommun +='En remplaçant les expressions de $x$, $y$ et $z$ issues de la représentation paramétrique de la droite dans l\'équation du plan, on obtient cette équation en $t$ :<br>'
       PointCommun +=`$\\begin{aligned}${rienSi1(a)}\\big(${x0}${ecritureAlgebriqueSauf1(ux)}t\\big)${ecritureAlgebriqueSauf1(b)}\\big(${y0}${ecritureAlgebriqueSauf1(uy)}t\\big)${ecritureAlgebriqueSauf1(c)}\\big(${z0}${ecritureAlgebriqueSauf1(uz)}t\\big)${ecritureAlgebriqueSauf0(d)}&=0\\\\
       ${a*x0}${ecritureAlgebriqueSauf1(ux*a)}t${ecritureAlgebrique(b*y0)}${ecritureAlgebriqueSauf1(uy*b)}t${ecritureAlgebrique(c*z0)}${ecritureAlgebriqueSauf1(uz*c)}t${ecritureAlgebrique(d)}&=0\\\\
