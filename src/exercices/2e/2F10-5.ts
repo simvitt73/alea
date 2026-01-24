@@ -1,9 +1,15 @@
 import { courbe } from '../../lib/2d/Courbe'
+import { fixeBordures } from '../../lib/2d/fixeBordures'
+import { Interactif2d } from '../../lib/2d/interactif2d'
 import { point } from '../../lib/2d/PointAbstrait'
 import { repere } from '../../lib/2d/reperes'
 import { labelPoint, texteParPosition } from '../../lib/2d/textes'
 import { tracePoint } from '../../lib/2d/TracePoint'
-import { tableauDeVariation } from '../../lib/mathFonctions/etudeFonction'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import {
+  creerTableauHtml,
+  tableauDeVariation,
+} from '../../lib/mathFonctions/etudeFonction'
 import { choice, combinaisonListes } from '../../lib/outils/arrayOutils'
 import {
   ecritureAlgebrique,
@@ -23,6 +29,8 @@ import Exercice from '../Exercice'
 
 export const dateDeModifImportante = '06/07/2023'
 export const titre = "Déterminer le signe d'une fonction affine"
+export const interactifReady = true
+export const interactifType = 'mathLive'
 
 /**
  * @author Stéphane Guyon+Gilles Mora
@@ -172,6 +180,49 @@ ${a !== 1 ? `x& ${a < 0 ? `${miseEnEvidence(`${sp(1.5)}\\boldsymbol{<}${sp(1.5)}
               lgt: 8, // taille de la première colonne en cm
               hauteurLignes: [15, 15],
             })
+
+            if (this.interactif) {
+              const objets = creerTableauHtml({
+                tabInit: [
+                  [
+                    // Première colonne du tableau avec le format [chaine d'entête, hauteur de ligne, nombre de pixels de largeur estimée du texte pour le centrage]
+                    ['$x$', 3, 25],
+                    [`$f(x)=${reduireAxPlusB(a, b)}$`, 2, 50],
+                  ],
+                  // Première ligne du tableau avec chaque antécédent suivi de son nombre de pixels de largeur estimée du texte pour le centrage
+                  ['$-\\infty$', 20, '', 20, '$+\\infty$', 30],
+                ],
+                // tabLines ci-dessous contient les autres lignes du tableau.
+                tabLines: [['Line', 25, '', 0, '', 20, 'z', 20, '']],
+                espcl: 3.5, // taille en cm entre deux antécédents
+                deltacl: 0.8, // distance entre la bordure et les premiers et derniers antécédents
+                lgt: 8, // taille de la première colonne en cm
+              })
+              const inputx0 = new Interactif2d('%{champ1}', 12.2, -1.5, {
+                exercice: this,
+                question: 3 * i,
+              })
+              const inputSigne0 = new Interactif2d('%{champ1}', 10, -4, {
+                exercice: this,
+                question: 3 * i + 1,
+              })
+              const inputSigne1 = new Interactif2d('%{champ1}', 14.4, -4, {
+                exercice: this,
+                question: 3 * i + 2,
+              })
+              handleAnswers(this, 3 * i, { champ1: { value: zero.texFSD } })
+              handleAnswers(this, 3 * i + 1, {
+                champ1: { value: a < 0 ? '+' : '-' },
+              })
+              handleAnswers(this, 3 * i + 2, {
+                champ1: { value: a < 0 ? '-' : '+' },
+              })
+              objets.push(inputx0, inputSigne0, inputSigne1)
+              texte += mathalea2d(
+                Object.assign({}, fixeBordures(objets)),
+                objets,
+              )
+            }
             const f = (x: number) => a * x + b
             const monRepere = repere({
               xMin: -8,
@@ -285,6 +336,48 @@ ${a !== 1 ? `x& ${a < 0 ? `${miseEnEvidence(`${sp(1.5)}\\boldsymbol{<}${sp(1.5)}
               lgt: 8, // taille de la première colonne en cm
               hauteurLignes: [15, 15],
             })
+            if (this.interactif) {
+              const objets = creerTableauHtml({
+                tabInit: [
+                  [
+                    // Première colonne du tableau avec le format [chaine d'entête, hauteur de ligne, nombre de pixels de largeur estimée du texte pour le centrage]
+                    ['$x$', 3, 25],
+                    [`$f(x)=${reduireAxPlusB(a, b)}$`, 2, 50],
+                  ],
+                  // Première ligne du tableau avec chaque antécédent suivi de son nombre de pixels de largeur estimée du texte pour le centrage
+                  ['$-\\infty$', 20, '', 20, '$+\\infty$', 30],
+                ],
+                // tabLines ci-dessous contient les autres lignes du tableau.
+                tabLines: [['Line', 25, '', 0, '', 20, 'z', 20, '']],
+                espcl: 3.5, // taille en cm entre deux antécédents
+                deltacl: 0.8, // distance entre la bordure et les premiers et derniers antécédents
+                lgt: 8, // taille de la première colonne en cm
+              })
+              const inputx0 = new Interactif2d('%{champ1}', 12.2, -1.5, {
+                exercice: this,
+                question: 3 * i,
+              })
+              const inputSigne0 = new Interactif2d('%{champ1}', 10, -4, {
+                exercice: this,
+                question: 3 * i + 1,
+              })
+              const inputSigne1 = new Interactif2d('%{champ1}', 14.4, -4, {
+                exercice: this,
+                question: 3 * i + 2,
+              })
+              handleAnswers(this, 3 * i, { champ1: { value: zero.texFSD } })
+              handleAnswers(this, 3 * i + 1, {
+                champ1: { value: a.inferieurstrict(0) ? '+' : '-' },
+              })
+              handleAnswers(this, 3 * i + 2, {
+                champ1: { value: a.inferieurstrict(0) ? '-' : '+' },
+              })
+              objets.push(inputx0, inputSigne0, inputSigne1)
+              texte += mathalea2d(
+                Object.assign({}, fixeBordures(objets)),
+                objets,
+              )
+            }
             const f = (x: number) => a.valeurDecimale * x + b
             const monRepere = repere({
               xMin: -8,
