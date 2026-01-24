@@ -1,10 +1,10 @@
-import Decimal from 'decimal.js'
+
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+import { choice } from '../../../lib/outils/arrayOutils'
+export const titre = 'Calculer une baisse globale après deux baisses successives'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'bdscv'
@@ -18,24 +18,41 @@ export const refs = {
 
 */
 export default class Can2a2026Q19 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+  enonce(taux?: number): void {
+    if (taux == null) {
+      taux = choice([10, 20, 25, 30, 40])
     }
 
     this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
+    
+    // Après deux baisses de taux%, la valeur finale est : valeur × (1 - taux/100)²
+    // La baisse globale est : 1 - (1 - taux/100)²
+    const coefficientBaisse = 1 - taux / 100
+    const coefficientGlobal = coefficientBaisse * coefficientBaisse
+    const baisseGlobale = (1 - coefficientGlobal) * 100
+    
+    this.reponse = texNombre(baisseGlobale, 2)
+    
+    this.question = `Deux baisses successives de $${taux}~\\%$ correspondent à une baisse globale de`
+    
+    this.correction = `Le coefficiecient multiplicateur associé  à une baisse de $${taux}~\\%$ est $1-${texNombre(taux/100,2)}=${texNombre(1 - taux/100, 2)}$.<br>
+     Ainsi, le coefficicient multiplicateur global après deux baisses successives de $${taux}~\\%$ est : 
+    $${texNombre(1 - taux/100, 2)}\\times ${texNombre(1 - taux/100, 2)}=${texNombre(coefficientGlobal, 4)}$.<br>
+    Le taux d'évolution associé à ce coefficient multiplicateur est : $${texNombre(coefficientGlobal, 4)}-1=${texNombre(coefficientGlobal-1, 4)}$.<br><br>
+    
+    La baisse globale est donc de $${miseEnEvidence(texNombre(baisseGlobale, 2))}~\\%$.`
+    
     this.canEnonce = this.question
-    this.canReponseACompleter = ''
+    this.canReponseACompleter = '$\\ldots~\\%$'
+    this.optionsChampTexte = { texteApres: ' $\\%$' }
+    
     if (this.interactif) {
-      this.question += '$=$'
-    }
+      this.question += ''
+    }else{this.question += ' $\\ldots~\\%$'}
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(50) : this.enonce()
+   
   }
 }

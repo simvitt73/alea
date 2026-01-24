@@ -1,10 +1,11 @@
-import Decimal from 'decimal.js'
+
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+import { ecritureParentheseSiNegatif } from '../../../lib/outils/ecritures'
+import FractionEtendue from '../../../modules/FractionEtendue'
+export const titre = 'Déterminer le coefficient directeur d\'une droite (calcul)'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'czskl'
@@ -18,24 +19,44 @@ export const refs = {
 
 */
 export default class Can2a2026Q25 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+   enonce(xP?: number, yP?: number, xQ?: number, yQ?: number): void {
+    if (xP == null || yP == null || xQ == null || yQ == null) {
+      xP = randint(1, 9)
+      yP = randint(1, 9)
+      xQ = randint(1, 9, xP)
+      yQ = randint(1, 9, yP)
     }
 
-    this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
-    this.canEnonce = this.question
-    this.canReponseACompleter = ''
-    if (this.interactif) {
-      this.question += '$=$'
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
+    this.optionsDeComparaison = { fractionEgale: true , nombreDecimalSeulement:true}
+    
+    const m = new FractionEtendue(yQ - yP, xQ - xP)
+    
+    this.reponse = m
+    
+    this.question = `Coefficient directeur de la droite $(PQ)$ avec $P(${xP}\\,;\\,${yP})$ et $Q(${xQ}\\,;\\,${yQ})$`
+    
+    if (yQ === yP) {
+      this.correction = `Comme $y_P=y_Q$, la droite $(PQ)$ est horizontale, son coefficient directeur est nul.<br>
+      Ainsi, $m=${miseEnEvidence('0')}$`
+    } else {
+      this.correction = `Le coefficient directeur $m$ de la droite $(PQ)$ est donné par la formule : $\\dfrac{y_Q-y_P}{x_Q-x_P}$.<br>
+      $\\begin{aligned}
+      m&=\\dfrac{${yQ}-${ecritureParentheseSiNegatif(yP)}}{${xQ}-${ecritureParentheseSiNegatif(xP)}}\\\\
+      &= \\dfrac{${yQ - yP}}{${xQ - xP}}\\\\
+      &=${miseEnEvidence(m.texFractionSimplifiee)}
+      \\end{aligned}$`
     }
+    
+    this.canEnonce = this.question
+    this.canReponseACompleter = '$m=\\ldots$'
+    
+    if (this.interactif) {
+      this.question += '<br>'
+    } 
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(1, 4, 5, 2) : this.enonce()
   }
 }

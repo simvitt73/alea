@@ -1,10 +1,8 @@
-import Decimal from 'decimal.js'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+export const titre = 'Développer une expression du type $(ax - b)^2$'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'nq187'
@@ -18,24 +16,36 @@ export const refs = {
 
 */
 export default class Can2a2026Q24 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
+  enonce(a?: number, b?: number): void {
     if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+      a = randint(2, 4)
+      b = randint(1, 4, a)
     }
 
-    this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
-    this.canEnonce = this.question
-    this.canReponseACompleter = ''
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecVariable
+
+    // (ax - b)² = a²x² - 2abx + b²
+    const a2 = a * a
+    const deuxab = 2 * a * b
+    const b2 = b * b
+
+    this.reponse = `${a2}x^2-${deuxab}x+${b2}`
+
+    this.question = `Développer $(${a}x-${b})^2$`
+
+    this.correction = `On utilise l'identité remarquable $(a-b)^2=a^2-2ab+b^2$ avec $a=${a}x$ et $b=${b}$.<br>
+$\\begin{aligned}(${a}x-${b})^2&=(${a}x)^2-2\\times ${a}x\\times ${b}+${b}^2\\\\
+&=${miseEnEvidence(`${a2}x^2-${deuxab}x+${b2}`)}\\end{aligned}$`
+
+    this.canEnonce = `Développer $(${a}x-${b})^2$`
+    this.canReponseACompleter = '$\\ldots$'
+
     if (this.interactif) {
-      this.question += '$=$'
+      this.question += ' $=$'
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(3, 1) : this.enonce()
   }
 }

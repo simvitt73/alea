@@ -1,10 +1,11 @@
-import Decimal from 'decimal.js'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
+import { choice } from '../../../lib/outils/arrayOutils'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
 import { texNombre } from '../../../lib/outils/texNombre'
+import FractionEtendue from '../../../modules/FractionEtendue'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+export const titre = 'Calculer avec une fraction '
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'bdk1y'
@@ -18,24 +19,43 @@ export const refs = {
 
 */
 export default class Can2a2026Q20 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+  enonce(b?: number, fraction?: FractionEtendue): void {
+    if (b == null || fraction == null) {
+      b = randint(3, 7)
+      const denominateur = choice([3, 5, 7])
+      const numerateur = randint(1, denominateur - 1)
+      fraction = new FractionEtendue(numerateur, denominateur)
     }
+    this.optionsDeComparaison = { fractionEgale: true }
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
 
-    this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
+    // Calcul : a × (b - c/d)
+    const bFraction = new FractionEtendue(b, 1)
+    const difference = bFraction.differenceFraction(fraction)
+    const resultat = difference.produitFraction(fraction.d)
+    const resultatSimplifie = resultat.simplifie()
+
+    this.reponse = resultatSimplifie
+
+    this.question = `$${fraction.d}\\times \\left(${b}-${fraction.texFraction}\\right)$`
+
+    this.correction = `$\\begin{aligned}
+${fraction.d}\\times \\left(${b}-${fraction.texFraction}\\right)&=${fraction.d}\\times \\left(${bFraction.texFractionSimplifiee}-${fraction.texFraction}\\right)\\\\
+&=${fraction.d}\\times ${difference.texFractionSimplifiee}\\\\
+&=${miseEnEvidence(texNombre(resultatSimplifie.valeurDecimale, 2))}
+\\end{aligned}$`
+
     this.canEnonce = this.question
-    this.canReponseACompleter = ''
+    this.canReponseACompleter = '$\\ldots$'
+
     if (this.interactif) {
-      this.question += '$=$'
+      this.question += ' $=$'
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle
+      ? this.enonce(4, new FractionEtendue(2, 7))
+      : this.enonce()
   }
 }

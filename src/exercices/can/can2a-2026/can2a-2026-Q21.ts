@@ -1,10 +1,10 @@
 import Decimal from 'decimal.js'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
+import { stringNombre, texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
-export const titre = 'Multiplier un entier avec un décimal'
+export const titre = 'Déterminer l\'écriture scientifique d\'un nombre décimal'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = '2yrmx'
@@ -18,24 +18,40 @@ export const refs = {
 
 */
 export default class Can2a2026Q21 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+   enonce(mantisse?: Decimal, puissance?: number): void {
+    if (mantisse == null || puissance == null) {
+      // Générer un nombre avec deux chiffres significatifs différents de 0
+      const chiffre1 = randint(1, 9)
+      const chiffre2 = randint(1, 9, chiffre1)
+      mantisse = new Decimal(chiffre1 + chiffre2 / 10)
+      puissance = -randint(3, 5)
     }
 
-    this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
+    this.formatChampTexte = KeyboardType.clavierFullOperations
+    
+    const nombre = mantisse.mul(new Decimal(10).pow(puissance))
+    
+    this.reponse = {
+      reponse: {
+        value: `${stringNombre(mantisse)}\\times 10^{${puissance}}`,
+        options: { ecritureScientifique: true },
+      },
+    }
+    
+    this.question = `Écriture scientifique de $${texNombre(nombre, 6)}$`
+    
+    this.correction = `La notation scientifique est de la forme $a\\times 10^{n}$ avec $1\\leqslant a <10$ et $n$ un entier relatif.<br>
+    Ici : $${texNombre(nombre, 6)}=\\underbrace{${miseEnEvidence(texNombre(mantisse, 2))}}_{1\\leqslant ${texNombre(mantisse, 2)} <10}${miseEnEvidence('\\times')} ${miseEnEvidence(`10^{${puissance}}`)}$.`
+    
     this.canEnonce = this.question
     this.canReponseACompleter = ''
+    
     if (this.interactif) {
-      this.question += '$=$'
+      this.question += '<br>'
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(new Decimal(2.6), -4) : this.enonce()
   }
 }
