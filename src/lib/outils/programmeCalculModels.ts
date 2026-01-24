@@ -175,8 +175,8 @@ export function generateProgram(
         b,
         program: [
           '- Choisir un nombre.',
-          `- ${a >= 0 ? 'Ajouter' : 'Soustraire'} $${Math.abs(a)}$.`,
-          `- ${a >= 0 ? 'Soustraire' : 'Ajouter'} $${Math.abs(a)}$.`,
+          `- ${a >= 0 ? 'Ajouter' : 'Soustraire'} $${Math.abs(a)}$ au nombre choisi.`,
+          `- ${a >= 0 ? 'Soustraire' : 'Ajouter'} $${Math.abs(a)}$ au nombre choisi.`,
           ' - Multiplier les deux résultats précédent.',
         ],
         solutionX: [
