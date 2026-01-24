@@ -1,9 +1,7 @@
-import Decimal from 'decimal.js'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
-import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
+import { shuffle } from '../../../lib/outils/arrayOutils'
 export const titre = 'Multiplier un entier avec un décimal'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,24 +16,36 @@ export const refs = {
 
 */
 export default class Can2a2026Q29 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+ enonce(lettre1?: string, lettre2?: string, lettre3?: string): void {
+    if (lettre1 == null || lettre2 == null || lettre3 == null) {
+      // Choisir 3 lettres différentes aléatoirement
+      const lettres = ['A', 'B', 'C', 'D', 'E', 'H', 'I', 'J', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W']
+      const lettresChoisies = shuffle(lettres).slice(0, 3)
+      lettre1 = lettresChoisies[0]
+      lettre2 = lettresChoisies[1]
+      lettre3 = lettresChoisies[2]
     }
 
-    this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
-    this.canEnonce = this.question
+    this.formatChampTexte = KeyboardType.alphanumeric
+    
+    this.reponse = `\\overrightarrow{${lettre2}${lettre3}}`
+    
+    this.question = `Compléter<br>
+    $\\overrightarrow{${lettre1}${lettre3}}=\\overrightarrow{${lettre1}${lettre2}}+$`
+    
+    this.correction = `D'après la relation de Chasles :<br>
+    $\\overrightarrow{${lettre1}${lettre3}}=\\overrightarrow{${lettre1}${lettre2}}+${miseEnEvidence(`\\overrightarrow{${lettre2}${lettre3}}`)}$`
+    
+    this.canEnonce = `Compléter<br>
+    $\\overrightarrow{${lettre1}${lettre3}}=\\overrightarrow{${lettre1}${lettre2}}+\\ldots$`
     this.canReponseACompleter = ''
+    
     if (this.interactif) {
-      this.question += '$=$'
-    }
+      this.question += ''
+    }else{this.question += '$\\ldots$'}
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce('F', 'K', 'G') : this.enonce()
   }
 }

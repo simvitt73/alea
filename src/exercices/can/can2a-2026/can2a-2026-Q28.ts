@@ -1,9 +1,10 @@
-import Decimal from 'decimal.js'
 import { KeyboardType } from '../../../lib/interactif/claviers/keyboard'
 import { miseEnEvidence } from '../../../lib/outils/embellissements'
-import { texNombre } from '../../../lib/outils/texNombre'
 import { randint } from '../../../modules/outils'
 import ExerciceCan from '../../ExerciceCan'
+import { choice } from '../../../lib/outils/arrayOutils'
+import FractionEtendue from '../../../modules/FractionEtendue'
+import { rienSi1 } from '../../../lib/outils/ecritures'
 export const titre = 'Multiplier un entier avec un décimal'
 export const interactifReady = true
 export const interactifType = 'mathLive'
@@ -18,24 +19,47 @@ export const refs = {
 
 */
 export default class Can2a2026Q28 extends ExerciceCan {
-  enonce(a?: Decimal, b?: number) {
-    if (a == null || b == null) {
-      a = new Decimal(randint(2, 9)).div(10)
-      b = randint(5, 9)
+  enonce(a?: number, signe?: string): void {
+    if (a == null || signe == null) {
+      a = randint(2, 5)
+      signe = choice(['+', '-'])
     }
 
-    this.formatChampTexte = KeyboardType.clavierDeBase
-    this.reponse = texNombre(a.mul(b), 1)
-    this.question = `$${texNombre(a, 1)} \\times ${b}$ `
-    this.correction = `$${texNombre(a, 1)} \\times ${b}=${miseEnEvidence(this.reponse)}$`
-    this.canEnonce = this.question
-    this.canReponseACompleter = ''
+    this.formatChampTexte = KeyboardType.clavierDeBaseAvecFraction
+    this.optionsChampTexte = { texteAvant: ' $S=\\{$', texteApres: '$\\}$' }
+    
+    // ax² ± x = 0
+    // x(ax ± 1) = 0
+    // Solutions : x = 0 ou ax ± 1 = 0
+    const sol2 = signe === '+' ? new FractionEtendue(1,a).multiplieEntier(-1) : new FractionEtendue(1,a)
+    
+    this.reponse =  [`0;${sol2.texFSD}`, `${sol2.texFSD};0`, `0;${sol2.valeurDecimale}`, `${sol2.valeurDecimale};0`]
+
+    
+    const equationTexte = signe === '+' ? `${a}x^2+x=0` : `${a}x^2-x=0`
+    const factorisationTexte = signe === '+' ? `x(${a}x+1)=0` : `x(${a}x-1)=0`
+    const equation2Texte = signe === '+' ? `${a}x+1=0` : `${a}x-1=0`
+    const valeurSol2 = signe === '+' ? `-1` : `1`
+    
+    this.question = `Résoudre dans $\\mathbb{R}$ l'équation : $${rienSi1(a)}x^2 ${signe} x=0$.`
+    
+    this.correction = `$${equationTexte}$<br>
+    En factorisant, on obtient une équation produit-nul  : $${factorisationTexte}$<br>
+    Un produit de facteurs est nul si et seulement si l'un au moins de ses facteurs est nul.<br>
+    Donc : $x=0$ ou $${equation2Texte}$.<br>
+
+    Ainsi : $x=0$ ou $x=\\dfrac{${valeurSol2}}{${a}}$.<br>
+    $S=\\left\\{${miseEnEvidence(`0\\,;\\,\\dfrac{${valeurSol2}}{${a}}`)}\\right\\}$`
+    
+    this.canEnonce = `Résoudre dans $\\mathbb{R}$ l'équation : $${equationTexte}$`
+    this.canReponseACompleter = '$S=\\ldots$'
+    
     if (this.interactif) {
-      this.question += '$=$'
+      this.question += '<br>'
     }
   }
 
-  nouvelleVersion() {
-    this.canOfficielle ? this.enonce(new Decimal(0.6), 9) : this.enonce()
+  nouvelleVersion(): void {
+    this.canOfficielle ? this.enonce(1, '+') : this.enonce()
   }
 }

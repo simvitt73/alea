@@ -68,8 +68,8 @@ export const refs = {
       ajouteNoeuds: false,
       color: 'blue',
     })
-    
-    const labelCourbe = latex2d('C', -1.7, 2.6, { letterSize: 'scriptsize' })
+
+    const labelCourbe = latex2d('(C)', -1.7, 2.3, { color:'blue', letterSize: 'scriptsize' })
     const objetsEnonce = [repere1, courbe1, labelCourbe, o]
     
     const graphique = mathalea2d(
