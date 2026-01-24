@@ -76,7 +76,7 @@ export default class NomExercice extends Exercice {
       texte +=
         "On note $\\mathcal{P}$ le plan passant par $A$ et engendré par $\\vec u$ et $\\vec v$. "
       texte +=
-        `Justifier que l'équation ${equationPlane}  est une équation cartésienne du plan $\\mathcal{P}$.br>`
+        `<br>Justifier que l'équation $${equationPlane}$  est une équation cartésienne du plan $\\mathcal{P}$.br>`
    
 
       texteCorr =
