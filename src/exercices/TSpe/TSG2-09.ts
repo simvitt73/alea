@@ -86,11 +86,11 @@ let engendreparuv=''
 engendreparuv+=`On sait qu'un plan ayant pour équation cartesienne : $ax+by+cz+d=0$ où $a$, $b$, $c$ et $d$ sont des réels, admet comme vecteur normal $\\vec n\\begin{pmatrix}a\\\\b\\\\c\\end{pmatrix}$.<br>`
 engendreparuv+=`Le vecteur $\\vec n\\begin{pmatrix}${nx}\\\\${ny}\\\\${nz}\\end{pmatrix}$ est donc un vecteur normal au plan $\\mathcal{P'}$.<br>`
 engendreparuv+=
-  'Vérifions si ce vecteur est orthogonal aux deux vecteurs $\\vec u$ et $\\vec v$. Pour cela, calculons les produits scalaires respectifs :'
+  'Calculons les produits scalaires respectifs du vecteur $\\vec n$ avec les vecteurs $\\vec u$ et $\\vec v$ :'
 engendreparuv += `<br>$\\vec n\\cdot\\vec u = ${nx}\\times ${ecritureParentheseSiNegatif(ux)}${ecritureAlgebrique(ny)}\\times ${ecritureParentheseSiNegatif(uy)}${ecritureAlgebrique(nz)}\\times ${ecritureParentheseSiNegatif(uz)} = ${produitAvecU}$.`
 engendreparuv += `<br>$\\vec n\\cdot\\vec v = ${nx}\\times ${ecritureParentheseSiNegatif(vx)}${ecritureAlgebrique(ny)}\\times ${ecritureParentheseSiNegatif(vy)}${ecritureAlgebrique(nz)}\\times ${ecritureParentheseSiNegatif(vz)} = ${produitAvecV}$.`
 engendreparuv +=
-  '<br>Ces produits scalaires sont nuls donc $\\vec n$ est orthogonal aux vecteurs $\\vec u$ et $\\vec v$ qui sont deux vecteurs directeurs du plan $\\mathcal{P}$, donc le vecteur $\\vec n$ est normal au plan $\\mathcal{P}$. On en déduit que les plans $\\mathcal{P}$ et $\\mathcal{P}\'$ sont parallèles.<br>'
+  '<br>Ces produits scalaires sont nuls donc $\\vec n$ est orthogonal aux vecteurs $\\vec u$ et $\\vec v$ qui sont deux vecteurs directeurs du plan $\\mathcal{P}$, donc le vecteur $\\vec n$ est normal au plan $\\mathcal{P}$. On en déduit que les plans $\\mathcal{P}$ et $\\mathcal{P}\'$ sont parallèles (éventuellement confondus).<br>'
 
 let pointAappartientAuPlan=''
 pointAappartientAuPlan=`${texteEnCouleurEtGras('Démontrer que le point A appartient à ce plan.')}<br>`
@@ -101,7 +101,7 @@ pointAappartientAuPlan += ` $\\begin{aligned}${nx}\\times ${ecritureParentheseSi
 pointAappartientAuPlan += `<br>Le point $A$ appartient donc au plan $\\mathcal{P'}$ et au plan $\\mathcal{P}$.<br>`
 pointAappartientAuPlan +=
   'Les deux plans sont donc confondus et l\'équation proposée est bien une équation cartésienne du plan $\\mathcal{P}$.'
-const partie1='Montrer que les plans $\\mathcal{P}\'$ et $\\mathcal{P}$ sont parallèles car ils ont un vecteur normal en commun'
+const partie1='Montrer que les plans $\\mathcal{P}\'$ et $\\mathcal{P}$ sont parallèles car ils ont un vecteur normal en commun.'
 const partie2='Vérifier que le point $A$ du plan $\\mathcal{P}$ appartient aussi au plan $\\mathcal{P}\'$ car ses coordonnées vérifient l\'équation cartésienne de $\\mathcal{P}\'$.'
 texteCorr =`Considérons le plan $\\mathcal{P'}$ d'équation cartésienne $${equationPlane}$.<br>Nous allons procéder en deux étapes :<br> `+createList({items:[partie1,partie2] ,style: 'nombres'})
      
