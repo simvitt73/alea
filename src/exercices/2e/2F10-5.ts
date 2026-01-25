@@ -28,7 +28,7 @@ import { mathalea2d } from '../../modules/mathalea2d'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 
-export const dateDeModifImportante = '06/07/2023'
+export const dateDeModifImportante = '25/01/2026' // Mise en place de MetaInteractif2d par Jean-Claude Lhote
 export const titre = "Déterminer le signe d'une fonction affine"
 export const interactifReady = true
 export const interactifType = 'MetaInteractif2d'
