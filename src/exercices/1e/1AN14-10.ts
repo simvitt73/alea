@@ -28,7 +28,7 @@ class DerivationQuotientParticulier extends Exercice {
     super()
     this.besoinFormulaireTexte = [
       'Types de fonctions',
-      'Nombres séparés par des tirets :\n1 : $u(x)=x+b$\n2 : $u(x)=mx+p$\n3 : $u(x)=x^2\\pm b$\n4 : Mélange',
+      'Nombres séparés par des tirets :\n1 : $u(x)=x+b$\n2 : $u(x)=mx+p$\n3 : $u(x)=ax^2+b$\n4 : Mélange',
     ]
     this.besoinFormulaire2CaseACocher = ['Numérateur égal à $1$']
     this.sup = '4'
@@ -94,18 +94,10 @@ class DerivationQuotientParticulier extends Exercice {
               // Étape intermédiaire si a≠1
               if (choix) {
                 laDeriveeIntermediaire = `${a}\\times\\dfrac{-1}{(x${ecritureAlgebrique(b)})^{2}}`
-                if (a > 0) {
-                  laDerivee = laDeriveeIntermediaire
-                } else {
-                  laDerivee = `\\dfrac{${abs(a)}}{(x${ecritureAlgebrique(b)})^{2}}`
-                }
+                laDerivee = `\\dfrac{${-a}}{(x${ecritureAlgebrique(b)})^{2}}`
               } else {
-                laDeriveeIntermediaire = `-\\dfrac{${a}}{(${b}+x)^{2}}`
-                if (a > 0) {
-                  laDerivee = laDeriveeIntermediaire
-                } else {
-                  laDerivee = `\\dfrac{${abs(a)}}{(${b}+x)^{2}}`
-                }
+                laDeriveeIntermediaire = `${a}\\times\\dfrac{-1}{(${b}+x)^{2}}`
+                laDerivee = `\\dfrac{${-a}}{(${b}+x)^{2}}`
               }
             }
 
@@ -118,7 +110,6 @@ class DerivationQuotientParticulier extends Exercice {
             const m = randint(-9, 9, [0, 1, -1])
             const p = randint(-10, 10, 0)
             const u = reduireAxPlusB(m, p, 'x')
-            const deriveeNum = a * m
 
             laFonction = `\\dfrac{${a}}{${u}}`
             uExpression = u
@@ -126,44 +117,46 @@ class DerivationQuotientParticulier extends Exercice {
 
             if (a === 1) {
               // Pas d'étape intermédiaire si a=1
-              if (m > 0) {
-                laDerivee = `-\\dfrac{${m}}{(${u})^{2}}`
-              } else {
-                laDerivee = `\\dfrac{${abs(m)}}{(${u})^{2}}`
-              }
+              laDeriveeIntermediaire = `\\dfrac{-${m}}{(${u})^{2}}`
+              laDerivee = `\\dfrac{${-m}}{(${u})^{2}}`
             } else {
               // Étape intermédiaire si a≠1
-              laDeriveeIntermediaire = `-\\dfrac{${deriveeNum}}{(${u})^{2}}`
-              if (deriveeNum > 0) {
-                laDerivee = laDeriveeIntermediaire
-              } else {
-                laDerivee = `\\dfrac{${abs(deriveeNum)}}{(${u})^{2}}`
-              }
+              laDeriveeIntermediaire = `${a}\\times\\dfrac{-${m}}{(${u})^{2}}`
+              laDerivee = `\\dfrac{${-a * m}}{(${u})^{2}}`
             }
           }
           break
 
-        case 3: // u(x) = x² ± b
+        case 3: // u(x) = ax² + b
           {
-            const b = randint(1, 10)
-            const signe = choice(['+', '-'])
-            const signeb = signe === '+' ? '+' : '-'
-            const deriveeNum = 2 * a
+            const coeff = randint(2, 5)
+            const b = randint(-10, 10, 0)
 
-            laFonction = `\\dfrac{${a}}{x^{2}${signeb}${b}}`
-            uExpression = `x^{2}${signeb}${b}`
-            uprime = `2x`
+            if (choix) {
+              laFonction = `\\dfrac{${a}}{${coeff}x^{2}${ecritureAlgebrique(b)}}`
+              uExpression = `${coeff}x^{2}${ecritureAlgebrique(b)}`
+            } else {
+              laFonction = `\\dfrac{${a}}{${b}+${coeff}x^{2}}`
+              uExpression = `${b}+${coeff}x^{2}`
+            }
+
+            uprime = `${2 * coeff}x`
 
             if (a === 1) {
               // Pas d'étape intermédiaire si a=1
-              laDerivee = `-\\dfrac{2x}{(x^{2}${signeb}${b})^{2}}`
+              if (choix) {
+                laDerivee = `-\\dfrac{${2 * coeff}x}{(${coeff}x^{2}${ecritureAlgebrique(b)})^{2}}`
+              } else {
+                laDerivee = `-\\dfrac{${2 * coeff}x}{(${b}+${coeff}x^{2})^{2}}`
+              }
             } else {
               // Étape intermédiaire si a≠1
-              laDeriveeIntermediaire = `-\\dfrac{${deriveeNum}x}{(x^{2}${signeb}${b})^{2}}`
-              if (deriveeNum > 0) {
-                laDerivee = laDeriveeIntermediaire
+              if (choix) {
+                laDeriveeIntermediaire = `${a}\\times\\dfrac{-${2 * coeff}x}{(${coeff}x^{2}${ecritureAlgebrique(b)})^{2}}`
+                laDerivee = `\\dfrac{${-a * 2 * coeff}x}{(${coeff}x^{2}${ecritureAlgebrique(b)})^{2}}`
               } else {
-                laDerivee = `\\dfrac{${abs(deriveeNum)}x}{(x^{2}${signeb}${b})^{2}}`
+                laDeriveeIntermediaire = `${a}\\times\\dfrac{-${2 * coeff}x}{(${b}+${coeff}x^{2})^{2}}`
+                laDerivee = `\\dfrac{${-a * 2 * coeff}x}{(${b}+${coeff}x^{2})^{2}}`
               }
             }
           }
@@ -180,8 +173,8 @@ class DerivationQuotientParticulier extends Exercice {
 
       if (this.correctionDetaillee) {
         texteCorr += `La fonction $f$ est de la forme $\\dfrac{a}{u}$ avec $a=${a}$ (constante) et $u(x)=${uExpression}$.<br>`
-        texteCorr += `On utilise la formule : $\\left(\\dfrac{${a}}{u}\\right)'=${a === 1 ? `\\dfrac{-u'}{u^{2}}` : `${a}\\times \\dfrac{-u'}{u^{2}}`}$.<br>`
-        texteCorr += `Comme $u'(x)=${uprime}$, on obtient : `
+        texteCorr += ` ${a === 1 ? `On utilise la formule : $\\left(\\dfrac{1}{u}\\right)'=\\dfrac{-u'}{u^{2}}$` : `On a $f=\\dfrac{${a}}{u}=${a}\\times \\dfrac{1}{u}$. <br>Comme $\\left(\\dfrac{1}{u}\\right)'=\\dfrac{-u'}{u^{2}}$, alors $\\left(\\dfrac{${a}}{u}\\right)'=${a}\\times \\dfrac{-u'}{u^{2}}$`}.<br>`
+        texteCorr += `Puisque $u'(x)=${uprime}$, on obtient : `
 
         if (a === 1) {
           // Si a=1 : affichage direct du résultat en orange
