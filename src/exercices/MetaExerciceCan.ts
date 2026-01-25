@@ -8,6 +8,7 @@ import {
 } from '../lib/interactif/questionMathLive'
 import { combinaisonListes, shuffle } from '../lib/outils/arrayOutils'
 import { range1 } from '../lib/outils/nombres'
+import type { OptionsComparaisonType, Valeur } from '../lib/types'
 import FractionEtendue from '../modules/FractionEtendue'
 import Grandeur from '../modules/Grandeur'
 import { gestionnaireFormulaireTexte } from '../modules/outils'
@@ -122,7 +123,7 @@ export default class MetaExercice extends Exercice {
             const consigne =
               Question.consigne === '' ? '' : `${Question.consigne}<br>`
             this.listeCorrections[indexQuestion] = Question.correction ?? ''
-            const formatChampTexte = Question.formatChampTexte ?? ''
+            const formatChampTexte = String(Question.formatChampTexte ?? '')
             const optionsChampTexte = Question.optionsChampTexte ?? {}
             if (Question.canEnonce != null)
               this.listeCanEnonces[indexQuestion] = Question.canEnonce
@@ -142,7 +143,7 @@ export default class MetaExercice extends Exercice {
                 remplisLesBlancs(
                   this,
                   indexQuestion,
-                  Question.question,
+                  String(Question.question),
                   formatChampTexte,
                   '\\ldots',
                 )
@@ -154,13 +155,12 @@ export default class MetaExercice extends Exercice {
                     options: optionsChampTexte,
                   },
                 })
-              } else if (typeof Question.reponse === 'object') {
-                handleAnswers(this, indexQuestion, Question.reponse)
-              } else {
-                window.notify(
-                  'Erreur avec cette question de type fillInTheBlank qui contient une reponse au format inconnu',
-                  { reponse: Question.reponse },
+              } else if (typeof Question.reponse !== 'object') {
+                throw new Error(
+                  `Erreur avec cette question de type fillInTheBlank qui contient une reponse au format inconnu: ${JSON.stringify(Question.reponse)}`,
                 )
+              } else {
+                handleAnswers(this, indexQuestion, Question.reponse as Valeur)
               }
             } else if (Question.formatInteractif === 'qcm') {
               Question?.question?.replaceAll(
@@ -173,22 +173,75 @@ export default class MetaExercice extends Exercice {
               )
               this.listeQuestions[indexQuestion] = consigne + Question.question
               this.autoCorrection[indexQuestion] = Question.autoCorrection[0]
+            } else if (Question.formatInteractif === 'MetaInteractif2d') {
+              const n = Question.numeroExercice
+              if (Question.question != null) {
+                const inputsIds = Question.question.matchAll(
+                  /id="MetaInteractif2dEx\d+Q\d+field(\d+)"/g,
+                )
+                for (const match of inputsIds) {
+                  Question.question = Question.question.replace(
+                    `id="MetaInteractif2dEx${n}Q0field${match[1]}"`,
+                    `id="MetaInteractif2dEx${n}Q${indexQuestion}field${match[1]}"`,
+                  )
+                }
+                Question.question = Question.question.replace(
+                  `id="resultatCheckEx${n}Q0"`,
+                  `id="resultatCheckEx${n}Q${indexQuestion}"`,
+                )
+                Question.question = Question.question.replace(
+                  `id="feedbackEx${n}Q0"`,
+                  `id="feedbackEx${n}Q${indexQuestion}"`,
+                )
+                Question.listeQuestions.push(Question.question ?? '')
+              }
+              handleAnswers(this, indexQuestion, Question.reponse as Valeur, {
+                formatInteractif: 'MetaInteractif2d',
+              })
+              this.listeQuestions[indexQuestion] = consigne + Question.question
             } else {
+              // * ***************** Question MathLive *****************//
               if (Question.compare == null) {
+                const reponse = Question.reponse as Valeur
                 const options =
                   Question.optionsDeComparaison == null
                     ? {}
-                    : Question.optionsDeComparaison
-                if (
-                  Question.reponse.reponse instanceof Object &&
-                  Question.reponse.reponse.value != null &&
-                  typeof Question.reponse.reponse.value === 'string'
-                )
-                  handleAnswers(this, indexQuestion, Question.reponse, options)
-                else
+                    : (Question.optionsDeComparaison as OptionsComparaisonType)
+                if (reponse instanceof FractionEtendue) {
                   handleAnswers(this, indexQuestion, {
-                    reponse: { value: Question.reponse, options },
+                    reponse: {
+                      value: reponse.texFraction,
+                      options,
+                    },
                   })
+                } else if (reponse instanceof Decimal) {
+                  handleAnswers(this, indexQuestion, {
+                    reponse: { value: reponse.toString(), options },
+                  })
+                } else if (reponse instanceof Grandeur) {
+                  handleAnswers(this, indexQuestion, {
+                    reponse: { value: reponse.toString(), options },
+                  })
+                } else if (Array.isArray(reponse)) {
+                  handleAnswers(this, indexQuestion, {
+                    reponse: { value: reponse, options },
+                  })
+                } else if (
+                  reponse != null &&
+                  reponse.reponse instanceof Object &&
+                  reponse.reponse.value != null &&
+                  typeof reponse.reponse.value === 'string'
+                ) {
+                  handleAnswers(
+                    this,
+                    indexQuestion,
+                    Object.assign(reponse, { options }),
+                  )
+                } else {
+                  handleAnswers(this, indexQuestion, {
+                    reponse: { value: String(Question.reponse), options },
+                  })
+                }
               } else {
                 const compare = Question.compare
                 const options =
@@ -234,7 +287,11 @@ export default class MetaExercice extends Exercice {
                       reponse: { value: reponse, compare, options },
                     })
                   } else {
-                    handleAnswers(this, indexQuestion, reponse) // EE : Pourquoi ce handleAnswers n'est pas au même format que les autres ?
+                    handleAnswers(
+                      this,
+                      indexQuestion,
+                      Object.assign(reponse as Valeur, { compare, options }),
+                    )
                   }
                 } else {
                   window.notify(
@@ -300,11 +357,9 @@ export default class MetaExercice extends Exercice {
             } else if (formatInteractif === 'qcm') {
               this.autoCorrection[indexQuestion] = Question.autoCorrection[0]
             } else {
-              handleAnswers(
-                this,
-                indexQuestion,
-                Question.autoCorrection[0].reponse.valeur,
-              )
+              const reponse = Question.autoCorrection[0]?.reponse
+              if (reponse != null)
+                handleAnswers(this, indexQuestion, reponse as Valeur)
             }
           }
           if (Question?.autoCorrection[0]?.propositions != null) {

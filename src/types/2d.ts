@@ -15,13 +15,20 @@ export type ObjetDivLatex = {
   bordures: [number, number, number, number]
 }
 
-export type Interactif2dData = {
-  exercice: IExercice
-  question: number
+export type MetaInteractif2dInputs = {
   x: number
   y: number
   content: string
+  classe: string
+  blanc: string
   opacity: number
+  index?: number
+}[]
+
+export type MetaInteractif2dData = {
+  exercice: IExercice
+  question: number
+  inputs: MetaInteractif2dInputs
 }
 
 // Type récursif décrivant la structure des tableaux d'objets 2D.

@@ -180,6 +180,16 @@ export async function mathaleaLoadExerciceFromUuid(uuid: string) {
       .replaceAll('\\', '/')
       .split('/')
       .reverse()
+  } else {
+    console.error(`UUID introuvable dans uuidToUrl: ${uuid}`)
+    window.notify(`L'exercice n'existe pas avec la référence uuid:${uuid}`, {
+      exercicesParams: get(exercicesParams),
+    })
+
+    const exercice = new Exercice()
+    exercice.titre = `L'exercice n'existe pas ou plus avec la référence uuid:${uuid}`
+    exercice.nouvelleVersion = () => {}
+    return exercice as IExercice
   }
   let attempts = 0
   const maxAttempts = 3
@@ -1002,6 +1012,28 @@ export function mathaleaHandleExerciceSimple(
             `checkEx${n}Q${i}"`,
           )
           exercice.listeQuestions.push(exercice.question ?? '')
+        } else if (exercice.formatInteractif === 'MetaInteractif2d') {
+          const n = exercice.numeroExercice
+          if (exercice.question != null) {
+            const inputsIds = exercice.question.matchAll(
+              /id="MetaInteractif2dEx\d+Q\d+field(\d+)"/g,
+            )
+            for (const match of inputsIds) {
+              exercice.question = exercice.question.replace(
+                `id="MetaInteractif2dEx${n}Q0field${match[1]}"`,
+                `id="MetaInteractif2dEx${n}Q${i}field${match[1]}"`,
+              )
+            }
+            exercice.question = exercice.question.replace(
+              `id="resultatCheckEx${n}Q0"`,
+              `id="resultatCheckEx${n}Q${i}"`,
+            )
+            exercice.question = exercice.question.replace(
+              `id="feedbackEx${n}Q0"`,
+              `id="feedbackEx${n}Q${i}"`,
+            )
+            exercice.listeQuestions.push(exercice.question ?? '')
+          }
         } else {
           exercice.listeQuestions.push(
             exercice.question +
