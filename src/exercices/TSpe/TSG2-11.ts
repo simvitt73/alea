@@ -1,6 +1,7 @@
 
 import { createList } from '../../lib/format/lists'
-import { ecritureAlgebrique, ecritureParentheseSiNegatif, rienSi1 } from '../../lib/outils/ecritures'
+import { ecritureAlgebrique, ecritureAlgebriqueSauf1, ecritureParentheseSiNegatif, rienSi1 } from '../../lib/outils/ecritures'
+import { texteEnCouleurEtGras } from '../../lib/outils/embellissements'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 
@@ -60,21 +61,34 @@ export default class NomExercice extends Exercice {
 texte+=`$A(${xA} ; ${yA} ; ${zA})$ , $B(${xB} ; ${yB} ; ${zB})$ et $M(${xM} ; ${yM} ; ${zM})$ .<br>`
 texte+=`Déterminer les coordonnées du point $H$ projeté orthogonal du point $M$ sur la droite $(AB)$ .<br>`
 
+let ortho=''
+ortho=` ${texteEnCouleurEtGras('Les vecteurs $\\overrightarrow{AB}$ et $\\overrightarrow{MH}$ sont orthogonaux :')} <br>On calcule les coordonnées du vecteur $\\overrightarrow{AB}\\begin{pmatrix}${xB}${ecritureAlgebrique(-xA)} \\\\${yB}${ecritureAlgebrique(-yA)} \\\\${zB}${ecritureAlgebrique(-zA)})\\end{pmatrix}$ d'où $\\overrightarrow{AB}\\begin{pmatrix}${ux} \\\\ ${uy} \\\\ ${uz}\\end{pmatrix}$ .<br>`
+ortho +=`On calcule les coordonnées du vecteur $\\overrightarrow{MH} \\begin{pmatrix}x  ${ecritureAlgebrique(-xM)} \\\\ y  ${ecritureAlgebrique(-yM)} \\\\ z  ${ecritureAlgebrique(-zM)}\\end{pmatrix}$.`
+ortho +=`<br>Le vecteur $\\overrightarrow{AB}$ est orthogonal au vecteur $\\overrightarrow{MH}$, leur produit scalaire est donc nul.<br>`
+ortho +=`Donc : <br>$\\begin{aligned}\\phantom{\\iff}&\\overrightarrow{MH} \\cdot \\overrightarrow{AB} = 0\\\\
+\\iff &(x ${ecritureAlgebrique(-xM)}) \\times ${ecritureParentheseSiNegatif(ux)} + (y ${ecritureAlgebrique(-yM)}) \\times ${ecritureParentheseSiNegatif(uy)} + (z ${ecritureAlgebrique(-zM)}) \\times ${ecritureParentheseSiNegatif(uz)} = 0\\\\
+\\iff &${rienSi1(ux)}  x + ${rienSi1(uy)} y + ${rienSi1(uz)} z  ${ecritureAlgebrique(-(ux * xM + uy * yM + uz * zM))}=0\\quad(1)\\end{aligned}$ <br>`
+let pointH=''
+pointH=`${texteEnCouleurEtGras('Le point $H$ appartient à la droite $(AB)$.')}<br>`
+pointH +=`Pour utiliser que le point $H$ appartient à la droite $(AB)$ , on détermine la représentation paramétrique de cette droite : <br>`
+pointH +=`$\\left\\{ \\begin{array}{l} x = ${xA}  ${ecritureAlgebriqueSauf1(ux)} t \\\\ y = ${yA}  ${ecritureAlgebriqueSauf1(uy)} t \\quad (t\\in\\mathbb{R}) \\\\ z = ${zA}  ${ecritureAlgebriqueSauf1(uz)} t \\end{array} \\right.$ <br>`
+
       texteCorr =
         'Soit $x$, $y$ et $z$ des réels tels que les coordonnées du point $H$ soient $H(x;y;z)$.<br>' 
 texteCorr +='<br>Par définition du projeté orthogonal, on déduit deux informations :'
-+ createList({items :['Les vecteurs $\\overrightarrow{AB}$ et $\\overrightarrow{MH}$ sont orthogonaux','Le point $H$ appartient à la droite $(AB)$'], style: 'fleches'})
-texteCorr +=` On va donc procéder en deux étapes :<br> On calcule les coordonnées du vecteur $\\overrightarrow{AB}\\begin{pmatrix}${xB}${ecritureAlgebrique(-xA)} \\\\${yB}${ecritureAlgebrique(-yA)} \\\\${zB}${ecritureAlgebrique(-zA)})\\end{pmatrix}$ d'où $\\overrightarrow{AB}\\begin{pmatrix}${ux} \\\\ ${uy} \\\\ ${uz}\\end{pmatrix}$ .<br>`
-texteCorr +=`On calcule les coordonnées du vecteur $\\overrightarrow{MH} \\begin{pmatrix}x  ${ecritureAlgebrique(-xM)} \\\\ y  ${ecritureAlgebrique(-yM)} \\\\ z  ${ecritureAlgebrique(-zM)}\\end{pmatrix}$.`
-texteCorr +=`Comme le vecteur $\\overrightarrow{AB}$ est orthogonal au vecteur $\\overrightarrow{AB}$, leur produit scalaire est nul.<br>`
-texteCorr +=`Donc : $\\begin{aligned}\\phantom{\\iff}&\\overrightarrow{MH} \\cdot \\overrightarrow{AB} = 0\\\\
-\\iff &(x ${ecritureAlgebrique(-xM)}) \\times ${ecritureParentheseSiNegatif(ux)} + (y ${ecritureAlgebrique(-yM)}) \\times ${ecritureParentheseSiNegatif(uy)} + (z ${ecritureAlgebrique(-zM)}) \\times ${ecritureParentheseSiNegatif(uz)} = 0\\\\
-\\iff &${rienSi1(ux)}  x + ${rienSi1(uy)} y + ${rienSi1(uz)} z  ${ecritureAlgebrique(-(ux * xM + uy * yM + uz * zM))}=0\\end{aligned}$ <br>`
-texteCorr +=`On cherche un point $H$ de la droite $(AB)$ , donc il existe un réel $t$ tel que : <br>`
-texteCorr +=`$\\left\\{ \\begin{array}{l} x = ${xA} + ${ux} \\times t \\\\ y = ${yA} + ${uy} \\times t \\\\ z = ${zA} + ${uz} \\times t \\end{array} \\right.$ <br>`
-texteCorr +=`En remplaçant dans l'équation précédente on obtient : <br>`
-texteCorr +=`$${ux} \\times (${xA} + ${ux} \\times t) + ${uy} \\times (${yA} + ${uy} \\times t) + ${uz} \\times (${zA} + ${uz} \\times t) = ${ux * xM + uy * yM + uz * zM}$ <br>`
-texteCorr +=`$\\Leftrightarrow (${ux}^2 + ${uy}^2 + ${uz}^2) \\times t = ${ux * xM + uy * yM + uz * zM} - (${ux} \\times ${xA} + ${uy} \\times ${yA} + ${uz} \\times ${zA})$ <br>`
++ createList({items :[ortho,pointH], style: 'fleches'})
+
+texteCorr +=`${texteEnCouleurEtGras('<br>Synthèse des deux éléments précédents :')} <br>`
+texteCorr +=`Les coordonnées du point $H$ vérifient donc ce système de $4$ équations à $4$ inconnues :<br>`
+texteCorr +=`$\\begin{cases}
+x = ${xA}  ${ecritureAlgebriqueSauf1(ux)} t \\\\ y = ${yA}  ${ecritureAlgebriqueSauf1(uy)} t \\\\ z = ${zA}  ${ecritureAlgebriqueSauf1(uz)} t \\\\
+${rienSi1(ux)}  x + ${rienSi1(uy)} y + ${rienSi1(uz)} z  ${ecritureAlgebrique(-(ux * xM + uy * yM + uz * zM))}=0\\end{cases}$ <br>`
+texteCorr +=`En remplaçant $x$, $y$ et $z$ dans la dernière équation, on obtient : <br>`
+texteCorr +=`$\\begin{aligned}
+&${rienSi1(ux)}  (${xA}  ${ecritureAlgebriqueSauf1(ux)}  t) + ${rienSi1(uy)}  (${yA}  ${ecritureAlgebriqueSauf1(uy)}  t) + ${rienSi1(uz)}  (${zA}  ${ecritureAlgebriqueSauf1(uz)}  t)  ${ecritureAlgebrique(-(ux * xM + uy * yM + uz * zM))}=0\\\\
+\\iff &${ux*xA}  ${ecritureAlgebriqueSauf1(ux*ux)}t  ${ecritureAlgebrique(uy*yA)} ${ecritureAlgebriqueSauf1(uy*uy)} t ${ecritureAlgebrique(uz*zA)} ${ecritureAlgebriqueSauf1(uz*uz)}t ${ecritureAlgebrique(-(ux * xM + uy * yM + uz * zM))}=0\\\\
+\\iff &${ux*ux+uy*uy+uz*uz}t  = ${ux * xM + uy * yM + uz * zM-(ux*xA+uy*yA+uz*zA)} \\\\
+\\iff& (${ux}^2 + ${uy}^2 + ${uz}^2) \\times t = ${ux * xM + uy * yM + uz * zM} - (${ux} \\times ${xA} + ${uy} \\times ${yA} + ${uz} \\times ${zA})\\end{aligned}$<br>`
 texteCorr +=`$\\Leftrightarrow t = \\dfrac{${ux * xM + uy * yM + uz * zM} - (${ux} \\times ${xA} + ${uy} \\times ${yA} + ${uz} \\times ${zA})}{${ux * ux} + ${uy * uy} + ${uz * uz}} = ${((ux * xM + uy * yM + uz * zM) - (ux * xA + uy * yA + uz * zA)) / (ux * ux + uy * uy + uz * uz)}$ <br>`
 texteCorr +=`On en déduit les coordonnées du point $H$ : <br>`
 texteCorr +=`$\\left\\{ \\begin{array}{l} x_H = ${xA} + ${ux} \\times ${((ux * xM + uy * yM + uz * zM) - (ux * xA + uy * yA + uz * zA)) / (ux * ux + uy * uy + uz * uz)} \\\\ y_H = ${yA} + ${uy} \\times ${((ux * xM + uy * yM + uz * zM) - (ux * xA + uy * yA + uz * zA)) / (ux * ux + uy * uy + uz * uz)} \\\\ z_H = ${zA} + ${uz} \\times ${((ux * xM + uy * yM + uz * zM) - (ux * xA + uy * yA + uz * zA)) / (ux * ux + uy * uy + uz * uz)} \\end{array} \\right.$ <br>`
