@@ -57,10 +57,10 @@ class DerivationQuotientParticulier extends Exercice {
       let laDeriveeIntermediaire = ''
       let uprime = ''
       let uExpression = ''
-      let df = ''
+      // let df = ''
       let a: number
       const choix = choice([true, false])
-      
+
       // Détermination de a selon sup2
       if (this.sup2) {
         a = 1
@@ -72,7 +72,7 @@ class DerivationQuotientParticulier extends Exercice {
         case 1: // u(x) = x + b
           {
             const b = randint(-10, 10, 0)
-            
+
             if (choix) {
               laFonction = `\\dfrac{${a}}{x${ecritureAlgebrique(b)}}`
               uExpression = `x${ecritureAlgebrique(b)}`
@@ -82,7 +82,7 @@ class DerivationQuotientParticulier extends Exercice {
             }
 
             uprime = '1'
-            
+
             if (a === 1) {
               // Pas d'étape intermédiaire si a=1
               if (choix) {
@@ -109,7 +109,7 @@ class DerivationQuotientParticulier extends Exercice {
               }
             }
 
-            df = `\\mathbb{R}\\smallsetminus\\left\\{${-b}\\right\\}`
+            // df = `\\mathbb{R}\\smallsetminus\\left\\{${-b}\\right\\}`
           }
           break
 
@@ -123,7 +123,7 @@ class DerivationQuotientParticulier extends Exercice {
             laFonction = `\\dfrac{${a}}{${u}}`
             uExpression = u
             uprime = `${m}`
-            
+
             if (a === 1) {
               // Pas d'étape intermédiaire si a=1
               if (m > 0) {
@@ -140,17 +140,6 @@ class DerivationQuotientParticulier extends Exercice {
                 laDerivee = `\\dfrac{${abs(deriveeNum)}}{(${u})^{2}}`
               }
             }
-
-            // Calcul de la valeur interdite
-            const valeurInterdite =
-              p === 0
-                ? '0'
-                : m === 1
-                  ? `${-p}`
-                  : m === -1
-                    ? `${p}`
-                    : `\\dfrac{${-p}}{${m}}`
-            df = `\\mathbb{R}\\setminus\\left\\{${valeurInterdite}\\right\\}`
           }
           break
 
@@ -164,7 +153,7 @@ class DerivationQuotientParticulier extends Exercice {
             laFonction = `\\dfrac{${a}}{x^{2}${signeb}${b}}`
             uExpression = `x^{2}${signeb}${b}`
             uprime = `2x`
-            
+
             if (a === 1) {
               // Pas d'étape intermédiaire si a=1
               laDerivee = `-\\dfrac{2x}{(x^{2}${signeb}${b})^{2}}`
@@ -176,12 +165,6 @@ class DerivationQuotientParticulier extends Exercice {
               } else {
                 laDerivee = `\\dfrac{${abs(deriveeNum)}x}{(x^{2}${signeb}${b})^{2}}`
               }
-            }
-
-            if (signe === '+') {
-              df = `\\mathbb{R}`
-            } else {
-              df = `\\mathbb{R}\\setminus\\left\\{-\\sqrt{${b}};\\sqrt{${b}}\\right\\}`
             }
           }
           break
@@ -199,7 +182,7 @@ class DerivationQuotientParticulier extends Exercice {
         texteCorr += `La fonction $f$ est de la forme $\\dfrac{a}{u}$ avec $a=${a}$ (constante) et $u(x)=${uExpression}$.<br>`
         texteCorr += `On utilise la formule : $\\left(\\dfrac{${a}}{u}\\right)'=${a === 1 ? `\\dfrac{-u'}{u^{2}}` : `${a}\\times \\dfrac{-u'}{u^{2}}`}$.<br>`
         texteCorr += `Comme $u'(x)=${uprime}$, on obtient : `
-        
+
         if (a === 1) {
           // Si a=1 : affichage direct du résultat en orange
           texteCorr += `$f'(x)=${miseEnEvidence(laDerivee)}$.<br>`
