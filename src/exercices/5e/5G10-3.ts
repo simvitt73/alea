@@ -37,6 +37,7 @@ import { arc } from '../../lib/2d/Arc'
 import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
 import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { arrondi } from '../../lib/outils/nombres'
+import Grandeur from '../../modules/Grandeur'
 export const titre = 'Utiliser les propriétés de conservation de la symétrie'
 
 // Gestion de la date de publication initiale
@@ -49,7 +50,7 @@ export const dateDeModifImportante = '13/11/2025'
  * Ajout de la symétrie centrale par Guillaume Valmont le 13/11/2025
  */
 
-export const uuid = '65bd7'
+export const uuid = '65bd8'
 
 export const refs = {
   'fr-fr': ['5G10-3'],
@@ -61,6 +62,10 @@ export const interactifType = 'mathLive'
 export default class SymetrieAxialeProprietes extends Exercice {
   constructor() {
     super()
+    this.consigne = texteEnCouleurEtGras(
+      'Dans cet exercice, les mesures sont à donner avec la bonne unité.',
+      'black',
+    )
     this.besoinFormulaireTexte = [
       'Type de questions',
       "Nombres séparés par des tirets :\n1 : Longueur d'un seul segment\n2 : Longueur d'un segment parmi d'autres\n3 : Alignement de points\n4 : Angle\n5 : Mélange",
@@ -96,7 +101,8 @@ export default class SymetrieAxialeProprietes extends Exercice {
       melange: 1,
       saisie: this.sup3,
     })
-
+    let optionKeyboard: string = ''
+    let objetReponse
     for (
       let i = 0,
         texte,
@@ -203,7 +209,14 @@ export default class SymetrieAxialeProprietes extends Exercice {
           texteCorr +=
             "Or, le symétrique d'un segment est un segment de même longueur.<br>"
           texteCorr += `Donc les segments $[${A.nom}${B.nom}]$ et $[${C.nom}${D.nom}]$ ont la même longueur et $${miseEnEvidence(C.nom + D.nom + '=' + texNombre(longueur(A, B, 1)))}$${sp()}${texteEnCouleurEtGras('cm')}.<br>`
-          reponse = texNombre(longueur(A, B, 1), 1)
+          reponse = new Grandeur(longueur(A, B, 1), 'cm').toString()
+          optionKeyboard = KeyboardType.longueur ?? ''
+          objetReponse = {
+            reponse: {
+              value: reponse,
+              options: { unite: true, precisionUnite: 0.1 },
+            },
+          }
           break
         case 3:
           nbpoints = 6
@@ -266,6 +279,10 @@ export default class SymetrieAxialeProprietes extends Exercice {
           texteCorr += "Or, la symétrie axiale conserve l'alignement.<br>"
           texteCorr += `Donc les points $${miseEnEvidence(D.nom)}$${texteEnCouleurEtGras(', ')}$${miseEnEvidence(E.nom)}$${texteEnCouleurEtGras(' et ')}$${miseEnEvidence(F.nom)}$ ${texteEnCouleurEtGras(' sont alignés')} également.<br>`
           reponse = ['oui', 'V', 'O']
+          optionKeyboard = KeyboardType.vFON ?? ''
+          objetReponse = {
+            reponse: { value: reponse, options: { texteSansCasse: true } },
+          }
           break
         case 2:
           nbpoints = 6
@@ -368,9 +385,17 @@ export default class SymetrieAxialeProprietes extends Exercice {
           texteCorr +=
             "Or, le symétrique d'un segment est un segment de même longueur.<br>"
           texteCorr += `Donc les segments $[${A.nom}${B.nom}]$ et $[${D.nom}${E.nom}]$ ont la même longueur et $${miseEnEvidence(D.nom + E.nom + '=' + texNombre(longueur(A, B, 1)))}$${sp()}${texteEnCouleurEtGras('cm')}.<br>`
-          reponse = texNombre(longueur(A, B, 1), 1)
+          reponse = new Grandeur(longueur(A, B, 1), 'cm').toString()
+          objetReponse = {
+            reponse: {
+              value: reponse,
+              options: { unite: true, precisionUnite: 0.1 },
+            },
+          }
+          optionKeyboard = KeyboardType.longueur ?? ''
           break
         case 4:
+        default:
           nbpoints = 6
           noms = choisitLettresDifferentes(nbpoints, 'QWX', true)
           A = point(
@@ -528,43 +553,21 @@ export default class SymetrieAxialeProprietes extends Exercice {
           texteCorr +=
             "Or, le symétrique d'un angle est un angle de même mesure.<br>"
           texteCorr += `Donc les angles $\\widehat{${A.nom}${C.nom}${B.nom}}$ et $\\widehat{${D.nom}${F.nom}${E.nom}}$ ont la même mesure et $\\widehat{${D.nom}${F.nom}${E.nom}} = ${angle(D, F, E, 0)}^\\circ$.<br>`
-          reponse = texNombre(angle(D, F, E, 0))
+          reponse = new Grandeur(angle(D, F, E, 0), '°').toString()
+          objetReponse = {
+            reponse: {
+              value: reponse,
+              options: { unite: true, precisionUnite: 1 },
+            },
+          }
+          optionKeyboard = `${String(KeyboardType.angles)} ${String(KeyboardType.clavierNumbers)}`
           break
       }
       if (this.questionJamaisPosee(i, a, b)) {
         // Si la question n'a jamais été posée, on en crée une autre
         if (this.interactif) {
-          if (reponse.indexOf('cm') !== -1) {
-            handleAnswers(this, i, {
-              reponse: {
-                value: reponse,
-                options: { unite: true, precisionUnite: 0.1 },
-              },
-            })
-            texte += ajouteChampTexteMathLive(this, i, KeyboardType.longueur, {
-              texteApres: '$\\text{ cm}',
-            })
-          } else if (reponse.indexOf('°') !== -1) {
-            handleAnswers(this, i, {
-              reponse: {
-                value: reponse,
-                options: { unite: true, precisionUnite: 1 },
-              },
-            })
-            texte += ajouteChampTexteMathLive(
-              this,
-              i,
-              KeyboardType.clavierNumbers,
-              {
-                texteApres: '°',
-              },
-            )
-          } else {
-            handleAnswers(this, i, {
-              reponse: { value: reponse, options: { texteSansCasse: true } },
-            })
-            texte += ajouteChampTexteMathLive(this, i, KeyboardType.vFON)
-          }
+          handleAnswers(this, i, objetReponse)
+          texte += ajouteChampTexteMathLive(this, i, optionKeyboard)
         }
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
