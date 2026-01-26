@@ -24,8 +24,9 @@ export const dateDePublication = '23/01/2026'
  *
  */
 class DerivationQuotientParticulier extends Exercice {
-  constructor() {
+ constructor() {
     super()
+    this.consigne = 'Dans chacun des cas suivants, on admet que la fonction $f$ est définie et dérivable sur un intervalle $I$. <br>Déterminer l\'expression de la fonction dérivée $f\'$ sur $I$.'
     this.besoinFormulaireTexte = [
       'Types de fonctions',
       'Nombres séparés par des tirets :\n1 : $u(x)=x+b$\n2 : $u(x)=mx+p$\n3 : $u(x)=ax^2+b$\n4 : Mélange',
@@ -164,7 +165,7 @@ class DerivationQuotientParticulier extends Exercice {
       }
 
       const texte =
-        `Donner l'expression de la dérivée de la fonction $f$ définie  par $f(x)=${laFonction}$.<br>` +
+        `$f(x)=${laFonction}$<br>` +
         ajouteChampTexteMathLive(this, i, KeyboardType.lyceeClassique, {
           texteAvant: "$f'(x)=$",
         })
@@ -172,8 +173,8 @@ class DerivationQuotientParticulier extends Exercice {
       let texteCorr = ''
 
       if (this.correctionDetaillee) {
-        texteCorr += `La fonction $f$ est de la forme $\\dfrac{a}{u}$ avec $a=${a}$ (constante) et $u(x)=${uExpression}$.<br>`
-        texteCorr += ` ${a === 1 ? `On utilise la formule : $\\left(\\dfrac{1}{u}\\right)'=\\dfrac{-u'}{u^{2}}$` : `On a $f=\\dfrac{${a}}{u}=${a}\\times \\dfrac{1}{u}$. <br>Comme $\\left(\\dfrac{1}{u}\\right)'=\\dfrac{-u'}{u^{2}}$, alors $\\left(\\dfrac{${a}}{u}\\right)'=${a}\\times \\dfrac{-u'}{u^{2}}$`}.<br>`
+        texteCorr += `${a === 1 ? `La fonction $f$ est de la forme $\\dfrac{1}{u}$ avec $u(x)=${uExpression}$.<br>`: `La fonction $f$ est de la forme $a\\times \\dfrac{1}{u}$ avec $a=${a}$  et $u(x)=${uExpression}$.<br>`}`
+        texteCorr += ` ${a === 1 ? `On utilise la formule : $\\left(\\dfrac{1}{u}\\right)'=\\dfrac{-u'}{u^{2}}$` : `On sait que $\\left(\\dfrac{1}{u}\\right)'=\\dfrac{-u'}{u^{2}}$, donc $f'=${a}\\times \\dfrac{-u'}{u^{2}}$`}.<br>`
         texteCorr += `Puisque $u'(x)=${uprime}$, on obtient : `
 
         if (a === 1) {
