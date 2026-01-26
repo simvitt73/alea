@@ -66,7 +66,7 @@ texte+=`$A(${xA} ; ${yA} ; ${zA})$ , $B(${xB} ; ${yB} ; ${zB})$ et $M(${xM} ; ${
 texte+=`Déterminer les coordonnées du point $H$ projeté orthogonal du point $M$ sur la droite $(AB)$ .<br>`
 
 let ortho=''
-ortho=` ${texteEnCouleurEtGras('Les vecteurs $\\overrightarrow{AB}$ et $\\overrightarrow{MH}$ sont orthogonaux :')} <br>On calcule les coordonnées du vecteur $\\overrightarrow{AB}\\begin{pmatrix}${xB}${ecritureAlgebrique(-xA)} \\\\${yB}${ecritureAlgebrique(-yA)} \\\\${zB}${ecritureAlgebrique(-zA)})\\end{pmatrix}$ d'où $\\overrightarrow{AB}\\begin{pmatrix}${ux} \\\\ ${uy} \\\\ ${uz}\\end{pmatrix}$ .<br>`
+ortho=` ${texteEnCouleurEtGras('Les vecteurs $\\overrightarrow{AB}$ et $\\overrightarrow{MH}$ sont orthogonaux :')} <br>On calcule les coordonnées du vecteur $\\overrightarrow{AB}\\begin{pmatrix}${xB}${ecritureAlgebrique(-xA)} \\\\${yB}${ecritureAlgebrique(-yA)} \\\\${zB}${ecritureAlgebrique(-zA)}\\end{pmatrix}$ d'où $\\overrightarrow{AB}\\begin{pmatrix}${ux} \\\\ ${uy} \\\\ ${uz}\\end{pmatrix}$ .<br>`
 ortho +=`On calcule les coordonnées du vecteur $\\overrightarrow{MH} \\begin{pmatrix}x  ${ecritureAlgebrique(-xM)} \\\\ y  ${ecritureAlgebrique(-yM)} \\\\ z  ${ecritureAlgebrique(-zM)}\\end{pmatrix}$.`
 ortho +=`<br>Le vecteur $\\overrightarrow{AB}$ est orthogonal au vecteur $\\overrightarrow{MH}$, leur produit scalaire est donc nul.<br>`
 ortho +=`Donc : <br>$\\begin{aligned}\\phantom{\\iff}&\\overrightarrow{MH} \\cdot \\overrightarrow{AB} = 0\\\\
