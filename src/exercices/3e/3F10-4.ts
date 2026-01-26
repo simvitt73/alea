@@ -101,7 +101,7 @@ class LireImageParApiGeom extends Exercice {
       pointMobile.createSegmentToAxeY()
       const textX = this.figure.create('DynamicX', { point: pointMobile })
       const textY = this.figure.create('DynamicY', { point: pointMobile })
-      textX.dynamicText.maximumFractionDigits = 2
+      textX.dynamicText.maximumFractionDigits = 1
       textY.dynamicText.maximumFractionDigits = 1
     }
 
