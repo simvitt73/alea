@@ -83,7 +83,8 @@ texteCorr +='<br>Par définition du projeté orthogonal, on déduit deux informa
 + createList({items :[ortho,pointH], style: 'fleches'})
 
 texteCorr +=`${texteEnCouleurEtGras('<br>Synthèse des deux éléments précédents :')} <br>`
-texteCorr +=`$H(x_H,y_H,z_H)\\in(AB)$ si et seulement s'il existe $t\\in\\mathbb{R}$ tel que : <br>`
+texteCorr +=`$H\\in(AB)\\cap\\mathcal{P}$. La droite $(AB)$ étant orthogonale au plan $\\mathscr{P}$, il existe un unique point $H$ solution. <br>`
+texteCorr +=`$H(x_H,y_H,z_H)\\in(AB)\\cap\\mathcal{P}$ si et seulement s'il existe $t\\in\\mathbb{R}$ tel que : <br>`
 texteCorr +=`$\\begin{cases}
 x_H = ${xA}  ${ecritureAlgebriqueSauf1(ux)} t \\\\ y_H = ${yA}  ${ecritureAlgebriqueSauf1(uy)} t \\\\ z_H = ${zA}  ${ecritureAlgebriqueSauf1(uz)} t \\\\
 ${rienSi1(ux)}  x_H + ${rienSi1(uy)} y_H + ${rienSi1(uz)} z_H  ${ecritureAlgebrique(-(ux * xM + uy * yM + uz * zM))}=0\\end{cases}$ <br>`
