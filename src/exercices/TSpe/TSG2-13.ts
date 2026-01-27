@@ -33,7 +33,7 @@ export default class NomExercice extends Exercice {
     super()
     this.nbQuestions = 1
     this.spacing =2
-    this.spacingCorr = 1.5
+    this.spacingCorr =  1.5
   }
 
   nouvelleVersion() {
