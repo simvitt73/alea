@@ -1,15 +1,19 @@
-import Exercice from '../Exercice'
-import { factorielle, listeQuestionsToContenu, randint } from '../../modules/outils'
+import Decimal from 'decimal.js'
+import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
+import { handleAnswers } from '../../lib/interactif/gestionInteractif'
+import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { combinaisonListes } from '../../lib/outils/arrayOutils'
-import { texNombre } from '../../lib/outils/texNombre'
 import {
   miseEnEvidence,
   texteEnCouleurEtGras,
 } from '../../lib/outils/embellissements'
-import { handleAnswers } from '../../lib/interactif/gestionInteractif'
-import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
-import { KeyboardType } from '../../lib/interactif/claviers/keyboard'
-
+import { texNombre } from '../../lib/outils/texNombre'
+import {
+  factorielle,
+  listeQuestionsToContenu,
+  randint,
+} from '../../modules/outils'
+import Exercice from '../Exercice'
 
 export const titre = 'Dénombrer des tirages de boules dans une urne'
 export const interactifReady = true
@@ -72,17 +76,21 @@ export default class nomExercice extends Exercice {
       this.nbQuestions,
     )
     let reponse = ''
-    
 
     for (let i = 0, cpt = 0; i < this.nbQuestions && cpt < 50; ) {
       let texte = ''
       let texteCorr = ''
       const variables: string[] = []
-      const n = listeTypeQuestions[i] === 'type5' ? randint(3, 9) : randint(3, 15)
+      const n =
+        listeTypeQuestions[i] === 'type5' ? randint(3, 9) : randint(3, 15)
       const k = randint(2, n - 1)
-      const arrangement = factorielle(n) / factorielle(n - k)
-      const combinaison = factorielle(n) / (factorielle(k) * factorielle(n - k))
-      let factorielleN = 0
+      const arrangement = new Decimal(factorielle(n).toString()).div(
+        new Decimal(factorielle(n - k).toString()),
+      )
+      const combinaison = arrangement.div(
+        new Decimal(factorielle(k).toString()),
+      )
+      let factorielleN = new Decimal(0)
       let kuplet = ''
       if (k === 2) {
         kuplet = 'couples'
@@ -115,8 +123,8 @@ export default class nomExercice extends Exercice {
           }
           texteCorr +=
             "Le nombre de $k$-uplet d'un ensemble fini $E$ est $\\mathrm{Card}(E)^k$.<br>"
-          texteCorr += `Comme $\\mathrm{Card}(E)=${n}$, le nombre de ${kuplet} est $\\mathrm{Card}(E)^${k}=${n}^{${k}}=${texNombre(n ** k)}$.<br>`
-          texteCorr += `Il y a donc $${miseEnEvidence(texNombre(n ** k))}$ tirages possibles.<br>`
+          texteCorr += `Comme $\\mathrm{Card}(E)=${n}$, le nombre de ${kuplet} est $\\mathrm{Card}(E)^${k}=${n}^{${k}}=${texNombre(new Decimal(n).pow(k))}$.<br>`
+          texteCorr += `Il y a donc $${miseEnEvidence(texNombre(new Decimal(n).pow(k)))}$ tirages possibles.<br>`
           reponse = `${n ** k}`
           break
         case 'type2':
@@ -160,7 +168,7 @@ export default class nomExercice extends Exercice {
           reponse = `${2 ** n}`
           break
         case 'type5':
-          factorielleN = factorielle(n)
+          factorielleN = new Decimal(factorielle(n).toString())
           texte = `On a ${n} boules numérotées de $1$ à ${n}.<br> Déterminer le nombre de permutations possibles.<br>`
           texteCorr =
             "On sait que le nombre de permutations d'un ensemble fini à $n$ éléménts est $n~!$<br>"
