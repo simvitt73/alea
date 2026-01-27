@@ -99,6 +99,7 @@ texteCorr +=`$\\begin{cases}
 x_H = ${xA}  ${ecritureAlgebrique(ux)} \\times ${valeurt.texFSP} \\\\\\\\ y_H = ${yA}  ${ecritureAlgebrique(uy)} \\times ${valeurt.texFSP} \\\\\\\\ z_H = ${zA}  ${ecritureAlgebrique(uz)} \\times ${valeurt.texFSP} \\end{cases}$ d'où finalement`
 texteCorr +=`$\\begin{cases}
 x_H = ${abscisseH.texFractionSimplifiee} \\\\ y_H = ${ordonneeH.texFractionSimplifiee} \\\\ z_H = ${coteH.texFractionSimplifiee} \\end{cases}$ <br>`
+texteCorr +=`On vérifie que le point $H$ ainsi déterminé satisfait bien la dernière équation du système. <br>`
 texteCorr +=`Ainsi, les coordonnées du point $H$ sont $${miseEnEvidence(`H(${abscisseH.texFractionSimplifiee} ; ${ordonneeH.texFractionSimplifiee} ; ${coteH.texFractionSimplifiee}).`)}$`
 
       
