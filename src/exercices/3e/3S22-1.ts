@@ -56,12 +56,16 @@ Calculer la probabilité de gagner à ce jeu.`
     ligneEnt.push(`\\text{${i}}`)
     colonneEnt.push(`\\text{${i}}`)
     for (let j = 1; j <= 6; j++) {
-      contenu.push(i <= j && boules[j - 1] === 'B' ? 'gagné' : 'perdu')
+      contenu.push(
+        i <= j && boules[j - 1] === 'B' ? '\\text{gagné}' : '\\text{perdu}',
+      )
     }
   }
   const tableau = tableauColonneLigne(ligneEnt, colonneEnt, contenu)
   correction += tableau + '<br>'
-  const nbIssuesGagnantes = contenu.filter((issue) => issue === 'gagné').length
+  const nbIssuesGagnantes = contenu.filter(
+    (issue) => issue === '\\text{gagné}',
+  ).length
   const probaGagner = fraction(nbIssuesGagnantes, 36)
   correction += `Il y a ${nbIssuesGagnantes} issues gagnantes parmi 36 issues possibles.<br>`
   correction += `La probabilité de gagner à ce jeu est donc de $${!probaGagner.estIrreductible ? probaGagner.texFraction + '=' + miseEnEvidence(probaGagner.texFractionSimplifiee) : miseEnEvidence(probaGagner.texFraction)}$.<br>`
@@ -175,7 +179,9 @@ Calculer la probabilité de gagner à ce jeu.`
   for (let i = 0; i < totalBoules; i++) {
     for (let j = 0; j < totalBoules; j++) {
       contenu.push(
-        gagnePerdu(conditionDeVictoire)(urne[i], urne[j]) ? 'gagné' : 'perdu',
+        gagnePerdu(conditionDeVictoire)(urne[i], urne[j])
+          ? '\\text{gagné}'
+          : '\\text{perdu}',
       )
     }
   }
@@ -183,7 +189,9 @@ Calculer la probabilité de gagner à ce jeu.`
   const tableau = tableauColonneLigne(ligneEnt, colonneEnt, contenu)
   correction += tableau + '<br>'
 
-  const nbIssuesGagnantes = contenu.filter((issue) => issue === 'gagné').length
+  const nbIssuesGagnantes = contenu.filter(
+    (issue) => issue === '\\text{gagné}',
+  ).length
   const probaGagner = fraction(nbIssuesGagnantes, totalIssues)
 
   correction += `Il y a ${nbIssuesGagnantes} issues gagnantes parmi ${totalIssues} issues possibles.<br>`
@@ -271,10 +279,10 @@ Calculer la probabilité de gagner à ce jeu.`
         }
 
         if (isGagnante) {
-          contenu.push('gagné')
+          contenu.push('\\text{gagné}')
           nbIssuesGagnantes++
         } else {
-          contenu.push('perdu')
+          contenu.push('\\text{perdu}')
         }
       }
     }
