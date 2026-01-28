@@ -29,7 +29,7 @@ export const interactifType = 'mathLive'
 export const amcType = 'AMCNum'
 
 /**
- * Trouver le dernier chiffre d'un calcul (somme, produit, différence) entre décimaux
+ * Trouver le dernier chiffre d'un calcul (somme, différence) entre décimaux
  * @author Eric Elter
  */
 
@@ -57,13 +57,13 @@ function nomFractionDecimale(
   return correspondance[n as 0 | 1 | 2 | 3]
 }
 
-export default class DernierChiffreDécimaux extends Exercice {
+export default class DernierChiffreSommeDifférenceDécimaux extends Exercice {
   version: string
   constructor() {
     super()
     this.besoinFormulaireTexte = [
       "Type d'opérations",
-      'Nombres séparés par des tirets :\n1 : Somme\n2 : Différence\n3 : Produit',
+      'Nombres séparés par des tirets :\n1 : Somme\n2 : Différence',
     ]
     this.besoinFormulaire2Numerique = [
       'Nombre de décimales sur les deux nombres',
@@ -92,7 +92,7 @@ export default class DernierChiffreDécimaux extends Exercice {
       melange: 4,
       defaut: 4,
       nbQuestions: 3,
-      listeOfCase: ['somme', 'difference', 'produit'],
+      listeOfCase: ['somme', 'difference'],
     })
 
     const listeTypeDeQuestions = combinaisonListes(
@@ -204,34 +204,6 @@ export default class DernierChiffreDécimaux extends Exercice {
           }
           texteCorr += `Le dernier chiffre de $${texNombre(a)} - ${texNombre(b)}$ est $${miseEnEvidence(resultat)}$.`
           break
-        case 'produit':
-          chiffreA = randint(1, 9)
-          chiffreB = randint(1, 9)
-          a =
-            randint(0, 1) * randint(1, 9) * 10000 +
-            randint(100, 999) * 10 +
-            chiffreA
-          b =
-            randint(0, 1) * randint(1, 9) * 10000 +
-            randint(10, 999) * 10 +
-            chiffreB
-          if (memeNbDeDecimales) {
-            a = arrondi(a / 10 ** exposant)
-            b = arrondi(b / 10 ** exposant)
-          } else {
-            a = arrondi(a / 10 ** exposant1, exposant1)
-            b = arrondi(b / 10 ** exposant2, exposant2)
-          }
-          resultat = (chiffreA * chiffreB) % 10
-          texte = `$${texNombre(a)} \\times ${texNombre(b)}$`
-          texteCorr = ''
-          if (this.correctionDetaillee) {
-            texteCorr += `Les derniers chiffres non nuls des deux facteurs ($${texNombre(a)}$ et $${texNombre(b)}$) sont respectivement $${chiffreA}$ et $${chiffreB}$.<br>`
-            texteCorr += `Le dernier chiffre attendu sera donc le chiffre des unités du produit de $${chiffreA}$ et $${chiffreB}$, soit $${chiffreA}\\times${chiffreB}=${chiffreA * chiffreB < 10 ? '' : Math.floor((chiffreA * chiffreB) / 10)}${miseEnEvidence(resultat)}$.<br>`
-          }
-          texteCorr += `Le dernier chiffre de $${texNombre(a)} \\times ${texNombre(b)}$ est $${miseEnEvidence(resultat)}$.`
-
-          break
       }
       if (this.interactif) {
         texte =
@@ -257,7 +229,7 @@ export default class DernierChiffreDécimaux extends Exercice {
         // @ts-expect-error trop compliqué à typer
         this.autoCorrection[i].reponse.param.decimals = 0
       }
-      if (this.listeQuestions.indexOf(texte) === -1) {
+      if (this.questionJamaisPosee(i, a, b)) {
         // Si la question n'a jamais été posée, on la stocke dans la liste des questions
         this.listeQuestions[i] = texte
         this.listeCorrections[i] = texteCorr
