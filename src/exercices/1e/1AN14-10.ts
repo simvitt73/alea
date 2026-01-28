@@ -5,10 +5,9 @@ import { ajouteChampTexteMathLive } from '../../lib/interactif/questionMathLive'
 import { choice } from '../../lib/outils/arrayOutils'
 import { ecritureAlgebrique, reduireAxPlusB } from '../../lib/outils/ecritures'
 import { miseEnEvidence } from '../../lib/outils/embellissements'
-import { abs } from '../../lib/outils/nombres'
 import { gestionnaireFormulaireTexte, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
-export const titre = 'Dériver $\\dfrac{a}{u}$'
+export const titre = 'Dériver une fonction du type$\\dfrac{a}{u}$'
 export const interactifReady = true
 export const interactifType = 'mathLive'
 export const uuid = 'b6bda'
@@ -16,7 +15,7 @@ export const refs = {
   'fr-fr': ['1AN14-10'],
   'fr-ch': [''],
 }
-export const dateDePublication = '23/01/2026'
+export const dateDePublication = '28/01/2026'
 
 /**
  * Calculer la dérivée d'un quotient particulier
@@ -24,9 +23,8 @@ export const dateDePublication = '23/01/2026'
  *
  */
 class DerivationQuotientParticulier extends Exercice {
- constructor() {
+  constructor() {
     super()
-    this.consigne = 'Dans chacun des cas suivants, on admet que la fonction $f$ est définie et dérivable sur un intervalle $I$. <br>Déterminer l\'expression de la fonction dérivée $f\'$ sur $I$.'
     this.besoinFormulaireTexte = [
       'Types de fonctions',
       'Nombres séparés par des tirets :\n1 : $u(x)=x+b$\n2 : $u(x)=mx+p$\n3 : $u(x)=ax^2+b$\n4 : Mélange',
@@ -34,11 +32,18 @@ class DerivationQuotientParticulier extends Exercice {
     this.besoinFormulaire2CaseACocher = ['Numérateur égal à $1$']
     this.sup = '4'
     this.sup2 = false
-    this.nbQuestions = 5
+    this.nbQuestions = 3
     this.correctionDetailleeDisponible = true
   }
 
   nouvelleVersion() {
+    // Consigne adaptative
+    if (this.nbQuestions > 1) {
+      this.consigne = 'Dans chacun des cas suivants, on admet que la fonction $f$ est définie et dérivable sur un intervalle $I$. <br>Déterminer une expression de la fonction dérivée $f\'$ sur $I$.'
+    } else {
+      this.consigne = 'On admet que la fonction $f$ est définie et dérivable sur un intervalle $I$. <br>Déterminer une expression de la fonction dérivée $f\'$ sur $I$.'
+    }
+    
     this.listeQuestions = []
     this.listeCorrections = []
     this.autoCorrection = []
