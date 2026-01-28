@@ -8,7 +8,7 @@ import { abs } from '../../../lib/outils/nombres'
 export const titre = 'Résoudre une équation du type $1+\\dfrac{p}{100}=c$'
 export const interactifReady = true
 export const interactifType = 'mathLive'
-export const dateDePublication = '27/01/2026'
+export const dateDePublication = '28/01/2026'
 
 /**
  *
