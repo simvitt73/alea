@@ -409,14 +409,23 @@ Calculer la probabilité de gagner à ce jeu.`
 function experience5() {
   // Créer le jeu complet de 16 cartes
   const figures = ['V', 'D', 'R', 'A'] as const // Valet, Dame, Roi, As
-  const couleurs = ['♣', '♦', '♥', '♠'] as const // Trèfle, Carreau, Coeur, Pique
+  const couleurs = context.isHtml
+    ? (['♣', '♦', '♥', '♠'] as const)
+    : (['\\clubsuit', '\\diamondsuit', '\\heartsuit', '\\spadesuit'] as const) // Trèfle, Carreau, Coeur, Pique
   const nomsFigures = { V: 'Valet', D: 'Dame', R: 'Roi', A: 'As' }
-  const nomsCouleurs = {
-    '♣': 'Trèfle',
-    '♦': 'Carreau',
-    '♥': 'Coeur',
-    '♠': 'Pique',
-  }
+  const nomsCouleurs = context.isHtml
+    ? {
+        '♣': 'Trèfle',
+        '♦': 'Carreau',
+        '♥': 'Coeur',
+        '♠': 'Pique',
+      }
+    : {
+        '\\clubsuit': 'Trèfle',
+        '\\diamondsuit': 'Carreau',
+        '\\heartsuit': 'Coeur',
+        '\\spadesuit': 'Pique',
+      }
 
   // Créer toutes les cartes
   const toutesLesCartes: Array<{ figure: string; couleur: string }> = []
@@ -459,12 +468,12 @@ Calculer la probabilité de gagner à ce jeu.`
   // Crée les étiquettes du tableau
   for (const carte2 of tas2) {
     entetesColonne.push(
-      `\\text{${nomsFigures[carte2.figure as keyof typeof nomsFigures]}${carte2.couleur}}`,
+      `\\text{${nomsFigures[carte2.figure as keyof typeof nomsFigures]} ${carte2.couleur}}`,
     )
   }
   for (const carte1 of tas1) {
     entetesLigne.push(
-      `\\text{${nomsFigures[carte1.figure as keyof typeof nomsFigures]}${carte1.couleur}}`,
+      `\\text{${nomsFigures[carte1.figure as keyof typeof nomsFigures]} ${carte1.couleur}}`,
     )
   }
 
