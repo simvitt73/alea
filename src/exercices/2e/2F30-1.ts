@@ -47,7 +47,7 @@ export default class VariationsCourbe extends Exercice {
         '1 : Intervalle borné',
         '2 : Intervalle non borné à gauche ou à droite',
         '3 : Sur R',
-        '4 : Fonction avec valeurs interdites',
+        '4 : Fonction avec valeur interdite',
         '0: Mélange',
       ].join('\n'),
     ]
@@ -1648,46 +1648,47 @@ export default class VariationsCourbe extends Exercice {
         case 4:
         default:
           {
-            const genereDenomAvecPoles = (nbPoles: number) => {
-              let a = randint(-8, -2) / 2
-              const b = randint(2, 8) / 2
+            const genereDenomAvecPoles = (choix: number) => {
+              let a = randint(-6, 6, 0) / 2
               const a1 = randint(-3, 3, [a, -a, 0])
               const b1 = randint(-3, 3, [-a1, 0])
               if (-a * a1 - b1 === 0) {
                 a -= 1
               }
               const fonction =
-                nbPoles === 2
-                  ? (x: number) =>
-                      (10 * ((a1 * x) / 10 + b1 / 10)) / ((x - b) * (x - a))
+                choix === 2
+                  ? (x: number) => (a < 0 ? 1 / (x + a) : 1 / (a - x))
                   : (x: number) => (a1 * x + b1) / (x - a)
               let denomTex: string
-              if (nbPoles === 2) {
-                denomTex = `(x  ${ecritureAlgebrique(-a)})(x  ${ecritureAlgebrique(-b)})`
+              if (choix === 2) {
+                denomTex =
+                  a < 0
+                    ? `x  ${ecritureAlgebrique(a)}`
+                    : `${ecritureAlgebrique(a)} - x`
               } else {
                 denomTex = `x  ${ecritureAlgebrique(-a)}`
               }
               const fonctionTex =
-                nbPoles === 2
-                  ? `\\dfrac{(${rienSi1(a1)}x ${ecritureAlgebrique(b1)})}{(x  ${ecritureAlgebrique(-a)})(x  ${ecritureAlgebrique(-b)})}`
+                choix === 2
+                  ? `\\dfrac{1}{x  ${ecritureAlgebrique(a)}}`
                   : `\\dfrac{${rienSi1(a1)}x ${ecritureAlgebrique(b1)}}{x ${ecritureAlgebrique(-a)}}`
-              const numTex = `${rienSi1(a1)}x ${ecritureAlgebrique(b1)}`
+              const numTex =
+                choix === 2 ? '1' : `${rienSi1(a1)}x ${ecritureAlgebrique(b1)}`
 
               const signes =
-                nbPoles === 2
+                choix === 2
                   ? [
-                      a1 > 0 ? '+/ ' : '-/ ',
-                      a1 > 0 ? '-D+/ / ' : '+D-/ / ',
-                      a1 > 0 ? '-D+/ / ' : '+D-/ / ',
-                      a1 > 0 ? '-/ ' : '+/ ',
+                      a > 0 ? '-/ ' : '+/ ',
+                      a > 0 ? '+D-/ / ' : '-D+/ / ',
+                      a > 0 ? '+/ ' : '-/ ',
                     ]
                   : [
-                      a1 > 0 ? '-/ ' : '+/ ',
-                      a1 > 0 ? '+D-/ / ' : '-D+/ / ',
-                      a1 > 0 ? '+/ ' : '-/ ',
+                      b1 + a * a1 > 0 ? '+/ ' : '-/ ',
+                      b1 + a * a1 > 0 ? '-D+/ / ' : '+D-/ / ',
+                      b1 + a * a1 > 0 ? '-/ ' : '+/ ',
                     ]
-              const limiteMoinsInfini = nbPoles === 2 ? 0 : a1
-              const limitePlusInfini = nbPoles === 2 ? 0 : a1
+              const limiteMoinsInfini = choix === 2 ? 0 : a1
+              const limitePlusInfini = choix === 2 ? 0 : a1
 
               return {
                 fonction,
@@ -1697,12 +1698,10 @@ export default class VariationsCourbe extends Exercice {
                 signes,
                 limiteMoinsInfini,
                 limitePlusInfini,
-                valeursInterdites:
-                  nbPoles === 2 ? [a, b].sort((a, b) => a - b) : [a],
+                valeursInterdites: [a],
               }
             }
-            choix = 1 // randint(1, 2) // 1 = 1 valeur interdite, 2 = 2 valeurs interdites Pour l'instant on ne fait que des 1 valeur interdite
-            // Le choix 2 est foireux pour l'instant
+            choix = randint(1, 2)
             const poles = genereDenomAvecPoles(choix)
             fonction = poles.fonction
             const r1 = repere({
@@ -1750,7 +1749,6 @@ export default class VariationsCourbe extends Exercice {
 
             texte = `La fonction $${nom}$ est définie sur $\\mathbb{R} \\setminus \\{${poles.valeursInterdites.map((v) => texNombre(v, 1)).join(' ; ')}\\}$.<br>
             ${graphique}<br>`
-            texte += `où $${nom}(x) = ${poles.fonctionTex}$.<br>Le dénominateur est $${poles.denomTex}$ et le numérateur est $${poles.numTex}$.<br>`
             texteCorr = `La fonction $${nom}$ est définie sur $\\mathbb{R} \\setminus \\{${poles.valeursInterdites.map((v) => texNombre(v, 1)).join(' ; ')}\\}$.<br>
             Son tableau de variations est : <br><br>`
             if (choix === 2) {
@@ -1765,9 +1763,7 @@ export default class VariationsCourbe extends Exercice {
                       `$-\\infty$`,
                       10,
                       `${texNombre(poles.valeursInterdites[0], 1)}`,
-                      20,
-                      `${texNombre(poles.valeursInterdites[1], 1)}`,
-                      20,
+                      10,
                       `$+\\infty$`,
                       10,
                     ],
