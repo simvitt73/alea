@@ -55,14 +55,14 @@ Calculer la probabilité de gagner à ce jeu.`
     entetesLigne.push(`\\text{${i}}`)
     for (let j = 1; j <= 6; j++) {
       contenu.push(
-        i <= j && boules[j - 1] === 'B' ? '\\text{gagné}' : '\\text{perdu}',
+        i <= j && boules[j - 1] === 'B' ? '\\textbf{gagné}' : '\\text{perdu}',
       )
     }
   }
   const tableau = tableauColonneLigne(entetesColonne, entetesLigne, contenu)
   correction += tableau + '<br>'
   const nbIssuesGagnantes = contenu.filter(
-    (issue) => issue === '\\text{gagné}',
+    (issue) => issue === '\\textbf{gagné}',
   ).length
   const probaGagner = fraction(nbIssuesGagnantes, 36)
   correction += `Il y a ${nbIssuesGagnantes} issues gagnantes parmi 36 issues possibles.<br>`
@@ -180,7 +180,7 @@ Calculer la probabilité de gagner à ce jeu.`
     for (let j = 0; j < totalBoules; j++) {
       contenu.push(
         gagnePerdu(conditionDeVictoire)(urne[i], urne[j])
-          ? '\\text{gagné}'
+          ? '\\textbf{gagné}'
           : '\\text{perdu}',
       )
     }
@@ -190,7 +190,7 @@ Calculer la probabilité de gagner à ce jeu.`
   correction += tableau + '<br>'
 
   const nbIssuesGagnantes = contenu.filter(
-    (issue) => issue === '\\text{gagné}',
+    (issue) => issue === '\\textbf{gagné}',
   ).length
   const probaGagner = fraction(nbIssuesGagnantes, totalIssues)
 
@@ -279,7 +279,7 @@ Calculer la probabilité de gagner à ce jeu.`
         }
 
         if (isGagnante) {
-          contenu.push('\\text{gagné}')
+          contenu.push('\\textbf{gagné}')
           nbIssuesGagnantes++
         } else {
           contenu.push('\\text{perdu}')
@@ -379,7 +379,7 @@ Calculer la probabilité de gagner à ce jeu.`
     for (let j = 1; j <= 6; j++) {
       const isGagnante = conditionChoisie.test(i, j)
       if (isGagnante) {
-        contenu.push('\\text{gagné}')
+        contenu.push('\\textbf{gagné}')
         nbIssuesGagnantes++
       } else {
         contenu.push('\\text{perdu}')
@@ -409,14 +409,23 @@ Calculer la probabilité de gagner à ce jeu.`
 function experience5() {
   // Créer le jeu complet de 16 cartes
   const figures = ['V', 'D', 'R', 'A'] as const // Valet, Dame, Roi, As
-  const couleurs = ['♣', '♦', '♥', '♠'] as const // Trèfle, Carreau, Coeur, Pique
+  const couleurs = context.isHtml
+    ? (['♣', '♦', '♥', '♠'] as const)
+    : (['\\clubsuit', '\\diamondsuit', '\\heartsuit', '\\spadesuit'] as const) // Trèfle, Carreau, Coeur, Pique
   const nomsFigures = { V: 'Valet', D: 'Dame', R: 'Roi', A: 'As' }
-  const nomsCouleurs = {
-    '♣': 'Trèfle',
-    '♦': 'Carreau',
-    '♥': 'Coeur',
-    '♠': 'Pique',
-  }
+  const nomsCouleurs = context.isHtml
+    ? {
+        '♣': 'Trèfle',
+        '♦': 'Carreau',
+        '♥': 'Coeur',
+        '♠': 'Pique',
+      }
+    : {
+        '\\clubsuit': 'Trèfle',
+        '\\diamondsuit': 'Carreau',
+        '\\heartsuit': 'Coeur',
+        '\\spadesuit': 'Pique',
+      }
 
   // Créer toutes les cartes
   const toutesLesCartes: Array<{ figure: string; couleur: string }> = []
@@ -459,12 +468,12 @@ Calculer la probabilité de gagner à ce jeu.`
   // Crée les étiquettes du tableau
   for (const carte2 of tas2) {
     entetesColonne.push(
-      `\\text{${nomsFigures[carte2.figure as keyof typeof nomsFigures]}${carte2.couleur}}`,
+      `\\text{${nomsFigures[carte2.figure as keyof typeof nomsFigures]} ${carte2.couleur}}`,
     )
   }
   for (const carte1 of tas1) {
     entetesLigne.push(
-      `\\text{${nomsFigures[carte1.figure as keyof typeof nomsFigures]}${carte1.couleur}}`,
+      `\\text{${nomsFigures[carte1.figure as keyof typeof nomsFigures]} ${carte1.couleur}}`,
     )
   }
 
@@ -475,7 +484,7 @@ Calculer la probabilité de gagner à ce jeu.`
       const gagne =
         carte1.figure === carte2.figure || carte1.couleur === carte2.couleur
       if (gagne) {
-        contenu.push('\\text{gagné}')
+        contenu.push('\\textbf{gagné}')
         nbIssuesGagnantes++
       } else {
         contenu.push('\\text{perdu}')
