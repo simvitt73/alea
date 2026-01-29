@@ -15,6 +15,7 @@ export const titre = "Produire une formule à partir d'une figure géométrique"
 /**
  * * Traduire la dépendance des grandeurs et produire une formule.
  * @author François-Rémi Zawadzki
+ * à partir d'un exercice proposé par Vincent Dujardin.
  */
 
 export const uuid = 'b3643'
