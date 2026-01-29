@@ -98,7 +98,7 @@ export default class NomExercice extends Exercice {
       const question1 = 'Montrer que le triangle $ABC$ est rectangle en $A$.'
       const question2 = `Soit $\\vec n \\begin{pmatrix}${nx}\\\\${ny}\\\\${nz}\\end{pmatrix}$. Vérifier que ce vecteur est orthogonal au plan $(ABC)$.`
       const question3 = 'En déduire une équation cartésienne du plan $(ABC)$.'
-      const question4 = `Donner une représentation paramétrique de la droite $(d)$ passant par $D(${xD} ; ${yD} ; ${zD})$ et de vecteur directeur $\\vec n$.`
+      const question4 = `Donner une représentation paramétrique de la droite $(d)$ passant par $D$ et de vecteur directeur $\\vec n$.`
       const question5 =
         'Calculer les coordonnées du point $H$, projection orthogonale de $D$ sur $(ABC)$.'
       const question6 = 'Calculer la longueur $DH$.'
@@ -127,53 +127,60 @@ export default class NomExercice extends Exercice {
           'Pour montrer qu’un triangle $ABC$ est rectangle en $A$, on peut appliquer la réciproque du théorème de Pythagore ou vérifier que les vecteurs $\\overrightarrow{AB}$ et $\\overrightarrow{AC}$ sont orthogonaux en calculant leur produit scalaire.<br> La deuxième idée est plus rapide.',
       })
 
-      reponse1 +='<br>On calcule les coordonnées des vecteurs $\\overrightarrow{AB}$ et $\\overrightarrow{AC}$ : <br>'
-      reponse1 +='$\\overrightarrow{AB}\\begin{pmatrix}${xB}${ecritureAlgebrique(-xA)}\\\\${yB}${ecritureAlgebrique(-yA)}\\\\${zB}${ecritureAlgebrique(-zA)}\\end{pmatrix}$ donc $\\overrightarrow{AB}\\begin{pmatrix}${ABx}\\\\${ABy}\\\\${ABz}\\end{pmatrix}$'
-      reponse1 +=`$\\overrightarrow{AC}\\begin{pmatrix}${xC}${ecritureAlgebrique(-xA)}\\\\${yC}${ecritureAlgebrique(-yA)}\\\\${zC}${ecritureAlgebrique(-zA)}\\end{pmatrix}$ donc $\\overrightarrow{AC}\\begin{pmatrix}${ACx}\\\\${ACy}\\\\${ACz}\\end{pmatrix}$.<br>` 
-          reponse1 +=`Pour vérifier si ces vecteurs sont orthogonaux, on calcule leur produit scalaire : <bt>'` +
-        ` $\\begin{aligned}\\overrightarrow{AB}\\cdot\\overrightarrow{AC} &= ${ABx}\\times${ACx} + ${ABy}\\times${ACy} + ${ABz}\\times${ACz} \\\\
+      reponse1 +=
+        '<br>On calcule les coordonnées des vecteurs $\\overrightarrow{AB}$ et $\\overrightarrow{AC}$ : <br>' +
+        `$\\overrightarrow{AB}\\begin{pmatrix}${xB}${ecritureAlgebrique(-xA)}\\\\${yB}${ecritureAlgebrique(-yA)}\\\\${zB}${ecritureAlgebrique(-zA)}\\end{pmatrix}$ donc $\\overrightarrow{AB}\\begin{pmatrix}${ABx}\\\\${ABy}\\\\${ABz}\\end{pmatrix}$.<br>` +
+        `$\\overrightarrow{AC}\\begin{pmatrix}${xC}${ecritureAlgebrique(-xA)}\\\\${yC}${ecritureAlgebrique(-yA)}\\\\${zC}${ecritureAlgebrique(-zA)}\\end{pmatrix}$ donc $\\overrightarrow{AC}\\begin{pmatrix}${ACx}\\\\${ACy}\\\\${ACz}\\end{pmatrix}$.<br>` +
+        'Pour vérifier si ces vecteurs sont orthogonaux, on calcule leur produit scalaire :<br>' +
+        ` $\\begin{aligned}\\overrightarrow{AB}\\cdot\\overrightarrow{AC} &= ${ABx}\\times${ecritureParentheseSiNegatif(ACx)} + ${ABy}\\times${ecritureParentheseSiNegatif(ACy)} + ${ABz}\\times${ecritureParentheseSiNegatif(ACz)} \\\\
         &= ${ABx * ACx + ABy * ACy + ABz * ACz}\\end{aligned}$.<br>` +
-        'Il est nul et les deux vecteurs sont non nuls, donc $ABC$ est rectangle en $A$.'
+        '$\\overrightarrow{AB}\\cdot\\overrightarrow{AC}$ et les deux vecteurs sont non nuls, ils sont donc orthogonaux. <br>' +
+        'donc $ABC$ est un triangle rectangle en $A$.'
 
-      const reponse2 =
-        texteEnCouleurEtGras('Vecteur normal au plan $(ABC)$ :') +
-        `<br>On calcule $\\vec n \\cdot \\overrightarrow{AB} = ${nx}\\times${ecritureParentheseSiNegatif(
-          ABx,
-        )} ${ecritureAlgebrique(nx * ABy)} ${ecritureAlgebrique(nx * ABz)} = ${nx * ABx + ny * ABy + nz * ABz}$,` +
-        ` et $\\vec n \\cdot \\overrightarrow{AC} = ${nx}\\times${ecritureParentheseSiNegatif(
-          ACx,
-        )} ${ecritureAlgebrique(nx * ACy)} ${ecritureAlgebrique(nx * ACz)} = ${nx * ACx + ny * ACy + nz * ACz}$.<br>` +
-        'Les deux produits scalaires sont nuls : $\\vec n$ est bien orthogonal au plan $(ABC)$.'
+      let reponse2 =
+       lampeMessage({
+        titre: 'Méthode :',
+        texte:
+          'Pour montrer qu’un vecteur est orthogonal à un plan, il suffit de vérifier qu\'il est orthogonal à deux vecteurs non-colinéaires de ce plan. <br> Il suffit ici de montrer par exemple que $\\vec n \\cdot \\overrightarrow{AB}=0$ et $\\vec n \\cdot \\overrightarrow{AC}=0$ .',
+      })
+       reponse2+= `<br>On calcule <br>$\\begin{aligned}\\vec n \\cdot \\overrightarrow{AB} &= ${nx}\\times${ecritureParentheseSiNegatif(
+      ABx,)} ${ecritureAlgebrique(nx)}\\times ${ecritureParentheseSiNegatif(ABy)} ${ecritureAlgebrique(nx)}\\times ${ecritureParentheseSiNegatif(ABz)} \\\\
+        &=${nx*ABx} ${ecritureAlgebrique(ny*ABy)} ${ecritureAlgebrique(nz*ABz)} \\\\
+      &= ${nx * ABx + ny * ABy + nz * ABz}\\end{aligned}$<br>` +
+        ` $\\begin{aligned}\\vec n \\cdot \\overrightarrow{AC} &= ${nx}\\times${ecritureParentheseSiNegatif(ACx,)} ${ecritureAlgebrique(nx * ACy)} ${ecritureAlgebrique(nx * ACz)} \\\\
+        &= ${nx*ACx} ${ecritureAlgebrique(ny * ACy)} ${ecritureAlgebrique(nz * ACz)} \\\\
+        &= ${nx * ACx + ny * ACy + nz * ACz}\\end{aligned}$.<br>` +
+        'Le vecteur $\\vec n$ est bien orthogonal à deux vecteurs non-colinéaires du plan $(ABC)$ (à une base), il est donc orthogonal au plan $(ABC)$.'
 
       const reponse3 =
         lampeMessage({
           titre: 'Méthode :',
           texte:
-            "Un vecteur normal $(a,b,c)$ conduit à une équation $ax+by+cz+d=0$. On remplace par les coordonnées d'un point du plan pour trouver $d$. Ici, on prend $A$.",
+            "Un vecteur  $\\vec{n}\\begin{pmatrix}a\\\\b\\\\c\\end{pmatrix}$ (avec $a,\\, b$ et $c$ trois réels) est un vecteur normal aux plans d'équation cartésienne $ax+by+cz+d=0$ où $d$ est un réel. <br>Pour déterminer $d$, on remplace les coordonnées d'un point du plan dans l'équation.",
         }) +
-        `On obtient $${nx}x ${ecritureAlgebrique(ny)}y ${ecritureAlgebrique(
-          nz,
-        )}z + d = 0$ et $${nx}\\times ${ecritureParentheseSiNegatif(
-          xA,
-        )} ${ecritureAlgebrique(ny)}\\times${ecritureParentheseSiNegatif(
-          yA,
-        )} ${ecritureAlgebrique(nz)}\\times${ecritureParentheseSiNegatif(
-          zA,
-        )} + d = 0$ d'où $d = ${dPlan}$.<br>` +
-        `Ainsi, une équation du plan $(ABC)$ est ${miseEnEvidence(
-          `$${rienSi0(nx)}x ${ecritureAlgebriqueSauf0(ny)}y ${ecritureAlgebriqueSauf0(
-            nz,
-          )}z ${ecritureAlgebriqueSauf0(dPlan)} = 0$`,
-        )}.`
+        `On vient de montrer que le vecteur $\\vec n \\begin{pmatrix}${nx}\\\\${ny}\\\\${nz}\\end{pmatrix}$ est normal au plan $ABC$. Une équation cartésienne de ce plan est donc sous la forme :<br>
+        $${nx}x ${ecritureAlgebrique(ny)}y ${ecritureAlgebrique(nz)}z + d = 0$ où $d$ est un réel à trouver.
+        Pour déterminer $d$, on utilise que le point $A(${xA} ; ${yA} ; ${zA})$ appartient au plan $(ABC), ses coordonnées vérifient donc l'équation cartésienne de ce plan :<br>
+        $\\begin{aligned}&${nx}\\times ${ecritureParentheseSiNegatif(xA,)} ${ecritureAlgebrique(ny)}\\times${ecritureParentheseSiNegatif(yA)} ${ecritureAlgebrique(nz)}\\times${ecritureParentheseSiNegatif(
+        zA,)} + d = 0\\\\
+       \\iff &${rienSi0(nx * xA)} ${ecritureAlgebriqueSauf0(ny*yA)} ${ecritureAlgebriqueSauf0(nz*zA)} + d = 0\\\\
+        \\iff&d = ${dPlan}\\end{aligned}$.<br>` +
+        `Ainsi, une équation du plan $(ABC)$ est : $${rienSi0(nx)}x ${ecritureAlgebriqueSauf0(ny)}y ${ecritureAlgebriqueSauf0(
+            nz,)}z ${ecritureAlgebriqueSauf0(dPlan)} = 0$`
 
       const reponse4 =
-        texteEnCouleurEtGras('Droite $(d)$ :') +
-        `<br>Elle passe par $D(${xD} ; ${yD} ; ${zD})$ et a pour vecteur directeur $\\vec n$. Une représentation paramétrique est<br>` +
-        `$\\left\\{ \\begin{array}{l}
+         lampeMessage({
+          titre: 'Méthode :',
+          texte:
+            `La représentation paramétrique d'une droite de vecteur directeur $\\vec{u} \\begin{pmatrix}a\\\\b\\\\c\\end{pmatrix}$ (avec $a,\\, b$ et $c$ trois réels) et passant par un point $A(x_A ; y_A ; z_A)$ ($x_A, y_A, zA$ trois réels) est donnée par :<br>,
+        $\\begin{cases} x=x_A+at\\\\y=y_A+bt\\\\z=z_A+ct\\end{cases}$`})+
+        `<br>La droite passe par le point $D(${xD} ; ${yD} ; ${zD})$ et a pour vecteur directeur $\\vec n \\begin{pmatrix}${nx}\\\\${ny}\\\\${nz}\\end{pmatrix}$.<br>
+         Une représentation paramétrique de la droite $(d)$ est<br>` +
+        `$ \\begin{cases}
 x = ${xD} ${ecritureAlgebrique(nx)}t \\\\
-y = ${yD} ${ecritureAlgebrique(ny)}t \\\\
+y = ${yD} ${ecritureAlgebrique(ny)}t \\quad (t\\in\\mathbb{R}\\\\
 z = ${zD} ${ecritureAlgebrique(nz)}t
-\\end{array} \\right. \\quad (t \\in \\mathbb R).`
+\\end{cases}  $.`
 
       // Projection orthogonale de D sur le plan (ABC)
       const denom = nx * nx + ny * ny + nz * nz
@@ -186,9 +193,13 @@ z = ${zD} ${ecritureAlgebrique(nz)}t
       const xHDec = xHFrac.valeurDecimale
       const yHDec = yHFrac.valeurDecimale
       const zHDec = zHFrac.valeurDecimale
-      const reponse5 =
-        texteEnCouleurEtGras('Projection orthogonale :') +
-        `<br>On cherche $t$ tel que $D + t\\vec n$ appartienne au plan d’équation $${nx}x ${ecritureAlgebrique(
+      const reponse5 =lampeMessage({
+        titre: 'Méthode :',
+        texte:
+          "Le point $H$ est le projeté orthogonal du point $D$ sur le plan $(ABC)$ donc $H\\in(ABC)$ et $H\\in(d)$ puisque la droite $(d)$ est perpendiculaire au plan, passant par le point $D$.",
+      }) +
+        `<br>Les coordonnées du point $H(x_H ; y_H ; z_H)$ vérifient le système suivant en $(x_H,y_h,z_h,t)$ :
+        , on cherche $t$ tel que $D + t\\vec n$ appartienne au plan d’équation $${nx}x ${ecritureAlgebrique(
           ny,
         )}y ${ecritureAlgebrique(nz)}z ${ecritureAlgebrique(dPlan)} = 0$ :<br>` +
         `${nx}(x_D + t\\,${nx}) ${ecritureAlgebrique(ny)}(y_D + t\\,${ny}) ${ecritureAlgebrique(
