@@ -10,6 +10,7 @@ import {
   texteEnCouleur,
 } from '../../lib/outils/embellissements'
 import { fraction } from '../../modules/fractions'
+import FractionEtendue from '../../modules/FractionEtendue'
 import { listeQuestionsToContenu, randint } from '../../modules/outils'
 import Exercice from '../Exercice'
 
@@ -40,7 +41,7 @@ export const refs = {
 /**
  * Retourne une chaîne LaTeX pour ax² (ex : "3x²", "-x²", "x²")
  */
-function ecritureAx2(a) {
+function ecritureAx2(a: number) {
   if (a === 1) return 'x^2'
   if (a === -1) return '-x^2'
   return `${a}x^2`
@@ -49,7 +50,7 @@ function ecritureAx2(a) {
 /**
  * Retourne une chaîne LaTeX pour ax (ex : "3x", "-x", "x")
  */
-function ecritureAx(a) {
+function ecritureAx(a: number) {
   if (a === 1) return 'x'
   if (a === -1) return '-x'
   return `${a}x`
@@ -58,7 +59,7 @@ function ecritureAx(a) {
 /**
  * Retourne une chaîne LaTeX pour bx(cx+d)
  */
-function ecritureBxCxPlusD(b, c, d) {
+function ecritureBxCxPlusD(b: number, c: number, d: number) {
   return `${ecritureAx(b)}(${reduireAxPlusB(c, d)})`
 }
 
@@ -66,14 +67,14 @@ function ecritureBxCxPlusD(b, c, d) {
  * Retourne une chaîne LaTeX pour ax(ax+b) — les deux facteurs partagent "a"
  * On réutilise le même coefficient pour le facteur linéaire et le coefficient de x dans la parenthèse
  */
-function ecritureAxAxPlusB(a, b) {
+function ecritureAxAxPlusB(a: number, b:number) {
   return `${ecritureAx(a)}(${reduireAxPlusB(a, b)})`
 }
 
 /**
  * Tri de deux fractions et retourne [petite, grande] pour construire S
  */
-function triDeuxFractions(f1, f2) {
+function triDeuxFractions(f1: FractionEtendue, f2: FractionEtendue) {
   if (f1.differenceFraction(f2).s > 0) return [f2, f1]
   if (f1.differenceFraction(f2).s < 0) return [f1, f2]
   return null // égales
@@ -82,7 +83,7 @@ function triDeuxFractions(f1, f2) {
 /**
  * Construit la chaîne de réponse et de correction pour S à partir de deux fractions
  */
-function construireSolution(f1, f2) {
+function construireSolution(f1:FractionEtendue, f2:FractionEtendue) {
   const tri = triDeuxFractions(f1, f2)
   if (tri === null) {
     // une seule solution
