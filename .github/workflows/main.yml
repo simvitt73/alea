@@ -1,28 +1,26 @@
-name: Deploy sur GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
     branches:
+      - main  # Déclenche le workflow sur les pushes sur main
+  pull_request:
+    branches:
       - main
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: node:23.9.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Install pnpm
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23.9.0'
+
+      - name: Setup PNPM
         run: |
           npm install -g corepack@latest
           corepack enable
@@ -32,22 +30,11 @@ jobs:
         run: pnpm install
 
       - name: Build
-        env:
-          NODE_OPTIONS: --max-old-space-size=4096
-        run: |
-          pnpm run makeJson
-          pnpm vite build
+        run: NODE_OPTIONS=--max-old-space-size=4096 pnpm run makeJson && pnpm vite build
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v6
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          # Branche par défaut pour Pages : gh-pages
