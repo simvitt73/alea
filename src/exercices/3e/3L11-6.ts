@@ -89,6 +89,10 @@ export default class FactoriserUneExpression3e extends Exercice {
           '(cx+d)(ax+b)+(ax+b)(ex+f)',
           '(ax+b)(cx+d)+(ex+f)(ax+b)',
           '(cx+d)(ax+b)+(ex+f)(ax+b)',
+          '(ax+b)(cx+d)+(ax+b)',
+          '(ax+b)+(ax+b)(cx+d)',
+          '(ax+b)^2+(ax+b)(ex+f)',
+          '(ax+b)(ex+f)+(ax+b)^2',
         )
       }
       if (this.sup2 > 1) {
@@ -97,6 +101,10 @@ export default class FactoriserUneExpression3e extends Exercice {
           '(cx+d)(ax+b)-(ax+b)(ex+f)',
           '(ax+b)(cx+d)-(ex+f)(ax+b)',
           '(cx+d)(ax+b)-(ex+f)(ax+b)',
+          '(ax+b)(cx+d)-(ax+b)',
+          '(ax+b)-(ax+b)(cx+d)',
+          '(ax+b)^2-(ax+b)(ex+f)',
+          '(ax+b)(ex+f)-(ax+b)^2',
         )
       }
     }
@@ -330,6 +338,172 @@ export default class FactoriserUneExpression3e extends Exercice {
           handleAnswers(this, i, {
             reponse: {
               value: `(${reduireAxPlusB(c - e, d - f)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        // ─── NOUVEAUX TYPES : (ax+b)(cx+d) ± (ax+b) ───────────────────────────
+
+        case '(ax+b)(cx+d)+(ax+b)':
+          // (ax+b)(cx+d) + (ax+b)·1  →  (ax+b)(cx+d+1)
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${c}x${ecritureAlgebrique(d)})+(${rienSi1(a)}x${ecritureAlgebrique(b)})$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d) + ')', 'blue')}+${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('1', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d) + '+1)', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d + 1) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${c}x${ecritureAlgebrique(d + 1)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(c, d + 1)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        case '(ax+b)+(ax+b)(cx+d)':
+          // (ax+b)·1 + (ax+b)(cx+d)  →  (ax+b)(1+cx+d) = (ax+b)(cx+d+1)
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})+(${rienSi1(a)}x${ecritureAlgebrique(b)})(${c}x${ecritureAlgebrique(d)})$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('1', 'blue')}+${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(1+' + c + 'x' + ecritureAlgebrique(d) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d + 1) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${c}x${ecritureAlgebrique(d + 1)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(c, d + 1)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        case '(ax+b)(cx+d)-(ax+b)':
+          // (ax+b)(cx+d) - (ax+b)·1  →  (ax+b)(cx+d-1)
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${c}x${ecritureAlgebrique(d)})-(${rienSi1(a)}x${ecritureAlgebrique(b)})$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d) + ')', 'blue')}-${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('1', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d) + '-1)', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d - 1) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${c}x${ecritureAlgebrique(d - 1)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(c, d - 1)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        case '(ax+b)-(ax+b)(cx+d)':
+          // (ax+b)·1 - (ax+b)(cx+d)  →  (ax+b)(1-cx-d)
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})-(${rienSi1(a)}x${ecritureAlgebrique(b)})(${c}x${ecritureAlgebrique(d)})$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('1', 'blue')}-${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + c + 'x' + ecritureAlgebrique(d) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(1-(' + c + 'x' + ecritureAlgebrique(d) + '))', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(-c) + 'x' + ecritureAlgebrique(1 - d) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(-c)}x${ecritureAlgebrique(1 - d)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(-c, 1 - d)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        // ─── NOUVEAUX TYPES : (ax+b)² ± (ax+b)(ex+f) ──────────────────────────
+
+        case '(ax+b)^2+(ax+b)(ex+f)':
+          // (ax+b)(ax+b) + (ax+b)(ex+f)  →  (ax+b)(ax+b+ex+f) = (ax+b)((a+e)x+(b+f))
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})^2+(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(e)}x${ecritureAlgebrique(f)})$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')', 'blue')}+${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + '+' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a + e) + 'x' + ecritureAlgebrique(b + f) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(a + e)}x${ecritureAlgebrique(b + f)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(a + e, b + f)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        case '(ax+b)(ex+f)+(ax+b)^2':
+          // (ax+b)(ex+f) + (ax+b)(ax+b)  →  (ax+b)(ex+f+ax+b) = (ax+b)((a+e)x+(b+f))
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(e)}x${ecritureAlgebrique(f)})+(${rienSi1(a)}x${ecritureAlgebrique(b)})^2$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + ')', 'blue')}+${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + '+' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a + e) + 'x' + ecritureAlgebrique(b + f) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(a + e)}x${ecritureAlgebrique(b + f)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(a + e, b + f)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        case '(ax+b)^2-(ax+b)(ex+f)':
+          // (ax+b)(ax+b) - (ax+b)(ex+f)  →  (ax+b)(ax+b-ex-f) = (ax+b)((a-e)x+(b-f))
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})^2-(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(e)}x${ecritureAlgebrique(f)})$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')', 'blue')}-${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + '-(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + '))', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + '-' + rienSi1(e) + 'x' + ecritureAlgebrique(-f) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a - e) + 'x' + ecritureAlgebrique(b - f) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(a - e)}x${ecritureAlgebrique(b - f)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(a - e, b - f)})(${reduireAxPlusB(a, b)})`,
+              options: { factorisation: true },
+            },
+          })
+          break
+
+        case '(ax+b)(ex+f)-(ax+b)^2':
+          // (ax+b)(ex+f) - (ax+b)(ax+b)  →  (ax+b)(ex+f-ax-b) = (ax+b)((e-a)x+(f-b))
+          texte = `$${lettreDepuisChiffre(i + 1)}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(e)}x${ecritureAlgebrique(f)})-(${rienSi1(a)}x${ecritureAlgebrique(b)})^2$`
+          texteCorr = texte
+          if (this.correctionDetaillee) {
+            texteCorr += `<br>On remarque que $(${rienSi1(a)}x${ecritureAlgebrique(b)})$ est un facteur commun.`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + ')', 'blue')}-${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + '-(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + '))', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e) + 'x' + ecritureAlgebrique(f) + '-' + rienSi1(a) + 'x' + ecritureAlgebrique(-b) + ')', 'blue')}$`
+            texteCorr += `<br>$${lettreDepuisChiffre(i + 1)}=${miseEnEvidence('(' + rienSi1(a) + 'x' + ecritureAlgebrique(b) + ')')}${miseEnEvidence('(' + rienSi1(e - a) + 'x' + ecritureAlgebrique(f - b) + ')', 'blue')}$<br>`
+          } else {
+            texteCorr += `<br>$\\phantom{ABC}=(${rienSi1(a)}x${ecritureAlgebrique(b)})(${rienSi1(e - a)}x${ecritureAlgebrique(f - b)})$<br>`
+          }
+          handleAnswers(this, i, {
+            reponse: {
+              value: `(${reduireAxPlusB(e - a, f - b)})(${reduireAxPlusB(a, b)})`,
               options: { factorisation: true },
             },
           })
