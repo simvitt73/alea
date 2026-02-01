@@ -38,7 +38,7 @@ export default class ModeleAutomatisme2nde extends ExerciceSimple {
       KeyboardType.clavierDeBaseAvecFractionPuissanceCrochets
     this.optionsChampTexte = {
       texteAvant: sp(5),
-      texteApres: sp(5) + '(Séparer les diviseurs par un point-virgule.)',
+      texteApres: sp(5) + '(Séparer les diviseurs par un point-virgule. Ceci est un test.)',
     }
     this.optionsDeComparaison = { suiteDeNombres: true }
     this.comment =
