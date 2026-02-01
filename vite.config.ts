@@ -6,7 +6,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/alea/',
+  base: '/mathalea/',
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
     sourcemap: true,
