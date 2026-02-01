@@ -3,7 +3,6 @@ import { defineConfig } from 'vitest/config'
 
 
 export default defineConfig({
-  base : 'alea',
   plugins: [svelte({ hot: !process.env.VITEST })],
   resolve: {
     conditions: ['browser'],
